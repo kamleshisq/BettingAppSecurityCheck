@@ -5679,7 +5679,7 @@ io.on('connection', (socket) => {
                                 "userName":"$userName",
                                 "runs":"$runs"
                             },
-                            uniqueRuns: { $addToSet: "$runs" },
+                            // uniqueRuns: { $addToSet: "$runs" },
                             parentArray: { $first: "$parentArray" },
                             totalAmount: { 
                                 $sum: '$returns'
@@ -5806,44 +5806,130 @@ io.on('connection', (socket) => {
                         }
                     },
                     {
-                        $addFields: {
-                          dataTOShow: {
-                            $cond: {
-                              if: { $eq: ["$secId", "odd_Even_Yes"] },
-                              then: { $concat: [ { $toString: "$runs" }, " or more" ] },
-                              else: { $concat: [ { $toString: "$runs" }, " less than" ] }
-                            }
-                          }
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $addToSet: "$runs" },
+                          data: { $push: "$$ROOT" } 
                         }
-                    },
-                    {
-                        $project:{
-                            _id:"$dataTOShow",
-                            secId: "$secId",
-                            runs: "$runs",
-                            totalAmount:"$totalAmount",
-                            totalWinAmount:"$totalWinAmount",
-                            uniqueRuns:"$uniqueRuns",
-                        }
-                    },
-                    {
+                      },
+                      {
                         $project: {
-                          _id: "$_id",
-                          secId: "$secId",
-                          runs: "$runs",
-                          totalAmount: "$totalAmount",
-                          totalWinAmount: "$totalWinAmount",
-                          uniqueRuns: {
-                            $setUnion: ["$uniqueRuns"] 
-                          }
+                          _id: 0, 
+                          uniqueRuns: 1,
+                          data: 1 
                         }
-                      }
+                      },
+                      {
+                        $unwind: "$uniqueRuns" 
+                      },
+                      {
+                        $sort: {
+                          "uniqueRuns": 1 
+                        }
+                      },
+                      {
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $push: "$uniqueRuns" },
+                          data: { $push: "$data" }
+                        }
+                      },
                     
                     
                     
                   ])
-                console.log(betData, "betData")
-                socket.emit('FANCYBOOK', {betData, type:'Fancy'})
+
+                  betData =  betData[0]
+                let dataToshow = []
+                for(let i = 0; i < betData.uniqueRuns.length; i++){ 
+                    if(betData.uniqueRuns.length === 1){
+                        let data1 = {}
+                        data1.message = `${betData.uniqueRuns[i] - 1} or less`
+                        let sum = 0
+                        for(let j = 0; j < betData.data[0].length; j++){
+                            if(betData.data[0][j].secId === "odd_Even_No"){
+                                sum += betData.data[0][j].totalWinAmount
+                            }else{
+                                sum += betData.data[0][j].totalAmount
+                            }
+                        }
+                        data1.sum = sum
+                        dataToshow.push(data1)
+                        let data2 = {}
+                        data2.message = `${betData.uniqueRuns[i]} or more`
+                        for(let j = 0; j < betData.data[0].length; j++){
+                            if(betData.data[0][j].secId === "odd_Even_Yes"){
+                                sum += betData.data[0][j].totalWinAmount
+                            }else{
+                                sum += betData.data[0][j].totalAmount
+                            }
+                        }
+                        data2.sum = sum
+                        dataToshow.push(data2)
+                    }else{
+                        if(i === 0){
+                            let data = {}
+                            data.message = `${betData.uniqueRuns[i] - 1} or less`
+                            let sum = 0
+                            for(let j = 0; j < betData.data[0].length; j++){
+                                if(betData.data[0][j].secId === "odd_Even_No" && betData.data[0][j].runs >= (betData.uniqueRuns[i])){
+                                    sum += betData.data[0][j].totalWinAmount
+                                }else{
+                                    sum += betData.data[0][j].totalAmount
+                                }
+                            }
+                            data.sum = sum
+                            dataToshow.push(data)
+                        }else if (i === (betData.uniqueRuns.length - 1)){
+                            let data = {}
+                            let data1 = {}
+                            data.message = `between ${betData.uniqueRuns[i - 1]} and ${betData.uniqueRuns[i] - 1}`
+                            let sum = 0
+                            for(let j = 0; j < betData.data[0].length; j++){
+                                if(betData.data[0][j].secId === "odd_Even_No" && betData.data[0][j].runs == betData.uniqueRuns[i]){
+                                    sum += betData.data[0][j].totalWinAmount
+                                }else if (betData.data[0][j].secId === "odd_Even_Yes" && betData.data[0][j].runs == betData.uniqueRuns[i - 1]){
+                                    sum += betData.data[0][j].totalWinAmount
+                                }
+                                else{
+                                    sum += betData.data[0][j].totalAmount
+                                }
+                            }
+                            data.sum = sum
+                            dataToshow.push(data)
+                            let sum2 = 0
+                            data1.message = `${betData.uniqueRuns[i]} or more`
+                            for(let j = 0; j < betData.data[0].length; j++){
+                                if(betData.data[0][j].secId === "odd_Even_Yes" && betData.data[0][j].runs <= betData.uniqueRuns[i]){
+                                    sum2 += betData.data[0][j].totalWinAmount
+                                }
+                                else{
+                                    sum2 += betData.data[0][j].totalAmount
+                                }
+                            }
+                            data1.sum = sum2
+                            dataToshow.push(data1)
+                        }else{
+                            let data = {}
+                            data.message = `between ${betData.uniqueRuns[i - 1]} and ${betData.uniqueRuns[i] - 1}`
+                            let sum = 0
+                            for(let j = 0; j < betData.data[0].length; j++){
+                                if(betData.data[0][j].secId === "odd_Even_No" && betData.data[0][j].runs == betData.uniqueRuns[i]){
+                                    sum += betData.data[0][j].totalWinAmount
+                                }else if (betData.data[0][j].secId === "odd_Even_Yes" && betData.data[0][j].runs == betData.uniqueRuns[i - 1]){
+                                    sum += betData.data[0][j].totalWinAmount
+                                }
+                                else{
+                                    sum += betData.data[0][j].totalAmount
+                                }
+                            }
+                            data.sum = sum
+                            dataToshow.push(data)
+                        }
+                    }
+                }
+                console.log(dataToshow, "betData")
+                socket.emit('FANCYBOOK', {betData : dataToshow, type:'Fancy'})
             }
 
         }else{

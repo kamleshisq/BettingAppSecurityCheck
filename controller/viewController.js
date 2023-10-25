@@ -5173,7 +5173,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                             data.message = `${betData.uniqueRuns[i] - 1} or less`
                             let sum = 0
                             for(let j = 0; j < betData.data[0].length; j++){
-                                if(betData.data[0][j].secId === "odd_Even_No" && betData.data[0][j].runs == (betData.uniqueRuns[i])){
+                                if(betData.data[0][j].secId === "odd_Even_No" && betData.data[0][j].runs >= (betData.uniqueRuns[i])){
                                     sum += betData.data[0][j].totalWinAmount
                                 }else{
                                     sum += betData.data[0][j].totalAmount
@@ -5201,7 +5201,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                             let sum2 = 0
                             data1.message = `${betData.uniqueRuns[i]} or more`
                             for(let j = 0; j < betData.data[0].length; j++){
-                                if(betData.data[0][j].secId === "odd_Even_Yes" && betData.data[0][j].runs == betData.uniqueRuns[i]){
+                                if(betData.data[0][j].secId === "odd_Even_Yes" && betData.data[0][j].runs <= betData.uniqueRuns[i]){
                                     sum2 += betData.data[0][j].totalWinAmount
                                 }
                                 else{
