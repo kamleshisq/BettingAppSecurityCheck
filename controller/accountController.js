@@ -487,44 +487,62 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                     marketId:"$marketId",
                     runs:'$runs'
                 },
-                exposure:{$sum: '$exposure'},
-                WinAmount:{$sum:'$WinAmount'}
-                // totalAmountB: {
-                //     $sum: {
-                //         $cond: {
-                //             if : {$eq: ['$bettype2', "BACK"]},
-                //             then:{$multiply:["$exposure",-1]},
-                //             else:'$WinAmount'
-                //         }
-                //     }
-                // },
-                // totalAmountL: {
-                //     $sum: {
-                //         $cond: {
-                //             if : {$eq: ['$bettype2', "LAY"]},
-                //             then:{$multiply:["$exposure",-1]},
-                //             else:'$WinAmount'
-                //         }
-                //     }
-                // }
+                // exposure:{$sum: '$exposure'},
+                // WinAmount:{$sum:'$WinAmount'},
+                totalAmountB: {
+                    $sum: {
+                        $cond: {
+                            if : {$eq: ['$bettype2', "BACK"]},
+                            then:{$multiply:["$exposure",-1]},
+                            else:'$WinAmount'
+                        }
+                    }
+                },
+                totalAmountL: {
+                    $sum: {
+                        $cond: {
+                            if : {$eq: ['$bettype2', "LAY"]},
+                            then:{$multiply:["$exposure",-1]},
+                            else:'$WinAmount'
+                        }
+                    }
+                }
            
             },
         },
         {
             $group:{
                 _id:"$_id.marketId",
+                runs:{
+                    $push:'$_id.runs'
+                },
                 data:{
                     $push:{
                         run:'$_id.runs',
-                        exposure:'$exposure',
-                        WinAmount:'$WinAmount'
+                        totalAmount: {$sum:{$cond:{
+                            if:{
+                                $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
+                            },
+                            then:"$totalAmountL",
+                            else:{
+                                $cond:{
+                                    if:{
+                                        $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
+                                    },
+                                    then:"$totalAmountL",
+                                    else:"$totalAmountB"
+                                }
+                               
+                            }
+                        },
+                        }},
                     }
                 }
             }
-        }
+        },
         // {
         //     $group: {
-        //         _id: null,
+        //         _id:"$_id.marketId",
         //         totalAmount: {$sum:{$cond:{
         //             if:{
         //                 $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
