@@ -5143,6 +5143,16 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                 let dataToshow = []
                 for(let i = 0; i < betData.uniqueRuns.length; i++){ 
                     console.log(betData.uniqueRuns[i])
+                    if(betData.uniqueRuns.length === 1){
+                        data.message = `${betData[0].uniqueRuns[i] - 1} or less`
+                        let sum = 0
+                       
+                        dataToshow.push(data)
+
+                        data.message = `${betData[0].uniqueRuns[i]} or more`
+                        
+                        dataToshow.push(data)
+                    }
                 }
                 // socket.emit('FANCYBOOK', {betData, type:'Fancy'})
                 res.status(200).json({
