@@ -21,7 +21,7 @@ router.get("/getCricketData", viewController.getCricketData);
 router.get("/getMarketDetails", viewController.getmarketDetailsByMarketId);
 router.get("/getLiveTv", viewController.getLiveTv);
 router.get("/getMarketResult", viewController.getMarketResult);
-
+router.get('/getFancyBookDATA', viewController.getFancyBookDATA)
 
 // Admin Panal 
 
