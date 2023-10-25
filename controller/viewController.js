@@ -46,7 +46,6 @@ const commissionMarketModel = require('../model/CommissionMarketsModel')
 let eventNotification = require('../model/eventNotification');
 const commissionNewModel = require('../model/commissioNNModel');
 const resumeSuspendModel = require('../model/resumeSuspendMarket');
-const { async } = require('../public/js/bundle');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
