@@ -5193,7 +5193,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                                     sum += betData.data[0][j].totalWinAmount
                                 }
                                 else{
-                                    sum -= betData.data[0][j].totalAmount
+                                    sum += betData.data[0][j].totalAmount
                                 }
                             }
                             data.sum = sum
@@ -5205,7 +5205,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                                     sum2 += betData.data[0][j].totalWinAmount
                                 }
                                 else{
-                                    sum2 -= betData.data[0][j].totalAmount
+                                    sum2 += betData.data[0][j].totalAmount
                                 }
                             }
                             data1.sum = sum2
@@ -5221,7 +5221,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                                     sum += betData.data[0][j].totalWinAmount
                                 }
                                 else{
-                                    sum -= betData.data[0][j].totalAmount
+                                    sum += betData.data[0][j].totalAmount
                                 }
                             }
                             data.sum = sum
