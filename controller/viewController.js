@@ -4930,7 +4930,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                                 "userName":"$userName",
                                 "runs":"$runs"
                             },
-                            uniqueRuns: { $addToSet: "$runs" },
+                            // uniqueRuns: { $addToSet: "$runs" },
                             parentArray: { $first: "$parentArray" },
                             totalAmount: { 
                                 $sum: '$returns'
