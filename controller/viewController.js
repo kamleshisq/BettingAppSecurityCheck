@@ -4923,31 +4923,31 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                           }
                         }
                     },
-                    {
-                        $group: { 
-                            _id: {
-                                "secId":"$secId",
-                                "userName":"$userName",
-                                "runs":"$runs"
-                            },
-                            // uniqueRuns: { $addToSet: "$runs" },
-                            parentArray: { $first: "$parentArray" },
-                            totalAmount: { 
-                                $sum: '$returns'
-                            },
-                            totalWinAmount:{
-                                $sum: { 
-                                    $cond : {
-                                        if : {$eq: ["$secId", "odd_Even_Yes"]},
-                                    then:{
-                                        $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
-                                    },
-                                    else:"$Stake"
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    // {
+                    //     $group: { 
+                    //         _id: {
+                    //             "secId":"$secId",
+                    //             "userName":"$userName",
+                    //             "runs":"$runs"
+                    //         },
+                    //         // uniqueRuns: { $addToSet: "$runs" },
+                    //         parentArray: { $first: "$parentArray" },
+                    //         totalAmount: { 
+                    //             $sum: '$returns'
+                    //         },
+                    //         totalWinAmount:{
+                    //             $sum: { 
+                    //                 $cond : {
+                    //                     if : {$eq: ["$secId", "odd_Even_Yes"]},
+                    //                 then:{
+                    //                     $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                    //                 },
+                    //                 else:"$Stake"
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // },
                     // {
                     //     $project:{
                     //         _id:0,
