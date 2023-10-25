@@ -4933,24 +4933,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                       {
                         $project: {
                           _id: 0, 
-                          uniqueRuns: {
-                            $setDifference: [
-                              "$uniqueRuns",
-                              [null]  
-                            ]
-                          },
-                          data: 1 
-                        }
-                      },
-                      {
-                        $project: {
-                          uniqueRuns: { $setUnion: ["$uniqueRuns", []] }, 
-                          data: 1 
-                        }
-                      },
-                      {
-                        $project: {
-                          uniqueRuns: { $setSort: "$uniqueRuns" }, 
+                          uniqueRuns: 1,
                           data: 1 
                         }
                       }
