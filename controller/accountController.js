@@ -564,6 +564,26 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         // }
     ])
 
+    function getExposure(runs,data){
+        let runLength = runs.length;
+        let groupruns = [];
+        for(let i = 0;i<runLength + 1;i++){
+            if(i == 0 && i != runLength){
+                groupruns.push([0,runs[i] - 1])
+            }else if(i == 0 && i == runLength){
+                groupruns.push([runs[i],Infinity])
+            }else if(i == runLength){
+                groupruns.push([runs[i],Infinity])
+            }
+
+        }
+    }
+
+    let exposure3 = 0;
+    for(let i = 0;i<exposure2>length;i++){
+
+    }
+
     res.status(200).json({
         status:'success',
         data:{exposure1,exposure2}
