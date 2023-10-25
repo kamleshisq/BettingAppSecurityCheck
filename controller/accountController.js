@@ -396,62 +396,55 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         {
             $group: {
                 _id: {
-                    selectionName: "$selectionName",
                     matchName: "$match",
                     marketId:"$marketId"
                 },
-                totalAmount: {
+                totalAmountB: {
                     $sum: {
                         $cond: {
                             if : {$eq: ['$bettype2', "BACK"]},
-                            then:{
-                                $cond:{
-                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                    then:{
-                                        $sum: {
-                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
-                                        }
-                                    },
-                                    else:{
-                                        $sum: {
-                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
-                                        }
-                                    }
-                                }
-                            },
+                            then:{$sum:{$multiply:["$exposure",-1]}},
                             else:{
-                                $cond:{
-                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                    then:{
-                                        $sum: {
-                                           $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
-                                        }
-                                    },
-                                    else:{
-                                        $sum: { 
-                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
-                                        }
-                                    }
-                                }
+                                $sum: '$winamount'
+                            }
+                        }
+                    }
+                },
+                totalAmountL: {
+                    $sum: {
+                        $cond: {
+                            if : {$eq: ['$bettype2', "LAY"]},
+                            then:{$sum:{$multiply:["$exposure",-1]}},
+                            else:{
+                                $sum: '$winamount'
                             }
                         }
                     }
                 }
+           
             },
         },
         {
             $group: {
                 _id: "$_id.marketId",
-                selections: {
-                    $push: {
-                        selectionName: "$_id.selectionName",
-                        totalAmount: '$totalAmount',
-                        matchName: "$_id.matchName",
-                        Stake: { $multiply: ["$Stake", -1] },
+                totalAmount: {$cond:{
+                    if:{
+                        $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
                     },
+                    then:"$totalAmountL",
+                    else:{
+                        $cond:{
+                            if:{
+                                $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
+                            }
+                        },
+                        then:"$totalAmountL",
+                        else:"$totalAmountB"
+                    }
                 },
             },
         }
+    }
     ])
 
     res.status(200).json({
