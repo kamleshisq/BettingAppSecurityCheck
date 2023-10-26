@@ -7216,7 +7216,7 @@ io.on('connection', (socket) => {
             if(exposure1.length == 0 ){
                 exposureOther = 0
             }else{
-                exposureOther = exposure1.totalAmount
+                exposureOther = exposure1[0].totalAmount
             }
             totalExposure = (exposureOther + exposureFancy) * -1
             socket.emit('userLoginBalance', {userData,totalExposure})
