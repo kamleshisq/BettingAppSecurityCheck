@@ -563,6 +563,7 @@ exports.signUp = catchAsync( async(req, res, body) => {
 });
 
 exports.logOut = catchAsync( async function logout(req, res) {
+    console.log('WORKING')
 	const profilechema = Joi.object({
 		userid: Joi.number().required(),
 		parent_ids: Joi.optional().required(),
