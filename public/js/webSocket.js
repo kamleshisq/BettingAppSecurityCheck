@@ -12315,7 +12315,7 @@ socket.on('connect', () => {
             e.preventDefault()
             if(confirm('do you want to accept this bet')){
                 let data = {}
-                data.LOGINDATA.LOGINUSER;
+                data.LOGINDATA = LOGINDATA;
                 data.id = this.id
                 socket.emit('acceptBet', data)
             }
@@ -14107,7 +14107,7 @@ socket.on('connect', () => {
                 socket.emit("BETONEVENT", {id ,type,page, LOGINDATA})
                 setTimeout(()=>{
                     eventID()
-                }, 5000)
+                }, 50000)
 
             }
             eventID()
@@ -14130,7 +14130,19 @@ socket.on('connect', () => {
                     <!-- <td>${data.data[i].userName}</td> -->
                     <td>${data.data[i].oddValue}</td>
                     <td>${data.data[i].Stake}</td>
-                    <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i]._id}">Alert</button></div></td>
+                    <td><div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${data.data[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489 489" xml:space="preserve">
+                    <g>
+                      <g>
+                        <path d="M454.3,31.6c-28.5-15.3-59.1-23.4-93.7-23.4c-40.7,0-81.5,11.2-120.2,21.4S166,50,130.4,50c-23.8,0-45.3-4.6-65.2-13.7
+                          V20.4C65.2,9.2,56,0,44.8,0S24.4,9.2,24.4,20.4v448.2c0,11.2,9.2,20.4,20.4,20.4s20.4-9.2,20.4-20.4v-148
+                          c20,6.9,41.2,10.5,64.2,10.5c40.7,0,81.5-11.2,120.2-20.4c38.7-10.2,74.4-20.4,110-20.4c27.5,0,52,6.1,74.4,18.3
+                          c12.7,8.7,30.6-2.1,30.6-17.3V49.9C464.4,41.8,460.4,35.7,454.3,31.6z M423.7,258.8c-20.4-7.1-41.8-10.2-64.2-10.2
+                          c-40.7,0-81.5,11.2-120.2,21.4s-74.4,20.4-110,20.4c-23.4,0-44.8-4.1-64.2-13.2V79.5c20.4,7.1,41.8,10.2,64.2,10.2
+                          c40.7,0,81.5-11.2,120.2-21.4s74.4-20.4,110-20.4c23.4,0,44.8,4.1,64.2,13.2V258.8z"></path>
+                      </g>
+                    </g>
+                    </svg></button></div></td>
+                    
                 </tr>`
                 if(!data.data[i].marketName.toLowerCase().startsWith('match') || !data.data[i].marketName.toLowerCase().startsWith('book')  || !data.data[i].marketName.toLowerCase().startsWith('winne')){
                     let string = `.fancy.disable[data-id="${data.data[i].marketId}"]`;
@@ -14165,28 +14177,35 @@ socket.on('connect', () => {
 
 
 
-            $(document).on("click", ".alert-btn", function(e){
-                e.preventDefault()
-                socket.emit("alertBet", this.id)
+            // $(document).on("click", ".alert-btn", function(e){
+            //     e.preventDefault()
+            //     socket.emit("alertBet", this.id)
+            // })
+            $(document).on('click', ".alert", function(e){
+                let form = $("#myModal2").find('.form-data')
+                form.attr('id', this.id)
+            })
+
+            $(document).on('submit', '.alertbet-form', function(e){
+                e.preventDefault() 
+                let form = $(this)[0];
+                let fd = new FormData(form);
+                let data = Object.fromEntries(fd.entries());
+                let id = this.id
+                socket.emit('alertBet',{data,LOGINDATA, id})
             })
 
             socket.on("alertBet", async(data) => {
-                if(data.status === "error"){
-                    alert("Please try again later")
+                if(data.status === "fail"){
+                    alert(data.msg)
                 }else{
-                    // console.log(data.bet._id)
+                    alert('Bet alert successfully')
                     const deleteButton = document.getElementById(data.bet._id);
-                    // console.log(deleteButton)
                     const row = deleteButton.closest('tr'); 
                     if (row) {
                         const table = row.parentNode;
                         const rowIndex = Array.from(table.rows).indexOf(row);
                         row.remove(); 
-                        // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                        // rowsToUpdate.forEach((row, index) => {
-                        //     const srNoCell = row.cells[0]; 
-                        //     srNoCell.textContent = index + rowIndex + 1;
-                        //   });
                       }
                 }
             })
@@ -14197,9 +14216,11 @@ socket.on('connect', () => {
                     let id = LOGINDATA.LOGINUSER._id
                     var closestMarket = $(this).parents('.bets-table').find('.market');
                     // console.log(closestMarket)
+
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
                         $("#match_odd").attr('data-marketid',marketId)
+                        $("#match_odd").html('Please wait a moment')
                         let type = 'userBook'
                         let newData = true
                         socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
@@ -14217,6 +14238,7 @@ socket.on('connect', () => {
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
                         $("#match_odd_Book").attr('data-marketid',marketId)
+                        $("#match_odd_Book").html("Please wait a moment")
                         let type = 'bookList'
                         let newData = true
                         socket.emit('Book', {marketId, LOGINDATA,id,type,newData})
@@ -14230,6 +14252,7 @@ socket.on('connect', () => {
                 $('.fancy').click(function(){
                     let id = LOGINDATA.LOGINUSER._id
                     let marketId = $(this).data('id');
+                    document.getElementById('FENCY').innerHTML = "Please wait a moment"
                     // console.log(id, marketId, "marketIdmarketIdmarketIdmarketId")
                     socket.emit('FANCYBOOK', {marketId, id, LOGINDATA})
                 })
@@ -14289,7 +14312,7 @@ socket.on('connect', () => {
                     </table>`
                     document.getElementById('FENCY').innerHTML = html
                 }else if(data.type == "notFound") {
-                    let html = `<tr class="empty_table">No record found</tr>`
+                    let html = `<tr class="empty_table"><td>No record found</td></tr>`
                     document.getElementById('FENCY').innerHTML = html
                 }else{
                     let html = ""
@@ -14870,7 +14893,7 @@ socket.on('connect', () => {
                        }
                     }
                 }else{
-                    document.getElementById('match_odd_Book').innerHTML = '<tr class="empty_table">No record found</tr>'
+                    document.getElementById('match_odd_Book').innerHTML = '<tr class="empty_table"><td>No record found</td></tr>'
                 }
             })
             
@@ -15238,7 +15261,7 @@ socket.on('connect', () => {
                     }
                 }else{
                     // document.getElementById('match_odd').innerHTML = ''
-                    document.getElementById('match_odd').innerHTML = '<tr class="empty_table">No record found</tr>'
+                    document.getElementById('match_odd').innerHTML = '<tr class="empty_table"><td>No record found</td></tr>'
                 }
             })
 
