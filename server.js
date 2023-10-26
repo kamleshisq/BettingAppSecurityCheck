@@ -407,19 +407,24 @@ io.on('connection', (socket) => {
     })
 
     socket.on("SelectLogoutUserId",async(id)=>{
-        // console.log(id)
+        console.log(id)
         // let data = {userId:`${id}`}
-        let fullUrl =  `http://127.0.0.1/api/v1/auth/logOutSelectedUser?userId=`+id
-        fetch(fullUrl, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ` + loginData.Token }
-        }).then(res => res.json())
-        .then(json =>{
-            console.log(json.status)
-            if(json.status == "success"){
-                socket.emit("SelectLogoutUserId", "success")
-            }
-        })
+        try{
+            let fullUrl =  `http://127.0.0.1/api/v1/auth/logOutSelectedUser?userId=`+id
+            fetch(fullUrl, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ` + loginData.Token }
+            }).then(res => res.json())
+            .then(json =>{
+                console.log(json.status)
+                if(json.status == "success"){
+                    socket.emit("SelectLogoutUserId", "success")
+                }
+            })
+        }catch(err){
+            console.log(err)
+        }
+        
     })
 
     //....For inactive user page....//

@@ -667,16 +667,17 @@ exports.logOutAllUser = catchAsync(async(req, res, next) => {
 });
 
 exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
-    // console.log(req.query)
+    console.log(req.query)
     req.body = req.query
     const user = await User.findOne({_id:req.body.userId,is_Online:true});
+    console.log(user,'==>user')
+
     if(!user){
         return next(new AppError('User not find with this id',404))
     }
     if(user.role.role_level < req.currentUser.role.role_level){
         return next(new AppError('You do not have permission to perform this action',404))
     }
-    console.log(user,'==>user')
     const logs = await loginLogs.find({user_id:user._id,isOnline:true})
     console.log(logs,'==>logs')
     for(let i = 0; i < logs.length; i++){
