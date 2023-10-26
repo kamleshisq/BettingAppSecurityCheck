@@ -14181,7 +14181,10 @@ socket.on('connect', () => {
             //     e.preventDefault()
             //     socket.emit("alertBet", this.id)
             // })
-
+            $(document).on('click', ".alert", function(e){
+                let form = $("#myModal2").find('.form-data')
+                form.attr('id', this.id)
+            })
 
             socket.on("alertBet", async(data) => {
                 if(data.status === "error"){
