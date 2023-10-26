@@ -14238,6 +14238,7 @@ socket.on('connect', () => {
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
                         $("#match_odd_Book").attr('data-marketid',marketId)
+                        $("#match_odd_Book").html("Please wait a moment")
                         let type = 'bookList'
                         let newData = true
                         socket.emit('Book', {marketId, LOGINDATA,id,type,newData})
