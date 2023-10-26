@@ -407,7 +407,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("SelectLogoutUserId",async(id)=>{
-        console.log(id,'back end id')
+        // console.log(id,'back end id')
         // let data = {userId:`${id}`}
         try{
             let fullUrl =  `http://127.0.0.1/api/v1/auth/logOutSelectedUser?userId=`+id
