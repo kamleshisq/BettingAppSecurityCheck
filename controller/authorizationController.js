@@ -6,7 +6,6 @@ const Joi = require('joi');
 const util = require('util');
 const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
-const { log } = require('console');
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -590,10 +589,18 @@ exports.logOut = catchAsync( async function logout(req, res) {
 	if (findToken >= 0) {
 		global._loggedInToken.splice(findToken, 1);
 	}
-    await loginLogs.findOneAndUpdate({session_id:token[token.length-1]},{isOnline:false, logOut_time:date})
-    // console.log(req.currentUser)
-    // await User.findByIdAndUpdate(req.currentUser.id, {is_Online:false})
-	res.cookie('JWT', 'loggedout', {
+      // console.log(user._id)
+      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+      // console.log(logs)
+      for(let i = 0; i < logs.length; i++){
+          res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+          res.clearCookie(logs[i].session_id);
+      }
+      await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+      global._loggedInToken.splice(logs.session_id, 1);
+      await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
+
+    res.cookie('JWT', 'loggedout', {
         expires: new Date(date + 500),
         httpOnly: true
     });
@@ -602,18 +609,12 @@ exports.logOut = catchAsync( async function logout(req, res) {
         status:'success'
     })
 });
-exports.admin_logOut = catchAsync( async function logout(req, res) {
-	const profilechema = Joi.object({
-		userid: Joi.number().required(),
-		parent_ids: Joi.optional().required(),
-	});
-	try {
-		profilechema.validate(req.body, {
-			abortEarly: true
-		});
-	} catch (error) {
-		return next(new AppError(error.details[0].message, 404));
-	}
+exports.admin_logOut = catchAsync( async(req, res) => {
+    const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
+    if(!user){
+        return next(new AppError('User not find with this id',404))
+    }
+    
     // console.log(req.headers)
 	let token
     // console.log(req.headers)
@@ -629,9 +630,16 @@ exports.admin_logOut = catchAsync( async function logout(req, res) {
 	if (findToken >= 0) {
 		global._loggedInToken.splice(findToken, 1);
 	}
-    await loginLogs.findOneAndUpdate({session_id:token[token.length-1]},{isOnline:false, logOut_time:date})
-    // console.log(req.currentUser)
-    // await User.findByIdAndUpdate(req.currentUser.id, {is_Online:false})
+      // console.log(user._id)
+      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+      // console.log(logs)
+      for(let i = 0; i < logs.length; i++){
+          res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+          res.clearCookie(logs[i].session_id);
+      }
+      await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+      global._loggedInToken.splice(logs.session_id, 1);
+      await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
 	res.cookie('ADMIN_JWT', 'loggedout', {
         expires: new Date(date + 500),
         httpOnly: true
@@ -669,15 +677,16 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     // console.log(req.query)
     req.body = req.query
     const user = await User.findOne({_id:req.body.userId,is_Online:true});
+    // console.log(user,'==>user')
+
     if(!user){
         return next(new AppError('User not find with this id',404))
     }
     if(user.role.role_level < req.currentUser.role.role_level){
         return next(new AppError('You do not have permission to perform this action',404))
     }
-    // console.log(user._id)
     const logs = await loginLogs.find({user_id:user._id,isOnline:true})
-    // console.log(logs)
+    // console.log(logs,'==>logs')
     for(let i = 0; i < logs.length; i++){
         res.cookie(logs[i].session_id, '', { expires: new Date(0) });
         res.clearCookie(logs[i].session_id);

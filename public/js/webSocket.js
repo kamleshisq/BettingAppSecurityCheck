@@ -5125,6 +5125,7 @@ socket.on('connect', () => {
 
         $(".logout").click(function(){
             let id = $(this).attr("id")
+            console.log(id,'frontend id')
             socket.emit("SelectLogoutUserId", id)
         })
 
