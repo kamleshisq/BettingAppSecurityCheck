@@ -574,7 +574,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
 			abortEarly: true
 		});
 	} catch (error) {
-        console.log(error, "errorerrorerrorerrorerrorerrorerror")
+        // console.log(error, "errorerrorerrorerrorerrorerrorerror")
 		return next(new AppError(error.details[0].message, 404));
 	}
     // console.log(req.headers)
