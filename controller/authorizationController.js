@@ -302,10 +302,9 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
         return next(new AppError('Please log in to access', 404))
     }
     // console.log(token, "token")
-    try{
 
         const tokenId = await loginLogs.findOne({session_id:token})
-        // console.log(tokenId, "ID")
+        console.log(tokenId, "ID")
         if(!tokenId.isOnline){
             return res.redirect('/')
         }
@@ -318,9 +317,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
                 message:'the user belonging to this token does no longer available'
             })
         }
-    }catch(err){
-        console.log(err, "ERRRRRR")
-    }
+    
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
     // if (req.session.userId && req.session.userId !== currentUser.id) {
