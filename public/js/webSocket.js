@@ -14199,7 +14199,7 @@ socket.on('connect', () => {
                 if(data.status === "fail"){
                     alert(data.msg)
                 }else{
-                    
+                    alert('Bet alert successfully')
                     const deleteButton = document.getElementById(data.bet._id);
                     const row = deleteButton.closest('tr'); 
                     if (row) {
@@ -14249,6 +14249,7 @@ socket.on('connect', () => {
                 $('.fancy').click(function(){
                     let id = LOGINDATA.LOGINUSER._id
                     let marketId = $(this).data('id');
+                    document.getElementById('FENCY').innerHTML = "Wait a moment"
                     // console.log(id, marketId, "marketIdmarketIdmarketIdmarketId")
                     socket.emit('FANCYBOOK', {marketId, id, LOGINDATA})
                 })
