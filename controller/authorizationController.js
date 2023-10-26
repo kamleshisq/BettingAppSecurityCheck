@@ -302,19 +302,24 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
         return next(new AppError('Please log in to access', 404))
     }
     // console.log(token, "token")
-    const tokenId = await loginLogs.findOne({session_id:token})
-    // console.log(tokenId, "ID")
-    if(!tokenId.isOnline){
-        return res.redirect('/')
-    }
-    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
-    const currentUser = await User.findById(decoded.A);
-    console.log(currentUser, currentUsercurrentUsercurrentUser)
-    if(!currentUser){
-        return res.status(404).json({
-            status:"success",
-            message:'the user belonging to this token does no longer available'
-        })
+    try{
+
+        const tokenId = await loginLogs.findOne({session_id:token})
+        // console.log(tokenId, "ID")
+        if(!tokenId.isOnline){
+            return res.redirect('/')
+        }
+        const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+        const currentUser = await User.findById(decoded.A);
+        console.log(currentUser, currentUsercurrentUsercurrentUser)
+        if(!currentUser){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }
+    }catch(err){
+        console.log(err, "ERRRRRR")
     }
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
