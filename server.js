@@ -3154,7 +3154,7 @@ io.on('connection', (socket) => {
                     socket.emit('alertBet', {bet, status:"fail",msg:'Removed alert successfully'})
                 }else if(bet.status == 'OPEN'){
                     await Bet.findOneAndUpdate({_id:data.id}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
-                    socket.emit('alertBet', {status:"success"})
+                    socket.emit('alertBet', {status:"success", bet})
                 }else if(['LOSS','WON'].includes(bet.status)){
                     socket.emit('alertBet', {bet, status:"fail",msg:'Cannot alert this bet'})
 
