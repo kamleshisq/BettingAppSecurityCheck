@@ -6985,7 +6985,234 @@ io.on('connection', (socket) => {
         // console.log(data, "LOGINDATA")
         if(data.LOGINUSER){
             let userData = await User.findById(data.LOGINUSER._id)
-            socket.emit('userLoginBalance', userData)
+            const exposure1 = await betModel.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        userName:userData.userName,
+                        marketId:{$ne:[{$substr: ["$marketId", -2, 2]},'F2']}
+                        
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$marketId",
+                        totalAmountB: {
+                            $sum: {
+                                $cond: {
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then:{$multiply:["$exposure",-1]},
+                                    else:'$WinAmount'
+                                }
+                            }
+                        },
+                        totalAmountL: {
+                            $sum: {
+                                $cond: {
+                                    if : {$eq: ['$bettype2', "LAY"]},
+                                    then:{$multiply:["$exposure",-1]},
+                                    else:'$WinAmount'
+                                }
+                            }
+                        }
+                   
+                    },
+                },
+                {
+                    $group: {
+                        _id: null,
+                        totalAmount: {$sum:{$cond:{
+                            if:{
+                                $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
+                            },
+                            then:"$totalAmountL",
+                            else:{
+                                $cond:{
+                                    if:{
+                                        $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
+                                    },
+                                    then:"$totalAmountL",
+                                    else:"$totalAmountB"
+                                }
+                               
+                            }
+                        },
+                    }},
+                }
+            }
+            ])
+        
+            const exposure2 = await betModel.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        userName:userData.userName,
+                        marketId:{$regex: /F2$/}
+                        
+                    }
+                },
+                {
+                    $addFields: {
+                      runs: {
+                        $toInt: {
+                          $arrayElemAt: [
+                            { $split: ["$selectionName", "@"] },
+                            1 
+                          ]
+                        }
+                      }
+                    }
+                },
+                {
+                    $group: {
+                        _id:{
+                            marketId:"$marketId",
+                            runs:'$runs',
+                            bettype2:'$bettype2'
+                        },
+                        exposure:{$sum: '$exposure'},
+                        WinAmount:{$sum:'$WinAmount'},
+                    },
+                },
+                {
+                    $group:{
+                        _id:"$_id.marketId",
+        
+                        runs:{
+                            $push:'$_id.runs'
+                        },
+                        data:{
+                            $push:{
+                                run:'$_id.runs',
+                                exposure:'$exposure',
+                                winAmount:'$WinAmount',
+                                type:'$_id.bettype2'
+                            }
+                        },
+                    }
+                        
+                    
+                },
+            ])
+        
+            function getExposure(runs,obj){
+                runs.sort((a, b) => a - b)
+                obj.sort((a, b) => a.run - b.run)
+                let runLength = runs.length;
+                let dataToshow = [];
+                let min = 0
+                for(let i = 0;i<runLength;i++){
+                    if(runLength == 1){
+                        let data1 = {}
+                        data1.message = `${runs[0] - 1} or less`
+                        let sum = 0
+                        for(let j = 0; j < obj.length; j++){
+                            if(obj[j].type === "LAY"){
+                                sum += obj[j].winAmount
+                            }else{
+                                sum -= obj[j].exposure
+                            }
+                        }
+                        data1.sum = sum
+                        dataToshow.push(data1)
+                        let data2 = {}
+                        let sum2 = 0
+                        data2.message = `${runs[i]} or more`
+                        for(let j = 0; j < obj.length; j++){
+                            if(obj[j].type === "BACK"){
+                                sum2 += obj[j].winAmount
+                            }else{
+                                sum2 -= obj[j].exposure
+                            }
+                        }
+                        data2.sum = sum2
+                        dataToshow.push(data2)
+                    }else{
+                        if(i === 0){
+                            let data = {}
+                            data.message = `${runs[i] - 1} or less`
+                            let sum = 0
+                            for(let j = 0; j < obj.length; j++){
+                                if(obj[j].type === "LAY" && obj[j].run >= runs[i]){
+                                    sum += obj[j].winAmount
+                                }else{
+                                    sum -= obj[j].exposure
+                                }
+                            }
+                            data.sum = sum
+                            dataToshow.push(data)
+                        }else if (i === (runs.length - 1)){
+                            let data = {}
+                            let data1 = {}
+                            
+                            if(runs[i - 1] == (runs[i] - 1)){
+                                data.message = `${runs[i - 1]}`
+                            }else{
+                                data.message = `between ${runs[i - 1]} and ${runs[i] - 1}`
+                            }
+                            let sum = 0
+                            for(let j = 0; j < obj.length; j++){
+                                if(obj[j].type === "LAY" && obj[j].run == runs[i]){
+                                    sum += obj[j].winAmount
+                                }else if(obj[j].type === "BACK" && obj[j].run == runs[i-1]){
+                                    sum += obj[j].winAmount
+                                }else{
+                                    sum -= obj[j].exposure
+        
+                                }
+                            }
+                            data.sum = sum
+                            dataToshow.push(data)
+                            let sum2 = 0
+                            data1.message = `${runs[i]} or more`
+                            for(let j = 0; j < obj.length; j++){
+                                if(obj[j].type === "BACK" && obj[j].run <= runs[i]){
+                                    sum2 += obj[j].winAmount
+                                }else{
+                                    sum2 -= obj[j].exposure
+                                }
+                            }
+                            data1.sum = sum2
+                            dataToshow.push(data1)
+                        }else{
+                            let data = {}
+                            if(runs[i - 1] == (runs[i] - 1)){
+                                data.message = `${runs[i] - 1}`
+                            }else{
+                                data.message = `between ${runs[i - 1]} and ${runs[i] - 1}`
+                            }
+                            let sum = 0
+                            for(let j = 0; j < obj.length; j++){
+                                if(obj[j].type === "LAY" && obj[j].run == runs[i]){
+                                    sum += obj[j].winAmount
+                                }else if (obj[j].type === "BACK" && obj[j].run == runs[i - 1]){
+                                    sum += obj[j].winAmount
+                                }
+                                else{
+                                    sum -= obj[j].exposure
+                                }
+                            }
+                            data.sum = sum
+                            dataToshow.push(data)
+                        }
+                    }
+        
+                }
+        
+                for(let i = 0;i<Object.keys(dataToshow).length;i++){
+                    if(dataToshow[i].sum < min){
+                        min = dataToshow[i].sum
+                    }
+                }
+                return min;
+            }
+        
+            let exposureFancy = 0;
+            for(let i = 0;i<exposure2.length;i++){
+                exposureFancy += getExposure(exposure2[i].runs,exposure2[i].data)
+            }
+            let totalExposure = exposure1[0].totalAmount + exposureFancy
+            socket.emit('userLoginBalance', {userData,totalExposure})
         }
     })
 
