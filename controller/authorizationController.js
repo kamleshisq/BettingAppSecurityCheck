@@ -6,7 +6,6 @@ const Joi = require('joi');
 const util = require('util');
 const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
-const { log } = require('console');
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -562,18 +561,7 @@ exports.signUp = catchAsync( async(req, res, body) => {
 
 });
 
-exports.logOut = catchAsync( async function logout(req, res) {
-	const profilechema = Joi.object({
-		userid: Joi.number().required(),
-		parent_ids: Joi.optional().required(),
-	});
-	try {
-		profilechema.validate(req.body, {
-			abortEarly: true
-		});
-	} catch (error) {
-		return next(new AppError(error.details[0].message, 404));
-	}
+exports.logOut = catchAsync( async(req, res)=>{
     const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
     if(!user){
         return next(new AppError('User not find with this id',404))
@@ -614,18 +602,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
         status:'success'
     })
 });
-exports.admin_logOut = catchAsync( async function logout(req, res) {
-	const profilechema = Joi.object({
-		userid: Joi.number().required(),
-		parent_ids: Joi.optional().required(),
-	});
-	try {
-		profilechema.validate(req.body, {
-			abortEarly: true
-		});
-	} catch (error) {
-		return next(new AppError(error.details[0].message, 404));
-	}
+exports.admin_logOut = catchAsync( async(req, res) => {
     const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
     if(!user){
         return next(new AppError('User not find with this id',404))
