@@ -14186,6 +14186,15 @@ socket.on('connect', () => {
                 form.attr('id', this.id)
             })
 
+            $(document).on('submit', '.alertbet-form', function(e){
+                e.preventDefault() 
+                let form = $(this)[0];
+                let fd = new FormData(form);
+                let data = Object.fromEntries(fd.entries());
+                let id = this.id
+                socket.emit('alertBet',{data,LOGINDATA, id})
+            })
+
             socket.on("alertBet", async(data) => {
                 if(data.status === "error"){
                     alert("Please try again later")
