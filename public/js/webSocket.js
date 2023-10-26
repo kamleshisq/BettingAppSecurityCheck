@@ -12315,7 +12315,7 @@ socket.on('connect', () => {
             e.preventDefault()
             if(confirm('do you want to accept this bet')){
                 let data = {}
-                data.LOGINDATA.LOGINUSER;
+                data.LOGINDATA.LOGINUSER = LOGINDATA.LOGINUSER;
                 data.id = this.id
                 socket.emit('acceptBet', data)
             }

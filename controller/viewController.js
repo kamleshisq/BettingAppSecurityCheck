@@ -4354,7 +4354,10 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                
                 {
                     $match: {
-                        status: "OPEN" ,
+                        $or: [
+                            { status: "OPEN" },
+                            { status: "ALERT" }
+                        ],
                         eventId: req.query.id,
                         userName:{$in:childrenUsername}
                     }
