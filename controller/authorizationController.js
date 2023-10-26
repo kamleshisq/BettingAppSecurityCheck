@@ -290,7 +290,6 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
-        try{
             if(req.headers.cookie){
                 loginData.Token = req.headers.cookie.split(';')[0]
                 if(!loginData.Token.startsWith("ADMIN_JWT")){
@@ -300,22 +299,19 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
                 loginData.Token = ""
             }
 
-        }catch(err){
-            console.log(err, "ERRRRRRRRRRRRRRRRRR")
-        }
+       
     }
-    console.log(token, "TOKENTOKEN")
     if(!token){
         return next(new AppError('Please log in to access', 404))
     }
     // console.log(token, "token")
 
         const tokenId = await loginLogs.findOne({session_id:token})
-        console.log(tokenId, "ID")
         if(!tokenId.isOnline){
             return res.redirect('/')
         }
         const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+        console.log(decoded, "decodeddecoded")
         const currentUser = await User.findById(decoded.A);
         console.log(currentUser, currentUsercurrentUsercurrentUser)
         if(!currentUser){
