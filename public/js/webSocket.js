@@ -14165,10 +14165,11 @@ socket.on('connect', () => {
 
 
 
-            $(document).on("click", ".alert-btn", function(e){
-                e.preventDefault()
-                socket.emit("alertBet", this.id)
-            })
+            // $(document).on("click", ".alert-btn", function(e){
+            //     e.preventDefault()
+            //     socket.emit("alertBet", this.id)
+            // })
+            
 
             socket.on("alertBet", async(data) => {
                 if(data.status === "error"){
