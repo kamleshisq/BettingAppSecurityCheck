@@ -14107,7 +14107,7 @@ socket.on('connect', () => {
                 socket.emit("BETONEVENT", {id ,type,page, LOGINDATA})
                 setTimeout(()=>{
                     eventID()
-                }, 5000)
+                }, 50000)
 
             }
             eventID()
