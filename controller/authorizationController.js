@@ -275,6 +275,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
+    let loginData = {}
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         // console.log("WORKING")
         // console.log(req.headers.authorization)
