@@ -324,6 +324,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     //         message: "Please login to get access"
     //     });
     // }
+    console.log(currentUser.roleName, "currentUser.roleNamecurrentUser.roleNamecurrentUser.roleName")
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
