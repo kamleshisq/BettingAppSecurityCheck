@@ -574,6 +574,11 @@ exports.logOut = catchAsync( async function logout(req, res) {
 	} catch (error) {
 		return next(new AppError(error.details[0].message, 404));
 	}
+    const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
+    if(!user){
+        return next(new AppError('User not find with this id',404))
+    }
+   
     // console.log(req.headers)
 	let token
     // console.log(req.headers)
@@ -589,10 +594,18 @@ exports.logOut = catchAsync( async function logout(req, res) {
 	if (findToken >= 0) {
 		global._loggedInToken.splice(findToken, 1);
 	}
-    await loginLogs.findOneAndUpdate({session_id:token[token.length-1]},{isOnline:false, logOut_time:date})
-    // console.log(req.currentUser)
-    // await User.findByIdAndUpdate(req.currentUser.id, {is_Online:false})
-	res.cookie('JWT', 'loggedout', {
+      // console.log(user._id)
+      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+      // console.log(logs)
+      for(let i = 0; i < logs.length; i++){
+          res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+          res.clearCookie(logs[i].session_id);
+      }
+      await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+      global._loggedInToken.splice(logs.session_id, 1);
+      await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
+
+    res.cookie('JWT', 'loggedout', {
         expires: new Date(date + 500),
         httpOnly: true
     });
@@ -613,6 +626,11 @@ exports.admin_logOut = catchAsync( async function logout(req, res) {
 	} catch (error) {
 		return next(new AppError(error.details[0].message, 404));
 	}
+    const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
+    if(!user){
+        return next(new AppError('User not find with this id',404))
+    }
+    
     // console.log(req.headers)
 	let token
     // console.log(req.headers)
@@ -628,9 +646,16 @@ exports.admin_logOut = catchAsync( async function logout(req, res) {
 	if (findToken >= 0) {
 		global._loggedInToken.splice(findToken, 1);
 	}
-    await loginLogs.findOneAndUpdate({session_id:token[token.length-1]},{isOnline:false, logOut_time:date})
-    // console.log(req.currentUser)
-    // await User.findByIdAndUpdate(req.currentUser.id, {is_Online:false})
+      // console.log(user._id)
+      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+      // console.log(logs)
+      for(let i = 0; i < logs.length; i++){
+          res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+          res.clearCookie(logs[i].session_id);
+      }
+      await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+      global._loggedInToken.splice(logs.session_id, 1);
+      await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
 	res.cookie('ADMIN_JWT', 'loggedout', {
         expires: new Date(date + 500),
         httpOnly: true
