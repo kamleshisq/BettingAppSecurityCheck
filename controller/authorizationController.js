@@ -565,7 +565,6 @@ exports.signUp = catchAsync( async(req, res, body) => {
 });
 
 exports.logOut = catchAsync( async function logout(req, res) {
-    console.log('WORKING 121212212122222222222222')
 	const profilechema = Joi.object({
 		userid: Joi.number().required(),
 		parent_ids: Joi.optional().required(),
@@ -575,6 +574,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
 			abortEarly: true
 		});
 	} catch (error) {
+        console.log(error, "errorerrorerrorerrorerrorerrorerror")
 		return next(new AppError(error.details[0].message, 404));
 	}
     // console.log(req.headers)
