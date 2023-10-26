@@ -14249,7 +14249,7 @@ socket.on('connect', () => {
                 $('.fancy').click(function(){
                     let id = LOGINDATA.LOGINUSER._id
                     let marketId = $(this).data('id');
-                    document.getElementById('FENCY').innerHTML = "Wait a moment"
+                    document.getElementById('FENCY').innerHTML = "Please wait a moment"
                     // console.log(id, marketId, "marketIdmarketIdmarketIdmarketId")
                     socket.emit('FANCYBOOK', {marketId, id, LOGINDATA})
                 })
