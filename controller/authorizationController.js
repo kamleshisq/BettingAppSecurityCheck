@@ -676,9 +676,9 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     if(user.role.role_level < req.currentUser.role.role_level){
         return next(new AppError('You do not have permission to perform this action',404))
     }
-    // console.log(user._id)
+    console.log(user,'==>user')
     const logs = await loginLogs.find({user_id:user._id,isOnline:true})
-    // console.log(logs)
+    console.log(logs,'==>logs')
     for(let i = 0; i < logs.length; i++){
         res.cookie(logs[i].session_id, '', { expires: new Date(0) });
         res.clearCookie(logs[i].session_id);
