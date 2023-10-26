@@ -298,7 +298,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
             loginData.Token = ""
         }
     }
-    console.log(token)
+    console.log(token, "TOKENTOKEN")
     if(!token){
         return next(new AppError('Please log in to access', 404))
     }
