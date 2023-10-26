@@ -6985,7 +6985,7 @@ io.on('connection', (socket) => {
         // console.log(data, "LOGINDATA")
         if(data.LOGINUSER){
             let userData = await User.findById(data.LOGINUSER._id)
-            const exposure1 = await betModel.aggregate([
+            const exposure1 = await Bet.aggregate([
                 {
                     $match: {
                         status: "OPEN",
@@ -7042,7 +7042,7 @@ io.on('connection', (socket) => {
             }
             ])
         
-            const exposure2 = await betModel.aggregate([
+            const exposure2 = await Bet.aggregate([
                 {
                     $match: {
                         status: "OPEN",
