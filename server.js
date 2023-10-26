@@ -6990,7 +6990,7 @@ io.on('connection', (socket) => {
                     $match: {
                         status: "OPEN",
                         userName:userData.userName,
-                        marketId:{$ne:[{$substr: ["$marketId", -2, 2]},'F2']}
+                        marketId:{$not:/F2/}
                         
                     }
                 },
