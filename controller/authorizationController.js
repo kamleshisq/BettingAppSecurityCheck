@@ -289,13 +289,18 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
-        if(req.headers.cookie){
-            loginData.Token = req.headers.cookie.split(';')[0]
-            if(!loginData.Token.startsWith("ADMIN_JWT")){
-                loginData.Token = req.headers.cookie.split(';')[1]
+        try{
+            if(req.headers.cookie){
+                loginData.Token = req.headers.cookie.split(';')[0]
+                if(!loginData.Token.startsWith("ADMIN_JWT")){
+                    loginData.Token = req.headers.cookie.split(';')[1]
+                }
+            }else{
+                loginData.Token = ""
             }
-        }else{
-            loginData.Token = ""
+
+        }catch(err){
+            console.log(err, "ERRRRRRRRRRRRRRRRRR")
         }
     }
     console.log(token, "TOKENTOKEN")
