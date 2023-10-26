@@ -14312,7 +14312,7 @@ socket.on('connect', () => {
                     </table>`
                     document.getElementById('FENCY').innerHTML = html
                 }else if(data.type == "notFound") {
-                    let html = `<tr class="empty_table">No record found</tr>`
+                    let html = `<td class="empty_table">No record found</td>`
                     document.getElementById('FENCY').innerHTML = html
                 }else{
                     let html = ""
@@ -14893,7 +14893,7 @@ socket.on('connect', () => {
                        }
                     }
                 }else{
-                    document.getElementById('match_odd_Book').innerHTML = '<tr class="empty_table">No record found</tr>'
+                    document.getElementById('match_odd_Book').innerHTML = '<td class="empty_table">No record found</td>'
                 }
             })
             
@@ -15261,7 +15261,7 @@ socket.on('connect', () => {
                     }
                 }else{
                     // document.getElementById('match_odd').innerHTML = ''
-                    document.getElementById('match_odd').innerHTML = '<tr class="empty_table">No record found</tr>'
+                    document.getElementById('match_odd').innerHTML = '<td class="empty_table">No record found</td>'
                 }
             })
 
