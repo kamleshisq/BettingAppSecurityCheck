@@ -275,7 +275,6 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
-    console.log(req.headers.cookie, 45654554)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         // console.log("WORKING")
         // console.log(req.headers.authorization)
@@ -310,6 +309,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
+    console.log(currentUser, currentUsercurrentUsercurrentUser)
     if(!currentUser){
         return res.status(404).json({
             status:"success",
