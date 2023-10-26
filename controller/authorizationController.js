@@ -311,9 +311,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
             return res.redirect('/')
         }
         const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
-        console.log(decoded, "decodeddecoded")
         const currentUser = await User.findById(decoded.A);
-        console.log(currentUser, "currentUsercurrentUsercurrentUser")
         if(!currentUser){
             return res.status(404).json({
                 status:"success",
@@ -329,7 +327,6 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     //         message: "Please login to get access"
     //     });
     // }
-    console.log(currentUser.roleName, "currentUser.roleNamecurrentUser.roleNamecurrentUser.roleName")
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
@@ -568,7 +565,7 @@ exports.signUp = catchAsync( async(req, res, body) => {
 });
 
 exports.logOut = catchAsync( async function logout(req, res) {
-    console.log('WORKING')
+    console.log('WORKING 121212212122222222222222')
 	const profilechema = Joi.object({
 		userid: Joi.number().required(),
 		parent_ids: Joi.optional().required(),
