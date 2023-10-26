@@ -578,6 +578,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
 		return next(new AppError(error.details[0].message, 404));
 	}
     // console.log(req.headers)
+    let user = await User.findById(req.currentUser.id)
     try{
 
         let token
