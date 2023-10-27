@@ -116,7 +116,7 @@ socket.on('connect', () => {
     })
 
     $(document).on('click','#navmod3 .copy-icon',function(e){
-        let element = $(this).parent().children()
+        let element = $(this).parent().text()
         console.log(element)
     })
 
