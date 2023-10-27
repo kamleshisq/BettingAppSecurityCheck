@@ -117,6 +117,10 @@ socket.on('connect', () => {
         }
     })
 
+    $(document).on('click','#navmod3 .copy-icon',function(e){
+        let element = $(this).parent().text()
+        console.log(element)
+    })
 
     $(document).on('click', ".bank-img", function(e){
         e.preventDefault();
