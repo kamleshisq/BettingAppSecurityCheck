@@ -105,7 +105,11 @@ socket.on('connect', () => {
     socket.on('getPaymentmethodData',async(data)=>{
         console.log(data)
         if(data.status == 'success'){
-
+            document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername
+            document.getElementById('Acc-Name').innerHTML = data.data.accountholdername
+            document.getElementById('Acc-Number').innerHTML = data.data.accountnumber
+            document.getElementById('IFSC').innerHTML = data.data.ifsccode
+            
         }else{
             alert(data.msg)
         }
