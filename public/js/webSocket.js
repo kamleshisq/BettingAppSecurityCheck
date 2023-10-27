@@ -119,6 +119,8 @@ socket.on('connect', () => {
 
     $(document).on('click','#navmod3 .copy-icon',function(e){
         let element = $(this).parent().text()
+        element.select()
+        // document.execCommand("copy")
         console.log(element)
     })
 
