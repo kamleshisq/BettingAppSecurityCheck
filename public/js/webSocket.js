@@ -16751,8 +16751,8 @@ socket.on('connect', () => {
         })
 
         socket.on('filterpaymentmethod',async(data)=>{
+            console.log(data)
             if(data.status == 'success'){
-                console.log(data)
             }else{
                 alert(data.msg)
             }

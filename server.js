@@ -7449,6 +7449,7 @@ io.on('connection', (socket) => {
             socket.emit('filterpaymentmethod',{status:'success',data:result})
         }catch(err){
             socket.emit('filterpaymentmethod',{status:'fail',msg:'something went wrong'})
+            console.log(err)
         }
     })
 
