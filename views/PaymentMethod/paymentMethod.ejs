@@ -41,89 +41,90 @@
 <div class="pageId" data-pageid="1"></div>
 </div>
 
-<div class="modal fade deposit-withdraw-modal" id="myModal" role="dialog" aria-modal="true" style="display: block; padding-left: 17px;">
+
+  <div class="modal fade deposit-withdraw-modal" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
         <div class="modal-header">
           <h4 class="modal-title">Select Payment Method</h4>
         </div>
         <div class="modal-body">
-          <form class="form-data acc-form" id="6493dd673a8db8e3847e9d58">
-            <div class="row">
-              <div class="col">
-                <p class="depositeWD active">Add Bank</p>
-              </div>
-              <div class="col">
-                <p class="withdrawWD">Add UPI</p>
-              </div>
-              <div class="col">
-                <p class="withdrawWD">Add Paytm</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Account Name</label>
-                <input type="text" class="bankTransferInp form-control ml0" placeholder="Account Name" name="accountholdername" required>
-              </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col">
-                    <label for="">Account Number</label>
-                    <input type="number" class="bankTransferInp form-control ml0" placeholder="Account Number" name="accountnumber" required>
+            <form class="form-data acc-form" id="6493dd673a8db8e3847e9d58">
+                <div class="row">
+                  <div class="col">
+                    <p class="depositeWD active">Add Bank</p>
+                  </div>
+                  <div class="col">
+                    <p class="withdrawWD">Add UPI</p>
+                  </div>
+                  <div class="col">
+                    <p class="withdrawWD">Add Paytm</p>
+                  </div>
                 </div>
-            </div>
-            <div class="row mt-2" style="display: none;">
-                <div class="col">
-                    <label for="">UPI Id</label>
-                    <input type="number" class="form-control ml0 upiTransferInp" placeholder="UPI Id" name="upiid" required>
+                <div class="row">
+                  <div class="col">
+                    <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
+                  </div>
                 </div>
-            </div>
-            <div class="row mt-2" style="display: none;">
-                <div class="col">
-                    <label for="">Phone Number</label>
-                    <input type="number" class="form-control ml0 paytmTransferInp" placeholder="Phone Number" name="phonenumber" required>
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="">Account Name</label>
+                    <input type="text" class="bankTransferInp form-control ml0" placeholder="Account Name" name="accountholdername" required>
+                  </div>
                 </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col">
-                    <label for="">Display Name</label>
-                    <input type="text" class="bankTransferInp form-control ml0"  name="displayname" required>
+                <div class="row mt-2">
+                    <div class="col">
+                        <label for="">Account Number</label>
+                        <input type="number" class="bankTransferInp form-control ml0" placeholder="Account Number" name="accountnumber" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col">
-                    <label for="">Ifsc Code</label>
-                    <input type="text" class="bankTransferInp form-control ml0"  name="ifsccode" required>
+                <div class="row mt-2" style="display: none;">
+                    <div class="col">
+                        <label for="">UPI Id</label>
+                        <input type="number" class="form-control ml0 upiTransferInp" placeholder="UPI Id" name="upiid" required>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Bank Name</label>
-                <input type="text" class="bankTransferInp form-control ml0"  name="bankname" required>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Branch Name</label>
-                <input type="text" class="bankTransferInp form-control ml0"  name="branchname" required>
-              </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col">
-                    <button type="submit" class="bankTransferInp btn-submit mt-3">Submit</button>
+                <div class="row mt-2" style="display: none;">
+                    <div class="col">
+                        <label for="">Phone Number</label>
+                        <input type="number" class="form-control ml0 paytmTransferInp" placeholder="Phone Number" name="phonenumber" required>
+                    </div>
                 </div>
-            </div>
-          </form>
+                <div class="row mt-2">
+                    <div class="col">
+                        <label for="">Display Name</label>
+                        <input type="text" class="bankTransferInp form-control ml0"  name="displayname" required>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <label for="">Ifsc Code</label>
+                        <input type="text" class="bankTransferInp form-control ml0"  name="ifsccode" required>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="">Bank Name</label>
+                    <input type="text" class="bankTransferInp form-control ml0"  name="bankname" required>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="">Branch Name</label>
+                    <input type="text" class="bankTransferInp form-control ml0"  name="branchname" required>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <button type="submit" class="bankTransferInp btn-submit mt-3">Submit</button>
+                    </div>
+                </div>
+              </form>
         </div>
       </div>
     </div>
