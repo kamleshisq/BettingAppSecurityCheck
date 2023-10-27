@@ -7151,6 +7151,19 @@ io.on('connection', (socket) => {
                             }
                         }
                     }
+                },
+                {
+                    $group:{
+                        _id:"$_id.marketId",
+                        data:{ 
+                            $push:{ 
+                                selectionName : "$_id.selectionName",
+                                totalWinAmount : "$totalWinAmount",
+                                totalLossAmount : "$totalLossAmount"
+                            }
+                        }
+
+                    }
                 }
             ])
 
