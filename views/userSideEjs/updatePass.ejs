@@ -42,6 +42,50 @@
     </div>
   </div>
 
+<div class="modal fade change-pass-model" id="navmod3" tabindex="-1" aria-labelledby="navmod3Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+      <div class="modal-content change-pass-model-txt">
+        <div class="modal-header change-pass-model-hed">
+          <div class="featured-sec-ro--titl-txt">
+            <span class="titl-bodr-lft-spn-model"></span>
+            <h3 class="featured-sec-ro--titl-txt-tg-model">Deposite</h3>
+          </div>
+          <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body change-pass-model-body">
+          <form class="change-pass-model-form change-pass-model-form1">
+
+            <div class="change-pass-model-form-inputs">
+              <label for="exampleInputPassword1" class="form-label">Enter Old Password</label>
+              <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="addon-wrapping" name="oldPass">
+                <span class="input-group-text oldPass" id="addon-wrapping"><i class="fa-solid fa-eye-slash"></i></span>
+              </div>
+            </div>
+            
+            <div class="change-pass-model-form-inputs">
+              <label for="exampleInputPassword1" class="form-label">Enter New Password</label>
+              <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="addon-wrapping" name="newPass">
+                <span class="input-group-text newPass" id="addon-wrapping"><i class="fa-solid fa-eye-slash"></i></span>
+              </div>
+            </div>
+            
+            <div class="change-pass-model-form-inputs">
+              <label for="exampleInputPassword1" class="form-label">Confirm New Password</label>
+              <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="addon-wrapping" name="confPass">
+                <span class="input-group-text confPass" id="addon-wrapping"><i class="fa-solid fa-eye-slash"></i></span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn change-pass-model-form-submit-btn">UPDATE CHANGES</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
    document.addEventListener("DOMContentLoaded", function () {
   const passwordInputs = document.querySelectorAll('input[type="password"]');
