@@ -144,15 +144,17 @@ socket.on('connect', () => {
         if(data.status === "fail"){
 
         }else{
+            let html = ''
             if(data.type === "banktransfer"){
-                let html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
+                html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
                 <li id="Acc-Number">${data.paymentMethodDetail.accountnumber} <span class="copy-icon"></span></li>
                 <li id="IFSC">IFSC : ${data.paymentMethodDetail.ifsccode} <span class="copy-icon"></span></li>`
             }else if (data.type === "upi"){
 
             }else if (data.type === "paytm"){
-                
+
             }
+            document.getElementById('BANK-DATA').innerHTML = html
         }
     })
 
