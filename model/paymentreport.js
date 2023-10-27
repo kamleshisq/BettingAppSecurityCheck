@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 
 const paymentreportSchem = mongoose.Schema({
-
     username:{
         type:String,
         required:true
@@ -43,6 +42,12 @@ const paymentreportSchem = mongoose.Schema({
     date:{
         type:Date,
         required:true
+    },
+    notes:{
+        type:String
+    },
+    remark:{
+        type:String
     }
 })
 

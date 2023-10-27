@@ -98,6 +98,10 @@ socket.on('connect', () => {
         clearTimeout(popupTimeout);
     });
 
+    $('.paymentDepositeMenu').click(function(e){
+        socket.emit('getPaymentmethodData',{LOGINDATA})
+    })
+
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
     if(inputElementSearch != null){

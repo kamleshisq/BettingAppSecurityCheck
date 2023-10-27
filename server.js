@@ -7453,6 +7453,10 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getPaymentmethodData',async(data)=>{
+        
+    })
+
 })
 
 http.listen(80,()=> {
