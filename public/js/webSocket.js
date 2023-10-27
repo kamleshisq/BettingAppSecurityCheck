@@ -16717,6 +16717,29 @@ socket.on('connect', () => {
                 location.reload(true)
             }
         })
+        $(document).on('click','.status_check',function(){
+            let status = $(this).prop('checked') ? true : false;
+            let id = $(this).data('statusid')
+            // console.log(id)
+            if(id){
+                if(confirm('do you want to change status')){
+                    socket.emit('paymentmethodStatusChange',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }
+        })
+
+        socket.on('paymentmethodStatusChange',async(data)=>{
+            alert(data.msg)
+            if(data.status == 'success'){
+                location.reload(true)
+            }
+        })
     }
 
 })

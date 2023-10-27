@@ -7428,6 +7428,15 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('paymentmethodStatusChange',async(data)=>{
+        try{
+            await PaymentMethodModel.findByIdAndUpdate(data.id,{status:data.status})
+            socket.emit('paymentmethodStatusChange',{status:'success',msg:'status changed successfully'})
+        }catch(err){
+            socket.emit('paymentmethodStatusChange',{status:'fail',msg:'something went wrong'})
+        }
+    })
+
 })
 
 http.listen(80,()=> {
