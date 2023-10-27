@@ -16747,7 +16747,7 @@ socket.on('connect', () => {
             e.preventDefault();
             let data = $(this).val()
             console.log(data)
-            socket.on('filterpaymentmethod',{data,LOGINDATA})
+            socket.emit('filterpaymentmethod',{data,LOGINDATA})
         })
 
         socket.on('filterpaymentmethod',async(data)=>{
