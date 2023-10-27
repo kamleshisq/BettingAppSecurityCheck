@@ -7228,18 +7228,26 @@ io.on('connection', (socket) => {
                     }
                   },
                   {
-                    $project: {
-                      _id: 1,
-                      marketId: "$_id",
-                      amount: 1
+                        $project: {
+                        _id: 1,
+                        marketId: "$_id",
+                        amount: 1
+                        }
+                    },
+                    {
+                        $project:{
+                            _id:0,
+                            amount:{
+                                $sum:'$amount'
+                            }
+                        }
                     }
-                }
             ])
 
 
             if(exposure3.length > 0){
                 console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
-                console.log(exposure3[0].data)
+                // console.log(exposure3[0].data)
             }
         
             function getExposure(runs,obj){
