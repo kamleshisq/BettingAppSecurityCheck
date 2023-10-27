@@ -7749,7 +7749,7 @@ $(document).on('submit', '#navmod3 .payment-fom', function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
-  console.log(data);
+  console.log(fd);
   (0, _paymentDeposite.paymentDeposite)(fd);
   // /api/v1/Account/paymentDeposite
 });

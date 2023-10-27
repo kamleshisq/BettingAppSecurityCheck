@@ -685,7 +685,7 @@ $(document).on('submit','#navmod3 .payment-fom',function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
-    console.log(data)
+    console.log(fd)
     paymentDeposite(fd)
     // /api/v1/Account/paymentDeposite
 })
