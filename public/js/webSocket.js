@@ -105,10 +105,10 @@ socket.on('connect', () => {
     socket.on('getPaymentmethodData',async(data)=>{
         console.log(data)
         if(data.status == 'success'){
-            document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername
-            document.getElementById('Acc-Name').innerHTML = data.data.accountholdername
-            document.getElementById('Acc-Number').innerHTML = data.data.accountnumber
-            document.getElementById('IFSC').innerHTML = data.data.ifsccode
+            document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
+            document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
+            document.getElementById('Acc-Number').innerHTML = data.data.accountnumber + '<span class="copy-icon"></span>'
+            document.getElementById('IFSC').innerHTML = data.data.ifsccode + '<span class="copy-icon"></span>'
             
             let modal = $('#navmod3')
 
