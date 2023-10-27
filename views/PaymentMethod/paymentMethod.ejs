@@ -7,61 +7,16 @@
           <h3>Payment Methods</h3>
           <form action="" class="betmonitor-heading-from">
             <div class="input-group">
-              <label class="up-down-form">Select User</label>
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-              </div>
-              <input type="text" id="searchUser" list="text_editors" class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
-              <div class="wrapper">
-                <ul id="search" class="users">
-              
-                </ul>
-                <ul id="button" class="button">
-                  
-                </ul>
-              </div>
-              
-            </div>
-            <div class="input-group">
-              <label class="up-down-form">From Date</label>
-              <input type="date" id="fromDate">
-            </div>
-            <div class="input-group">
-              <label class="up-down-form">To Date</label>
-              <input type="date" id="toDate">
-            </div>
-            <div class="input-group">
-              <label>Select Result</label>
-              <select name="result" id="result">
+              <label>Payment Method</label>
+              <select name="pmethod" id="pmethod">
                 <option value="All" selected>All</option>
-                <option value="ALERT">Alert</option>
-                <option value="CANCEL">Voided</option>
-                <option value="ACCEPT">Valid</option>
+                <option value="banktransfer">Bank Transfer</option>
+                <option value="upi">UPI</option>
+                <option value="paytm">Paytm</option>
               </select>
             </div>
             <div class="input-group">
-              <label class="up-down-form">Select Sports</label>
-              <select name="Sport" id="Sport">
-                <option value="All" selected>All</option>
-                <option value="Cricket">Cricket</option>
-                <option value="Football">FOOTBALL</option>
-                <option value="Tennis">TENNIS</option>
-                <option value="BASKETBALL">BASKETBALL</option>
-                <option value="BASEBALL">BASEBALL</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label class="up-down-form">Select Market</label>
-              <select name="market" id="market">
-                <option value="All" selected>All</option>
-                <option value="Match Odds">Match Odds</option>
-                <option value="Bookmaker 0%Comm">BookMaker</option>
-                <option value="Fancy">Fancy</option>
-                <!-- <option value="">GoalMarket</option> -->
-              </select>
-            </div>
-            
-            <div class="input-group">
+                <button class="btn-filter refresh btn-group" data-bs-toggle="modal" data-bs-target="#myModaladduser" type="button"><i class="fa-solid fa-plus"></i> &nbsp; Add User</button>
               <button type="button" class="refresh btn-group">Refresh</button>
             </div>
           </form>
