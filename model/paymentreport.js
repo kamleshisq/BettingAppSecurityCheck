@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-const paymentMethodSchem = mongoose.Schema({
+const paymentreportSchem = mongoose.Schema({
     accountholdername:{
         type:String,
         required:true
@@ -36,9 +36,17 @@ const paymentMethodSchem = mongoose.Schema({
     },
     approvedamount:{
         type:Number
+    },
+    image:{
+        type:String,
+        required:ture
+    },
+    date:{
+        type:Date,
+        required:true
     }
 })
 
-const payment = mongoose.model('paymentmethodmodel', paymentMethodSchem)
+const paymentreport = mongoose.model('paymentmethodmodel', paymentreportSchem)
 
-module.exports = payment
+module.exports = paymentreport
