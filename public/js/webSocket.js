@@ -16678,9 +16678,14 @@ socket.on('connect', () => {
             e.preventDefault()
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
-            $('[name="' + "upiid" + '"]').closest('.col').removeClass('hide');
-            $('[name="' + "phonenumber" + '"]').closest('.col').removeClass('hide');
-            // $('[name="' + "phonenumber" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.col').addClass('hide');
         })
 
         $(document).on('click', ".UPI", function(e){
@@ -16688,6 +16693,14 @@ socket.on('connect', () => {
             console.log("WORKING")
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
+            $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.col').addClass('hide');
         })
 
         $(document).on('click', ".addPaytm", function(e){
@@ -16695,6 +16708,15 @@ socket.on('connect', () => {
             console.log("WORKING")
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
+            $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.col').addClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.col').addClass('hide');
+
         })
 
         $(document).on('submit','.paymentMethodForm',function(e){
