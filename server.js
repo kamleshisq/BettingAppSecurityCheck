@@ -7437,6 +7437,21 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('filterpaymentmethod',async(data)=>{
+        try{
+            let data
+            let filter = {}
+            if(data.data != 'All'){
+                filter.pmathod = data.data
+            }
+            filter.userName = data.userName
+            data = await PaymentMethodModel.find(filter)
+            socket.emit('filterpaymentmethod',{status:'success',data})
+        }catch(err){
+            socket.emit('filterpaymentmethod',{status:'fail',msg:'something went wrong'})
+        }
+    })
+
 })
 
 http.listen(80,()=> {
