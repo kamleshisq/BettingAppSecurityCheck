@@ -9,7 +9,14 @@ const paymentMethodSchem = mongoose.Schema({
     },
     accountnumber:{
         type:String,
-        required:true,
+        unique
+    },
+    upiid:{
+        type:String,
+        unique
+    },
+    phonenumber:{
+        type:String,
         unique
     },
     ifsccode:{
