@@ -27,9 +27,9 @@
                                 <%if(betsDetails.length > 0){ %>
                                   <span class="cur-bet-amount-spn">Total Bets : <span><%=betsDetails[0].totalCount %></span></span>
                                   <%if(betsDetails[0].totalReturns > 0){ %>
-                                    <span class="cur-bet-amount-spn">Total Amount : <span class="c-gren"><%=betsDetails[0].totalReturns %></span></span>
+                                    <span class="cur-bet-amount-spn">Total Amount : <span class="c-gren"><%=betsDetails[0].totalReturns.toFixed(2) %></span></span>
                                   <%}else{%>
-                                    <span class="cur-bet-amount-spn">Total Amount : <span class="c-reed"><%=betsDetails[0].totalReturns %></span></span>
+                                    <span class="cur-bet-amount-spn">Total Amount : <span class="c-reed"><%=betsDetails[0].totalReturns.toFixed(2) %></span></span>
                                     <%} %>
                                 <%}else{ %>
                                   <span class="cur-bet-amount-spn">Total Bets : <span>00</span></span>
