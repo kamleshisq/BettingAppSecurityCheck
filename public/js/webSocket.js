@@ -109,12 +109,15 @@ socket.on('connect', () => {
             document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
             document.getElementById('Acc-Number').innerHTML = data.data.accountnumber + '<span class="copy-icon"></span>'
             document.getElementById('IFSC').innerHTML = data.data.ifsccode + '<span class="copy-icon"></span>'
-            
             let modal = $('#navmod3')
-
         }else{
             alert(data.msg)
         }
+    })
+
+    $(document).on('click','#navmod3 .copy-icon',function(e){
+        let element = $(this).parent()
+        console.log(element)
     })
 
   
