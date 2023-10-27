@@ -16670,5 +16670,10 @@ socket.on('connect', () => {
         })
     }
 
+
+    if(pathname == '/admin/paymentmethods'){
+        
+    }
+
 })
 })
