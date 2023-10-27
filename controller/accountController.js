@@ -17,6 +17,9 @@ exports.deposit = catchAsync(async(req, res, next) => {
     //     return next(new AppError("User Account is Locked", 404))
     // }
     const parentUser = await User.findById(childUser.parent_id);
+    if(parentUser.transferLock){
+        return next(new AppError("Your Account is Locked", 404))
+    }
     req.body.amount = parseFloat(req.body.amount)
     // // console.log(req.body)
     // // console.log(childUser)
@@ -107,6 +110,12 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     req.body.amount = parseFloat(req.body.amount)
     const childUser = await User.findById(req.body.id);
     const parentUser = await User.findById(childUser.parent_id);
+    if(childUser.transferLock){
+        return next(new AppError("User Account is Locked", 404))
+    }
+    if(parentUser.transferLock){
+        return next(new AppError("User Account is Locked", 404))
+    }
     // // console.log(user)
     if(childUser.role.role_level < parentUser.role.role_level){
         return next(new AppError("you do not have permission to perform this action", 404))
