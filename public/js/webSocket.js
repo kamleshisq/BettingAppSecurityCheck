@@ -16678,6 +16678,9 @@ socket.on('connect', () => {
             e.preventDefault()
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
+            $('[name="' + "upiid" + '"]').closest('.col').removeClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.col').removeClass('hide');
+            // $('[name="' + "phonenumber" + '"]').closest('.col').removeClass('hide');
         })
 
         $(document).on('click', ".UPI", function(e){
