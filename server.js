@@ -7205,7 +7205,35 @@ io.on('connection', (socket) => {
                         }
                       }
                     }
-                  }
+                  },
+                  {
+                    $project: {
+                      _id: 1,
+                      data: 1
+                    }
+                  },
+                  {
+                    $unwind: "$data"
+                  },
+                  {
+                    $sort: {
+                      "data.totalLossAmount": -1
+                    }
+                  },
+                  {
+                    $group: {
+                      _id: "$_id",
+                      selectionName: { $first: "$data.selectionName" },
+                      amount: { $first: "$data.totalLossAmount" }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 1,
+                      marketId: "$_id",
+                      amount: 1
+                    }
+                }
             ])
 
 
