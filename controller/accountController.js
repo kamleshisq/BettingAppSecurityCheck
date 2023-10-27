@@ -666,6 +666,6 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
 
 exports.paymentDeposite = catchAsync(async(req, res, next)=>{
     console.log(req.body,'==>paymentDeposite body')
-    console.log(req)
+    console.log(req.files)
 
 })
