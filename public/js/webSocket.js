@@ -103,7 +103,7 @@ socket.on('connect', () => {
     })
 
     socket.on('getPaymentmethodData',async(data)=>{
-        console.log(data)
+        // console.log(data)
         if(data.status == 'success'){
             document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
             document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
@@ -114,6 +114,45 @@ socket.on('connect', () => {
 
         }else{
             alert(data.msg)
+        }
+    })
+
+
+    $(document).on('click', ".bank-img", function(e){
+        e.preventDefault();
+        $('.img-payment').removeClass("active");
+        $(this).addClass('active')
+        socket.emit('getBankData', {LOGINDATA, type:'banktransfer'})
+    })
+
+    $(document).on('click', ".upi-img", function(e){
+        e.preventDefault();
+        $('.img-payment').removeClass("active");
+        $(this).addClass('active')
+        socket.emit('getBankData', {LOGINDATA, type:'upi'})
+    })
+
+    $(document).on('click', ".pytm-img", function(e){
+        e.preventDefault();
+        $('.img-payment').removeClass("active");
+        $(this).addClass('active')
+        socket.emit('getBankData', {LOGINDATA, type:'paytm'})
+    })
+
+
+    socket.on('getBankData', data => {
+        if(data.status === "fail"){
+
+        }else{
+            if(data.type === "banktransfer"){
+                let html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
+                <li id="Acc-Number">${data.paymentMethodDetail.accountnumber} <span class="copy-icon"></span></li>
+                <li id="IFSC">IFSC : ${data.paymentMethodDetail.ifsccode} <span class="copy-icon"></span></li>`
+            }else if (data.type === "upi"){
+
+            }else if (data.type === "paytm"){
+                
+            }
         }
     })
 

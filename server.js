@@ -7469,6 +7469,19 @@ io.on('connection', (socket) => {
 
     })
 
+    socket.on('getBankData', async(data) => {
+        try{
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+            let sdmId = user.parentUsers[1]
+            let sdmUser = await User.findById(sdmId)
+            let paymentMethodDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:data.type})
+            socket.emit('getBankData', {paymentMethodDetail, type:data.type})
+        }catch(err){
+            socket.emit('getPaymentmethodData',{status:'fail',msg:'something went wrong'})
+            console.log(err)
+        }
+    })
+
 })
 
 http.listen(80,()=> {
