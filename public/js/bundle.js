@@ -7045,7 +7045,7 @@ var paymentDeposite = /*#__PURE__*/function () {
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _notificationsss.notificationsss)({
-              message: "Updated Successfully!!!",
+              message: "amount deposit successfully!!!",
               status: "success"
             });
             setTimeout(function () {

@@ -5,6 +5,8 @@ const Role = require('./../model/roleModel')
 // const { required } = require("joi");
 const accountStatement = require('../model/accountStatementByUserModel');
 const betModel = require("../model/betmodel");
+const paymentReportModel = require('../model/paymentreport');
+const PaymentMethodModel = require('../model/paymentmethodmodel')
 // const { use } = require("../routes/viewRoutes");
 
 exports.deposit = catchAsync(async(req, res, next) => {
@@ -665,7 +667,38 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
 });
 
 exports.paymentDeposite = catchAsync(async(req, res, next)=>{
-    console.log(req.body,'==>paymentDeposite body')
-    console.log(req.files)
+    // console.log(req.body,'==>paymentDeposite body')
+    // console.log(req.files)
+    let imagName;
+    let data;
+    let user = await User.findById(req.currentUser._id)
+    let sdmId = user.parentUsers[1]
+    let sdmUser = await User.findById(sdmId)
+    if(req.files){
+        if(req.files.file.mimetype.startsWith('image')){
+            imagName = `${req.currentUser.userName}${Date.now()}`
+            const image = req.files.file
+            // console.log(logo)
+            image.mv(`public/paymentimg/${req.currentUser.userName}${Date.now()}.png`, (err)=>{
+                if(err) return next(new AppError("Something went wrong please try again later", 400))
+            })
+            data = {... req.body}
+            let paymentMethoDetail = PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod})
+            data.username = req.currentUser.userName
+            data.accountholdername = paymentMethoDetail.accountholdername
+            data.status = 'pending'
+            data.image = imagName
+            data.date = new Date()
+            console.log(data)
+            await paymentReportModel.create(data)
+
+        }else{
+            return next(new AppError("Please Provide Image", 400))
+        }
+    }
+
+    res.status(200).json({
+        status:'success'
+    })
 
 })

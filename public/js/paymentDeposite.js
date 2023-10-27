@@ -9,12 +9,11 @@ export const paymentDeposite = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-                notificationsss({message:"Updated Successfully!!!", status:"success"});
+                notificationsss({message:"amount deposit successfully!!!", status:"success"});
                 setTimeout(function() {
                     location.reload();
                   }, 2000);
             // $(".popup_body").removeClass("popup_body_show");
-
            
         }
 

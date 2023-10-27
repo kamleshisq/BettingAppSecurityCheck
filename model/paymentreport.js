@@ -10,10 +10,6 @@ const paymentreportSchem = mongoose.Schema({
         type:String,
         required:true
     },
-    transactiontype:{
-        type:String,
-        required:true
-    },
     status:{
         type:String,
         required:true,
