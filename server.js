@@ -7159,7 +7159,9 @@ io.on('connection', (socket) => {
                             $push:{ 
                                 selectionName : "$_id.selectionName",
                                 totalWinAmount : "$totalWinAmount",
-                                totalLossAmount : "$totalLossAmount"
+                                totalLossAmount : {
+                                    $multiply:["$totalLossAmount", -1]
+                                }
                             }
                         }
 
@@ -7167,7 +7169,7 @@ io.on('connection', (socket) => {
                 },
                 {
                     $project: {
-                      _id: "$_id.marketId",
+                      _id: "$_id",
                       data: {
                         $map: {
                           input: "$data",
@@ -7176,16 +7178,26 @@ io.on('connection', (socket) => {
                             selectionName: "$$item.selectionName",
                             totalWinAmount: "$$item.totalWinAmount",
                             totalLossAmount: {
-                              $subtract: [
+                              $add: [
                                 "$$item.totalLossAmount",
                                 {
-                                  $sum: {
-                                    $filter: {
-                                      input: "$data",
-                                      as: "innerItem",
-                                      cond: { $ne: ["$$innerItem.selectionName", "$$item.selectionName"] }
+                                    $sum:{
+                                        $reduce: { 
+                                            input: "$data",
+                                            initialValue: 0,
+                                            in: { 
+                                                $cond: { 
+                                                    if: {
+                                                        $ne: ["$$this.selectionName", "$$item.selectionName"] 
+                                                      },
+                                                      then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                      else: {
+                                                          $add: ["$$value", 0] 
+                                                      }
+                                                }
+                                            }
+                                        }
                                     }
-                                  }
                                 }
                               ]
                             }
@@ -7193,13 +7205,49 @@ io.on('connection', (socket) => {
                         }
                       }
                     }
-                  }
+                  },
+                  {
+                    $project: {
+                      _id: 1,
+                      data: 1
+                    }
+                  },
+                  {
+                    $unwind: "$data"
+                  },
+                  {
+                    $sort: {
+                      "data.totalLossAmount": -1
+                    }
+                  },
+                  {
+                    $group: {
+                      _id: "$_id",
+                      selectionName: { $first: "$data.selectionName" },
+                      amount: { $first: "$data.totalLossAmount" }
+                    }
+                  },
+                  {
+                        $project: {
+                        _id: 1,
+                        marketId: "$_id",
+                        amount: 1
+                        }
+                    },
+                    {
+                        $project:{
+                            _id:0,
+                            amount:{
+                                $sum:'$amount'
+                            }
+                        }
+                    }
             ])
 
 
             if(exposure3.length > 0){
                 console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
-                console.log(exposure3[0].data)
+                // console.log(exposure3[0].data)
             }
         
             function getExposure(runs,obj){
