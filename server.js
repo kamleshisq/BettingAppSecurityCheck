@@ -7159,7 +7159,9 @@ io.on('connection', (socket) => {
                             $push:{ 
                                 selectionName : "$_id.selectionName",
                                 totalWinAmount : "$totalWinAmount",
-                                totalLossAmount : "$totalLossAmount"
+                                totalLossAmount : {
+                                    $multiply:["$totalLossAmount", -1]
+                                }
                             }
                         }
 
