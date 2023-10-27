@@ -289,19 +289,19 @@
 </script>
 
 <script>
-  $(document).on("click", ".dropdown-link1", function(e){
-    $(".dropdown-menu1").toggleClass("open");
+  $(document).on("click", ".dropdown-link .nav_link", function(e){
+    $(this).siblings('.dropdown-link').toggleClass("open");
   })
-  $(document).on("click", ".dropdown-link2", function(e){
-    $(".dropdown-menu2").toggleClass("open");
-  })
-  $(document).on("click", ".dropdown-link3", function(e){
-    $(".dropdown-menu3").toggleClass("open");
-  })
-  $(document).on("click", ".setiing-admin", function(e){
+  // $(document).on("click", ".dropdown-link2", function(e){
+  //   $(".dropdown-menu2").toggleClass("open");
+  // })
+  // $(document).on("click", ".dropdown-link3", function(e){
+  //   $(".dropdown-menu3").toggleClass("open");
+  // })
+  // $(document).on("click", ".setiing-admin", function(e){
 
-    $(this).find("ul").toggleClass("open-ul");
-  })
+  //   $(this).find("ul").toggleClass("open-ul");
+  // })
 </script>
 
 <!-- <script>
