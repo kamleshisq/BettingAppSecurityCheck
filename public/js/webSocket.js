@@ -16692,15 +16692,60 @@ socket.on('connect', () => {
                 }
             })
             newData.status = true
+            newData.userName = LOGINDATA.LOGINUSER.userName
             console.log(newData)
             socket.emit('addpaymentMethod',newData)
         })
 
         socket.on('addpaymentMethod',async(data)=>{
+            alert(data.msg)
             if(data.status == 'success'){
-                alert(data.msg)
                 $('#myModal').modal('toggle')
+                location.reload(true)
             }
+        })
+
+        $(document).on('click','.delete',function(e){
+            e.preventDefault();
+            let id = $(this).attr('data-docid')
+            console.log(id)
+            if(id){
+                if(confirm('do you want to delete this payment method')){
+                    socket.emit('deletePaymentMethod',{id})
+                }
+            }
+        })
+
+        socket.on('deletePaymentMethod',async(data)=>{
+            alert(data.msg)
+            if(data.status == 'success'){
+                location.reload(true)
+            }
+        })
+        $(document).on('click','.status_check_payment',function(){
+            let status = $(this).prop('checked') ? true : false;
+            let id = $(this).data('statusid')
+            // console.log(id)
+            if(id){
+                if(confirm('do you want to change status')){
+                    socket.emit('paymentmethodStatusChange',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }
+        })
+
+        socket.on('paymentmethodStatusChange',async(data)=>{
+            alert(data.msg)
+        })
+
+        $(document).on('change','#pmethod',function(e){
+            e.preventDefault();
+            let data = $(this).val()
         })
     }
 
