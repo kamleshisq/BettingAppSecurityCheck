@@ -7442,7 +7442,7 @@ io.on('connection', (socket) => {
             let result
             let filter = {}
             if(data.data != 'All'){
-                filter.pmathod = data.data
+                filter.pmethod = data.data
             }
             filter.userName = data.LOGINDATA.LOGINUSER.userName
             result = await PaymentMethodModel.find(filter)
