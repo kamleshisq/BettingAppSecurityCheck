@@ -7444,7 +7444,7 @@ io.on('connection', (socket) => {
             if(data.data != 'All'){
                 filter.pmathod = data.data
             }
-            filter.userName = data.LOGINDATA.LOGINDATA.userName
+            filter.userName = data.LOGINDATA.LOGINUSER.userName
             result = await PaymentMethodModel.find(filter)
             socket.emit('filterpaymentmethod',{status:'success',data:result})
         }catch(err){
