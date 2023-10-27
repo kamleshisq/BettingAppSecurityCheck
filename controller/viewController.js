@@ -5254,7 +5254,7 @@ exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
-    let paymentmethod = await PaymentMethodModel.find();
+    let paymentmethod = await PaymentMethodModel.find({userName:req.currentUser.userName});
     res.render('./PaymentMethod/paymentMethod',{
         title:'Payment Method',
         currentUser:req.currentUser,
