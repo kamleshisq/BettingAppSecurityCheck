@@ -16676,17 +16676,22 @@ socket.on('connect', () => {
 
         $(document).on('click', ".addBank", function(e){
             e.preventDefault()
-            
+            $(".withdrawWD").removeClass("active");
+            $(this).addClass('active')
         })
 
         $(document).on('click', ".UPI", function(e){
             e.preventDefault()
             console.log("WORKING")
+            $(".withdrawWD").removeClass("active");
+            $(this).addClass('active')
         })
 
         $(document).on('click', ".addPaytm", function(e){
             e.preventDefault()
             console.log("WORKING")
+            $(".withdrawWD").removeClass("active");
+            $(this).addClass('active')
         })
 
         $(document).on('submit','.paymentMethodForm',function(e){
