@@ -11,7 +11,7 @@ export const debitCredit = async(data)=>{
             });
             if(res.data.status === 'success'){
                 alert('deposit successfully!!!!');
-                $("#myModal").model("toggle");
+                $("#myModal").modal("toggle");
                 // window.setTimeout(()=>{
                 //     location.assign('/userManagement')
                 // }, 100)

@@ -5761,7 +5761,7 @@ var debitCredit = /*#__PURE__*/function () {
             break;
           }
           alert('deposit successfully!!!!');
-          $("#myModal").model("toggle");
+          $("#myModal").modal("toggle");
           // window.setTimeout(()=>{
           //     location.assign('/userManagement')
           // }, 100)
