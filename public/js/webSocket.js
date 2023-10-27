@@ -16677,7 +16677,17 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            Object.keys(data).map(ele => {
+                if(data.ele == ""){
+                    delete data[ele]
+                }
+            })
             console.log(data)
+            socket.emit('addpaymentMethod',data)
+        })
+
+        socket.on('addpaymentMethod',async(data)=>{
+
         })
     }
 
