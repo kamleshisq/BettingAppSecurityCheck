@@ -7419,6 +7419,15 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('deletePaymentMethod',async(data)=>{
+        try{
+            await PaymentMethodModel.findByIdAndDelete(data.id)
+            socket.emit('deletePaymentMethod',{status:'success',msg:'payment method deleted successfully'})
+        }catch(err){
+            socket.emit('deletePaymentMethod',{status:'fail',msg:'something went wrong'})
+        }
+    })
+
 })
 
 http.listen(80,()=> {

@@ -16697,9 +16697,24 @@ socket.on('connect', () => {
         })
 
         socket.on('addpaymentMethod',async(data)=>{
+            alert(data.msg)
             if(data.status == 'success'){
-                alert(data.msg)
                 $('#myModal').modal('toggle')
+                location.reload(true)
+            }
+        })
+
+        $(document).on('click','.delete',function(e){
+            e.preventDefault();
+            let id = $(thid).attr('data-docid')
+            console.log(id)
+            socket.emit('deletePaymentMethod',{id})
+        })
+
+        socket.on('deletePaymentMethod',async(data)=>{
+            alert(data.msg)
+            if(data.status == 'success'){
+                location.reload(true)
             }
         })
     }

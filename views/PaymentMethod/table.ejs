@@ -14,7 +14,7 @@
     </thead>
     <tbody class="new-body">
       <% for(let i = 0; i < paymentmethod.length; i++){%>
-        <tr class="lay" data-trid="paymentmethod[i]._id">
+        <tr class="" data-trid="paymentmethod[i]._id">
         <td><%=paymentmethod[i].accountholdername%></td>
         <td class="text-nowrap" ><%=paymentmethod[i].accountnumber%></td>
         <td class="text-nowrap" ><%=paymentmethod[i].ifsccode%></td>
@@ -23,7 +23,7 @@
         <td class="text-nowrap" ><%=paymentmethod[i].displayname%></td>
         <td class="text-nowrap" ><%=paymentmethod[i].pmethod%></td>
         <%if(paymentmethod[i].status){%>
-          <td><span class="on-off">OFF<label class="switch on">
+          <td>
             <div class="on-off-btn-section">
               <span class="on-off">OFF &nbsp; <label class="switch on">
               <input class="checkbox status_check_inPlay" name="paymentMethod" type="checkbox" data-statusid="<%=paymentmethod[i]._id%>" checked="">
@@ -43,7 +43,7 @@
         <%}%>
         <td>
           <div class="btn-group">
-            <button class="btn accept" data-docid="<%=paymentmethod[i]._id%>">Delete</button>
+            <button class="btn delete" data-docid="<%=paymentmethod[i]._id%>">Delete</button>
           </div>
         </td>
     </tr>
