@@ -16708,7 +16708,11 @@ socket.on('connect', () => {
             e.preventDefault();
             let id = $(this).attr('data-docid')
             console.log(id)
-            socket.emit('deletePaymentMethod',{id})
+            if(id){
+                if(confirm('do you want to delete this payment method')){
+                    socket.emit('deletePaymentMethod',{id})
+                }
+            }
         })
 
         socket.on('deletePaymentMethod',async(data)=>{
@@ -16736,9 +16740,6 @@ socket.on('connect', () => {
 
         socket.on('paymentmethodStatusChange',async(data)=>{
             alert(data.msg)
-            if(data.status == 'success'){
-                location.reload(true)
-            }
         })
     }
 
