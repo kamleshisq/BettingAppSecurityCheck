@@ -7244,9 +7244,10 @@ io.on('connection', (socket) => {
                     }
             ])
 
-
+            let exposer3Amount = 0
             if(exposure3.length > 0){
-                console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
+                // console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
+                exposer3Amount = exposure3[0].amount
                 // console.log(exposure3[0].data)
             }
         
@@ -7374,6 +7375,7 @@ io.on('connection', (socket) => {
                 exposureOther = exposure1[0].totalAmount
             }
             totalExposure = (exposureOther + exposureFancy) * -1
+            totalExposure = totalExposure + exposer3Amount
             socket.emit('userLoginBalance', {userData,totalExposure})
         }
     })
