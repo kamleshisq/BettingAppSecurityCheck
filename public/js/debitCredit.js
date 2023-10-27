@@ -15,7 +15,7 @@ export const debitCredit = async(data)=>{
                 // window.setTimeout(()=>{
                 //     location.assign('/userManagement')
                 // }, 100)
-                return res.data.user;
+                location.reload(true)
             }
     
         }catch(err){
@@ -34,8 +34,8 @@ export const debitCredit = async(data)=>{
                 // window.setTimeout(()=>{
                 //     location.assign('/userManagement')
                 // }, 100)
-                $(".popup_body").removeClass("popup_body_show");
-                return res.data.user;
+                $("#myModal").modal("toggle");
+                location.reload(true)
 
             }
     

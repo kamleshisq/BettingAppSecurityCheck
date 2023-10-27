@@ -5744,7 +5744,7 @@ var debitCredit = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           if (!(data.type == "deposit")) {
-            _context.next = 17;
+            _context.next = 14;
             break;
           }
           _context.prev = 1;
@@ -5756,60 +5756,54 @@ var debitCredit = /*#__PURE__*/function () {
           });
         case 4:
           res = _context.sent;
-          if (!(res.data.status === 'success')) {
-            _context.next = 9;
-            break;
+          if (res.data.status === 'success') {
+            alert('deposit successfully!!!!');
+            $("#myModal").modal("toggle");
+            // window.setTimeout(()=>{
+            //     location.assign('/userManagement')
+            // }, 100)
+            location.reload(true);
           }
-          alert('deposit successfully!!!!');
-          $("#myModal").modal("toggle");
-          // window.setTimeout(()=>{
-          //     location.assign('/userManagement')
-          // }, 100)
-          return _context.abrupt("return", res.data.user);
-        case 9:
-          _context.next = 15;
+          _context.next = 12;
           break;
-        case 11:
-          _context.prev = 11;
+        case 8:
+          _context.prev = 8;
           _context.t0 = _context["catch"](1);
           console.log(_context.t0);
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 15:
-          _context.next = 31;
+        case 12:
+          _context.next = 25;
           break;
-        case 17:
-          _context.prev = 17;
-          _context.next = 20;
+        case 14:
+          _context.prev = 14;
+          _context.next = 17;
           return (0, _axios.default)({
             method: 'POST',
             url: '/api/v1/Account/withdrawl',
             data: data
           });
-        case 20:
+        case 17:
           _res = _context.sent;
-          if (!(_res.data.status === 'success')) {
-            _context.next = 25;
-            break;
+          if (_res.data.status === 'success') {
+            alert('withdrawl successfully!!!!');
+            // window.setTimeout(()=>{
+            //     location.assign('/userManagement')
+            // }, 100)
+            $("#myModal").modal("toggle");
+            location.reload(true);
           }
-          alert('withdrawl successfully!!!!');
-          // window.setTimeout(()=>{
-          //     location.assign('/userManagement')
-          // }, 100)
-          $(".popup_body").removeClass("popup_body_show");
-          return _context.abrupt("return", _res.data.user);
-        case 25:
-          _context.next = 31;
+          _context.next = 25;
           break;
-        case 27:
-          _context.prev = 27;
-          _context.t1 = _context["catch"](17);
+        case 21:
+          _context.prev = 21;
+          _context.t1 = _context["catch"](14);
           console.log(_context.t1);
           setTimeout(alert(_context.t1.response.data.message), 1500);
-        case 31:
+        case 25:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[1, 11], [17, 27]]);
+    }, _callee, null, [[1, 8], [14, 21]]);
   }));
   return function debitCredit(_x) {
     return _ref.apply(this, arguments);
@@ -7234,7 +7228,7 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
 
 $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-    var form, id, fd, formDataObj, user, trElements;
+    var form, id, fd, formDataObj;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -7250,19 +7244,12 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
             break;
           }
           alert('please enter amount greater than 0');
-          _context2.next = 15;
+          _context2.next = 12;
           break;
         case 10:
           _context2.next = 12;
           return (0, _debitCredit.debitCredit)(formDataObj);
         case 12:
-          user = _context2.sent;
-          trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
-          // console.log(user)
-          trElements.forEach(function (trElement) {
-            if (trElement.getAttribute('data-id') === user.id) {}
-          });
-        case 15:
         case "end":
           return _context2.stop();
       }
