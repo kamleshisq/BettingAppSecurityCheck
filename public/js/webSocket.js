@@ -16677,12 +16677,13 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            let newData = {}
             Object.keys(data).map(ele => {
-                if(data.ele == ""){
-                    delete data[ele]
+                if(data.ele != ""){
+                    newData.ele = data.ele
                 }
             })
-            console.log(data)
+            console.log(newData)
             socket.emit('addpaymentMethod',data)
         })
 
