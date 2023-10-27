@@ -7113,7 +7113,7 @@ io.on('connection', (socket) => {
                         status: "OPEN",
                         userName:userData.userName,
                         marketName : {
-                            $regex: /^(?!^(match|win|book)).*/
+                            $regex: /^(?!^(match|book)).*/
                         },
                         
                     }
