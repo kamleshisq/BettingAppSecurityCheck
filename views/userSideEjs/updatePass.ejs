@@ -53,34 +53,56 @@
           <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body change-pass-model-body">
-          <form class="change-pass-model-form change-pass-model-form1">
-
-            <div class="change-pass-model-form-inputs">
-              <label for="exampleInputPassword1" class="form-label">Enter Old Password</label>
-              <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="addon-wrapping" name="oldPass">
-                <span class="input-group-text oldPass" id="addon-wrapping"><i class="fa-solid fa-eye-slash"></i></span>
-              </div>
+          <div class="choose-payment-option">
+            <div class="payment-tab">
+                <div class="payment-tab-list">
+                    <a href="#"><img src="./images/bank-transfer.png"></a>
+                    <a href="#"><img src="./images/upi-pay.png"></a>
+                    <a href="#"><img src="./images/paytm-pay.png"></a>
+                </div>
+                <div class="payment-tab-content">
+                    <div class="title">Choose Beneficiary Account</div>
+                    <div class="luck-enterprise">
+                        <div class="luck-enterprise-tag"></div>
+                        <ul>
+                            <li>Luck Enterprise <span class="copy-icon"></span></li>
+                            <li>0147896764 <span class="copy-icon"></span></li>
+                            <li>IFSC : Kkbk0001359 <span class="copy-icon"></span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            
-            <div class="change-pass-model-form-inputs">
-              <label for="exampleInputPassword1" class="form-label">Enter New Password</label>
-              <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="addon-wrapping" name="newPass">
-                <span class="input-group-text newPass" id="addon-wrapping"><i class="fa-solid fa-eye-slash"></i></span>
-              </div>
-            </div>
-            
-            <div class="change-pass-model-form-inputs">
-              <label for="exampleInputPassword1" class="form-label">Confirm New Password</label>
-              <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                <input type="password" class="form-control" placeholder="" aria-label="Username" aria-describedby="addon-wrapping" name="confPass">
-                <span class="input-group-text confPass" id="addon-wrapping"><i class="fa-solid fa-eye-slash"></i></span>
-              </div>
-            </div>
-
-            <button type="submit" class="btn change-pass-model-form-submit-btn">UPDATE CHANGES</button>
-          </form>
+        </div>
+        <div class="enter-payment-detail">
+            <div class="title">Enter Payment Details</div>
+            <form action="" class="payment-fom">
+                <div class="change-pass-model-form-inputs">
+                    <label for="exampleInputPassword1" class="form-label">Enter Amount</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="text" class="form-control" placeholder="Enter Desposited Amount">
+                    </div>
+                </div>
+                <div class="change-pass-model-form-inputs">
+                    <label for="exampleInputPassword1" class="form-label">Enter Notes</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="text" class="form-control" placeholder="Enter Notes">
+                    </div>
+                </div>
+                <div class="change-pass-model-form-inputs">
+                    <label for="exampleInputPassword1" class="form-label">Enter Reference ID</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="text" class="form-control" placeholder="Enter Transaction Reference ID">
+                    </div>
+                </div>
+                <div class="change-pass-model-form-inputs">
+                    <label for="payment-img-upload" class="form-label">Enter Reference ID</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="file" class="form-control" placeholder="Enter Transaction Reference ID" id="payment-img-upload">
+                    </div>
+                </div>
+                <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+            </form>
+        </div>
         </div>
       </div>
     </div>
