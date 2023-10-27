@@ -291,6 +291,7 @@
 <script>
   $(document).on("click", ".dropdown-link .nav_link", function(e){
     $(this).siblings('.dropdown-menu').toggleClass("open");
+    $(this).toggleClass("active");
   })
   // $(document).on("click", ".dropdown-link2", function(e){
   //   $(".dropdown-menu2").toggleClass("open");
