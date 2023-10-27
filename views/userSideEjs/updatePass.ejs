@@ -64,10 +64,10 @@
                     <div class="title">Choose Beneficiary Account</div>
                     <div class="luck-enterprise">
                         <div class="luck-enterprise-tag">super duper admin</div>
-                        <ul>
-                            <li>Luck Enterprise <span class="copy-icon"></span></li>
-                            <li>0147896764 <span class="copy-icon"></span></li>
-                            <li>IFSC : Kkbk0001359 <span class="copy-icon"></span></li>
+                        <ul class="paymentDetailUl">
+                            <li class="AccountNameLi">Luck Enterprise <span class="copy-icon"></span></li>
+                            <li class="AccountNumberLi">0147896764 <span class="copy-icon"></span></li>
+                            <li class="Accountifsc">IFSC : Kkbk0001359 <span class="copy-icon"></span></li>
                         </ul>
                     </div>
                 </div>
@@ -79,25 +79,26 @@
                 <div class="change-pass-model-form-inputs">
                     <label for="exampleInputPassword1" class="form-label">Enter Amount</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <input type="text" class="form-control" placeholder="Enter Desposited Amount">
+                      <input type="text" class="form-control" name="amount" placeholder="Enter Amount" required>
+                      <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
                     </div>
                 </div>
                 <div class="change-pass-model-form-inputs">
                     <label for="exampleInputPassword1" class="form-label">Enter Notes</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <input type="text" class="form-control" placeholder="Enter Notes">
+                      <input type="text" class="form-control" name="notes" placeholder="Enter Notes" required>
                     </div>
                 </div>
                 <div class="change-pass-model-form-inputs">
                     <label for="exampleInputPassword1" class="form-label">Enter Reference ID</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <input type="text" class="form-control" placeholder="Enter Transaction Reference ID">
+                      <input type="text" class="form-control" name="utr" placeholder="Enter Transaction Reference ID" required>
                     </div>
                 </div>
                 <div class="change-pass-model-form-inputs">
                     <label for="payment-img-upload" class="form-label">Image</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <input type="file" class="form-control" placeholder="Enter Transaction Reference ID" id="payment-img-upload">
+                      <input type="file" class="form-control" id="payment-img-upload" required>
                     </div>
                 </div>
                 <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>

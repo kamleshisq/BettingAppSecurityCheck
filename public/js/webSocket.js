@@ -105,10 +105,19 @@ socket.on('connect', () => {
     socket.on('getPaymentmethodData',async(data)=>{
         console.log(data)
         if(data.status == 'success'){
+            let modal = $('#navmod3')
 
         }else{
             alert(data.msg)
         }
+    })
+
+    $(document).on('submit','#navmod3 .payment-fom',function(e){
+        e.preventDefault();
+        let form = $(this)[0];
+        let fd = new FormData(form);
+        let data = Object.fromEntries(fd.entries());
+        console.log(data)
     })
 
     //....................FOR UPDATE ROLE...................//
