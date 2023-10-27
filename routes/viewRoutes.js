@@ -88,6 +88,8 @@ router.get("/admin/catalogcontrol/compitations/events", authController.isProtect
 router.get("/admin/eventcontrol", authController.isProtected, authController.isAdmin,viewController.getEventControllerPage);
 router.get("/admin/riskAnalysis", authController.isProtected, authController.isAdmin,viewController.RiskAnalysis);
 router.get("/admin/matchBets", authController.isProtected, authController.isAdmin,viewController.marketBets);
+router.get("/admin/paymentmethods", authController.isProtected, authController.isAdmin,viewController.marketBets);
+router.get("/admin/paymentapproval", authController.isProtected, authController.isAdmin,viewController.marketBets);
 
 //User Panal
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);
