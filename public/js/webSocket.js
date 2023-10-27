@@ -16683,12 +16683,15 @@ socket.on('connect', () => {
                     newData[ele] = data[ele]
                 }
             })
+            newData.status = 
             console.log(newData)
             socket.emit('addpaymentMethod',newData)
         })
 
         socket.on('addpaymentMethod',async(data)=>{
-
+            if(data.status == 'success'){
+                alert(data.msg)
+            }
         })
     }
 

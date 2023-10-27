@@ -42,7 +42,7 @@ const paymentMethodSchem = mongoose.Schema({
         enum:['banktransfer','upi','paytm']
     },
     status:{
-        type:String,
+        type:Boolean,
         required:true
     }
 })
