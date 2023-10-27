@@ -16,7 +16,9 @@
       <select name="ROLEselect" id="ROLEselect" class="ROLEselect">
         <option value="" selected >Select Role</option>
         <%for(let i = 0 ; i < roles.length; i++){%>
-          <option value="<%=roles[i].role_type%>"><%=roles[i].roleName%></option>
+          <%if(roles[i].roleName != "Operator"){%>
+            <option value="<%=roles[i].role_type%>"><%=roles[i].roleName%></option>
+          <%}%>
         <%}%>
       </select>
     </div>
