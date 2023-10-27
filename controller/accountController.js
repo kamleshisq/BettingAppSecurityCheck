@@ -679,7 +679,7 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
             imagName = `${req.currentUser.userName}${Date.now()}`
             const image = req.files.file
             // console.log(logo)
-            image.mv(`public/paymentimg/${req.currentUser.userName}${Date.now()}.png`, (err)=>{
+            image.mv(`public/paymentimg/${imagName}.png`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
             data = {... req.body}
@@ -698,7 +698,7 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
         }
     }
 
-    res.status(200).json({
+    return res.status(200).json({
         status:'success'
     })
 
