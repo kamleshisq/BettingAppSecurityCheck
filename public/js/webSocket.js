@@ -16683,7 +16683,7 @@ socket.on('connect', () => {
                     newData[ele] = data[ele]
                 }
             })
-            newData.status = 
+            newData.status = true
             console.log(newData)
             socket.emit('addpaymentMethod',newData)
         })
