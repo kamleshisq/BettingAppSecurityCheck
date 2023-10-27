@@ -16678,6 +16678,7 @@ socket.on('connect', () => {
             e.preventDefault()
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
+            $('[name="' + "pmethod" + '"]').val('banktransfer')
             $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
             $('[name="' + "accountnumber" + '"]').closest('.col').removeClass('hide');
             $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
@@ -16693,6 +16694,7 @@ socket.on('connect', () => {
             console.log("WORKING")
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
+            $('[name="' + "pmethod" + '"]').val('upi')
             $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
             $('[name="' + "accountnumber" + '"]').closest('.col').addClass('hide');
             $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
@@ -16708,6 +16710,7 @@ socket.on('connect', () => {
             console.log("WORKING")
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
+            $('[name="' + "pmethod" + '"]').val('paytm')
             $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
             $('[name="' + "accountnumber" + '"]').closest('.col').addClass('hide');
             $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
