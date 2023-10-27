@@ -154,9 +154,11 @@ socket.on('connect', () => {
                 <li id="Acc-Number">${data.paymentMethodDetail.accountnumber} <span class="copy-icon"></span></li>
                 <li id="IFSC">IFSC : ${data.paymentMethodDetail.ifsccode} <span class="copy-icon"></span></li>`
             }else if (data.type === "upi"){
-
+                html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
+                <li id="Acc-Number">${data.paymentMethodDetail.upiid} <span class="copy-icon"></span></li>`
             }else if (data.type === "paytm"){
-
+                html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
+                <li id="Acc-Number">${data.paymentMethodDetail.phonenumber} <span class="copy-icon"></span></li>`
             }
             document.getElementById('BANK-DATA').innerHTML = html
         }
