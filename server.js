@@ -7217,7 +7217,7 @@ io.on('connection', (socket) => {
                   },
                   {
                     $sort: {
-                      "data.totalLossAmount": -1
+                      "data.totalLossAmount": 1
                     }
                   },
                   {
