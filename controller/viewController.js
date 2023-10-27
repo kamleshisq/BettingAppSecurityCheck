@@ -46,6 +46,8 @@ const commissionMarketModel = require('../model/CommissionMarketsModel')
 let eventNotification = require('../model/eventNotification');
 const commissionNewModel = require('../model/commissioNNModel');
 const resumeSuspendModel = require('../model/resumeSuspendMarket');
+const PaymentMethodModel = require('../model/paymentmethodmodel')
+const paymentReportModel = require('../model/paymentreport')
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -5252,8 +5254,10 @@ exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
+    let paymentmethod = await PaymentMethodModel.find();
     res.render('./PaymentMethod/paymentMethod',{
         title:'Payment Method',
-        currentUser:req.currentUser
+        currentUser:req.currentUser,
+        paymentmethod
     })
 })
