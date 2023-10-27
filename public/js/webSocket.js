@@ -118,6 +118,7 @@ socket.on('connect', () => {
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
         console.log(data)
+        console.log(fd)
     })
 
     //....................FOR UPDATE ROLE...................//
