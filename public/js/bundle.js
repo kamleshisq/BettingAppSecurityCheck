@@ -5761,7 +5761,7 @@ var debitCredit = /*#__PURE__*/function () {
             break;
           }
           alert('deposit successfully!!!!');
-          $(".popup_body").removeClass("popup_body_show");
+          $("#myModal").model("toggle");
           // window.setTimeout(()=>{
           //     location.assign('/userManagement')
           // }, 100)
@@ -7721,7 +7721,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50137" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62005" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
