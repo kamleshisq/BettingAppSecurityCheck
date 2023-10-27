@@ -16717,7 +16717,7 @@ socket.on('connect', () => {
                 location.reload(true)
             }
         })
-        $(document).on('click','.status_check',function(){
+        $(document).on('click','.status_check_payment',function(){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('statusid')
             // console.log(id)
