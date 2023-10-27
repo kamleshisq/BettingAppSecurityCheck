@@ -6995,11 +6995,11 @@ io.on('connection', (socket) => {
                     $match: {
                         status: "OPEN",
                         userName:userData.userName,
-                        // marketName : {
-                        //     $not: {
-                        //         $regex: /^(?!^(match|win|book)).*/
-                        //     }
-                        // },
+                        marketName : {
+                            $not: {
+                                $regex: /^(?!^(match|win|book)).*/
+                            }
+                        },
                         marketId:{$not:/F2/}
                         
                     }
@@ -7052,7 +7052,6 @@ io.on('connection', (socket) => {
             }
             ])
 
-            console.log(exposure1, "exposure1exposure1exposure1exposure1exposure1exposure1")
         
             const exposure2 = await Bet.aggregate([
                 {
@@ -7106,6 +7105,23 @@ io.on('connection', (socket) => {
                     
                 },
             ])
+
+
+            let exposure3 = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        userName:userData.userName,
+                        marketName : {
+                            $regex: /^(?!^(match|win|book)).*/
+                        },
+                        
+                    }
+                },
+            ])
+
+
+            console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
         
             function getExposure(runs,obj){
                 runs.sort((a, b) => a - b)
