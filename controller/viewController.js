@@ -5247,11 +5247,13 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     res.render('./PaymentApproval/PaymentApproval',{
-        title:'Payment Approval'
+        title:'Payment Approval',
+        currentUser:req.currentUser
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
     res.render('./PaymentMethod/paymentMethod',{
-        title:'Payment Method'
+        title:'Payment Method',
+        currentUser:req.currentUser
     })
 })
