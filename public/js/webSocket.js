@@ -16746,6 +16746,15 @@ socket.on('connect', () => {
         $(document).on('change','#pmethod',function(e){
             e.preventDefault();
             let data = $(this).val()
+            socket.on('filterpaymentmethod',{data,LOGINDATA})
+        })
+
+        socket.on('filterpaymentmethod',async(data)=>{
+            if(data.status == 'success'){
+                console.log(data)
+            }else{
+                alert(data.msg)
+            }
         })
     }
 
