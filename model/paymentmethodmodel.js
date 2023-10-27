@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 
 const paymentMethodSchem = mongoose.Schema({
+    userName:{
+        type:String,
+        required:true
+    },
     accountholdername:{
         type:String,
         required:true,

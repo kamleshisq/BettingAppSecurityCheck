@@ -16692,6 +16692,7 @@ socket.on('connect', () => {
                 }
             })
             newData.status = true
+            newData.userName = LOGINDATA.LOGINUSER.userName
             console.log(newData)
             socket.emit('addpaymentMethod',newData)
         })
@@ -16740,6 +16741,11 @@ socket.on('connect', () => {
 
         socket.on('paymentmethodStatusChange',async(data)=>{
             alert(data.msg)
+        })
+
+        $(document).on('change','#pmethod',function(e){
+            e.preventDefault();
+            let data = $(this).val()
         })
     }
 
