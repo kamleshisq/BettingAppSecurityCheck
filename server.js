@@ -7118,130 +7118,130 @@ io.on('connection', (socket) => {
                         
                     }
                 },
-                // {
-                //     $group:{
-                //         _id: {
-                //             selectionName: "$selectionName",
-                //             marketId : "$marketId"
-                //         },
-                //         totalWinAmount:{
-                //             $sum: { 
-                //                 $cond: { 
-                //                     if : {$eq: ['$bettype2', "BACK"]},
-                //                     then : {
-                //                         $sum: "$WinAmount"
-                //                     },
-                //                     else:{ 
-                //                         $sum: "$exposure"
-                //                     }
-                //                 }
-                //             }
-                //         },
-                //         totalLossAmount:{
-                //             $sum: { 
-                //                 $cond: { 
-                //                     if : {$eq: ['$bettype2', "BACK"]},
-                //                     then : {
-                //                         $sum: "$exposure"
-                //                     },
-                //                     else:{ 
-                //                         $sum: "$WinAmount"
-                //                     }
-                //                 }
-                //             }
-                //         }
-                //     }
-                // },
-                // {
-                //     $group:{
-                //         _id:"$_id.marketId",
-                //         data:{ 
-                //             $push:{ 
-                //                 selectionName : "$_id.selectionName",
-                //                 totalWinAmount : "$totalWinAmount",
-                //                 totalLossAmount : {
-                //                     $multiply:["$totalLossAmount", -1]
-                //                 }
-                //             }
-                //         }
+                {
+                    $group:{
+                        _id: {
+                            selectionName: "$selectionName",
+                            marketId : "$marketId"
+                        },
+                        totalWinAmount:{
+                            $sum: { 
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then : {
+                                        $sum: "$WinAmount"
+                                    },
+                                    else:{ 
+                                        $sum: "$exposure"
+                                    }
+                                }
+                            }
+                        },
+                        totalLossAmount:{
+                            $sum: { 
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then : {
+                                        $sum: "$exposure"
+                                    },
+                                    else:{ 
+                                        $sum: "$WinAmount"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    $group:{
+                        _id:"$_id.marketId",
+                        data:{ 
+                            $push:{ 
+                                selectionName : "$_id.selectionName",
+                                totalWinAmount : "$totalWinAmount",
+                                totalLossAmount : {
+                                    $multiply:["$totalLossAmount", -1]
+                                }
+                            }
+                        }
 
-                //     }
-                // },
-                // {
-                //     $project: {
-                //       _id: "$_id",
-                //       data: {
-                //         $map: {
-                //           input: "$data",
-                //           as: "item",
-                //           in: {
-                //             selectionName: "$$item.selectionName",
-                //             totalWinAmount: "$$item.totalWinAmount",
-                //             totalLossAmount: {
-                //               $add: [
-                //                 "$$item.totalLossAmount",
-                //                 {
-                //                     $sum:{
-                //                         $reduce: { 
-                //                             input: "$data",
-                //                             initialValue: 0,
-                //                             in: { 
-                //                                 $cond: { 
-                //                                     if: {
-                //                                         $ne: ["$$this.selectionName", "$$item.selectionName"] 
-                //                                       },
-                //                                       then: { $add: ["$$value", "$$this.totalWinAmount"] },
-                //                                       else: {
-                //                                           $add: ["$$value", 0] 
-                //                                       }
-                //                                 }
-                //                             }
-                //                         }
-                //                     }
-                //                 }
-                //               ]
-                //             }
-                //           }
-                //         }
-                //       }
-                //     }
-                //   },
-                //   {
-                //     $project: {
-                //       _id: 1,
-                //       data: 1
-                //     }
-                //   },
-                //   {
-                //     $unwind: "$data"
-                //   },
-                //   {
-                //     $sort: {
-                //       "data.totalLossAmount": 1
-                //     }
-                //   },
-                //   {
-                //     $group: {
-                //       _id: "$_id",
-                //       selectionName: { $first: "$data.selectionName" },
-                //       amount: { $first: "$data.totalLossAmount" }
-                //     }
-                //   },
-                //   {
-                //         $project: {
-                //         _id: 1,
-                //         marketId: "$_id",
-                //         amount: 1
-                //         }
-                //     },
-                //     {
-                //         $project:{
-                //             _id:0,
-                //             amount:{
-                //                 $sum:'$amount'
-                //             }
-                //         }
-                //     }
+                    }
+                },
+                {
+                    $project: {
+                      _id: "$_id",
+                      data: {
+                        $map: {
+                          input: "$data",
+                          as: "item",
+                          in: {
+                            selectionName: "$$item.selectionName",
+                            totalWinAmount: "$$item.totalWinAmount",
+                            totalLossAmount: {
+                              $add: [
+                                "$$item.totalLossAmount",
+                                {
+                                    $sum:{
+                                        $reduce: { 
+                                            input: "$data",
+                                            initialValue: 0,
+                                            in: { 
+                                                $cond: { 
+                                                    if: {
+                                                        $ne: ["$$this.selectionName", "$$item.selectionName"] 
+                                                      },
+                                                      then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                      else: {
+                                                          $add: ["$$value", 0] 
+                                                      }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 1,
+                      data: 1
+                    }
+                  },
+                  {
+                    $unwind: "$data"
+                  },
+                  {
+                    $sort: {
+                      "data.totalLossAmount": 1
+                    }
+                  },
+                  {
+                    $group: {
+                      _id: "$_id",
+                      selectionName: { $first: "$data.selectionName" },
+                      amount: { $first: "$data.totalLossAmount" }
+                    }
+                  },
+                  {
+                        $project: {
+                        _id: 1,
+                        marketId: "$_id",
+                        amount: 1
+                        }
+                    },
+                    {
+                        $project:{
+                            _id:0,
+                            amount:{
+                                $sum:'$amount'
+                            }
+                        }
+                    }
             ])
 
             let exposer3Amount = 0
