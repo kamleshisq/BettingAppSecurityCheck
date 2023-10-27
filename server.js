@@ -6995,6 +6995,11 @@ io.on('connection', (socket) => {
                     $match: {
                         status: "OPEN",
                         userName:userData.userName,
+                        marketName : {
+                            $not: {
+                                $regex: /^(?!^(match|win|book)).*/
+                            }
+                        },
                         marketId:{$not:/F2/}
                         
                     }
