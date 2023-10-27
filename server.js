@@ -7439,16 +7439,17 @@ io.on('connection', (socket) => {
 
     socket.on('filterpaymentmethod',async(data)=>{
         try{
-            let data
+            let result
             let filter = {}
             if(data.data != 'All'){
-                filter.pmathod = data.data
+                filter.pmethod = data.data
             }
-            filter.userName = data.LOGINDATA.LOGINDATA.userName
-            data = await PaymentMethodModel.find(filter)
-            socket.emit('filterpaymentmethod',{status:'success',data})
+            filter.userName = data.LOGINDATA.LOGINUSER.userName
+            result = await PaymentMethodModel.find(filter)
+            socket.emit('filterpaymentmethod',{status:'success',data:result})
         }catch(err){
             socket.emit('filterpaymentmethod',{status:'fail',msg:'something went wrong'})
+            console.log(err)
         }
     })
 

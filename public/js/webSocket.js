@@ -16756,12 +16756,12 @@ socket.on('connect', () => {
             e.preventDefault();
             let data = $(this).val()
             console.log(data)
-            socket.on('filterpaymentmethod',{data,LOGINDATA})
+            socket.emit('filterpaymentmethod',{data,LOGINDATA})
         })
 
         socket.on('filterpaymentmethod',async(data)=>{
+            console.log(data)
             if(data.status == 'success'){
-                console.log(data)
             }else{
                 alert(data.msg)
             }
