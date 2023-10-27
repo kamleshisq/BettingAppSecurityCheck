@@ -7170,7 +7170,7 @@ io.on('connection', (socket) => {
 
             console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
             if(exposure3.length > 0){
-                exposure3[0].data
+                console.log(exposure3[0].data)
             }
         
             function getExposure(runs,obj){
