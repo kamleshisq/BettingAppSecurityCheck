@@ -7454,7 +7454,18 @@ io.on('connection', (socket) => {
     })
 
     socket.on('getPaymentmethodData',async(data)=>{
-        
+        try{
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+            let sdmId = user.parentUsers[1]
+            let sdmUser = await User.findById(sdmId)
+            let paymentMethodDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:'banktransfer'})
+            socket.emit('getPaymentmethodData',{status:'success',data:paymentMethodDetail})
+        }catch(err){
+            socket.emit('getPaymentmethodData',{status:'fail',msg:'something went wrong'})
+            console.log(err)
+        }
+       
+
     })
 
 })

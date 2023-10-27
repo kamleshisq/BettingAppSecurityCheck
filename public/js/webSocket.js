@@ -99,7 +99,16 @@ socket.on('connect', () => {
     });
 
     $('.paymentDepositeMenu').click(function(e){
-        socket.emit('getPaymentmethodData',{LOGINDATA})
+        socket.emit('getPaymentmethodData',{data:LOGINDATA})
+    })
+
+    socket.on('getPaymentmethodData',async(data)=>{
+        console.log(data)
+        if(data.status == 'success'){
+
+        }else{
+            alert(data.msg)
+        }
     })
 
     //....................FOR UPDATE ROLE...................//
