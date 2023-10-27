@@ -16676,7 +16676,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".addBank", function(e){
             e.preventDefault()
-            console.log("WORKING")
+            
         })
 
         $(document).on('click', ".UPI", function(e){
