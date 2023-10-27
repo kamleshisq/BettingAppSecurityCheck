@@ -16678,9 +16678,9 @@ socket.on('connect', () => {
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             let newData = {}
-            Object.keys(data).map(ele => {
-                if(data.ele != ""){
-                    newData.ele = data.ele
+            Object.keys(data).map((ele) => {
+                if(data[ele] != ""){
+                    newData[ele] = data[ele]
                 }
             })
             console.log(newData)
