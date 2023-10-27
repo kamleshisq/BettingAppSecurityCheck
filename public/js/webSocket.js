@@ -16706,7 +16706,7 @@ socket.on('connect', () => {
 
         $(document).on('click','.delete',function(e){
             e.preventDefault();
-            let id = $(thid).attr('data-docid')
+            let id = $(this).attr('data-docid')
             console.log(id)
             socket.emit('deletePaymentMethod',{id})
         })

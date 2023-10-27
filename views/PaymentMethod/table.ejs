@@ -48,5 +48,8 @@
         </td>
     </tr>
     <%}%>
+    <%if(paymentmethod.length == 0){%>
+      <tr class="empty_table"><td>No record found</td></tr>
+    <%}%>
     </tbody>
   </table>
