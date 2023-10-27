@@ -16672,6 +16672,14 @@ socket.on('connect', () => {
 
 
     if(pathname == '/admin/paymentmethods'){
+
+
+        $(document).on('click', ".addBank .UPI .addPaytm", function(e){
+            e.preventDefault()
+            console.log("WORKING")
+        })
+
+
         $(document).on('submit','.paymentMethodForm',function(e){
             e.preventDefault()
             let form = $(this)[0];
