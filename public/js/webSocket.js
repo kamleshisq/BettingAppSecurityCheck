@@ -16679,6 +16679,15 @@ socket.on('connect', () => {
             console.log("WORKING")
         })
 
+        $(document).on('click', ".UPI", function(e){
+            e.preventDefault()
+            console.log("WORKING")
+        })
+
+        $(document).on('click', ".addPaytm", function(e){
+            e.preventDefault()
+            console.log("WORKING")
+        })
 
         $(document).on('submit','.paymentMethodForm',function(e){
             e.preventDefault()
