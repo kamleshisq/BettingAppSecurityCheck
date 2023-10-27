@@ -7167,7 +7167,7 @@ io.on('connection', (socket) => {
                 },
                 {
                     $project: {
-                      _id: "$_id.marketId",
+                      _id: "$_id",
                       data: {
                         $map: {
                           input: "$data",
