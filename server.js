@@ -7411,7 +7411,7 @@ io.on('connection', (socket) => {
 
     socket.on('addpaymentMethod',async(data)=>{
         try{
-            // await PaymentMethodModel.create(data)
+            await PaymentMethodModel.create(data)
             socket.emit('addpaymentMethod',{status:'success',msg:'payment method added successfully'})
         }catch(err){
             console.log(err)

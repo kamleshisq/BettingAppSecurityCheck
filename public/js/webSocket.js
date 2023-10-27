@@ -16684,7 +16684,7 @@ socket.on('connect', () => {
                 }
             })
             console.log(newData)
-            socket.emit('addpaymentMethod',data)
+            socket.emit('addpaymentMethod',newData)
         })
 
         socket.on('addpaymentMethod',async(data)=>{
