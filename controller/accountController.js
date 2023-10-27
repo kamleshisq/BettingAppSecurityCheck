@@ -668,7 +668,7 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
 
 exports.paymentDeposite = catchAsync(async(req, res, next)=>{
     // console.log(req.body,'==>paymentDeposite body')
-    // console.log(req.files)
+    console.log(req.files)
     let imagName;
     let data;
     let user = await User.findById(req.currentUser._id)
