@@ -16751,8 +16751,50 @@ socket.on('connect', () => {
         })
 
         socket.on('filterpaymentmethod',async(data)=>{
-            console.log(data)
             if(data.status == 'success'){
+                console.log(data)
+                let paymentmethod = data.data
+                let html = "";
+                for(let i = 0;i<paymentmethod.length;i++){
+                    html += `
+                    <tr class="" data-trid="${paymentmethod[i]._id}">
+                    <td>${paymentmethod[i].accountholdername}</td>
+                    <td class="text-nowrap" >${paymentmethod[i].accountnumber}</td>
+                    <td class="text-nowrap" >${paymentmethod[i].ifsccode}</td>
+                    <td class="text-nowrap">${paymentmethod[i].bankname}</td>
+                    <td class="text-nowrap" >${paymentmethod[i].branchname}</td>
+                    <td class="text-nowrap" >${paymentmethod[i].displayname}</td>
+                    <td class="text-nowrap" >${paymentmethod[i].pmethod}</td>`
+                    if(paymentmethod[i].status){
+                    html += `<td>
+                        <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch on">
+                        <input class="checkbox status_check_payment" type="checkbox" data-statusid="${paymentmethod[i]._id}" checked="">
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                        </div>
+                    </td>`
+                    }else{
+                    html += `<td>
+                        <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch">
+                        <input class="checkbox status_check_payment" type="checkbox" data-statusid="${paymentmethod[i]._id}">
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                        </div>
+                    </td>`
+                    }
+                    html += `<td>
+                    <div class="btn-group">
+                        <button class="btn delete" data-docid="${paymentmethod[i]._id}">Delete</button>
+                    </div>
+                    </td>
+                    </tr>`
+                }
+                if(paymentmethod.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+                $('.tbody').html(html)
             }else{
                 alert(data.msg)
             }
