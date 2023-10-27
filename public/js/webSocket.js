@@ -16746,6 +16746,7 @@ socket.on('connect', () => {
         $(document).on('change','#pmethod',function(e){
             e.preventDefault();
             let data = $(this).val()
+            console.log(data)
             socket.on('filterpaymentmethod',{data,LOGINDATA})
         })
 
