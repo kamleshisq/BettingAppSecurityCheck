@@ -29,6 +29,7 @@ import { updateSlider } from "./updateSlider";
 import { createSlider } from "./addSlider";
 import { userLogin } from "./userLogin";
 import { KYC } from "./kyc";
+import { paymentDeposite } from "./paymentDeposite";
 // import { func } from "joi";
 
 
@@ -677,4 +678,14 @@ $(document).on('submit', ".kycForm", function(e){
     let data = Object.fromEntries(fd.entries());
     // console.log(data)
     KYC(fd)
+})
+
+$(document).on('submit','#navmod3 .payment-fom',function(e){
+    e.preventDefault();
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let data = Object.fromEntries(fd.entries());
+    console.log(data)
+    paymentDeposite(data)
+    // /api/v1/Account/paymentDeposite
 })
