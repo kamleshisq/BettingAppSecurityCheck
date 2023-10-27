@@ -7004,53 +7004,55 @@ io.on('connection', (socket) => {
                         
                     }
                 },
-                {
-                    $group: {
-                        _id: "$marketId",
-                        totalAmountB: {
-                            $sum: {
-                                $cond: {
-                                    if : {$eq: ['$bettype2', "BACK"]},
-                                    then:{$multiply:["$exposure",-1]},
-                                    else:'$WinAmount'
-                                }
-                            }
-                        },
-                        totalAmountL: {
-                            $sum: {
-                                $cond: {
-                                    if : {$eq: ['$bettype2', "LAY"]},
-                                    then:{$multiply:["$exposure",-1]},
-                                    else:'$WinAmount'
-                                }
-                            }
-                        }
+            //     {
+            //         $group: {
+            //             _id: "$marketId",
+            //             totalAmountB: {
+            //                 $sum: {
+            //                     $cond: {
+            //                         if : {$eq: ['$bettype2', "BACK"]},
+            //                         then:{$multiply:["$exposure",-1]},
+            //                         else:'$WinAmount'
+            //                     }
+            //                 }
+            //             },
+            //             totalAmountL: {
+            //                 $sum: {
+            //                     $cond: {
+            //                         if : {$eq: ['$bettype2', "LAY"]},
+            //                         then:{$multiply:["$exposure",-1]},
+            //                         else:'$WinAmount'
+            //                     }
+            //                 }
+            //             }
                    
-                    },
-                },
-                {
-                    $group: {
-                        _id: null,
-                        totalAmount: {$sum:{$cond:{
-                            if:{
-                                $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
-                            },
-                            then:"$totalAmountL",
-                            else:{
-                                $cond:{
-                                    if:{
-                                        $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
-                                    },
-                                    then:"$totalAmountL",
-                                    else:"$totalAmountB"
-                                }
+            //         },
+            //     },
+            //     {
+            //         $group: {
+            //             _id: null,
+            //             totalAmount: {$sum:{$cond:{
+            //                 if:{
+            //                     $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
+            //                 },
+            //                 then:"$totalAmountL",
+            //                 else:{
+            //                     $cond:{
+            //                         if:{
+            //                             $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
+            //                         },
+            //                         then:"$totalAmountL",
+            //                         else:"$totalAmountB"
+            //                     }
                                
-                            }
-                        },
-                    }},
-                }
-            }
+            //                 }
+            //             },
+            //         }},
+            //     }
+            // }
             ])
+
+            console.log(exposure1, "exposure1exposure1exposure1exposure1exposure1exposure1")
         
             const exposure2 = await Bet.aggregate([
                 {
