@@ -54,16 +54,16 @@
           <h4 class="modal-title">Select Payment Method</h4>
         </div>
         <div class="modal-body">
-            <form class="form-data acc-form" id="6493dd673a8db8e3847e9d58">
+            <form class="form-data paymentMethodForm" id="6493dd673a8db8e3847e9d58">
                 <div class="row">
                   <div class="col">
-                    <p class="depositeWD active">Add Bank</p>
+                    <p class="depositeWD addBank active">Add Bank</p>
                   </div>
                   <div class="col">
-                    <p class="withdrawWD">Add UPI</p>
+                    <p class="withdrawWD UPI">Add UPI</p>
                   </div>
                   <div class="col">
-                    <p class="withdrawWD">Add Paytm</p>
+                    <p class="withdrawWD addPaytm">Add Paytm</p>
                   </div>
                 </div>
                 <div class="row">
@@ -80,19 +80,19 @@
                 <div class="row mt-2">
                     <div class="col">
                         <label for="">Account Number</label>
-                        <input type="number" class="bankTransferInp form-control ml0" placeholder="Account Number" name="accountnumber" required>
+                        <input type="number" class="bankTransferInp form-control ml0" placeholder="Account Number" name="accountnumber"  required>
                     </div>
                 </div>
-                <div class="row mt-2" style="display: none;">
+                <div class="row mt-2" style="display: none !important">
                     <div class="col">
                         <label for="">UPI Id</label>
-                        <input type="number" class="form-control ml0 upiTransferInp" placeholder="UPI Id" name="upiid" required>
+                        <input type="number" class="form-control ml0 upiTransferInp" placeholder="UPI Id" name="upiid">
                     </div>
                 </div>
-                <div class="row mt-2" style="display: none;">
+                <div class="row mt-2" style="display: none !important">
                     <div class="col">
                         <label for="">Phone Number</label>
-                        <input type="number" class="form-control ml0 paytmTransferInp" placeholder="Phone Number" name="phonenumber" required>
+                        <input type="number" class="form-control ml0 paytmTransferInp" placeholder="Phone Number" name="phonenumber">
                     </div>
                 </div>
                 <div class="row mt-2">

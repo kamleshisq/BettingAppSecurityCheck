@@ -45,6 +45,8 @@ const netCommissionModel = require('./model/netCommissionModel');
 const commissionRepportModel = require('./model/commissionReport');
 const featureEventModel = require('./model/featureEventModel')
 const InPlayEvent = require('./model/inPlayModel')
+const PaymentMethodModel = require('./model/paymentmethodmodel')
+const paymentReportModel = require('./model/paymentreport')
 
 const { error } = require('console');
 const checkPass = require("./websocketController/checkPassUser");
@@ -7404,6 +7406,16 @@ io.on('connection', (socket) => {
             }
         }catch(err){
             console.log(err)
+        }
+    })
+
+    socket.on('addpaymentMethod',async(data)=>{
+        try{
+            await PaymentMethodModel.create(data)
+            socket.emit('addpaymentMethod',{status:'success',msg:'payment method added successfully'})
+        }catch(err){
+            console.log(err)
+            socket.emit('addpaymentMethod',{status:'fail',msg:'something went wrong'})
         }
     })
 

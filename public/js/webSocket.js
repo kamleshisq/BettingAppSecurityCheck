@@ -16670,5 +16670,31 @@ socket.on('connect', () => {
         })
     }
 
+
+    if(pathname == '/admin/paymentmethods'){
+        $(document).on('submit','.paymentMethodForm',function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let newData = {}
+            Object.keys(data).map((ele) => {
+                if(data[ele] != ""){
+                    newData[ele] = data[ele]
+                }
+            })
+            newData.status = true
+            console.log(newData)
+            socket.emit('addpaymentMethod',newData)
+        })
+
+        socket.on('addpaymentMethod',async(data)=>{
+            if(data.status == 'success'){
+                alert(data.msg)
+                $('#myModal').modal('toggle')
+            }
+        })
+    }
+
 })
 })

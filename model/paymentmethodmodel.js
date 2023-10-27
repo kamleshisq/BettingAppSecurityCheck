@@ -9,20 +9,20 @@ const paymentMethodSchem = mongoose.Schema({
     },
     accountnumber:{
         type:String,
-        unique
+        unique:true
     },
     upiid:{
         type:String,
-        unique
+        unique:true
     },
     phonenumber:{
         type:String,
-        unique
+        unique:true
     },
     ifsccode:{
         type:String,
         required:true,
-        unique
+        unique:true
     },
     bankname:{
         type:String,
@@ -42,7 +42,7 @@ const paymentMethodSchem = mongoose.Schema({
         enum:['banktransfer','upi','paytm']
     },
     status:{
-        type:String,
+        type:Boolean,
         required:true
     }
 })

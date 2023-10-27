@@ -9,12 +9,12 @@ const paymentreportSchem = mongoose.Schema({
     username:{
         type:String,
         required:true,
-        unique
+        unique:true
     },
     transactiontype:{
         type:String,
         required:true,
-        unique
+        unique:true
     },
     status:{
         type:String,
@@ -39,7 +39,7 @@ const paymentreportSchem = mongoose.Schema({
     },
     image:{
         type:String,
-        required:ture
+        required:true
     },
     date:{
         type:Date,
@@ -47,6 +47,6 @@ const paymentreportSchem = mongoose.Schema({
     }
 })
 
-const paymentreport = mongoose.model('paymentmethodmodel', paymentreportSchem)
+const paymentreport = mongoose.model('paymentreportmodel', paymentreportSchem)
 
 module.exports = paymentreport
