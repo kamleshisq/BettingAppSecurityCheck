@@ -683,7 +683,8 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
             data = {... req.body}
-            let paymentMethoDetail = PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod})
+            let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod})
+            // console.log(paymentMethoDetail)
             data.username = req.currentUser.userName
             data.accountholdername = paymentMethoDetail.accountholdername
             data.status = 'pending'
