@@ -16674,7 +16674,7 @@ socket.on('connect', () => {
     if(pathname == '/admin/paymentmethods'){
 
 
-        $(document).on('click', ".addBank .UPI .addPaytm", function(e){
+        $(document).on('click', ".addBank", function(e){
             e.preventDefault()
             console.log("WORKING")
         })
