@@ -11,16 +11,16 @@ export const debitCredit = async(data)=>{
             });
             if(res.data.status === 'success'){
                 alert('deposit successfully!!!!');
-                $(".popup_body").removeClass("popup_body_show");
+                $("#myModal").modal("toggle");
                 // window.setTimeout(()=>{
                 //     location.assign('/userManagement')
                 // }, 100)
-                return res.data.user;
+                location.reload(true)
             }
     
         }catch(err){
             console.log(err)
-        setTimeout(alert(err.response.data.message), 1500)
+            setTimeout(alert(err.response.data.message), 1500)
         }
     }else{
         try{
@@ -34,8 +34,8 @@ export const debitCredit = async(data)=>{
                 // window.setTimeout(()=>{
                 //     location.assign('/userManagement')
                 // }, 100)
-                $(".popup_body").removeClass("popup_body_show");
-                return res.data.user;
+                $("#myModal").modal("toggle");
+                location.reload(true)
 
             }
     

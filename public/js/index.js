@@ -210,14 +210,14 @@ $(document).on('submit','.acc-form',async function(e) {
     if(formDataObj.amount == 0){
         alert('please enter amount greater than 0')
     }else{
-        const user = await debitCredit(formDataObj)
-        var trElements = document.querySelectorAll('tr.trtable');
+        await debitCredit(formDataObj)
+        // var trElements = document.querySelectorAll('tr.trtable');
         // console.log(trElements)
         // console.log(user)
-        trElements.forEach(function(trElement) {
-            if (trElement.getAttribute('data-id') === user.id) {
-            }
-        })    
+        // trElements.forEach(function(trElement) {
+        //     if (trElement.getAttribute('data-id') === user.id) {
+        //     }
+        // })    
     }
     // const url = window.location.href
     // const id = url.split("=")[1]
