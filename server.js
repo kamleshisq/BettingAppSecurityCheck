@@ -7164,11 +7164,43 @@ io.on('connection', (socket) => {
                         }
 
                     }
-                }
+                },
+                {
+                    $project: {
+                      _id: "$_id.marketId",
+                      data: {
+                        $map: {
+                          input: "$data",
+                          as: "item",
+                          in: {
+                            selectionName: "$$item.selectionName",
+                            totalWinAmount: "$$item.totalWinAmount",
+                            totalLossAmount: {
+                              $subtract: [
+                                "$$item.totalLossAmount",
+                                {
+                                  $sum: {
+                                    $filter: {
+                                      input: "$data",
+                                      as: "innerItem",
+                                      cond: { $ne: ["$$innerItem.selectionName", "$$item.selectionName"] }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
             ])
 
 
-            console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
+            if(exposure3.length > 0){
+                console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
+                console.log(exposure3[0].data)
+            }
         
             function getExposure(runs,obj){
                 runs.sort((a, b) => a - b)
