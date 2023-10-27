@@ -7,62 +7,16 @@
           <h3>Payment Methods</h3>
           <form action="" class="betmonitor-heading-from">
             <div class="input-group">
-              <label class="up-down-form">Select User</label>
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-              </div>
-              <input type="text" id="searchUser" list="text_editors" class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
-              <div class="wrapper">
-                <ul id="search" class="users">
-              
-                </ul>
-                <ul id="button" class="button">
-                  
-                </ul>
-              </div>
-              
-            </div>
-            <div class="input-group">
-              <label class="up-down-form">From Date</label>
-              <input type="date" id="fromDate">
-            </div>
-            <div class="input-group">
-              <label class="up-down-form">To Date</label>
-              <input type="date" id="toDate">
-            </div>
-            <div class="input-group">
-              <label>Select Result</label>
-              <select name="result" id="result">
+              <label>Payment Method</label>
+              <select name="pmethod" id="pmethod">
                 <option value="All" selected>All</option>
-                <option value="ALERT">Alert</option>
-                <option value="CANCEL">Voided</option>
-                <option value="ACCEPT">Valid</option>
+                <option value="banktransfer">Bank Transfer</option>
+                <option value="upi">UPI</option>
+                <option value="paytm">Paytm</option>
               </select>
             </div>
             <div class="input-group">
-              <label class="up-down-form">Select Sports</label>
-              <select name="Sport" id="Sport">
-                <option value="All" selected>All</option>
-                <option value="Cricket">Cricket</option>
-                <option value="Football">FOOTBALL</option>
-                <option value="Tennis">TENNIS</option>
-                <option value="BASKETBALL">BASKETBALL</option>
-                <option value="BASEBALL">BASEBALL</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label class="up-down-form">Select Market</label>
-              <select name="market" id="market">
-                <option value="All" selected>All</option>
-                <option value="Match Odds">Match Odds</option>
-                <option value="Bookmaker 0%Comm">BookMaker</option>
-                <option value="Fancy">Fancy</option>
-                <!-- <option value="">GoalMarket</option> -->
-              </select>
-            </div>
-            
-            <div class="input-group">
-              <button type="button" class="refresh btn-group">Refresh</button>
+                <button class="refresh btn-group" data-bs-toggle="modal" data-bs-target="#myModal" type="button"><i class="fa-solid fa-plus"></i> &nbsp; Add Payment Method</button>
             </div>
           </form>
          
@@ -88,68 +42,95 @@
 </div>
 
 
-<div class="modal fade" id="myModaladduser" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-header">
-        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-        <h4 class="modal-title">Add HouseFunds</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-data">
-          <div class="row">
-            <div class="col">
-              <label for="">Amounts</label>
-              <input type="text" class="form-control ml0" placeholder="1000000" name="email">
-            </div>
-            <div class="col">
-
-            </div>
-          </div>
-          <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
-        </form>
-      </div>
-    </div>
+  <div class="modal fade deposit-withdraw-modal" id="myModal" role="dialog">
+    <div class="modal-dialog">
     
-  </div>
-</div>
-
-<div class="modal fade " id="myModal2" role="dialog">
-  <div class="modal-dialog">
-  
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
-      </div>
-      <div class="modal-header">
-        <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
-        <h4 class="modal-title">Voide Bets</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-data timely-voideBet">
-          <div class="row">
-              <div class="col">
-                <label for="">password</label>
-                <input type="password" class="form-control ml0" name="password">
-              </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <label >Remark</label>
-              <input type="text" class="form-control ml0"  name="Remark">
-            </div>
-          </div>
-        <button type="submit" class="btn-submit mt-3 ">Submit</button>
-        </form>
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Select Payment Method</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-data acc-form" id="6493dd673a8db8e3847e9d58">
+                <div class="row">
+                  <div class="col">
+                    <p class="depositeWD active">Add Bank</p>
+                  </div>
+                  <div class="col">
+                    <p class="withdrawWD">Add UPI</p>
+                  </div>
+                  <div class="col">
+                    <p class="withdrawWD">Add Paytm</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="">Account Name</label>
+                    <input type="text" class="bankTransferInp form-control ml0" placeholder="Account Name" name="accountholdername" required>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <label for="">Account Number</label>
+                        <input type="number" class="bankTransferInp form-control ml0" placeholder="Account Number" name="accountnumber" required>
+                    </div>
+                </div>
+                <div class="row mt-2" style="display: none;">
+                    <div class="col">
+                        <label for="">UPI Id</label>
+                        <input type="number" class="form-control ml0 upiTransferInp" placeholder="UPI Id" name="upiid" required>
+                    </div>
+                </div>
+                <div class="row mt-2" style="display: none;">
+                    <div class="col">
+                        <label for="">Phone Number</label>
+                        <input type="number" class="form-control ml0 paytmTransferInp" placeholder="Phone Number" name="phonenumber" required>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <label for="">Display Name</label>
+                        <input type="text" class="bankTransferInp form-control ml0"  name="displayname" required>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <label for="">Ifsc Code</label>
+                        <input type="text" class="bankTransferInp form-control ml0"  name="ifsccode" required>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="">Bank Name</label>
+                    <input type="text" class="bankTransferInp form-control ml0"  name="bankname" required>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="">Branch Name</label>
+                    <input type="text" class="bankTransferInp form-control ml0"  name="branchname" required>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <button type="submit" class="bankTransferInp btn-submit mt-3">Submit</button>
+                    </div>
+                </div>
+              </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+
   
     
 
