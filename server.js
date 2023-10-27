@@ -7179,13 +7179,23 @@ io.on('connection', (socket) => {
                               $subtract: [
                                 "$$item.totalLossAmount",
                                 {
-                                  $sum: {
-                                    $filter: {
-                                      input: "$data",
-                                      as: "innerItem",
-                                      cond: { $ne: ["$$innerItem.selectionName", "$$item.selectionName"] }
+                                    $sum:{
+                                        $reduce: { 
+                                            input: "$data",
+                                            initialValue: 0,
+                                            in: { 
+                                                $cond: { 
+                                                    if: {
+                                                        $ne: ["$$this.selectionName", "$$item.selectionName"] 
+                                                      },
+                                                      then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                      else: {
+                                                          $add: ["$$value", 0] 
+                                                      }
+                                                }
+                                            }
+                                        }
                                     }
-                                  }
                                 }
                               ]
                             }
