@@ -16691,6 +16691,7 @@ socket.on('connect', () => {
         socket.on('addpaymentMethod',async(data)=>{
             if(data.status == 'success'){
                 alert(data.msg)
+                $('#myModal').modal('toggle')
             }
         })
     }
