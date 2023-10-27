@@ -275,7 +275,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
-    // console.log(req.headers.authorization, 456)
+    let loginData = {}
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         // console.log("WORKING")
         // console.log(req.headers.authorization)
@@ -290,32 +290,35 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
-        if(req.headers.cookie){
-            loginData.Token = req.headers.cookie.split(';')[0]
-            if(!loginData.Token.startsWith("ADMIN_JWT")){
-                loginData.Token = req.headers.cookie.split(';')[1]
+            if(req.headers.cookie){
+                loginData.Token = req.headers.cookie.split(';')[0]
+                if(!loginData.Token.startsWith("ADMIN_JWT")){
+                    loginData.Token = req.headers.cookie.split(';')[1]
+                }
+            }else{
+                loginData.Token = ""
             }
-        }else{
-            loginData.Token = ""
-        }
+
+       
     }
     if(!token){
         return next(new AppError('Please log in to access', 404))
     }
     // console.log(token, "token")
-    const tokenId = await loginLogs.findOne({session_id:token})
-    // console.log(tokenId, "ID")
-    if(!tokenId.isOnline){
-        return res.redirect('/')
-    }
-    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
-    const currentUser = await User.findById(decoded.A);
-    if(!currentUser){
-        return res.status(404).json({
-            status:"success",
-            message:'the user belonging to this token does no longer available'
-        })
-    }
+
+        const tokenId = await loginLogs.findOne({session_id:token})
+        if(!tokenId.isOnline){
+            return res.redirect('/')
+        }
+        const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+        const currentUser = await User.findById(decoded.A);
+        if(!currentUser){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }
+    
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
     // if (req.session.userId && req.session.userId !== currentUser.id) {
@@ -561,46 +564,59 @@ exports.signUp = catchAsync( async(req, res, body) => {
 
 });
 
-exports.logOut = catchAsync( async(req, res)=>{
-    const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
-    if(!user){
-        return next(new AppError('User not find with this id',404))
-    }
-   
-    // console.log(req.headers)
-	let token
-    // console.log(req.headers)
-    if(req.headers.authorization){
-        token = req.headers.authorization.split(' ');
-    }else{
-        token = req.headers.cookie.split('=')
-    }
-    // console.log(token)
-    let date = Date.now();
-    // console.log(global._loggedInToken)
-	let findToken=global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
-	if (findToken >= 0) {
-		global._loggedInToken.splice(findToken, 1);
+exports.logOut = catchAsync( async function logout(req, res) {
+	const profilechema = Joi.object({
+		userid: Joi.number().required(),
+		parent_ids: Joi.optional().required(),
+	});
+	try {
+		profilechema.validate(req.body, {
+			abortEarly: true
+		});
+	} catch (error) {
+        // console.log(error, "errorerrorerrorerrorerrorerrorerror")
+		return next(new AppError(error.details[0].message, 404));
 	}
-      // console.log(user._id)
-      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
-      // console.log(logs)
-      for(let i = 0; i < logs.length; i++){
-          res.cookie(logs[i].session_id, '', { expires: new Date(0) });
-          res.clearCookie(logs[i].session_id);
-      }
-      await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
-      global._loggedInToken.splice(logs.session_id, 1);
-      await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
+    // console.log(req.headers)
+    let user = await User.findById(req.currentUser.id)
+    try{
 
-    res.cookie('JWT', 'loggedout', {
-        expires: new Date(date + 500),
-        httpOnly: true
-    });
-
-    res.status(200).json({
-        status:'success'
-    })
+        let token
+        // console.log(req.headers)
+        if(req.headers.authorization){
+            token = req.headers.authorization.split(' ');
+        }else{
+            token = req.headers.cookie.split('=')
+        }
+        // console.log(token)
+        let date = Date.now();
+        // console.log(global._loggedInToken)
+        let findToken=global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
+        if (findToken >= 0) {
+            global._loggedInToken.splice(findToken, 1);
+        }
+          // console.log(user._id)
+          const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+          // console.log(logs)
+          for(let i = 0; i < logs.length; i++){
+              res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+              res.clearCookie(logs[i].session_id);
+          }
+          await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+          global._loggedInToken.splice(logs.session_id, 1);
+          await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
+    
+        res.cookie('JWT', 'loggedout', {
+            expires: new Date(date + 500),
+            httpOnly: true
+        });
+    
+        res.status(200).json({
+            status:'success'
+        })
+    }catch(err){
+        console.log(err, "ERRRR")
+    }
 });
 exports.admin_logOut = catchAsync( async(req, res) => {
     const user = await User.findOne({_id:req.currentUser._id,is_Online:true});

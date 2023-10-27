@@ -6995,6 +6995,11 @@ io.on('connection', (socket) => {
                     $match: {
                         status: "OPEN",
                         userName:userData.userName,
+                        marketName : {
+                            $not: {
+                                $regex: /^(?!^(match|win|book)).*/
+                            }
+                        },
                         marketId:{$not:/F2/}
                         
                     }
@@ -7046,6 +7051,7 @@ io.on('connection', (socket) => {
                 }
             }
             ])
+
         
             const exposure2 = await Bet.aggregate([
                 {
@@ -7099,6 +7105,57 @@ io.on('connection', (socket) => {
                     
                 },
             ])
+
+
+            let exposure3 = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        userName:userData.userName,
+                        marketName : {
+                            $regex: /^(?!^(match|win|book)).*/
+                        },
+                        
+                    }
+                },
+                {
+                    $group:{
+                        _id: {
+                            selectionName: "$selectionName",
+                            marketId : "$marketId"
+                        },
+                        totalWinAmount:{
+                            $sum: { 
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then : {
+                                        $sum: "$WinAmount"
+                                    },
+                                    else:{ 
+                                        $sum: "$exposure"
+                                    }
+                                }
+                            }
+                        },
+                        totalLossAmount:{
+                            $sum: { 
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then : {
+                                        $sum: "$exposure"
+                                    },
+                                    else:{ 
+                                        $sum: "$WinAmount"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ])
+
+
+            console.log(exposure3, "exposure3exposure3exposure3exposure3exposure3")
         
             function getExposure(runs,obj){
                 runs.sort((a, b) => a - b)
