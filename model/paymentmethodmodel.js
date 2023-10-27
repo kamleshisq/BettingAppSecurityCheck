@@ -8,33 +8,25 @@ const paymentMethodSchem = mongoose.Schema({
     },
     accountholdername:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
     accountnumber:{
-        type:String,
-        unique:true
+        type:String
     },
     upiid:{
-        type:String,
-        unique:true
+        type:String
     },
     phonenumber:{
-        type:String,
-        unique:true
+        type:String
     },
     ifsccode:{
-        type:String,
-        required:true,
-        unique:true
+        type:String
     },
     bankname:{
         type:String,
-        required:true
     },
     branchname:{
-        type:String,
-        required:true
+        type:String
     },
     displayname:{
         type:String,

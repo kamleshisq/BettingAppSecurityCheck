@@ -2,19 +2,18 @@ const mongoose = require("mongoose");
 
 
 const paymentreportSchem = mongoose.Schema({
+
+    username:{
+        type:String,
+        required:true
+    },
     accountholdername:{
         type:String,
         required:true
     },
-    username:{
-        type:String,
-        required:true,
-        unique:true
-    },
     transactiontype:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
     status:{
         type:String,
