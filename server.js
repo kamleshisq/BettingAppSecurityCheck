@@ -7118,6 +7118,40 @@ io.on('connection', (socket) => {
                         
                     }
                 },
+                {
+                    $group:{
+                        _id: {
+                            selectionName: "$selectionName",
+                            marketId : "$marketId"
+                        },
+                        totalWinAmount:{
+                            $sum: { 
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then : {
+                                        $sum: "$WinAmount"
+                                    },
+                                    else:{ 
+                                        $sum: "$exposure"
+                                    }
+                                }
+                            }
+                        },
+                        totalLossAmount:{
+                            $sum: { 
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then : {
+                                        $sum: "$exposure"
+                                    },
+                                    else:{ 
+                                        $sum: "$WinAmount"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             ])
 
 
