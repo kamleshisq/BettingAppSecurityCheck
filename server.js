@@ -7482,6 +7482,16 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getpaymentapprovalreqdata',async(data)=>{
+        try{
+            let result = await paymentReportModel.findById(data)
+            socket.emit('getpaymentapprovalreqdata',{status:'success',result})
+        }catch(err){
+            socket.emit('getpaymentapprovalreqdata',{status:'fail',msg:'something went wrong'})
+
+        }
+    })
+
 })
 
 http.listen(80,()=> {
