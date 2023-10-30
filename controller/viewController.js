@@ -5250,7 +5250,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     let chils = await User.find({parentUsers:req.currentUser._id})
     let newChilds = chils.map(ele => {
-        return ele[userName]
+        return ele.userName
     })
     let paymentreq = await paymentReportModel.find({username:{$in:newChilds}})
     console.log(paymentreq)

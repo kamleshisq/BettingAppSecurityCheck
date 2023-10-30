@@ -21,8 +21,9 @@
         <tr class="" data-trid="paymentreq[i]._id">
         <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
         <td class="text-nowrap" ><%=paymentreq[i].username%></td>
-        <td class="text-nowrap" ><%=paymentreq[i].pmethod%></td>
+        <td class="text-nowrap" >Deposit</td>
         <td class="text-nowrap"><%=paymentreq[i].status%></td>
+        <td class="text-nowrap" ><%=paymentreq[i].pmethod%></td>
         <td class="text-nowrap" ><%=paymentreq[i].amount%></td>
         <td class="text-nowrap" ><%=paymentreq[i].utr%></td>
         <%if(paymentreq[i].approvedamount){%>
@@ -31,11 +32,11 @@
           <td>-</td>
         <%}%>
        
-        <td class="text-nowrap" >./public/paymentimg/<%=paymentreq[i].image%></td>
+        <td class="text-nowrap" ><img src="./paymentimg/<%=paymentreq[i].image%>" alt=""></td>
         <td>
           <div class="btn-group">
-            <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel" id="<%=bets[i]._id%>">Approve</button>
-            <button class="btn accept" id="<%=bets[i]._id%>">Denie</button>
+            <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel" id="<%=paymentreq[i]._id%>">Approve</button>
+            <button class="btn accept" id="<%=paymentreq[i]._id%>">Denie</button>
           </div>
         </td>
         </tr>
