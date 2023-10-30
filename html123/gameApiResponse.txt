@@ -1,0 +1,30 @@
+{
+  userId: '64e5c3002ceb9abbb4e4d341',
+  token: '397db4b7-ecbb-435c-bffa-fc495982e2e7',
+  url: 'https://stage-game.royalgaming.online?token=397db4b7-ecbb-435c-bffa-fc495982e2e7&operatorId=gapcgp&userName=com_user&partnerId=GAPINR&providerId=RGONLINE&lobby=false&gameId=A7UP01&opentable=AT7UP01&theme=LIGHT&view=CHIP&lobbyType=LIVE:VIRTUAL',
+  providerId: 'gapcgp',
+  providerName: '',
+  status: 0,
+  errorDescripion: 'Completed successfully'
+}
+
+body: {
+  operatorId: 'sheldon',
+  token: '397db4b7-ecbb-435c-bffa-fc495982e2e7',
+  userId: '64e5c3002ceb9abbb4e4d341'
+}
+
+
+
+
+body: {
+  betType: 'Casino',
+  debitAmount: 2000,
+  gameId: '900001',
+  operatorId: 'sheldon',
+  reqId: '67642d16-f60d-4a77-8e74-9750205d6f69',
+  roundId: '1698660145.213439',
+  token: '90c1d60d-fd23-499e-a536-068686e2150d',
+  transactionId: 'c3057353-4e4c-43f8-9f3f-0c04e21017af',
+  userId: '64e5c3002ceb9abbb4e4d341'
+}

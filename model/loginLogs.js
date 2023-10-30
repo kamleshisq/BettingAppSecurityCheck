@@ -33,7 +33,10 @@ const loginLogSchema = mongoose.Schema({
     },
     logs:[{
         type:String
-    }]
+    }],
+    gameToken:{
+        type:String
+    }
 });
 
 loginLogSchema.pre(/^find/, function(next){

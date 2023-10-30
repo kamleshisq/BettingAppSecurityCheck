@@ -2,6 +2,8 @@ const fetch = require("node-fetch")
 const path = require('path');
 const SHA256 = require('./sha256');
 const fs = require('fs');
+const loginLogs = require('../model/loginLogs');
+
 
 async function gameAPi(data,user){
     // console.log(user, data,123)
@@ -45,6 +47,14 @@ var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
     .then(result => {
       DATA = result
     })
+
+    // forloginLogs Update 
+    let loginData = loginLogs.find({userName: "user.userName", isOnline: true})
+    if(loginData[0].gameToken){
+        await loginLogs.findByIdAndUpdate(loginData[0]._id, {gameToken:DATA.token})
+    }else{
+        await loginLogs.findByIdAndUpdate(loginData[0]._id, {gameToken:DATA.token})
+    }
     console.log(DATA, "GAMEAPI DATA")
     return DATA
 }
