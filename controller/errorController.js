@@ -85,11 +85,13 @@ const senderrorProd = (err, req,res) => {
     }
     if( err.isOperational){
         // let setting
+        console.log(err)
         return res.status(err.statusCode).render('error',{
             title: 'something went wrong',
             msg: err.message
         })
     }
+    console.log(err)
     return res.status(err.statusCode).render('error',{
     title: 'something went wrong',
     msg: 'Please tyr again later'
