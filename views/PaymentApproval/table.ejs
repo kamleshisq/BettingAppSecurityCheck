@@ -32,11 +32,11 @@
           <td>-</td>
         <%}%>
        
-        <td class="text-nowrap" ><img src="./paymentimg/<%=paymentreq[i].image%>" alt=""></td>
+        <td class="text-nowrap" ><img src="/paymentimg/<%=paymentreq[i].image%>.png" alt=""></td>
         <td>
           <div class="btn-group">
-            <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel" id="<%=paymentreq[i]._id%>">Approve</button>
-            <button class="btn accept" id="<%=paymentreq[i]._id%>">Denie</button>
+            <button data-bs-toggle="modal" data-bs-target="#myModaladduser" class="btn paymetnreqApprove" data-docidapp="<%=paymentreq[i]._id%>">Approve</button>
+            <button class="btn denie" data-dociddenie="<%=paymentreq[i]._id%>">Denie</button>
           </div>
         </td>
         </tr>
