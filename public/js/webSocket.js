@@ -16940,7 +16940,7 @@ socket.on('connect', () => {
                 togglePopupMain('popup-2', "redPopUP2", data.msg)
             }else{
                 
-                let form = $('#myModaladduser>.paymentreq_form')
+                let form = $('#myModaladduser .paymentreq_form')
                 form.find('input[name="approvedamount"]').val(data.result.amount)
             }
 
