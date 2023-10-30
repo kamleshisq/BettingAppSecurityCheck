@@ -7494,7 +7494,7 @@ io.on('connection', (socket) => {
 
     socket.on('acceptpaymetnreq',async(data)=>{
         try{
-            await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount})
+            await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount,status:'approved'})
             socket.emit('acceptpaymetnreq',{status:'success',msg:'request approved'})
         }catch(err){
             socket.emit('acceptpaymetnreq',{status:'fail',msg:'something went wrong'})
