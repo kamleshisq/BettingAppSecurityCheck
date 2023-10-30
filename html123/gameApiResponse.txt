@@ -28,3 +28,25 @@ body: {
   transactionId: 'c3057353-4e4c-43f8-9f3f-0c04e21017af',
   userId: '64e5c3002ceb9abbb4e4d341'
 }
+
+
+
+//FOR SPORTBOOK
+
+
+{
+  status: 'RS_OK',
+  errorDescription: '',
+  userId: '64e5c3002ceb9abbb4e4d341',
+  token: '41a63ff7-7e98-4636-aedb-13a49ea357d5',
+  url: 'https://dev-sports-v3.mysportsfeed.io/auth?token=41a63ff7-7e98-4636-aedb-13a49ea357d5&operatorId=sheldon&partnerId=SHPID01&providerId=SportRadar&lobby=SportBook',
+  providers: [
+    {
+      providerId: 'SportRadar',
+      providerName: 'Sport Radar',
+      status: 'ACTIVE',
+      url: 'https://dev-sports-v3.mysportsfeed.io/auth?token=41a63ff7-7e98-4636-aedb-13a49ea357d5&operatorId=sheldon&partnerId=SHPID01&providerId=SportRadar&lobby=SportBook'
+    }
+  ]
+}
+

@@ -2382,7 +2382,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
     });
-    console.log(footbalSeries);
+    // console.log(footbalSeries);
     if(user){
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
@@ -3000,6 +3000,15 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
       urldata = result
     })
     console.log(urldata)
+    let loginData = await loginLogs.find({userName: user.userName, isOnline: true})
+    console.log(loginData, "loginDataloginDataloginData")
+    let CheckingData
+    if(loginData[0].gameToken){
+        CheckingData = await loginLogs.findByIdAndUpdate(loginData[0]._id, {gameToken:urldata.token})
+    }else{
+        CheckingData = await loginLogs.findByIdAndUpdate(loginData[0]._id, {gameToken:urldata.token})
+    }
+    console.log(CheckingData, "CheckingDataCheckingDataCheckingData")
     // return DATA
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
