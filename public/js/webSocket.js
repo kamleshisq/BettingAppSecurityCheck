@@ -16941,7 +16941,7 @@ socket.on('connect', () => {
             }else{
                 
                 let form = $('#myModaladduser>.paymentreq_form')
-                form.find('input[name="approvedamount"]').val(data.result.approvedamount)
+                form.find('input[name="approvedamount"]').val(data.result.amount)
             }
 
       
