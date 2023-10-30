@@ -98,9 +98,10 @@ exports.userTable = catchAsync(async(req, res, next) => {
     if(req.currentUser.roleName === "Super-Duper-Admin"){
         roles1 = roles1.filter(item => item.roleName !== 'DemoLogin')
     }else{
-        roles1 = roles1.filter(item => item.roleName !== ('DemoLogin' || Operator))
+        const rolesToRemove = ['DemoLogin', 'Operator'];
+        roles1 = roles1.filter(item => !rolesToRemove.includes(item.roleName));
     }
-    // console.log(roles1, "roles1roles1roles1roles1")
+    console.log(roles1, "roles1roles1roles1roles1")
 
     if(id && id != operationparentId){
         var isValid = mongoose.Types.ObjectId.isValid(id)
