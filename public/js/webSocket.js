@@ -1314,8 +1314,8 @@ socket.on('connect', () => {
                 form.find('#fuBlanceAfter').text((fromAmount - amount).toFixed(2))
                 form.find('#tuBalanceAfter').text((toAmount + amount).toFixed(2))
             }else{
-                form.find('#fuBlanceAfter').text((fromAmount + amount).toFixed(2))
-                form.find('#tuBalanceAfter').text((toAmount - amount).toFixed(2))
+                form.find('#fuBlanceAfter').text((fromAmount - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((toAmount + amount).toFixed(2))
             }
 
 
