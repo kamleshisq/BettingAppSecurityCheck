@@ -50,6 +50,7 @@ var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
 
     // forloginLogs Update 
     let loginData = loginLogs.find({userName: "user.userName", isOnline: true})
+    console.log(loginData, "loginDataloginDataloginData")
     if(loginData[0].gameToken){
         await loginLogs.findByIdAndUpdate(loginData[0]._id, {gameToken:DATA.token})
     }else{
