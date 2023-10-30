@@ -16928,7 +16928,23 @@ socket.on('connect', () => {
 
     if(pathname == '/admin/paymentapproval'){
         $(document).on('click','.paymetnreqApprove',function(e){
-            let id = $(this).parent()
+            let id = $(this).data('docidapp')
+            if(id){
+                socket.emit('getpaymentapprovalreqdata',id)
+            }
+        })
+
+        socket.on('getpaymentapprovalreqdata',async(data)=>{
+            console.log(data)
+            if(data.status == 'fail'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg)
+            }else{
+                
+                let form = $('#myModaladduser>.paymentreq_form')
+                form.find('input[name="approvedamount"]').val(data.result.approvedamount)
+            }
+
+      
         })
     }
     
