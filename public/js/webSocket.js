@@ -16922,7 +16922,16 @@ socket.on('connect', () => {
                 alert(data.msg)
             }
         })
+
+
     }
+
+    if(pathname == '/admin/paymentapproval'){
+        $(document).on('click','.paymetnreqApprove',function(e){
+            let id = $(this).parent()
+        })
+    }
+    
 
 })
 })
