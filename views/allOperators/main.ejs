@@ -265,6 +265,7 @@
           <form class="form-data editOperator">
             <div class="row mt-2 createRole-form" id="operator-authorization">
               <div class="option-group">
+                <%if(currentUser.roleName === "Admin"){%>
                 <div class="input_group">
                   <label for="HouseManagement">HouseManagement</label>
                   <input type="checkbox" name="operator" value="HouseManagement" id="HouseManagement" class="0">
@@ -274,7 +275,7 @@
                   <label for="whiteLabelAnalysis">whiteLabelAnalysis</label>
                   <input type="checkbox" name="operator" value="whiteLabelAnalysis" id="whiteLabelAnalysis" class="1">
                 </div>
-                
+                <%}%>
                 <div class="input_group">
                   <label for="commissionMarkets">commissionMarkets</label>
                   <input type="checkbox" name="operator" value="commissionMarkets" id="commissionMarkets" class="2">
@@ -318,6 +319,11 @@
                 <div class="input_group">
                   <label for="voidBets">voidBets</label>
                   <input type="checkbox" name="operator" value="voidBets" id="voidBets" class="10">
+                </div>
+
+                <div class="input_group">
+                  <label for="userManagement">userManagement</label>
+                  <input type="checkbox" name="operator" value="userManagement" id="userManagement" class="10">
                 </div>
                 
               </div>
