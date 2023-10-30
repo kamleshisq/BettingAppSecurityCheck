@@ -495,6 +495,7 @@
             </div>
             <div class="row mt-2 createRole-form hide" id="operator-authorization">
               <div class="option-group">
+            <%if(currentUser.roleName === "Admin"){%>
             <div class="input_group">
               <label for="HouseManagement">HouseManagement</label>
               <input type="checkbox" name="operator" value="HouseManagement" id="HouseManagement" class="0">
@@ -504,7 +505,7 @@
               <label for="whiteLabelAnalysis">whiteLabelAnalysis</label>
               <input type="checkbox" name="operator" value="whiteLabelAnalysis" id="whiteLabelAnalysis" class="1">
             </div>
-            
+            <%}%>
             <div class="input_group">
               <label for="commissionMarkets">commissionMarkets</label>
               <input type="checkbox" name="operator" value="commissionMarkets" id="commissionMarkets" class="2">
