@@ -157,9 +157,9 @@ if(formDataObj.role == "650bccdbb3fdc8c922c34bbe"){
     }
 }
 formDataObj.OperatorAuthorization = checkedValues
-console.log(formDataObj, "+==> data")
-console.log(checkedValues);
-// createUser(formDataObj)
+// console.log(formDataObj, "+==> data")
+// console.log(checkedValues);
+createUser(formDataObj)
 });
 
 
