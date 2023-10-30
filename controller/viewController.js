@@ -94,6 +94,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         operationparentId = req.currentUser.parent_id
 
     }
+    console.log(roles1, "roles1roles1roles1roles1")
     if(id && id != operationparentId){
         var isValid = mongoose.Types.ObjectId.isValid(id)
 
