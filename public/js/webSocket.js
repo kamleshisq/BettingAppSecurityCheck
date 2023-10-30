@@ -16967,7 +16967,7 @@ socket.on('connect', () => {
             if(data.status == 'fail'){
                 togglePopupMain('popup-2', "redPopUP2", data.msg)
             }else{
-                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+                togglePopupMain('popup-1', "redPopUP", data.msg.toUpperCase())
                 $('#myModaladduser').modal('toggle')
             }
         })
