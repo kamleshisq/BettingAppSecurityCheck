@@ -11,6 +11,7 @@ const verify = require("../utils/verify");//
 const alert = require("../server");
 const Decimal = require("decimal.js")
 const loginLogs = require('../model/loginLogs')
+const mongoose = require('mongoose');
 // const Decimal = require("decima")
 // const { use } = require('../app');
 function readPem (filename) {
