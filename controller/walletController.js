@@ -43,7 +43,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }else{
         return next(new AppError("Please re login to access", 404))
     }
-    console.log(result)
+    console.log(result, "resultresultresult")
     if(result){
         next()
     }else{
