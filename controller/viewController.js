@@ -2124,7 +2124,7 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     // console.log(liveTennis.length != 0)
-    // console.log(liveFootBall)
+    console.log(liveFootBall,LiveCricket )
     res.status(200).render("./user/exchange",{
         user,
         LiveCricket,
@@ -2999,7 +2999,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     .then(result => {
       urldata = result
     })
-    console.log(DATA)
+    console.log(urldata)
     // return DATA
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
