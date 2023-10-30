@@ -45,7 +45,7 @@ var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
     .then(result => {
       DATA = result
     })
-    // console.log(DATA)
+    console.log(DATA, "GAMEAPI DATA")
     return DATA
 }
 
