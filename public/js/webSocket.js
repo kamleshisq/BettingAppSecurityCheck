@@ -1293,8 +1293,8 @@ socket.on('connect', () => {
                 form.find('input[name = "clintPL"]').attr('value',me.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
                 form.attr('id', userData._id)
-                form.find('#fuBlanceAfter').text((userData.availableBalance - amount).toFixed(2))
-                form.find('#tuBalanceAfter').text((me.availableBalance + amount).toFixed(2))
+                form.find('#fuBlanceAfter').text((userData.availableBalance + amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((me.availableBalance - amount).toFixed(2))
 
             }
             }
