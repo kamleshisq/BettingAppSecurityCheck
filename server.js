@@ -6363,7 +6363,7 @@ io.on('connection', (socket) => {
         let commissionAmount = await newCommissionModel.aggregate([
             {
                 $match:{
-                    userId: operationId._id,
+                    userId: operationId,
                     commissionStatus: 'Unclaimed'
                 }
             },
