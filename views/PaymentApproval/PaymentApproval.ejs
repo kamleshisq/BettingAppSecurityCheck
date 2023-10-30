@@ -93,6 +93,7 @@
             <div class="col">
               <label for="">Edit Amount</label>
               <input type="number" class="form-control ml0" placeholder="" name="approvedamount">
+              <input type="hidden" name="id">
             </div>
           </div>
           <p>Once you approve the application, it can not be undone later. Would you like to proceed?</p>
@@ -100,9 +101,10 @@
             <div class="col">
               <label for="">I understand. Proceed to approve the application.</label>
               <input type="checkbox" class="form-control ml0" placeholder="" name="status">
+
             </div>
           </div>
-          <button type="button" class="btn-submit mt-3">OK</button>
+          <button type="submit" class="btn-submit mt-3">OK</button>
         </form>
       </div>
     </div>

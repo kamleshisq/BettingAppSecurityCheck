@@ -16939,12 +16939,37 @@ socket.on('connect', () => {
             if(data.status == 'fail'){
                 togglePopupMain('popup-2', "redPopUP2", data.msg)
             }else{
-                
                 let form = $('#myModaladduser .paymentreq_form')
                 form.find('input[name="approvedamount"]').val(data.result.amount)
+                form.find('input[name="id"]').val(data.result._id)
+                
             }
 
       
+        })
+
+        $(document).on('submit','.paymentreq_form',function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let newData = {}
+            Object.keys(data).map((ele) => {
+                if(data[ele] != ""){
+                    newData[ele] = data[ele]
+                }
+            })
+            socket.emit('acceptpaymetnreq',newData)
+
+        })
+
+        socket.on('acceptpaymetnreq',async(data)=>{
+            if(data.status == 'fail'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg)
+            }else{
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+                $('#myModaladduser').modal('toggle')
+            }
         })
     }
     
