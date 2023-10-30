@@ -4,7 +4,7 @@
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
       <div class="new-head bet-monitoring-heading"> 
-          <h3>Alert Bet</h3>
+          <h3>Apporvals</h3>
           <form action="" class="betmonitor-heading-from">
             <div class="input-group">
               <label class="up-down-form">Select User</label>
@@ -31,33 +31,21 @@
               <input type="date" id="toDate">
             </div>
             <div class="input-group">
-              <label>Select Result</label>
-              <select name="result" id="result">
+              <label>Status</label>
+              <select name="result" id="status">
                 <option value="All" selected>All</option>
-                <option value="ALERT">Alert</option>
-                <option value="CANCEL">Voided</option>
-                <option value="ACCEPT">Valid</option>
+                <option value="pending">Approval Pending</option>
+                <option value="approved">Approved</option>
+                <option value="denied">Dnied</option>
               </select>
             </div>
             <div class="input-group">
-              <label class="up-down-form">Select Sports</label>
-              <select name="Sport" id="Sport">
+              <label class="up-down-form">Type</label>
+              <select name="Sport" id="type">
                 <option value="All" selected>All</option>
-                <option value="Cricket">Cricket</option>
-                <option value="Football">FOOTBALL</option>
-                <option value="Tennis">TENNIS</option>
-                <option value="BASKETBALL">BASKETBALL</option>
-                <option value="BASEBALL">BASEBALL</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label class="up-down-form">Select Market</label>
-              <select name="market" id="market">
-                <option value="All" selected>All</option>
-                <option value="Match Odds">Match Odds</option>
-                <option value="Bookmaker 0%Comm">BookMaker</option>
-                <option value="Fancy">Fancy</option>
-                <!-- <option value="">GoalMarket</option> -->
+                <option value="banktransfer">Bank Transfer</option>
+                <option value="upi">UPI</option>
+                <option value="paytm">Paytm</option>
               </select>
             </div>
             
@@ -97,20 +85,24 @@
       </div>
       <div class="modal-header">
         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-        <h4 class="modal-title">Add HouseFunds</h4>
+        <h4 class="modal-title">Approve</h4>
       </div>
       <div class="modal-body">
-        <form class="form-data">
+        <form class="form-data paymentreq_form">
           <div class="row">
             <div class="col">
-              <label for="">Amounts</label>
-              <input type="text" class="form-control ml0" placeholder="1000000" name="email">
-            </div>
-            <div class="col">
-
+              <label for="">Edit Amount</label>
+              <input type="number" class="form-control ml0" placeholder="" name="approvedamount">
             </div>
           </div>
-          <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
+          <p>Once you approve the application, it can not be undone later. Would you like to proceed?</p>
+          <div class="row">
+            <div class="col">
+              <label for="">I understand. Proceed to approve the application.</label>
+              <input type="checkbox" class="form-control ml0" placeholder="" name="status">
+            </div>
+          </div>
+          <button type="button" class="btn-submit mt-3">OK</button>
         </form>
       </div>
     </div>
