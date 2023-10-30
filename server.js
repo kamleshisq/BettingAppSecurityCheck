@@ -6359,7 +6359,7 @@ io.on('connection', (socket) => {
             operationId = data.LOGINDATA.LOGINUSER._id
             operationUser = data.LOGINDATA.LOGINUSER
         }
-        let user = await User.findById(operationId._id)
+        let user = await User.findById(operationId)
         let commissionAmount = await newCommissionModel.aggregate([
             {
                 $match:{
