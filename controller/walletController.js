@@ -30,6 +30,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }
     console.log("PublicKey:",publicKey)
     let result = verify(req.headers.signature, publicKey, x)
+    const ObjectId = mongoose.Types.ObjectId;
     let objectId = new ObjectId(req.body.userId);
     let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
     if(loginData[0].gameToken){
