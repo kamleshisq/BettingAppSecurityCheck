@@ -5266,7 +5266,8 @@ exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     res.render('./PaymentApproval/PaymentApproval',{
         title:'Payment Approval',
         currentUser:req.currentUser,
-        paymentreq
+        paymentreq,
+        check:"PaymentApp",
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
@@ -5274,6 +5275,7 @@ exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
     res.render('./PaymentMethod/paymentMethod',{
         title:'Payment Method',
         currentUser:req.currentUser,
-        paymentmethod
+        paymentmethod,
+        check:"PaymentRepo"
     })
 })
