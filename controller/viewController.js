@@ -2999,16 +2999,16 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     .then(result => {
       urldata = result
     })
-    console.log(urldata)
+    // console.log(urldata)
     let loginData = await loginLogs.find({userName: user.userName, isOnline: true})
-    console.log(loginData, "loginDataloginDataloginData")
+    // console.log(loginData, "loginDataloginDataloginData")
     let CheckingData
     if(loginData[0].gameToken){
         CheckingData = await loginLogs.findByIdAndUpdate(loginData[0]._id, {gameToken:urldata.token})
     }else{
         CheckingData = await loginLogs.findByIdAndUpdate(loginData[0]._id, {gameToken:urldata.token})
     }
-    console.log(CheckingData, "CheckingDataCheckingDataCheckingData")
+    // console.log(CheckingData, "CheckingDataCheckingDataCheckingData")
     // return DATA
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
