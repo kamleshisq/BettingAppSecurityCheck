@@ -2382,7 +2382,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
     });
-    // console.log(footbalSeries);
+    console.log(footbalSeries);
     if(user){
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
