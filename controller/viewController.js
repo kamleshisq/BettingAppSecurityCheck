@@ -100,7 +100,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }else{
         roles1 = roles1.filter(item => item.roleName !== ('DemoLogin' || Operator))
     }
-    // console.log(roles1, "roles1roles1roles1roles1")
+    console.log(roles1, "roles1roles1roles1roles1")
 
     if(id && id != operationparentId){
         var isValid = mongoose.Types.ObjectId.isValid(id)
