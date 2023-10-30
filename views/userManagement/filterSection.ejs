@@ -41,8 +41,10 @@
           </select>
         </div>
       <%}%>
-      <div class="input-group">
-        <a href="/admin/allOperators" class="btn user-mng-btn">All Operators</a>
-      </div>
+      <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Super-Duper-Admin"){%>
+        <div class="input-group">
+          <a href="/admin/allOperators" class="btn user-mng-btn">All Operators</a>
+        </div>
+      <%}%>
 </div>
 </div>
