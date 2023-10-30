@@ -16937,7 +16937,7 @@ socket.on('connect', () => {
         socket.on('getpaymentapprovalreqdata',async(data)=>{
             console.log(data)
             if(data.status == 'fail'){
-                togglePopupMain('popup-2', "redPopUP2", data.msg)
+                alert(data.msg)
             }else{
                 let form = $('#myModaladduser .paymentreq_form')
                 form.find('input[name="approvedamount"]').val(data.result.amount)
@@ -16965,9 +16965,9 @@ socket.on('connect', () => {
 
         socket.on('acceptpaymetnreq',async(data)=>{
             if(data.status == 'fail'){
-                togglePopupMain('popup-2', "redPopUP2", data.msg)
+                alert(data.msg)
             }else{
-                togglePopupMain('popup-1', "redPopUP", data.msg.toUpperCase())
+                alert(data.msg)
                 $('#myModaladduser').modal('toggle')
             }
         })
