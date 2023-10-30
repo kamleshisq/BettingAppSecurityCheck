@@ -2999,7 +2999,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     .then(result => {
       urldata = result
     })
-    // console.log(DATA)
+    console.log(DATA)
     // return DATA
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
