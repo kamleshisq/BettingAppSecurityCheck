@@ -683,6 +683,7 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
             console.log(STRING, "STRINGSTRINGSTRING")
             try{
                 image.mv(STRING, (err)=>{
+                    console.log(err)
                     if(err) return next(new AppError("Something went wrong please try again later", 400))
                 })
             }catch(err){
