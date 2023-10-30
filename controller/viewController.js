@@ -98,7 +98,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     if(req.currentUser.roleName === "Super-Duper-Admin"){
         roles1 = roles1.filter(item => item.roleName !== 'DemoLogin')
     }else{
-        roles1 = roles1.filter(item => item.roleName !== ('DemoLogin' || Operator))
+        roles1 = roles1.filter(item => item.roleName !== ('DemoLogin' || "Operator"))
     }
     console.log(roles1, "roles1roles1roles1roles1")
 
