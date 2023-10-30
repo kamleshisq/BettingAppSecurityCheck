@@ -10,6 +10,7 @@ const fs = require('fs');
 const verify = require("../utils/verify");//
 const alert = require("../server");
 const Decimal = require("decimal.js")
+const loginLogs = require('../model/loginLogs')
 // const Decimal = require("decima")
 // const { use } = require('../app');
 function readPem (filename) {
@@ -29,6 +30,17 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }
     console.log("PublicKey:",publicKey)
     let result = verify(req.headers.signature, publicKey, x)
+    let objectId = new ObjectId(req.body.userId);
+    let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
+    if(loginData[0].gameToken){
+        if(loginData[0].gameToken == req.body.token){
+            next()
+        }else{
+            return next(new AppError("Please re login to access", 404))
+        }
+    }else{
+        return next(new AppError("Please re login to access", 404))
+    }
     console.log(result)
     if(result){
         next()
