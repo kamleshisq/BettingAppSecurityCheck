@@ -35,15 +35,15 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     let objectId = new ObjectId(req.body.userId);
     let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
     console.log(loginData, "loginDataloginDataloginData12313211132")
-    // if(loginData[0].gameToken){
-    //     if(loginData[0].gameToken == req.body.token){
-    //         next()
-    //     }else{
-    //         return next(new AppError("Please re login to access", 404))
-    //     }
-    // }else{
-    //     return next(new AppError("Please re login to access", 404))
-    // }
+    if(loginData[0].gameToken){
+        // if(loginData[0].gameToken == req.body.token){
+        //     next()
+        // }else{
+        //     return next(new AppError("Please re login to access", 404))
+        // }
+    }else{
+        return next(new AppError("Please re login to access", 404))
+    }
     console.log(result, "resultresultresult")
     if(result){
         next()
