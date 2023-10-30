@@ -99,6 +99,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     // console.log(req.headers['user-agent'])
     // req.loginUser = user
     let time = Date.now()
+    await loginLogs.updateMany({userName:user.userName}, {isOnline: false})
     await loginLogs.create({user_id:user._id,
                             userName:user.userName, 
                             role_Type:user.role_type,
