@@ -47,7 +47,7 @@ let eventNotification = require('../model/eventNotification');
 const commissionNewModel = require('../model/commissioNNModel');
 const resumeSuspendModel = require('../model/resumeSuspendMarket');
 const PaymentMethodModel = require('../model/paymentmethodmodel')
-const paymentReportModel = require('../model/paymentreport')
+const paymentReportModel = require('../model/paymentreport');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -5248,9 +5248,16 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
+    let chils = await User.find({parentUsers:req.currentUser._id})
+    let newChilds = chils.map(ele => {
+        return ele[userName]
+    })
+    let paymentreq = await paymentReportModel.find({username:{$in:newChilds}})
+    console.log(paymentreq)
     res.render('./PaymentApproval/PaymentApproval',{
         title:'Payment Approval',
-        currentUser:req.currentUser
+        currentUser:req.currentUser,
+        paymentreq
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
