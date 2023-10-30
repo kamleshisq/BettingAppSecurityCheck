@@ -6374,7 +6374,7 @@ io.on('connection', (socket) => {
                 }
               }
         ])
-        console.log(commissionAmount)
+        console.log(commissionAmount, "commissionAmountcommissionAmountcommissionAmountcommissionAmount")
         if(user){
             if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
