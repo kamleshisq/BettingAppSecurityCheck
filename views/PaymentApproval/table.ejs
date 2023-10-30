@@ -34,10 +34,14 @@
        
         <td class="text-nowrap" ><img src="/paymentimg/<%=paymentreq[i].image%>.png" alt=""></td>
         <td>
-          <div class="btn-group">
-            <button data-bs-toggle="modal" data-bs-target="#myModaladduser" class="btn paymetnreqApprove" data-docidapp="<%=paymentreq[i]._id%>">Approve</button>
-            <button class="btn denie" data-dociddenie="<%=paymentreq[i]._id%>">Denie</button>
-          </div>
+          <%if(paymentreq[i].status == 'pending'){%>
+            <div class="btn-group">
+              <button data-bs-toggle="modal" data-bs-target="#myModaladduser" class="btn paymetnreqApprove" data-docidapp="<%=paymentreq[i]._id%>">Approve</button>
+              <button class="btn denie" data-dociddenie="<%=paymentreq[i]._id%>">Denie</button>
+            </div>
+          <%}else{%>
+            <%=paymentreq[i].status%>
+          <%}%>
         </td>
         </tr>
       <%}%>
