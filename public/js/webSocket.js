@@ -152,6 +152,8 @@ socket.on('connect', () => {
         }else{
             let html = ''
             if(data.paymentMethodDetail){
+                $('#navmod3').find('form button').prop("disabled", false)
+                $('#navmod3').find('form button').css("opacity", 1)
                 if(data.type === "banktransfer"){
                     html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
                     <li id="Acc-Number">${data.paymentMethodDetail.accountnumber} <span class="copy-icon"></span></li>
@@ -165,6 +167,8 @@ socket.on('connect', () => {
                 }
             }else{
                 html = 'This Payment method not allowed yet!!'
+                $('#navmod3').find('form button').prop("disabled", true)
+                $('#navmod3').find('form button').css("opacity", 0.5)
             }
             document.getElementById('BANK-DATA').innerHTML = html
         }
