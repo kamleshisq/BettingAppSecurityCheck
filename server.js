@@ -7559,10 +7559,10 @@ io.on('connection', (socket) => {
                 childrenUsername.push(ele.userName) 
             })
         }     
-        if(data.LOGINDATA.LOGINUSER.userName != data.filterData.userName){
+        if(data.LOGINDATA.LOGINUSER.userName != data.filterData.username){
         }
         else{
-            data.filterData.userName = {$in:childrenUsername}
+            data.filterData.username = {$in:childrenUsername}
 
         }
 
