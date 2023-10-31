@@ -35,7 +35,7 @@ module.exports = () => {
                     name : x,
                     userName : x,
                     role : "6492fe4fd09db28e00761694",
-                    whiteLabel : "jayesh",
+                    whiteLabel : "10000",
                     email: 'cronetestingUser@gmail.com',
                     contact: '987654321',
                     password : "123456789",
