@@ -68,6 +68,13 @@
                 </div>
                 <%}%>
                 <%if(currentUser.role.roleName == 'Operator'){%>
+                  <%if(currentUser.OperatorAuthorization.includes('dashBoard')){%>
+                    <div class="menu-item">
+                      <a href="/admin/dashboard" class="nav_link active"><svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.6875 18.875C1.25347 18.875 0.884722 18.7229 0.58125 18.4188C0.277083 18.1153 0.125 17.7465 0.125 17.3125V15.3333L4.29167 11.6354V18.875H1.6875ZM5.33333 18.875V14.7083H13.6667V18.875H5.33333ZM14.7083 18.875V10.3333L10.2552 6.375L13.4062 3.58854L18.3542 7.98958C18.5278 8.14583 18.658 8.32361 18.7448 8.52292C18.8316 8.72292 18.875 8.93576 18.875 9.16146V17.3125C18.875 17.7465 18.7229 18.1153 18.4187 18.4188C18.1153 18.7229 17.7465 18.875 17.3125 18.875H14.7083ZM0.125 13.9271V9.16146C0.125 8.93576 0.168403 8.71875 0.255208 8.51042C0.342014 8.30208 0.472222 8.12847 0.645833 7.98958L8.45833 1.0625C8.59722 0.923611 8.75799 0.823611 8.94063 0.7625C9.12257 0.702083 9.30903 0.671875 9.5 0.671875C9.69097 0.671875 9.87778 0.702083 10.0604 0.7625C10.2424 0.823611 10.4028 0.923611 10.5417 1.0625L12.625 2.91146L0.125 13.9271Z" fill="#6359CA"/>
+                        </svg> <span class="nav_name">Dashboard</span> </a>
+                    </div>
+                  <%}%>
                   <%if(currentUser.OperatorAuthorization.includes('userManagement')){%>
                     <div class="menu-item">
                       <a href="/admin/userManagement" class="nav_link"> <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
