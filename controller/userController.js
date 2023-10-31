@@ -573,9 +573,9 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
             if(!me){
                 return next(new AppError('user not found'))
             }
-            if(me.role.role_level < req.currentUser.role.role_level){
-                return next(new AppError('You do not have permission to perform this action',400))
-            }
+            // if(me.role.role_level < req.currentUser.role.role_level){
+            //     return next(new AppError('You do not have permission to perform this action',400))
+            // }
             Rows = await User.count({parent_id: req.query.id})
             child = await User.find({parent_id: req.query.id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
         }else{
