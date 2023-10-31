@@ -542,50 +542,58 @@ exports.currentUserPasswordupdate = catchAsync(async(req, res, next) => {
 });
 
 exports.getOwnChild = catchAsync(async(req, res, next) => {
-    let child;
-    let Rows;
-    let me;
-    let page = req.query.page;
-    let operationId;
-    if(req.currentUser.roleName == 'Operator'){
-        operationId = req.currentUser.parent_id
-    }else{
-        operationId = req.currentUser._id
-    }
-    if(!page){
-        page = 0;
-    }
-    let limit = 10;
-    // console.log(req.query)
 
-    if(page < 0){
-        return next(new AppError('page should positive',404))
-    }
-    if(req.query.id == 0){
-        return next(new AppError('You do not have permission to perform this action',400))
-    }
-    if(req.query.id){
-        me = await User.findById(req.query.id)
-        if(!me){
-            return next(new AppError('user not found'))
+    try{
+        console.log(req.currentUser, "req.currentUserreq.currentUserreq.currentUserreq.currentUser")
+        let child;
+        let Rows;
+        let me;
+        let page = req.query.page;
+        let operationId;
+        if(req.currentUser.roleName == 'Operator'){
+            operationId = req.currentUser.parent_id
+        }else{
+            operationId = req.currentUser._id
         }
-        if(me.role.role_level < req.currentUser.role.role_level){
+        if(!page){
+            page = 0;
+        }
+        let limit = 10;
+        // console.log(req.query)
+        console.log(req.query, "req.queryreq.queryreq.queryreq.query")
+        console.log(operationId, "operationIdoperationIdoperationIdoperationIdoperationId")
+        if(page < 0){
+            return next(new AppError('page should positive',404))
+        }
+        if(req.query.id == 0){
             return next(new AppError('You do not have permission to perform this action',400))
         }
-        Rows = await User.count({parent_id: req.query.id})
-        child = await User.find({parent_id: req.query.id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
-    }else{
-        Rows = await User.count({parent_id: operationId})
-        child = await User.find({parent_id: operationId,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
-        me = await User.findById(req.currentUser._id)
+        if(req.query.id){
+            me = await User.findById(req.query.id)
+            if(!me){
+                return next(new AppError('user not found'))
+            }
+            if(me.role.role_level < req.currentUser.role.role_level){
+                return next(new AppError('You do not have permission to perform this action',400))
+            }
+            Rows = await User.count({parent_id: req.query.id})
+            child = await User.find({parent_id: req.query.id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
+        }else{
+            Rows = await User.count({parent_id: operationId})
+            child = await User.find({parent_id: operationId,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
+            me = await User.findById(req.currentUser._id)
+        }
+        res.status(200).json({
+            status:'success',
+            result:child.length,
+            rows:Rows / limit,
+            child,
+            me
+        })
+    }catch(err){
+        console.log(err, "ERROORR")
     }
-    res.status(200).json({
-        status:'success',
-        result:child.length,
-        rows:Rows / limit,
-        child,
-        me
-    })
+    
 });
 
 
