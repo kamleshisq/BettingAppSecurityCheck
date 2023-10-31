@@ -235,6 +235,15 @@ socket.on('connect', () => {
                 $('#navmod3').find('form button').prop("disabled", false)
                 $('#navmod3').find('form button').css("opacity", 1)
                 let form = $('#navmod3').find('form')
+                let htmltag = "";
+                for(let i = 0; i<data.accountholderarr.length;i++){
+                    if(i == 0){
+                        htmltag += `<div class="luck-enterprise-tag active" data-accountname="${data.accountholderarr[i].accountholdername}">${data.accountholderarr[i].accountholdername}</div>`
+                    }else{
+                        htmltag += `<div class="luck-enterprise-tag" data-accountname="${data.accountholderarr[i].accountholdername}">${data.accountholderarr[i].accountholdername}</div>`
+                    }
+                }
+                $('#navmod3 .accountnamecontainer').html(htmltag)
                 if(data.type === "banktransfer"){
                     form.find('input[name="pmethod"]').val('banktransfer')
                     form.find('input[name="accountholdername"]').val(data.paymentMethodDetail.accountholdername)
@@ -253,6 +262,7 @@ socket.on('connect', () => {
                     <li id="Acc-Number">${data.paymentMethodDetail.phonenumber} <span class="copy-icon"></span></li>`
                 }
             }else{
+                $('#navmod3 .accountnamecontainer').hmtl('')
                 html = 'This Payment method not allowed yet!!'
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)
