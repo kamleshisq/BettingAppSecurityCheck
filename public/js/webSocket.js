@@ -111,9 +111,14 @@ socket.on('connect', () => {
             document.getElementById('IFSC').innerHTML = data.data.ifsccode + '<span class="copy-icon"></span>'
             
             let modal = $('#navmod3')
+            if(!data.paymentMethodDetail){
+                $('#navmod3').find('form button').prop("disabled", true)
+                $('#navmod3').find('form button').css("opacity", 0.5)
+            }
 
         }else{
             alert(data.msg)
+            
         }
     })
 

@@ -54,11 +54,12 @@ $(document).ready(function(){
 	const operationPathnameArr = ['/admin/houseManagement','/admin/streammanagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
     const reportsPathnameArr = ['/admin/gamereport','/admin/myaccount','/admin/adminaccount','/admin/useraccount','/admin/settlementHistory','/admin/reports','/admin/userhistoryreport','/admin/plreport','/admin/commissionReport']
     const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules']
+    const patmentArr = ['/admin/paymentapproval','/admin/paymentmethods']
 	function colorLink(){
         if(linkColor){
         linkColor.forEach(l=> l.classList.remove('active'))
         $("a[href='"+pathname+"'").addClass('active')
-        if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname)){
+        if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname) || patmentArr.includes(pathname)){
             $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+pathname+"'").parent().parent().addClass('open')
         }
