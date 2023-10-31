@@ -3170,9 +3170,9 @@ io.on('connection', (socket) => {
                 socket.emit("FUndData", houseFund)
             }else{
                 let parentUse = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
-                if(data.LOGINDATA.LOGINUSER.roleName === "Admin"){ 
+                if(parentUse.roleName === "Admin"){ 
                     let user = await User.findByIdAndUpdate(parentUse._id.toString(), {$inc:{balance:parseFloat(data.data.amount), availableBalance:parseFloat(data.data.amount)}})
-                // console.log(user,122122)
+                console.log(user,122122)
                 let date = Date.now()
                 let data1 = {
                     userId:data.LOGINDATA.LOGINUSER._id,
