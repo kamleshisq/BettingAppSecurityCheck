@@ -7560,20 +7560,55 @@ io.on('connection', (socket) => {
             let parentData = {}
             const childUser = await User.findOne({userName:report.username});
             const parentUser = await User.findById(childUser.parent_id);
-            userData.balance = parseFloat(childUser.balance + data.approvedamount);
-            userData.availableBalance = parseFloat(childUser.availableBalance + data.approvedamount);
+            userData.balance = parseFloat(childUser.balance + (data.approvedamount * 1));
+            userData.availableBalance = parseFloat(childUser.availableBalance + (data.approvedamount * 1));
             // // userData.creditReference = {}
             // // userData.lifeTimeCredit = (childUser.lifeTimeCredit + req.body.amount);
-            parentData.availableBalance = parseFloat(parentUser.availableBalance - data.approvedamount);
-            // // parentData.lifeTimeDeposit = (parentUser.lifeTimeDeposit + data.approvedamount);
-            parentData.downlineBalance = parseFloat(parentUser.downlineBalance + data.approvedamount);
+            parentData.availableBalance = parseFloat(parentUser.availableBalance - (data.approvedamount * 1));
+            // // parentData.lifeTimeDeposit = (parentUser.lifeTimeDeposit + (data.approvedamount * 1));
+            parentData.downlineBalance = parseFloat(parentUser.downlineBalance + (data.approvedamount * 1));
             
             // // console.log(userData)
             const updatedChild = await User.findByIdAndUpdate(childUser.id, userData,{
                 new:true
             });
-            await User.findByIdAndUpdate(childUser.id, {$inc:{creditReference:data.approvedamount}})
+            await User.findByIdAndUpdate(childUser.id, {$inc:{creditReference:(data.approvedamount * 1)}})
             const updatedparent =  await User.findByIdAndUpdate(parentUser.id, parentData);
+            let childAccStatement = {}
+            let ParentAccStatement = {}
+            let date = Date.now()
+
+            // //for child User//
+            childAccStatement.child_id = childUser.id;
+            childAccStatement.user_id = childUser.id;
+            childAccStatement.parent_id = parentUser.id;
+            childAccStatement.description = 'Chips credited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+            childAccStatement.creditDebitamount = data.approvedamount;
+            childAccStatement.balance = userData.availableBalance;
+            childAccStatement.date = date
+            childAccStatement.userName = childUser.userName
+            childAccStatement.role_type = childUser.role_type
+            childAccStatement.Remark = 'Deposite'
+
+            const accStatementChild = await AccModel.create(childAccStatement)
+            if(!accStatementChild){
+                return next(new AppError("Ops, Something went wrong Please try again later", 500))
+            }
+            // // console.log(childAccStatement)
+            // // for parent user // 
+            ParentAccStatement.child_id = childUser.id;
+            ParentAccStatement.user_id = parentUser.id;
+            ParentAccStatement.parent_id = parentUser.id;
+            ParentAccStatement.description = 'Chips credited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+            ParentAccStatement.creditDebitamount = -(data.approvedamount);
+            ParentAccStatement.balance = parentData.availableBalance;
+            ParentAccStatement.date = date
+            ParentAccStatement.userName = parentUser.userName;
+            ParentAccStatement.role_type = parentUser.role_type
+            ParentAccStatement.Remark = 'Deposite'
+
+            // // console.log(ParentAccStatement)
+            const accStatementparent = await AccModel.create(ParentAccStatement)
             socket.emit('acceptpaymetnreq',{status:'success',msg:'request approved'})
         }catch(err){
             socket.emit('acceptpaymetnreq',{status:'fail',msg:'something went wrong'})
