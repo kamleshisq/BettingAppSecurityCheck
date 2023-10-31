@@ -2064,7 +2064,7 @@ io.on('connection', (socket) => {
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
         }
-
+        console.log(data.LOGINUSER, "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
         User.aggregate([
             {
               $match: {
