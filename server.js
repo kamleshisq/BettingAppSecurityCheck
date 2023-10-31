@@ -2065,7 +2065,7 @@ io.on('connection', (socket) => {
             data.LOGINUSER = parentUser
             data.LOGINUSER._id = data.LOGINUSER._id.toString()
         }
-        console.log(data.LOGINUSER, "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
+        console.log(data.LOGINUSER._id.toString(), "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
         User.aggregate([
             {
               $match: {
