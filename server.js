@@ -7752,6 +7752,7 @@ io.on('connection', (socket) => {
             socket.emit('deniePaymentReq',{status:'success',msg:'payment request denied'})
         }catch(err){
             socket.emit('deniePaymentReq',{status:'fail',msg:'Somethig went wrong'})
+            console.log(err)
 
         }
     })
