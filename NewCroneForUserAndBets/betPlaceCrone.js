@@ -70,11 +70,11 @@ module.exports = () => {
                     console.log(data)
                     if(data.odds != '-' && data.odds != 'NAN', data.odds != '', data.odds != ' '){
 
-                        let result = await betplace(data)
-                        console.log(result)
-                        if(result != 'Bet placed successfully'){
-                            break;
-                        }
+                        // let result = await betplace(data)
+                        // console.log(result)
+                        // if(result != 'Bet placed successfully'){
+                        //     break;
+                        // }
                     }
 
                 }
