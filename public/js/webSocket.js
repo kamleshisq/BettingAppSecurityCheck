@@ -6624,7 +6624,7 @@ socket.on('connect', () => {
         
 
         socket.on("aggreat", async(data) => {
-            // console.log(data)
+            console.log(data)
             let stake1 = 0;
             let stake2 = 0;
             data.forEach(item => {
