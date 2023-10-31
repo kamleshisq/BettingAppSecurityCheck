@@ -683,6 +683,7 @@ $(document).on('submit', ".kycForm", function(e){
 
 $(document).on('submit','#navmod3 .payment-fom',function(e){
     e.preventDefault();
+    $(this).find('button').prop("disabled", true);
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());

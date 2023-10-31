@@ -7747,6 +7747,7 @@ $(document).on('submit', ".kycForm", function (e) {
 });
 $(document).on('submit', '#navmod3 .payment-fom', function (e) {
   e.preventDefault();
+  $(this).find('button').prop("disabled", true);
   var form = $(this)[0];
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
@@ -7779,7 +7780,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61136" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49855" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
