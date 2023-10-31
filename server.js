@@ -2059,17 +2059,20 @@ io.on('connection', (socket) => {
         //     console.log(result)
         //   socket.emit("aggreat", result)
         // })
-
+        let id = ``
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
-            data.LOGINUSER._id = data.LOGINUSER._id.toString()
+            // data.LOGINUSER._id = data.LOGINUSER._id.toString()
+        //     id = data.LOGINUSER._id.toString()
+        // }else{
+        //     id =data.LOGINUSER._id
         }
-        console.log(data.LOGINUSER, "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
+        // console.log(data.LOGINUSER._id.toString(), "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
         User.aggregate([
             {
               $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }
               }
             },
             {
@@ -4083,6 +4086,10 @@ io.on('connection', (socket) => {
 
     socket.on('BETONEVENT', async(data) => {
         try{
+            if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
+                let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+                data.LOGINDATA.LOGINUSER = parentUser
+            }
             let page = data.page;
             let skip;
             let limit = 10;
@@ -4121,7 +4128,7 @@ io.on('connection', (socket) => {
                   },
                   {
                     $match: {
-                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id.toString()] }
                     }
                   }
                   

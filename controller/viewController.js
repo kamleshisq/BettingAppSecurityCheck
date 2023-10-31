@@ -4281,6 +4281,10 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     }else{
         ipv4 = ip
     }
+    if(req.currentUser.role.roleName == 'Operator'){
+        let parentUser = await User.findById(req.currentUser.parent_id)
+        req.currentUser = parentUser
+    }
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
