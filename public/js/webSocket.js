@@ -17232,6 +17232,7 @@ socket.on('connect', () => {
                 html += `
                 <td class="text-nowrap" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                 <td class="text-nowrap" >${paymentreq[i].username}</td>
+                <td class="text-nowrap" >${paymentreq[i].accountholdername}</td>
                 <td class="text-nowrap" >Deposit</td>
                 <td class="text-nowrap">${paymentreq[i].status}</td>
                 <td class="text-nowrap" >${paymentreq[i].pmethod}</td>
