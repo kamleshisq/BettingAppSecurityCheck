@@ -67,7 +67,7 @@ module.exports = () => {
                         LOGINDATA
                     }
 
-                    console.log(data)
+                    // console.log(data)
                     if(data.odds != '-' && data.odds != 'NAN', data.odds != '', data.odds != ' '){
 
                         // let result = await betplace(data)
