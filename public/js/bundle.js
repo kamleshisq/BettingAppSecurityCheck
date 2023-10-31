@@ -7045,7 +7045,7 @@ var paymentDeposite = /*#__PURE__*/function () {
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _notificationsss.notificationsss)({
-              message: "amount deposit successfully!!!",
+              message: "Thank you for the deposit, Amount will be added into your wallet once it is approved",
               status: "success"
             });
             setTimeout(function () {
@@ -7779,7 +7779,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61136" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49855" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

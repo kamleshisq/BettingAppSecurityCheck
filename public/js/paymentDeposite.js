@@ -9,7 +9,7 @@ export const paymentDeposite = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-                notificationsss({message:"amount deposit successfully!!!", status:"success"});
+                notificationsss({message:"Thank you for the deposit, Amount will be added into your wallet once it is approved", status:"success"});
                 setTimeout(function() {
                     location.reload();
                   }, 2000);
