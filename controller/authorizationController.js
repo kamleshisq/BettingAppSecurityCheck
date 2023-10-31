@@ -269,7 +269,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.currentUser = currentUser
     req.token = token
-    console.log("WORKING123456789")
+    // console.log("WORKING123456789")
     next()
 });
 
@@ -783,7 +783,7 @@ exports.isAdmin = catchAsync(async(req, res, next) => {
     if(req.currentUser.role_type == 5){
         return next(new AppError('You do not have permission to access this route',404))
     }else{
-
+        console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
         next()
     }
 })
