@@ -99,7 +99,7 @@ socket.on('connect', () => {
     });
 
     $('.paymentDepositeMenu').click(function(e){
-        document.getElementById("loader-overlay-popup").style.display = "flex";
+        document.getElementById("loader-overlay").style.display = "flex";
         socket.emit('getPaymentmethodData',{data:LOGINDATA})
     })
 
@@ -147,7 +147,7 @@ socket.on('connect', () => {
     socket.on('getPaymentmethodData',async(data)=>{
         console.log(data)
         if(data.status == 'success'){
-            document.getElementById("loader-overlay-popup").style.display = "none";
+            document.getElementById("loader-overlay").style.display = "none";
             if(data.data){
                 $('#navmod3 .accountnamecontainer').show()
                 $('#navmod3 .enter-payment-detail').show()
@@ -216,7 +216,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".bank-img", function(e){
         e.preventDefault();
-        document.getElementById("loader-overlay-popup").style.display = "flex";
+        document.getElementById("loader-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'banktransfer'})
@@ -224,7 +224,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".upi-img", function(e){
         e.preventDefault();
-        document.getElementById("loader-overlay-popup").style.display = "flex";
+        document.getElementById("loader-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'upi'})
@@ -232,7 +232,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".pytm-img", function(e){
         e.preventDefault();
-        document.getElementById("loader-overlay-popup").style.display = "flex";
+        document.getElementById("loader-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'paytm'})
@@ -243,7 +243,7 @@ socket.on('connect', () => {
         if(data.status === "fail"){
 
         }else{
-            document.getElementById("loader-overlay-popup").style.display = "none";
+            document.getElementById("loader-overlay").style.display = "none";
             let html = ''
             if(data.paymentMethodDetail){
                 $('#navmod3 .enter-payment-detail').show()
