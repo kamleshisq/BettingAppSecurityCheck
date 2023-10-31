@@ -1051,7 +1051,7 @@ socket.on('connect', () => {
     }
 
     if(pathname.startsWith('/admin')){
-        if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Master'){
+        if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Admin'){
             setInterval(()=>{
                 socket.emit('getcountofpaymentreq',LOGINDATA)
             },1000)
