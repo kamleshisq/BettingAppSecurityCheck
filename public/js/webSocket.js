@@ -119,6 +119,24 @@ socket.on('connect', () => {
 
     socket.on('getpaymentdetailbyholdername',async(data)=>{
         console.log(data)
+        if(data.status == 'success'){
+            let form = $('#navmod3 form')
+            if(data.data.pmethod === "banktransfer"){
+                form.find('input[name="accountholdername"]').val(data.data.accountholdername)
+                html = `<li id="Acc-Name">${data.data.accountholdername} <span class="copy-icon"></span></li>
+                <li id="Acc-Number">${data.data.accountnumber} <span class="copy-icon"></span></li>
+                <li id="IFSC">IFSC : ${data.data.ifsccode} <span class="copy-icon"></span></li>`
+            }else if (data.data.pmethod === "upi"){
+                form.find('input[name="accountholdername"]').val(data.data.accountholdername)
+                html = `<li id="Acc-Name">${data.data.accountholdername} <span class="copy-icon"></span></li>
+                <li id="Acc-Number">${data.data.upiid} <span class="copy-icon"></span></li>`
+            }else if (data.data.pmethod === "paytm"){
+                form.find('input[name="accountholdername"]').val(data.data.accountholdername)
+                html = `<li id="Acc-Name">${data.data.accountholdername} <span class="copy-icon"></span></li>
+                <li id="Acc-Number">${data.data.phonenumber} <span class="copy-icon"></span></li>`
+            }
+            document.getElementById('BANK-DATA').innerHTML = html
+        }
     })
 
     socket.on('getPaymentmethodData',async(data)=>{
