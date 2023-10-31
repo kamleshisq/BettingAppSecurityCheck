@@ -126,7 +126,7 @@ socket.on('connect', () => {
         }
     })
     $(document).on('click','#BANK-DATA .copy-icon',function(e){
-        const textToCopy = document.querySelectorAll("#BANK-DATA li");
+        
         const copyButton = document.querySelectorAll("#BANK-DATA .copy-icon");
         console.log(copyButton)
         if(copyButton){
@@ -134,8 +134,9 @@ socket.on('connect', () => {
                 button.addEventListener("click", function () {
                     console.log('clicked')
                     // Select the text inside the element
+                    console.log(this.parentNode.textContent)
                     const range = document.createRange();
-                    range.selectNode(textToCopy);
+                    range.selectNode(this.parentNode);
                     window.getSelection().removeAllRanges();
                     window.getSelection().addRange(range);
             
