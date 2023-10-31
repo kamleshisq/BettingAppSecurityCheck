@@ -108,7 +108,7 @@ socket.on('connect', () => {
         $(this).addClass('active')
         let data = {}
         let accountholdername = $(this).data('accountname')
-        let pmethod = form.find('input[name="pmethod"]')
+        let pmethod = form.find('input[name="pmethod"]').val()
         data.accountholdername = accountholdername
         data.pmethod = pmethod
         console.log(data,'==>payment detail')
