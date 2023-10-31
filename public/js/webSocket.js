@@ -967,7 +967,7 @@ socket.on('connect', () => {
         setInterval(()=>{
             console.log("loginuserbalance")
             socket.emit('loginuserbalance',LOGINDATA)
-        },1000 * 60)
+        },1000)
         
     }
     socket.on('loginuserbalance',async(data)=>{
@@ -1976,7 +1976,7 @@ socket.on('connect', () => {
         let data = {LOGINUSER:JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))}
         socket.emit('loginuserbalance', data)
 
-    },1000 * 60)
+    },1000)
     
     $(document).on('click', ".COMMISSIONADMIN", function(e){
         e.preventDefault()
