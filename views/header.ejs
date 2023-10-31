@@ -213,6 +213,25 @@
                     <a href="/admin/eventcontrol" class="nav_link"> <svg xmlns="http://www.w3.org/2000/svg" height="1.35em" viewBox="0 0 448 512"><path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"></path></svg> <span class="nav_name">Event Control</span> </a>
                   </div>
                 <%}%>
+                <%if(currentUser.role.roleName == 'Operator'){%>
+                  <%if(currentUser.OperatorAuthorization.includes('casinocontrol')){%>
+                    <div class="menu-item">
+                      <a href="/admin/casinocontrol" class="nav_link"> <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.492188 16.5078H16.5078V0.492188H0.492188V16.5078ZM11.1465 4.32275C11.1416 4.32275 11.1392 4.3252 11.1367 4.3252V2.44531C11.1367 2.33789 11.2246 2.25 11.332 2.25H12.5039C12.6113 2.25 12.6992 2.33789 12.6992 2.44531V4.3252C12.6943 4.3252 12.6919 4.32275 12.6895 4.32275C13.7148 4.6499 14.457 5.60938 14.457 6.74219C14.457 7.875 13.7148 8.83447 12.6895 9.16162C12.6943 9.16162 12.6968 9.15918 12.6992 9.15918V14.5547C12.6992 14.6621 12.6113 14.75 12.5039 14.75H11.332C11.2246 14.75 11.1367 14.6621 11.1367 14.5547V9.15918C11.1416 9.15918 11.144 9.16162 11.1465 9.16162C10.1211 8.83447 9.37891 7.875 9.37891 6.74219C9.37891 5.60938 10.1211 4.6499 11.1465 4.32275ZM4.30078 7.84082V2.44531C4.30078 2.33789 4.38867 2.25 4.49609 2.25H5.66797C5.77539 2.25 5.86328 2.33789 5.86328 2.44531V7.84082C6.88135 8.17285 7.62109 9.12988 7.62109 10.2578C7.62109 11.3857 6.88135 12.3452 5.86328 12.6748V14.5547C5.86328 14.6621 5.77539 14.75 5.66797 14.75H4.49609C4.38867 14.75 4.30078 14.6621 4.30078 14.5547V12.6748C3.28271 12.3428 2.54297 11.3857 2.54297 10.2578C2.54297 9.12988 3.28271 8.17041 4.30078 7.84082Z" fill="#212121"/>
+                        </svg> <span class="nav_name">Casino Control</span> </a>
+                      </div>
+                  <%}%>
+                  <%if(currentUser.OperatorAuthorization.includes('catalogcontrol')){%>
+                    <div class="menu-item">
+                      <a href="/admin/catalogcontrol" class="nav_link"> <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z"/></svg> <span class="nav_name">Catalog Control</span> </a>
+                    </div>
+                  <%}%>
+                  <%if(currentUser.OperatorAuthorization.includes('eventcontrol')){%>
+                    <div class="menu-item">
+                      <a href="/admin/eventcontrol" class="nav_link"> <svg xmlns="http://www.w3.org/2000/svg" height="1.35em" viewBox="0 0 448 512"><path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"></path></svg> <span class="nav_name">Event Control</span> </a>
+                    </div>
+                  <%}%>
+                <%}%>
                 <%if(currentUser.role.AdminController.includes('Report')){%>
                   <div class="menu-item dropdown-link dropdown-link2">
                     <a class="nav_link"> <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
