@@ -103,17 +103,24 @@ socket.on('connect', () => {
     })
 
     socket.on('getPaymentmethodData',async(data)=>{
-        // console.log(data)
+        console.log(data)
         if(data.status == 'success'){
-            document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
-            document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
-            document.getElementById('Acc-Number').innerHTML = data.data.accountnumber + '<span class="copy-icon"></span>'
-            document.getElementById('IFSC').innerHTML = data.data.ifsccode + '<span class="copy-icon"></span>'
-            
-            let modal = $('#navmod3')
+            if(data.data){
+
+                document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
+                document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
+                document.getElementById('Acc-Number').innerHTML = data.data.accountnumber + '<span class="copy-icon"></span>'
+                document.getElementById('IFSC').innerHTML = data.data.ifsccode + '<span class="copy-icon"></span>'
+                
+            }
+            else{
+                $('#navmod3').find('form button').prop("disabled", true)
+                $('#navmod3').find('form button').css("opacity", 0.5)
+            }
 
         }else{
             alert(data.msg)
+            
         }
     })
 
