@@ -968,59 +968,59 @@ socket.on('connect', () => {
             console.log("loginuserbalance")
             socket.emit('loginuserbalance',LOGINDATA)
         },1000)
-        socket.on('loginuserbalance',async(data)=>{
-            console.log('refresh login data')
-            html1 = `
-            <div class="skin-data green">
-                
-                <h5>Credit Reference</h5>
-                <h6> ${data.creditReference.toFixed(2)}</h6>
-            </div>
-            <!-- <div class="skin-data green">
-              
-              <h5>Balance</h5>
-                <h6> ${data.balance.toFixed(2)}</h6>
-            </div> -->
-            <div class="skin-data green">
-              
-              <h5>Available Balance</h5>
-                <h6> ${data.availableBalance.toFixed(2)}</h6>
-            </div>
-            <div class="skin-data green">
-              
-              <h5>Downline Balance</h5>
-                <h6> ${data.downlineBalance.toFixed(2)}</h6>
-            </div>`
-            if(data.myPL.toFixed(2) > 0){
-            html1 += `<div class="skin-data green">`
-              }else{
-                html1 += `<div class="skin-data red">`
-              }
-                html1 += `<h5>MY P/L</h5>
-                  <h6> ${data.myPL.toFixed(2)}</h6>
-              </div>`
-              if(data.uplinePL.toFixed(2) > 0){
-                html1 += `<div class="skin-data green">`
-              }else{ 
-                html1 += `<div class="skin-data red">`
-              } 
-              
-              html1 += `<h5>Upline P/L</h5>
-                <h6> ${data.uplinePL.toFixed(2)}</h6>
-            </div>`
-            if(data.lifetimePL.toFixed(2) > 0){
-              html1 += `<div class="skin-data green">`
-            }else{ 
-              html1 += `<div class="skin-data red">`
-            } 
-              
-              html1 += `<h5>Lifetime P/L</h5>
-                <h6> ${data.lifetimePL.toFixed(2)}</h6>
-            </div>`
-            $('.welcome-info-btn').html(html1)
-        })
-
+        
     }
+    socket.on('loginuserbalance',async(data)=>{
+        console.log('refresh login data')
+        html1 = `
+        <div class="skin-data green">
+            
+            <h5>Credit Reference</h5>
+            <h6> ${data.creditReference.toFixed(2)}</h6>
+        </div>
+        <!-- <div class="skin-data green">
+          
+          <h5>Balance</h5>
+            <h6> ${data.balance.toFixed(2)}</h6>
+        </div> -->
+        <div class="skin-data green">
+          
+          <h5>Available Balance</h5>
+            <h6> ${data.availableBalance.toFixed(2)}</h6>
+        </div>
+        <div class="skin-data green">
+          
+          <h5>Downline Balance</h5>
+            <h6> ${data.downlineBalance.toFixed(2)}</h6>
+        </div>`
+        if(data.myPL.toFixed(2) > 0){
+        html1 += `<div class="skin-data green">`
+          }else{
+            html1 += `<div class="skin-data red">`
+          }
+            html1 += `<h5>MY P/L</h5>
+              <h6> ${data.myPL.toFixed(2)}</h6>
+          </div>`
+          if(data.uplinePL.toFixed(2) > 0){
+            html1 += `<div class="skin-data green">`
+          }else{ 
+            html1 += `<div class="skin-data red">`
+          } 
+          
+          html1 += `<h5>Upline P/L</h5>
+            <h6> ${data.uplinePL.toFixed(2)}</h6>
+        </div>`
+        if(data.lifetimePL.toFixed(2) > 0){
+          html1 += `<div class="skin-data green">`
+        }else{ 
+          html1 += `<div class="skin-data red">`
+        } 
+          
+          html1 += `<h5>Lifetime P/L</h5>
+            <h6> ${data.lifetimePL.toFixed(2)}</h6>
+        </div>`
+        $('.welcome-info-btn').html(html1)
+    })
 
     //..................FOR User Profile Page...........//
 
@@ -1976,7 +1976,7 @@ socket.on('connect', () => {
         let data = {LOGINUSER:JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))}
         socket.emit('loginuserbalance', data)
 
-    },1000 * 60)
+    },1000)
     
     $(document).on('click', ".COMMISSIONADMIN", function(e){
         e.preventDefault()
