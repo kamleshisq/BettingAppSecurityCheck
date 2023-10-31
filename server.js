@@ -6031,11 +6031,19 @@ io.on('connection', (socket) => {
 
     socket.on('gameAnalysis', async(data) => {
         // console.log(data.Sport)
+
         let me = data.USER
+
         let page = data.page;
         let limit = 10
         let childrenUsername = []
-        let children = await User.find({parentUsers:me._id})
+        let children
+        if(data.USER.roleName == 'Operator'){
+            children = await User.find({parentUsers:me.parent_id})
+        }else{
+            children = await User.find({parentUsers:me._id})
+
+        }
         children.map(ele => {
             childrenUsername.push(ele.userName) 
         })
