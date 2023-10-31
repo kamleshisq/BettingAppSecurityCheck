@@ -81,6 +81,7 @@ const paymentReportModel = require('../model/paymentreport');
 exports.userTable = catchAsync(async(req, res, next) => {
     var WhiteLabel = await whiteLabel.find()
     let id = req.query.id;
+    console.log(id, "111111111111111111")
     let page = req.query.page;
     let urls;
     let roles1
@@ -102,7 +103,6 @@ exports.userTable = catchAsync(async(req, res, next) => {
         roles1 = roles1.filter(item => !rolesToRemove.includes(item.roleName));
     }
     // console.log(roles1, "roles1roles1roles1roles1")
-    console.log(id, "111111111111111111")
     if(id && id != operationparentId){
         var isValid = mongoose.Types.ObjectId.isValid(id)
 
