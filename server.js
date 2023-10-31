@@ -4769,7 +4769,11 @@ io.on('connection', (socket) => {
         let users = []
         let falg = false
         let Id 
-        let loginId = data.LOGINDATA.LOGINUSER._id
+        if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            data.LOGINDATA.LOGINUSER = parentUser
+        }
+        let loginId = data.LOGINDATA.LOGINUSER._id.toString()
         if(data.userName){
             let thatUSer = await User.findOne({userName:data.userName})
             if(thatUSer){
@@ -4779,7 +4783,7 @@ io.on('connection', (socket) => {
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
-            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
             Id = data.LOGINDATA.LOGINUSER.userName
 
         }
