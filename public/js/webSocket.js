@@ -1049,6 +1049,20 @@ socket.on('connect', () => {
         },1000)
         
     }
+
+    if(pathname.startsWith('/admin')){
+        if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Master'){
+            setInterval(()=>{
+
+                socket.emit('getcountofpaymentreq',LOGINDATA)
+            },1000)
+        }
+        socket.on('getcountofpaymentreq',async(data)=>{
+            if(data.status == 'success'){
+                $('header .social-media .fa-bell').siblings('span').text(data.paymentreqcount)
+            }
+        })
+    }
     socket.on('loginuserbalance',async(data)=>{
         // console.log('refresh login data')
         html1 = `

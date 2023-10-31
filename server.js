@@ -7734,6 +7734,20 @@ io.on('connection', (socket) => {
         socket.emit('paymentApprovaltable',{paymentreq,page,refreshStatus:data.refreshStatus})
     })
 
+    socket.on('getcountofpaymentreq',async(data)=>{
+        try{
+            let childrenArr = []
+            let children = await User.find({parentUsers:LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenArr.push(ele.userName)
+            })
+            let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr}})
+            socket.emit('getcountofpaymentreq',{status:'success',paymentreqcount})
+        }catch(err){
+            socket.emit('getcountofpaymentreq',{status:'fail',paymentreqcount})
+        }
+    })
+
 })
 
 http.listen(80,()=> {
