@@ -19,6 +19,6 @@ export const paymentDeposite = async(data)=>{
 
     }catch(err){
         console.log(err)
-    notificationsss({message: err.response.data.message, status:"error"})
+        notificationsss({message: err.response.data.message, status:"error"})
     }
 }
