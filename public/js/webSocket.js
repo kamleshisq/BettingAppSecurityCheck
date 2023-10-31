@@ -17402,6 +17402,27 @@ socket.on('connect', () => {
       
         })
 
+        $(document).on('click','.paymetnreqDeny',function(e){
+            let id = $(this).data('docidapp')
+            if(id){
+                socket.emit('getpaymentdenyreqdata',id)
+            }
+        })
+
+        socket.on('getpaymentdenyreqdata',async(data)=>{
+            console.log(data)
+            if(data.status == 'fail'){
+                alert(data.msg)
+            }else{
+                let form = $('#myModal2 .denypaymentreq_form')
+                form.find('input[name="id"]').val(data.result._id)
+                form.find('input[name="amount"]').val(data.result.amount)
+                
+            }
+
+      
+        })
+
         $(document).on('submit','.paymentreq_form',function(e){
             e.preventDefault()
             let form = $(this)[0];
@@ -17427,13 +17448,13 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('click','.denie',function(e){
-            let id = $(this).data('dociddenie')
-            if(id){
-                if(confirm('do you want to denie this payment request')){
-                    socket.emit('deniePaymentReq',id)
-                }
-            }
+        $(document).on('submit','.denypaymentreq_form',function(e){
+            let form = $('.denypaymentreq_form')
+            let id = form.find('input[name="id"]').val()
+            let remark = form.find('input[name="remark"]')
+            let amount = form.find('input[name="amount"]')
+
+            socket.emit('deniePaymentReq',{id,remark,amount})
         })
 
         socket.on('deniePaymentReq',async(data)=>{
