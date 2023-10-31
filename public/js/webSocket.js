@@ -17001,7 +17001,14 @@ socket.on('connect', () => {
                 }
             })
             console.log(newData)
-            // socket.emit('editpaymentMethod',newData)
+            socket.emit('editpaymentMethod',newData)
+        })
+
+        socket.on('editpaymentMethod',async(data)=>{
+            alert(data.msg)
+            if(data.status == 'success'){
+                location.reload(true)
+            }
         })
 
         $(document).on('submit','.paymentMethodForm',function(e){

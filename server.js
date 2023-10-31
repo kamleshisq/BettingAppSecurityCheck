@@ -7518,9 +7518,11 @@ io.on('connection', (socket) => {
         try{
             let id = data.id
             delete data['id']
+            console.log(data)
             await PaymentMethodModel.findOneAndUpdate(id,data)
+            socket.emit('editpaymentMethod',{status:'success',msg:'data updated successfully'})
         }catch(err){
-
+            socket.emit('editpaymentMethod',{status:'fail',msg:'something went wrong'})
         }
     })
 
