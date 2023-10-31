@@ -965,13 +965,13 @@ socket.on('connect', () => {
     
     if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && !pathname.startsWith('/admin/betlimit')){
         setInterval(()=>{
-            console.log("loginuserbalance")
+            // console.log("loginuserbalance")
             socket.emit('loginuserbalance',LOGINDATA)
-        },1000 * 60)
+        },1000)
         
     }
     socket.on('loginuserbalance',async(data)=>{
-        console.log('refresh login data')
+        // console.log('refresh login data')
         html1 = `
         <div class="skin-data green">
             
@@ -1976,7 +1976,7 @@ socket.on('connect', () => {
         let data = {LOGINUSER:JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))}
         socket.emit('loginuserbalance', data)
 
-    },1000 * 60)
+    },1000)
     
     $(document).on('click', ".COMMISSIONADMIN", function(e){
         e.preventDefault()
