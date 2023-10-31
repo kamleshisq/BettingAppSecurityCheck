@@ -7707,6 +7707,7 @@ io.on('connection', (socket) => {
             let childAccStatement = {}
             let ParentAccStatement = {}
             let date = Date.now()
+            let date1 = Date.now() + 1000
 
             // //for child User//
             childAccStatement.child_id = childUser.id;
@@ -7723,6 +7724,7 @@ io.on('connection', (socket) => {
             const accStatementChild = await AccModel.create(childAccStatement)
             childAccStatement.creditDebitamount = data.amount * -1;
             childAccStatement.balance = childUser.balance;
+            childAccStatement.date = date1
             childAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
             const accStatementChild1 = await AccModel.create(childAccStatement)
             if(!accStatementChild || !accStatementChild1){
@@ -7746,6 +7748,7 @@ io.on('connection', (socket) => {
             ParentAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
             ParentAccStatement.creditDebitamount = data.amount * 1;
             ParentAccStatement.balance = parseInt(data.amount);
+            ParentAccStatement.date = date1
             await AccModel.create(ParentAccStatement)
 
             socket.emit('deniePaymentReq',{status:'success',msg:'payment request denied'})
