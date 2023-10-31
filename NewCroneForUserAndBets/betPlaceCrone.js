@@ -70,12 +70,12 @@ module.exports = () => {
                     if(data.data.odds === '-'){
                        
 
-                        // let result = await betplace(data)
-                        // console.log(result)
-                        // if(result != 'Bet placed successfully'){
-                        //     break;
-                        // }
                     }else{
+                        let result = await betplace(data)
+                        console.log(result)
+                        if(result != 'Bet placed successfully'){
+                            break;
+                        }
                         console.log(data, "BATDATA")
                     }
 
