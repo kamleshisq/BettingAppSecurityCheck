@@ -73,6 +73,7 @@
     <script src="/js/webSocket.js"></script>
     <!-- LOCAL CSS  -->
 
+    <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <style type="text/css">
       .popup .overlay { position:fixed; top:0px; left:0px; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:9999; display:none; }
       .popup .content { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); font-family: 'Kanit', sans-serif; font-weight: 400; font-size: 20px; line-height: normal;color: #fff; background: green; width: 100%; max-width: 600px; height: initial; z-index: 99999; text-align: center; box-sizing: border-box; padding: 20px; }
@@ -83,12 +84,14 @@
 
       .popup.Error .content { background: red; }      
     </style>
+    <%} %>
   </head>
   <%if(loginData){%>
     <body data-logindata="<%=JSON.stringify(loginData)%>">
       <%}else{%>
     <body >
   <%}%>
+    <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <div class="popup" id="popup-1">
       <div class="overlay"></div>
       <div class="content">
@@ -104,6 +107,7 @@
         <p id="redPopUP2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aspernatur laborum rem sed laudantium excepturi veritatis voluptatum architecto, dolore quaerat totam officiis nisi animi accusantium alias inventore nulla atque debitis.</p>
       </div>
     </div>
+    <%} %>
     
     <main class="main-tg-dv">
       <!-- ----= NAVBAR SECTION START =-----   -->
