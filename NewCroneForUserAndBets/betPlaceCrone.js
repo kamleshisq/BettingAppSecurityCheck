@@ -13,7 +13,7 @@ const betplace = require('../utils/betPlace')
 
 
 module.exports = () => {
-    cron.schedule('*/5 * * * * *', async() => { 
+    cron.schedule('*/30 * * * * *', async() => { 
         try{
             let MarketIds = []
             let betDetailsArray = []
@@ -67,8 +67,8 @@ module.exports = () => {
                         LOGINDATA
                     }
 
-                    // console.log(data)
-                    if(data.odds != '-' && data.odds != 'NAN', data.odds != '', data.odds != ' '){
+                    if(data.data.odds != '-' && data.data.odds != 'NAN', data.data.odds != '', data.data.odds != ' '){
+                        console.log(data, "BATDATA")
 
                         // let result = await betplace(data)
                         // console.log(result)
