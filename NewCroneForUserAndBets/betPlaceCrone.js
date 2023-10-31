@@ -13,7 +13,7 @@ const betplace = require('../utils/betPlace')
 
 
 module.exports = () => {
-    cron.schedule('*/30 * * * * *', async() => { 
+    cron.schedule('*/5 * * * * *', async() => { 
         try{
             let MarketIds = []
             let betDetailsArray = []
@@ -67,12 +67,12 @@ module.exports = () => {
                         LOGINDATA
                     }
 
-                    // console.log(data)
-                    let result = await betplace(data)
-                    console.log(result)
-                    if(result != 'Bet placed successfully'){
-                        break;
-                    }
+                    console.log(data)
+                    // let result = await betplace(data)
+                    // console.log(result)
+                    // if(result != 'Bet placed successfully'){
+                    //     break;
+                    // }
 
                 }
             }
