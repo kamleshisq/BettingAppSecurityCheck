@@ -104,7 +104,7 @@ socket.on('connect', () => {
 
     $(document).on('click','#navmod3 .luck-enterprise-tag',function(e){
         let form = $('#navmod3 form')
-        $('#navmod3 .luck-enterprise-tag').hasClass('active').removeClass('active')
+        $('#navmod3 .luck-enterprise-tag .active').removeClass('active')
         $(this).addClass('active')
         let data = {}
         let accountholdername = $(this).data('accountname')
