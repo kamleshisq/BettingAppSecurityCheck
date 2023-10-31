@@ -7441,7 +7441,19 @@ io.on('connection', (socket) => {
 
     socket.on('addpaymentMethod',async(data)=>{
         try{
-            if(!await PaymentMethodModel.findOne({accountnumber:data.accountnumber})){
+            let filterdata = {}
+            let filterarr = []
+            if(data.accountnumber){
+                filterarr.push({accountnumber:data.accountnumber})
+            }
+            if(data.upiid){
+                filterarr.push({upiid:data.upiid})
+            }
+            if(data.upiid){
+                filterarr.push({phonenumber:data.phonenumber})
+            }
+            filterdata.$or = filterarr
+            if(!await PaymentMethodModel.findOne(filterdata)){
                 await PaymentMethodModel.create(data)
                 socket.emit('addpaymentMethod',{status:'success',msg:'payment method added successfully'})
             }else{
