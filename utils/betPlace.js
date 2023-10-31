@@ -61,7 +61,9 @@ async function placeBet(data){
         //FOR FENCT DATA(IF THAT MARKET IS FANCY)
         if (data.data.secId === "odd_Even_Yes" || data.data.secId === "odd_Even_No"){
             const oddEvenData = marketList.odd_even;
-            marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
+            if(oddEvenData){
+                marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
+            }
             if(!marketDetails){
                 let oddEvenData = marketList.session
                 marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
