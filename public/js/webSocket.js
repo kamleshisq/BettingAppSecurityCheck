@@ -107,12 +107,15 @@ socket.on('connect', () => {
         $('#navmod3 .luck-enterprise-tag.active').removeClass('active')
         $(this).addClass('active')
         let data = {}
+        let maindata = {}
         let accountholdername = $(this).data('accountname')
         let pmethod = form.find('input[name="pmethod"]').val()
         data.accountholdername = accountholdername
         data.pmethod = pmethod
+        maindata.data = data
+        maindata.LOGINDATA = LOGINDATA
         console.log(data,'==>payment detail')
-        socket.emit('getpaymentdetailbyholdername',data)
+        socket.emit('getpaymentdetailbyholdername',maindata)
 
         
     })
@@ -232,6 +235,15 @@ socket.on('connect', () => {
                 $('#navmod3').find('form button').prop("disabled", false)
                 $('#navmod3').find('form button').css("opacity", 1)
                 let form = $('#navmod3').find('form')
+                let htmltag = "";
+                for(let i = 0; i<data.accountholderarr.length;i++){
+                    if(i == 0){
+                        htmltag += `<div class="luck-enterprise-tag active" data-accountname="${data.accountholderarr[i].accountholdername}">${data.accountholderarr[i].accountholdername}</div>`
+                    }else{
+                        htmltag += `<div class="luck-enterprise-tag" data-accountname="${data.accountholderarr[i].accountholdername}">${data.accountholderarr[i].accountholdername}</div>`
+                    }
+                }
+                $('#navmod3 .accountnamecontainer').html(htmltag)
                 if(data.type === "banktransfer"){
                     form.find('input[name="pmethod"]').val('banktransfer')
                     form.find('input[name="accountholdername"]').val(data.paymentMethodDetail.accountholdername)
@@ -250,6 +262,7 @@ socket.on('connect', () => {
                     <li id="Acc-Number">${data.paymentMethodDetail.phonenumber} <span class="copy-icon"></span></li>`
                 }
             }else{
+                $('#navmod3 .accountnamecontainer').hmtl('')
                 html = 'This Payment method not allowed yet!!'
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)

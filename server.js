@@ -7550,7 +7550,12 @@ io.on('connection', (socket) => {
 
     socket.on('getpaymentdetailbyholdername',async(data)=>{
         try{
-            let paymentmethod = await PaymentMethodModel.findOne(data)
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+            let sdmId = user.parentUsers[1]
+            let sdmUser = await User.findById(sdmId)
+            data.data.userName = sdmUser.userName
+            data.data.status = true
+            let paymentmethod = await PaymentMethodModel.findOne(data.data)
             socket.emit('getpaymentdetailbyholdername',{status:'success',data:paymentmethod})
         }catch(err){
             socket.emit('getpaymentdetailbyholdername',{status:'fail',msg:'something went wrong'})
@@ -7580,7 +7585,8 @@ io.on('connection', (socket) => {
             let sdmId = user.parentUsers[1]
             let sdmUser = await User.findById(sdmId)
             let paymentMethodDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:data.type,status:true})
-            socket.emit('getBankData', {paymentMethodDetail, type:data.type})
+            let accountholderarr = await PaymentMethodModel.find({userName:sdmUser.userName,pmethod:data.type,status:true})
+            socket.emit('getBankData', {paymentMethodDetail, type:data.type,accountholderarr})
         }catch(err){
             socket.emit('getPaymentmethodData',{status:'fail',msg:'something went wrong'})
             console.log(err)
