@@ -963,11 +963,11 @@ socket.on('connect', () => {
         }
     })
     
-    setInterval(()=>{
-        console.log("loginuserbalance")
-        socket.emit('loginuserbalance',LOGINDATA)
-    },1000)
-    if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && pathname.startsWith('/admin/betlimit')){
+    if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && !pathname.startsWith('/admin/betlimit')){
+        setInterval(()=>{
+            console.log("loginuserbalance")
+            socket.emit('loginuserbalance',LOGINDATA)
+        },1000)
         socket.on('loginuserbalance',async(data)=>{
             // console.log('refresh login data')
             html1 = `
