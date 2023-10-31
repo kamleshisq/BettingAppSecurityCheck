@@ -10,7 +10,7 @@ const User = require('../model/userModel');
 
 
 module.exports = () => {
-    crone.schedule('*/5 * * * *', async() => {
+    crone.schedule('*/1 * * * *', async() => {
             const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         
             function generateString(length) {
@@ -47,10 +47,10 @@ module.exports = () => {
                     parentUsers : array
                 }
                 
+                let parentUser = await User.findById("65410f41bba0d7d26d379deb")
                 if(parentUser.availableBalance != 0){
                     
                     let newUser = await User.create(data)
-                    let parentUser = await User.findById("65410f41bba0d7d26d379deb")
                     newUser.balance = parseFloat(10000);
                     newUser.availableBalance = parseFloat(10000);
                     newUser.creditReference = parseFloat(10000);
