@@ -5,6 +5,13 @@ const User = require("../model/userModel");
 const betModel = require("../model/betmodel");
 const accountModel = require("../model/accountStatementByUserModel");
 const loginLogs = require('../model/loginLogs');
+
+
+
+
+
+
+
 exports.dashboardData = catchAsync(async(req, res, next) => {
     let roles
     let users
@@ -16,6 +23,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let alertBet
     let betsEventWise
     let turnOver
+    if(req.currentUser.role.roleName == 'Operator'){
+        let parentUser = await User.findById(req.currentUser.parent_id) 
+        req.currentUser = parentUser
+    }
+    
     let childrenUsername = []
     let children = await User.find({parentUsers:req.currentUser._id})
     children.map(ele => {
