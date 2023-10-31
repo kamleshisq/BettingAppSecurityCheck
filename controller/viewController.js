@@ -1365,7 +1365,13 @@ exports.getPromotionPage = catchAsync(async(req, res, next) => {
 
 exports.getoperationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    const fundList = await houseFundModel.find({userId:me.id}).sort({date:-1}).limit(10)
+    let id = me.id
+    if(req.currentUser.role.roleName == 'Operator'){
+        let parentUser = await User.findById(req.currentUser.parent_id)
+        req.currentUser = parentUser
+        id = parentUser._id.toString()
+    }
+    const fundList = await houseFundModel.find({userId:id}).sort({date:-1}).limit(10)
     res.status(200).render("./operations/operation",{
         title:"House Management",
         me,
