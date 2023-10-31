@@ -68,7 +68,7 @@ module.exports = () => {
                     }
 
                     if(data.data.odds != '-' && data.data.odds != 'NAN', data.data.odds != '', data.data.odds != ' '){
-                        console.log(data)
+                        console.log(data, "BATDATA")
 
                         // let result = await betplace(data)
                         // console.log(result)
