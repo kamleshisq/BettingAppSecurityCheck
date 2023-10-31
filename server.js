@@ -7741,7 +7741,7 @@ io.on('connection', (socket) => {
             children.map(ele => {
                 childrenArr.push(ele.userName)
             })
-            let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr}})
+            let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
             socket.emit('getcountofpaymentreq',{status:'success',paymentreqcount})
         }catch(err){
             socket.emit('getcountofpaymentreq',{status:'fail',paymentreqcount})
