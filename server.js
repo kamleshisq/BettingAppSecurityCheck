@@ -7736,8 +7736,9 @@ io.on('connection', (socket) => {
 
     socket.on('getcountofpaymentreq',async(data)=>{
         try{
+            console.log(data)
             let childrenArr = []
-            let children = await User.find({parentUsers:LOGINDATA.LOGINUSER._id})
+            let children = await User.find({parentUsers:data.LOGINUSER._id})
             children.map(ele => {
                 childrenArr.push(ele.userName)
             })
