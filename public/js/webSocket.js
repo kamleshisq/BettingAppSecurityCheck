@@ -17459,6 +17459,7 @@ socket.on('connect', () => {
         })
 
         socket.on('deniePaymentReq',async(data)=>{
+            console.log(data.err)
             alert(data.msg)
             if(data.status == 'success'){
                 location.reload(true)
