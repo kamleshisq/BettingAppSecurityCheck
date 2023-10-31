@@ -130,21 +130,24 @@ socket.on('connect', () => {
     const copyButton = document.querySelectorAll("#BANK-DATA .copy-icon");
     console.log(copyButton)
     if(copyButton){
-        copyButton.addEventListener("click", function () {
-            // Select the text inside the element
-            const range = document.createRange();
-            range.selectNode(textToCopy);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-    
-            // Copy the selected text to the clipboard
-            try {
-            document.execCommand("copy");
-            console.log("Text copied to clipboard");
-            } catch (err) {
-            console.error("Unable to copy text: ", err);
-            }
+        copyButton.forEach(function (button) {
+            button.addEventListener("click", function () {
+                // Select the text inside the element
+                const range = document.createRange();
+                range.selectNode(textToCopy);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+        
+                // Copy the selected text to the clipboard
+                try {
+                document.execCommand("copy");
+                console.log("Text copied to clipboard");
+                } catch (err) {
+                console.error("Unable to copy text: ", err);
+                }
+            })
         })
+
     }
 
     $(document).on('click', ".bank-img", function(e){
