@@ -2907,6 +2907,10 @@ io.on('connection', (socket) => {
         let alertBet
         let betsEventWise
         let turnOver
+        if(data.LOGINUSER.role.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINUSER.parent_id)
+            data.LOGINUSER = parentUser
+        }
         let childrenUsername = []
         let children = await User.find({parentUsers:data.LOGINUSER._id})
         children.map(ele => {
