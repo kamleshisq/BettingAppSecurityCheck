@@ -128,11 +128,13 @@ socket.on('connect', () => {
 
     $(document).on('click','#navmod3 .copy-icon',function(e){
         let element = $(this).parent().text()
-        var $temp = $("<input>");
-        $("body").append($temp);
-        $temp.val(element).select();
+        var TempText = document.createElement("input");
+        TempText.value = element;
+        document.body.appendChild(TempText);
+        TempText.select();
+        
         document.execCommand("copy");
-        $temp.remove();
+        document.body.removeChild(TempText);
         
     })
 
