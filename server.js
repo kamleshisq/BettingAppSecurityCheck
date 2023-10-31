@@ -7593,6 +7593,15 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getpaymentmethoddetailsbyid',async(data)=>{
+        try{
+            let paymentdata = await PaymentMethodModel.findOne({_id:data.id})
+            socket.emit('getpaymentmethoddetailsbyid', {status:'success',data:paymentdata})
+        }catch(err){
+            socket.emit('getpaymentmethoddetailsbyid', {status:'fail',msg:'something went wrong'})
+        }
+    })
+
     socket.on('getpaymentapprovalreqdata',async(data)=>{
         try{
             let result = await paymentReportModel.findById(data)
@@ -7748,6 +7757,8 @@ io.on('connection', (socket) => {
             socket.emit('getcountofpaymentreq',{status:'fail',msg:'something went wrong'})
         }
     })
+
+  
 
 })
 

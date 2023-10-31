@@ -131,6 +131,83 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade deposit-withdraw-modal" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Payment Method</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-data edit_paymentMethodForm">
+                <div class="row">
+                  <div class="col hide">
+                    <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col hide">
+                    <label for="">Account Name</label>
+                    <input type="text" class="form-control ml0" placeholder="Account Name" name="accountholdername">
+                  </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col hide">
+                        <label for="">Account Number</label>
+                        <input type="number" class="form-control ml0" placeholder="Account Number" name="accountnumber" >
+                    </div>
+                </div>
+                <div class="row mt-2" >
+                    <div class="col hide">
+                        <label for="">UPI Id</label>
+                        <input type="text" class="form-control ml0 upiTransferInp" placeholder="UPI Id" name="upiid">
+                    </div>
+                </div>
+                <div class="row mt-2" >
+                    <div class="col hide">
+                        <label for="">Phone Number</label>
+                        <input type="number" class="form-control ml0 paytmTransferInp" placeholder="Phone Number" name="phonenumber">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col hide">
+                        <label for="">Display Name</label>
+                        <input type="text" class="form-control ml0"  name="displayname">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col hide">
+                        <label for="">Ifsc Code</label>
+                        <input type="text" class="form-control ml0"  name="ifsccode">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col hide">
+                    <label for="">Bank Name</label>
+                    <input type="text" class="form-control ml0"  name="bankname">
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col hide">
+                    <label for="">Branch Name</label>
+                    <input type="text" class="form-control ml0"  name="branchname">
+                  </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col hide">
+                        <button type="submit" class="btn-submit mt-3">Submit</button>
+                    </div>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
   
   
   
