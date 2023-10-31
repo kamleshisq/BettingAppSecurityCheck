@@ -560,8 +560,8 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
         }
         let limit = 10;
         // console.log(req.query)
-        console.log(req.query, "req.queryreq.queryreq.queryreq.query")
-        console.log(operationId, "operationIdoperationIdoperationIdoperationIdoperationId")
+        // console.log(req.query, "req.queryreq.queryreq.queryreq.query")
+        // console.log(operationId, "operationIdoperationIdoperationIdoperationIdoperationId")
         if(page < 0){
             return next(new AppError('page should positive',404))
         }
