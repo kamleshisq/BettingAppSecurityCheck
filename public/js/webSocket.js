@@ -184,30 +184,26 @@ socket.on('connect', () => {
             
         }
     })
-    const copyButton = document.querySelectorAll("#BANK-DATA .copy-icon");
-    console.log(copyButton)
-    if(copyButton.length != 0){
-        copyButton.forEach(function (button) {
-            button.addEventListener("click", function () {
-                console.log('clicked')
-                // Select the text inside the element
-                console.log(this.parentNode.textContent)
-                const range = document.createRange();
-                range.selectNode(this.parentNode);
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(range);
-        
-                // Copy the selected text to the clipboard
-                try {
-                document.execCommand("copy");
-                console.log("Text copied to clipboard");
-                } catch (err) {
-                console.error("Unable to copy text: ", err);
-                }
-            })
+    $(document).on('click',"#BANK-DATA .copy-icon",function(e){
+        const copyButton = this
+        copyButton.addEventListener("click", function () {
+            console.log('clicked')
+            // Select the text inside the element
+            console.log(this.parentNode.textContent)
+            const range = document.createRange();
+            range.selectNode(this.parentNode);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+    
+            // Copy the selected text to the clipboard
+            try {
+            document.execCommand("copy");
+            console.log("Text copied to clipboard");
+            } catch (err) {
+            console.error("Unable to copy text: ", err);
+            }
         })
-
-    }
+    })
 
 
 
