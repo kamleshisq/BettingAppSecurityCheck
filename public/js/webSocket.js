@@ -128,9 +128,12 @@ socket.on('connect', () => {
 
     $(document).on('click','#navmod3 .copy-icon',function(e){
         let element = $(this).parent().text()
-        element.select()
-        // document.execCommand("copy")
-        console.log(element)
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val(element).select();
+        document.execCommand("copy");
+        $temp.remove();
+        
     })
 
     $(document).on('click', ".bank-img", function(e){
