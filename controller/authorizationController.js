@@ -197,6 +197,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
 
+    console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
@@ -269,6 +270,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.currentUser = currentUser
     req.token = token
+    console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     // console.log("WORKING123456789")
     next()
 });
