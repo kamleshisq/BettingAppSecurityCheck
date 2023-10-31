@@ -7048,9 +7048,9 @@ var paymentDeposite = /*#__PURE__*/function () {
               message: "amount deposit successfully!!!",
               status: "success"
             });
-            // setTimeout(function() {
-            //     location.reload();
-            //   }, 2000);
+            setTimeout(function () {
+              location.reload();
+            }, 2000);
             // $(".popup_body").removeClass("popup_body_show");
           }
           _context.next = 11;
