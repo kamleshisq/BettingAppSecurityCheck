@@ -1497,7 +1497,7 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
                 roleName:{$ne:'Admin'},
                 role_type:{$in:role_type},
                 // whiteLabel:fWhitlabel,
-                parentUsers:{$elemMatch: { $eq:  req.currentUser.id}}
+                parentUsers:{$elemMatch: { $eq:  '6492fd6cd09db28e00761691'}}
             }
         },
         {
