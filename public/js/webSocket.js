@@ -116,6 +116,8 @@ socket.on('connect', () => {
             else{
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)
+                html = 'This Payment method not allowed yet!!'
+                document.getElementById('BANK-DATA').innerHTML = html
             }
 
         }else{
