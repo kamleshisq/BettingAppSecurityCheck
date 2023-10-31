@@ -1059,6 +1059,7 @@ socket.on('connect', () => {
         }
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
+                console.log(data.paymentreqcount)
                 $('header .social-media .fa-bell').siblings('span').text(data.paymentreqcount)
             }
         })
