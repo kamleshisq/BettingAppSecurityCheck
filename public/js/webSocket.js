@@ -964,10 +964,14 @@ socket.on('connect', () => {
     })
 
     if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && pathname.startsWith('/admin/betlimit')){
-        setInterval(()=>{
+        function loginUserBalance(){
+            socket.emit('loginuserbalance', LOGINDATA)
+            setTimeout(()=>{
+                loginUserBalance()
+              }, 500)
 
-            socket.emit('loginuserbalance',LOGINDATA)
-        },1000 * 60)
+        }
+        loginUserBalance()
         socket.on('loginuserbalance',async(data)=>{
             // console.log('refresh login data')
             html1 = `

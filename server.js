@@ -319,7 +319,7 @@ io.on('connection', (socket) => {
             id = parentUser._id.toString()
         }
         const user = await User.findById(id)
-        console.log(user)
+        console.log(user, "CONSOLEUSER")
         socket.emit('loginuserbalance',user)
     })
 
