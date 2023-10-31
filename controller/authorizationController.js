@@ -269,6 +269,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.currentUser = currentUser
     req.token = token
+    console.log("WORKING123456789")
     next()
 });
 
