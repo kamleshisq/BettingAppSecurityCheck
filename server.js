@@ -2365,7 +2365,7 @@ io.on('connection', (socket) => {
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
     let limit = 20;
     let page = data.page;
-    // console.log(page)
+    console.log(data.filterData)
     // console.log(data.LOGINDATA.LOGINUSER)
     let filter = {}
     filter.user_id = data.LOGINDATA.LOGINUSER._id
