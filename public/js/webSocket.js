@@ -16912,12 +16912,13 @@ socket.on('connect', () => {
                     html += `
                     <tr class="" data-trid="${paymentmethod[i]._id}">
                     <td>${paymentmethod[i].accountholdername}</td>`
-                    if(paymentmethod[i].accountnumber){
-
+                    if(paymentmethod[i].pmethod == 'banktransfer'){
                         html += `<td class="text-nowrap" >${paymentmethod[i].accountnumber}</td>`
-                    }else{
-                        html += `<td class="text-nowrap" >-</td>`
+                    }else if(paymentmethod[i].pmethod == 'upi'){
+                        html += `<td class="text-nowrap" >${paymentmethod[i].upiid}</td>`
 
+                    }else if(paymentmethod[i].pmethod == 'paytm'){
+                        html += `<td class="text-nowrap" >${paymentmethod[i].phonenumber}</td>`
                     }
                     if(paymentmethod[i].ifsccode){
 

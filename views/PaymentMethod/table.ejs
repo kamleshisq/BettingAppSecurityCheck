@@ -16,10 +16,31 @@
     <% for(let i = 0; i < paymentmethod.length; i++){%>
       <tr class="" data-trid="paymentmethod[i]._id">
       <td><%=paymentmethod[i].accountholdername%></td>
-      <td class="text-nowrap" ><%=paymentmethod[i].accountnumber%></td>
-      <td class="text-nowrap" ><%=paymentmethod[i].ifsccode%></td>
-      <td class="text-nowrap"><%=paymentmethod[i].bankname%></td>
-      <td class="text-nowrap" ><%=paymentmethod[i].branchname%></td>
+      if(paymentmethod[i].pmethod == 'banktransfer'){
+
+        <td class="text-nowrap" ><%=paymentmethod[i].accountnumber%></td>
+      }else if(paymentmethod[i].pmethod == 'upi'){
+        <td class="text-nowrap" ><%=paymentmethod[i].upiid%></td>
+        
+      }else if(paymentmethod[i].pmethod == 'paytm'){
+        <td class="text-nowrap" ><%=paymentmethod[i].phonenumber%></td>
+
+      }
+      if(paymentmethod[i].ifsccode){
+        <td class="text-nowrap" ><%=paymentmethod[i].ifsccode%></td>
+      }else{
+        <td class="text-nowrap" >-</td>
+      }
+      if(paymentmethod[i].bankname){
+        <td class="text-nowrap" ><%=paymentmethod[i].bankname%></td>
+      }else{
+        <td class="text-nowrap" >-</td>
+      }
+      if(paymentmethod[i].branchname){
+        <td class="text-nowrap" ><%=paymentmethod[i].branchname%></td>
+      }else{
+        <td class="text-nowrap" >-</td>
+      }
       <td class="text-nowrap" ><%=paymentmethod[i].displayname%></td>
       <td class="text-nowrap" ><%=paymentmethod[i].pmethod%></td>
       <%if(paymentmethod[i].status){%>
