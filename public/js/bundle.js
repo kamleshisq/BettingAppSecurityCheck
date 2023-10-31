@@ -7048,9 +7048,9 @@ var paymentDeposite = /*#__PURE__*/function () {
               message: "amount deposit successfully!!!",
               status: "success"
             });
-            setTimeout(function () {
-              location.reload();
-            }, 2000);
+            // setTimeout(function() {
+            //     location.reload();
+            //   }, 2000);
             // $(".popup_body").removeClass("popup_body_show");
           }
           _context.next = 11;
@@ -7779,7 +7779,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61136" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49855" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
