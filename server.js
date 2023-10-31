@@ -319,6 +319,7 @@ io.on('connection', (socket) => {
             id = parentUser._id.toString()
         }
         const user = await User.findById(id)
+        console.log(user)
         socket.emit('loginuserbalance',user)
     })
 
