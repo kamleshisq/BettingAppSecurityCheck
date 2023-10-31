@@ -105,7 +105,7 @@ socket.on('connect', () => {
     socket.on('getPaymentmethodData',async(data)=>{
         console.log(data)
         if(data.status == 'success'){
-            if(!data.data){
+            if(data.data){
                 let htmltag = "";
                 for(let i = 0; i<data.accountholderarr.length;i++){
                     if(i == 0){

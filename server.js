@@ -7546,8 +7546,8 @@ io.on('connection', (socket) => {
             let sdmId = user.parentUsers[1]
             let sdmUser = await User.findById(sdmId)
             // console.log('sdmId',sdmId,'sdmUser',sdmUser)
-            let paymentMethodDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:'banktransfer',status:true}).sort({accountholdername:1})
-            let accountholderarr = await PaymentMethodModel.find({userName:sdmUser.userName,pmethod:'banktransfer',status:true}).sort({accountholdername:1})
+            let paymentMethodDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:'banktransfer',status:true})
+            let accountholderarr = await PaymentMethodModel.find({userName:sdmUser.userName,pmethod:'banktransfer',status:true})
             socket.emit('getPaymentmethodData',{status:'success',data:paymentMethodDetail,accountholderarr})
         }catch(err){
             socket.emit('getPaymentmethodData',{status:'fail',msg:'something went wrong'})
