@@ -107,12 +107,15 @@ socket.on('connect', () => {
         $('#navmod3 .luck-enterprise-tag.active').removeClass('active')
         $(this).addClass('active')
         let data = {}
+        let maindata = {}
         let accountholdername = $(this).data('accountname')
         let pmethod = form.find('input[name="pmethod"]').val()
         data.accountholdername = accountholdername
         data.pmethod = pmethod
+        maindata.data = data
+        maindata.LOGINDATA = LOGINDATA
         console.log(data,'==>payment detail')
-        socket.emit('getpaymentdetailbyholdername',data)
+        socket.emit('getpaymentdetailbyholdername',maindata)
 
         
     })
