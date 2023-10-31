@@ -2063,6 +2063,7 @@ io.on('connection', (socket) => {
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
+            data.LOGINUSER._id = data.LOGINUSER._id.toString()
         }
         console.log(data.LOGINUSER, "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
         User.aggregate([
