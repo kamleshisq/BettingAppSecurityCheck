@@ -1481,6 +1481,8 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
         for(let i = 0; i < roles.length; i++){
             role_type.push(roles[i].role_type)
         }
+
+        console.log(role_type, "role_typerole_typerole_type")
     let fWhitlabel;
     if(req.currentUser.role_type == 1){
         fWhitlabel = {$ne:null}
