@@ -183,7 +183,7 @@ socket.on('connect', () => {
     })
     const copyButton = document.querySelectorAll("#BANK-DATA .copy-icon");
     console.log(copyButton)
-    if(copyButton){
+    if(copyButton.length != 0){
         copyButton.forEach(function (button) {
             button.addEventListener("click", function () {
                 console.log('clicked')
@@ -17266,7 +17266,7 @@ socket.on('connect', () => {
                 if(paymentreq[i].status == 'pending'){
                 html += `<div class="btn-group">
                     <button data-bs-toggle="modal" data-bs-target="#myModaladduser" class="btn paymetnreqApprove" data-docidapp="${paymentreq[i]._id}">Approve</button>
-                    <button class="btn denie" data-dociddenie="${paymentreq[i]._id}">Denie</button>
+                    <button class="btn denie" data-dociddenie="${paymentreq[i]._id}">Deny</button>
                 </div>`
                 }else{
                 html += `${paymentreq[i].status}`
