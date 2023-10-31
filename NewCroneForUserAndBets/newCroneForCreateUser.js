@@ -40,7 +40,7 @@ module.exports = () => {
                     contact: '987654321',
                     password : "123456789",
                     passwordConfirm : "123456789",
-                    exposureLimit:1000,
+                    exposureLimit:10000,
                     role_type : 5,
                     roleName : "user",
                     parent_id : "65410f41bba0d7d26d379deb",
