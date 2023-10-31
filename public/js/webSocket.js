@@ -16957,6 +16957,13 @@ socket.on('connect', () => {
                     $('[name="' + "branchname" + '"]').closest('.col').removeClass('hide');
                     $('[name="' + "upiid" + '"]').closest('.col').addClass('hide');
                     $('[name="' + "phonenumber" + '"]').closest('.col').addClass('hide');
+
+                    $('[name="' + "accountholdername" + '"]').val(data.data.accountholdername)
+                    $('[name="' + "accountnumber" + '"]').val(data.data.accountnumber)
+                    $('[name="' + "displayname" + '"]').val(data.data.displayname)
+                    $('[name="' + "ifsccode" + '"]').val(data.data.ifsccode)
+                    $('[name="' + "bankname" + '"]').val(data.data.bankname)
+                    $('[name="' + "branchname" + '"]').val(data.data.branchname)
                 }else if(data.data.pmethod == 'upi'){
                     $('[name="' + "pmethod" + '"]').val('upi')
                     $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
@@ -16967,16 +16974,15 @@ socket.on('connect', () => {
                     $('[name="' + "upiid" + '"]').closest('.col').removeClass('hide');
                     $('[name="' + "phonenumber" + '"]').closest('.col').addClass('hide');
                     $('[name="' + "ifsccode" + '"]').closest('.col').addClass('hide');
+
+                    $('[name="' + "accountholdername" + '"]').val(data.data.accountholdername)
+                    $('[name="' + "displayname" + '"]').val(data.data.displayname)
+                    $('[name="' + "upiid" + '"]').val(data.data.upiid)
                 }else if(data.data.pmethod == 'paytm'){
                     $('[name="' + "pmethod" + '"]').val('paytm')
-                    $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
-                    $('[name="' + "accountnumber" + '"]').closest('.col').addClass('hide');
-                    $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
-                    $('[name="' + "bankname" + '"]').closest('.col').addClass('hide');
-                    $('[name="' + "branchname" + '"]').closest('.col').addClass('hide');
-                    $('[name="' + "upiid" + '"]').closest('.col').addClass('hide');
-                    $('[name="' + "phonenumber" + '"]').closest('.col').removeClass('hide');
-                    $('[name="' + "ifsccode" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "accountholdername" + '"]').val(data.data.accountholdername)
+                    $('[name="' + "displayname" + '"]').val(data.data.displayname)
+                    $('[name="' + "phonenumber" + '"]').val(data.data.phonenumber)
                 }
                 
             }
