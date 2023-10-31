@@ -14,7 +14,7 @@
     </thead>
     <tbody class="new-body tbody">
     <% for(let i = 0; i < paymentmethod.length; i++){%>
-      <tr class="" data-trid="paymentmethod[i]._id">
+      <tr class="" data-trid="<%=paymentmethod[i]._id%>">
       <td><%=paymentmethod[i].accountholdername%></td>
       <%if(paymentmethod[i].pmethod == 'banktransfer'){%>
 
@@ -64,6 +64,7 @@
       <%}%>
       <td>
         <div class="btn-group">
+          <button class="btn-group editpaymentmethod" data-bs-toggle="modal" data-bs-target="#myModal1" type="button">Edit</button>
           <button class="btn delete" data-docid="<%=paymentmethod[i]._id%>">Delete</button>
         </div>
       </td>

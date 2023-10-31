@@ -128,6 +128,7 @@ socket.on('connect', () => {
                 form.find('input[name="accountholdername"]').val(data.data.accountholdername)
                 html = `<li id="Acc-Name">${data.data.accountholdername} <span class="copy-icon"></span></li>
                 <li id="Acc-Number">${data.data.accountnumber} <span class="copy-icon"></span></li>
+                <li id="Bank-Name">${data.data.bankname} <span class="copy-icon"></span></li>
                 <li id="IFSC">IFSC : ${data.data.ifsccode} <span class="copy-icon"></span></li>`
             }else if (data.data.pmethod === "upi"){
                 form.find('input[name="accountholdername"]').val(data.data.accountholdername)
@@ -205,6 +206,9 @@ socket.on('connect', () => {
         })
 
     }
+
+
+
 
    
 
@@ -16932,6 +16936,52 @@ socket.on('connect', () => {
 
         })
 
+        $(document).on('click','.editpaymentmethod',function(e){
+            let id = $(this).closest('tr').data('trid')
+            if(id){
+                socket.emit('getpaymentmethoddetailsbyid',{LOGINDATA,id})
+            }
+        })
+
+        socket.on('getpaymentmethoddetailsbyid',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let form = $('#myModal1 form')
+                if(data.data.pmethod == 'banktransfer'){
+                    $('[name="' + "pmethod" + '"]').val('banktransfer')
+                    $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "accountnumber" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "ifsccode" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "bankname" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "branchname" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "upiid" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "phonenumber" + '"]').closest('.col').addClass('hide');
+                }else if(data.data.pmethod == 'upi'){
+                    $('[name="' + "pmethod" + '"]').val('upi')
+                    $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "accountnumber" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "bankname" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "branchname" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "upiid" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "phonenumber" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "ifsccode" + '"]').closest('.col').addClass('hide');
+                }else if(data.data.pmethod == 'paytm'){
+                    $('[name="' + "pmethod" + '"]').val('paytm')
+                    $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "accountnumber" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "displayname" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "bankname" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "branchname" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "upiid" + '"]').closest('.col').addClass('hide');
+                    $('[name="' + "phonenumber" + '"]').closest('.col').removeClass('hide');
+                    $('[name="' + "ifsccode" + '"]').closest('.col').addClass('hide');
+                }
+                
+            }
+        })
+
         $(document).on('submit','.paymentMethodForm',function(e){
             e.preventDefault()
             let form = $(this)[0];
@@ -16994,6 +17044,8 @@ socket.on('connect', () => {
         socket.on('paymentmethodStatusChange',async(data)=>{
             alert(data.msg)
         })
+
+     
 
         $(document).on('change','#pmethod',function(e){
             e.preventDefault();
