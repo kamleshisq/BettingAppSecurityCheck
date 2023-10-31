@@ -1976,7 +1976,7 @@ socket.on('connect', () => {
         let data = {LOGINUSER:JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))}
         socket.emit('loginuserbalance', data)
 
-    },1000)
+    },1000 * 60)
     
     $(document).on('click', ".COMMISSIONADMIN", function(e){
         e.preventDefault()
