@@ -105,12 +105,22 @@ socket.on('connect', () => {
     socket.on('getPaymentmethodData',async(data)=>{
         console.log(data)
         if(data.status == 'success'){
-            if(data.data){
-
-                document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
+            if(!data.data){
+                let htmltag = "";
+                for(let i = 0; i<data.accountholderarr.length;i++){
+                    if(i == 0){
+                        htmltag += `<div class="luck-enterprise-tag active">${data.accountholderarr[i].accountholdername}</div>`
+                    }else{
+                        htmltag += `<div class="luck-enterprise-tag">${data.accountholderarr[i].accountholdername}</div>`
+                    }
+                }
+                // document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
                 document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
                 document.getElementById('Acc-Number').innerHTML = data.data.accountnumber + '<span class="copy-icon"></span>'
                 document.getElementById('IFSC').innerHTML = data.data.ifsccode + '<span class="copy-icon"></span>'
+                let form = $('#navmod3').find('form')
+                form.find('input[name="pmethod"]').val('banktransfer')
+                form.find('input[name="accountholdername"]').val(data.data.accountholdername)
                 
             }
             else{
@@ -180,14 +190,21 @@ socket.on('connect', () => {
             if(data.paymentMethodDetail){
                 $('#navmod3').find('form button').prop("disabled", false)
                 $('#navmod3').find('form button').css("opacity", 1)
+                let form = $('#navmod3').find('form')
                 if(data.type === "banktransfer"){
+                    form.find('input[name="pmethod"]').val('banktransfer')
+                    form.find('input[name="accountholdername"]').val(data.paymentMethodDetail.accountholdername)
                     html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
                     <li id="Acc-Number">${data.paymentMethodDetail.accountnumber} <span class="copy-icon"></span></li>
                     <li id="IFSC">IFSC : ${data.paymentMethodDetail.ifsccode} <span class="copy-icon"></span></li>`
                 }else if (data.type === "upi"){
+                    form.find('input[name="pmethod"]').val('upi')
+                    form.find('input[name="accountholdername"]').val(data.paymentMethodDetail.accountholdername)
                     html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
                     <li id="Acc-Number">${data.paymentMethodDetail.upiid} <span class="copy-icon"></span></li>`
                 }else if (data.type === "paytm"){
+                    form.find('input[name="pmethod"]').val('paytm')
+                    form.find('input[name="accountholdername"]').val(data.paymentMethodDetail.accountholdername)
                     html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
                     <li id="Acc-Number">${data.paymentMethodDetail.phonenumber} <span class="copy-icon"></span></li>`
                 }
@@ -200,14 +217,14 @@ socket.on('connect', () => {
         }
     })
 
-    $(document).on('submit','#navmod3 .payment-fom',function(e){
-        e.preventDefault();
-        let form = $(this)[0];
-        let fd = new FormData(form);
-        let data = Object.fromEntries(fd.entries());
-        console.log(data)
-        console.log(fd)
-    })
+    // $(document).on('submit','#navmod3 .payment-fom',function(e){
+    //     e.preventDefault();
+    //     let form = $(this)[0];
+    //     let fd = new FormData(form);
+    //     let data = Object.fromEntries(fd.entries());
+    //     console.log(data)
+    //     console.log(fd)
+    // })
 
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
