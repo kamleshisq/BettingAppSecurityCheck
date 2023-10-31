@@ -114,6 +114,7 @@ socket.on('connect', () => {
                         htmltag += `<div class="luck-enterprise-tag">${data.accountholderarr[i].accountholdername}</div>`
                     }
                 }
+                $('#navmod3 .accountnamecontainer').html(htmltag)
                 // document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
                 document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
                 document.getElementById('Acc-Number').innerHTML = data.data.accountnumber + '<span class="copy-icon"></span>'
@@ -124,6 +125,7 @@ socket.on('connect', () => {
                 
             }
             else{
+                $('#navmod3 .accountnamecontainer').hmtl('')
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)
                 html = 'This Payment method not allowed yet!!'
