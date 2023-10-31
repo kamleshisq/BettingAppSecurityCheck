@@ -16947,6 +16947,7 @@ socket.on('connect', () => {
             console.log(data)
             if(data.status == 'success'){
                 let form = $('#myModal1 form')
+                $('[name="' + "id" + '"]').val(data.data._id)
                 if(data.data.pmethod == 'banktransfer'){
                     $('[name="' + "pmethod" + '"]').val('banktransfer')
                     $('[name="' + "accountholdername" + '"]').closest('.col').removeClass('hide');
@@ -16986,6 +16987,21 @@ socket.on('connect', () => {
                 }
                 
             }
+        })
+
+        $(document).on('submit','.edit_paymentMethodForm',function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let newData = {}
+            Object.keys(data).map((ele) => {
+                if(data[ele] != ""){
+                    newData[ele] = data[ele]
+                }
+            })
+            console.log(newData)
+            // socket.emit('editpaymentMethod',newData)
         })
 
         $(document).on('submit','.paymentMethodForm',function(e){
