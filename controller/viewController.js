@@ -4300,9 +4300,10 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     }else{
         ipv4 = ip
     }
+    let mainId = req.currentUser._id
     if(req.currentUser.role.roleName == 'Operator'){
         let parentUser = await User.findById(req.currentUser.parent_id)
-        req.currentUser = parentUser
+        mainId = parentUser._id.toString()
     }
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const sportData = await getCrkAndAllData()
@@ -4368,7 +4369,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
         let childrenUsername = []
-        let children = await User.find({parentUsers:req.currentUser._id})
+        let children = await User.find({parentUsers:mainId})
         children.map(ele => {
             childrenUsername.push(ele.userName) 
         })
@@ -4392,9 +4393,9 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         let Bets = []
         let rules = await gamrRuleModel.find()
         if(req.currentUser){
-            userLog = await loginLogs.find({user_id:req.currentUser._id})
-            userMultimarkets = await multimarkets.findOne({userId:req.currentUser._id})
-            stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
+            userLog = await loginLogs.find({user_id:mainId})
+            userMultimarkets = await multimarkets.findOne({userId:mainId})
+            stakeLabledata = await stakeLable.findOne({userId:mainId})
             if(stakeLabledata === null){
                 stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
             }
