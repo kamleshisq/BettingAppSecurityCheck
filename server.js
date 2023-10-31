@@ -7512,6 +7512,64 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('paymentApprovaltable',async(data)=>{
+        console.log(data.filterData)
+        if(data.filterData.status == "All"){
+            delete data.filterData.status
+        }
+        if(data.filterData.pmethod == "All"){
+            delete data.filterData.pmethod
+        }
+        
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate))}
+            delete data.filterData.fromDate;
+            delete data.filterData.toDate;
+        }else{
+            if(data.filterData.fromDate){
+                data.filterData.date = {$gte : data.filterData.fromDate}
+                delete data.filterData.fromDate;
+
+            }
+            if(data.filterData.toDate){
+                data.filterData.date = {$lte : new Date(new Date(data.filterData.toDate))}
+                delete data.filterData.toDate;
+
+            }
+        }
+        let limit;
+        let page = data.page;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
+        }
+        let childrenUsername = []
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }     
+        if(data.LOGINDATA.LOGINUSER.userName != data.filterData.userName){
+        }
+        else{
+            data.filterData.userName = {$in:childrenUsername}
+
+        }
+
+        let paymentreq = await paymentReportModel.find(data.filterData).sort({date:-1}).skip(skip).limit(limit)
+        socket.emit('paymentApprovaltable',{paymentreq,page,refreshStatus:data.refreshStatus})
+    })
+
 })
 
 http.listen(80,()=> {

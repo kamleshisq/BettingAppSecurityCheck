@@ -5270,8 +5270,8 @@ exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     let newChilds = chils.map(ele => {
         return ele.userName
     })
-    let paymentreq = await paymentReportModel.find({username:{$in:newChilds}})
-    console.log(paymentreq)
+    let paymentreq = await paymentReportModel.find({username:{$in:newChilds}}).sort({date:-1}).limit(10)
+    // console.log(paymentreq)
     res.render('./PaymentApproval/PaymentApproval',{
         title:'Payment Approval',
         currentUser:req.currentUser,

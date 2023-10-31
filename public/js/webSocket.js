@@ -16927,6 +16927,215 @@ socket.on('connect', () => {
     }
 
     if(pathname == '/admin/paymentapproval'){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        $('#fromDate').val(tomorrowFormatted)
+        $('#toDate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+
+        $('.searchUser').keyup(function(){
+            if($(this).hasClass("searchUser")){
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+    
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+    
+        socket.on("ACCSEARCHRES", async(data)=>{
+            $('.wrapper').show()
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
+
+
+        let toDate;
+        let fromDate;
+        let status;
+        let type;
+        let filterData = {}
+        fromDate = $('#fromDate').val()
+        toDate = $('#toDate').val()
+        filterData.fromDate = fromDate;
+        if(toDate != ''){
+            filterData.toDate = new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))
+        }else{
+            filterData.toDate = toDate;
+        }
+      
+
+        $('#status,#type,#fromDate,#toDate').change(function(){
+            $('.pageId').attr('data-pageid','1')
+
+            console.log("working")
+            let userName = $('.searchUser').val()
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            status = $('#status').val()
+            type = $('#type').val()
+            
+            data.page = 0;
+       
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            if(toDate != ''){
+                filterData.toDate = new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))
+            }else{
+                filterData.toDate = toDate;
+            }
+            filterData.fromDate = fromDate;
+            filterData.status = status
+            filterData.pmethod = type
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            socket.emit('paymentApprovaltable',data)
+    
+        })
+    
+        $(document).on("click", ".searchList", function(){
+            $('.pageId').attr('data-pageid','1')
+            
+            document.getElementById("searchUser").value = this.textContent
+         
+            data.page = 0;
+          
+            filterData.userName = this.textContent
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
+            socket.emit('paymentApprovaltable',data)
+            
+        })
+    
+
+        $('#load-more').click(function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('paymentApprovaltable',data)
+        })
+
+        $('.refresh').click(function(e){
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            let refreshStatus = true;
+            data.refreshStatus = refreshStatus
+            socket.emit('paymentApprovaltable',data)
+        })
+
+        
+        socket.on('paymentApprovaltable',(data) => {
+            // console.log(data.refreshStatus)
+           
+            let paymentreq = data.paymentreq;
+            let html = '';
+            for(let i = 0; i < paymentreq.length; i++){
+                let date = new Date(paymentreq[i].date)
+                html += `<tr class="" data-trid="${paymentreq[i]._id}">`
+                html += `
+                <td class="text-nowrap" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                <td class="text-nowrap" >${paymentreq[i].username}></td>
+                <td class="text-nowrap" >Deposit</td>
+                <td class="text-nowrap">${paymentreq[i].status}></td>
+                <td class="text-nowrap" >${paymentreq[i].pmethod}></td>
+                <td class="text-nowrap" >${paymentreq[i].amount}></td>
+                <td class="text-nowrap" >${paymentreq[i].utr}></td>
+                `
+                if(paymentreq[i].approvedamount){
+                    html += `<td class="text-nowrap" >${paymentreq[i].approvedamount}</td>`
+                }else{
+                html += `<td>-</td>`
+                }
+                html += `
+                <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal3" class="btn docimg" data-docimg="/paymentimg/${paymentreq[i].image}.png">View Image</button></td>
+                <td>`
+                if(paymentreq[i].status == 'pending'){
+                html += `<div class="btn-group">
+                    <button data-bs-toggle="modal" data-bs-target="#myModaladduser" class="btn paymetnreqApprove" data-docidapp="${paymentreq[i]._id}">Approve</button>
+                    <button class="btn denie" data-dociddenie="${paymentreq[i]._id}">Denie</button>
+                </div>`
+                }else{
+                html += `${paymentreq[i].status}`
+                }
+                html += `</td>
+                </tr>`
+            }
+            if(data.page == 0 || data.refreshStatus){
+                if(paymentreq.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    $('#load-more').hide()
+                }else{
+
+                    $('#load-more').show()
+                }
+
+                $('.new-body').html(html)
+            }else{
+                if(paymentreq.length == 0){
+                    $('#load-more').hide()
+                }
+                $('.new-body').append(html)         
+            }
+        })
+
+        
         $(document).on('click','.paymetnreqApprove',function(e){
             let id = $(this).data('docidapp')
             if(id){
