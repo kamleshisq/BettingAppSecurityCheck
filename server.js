@@ -7544,12 +7544,12 @@ io.on('connection', (socket) => {
 
     socket.on('acceptpaymetnreq',async(data)=>{
         try{
-            const data = await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount,status:'approved'})
+            const report = await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount,status:'approved'})
             let userData = {}
             let parentData = {}
-            const childUser = await User.findOne({userName:data.username});
+            const childUser = await User.findOne({userName:report.username});
             const parentUser = await User.findById(childUser.parent_id);
-            userData.balance = parseFloat(childUser.balance + req.body.amount);
+            userData.balance = parseFloat(childUser.balance + data.approvedamount);
             userData.availableBalance = parseFloat(childUser.availableBalance + data.approvedamount);
             // // userData.creditReference = {}
             // // userData.lifeTimeCredit = (childUser.lifeTimeCredit + req.body.amount);
