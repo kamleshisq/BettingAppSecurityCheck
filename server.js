@@ -7502,6 +7502,16 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('deniePaymentReq',async(data)=>{
+        try{
+            await paymentReportModel.findByIdAndUpdate(data,{status:'denied'})
+            socket.emit('deniePaymentReq',{status:'success',msg:'payment request denied'})
+        }catch(err){
+            socket.emit('deniePaymentReq',{status:'fail',msg:'Somethig went wrong'})
+
+        }
+    })
+
 })
 
 http.listen(80,()=> {
