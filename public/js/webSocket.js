@@ -146,6 +146,7 @@ socket.on('connect', () => {
         console.log(data)
         if(data.status == 'success'){
             if(data.data){
+                $('#navmod3 .enter-payment-detail').show()
                 let htmltag = "";
                 for(let i = 0; i<data.accountholderarr.length;i++){
                     if(i == 0){
@@ -166,6 +167,7 @@ socket.on('connect', () => {
             }
             else{
                 $('#navmod3 .accountnamecontainer').html('')
+                $('#navmod3 .enter-payment-detail').hide()
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)
                 html = 'This Payment method not allowed yet!!'
@@ -232,6 +234,7 @@ socket.on('connect', () => {
         }else{
             let html = ''
             if(data.paymentMethodDetail){
+                $('#navmod3 .enter-payment-detail').show()
                 $('#navmod3').find('form button').prop("disabled", false)
                 $('#navmod3').find('form button').css("opacity", 1)
                 let form = $('#navmod3').find('form')
@@ -263,6 +266,7 @@ socket.on('connect', () => {
                 }
             }else{
                 $('#navmod3 .accountnamecontainer').html('')
+                $('#navmod3 .enter-payment-detail').hide()
                 html = 'This Payment method not allowed yet!!'
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)
