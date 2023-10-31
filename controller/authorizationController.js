@@ -197,7 +197,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
 
-    console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+    console.log(req.originalUrl, "111111111111111111111111111111")
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
@@ -270,7 +270,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.currentUser = currentUser
     req.token = token
-    console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+    console.log(req.originalUrl, "2222222222222222222222222222222")
     // console.log("WORKING123456789")
     next()
 });
@@ -785,7 +785,7 @@ exports.isAdmin = catchAsync(async(req, res, next) => {
     if(req.currentUser.role_type == 5){
         return next(new AppError('You do not have permission to access this route',404))
     }else{
-        console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+        // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
         next()
     }
 })
