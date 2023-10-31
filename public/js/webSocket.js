@@ -17449,6 +17449,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('submit','.denypaymentreq_form',function(e){
+            e.preventDefault()
             let form = $('.denypaymentreq_form')
             let id = form.find('input[name="id"]').val()
             let remark = form.find('input[name="remark"]')
