@@ -17454,7 +17454,7 @@ socket.on('connect', () => {
             let id = form.find('input[name="id"]').val()
             let remark = form.find('input[name="remark"]')
             let amount = form.find('input[name="amount"]')
-
+            console.log(id,remark,amount)
             socket.emit('deniePaymentReq',{id,remark,amount})
         })
 

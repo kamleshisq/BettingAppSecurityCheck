@@ -7700,8 +7700,7 @@ io.on('connection', (socket) => {
     socket.on('deniePaymentReq',async(data)=>{
         try{
             let report = await paymentReportModel.findByIdAndUpdate(data.id,{status:'denied',remark:data.remark})
-            let userData = {}
-            let parentData = {}
+
             const childUser = await User.findOne({userName:report.username});
             const parentUser = await User.findById(childUser.parent_id);
            
@@ -7714,7 +7713,7 @@ io.on('connection', (socket) => {
             childAccStatement.user_id = childUser.id;
             childAccStatement.parent_id = parentUser.id;
             childAccStatement.description = 'Chips credited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
-            childAccStatement.creditDebitamount = data.amount;
+            childAccStatement.creditDebitamount = data.amount * 1;
             childAccStatement.balance = childUser.balance + parseInt(data.amount);
             childAccStatement.date = date
             childAccStatement.userName = childUser.userName
@@ -7745,7 +7744,7 @@ io.on('connection', (socket) => {
             // // console.log(ParentAccStatement)
             await AccModel.create(ParentAccStatement)
             ParentAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
-            ParentAccStatement.creditDebitamount = data.amount;
+            ParentAccStatement.creditDebitamount = data.amount * 1;
             ParentAccStatement.balance = parseInt(data.amount);
             await AccModel.create(ParentAccStatement)
 
