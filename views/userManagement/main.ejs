@@ -571,6 +571,12 @@
               <label for="viewReports">viewReports</label>
               <input type="checkbox" name="operator" value="viewReports" id="viewReports" class="10">
             </div>
+            <%if(currentUser.roleName != "Admin"){%>
+              <div class="input_group">
+                <label for="Payment">Payment</label>
+                <input type="checkbox" name="operator" value="Payment" id="Payment" class="10">
+              </div>
+            <%}%>
             
         </div>
           </div>
