@@ -7745,7 +7745,7 @@ io.on('connection', (socket) => {
             let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
             socket.emit('getcountofpaymentreq',{status:'success',paymentreqcount})
         }catch(err){
-            socket.emit('getcountofpaymentreq',{status:'fail',paymentreqcount})
+            socket.emit('getcountofpaymentreq',{status:'fail',msg:'something went wrong'})
         }
     })
 
