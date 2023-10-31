@@ -16971,6 +16971,27 @@ socket.on('connect', () => {
                 $('#myModaladduser').modal('toggle')
             }
         })
+
+        $(document).on('click','.denie',function(e){
+            let id = $(this).data('dociddenie')
+            if(id){
+                if(confirm('do you want to denie this payment request')){
+                    socket.emit('deniePaymentReq',id)
+                }
+            }
+        })
+
+        socket.on('deniePaymentReq',async(data)=>{
+            alert(data.msg)
+            if(data.status == 'success'){
+                location.reload(true)
+            }
+        })
+
+        $(document).on('click','.docimg',function(e){
+            let imgpath = $(this).data('docimg')
+            $('#myModal3').find('img').attr('src',imgpath)
+        })
     }
     
 
