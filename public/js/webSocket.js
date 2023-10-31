@@ -103,7 +103,7 @@ socket.on('connect', () => {
     })
 
     socket.on('getPaymentmethodData',async(data)=>{
-        // console.log(data)
+        console.log(data)
         if(data.status == 'success'){
             document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
             document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
