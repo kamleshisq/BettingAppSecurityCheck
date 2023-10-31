@@ -17319,6 +17319,7 @@ socket.on('connect', () => {
             }else{
                 alert(data.msg)
                 $('#myModaladduser').modal('toggle')
+                location.reload(true)
             }
         })
 
