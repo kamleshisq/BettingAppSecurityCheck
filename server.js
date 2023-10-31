@@ -2668,7 +2668,7 @@ io.on('connection', (socket) => {
     socket.on("chartMain", async (data) => {
         console.log(data);
         if(data.LOGINUSER.role.roleName == 'Operator'){
-            let parentUser = await User.findById(req.currentUser.parent_id)
+            let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
         }
     
