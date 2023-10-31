@@ -26,7 +26,7 @@ module.exports = () => {
         
             // console.log('working')
             let array = [ '6492fd6cd09db28e00761691', '6540fab15030a819abeade83' ]
-            array.push("6540fb205030a819abeaec9e")
+            array.push("6540fb535030a819abeaf4c5")
             // console.log(array)
             for(let i = 0; i < 1000; i++){
                 let x = generateString(7)
@@ -43,12 +43,12 @@ module.exports = () => {
                     exposureLimit:1000,
                     role_type : 5,
                     roleName : "user",
-                    parent_id : "6540fb205030a819abeaec9e",
+                    parent_id : "6540fb535030a819abeaf4c5",
                     parentUsers : array
                 }
                 
                 let newUser = await User.create(data)
-                let parentUser = await User.findById("6540fb205030a819abeaec9e")
+                let parentUser = await User.findById("6540fb535030a819abeaf4c5")
                 newUser.balance = parseFloat(10000);
                 newUser.availableBalance = parseFloat(10000);
                 newUser.creditReference = parseFloat(10000);
