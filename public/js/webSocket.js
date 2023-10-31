@@ -165,7 +165,7 @@ socket.on('connect', () => {
                 
             }
             else{
-                $('#navmod3 .accountnamecontainer').hmtl('')
+                $('#navmod3 .accountnamecontainer').html('')
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)
                 html = 'This Payment method not allowed yet!!'
@@ -262,7 +262,7 @@ socket.on('connect', () => {
                     <li id="Acc-Number">${data.paymentMethodDetail.phonenumber} <span class="copy-icon"></span></li>`
                 }
             }else{
-                $('#navmod3 .accountnamecontainer').hmtl('')
+                $('#navmod3 .accountnamecontainer').html('')
                 html = 'This Payment method not allowed yet!!'
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)
