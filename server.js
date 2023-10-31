@@ -2079,8 +2079,9 @@ io.on('connection', (socket) => {
             }
           ])
             .then((userResult) => {
+                console.log(userResult, "userResultuserResultuserResultuserResult")
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-          
+              console.log(userIds, "userIds")
               Bet.aggregate([
                 {
                   $match: {
