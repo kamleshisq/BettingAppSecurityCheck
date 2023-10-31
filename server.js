@@ -7544,7 +7544,25 @@ io.on('connection', (socket) => {
 
     socket.on('acceptpaymetnreq',async(data)=>{
         try{
-            await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount,status:'approved'})
+            const data = await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount,status:'approved'})
+            let userData = {}
+            let parentData = {}
+            const childUser = await User.findOne({userName:data.username});
+            const parentUser = await User.findById(childUser.parent_id);
+            userData.balance = parseFloat(childUser.balance + req.body.amount);
+            userData.availableBalance = parseFloat(childUser.availableBalance + data.approvedamount);
+            // // userData.creditReference = {}
+            // // userData.lifeTimeCredit = (childUser.lifeTimeCredit + req.body.amount);
+            parentData.availableBalance = parseFloat(parentUser.availableBalance - data.approvedamount);
+            // // parentData.lifeTimeDeposit = (parentUser.lifeTimeDeposit + data.approvedamount);
+            parentData.downlineBalance = parseFloat(parentUser.downlineBalance + data.approvedamount);
+            
+            // // console.log(userData)
+            const updatedChild = await User.findByIdAndUpdate(childUser.id, userData,{
+                new:true
+            });
+            await User.findByIdAndUpdate(childUser.id, {$inc:{creditReference:data.approvedamount}})
+            const updatedparent =  await User.findByIdAndUpdate(parentUser.id, parentData);
             socket.emit('acceptpaymetnreq',{status:'success',msg:'request approved'})
         }catch(err){
             socket.emit('acceptpaymetnreq',{status:'fail',msg:'something went wrong'})
