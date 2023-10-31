@@ -1483,7 +1483,7 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
             role_type.push(roles[i].role_type)
         }
 
-        // console.log(role_type, "role_typerole_typerole_type")
+        console.log(role_type, "role_typerole_typerole_type")
     let fWhitlabel;
     if(req.currentUser.role_type == 1){
         fWhitlabel = {$ne:null}
@@ -1497,7 +1497,7 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
                 roleName:{$ne:'Admin'},
                 role_type:{$in:role_type},
                 // whiteLabel:fWhitlabel,
-                parentUsers:{$elemMatch: { $eq:  req.currentUser.id}}
+                parentUsers:{$elemMatch: { $eq:  '6492fd6cd09db28e00761691'}}
             }
         },
         {

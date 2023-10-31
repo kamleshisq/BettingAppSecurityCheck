@@ -2090,9 +2090,9 @@ io.on('connection', (socket) => {
             }
           ])
             .then((userResult) => {
-                console.log(userResult, "userResultuserResultuserResultuserResult")
+                // console.log(userResult, "userResultuserResultuserResultuserResult")
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-              console.log(userIds, "userIds")
+            //   console.log(userIds, "userIds")
               Bet.aggregate([
                 {
                   $match: {
@@ -2365,7 +2365,7 @@ io.on('connection', (socket) => {
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
     let limit = 20;
     let page = data.page;
-    // console.log(page)
+    console.log(data.filterData)
     // console.log(data.LOGINDATA.LOGINUSER)
     let filter = {}
     filter.user_id = data.LOGINDATA.LOGINUSER._id

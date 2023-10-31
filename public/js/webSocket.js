@@ -8978,6 +8978,7 @@ socket.on('connect', () => {
             filterData.type = type
             page = 0
             $('.pageId').attr('data-pageid',1)
+            // console.log()
             socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
           }
 
