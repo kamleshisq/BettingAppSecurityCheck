@@ -16894,11 +16894,37 @@ socket.on('connect', () => {
                 for(let i = 0;i<paymentmethod.length;i++){
                     html += `
                     <tr class="" data-trid="${paymentmethod[i]._id}">
-                    <td>${paymentmethod[i].accountholdername}</td>
-                    <td class="text-nowrap" >${paymentmethod[i].accountnumber}</td>
-                    <td class="text-nowrap" >${paymentmethod[i].ifsccode}</td>
-                    <td class="text-nowrap">${paymentmethod[i].bankname}</td>
-                    <td class="text-nowrap" >${paymentmethod[i].branchname}</td>
+                    <td>${paymentmethod[i].accountholdername}</td>`
+                    if(paymentmethod[i].accountnumber){
+
+                        html += `<td class="text-nowrap" >${paymentmethod[i].accountnumber}</td>`
+                    }else{
+                        html += `<td class="text-nowrap" >-</td>`
+
+                    }
+                    if(paymentmethod[i].ifsccode){
+
+                        html += `<td class="text-nowrap" >${paymentmethod[i].ifsccode}</td>`
+                    }else{
+                        html += `<td class="text-nowrap" >-</td>`
+
+                    }
+                    if(paymentmethod[i].bankname){
+
+                        html += `<td class="text-nowrap" >${paymentmethod[i].bankname}</td>`
+                    }else{
+                        html += `<td class="text-nowrap" >-</td>`
+
+                    }
+                    if(paymentmethod[i].branchname){
+
+                        html += `<td class="text-nowrap" >${paymentmethod[i].branchname}</td>`
+                    }else{
+                        html += `<td class="text-nowrap" >-</td>`
+
+                    }
+
+                    html += `
                     <td class="text-nowrap" >${paymentmethod[i].displayname}</td>
                     <td class="text-nowrap" >${paymentmethod[i].pmethod}</td>`
                     if(paymentmethod[i].status){
