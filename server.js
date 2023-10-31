@@ -3170,12 +3170,12 @@ io.on('connection', (socket) => {
                 socket.emit("FUndData", houseFund)
             }else{
                 let parentUse = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
-                if(data.LOGINDATA.LOGINUSER.roleName === "Admin"){ 
+                if(parentUse.roleName === "Admin"){ 
                     let user = await User.findByIdAndUpdate(parentUse._id.toString(), {$inc:{balance:parseFloat(data.data.amount), availableBalance:parseFloat(data.data.amount)}})
-                // console.log(user,122122)
+                console.log(user,122122)
                 let date = Date.now()
                 let data1 = {
-                    userId:data.LOGINDATA.LOGINUSER._id,
+                    userId:parentUse._id.toString(),
                     amount:parseFloat(data.data.amount),
                     Remark:data.data.Remark,
                     date,
@@ -6601,7 +6601,15 @@ io.on('connection', (socket) => {
         try{
             let page = data.page
             let limit = 10
-            let houseData = await houseFundModel.find({userId:data.LOGINDATA.LOGINUSER._id}).sort({date:-1}).skip(page * limit).limit(limit)
+            let id = data.LOGINDATA.LOGINUSER._id
+
+            if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
+                let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+                data.LOGINDATA.LOGINUSER = parentUser
+                id = parentUser._id.toString()
+            }
+
+            let houseData = await houseFundModel.find({userId:id}).sort({date:-1}).skip(page * limit).limit(limit)
             socket.emit('HouseFundData', houseData)
         }catch(err){
             console.log(err)

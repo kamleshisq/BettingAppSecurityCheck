@@ -1476,11 +1476,14 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
 })
 
 exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
-    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    // if(req.currentUser.roleName === "")
+    const roles = await Role.find({role_level: {$gt:1}});
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
             role_type.push(roles[i].role_type)
         }
+
+        // console.log(role_type, "role_typerole_typerole_type")
     let fWhitlabel;
     if(req.currentUser.role_type == 1){
         fWhitlabel = {$ne:null}
@@ -1493,7 +1496,7 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
             $match:{
                 roleName:{$ne:'Admin'},
                 role_type:{$in:role_type},
-                whiteLabel:fWhitlabel,
+                // whiteLabel:fWhitlabel,
                 parentUsers:{$elemMatch: { $eq:  req.currentUser.id}}
             }
         },
