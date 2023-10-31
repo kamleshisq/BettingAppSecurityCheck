@@ -967,7 +967,7 @@ socket.on('connect', () => {
         setInterval(()=>{
             console.log("loginuserbalance")
             socket.emit('loginuserbalance',LOGINDATA)
-        },1000)
+        },1000 * 60)
         
     }
     socket.on('loginuserbalance',async(data)=>{
