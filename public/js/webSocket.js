@@ -17091,12 +17091,12 @@ socket.on('connect', () => {
                 html += `<tr class="" data-trid="${paymentreq[i]._id}">`
                 html += `
                 <td class="text-nowrap" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
-                <td class="text-nowrap" >${paymentreq[i].username}></td>
+                <td class="text-nowrap" >${paymentreq[i].username}</td>
                 <td class="text-nowrap" >Deposit</td>
-                <td class="text-nowrap">${paymentreq[i].status}></td>
-                <td class="text-nowrap" >${paymentreq[i].pmethod}></td>
-                <td class="text-nowrap" >${paymentreq[i].amount}></td>
-                <td class="text-nowrap" >${paymentreq[i].utr}></td>
+                <td class="text-nowrap">${paymentreq[i].status}</td>
+                <td class="text-nowrap" >${paymentreq[i].pmethod}</td>
+                <td class="text-nowrap" >${paymentreq[i].amount}</td>
+                <td class="text-nowrap" >${paymentreq[i].utr}</td>
                 `
                 if(paymentreq[i].approvedamount){
                     html += `<td class="text-nowrap" >${paymentreq[i].approvedamount}</td>`
