@@ -63,11 +63,11 @@
                 <div class="payment-tab-content">
                     <div class="title">Choose Beneficiary Account</div>
                     <div class="luck-enterprise">
-                        <div class="luck-enterprise-tag" id="Acc-Name-button" >super duper admin</div>
+                        <div class="luck-enterprise-tag" id="Acc-Name-button" data-accountname="" active></div>
                         <ul id="BANK-DATA">
-                            <li id="Acc-Name">Luck Enterprise <span class="copy-icon"></span></li>
-                            <li id="Acc-Number">0147896764 <span class="copy-icon"></span></li>
-                            <li id="IFSC">IFSC : Kkbk0001359 <span class="copy-icon"></span></li>
+                            <li id="Acc-Name"> <span class="copy-icon"></span></li>
+                            <li id="Acc-Number"> <span class="copy-icon"></span></li>
+                            <li id="IFSC"> <span class="copy-icon"></span></li>
                         </ul>
                     </div>
                 </div>
@@ -81,6 +81,7 @@
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                       <input type="text" class="form-control" name="amount" placeholder="Enter Amount" required>
                       <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
+                      <input type="hidden" name="accountholdername" value="">
                     </div>
                 </div>
                 <div class="change-pass-model-form-inputs">
