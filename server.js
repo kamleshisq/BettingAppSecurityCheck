@@ -7450,7 +7450,19 @@ io.on('connection', (socket) => {
 
     socket.on('addpaymentMethod',async(data)=>{
         try{
-            if(!await PaymentMethodModel.findOne({accountnumber:data.accountnumber})){
+            let filterdata = {}
+            let filterarr = []
+            if(data.accountnumber){
+                filterarr.push({accountnumber:data.accountnumber})
+            }
+            if(data.upiid){
+                filterarr.push({upiid:data.upiid})
+            }
+            if(data.upiid){
+                filterarr.push({phonenumber:data.phonenumber})
+            }
+            filterdata.$or = filterarr
+            if(!await PaymentMethodModel.findOne(filterdata)){
                 await PaymentMethodModel.create(data)
                 socket.emit('addpaymentMethod',{status:'success',msg:'payment method added successfully'})
             }else{
@@ -7537,7 +7549,25 @@ io.on('connection', (socket) => {
 
     socket.on('acceptpaymetnreq',async(data)=>{
         try{
-            await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount,status:'approved'})
+            const report = await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount,status:'approved'})
+            let userData = {}
+            let parentData = {}
+            const childUser = await User.findOne({userName:report.username});
+            const parentUser = await User.findById(childUser.parent_id);
+            userData.balance = parseFloat(childUser.balance + data.approvedamount);
+            userData.availableBalance = parseFloat(childUser.availableBalance + data.approvedamount);
+            // // userData.creditReference = {}
+            // // userData.lifeTimeCredit = (childUser.lifeTimeCredit + req.body.amount);
+            parentData.availableBalance = parseFloat(parentUser.availableBalance - data.approvedamount);
+            // // parentData.lifeTimeDeposit = (parentUser.lifeTimeDeposit + data.approvedamount);
+            parentData.downlineBalance = parseFloat(parentUser.downlineBalance + data.approvedamount);
+            
+            // // console.log(userData)
+            const updatedChild = await User.findByIdAndUpdate(childUser.id, userData,{
+                new:true
+            });
+            await User.findByIdAndUpdate(childUser.id, {$inc:{creditReference:data.approvedamount}})
+            const updatedparent =  await User.findByIdAndUpdate(parentUser.id, parentData);
             socket.emit('acceptpaymetnreq',{status:'success',msg:'request approved'})
         }catch(err){
             socket.emit('acceptpaymetnreq',{status:'fail',msg:'something went wrong'})
