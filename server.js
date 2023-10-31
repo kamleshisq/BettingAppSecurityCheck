@@ -4128,7 +4128,7 @@ io.on('connection', (socket) => {
                   },
                   {
                     $match: {
-                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id.toString()] }
                     }
                   }
                   
