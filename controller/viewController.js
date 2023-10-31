@@ -2227,13 +2227,13 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.eventList;
     let liveTennis = Tennis.eventList
     let currentUser =  req.currentUser
+    let id = req.currentUser._id
     if(req.currentUser.role.roleName == 'Operator'){
         let parentUser = await User.findById(req.currentUser.parent_id)
-        req.currentUser = parentUser
-        currentUser = parentUser
+        id = parentUser._id.toString()
     }
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
+    let children = await User.find({parentUsers:id})
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
