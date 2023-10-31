@@ -3168,6 +3168,23 @@ io.on('connection', (socket) => {
                 }
                 let houseFund =  await houseFundModel.create(data1)
                 socket.emit("FUndData", houseFund)
+            }else{
+                let parentUse = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+                if(data.LOGINDATA.LOGINUSER.roleName === "Admin"){ 
+                    let user = await User.findByIdAndUpdate(parentUse, {$inc:{balance:parseFloat(data.data.amount), availableBalance:parseFloat(data.data.amount)}})
+                // console.log(user,122122)
+                let date = Date.now()
+                let data1 = {
+                    userId:data.LOGINDATA.LOGINUSER._id,
+                    amount:parseFloat(data.data.amount),
+                    Remark:data.data.Remark,
+                    date,
+                    type:"Deposit",
+                    closingBalance: parseFloat(user.availableBalance + parseFloat(data.data.amount))
+                }
+                let houseFund =  await houseFundModel.create(data1)
+                socket.emit("FUndData", houseFund)
+                }
             }
         }catch(err){
             console.log(err)

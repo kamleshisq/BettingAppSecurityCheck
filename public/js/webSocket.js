@@ -12005,7 +12005,7 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/houseManagement"){
-        console.log('working')
+        // console.log('working')
         $(document).on("submit", ".HouseFund", function(e){
             e.preventDefault()
             let form = $(this)[0];
