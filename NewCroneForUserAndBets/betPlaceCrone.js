@@ -13,7 +13,7 @@ const betplace = require('../utils/betPlace')
 
 
 module.exports = () => {
-    cron.schedule('*/5 * * * * *', async() => { 
+    cron.schedule('*/30 * * * * *', async() => { 
         try{
             let MarketIds = []
             let betDetailsArray = []
