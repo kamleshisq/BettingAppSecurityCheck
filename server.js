@@ -7422,8 +7422,12 @@ io.on('connection', (socket) => {
 
     socket.on('addpaymentMethod',async(data)=>{
         try{
-            await PaymentMethodModel.create(data)
-            socket.emit('addpaymentMethod',{status:'success',msg:'payment method added successfully'})
+            if(!await PaymentMethodModel.findOne({accountnumber:data.accountnumber})){
+                await PaymentMethodModel.create(data)
+                socket.emit('addpaymentMethod',{status:'success',msg:'payment method added successfully'})
+            }else{
+                socket.emit('addpaymentMethod',{status:'success',msg:'this account number is alredy exist'})
+            }
         }catch(err){
             console.log(err)
             socket.emit('addpaymentMethod',{status:'fail',msg:'something went wrong'})
