@@ -286,7 +286,7 @@ io.on('connection', (socket) => {
         // console.log(page)
         let response = user;
         //urlRequestAdd(`/api/v1/users/searchUser?username = ${data.filterData.userName}& role=${data.filterData.role}& whiteLable = ${data.filterData.whiteLabel}`,'GET', data.LOGINDATA.LOGINTOKEN)
-        socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles,refreshStatus:data.refreshStatus})
+        socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles,refreshStatus:data.refreshStatus,me})
     })
 
     socket.on('getOperatorPermission',async(id)=>{

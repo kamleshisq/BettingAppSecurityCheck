@@ -338,12 +338,19 @@ exports.getUpdateRolePage = catchAsync(async(req, res, next) => {
 
 exports.dashboard = catchAsync(async(req, res, nex) => {
     var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/deshBoard/getDeshboardUserManagement'
+    let me;
+    const currentUser = req.currentUser
+    if(currentUser.role.roleName = 'Operator'){
+        me = await User.findById(currentUser.parent_id)
+    }else{
+        me = currentUser
+    }
     fetch(fullUrl, {
         method: 'get',
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json()).then(result => {
         // console.log(result.dashboard)
-        const currentUser = req.currentUser
+        
         res.status(200).render('./adminSideDashboard/dashboard',{
             title:"Dashboard",
             data:result,
