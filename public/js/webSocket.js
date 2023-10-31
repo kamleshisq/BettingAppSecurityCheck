@@ -967,7 +967,7 @@ socket.on('connect', () => {
         setInterval(()=>{
 
             socket.emit('loginuserbalance',LOGINDATA)
-        },1000 * 60)
+        },1000 )
         socket.on('loginuserbalance',async(data)=>{
             // console.log('refresh login data')
             html1 = `
