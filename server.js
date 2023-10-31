@@ -7498,7 +7498,7 @@ io.on('connection', (socket) => {
             if(data.upiid){
                 filterarr.push({upiid:data.upiid})
             }
-            if(data.upiid){
+            if(data.phonenumber){
                 filterarr.push({phonenumber:data.phonenumber})
             }
             filterdata.$or = filterarr
@@ -7511,6 +7511,16 @@ io.on('connection', (socket) => {
         }catch(err){
             console.log(err)
             socket.emit('addpaymentMethod',{status:'fail',msg:'something went wrong'})
+        }
+    })
+
+    socket.on('editpaymentMethod',async(data)=>{
+        try{
+            let id = data.id
+            delete data['id']
+            await PaymentMethodModel.findOneAndUpdate(id,data)
+        }catch(err){
+
         }
     })
 
