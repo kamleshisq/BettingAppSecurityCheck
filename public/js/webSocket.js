@@ -102,6 +102,25 @@ socket.on('connect', () => {
         socket.emit('getPaymentmethodData',{data:LOGINDATA})
     })
 
+    $(document).on('click','#navmod3 .luck-enterprise-tag',function(e){
+        let form = $('#navmod3 form')
+        $('#navmod3 .luck-enterprise-tag').hasClass('active').removeClass('active')
+        $(this).addClass('active')
+        let data = {}
+        let accountholdername = $(this).data('accountname')
+        let pmethod = form.find('input[name="pmethod"]')
+        data.accountholdername = accountholdername
+        data.pmethod = pmethod
+        console.log(data,'==>payment detail')
+        socket.emit('getpaymentdetailbyholdername',data)
+
+        
+    })
+
+    socket.on('getpaymentdetailbyholdername',async(data)=>{
+        console.log(data)
+    })
+
     socket.on('getPaymentmethodData',async(data)=>{
         console.log(data)
         if(data.status == 'success'){
@@ -109,9 +128,9 @@ socket.on('connect', () => {
                 let htmltag = "";
                 for(let i = 0; i<data.accountholderarr.length;i++){
                     if(i == 0){
-                        htmltag += `<div class="luck-enterprise-tag active">${data.accountholderarr[i].accountholdername}</div>`
+                        htmltag += `<div class="luck-enterprise-tag active" data-accountname="${data.accountholderarr[i].accountholdername}">${data.accountholderarr[i].accountholdername}</div>`
                     }else{
-                        htmltag += `<div class="luck-enterprise-tag">${data.accountholderarr[i].accountholdername}</div>`
+                        htmltag += `<div class="luck-enterprise-tag" data-accountname="${data.accountholderarr[i].accountholdername}">${data.accountholderarr[i].accountholdername}</div>`
                     }
                 }
                 $('#navmod3 .accountnamecontainer').html(htmltag)
@@ -161,6 +180,8 @@ socket.on('connect', () => {
         })
 
     }
+
+   
 
     $(document).on('click', ".bank-img", function(e){
         e.preventDefault();

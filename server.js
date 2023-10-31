@@ -7540,6 +7540,15 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getpaymentdetailbyholdername',async(data)=>{
+        try{
+            let paymentmethod = await PaymentMethodModel.findOne(data)
+            socket.emit('getpaymentdetailbyholdername',{status:'success',data:paymentmethod})
+        }catch(err){
+            socket.emit('getpaymentdetailbyholdername',{status:'fail',msg:'something went wrong'})
+        }
+    })
+
     socket.on('getPaymentmethodData',async(data)=>{
         try{
             let user = await User.findById(data.data.LOGINUSER._id)
