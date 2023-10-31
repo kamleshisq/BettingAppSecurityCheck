@@ -146,6 +146,7 @@ socket.on('connect', () => {
         console.log(data)
         if(data.status == 'success'){
             if(data.data){
+                $('#navmod3 .accountnamecontainer').show()
                 $('#navmod3 .enter-payment-detail').show()
                 let htmltag = "";
                 for(let i = 0; i<data.accountholderarr.length;i++){
@@ -159,6 +160,7 @@ socket.on('connect', () => {
                 // document.getElementById('Acc-Name-button').innerHTML = data.data.accountholdername 
                 document.getElementById('Acc-Name').innerHTML = data.data.accountholdername + '<span class="copy-icon"></span>'
                 document.getElementById('Acc-Number').innerHTML = data.data.accountnumber + '<span class="copy-icon"></span>'
+                document.getElementById('Bank-Name').innerHTML = data.data.bankname + '<span class="copy-icon"></span>'
                 document.getElementById('IFSC').innerHTML = data.data.ifsccode + '<span class="copy-icon"></span>'
                 let form = $('#navmod3').find('form')
                 form.find('input[name="pmethod"]').val('banktransfer')
@@ -166,7 +168,7 @@ socket.on('connect', () => {
                 
             }
             else{
-                $('#navmod3 .accountnamecontainer').html('')
+                $('#navmod3 .accountnamecontainer').hide()
                 $('#navmod3 .enter-payment-detail').hide()
                 $('#navmod3').find('form button').prop("disabled", true)
                 $('#navmod3').find('form button').css("opacity", 0.5)
@@ -235,6 +237,7 @@ socket.on('connect', () => {
             let html = ''
             if(data.paymentMethodDetail){
                 $('#navmod3 .enter-payment-detail').show()
+                $('#navmod3 .accountnamecontainer').show()
                 $('#navmod3').find('form button').prop("disabled", false)
                 $('#navmod3').find('form button').css("opacity", 1)
                 let form = $('#navmod3').find('form')
@@ -252,6 +255,7 @@ socket.on('connect', () => {
                     form.find('input[name="accountholdername"]').val(data.paymentMethodDetail.accountholdername)
                     html = `<li id="Acc-Name">${data.paymentMethodDetail.accountholdername} <span class="copy-icon"></span></li>
                     <li id="Acc-Number">${data.paymentMethodDetail.accountnumber} <span class="copy-icon"></span></li>
+                    <li id="Bank-Name">${data.paymentMethodDetail.bankname} <span class="copy-icon"></span></li>
                     <li id="IFSC">IFSC : ${data.paymentMethodDetail.ifsccode} <span class="copy-icon"></span></li>`
                 }else if (data.type === "upi"){
                     form.find('input[name="pmethod"]').val('upi')
@@ -265,7 +269,7 @@ socket.on('connect', () => {
                     <li id="Acc-Number">${data.paymentMethodDetail.phonenumber} <span class="copy-icon"></span></li>`
                 }
             }else{
-                $('#navmod3 .accountnamecontainer').html('')
+                $('#navmod3 .accountnamecontainer').hide()
                 $('#navmod3 .enter-payment-detail').hide()
                 html = 'This Payment method not allowed yet!!'
                 $('#navmod3').find('form button').prop("disabled", true)
