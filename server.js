@@ -2666,7 +2666,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("chartMain", async (data) => {
-        console.log(data);
+        // console.log(data);
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
@@ -2756,7 +2756,10 @@ io.on('connection', (socket) => {
         let filter;
         let filter2;
         let result = {}
-
+        if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            data.LOGINDATA.LOGINUSER = parentUser
+        }
         let childrenUsername = []
         let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
         children.map(ele => {
