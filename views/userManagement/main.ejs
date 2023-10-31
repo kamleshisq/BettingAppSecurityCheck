@@ -505,13 +505,11 @@
               <label for="whiteLabelAnalysis">whiteLabelAnalysis</label>
               <input type="checkbox" name="operator" value="whiteLabelAnalysis" id="whiteLabelAnalysis" class="1">
             </div>
-            
+
             <div class="input_group">
               <label for="commissionMarkets">commissionMarkets</label>
               <input type="checkbox" name="operator" value="commissionMarkets" id="commissionMarkets" class="2">
             </div>
-            <%}%>
-            
             <div class="input_group">
               <label for="settlements">settlements</label>
               <input type="checkbox" name="operator" value="settlements" id="settlements" class="3">
@@ -521,6 +519,12 @@
               <label for="gameAnalysis">gameAnalysis</label>
               <input type="checkbox" name="operator" value="gameAnalysis" id="gameAnalysis" class="4">
             </div>
+            <div class="input_group">
+              <label for="betLimits">betLimits</label>
+              <input type="checkbox" name="operator" value="betLimits" id="betLimits" class="9">
+            </div>
+            <%}%>
+            
             
             <div class="input_group">
               <label for="notification">notification</label>
@@ -542,10 +546,6 @@
               <input type="checkbox" name="operator" value="alertBets" id="alertBets" class="8">
             </div>
             
-            <div class="input_group">
-              <label for="betLimits">betLimits</label>
-              <input type="checkbox" name="operator" value="betLimits" id="betLimits" class="9">
-            </div>
             
             <div class="input_group">
               <label for="voidBets">voidBets</label>
@@ -571,6 +571,12 @@
               <label for="viewReports">viewReports</label>
               <input type="checkbox" name="operator" value="viewReports" id="viewReports" class="10">
             </div>
+            <%if(currentUser.roleName != "Admin"){%>
+              <div class="input_group">
+                <label for="Payment">Payment</label>
+                <input type="checkbox" name="operator" value="Payment" id="Payment" class="10">
+              </div>
+            <%}%>
             
         </div>
           </div>
