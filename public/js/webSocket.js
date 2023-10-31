@@ -973,7 +973,7 @@ socket.on('connect', () => {
         }
         loginUserBalance()
         socket.on('loginuserbalance',async(data)=>{
-            // console.log('refresh login data')
+            console.log('refresh login data')
             html1 = `
             <div class="skin-data green">
                 
@@ -1910,6 +1910,7 @@ socket.on('connect', () => {
                 // }
                 // $('.pageLink').html(html)
                 // $('#meDetails').attr('data-me',JSON.stringify(data.me));
+
             }
         })
 
@@ -1976,6 +1977,8 @@ socket.on('connect', () => {
         let page = parseInt($('.rowId').attr('data-rowid')) - 1;
         let refreshStatus = true;
         socket.emit("search", {filterData,page,id, LOGINDATA ,refreshStatus})
+        let data = {LOGINUSER:JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))}
+        socket.emit('loginuserbalance', data)
 
     },1000 * 60)
     
