@@ -17010,9 +17010,9 @@ socket.on('connect', () => {
             data.page = 0;
        
             if(userName != ''){
-                filterData.userName = userName
+                filterData.username = userName
             }else{
-                filterData.userName = LOGINDATA.LOGINUSER.userName
+                filterData.username = LOGINDATA.LOGINUSER.userName
             }
             if(toDate != ''){
                 filterData.toDate = new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))
@@ -17035,7 +17035,7 @@ socket.on('connect', () => {
          
             data.page = 0;
           
-            filterData.userName = this.textContent
+            filterData.username = this.textContent
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             $('.pageId').attr('data-pageid','1')
@@ -17051,9 +17051,9 @@ socket.on('connect', () => {
             let data = {}
             let userName = $('.searchUser').val()
             if(userName == ''){
-                filterData.userName = LOGINDATA.LOGINUSER.userName
+                filterData.username = LOGINDATA.LOGINUSER.userName
             }else{
-                filterData.userName = userName
+                filterData.username = userName
             }
             data.filterData = filterData;
             data.page = page
@@ -17067,9 +17067,9 @@ socket.on('connect', () => {
             let data = {}
             let userName = $('.searchUser').val()
             if(userName == ''){
-                filterData.userName = LOGINDATA.LOGINUSER.userName
+                filterData.username = LOGINDATA.LOGINUSER.userName
             }else{
-                filterData.userName = userName
+                filterData.username = userName
             }
             data.filterData = filterData;
             data.page = page
