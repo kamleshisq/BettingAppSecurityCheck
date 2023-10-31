@@ -312,7 +312,14 @@ io.on('connection', (socket) => {
     })
 
     socket.on('loginuserbalance',async(data)=>{
-        const user = await User.findById(data.LOGINUSER._id)
+        let id = data.LOGINUSER._id
+        if(data.LOGINUSER.role.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINUSER.parent_id)
+            data.LOGINUSER = parentUser
+            id = parentUser._id.toString()
+        }
+        const user = await User.findById(id)
+        console.log(user)
         socket.emit('loginuserbalance',user)
     })
 
