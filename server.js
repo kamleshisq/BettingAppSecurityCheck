@@ -6601,7 +6601,15 @@ io.on('connection', (socket) => {
         try{
             let page = data.page
             let limit = 10
-            let houseData = await houseFundModel.find({userId:data.LOGINDATA.LOGINUSER._id}).sort({date:-1}).skip(page * limit).limit(limit)
+            let id = data.LOGINDATA.LOGINUSER._id
+
+            if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
+                let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+                data.LOGINDATA.LOGINUSER = parentUser
+                id = parentUser._id.toString()
+            }
+
+            let houseData = await houseFundModel.find({userId:id}).sort({date:-1}).skip(page * limit).limit(limit)
             socket.emit('HouseFundData', houseData)
         }catch(err){
             console.log(err)
