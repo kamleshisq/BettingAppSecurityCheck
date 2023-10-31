@@ -3175,7 +3175,7 @@ io.on('connection', (socket) => {
                 console.log(user,122122)
                 let date = Date.now()
                 let data1 = {
-                    userId:data.LOGINDATA.LOGINUSER._id,
+                    userId:parentUse._id.toString(),
                     amount:parseFloat(data.data.amount),
                     Remark:data.data.Remark,
                     date,
