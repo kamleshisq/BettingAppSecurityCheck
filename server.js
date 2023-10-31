@@ -2063,6 +2063,7 @@ io.on('connection', (socket) => {
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
+            data.LOGINUSER._id = data.LOGINUSER._id.toString()
         }
         console.log(data.LOGINUSER, "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
         User.aggregate([
@@ -2079,8 +2080,9 @@ io.on('connection', (socket) => {
             }
           ])
             .then((userResult) => {
+                console.log(userResult, "userResultuserResultuserResultuserResult")
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-          
+              console.log(userIds, "userIds")
               Bet.aggregate([
                 {
                   $match: {
