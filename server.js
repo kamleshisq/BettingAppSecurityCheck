@@ -319,12 +319,12 @@ io.on('connection', (socket) => {
             id = parentUser._id.toString()
         }
         const user = await User.findById(id)
-        console.log(user, "CONSOLEUSER")
+        // console.log(user, "CONSOLEUSER")
         socket.emit('loginuserbalance',user)
     })
 
     socket.on('userHistory',async(data)=>{
-        console.log(data.filterData)
+        // console.log(data.filterData)
         let page = data.page;
         let limit = 10;
         let filter = {}
