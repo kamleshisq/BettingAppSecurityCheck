@@ -10,6 +10,7 @@ export const paymentDeposite = async(data)=>{
         });
         if(res.data.status === 'success'){
                 notificationsss({message:"Thank you for the deposit, Amount will be added into your wallet once it is approved", status:"success"});
+                $('#navmod3 .payment-fom')[0].reset()
                 setTimeout(function() {
                     location.reload();
                   }, 2000);

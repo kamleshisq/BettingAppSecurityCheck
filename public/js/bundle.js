@@ -7048,6 +7048,7 @@ var paymentDeposite = /*#__PURE__*/function () {
               message: "Thank you for the deposit, Amount will be added into your wallet once it is approved",
               status: "success"
             });
+            $('#navmod3 .payment-fom')[0].reset();
             setTimeout(function () {
               location.reload();
             }, 2000);
