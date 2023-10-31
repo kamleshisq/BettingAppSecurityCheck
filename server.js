@@ -2059,6 +2059,12 @@ io.on('connection', (socket) => {
         //     console.log(result)
         //   socket.emit("aggreat", result)
         // })
+
+        if(data.LOGINUSER.role.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINUSER.parent_id)
+            data.LOGINUSER = parentUser
+        }
+        console.log(data.LOGINUSER, "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
         User.aggregate([
             {
               $match: {
