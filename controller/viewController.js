@@ -1476,6 +1476,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
 })
 
 exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
+    // if(req.currentUser.)
     const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
