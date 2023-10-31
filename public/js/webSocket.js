@@ -128,6 +128,7 @@ socket.on('connect', () => {
 
     const textToCopy = document.querySelectorAll("#BANK-DATA li");
     const copyButton = document.querySelectorAll("#BANK-DATA .copy-icon");
+    console.log(copyButton)
     if(copyButton){
         copyButton.addEventListener("click", function () {
             // Select the text inside the element
