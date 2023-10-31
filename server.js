@@ -5488,6 +5488,11 @@ io.on('connection', (socket) => {
         // console.log(data, "FANCYDATA")
         let childrenUsername1 = []
         // let loginUser = await User.findById()
+        if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            data.LOGINDATA.LOGINUSER = parentUser
+            data.id = parentUser._id.toString()
+        }
         let forcheck = await Bet.find({marketId: data.marketId}) 
         let children = await User.find({parentUsers:data.id, role_type: 5})
         children.map(ele1 => {
