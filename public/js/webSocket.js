@@ -1823,15 +1823,15 @@ socket.on('connect', () => {
                         <td>
                         <div class="btn-group">
                         `
-                            if(data.currentUser.role.authorization.includes('accountControl')){
+                            // if(data.currentUser.role.authorization.includes('accountControl')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>`
-                            }
-                            if(data.currentUser.role.authorization.includes('accountControl')){
+                            // }
+                            // if(data.currentUser.role.authorization.includes('accountControl')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange" title="Commission">C</button>`
-                            }
-                            if(data.currentUser.role.authorization.includes('changeUserPassword')){
+                            // }
+                            // if(data.currentUser.role.authorization.includes('changeUserPassword')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange" title="Change Password">P</button>`
-                            }
+                            // }
                             html += `<button  data-bs-toggle="modal" data-bs-target="#myModalSE" class="Settlement" title="Settlement">S</button>`
                             // if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
                             //     if(response[i].betLock){
@@ -1840,13 +1840,13 @@ socket.on('connect', () => {
                             //         html += `<button type="button" class="betLockStatus" title="Bet Lock">B</button>`
                             //     } 
                             // }
-                            if(data.currentUser.role.authorization.includes('userStatus')){
+                            // if(data.currentUser.role.authorization.includes('userStatus')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>
                                 `
-                            }
-                            if(data.currentUser.role.authorization.includes('userName')){
+                            // }
+                            // if(data.currentUser.role.authorization.includes('userName')){
                                 html += `<button class="UserDetails" title="View details"><i class="fa-solid fa-database"></i></button>`
-                            }
+                            // }
                         html += `</div>
                         </td></td> </tr>`
                 }
