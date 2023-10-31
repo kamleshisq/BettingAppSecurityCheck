@@ -667,46 +667,44 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
 });
 
 exports.paymentDeposite = catchAsync(async(req, res, next)=>{
-    console.log(req.body,'==>paymentDeposite body')
-    // console.log(req.files)
-    // let imagName;
-    // let data;
-    // let user = await User.findById(req.currentUser._id)
-    // let sdmId = user.parentUsers[1]
-    // let sdmUser = await User.findById(sdmId)
-    // if(req.files){
-    //     if(req.files.file.mimetype.startsWith('image')){
-    //         imagName = `${req.currentUser.userName}${Date.now()}`
-    //         const image = req.files.file
-    //         // console.log(logo)
-    //         let STRING = `public/paymentimg/${imagName}.png`
-    //         console.log(STRING, "STRINGSTRINGSTRING")
-    //         try{
-    //             image.mv(STRING, (err)=>{
-    //                 console.log(err)
-    //                 if(err) return next(new AppError("Something went wrong please try again later", 400))
-    //             })
-    //         }catch(err){
-    //             console.log(err, "THIS IS ERRRRRR")
-    //         }
-    //         data = {... req.body}
-    //         let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod})
-    //         // console.log(paymentMethoDetail)
-    //         data.username = req.currentUser.userName
-    //         data.accountholdername = paymentMethoDetail.accountholdername
-    //         data.status = 'pending'
-    //         data.image = imagName
-    //         data.date = new Date()
-    //         console.log(data)
-    //         await paymentReportModel.create(data)
+    // console.log(req.body,'==>paymentDeposite body')
+    console.log(req.files)
+    let imagName;
+    let data;
+    let user = await User.findById(req.currentUser._id)
+    let sdmId = user.parentUsers[1]
+    let sdmUser = await User.findById(sdmId)
+    if(req.files){
+        if(req.files.file.mimetype.startsWith('image')){
+            imagName = `${req.currentUser.userName}${Date.now()}`
+            const image = req.files.file
+            // console.log(logo)
+            let STRING = `public/paymentimg/${imagName}.png`
+            console.log(STRING, "STRINGSTRINGSTRING")
+            try{
+                image.mv(STRING, (err)=>{
+                    console.log(err)
+                    if(err) return next(new AppError("Something went wrong please try again later", 400))
+                })
+            }catch(err){
+                console.log(err, "THIS IS ERRRRRR")
+            }
+            data = {... req.body}
+            // console.log(paymentMethoDetail)
+            data.username = req.currentUser.userName
+            data.status = 'pending'
+            data.image = imagName
+            data.date = new Date()
+            console.log(data)
+            await paymentReportModel.create(data)
 
-    //     }else{
-    //         return next(new AppError("Please Provide Image", 400))
-    //     }
-    // }
+        }else{
+            return next(new AppError("Please Provide Image", 400))
+        }
+    }
 
-    // return res.status(200).json({
-    //     status:'success'
-    // })
+    return res.status(200).json({
+        status:'success'
+    })
 
 })
