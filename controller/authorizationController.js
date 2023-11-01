@@ -241,12 +241,19 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
+
     if(!currentUser){
         return res.status(404).json({
             status:"success",
             message:'the user belonging to this token does no longer available'
         })
     }
+    let childrenArr = []
+    let children = await User.find({parentUsers:currentUser._id})
+    children.map(ele => {
+        childrenArr.push(ele.userName)
+    })
+    let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
     // if (req.session.userId && req.session.userId !== currentUser.id) {
@@ -276,6 +283,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 
     loginData.User = currentUser
     res.locals.loginData = loginData
+    res.locals.paymentreqcount = paymentreqcount
     req.currentUser = currentUser
     req.token = token
     // console.log(req.originalUrl, "2222222222222222222222222222222")

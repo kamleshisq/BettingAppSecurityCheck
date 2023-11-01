@@ -1079,6 +1079,7 @@ socket.on('connect', () => {
             setInterval(()=>{
                 socket.emit('getcountofpaymentreq',LOGINDATA)
             },5000)
+            socket.emit('getcountofpaymentreq',LOGINDATA)
         }
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
@@ -17333,7 +17334,7 @@ socket.on('connect', () => {
             socket.emit('paymentApprovaltable',data)
         })
 
-        $('.refresh').click(function(e){
+        function refreshPage(){
             let page = parseInt($('.pageId').attr('data-pageid')) - 1;
             let data = {}
             let userName = $('.searchUser').val()
@@ -17349,7 +17350,15 @@ socket.on('connect', () => {
             let refreshStatus = true;
             data.refreshStatus = refreshStatus
             socket.emit('paymentApprovaltable',data)
+        }
+
+        $('.refresh').click(function(e){
+            refreshPage()
         })
+
+        setInterval(()=>{
+            refreshPage()
+        },1000 * 15)
 
         
         socket.on('paymentApprovaltable',(data) => {
@@ -17438,6 +17447,7 @@ socket.on('connect', () => {
         $(document).on('click','.paymetnreqDeny',function(e){
             let id = $(this).data('docidapp')
             if(id){
+                $(this).prop('disable',true)
                 socket.emit('getpaymentdenyreqdata',id)
             }
         })
