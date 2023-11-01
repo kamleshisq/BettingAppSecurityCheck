@@ -33,5 +33,6 @@ export const login = async(userName, password)=>{
     }catch(err){
         console.log(err)
     setTimeout(alert(err.response.data.message), 1500)
+    $(".loginFormAdmin button[type='submit']").removeClass("loading");
     }
 }

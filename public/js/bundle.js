@@ -5500,14 +5500,15 @@ var login = /*#__PURE__*/function () {
               }, 100);
             }
           }
-          _context.next = 11;
+          _context.next = 12;
           break;
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 11:
+          $(".loginFormAdmin button[type='submit']").removeClass("loading");
+        case 12:
         case "end":
           return _context.stop();
       }
