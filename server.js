@@ -3093,6 +3093,7 @@ io.on('connection', (socket) => {
         dashboard.alertBet = alertBet
         dashboard.settlement = betsEventWise
         dashboard.topBets = topBets
+        console.log("WORKINGDONE")
         socket.emit('dashboardrefresh',dashboard)
     })
 
