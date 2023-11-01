@@ -3369,7 +3369,7 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
             },
           },
     ])
-    // console.log(userProfileContent)
+    console.log(process.memoryUsage())
     res.status(200).render("./userSideEjs/userProfile/main",{
         title:'My Profile',
         user,
