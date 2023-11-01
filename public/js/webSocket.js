@@ -17447,7 +17447,7 @@ socket.on('connect', () => {
         $(document).on('click','.paymetnreqDeny',function(e){
             let id = $(this).data('docidapp')
             if(id){
-                $(this).prop('disable',true)
+                // $(this).prop('disable',true)
                 socket.emit('getpaymentdenyreqdata',id)
             }
         })

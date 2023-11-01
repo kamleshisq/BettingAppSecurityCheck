@@ -7669,7 +7669,7 @@ io.on('connection', (socket) => {
             childAccStatement.date = date
             childAccStatement.userName = childUser.userName
             childAccStatement.role_type = childUser.role_type
-            childAccStatement.Remark = 'Deposite'
+            childAccStatement.Remark = 'Deposit'
 
             const accStatementChild = await AccModel.create(childAccStatement)
             if(!accStatementChild){
@@ -7686,7 +7686,7 @@ io.on('connection', (socket) => {
             ParentAccStatement.date = date
             ParentAccStatement.userName = parentUser.userName;
             ParentAccStatement.role_type = parentUser.role_type
-            ParentAccStatement.Remark = 'Deposite'
+            ParentAccStatement.Remark = 'Deposit'
 
             // // console.log(ParentAccStatement)
             const accStatementparent = await AccModel.create(ParentAccStatement)
@@ -7726,6 +7726,7 @@ io.on('connection', (socket) => {
             childAccStatement.balance = childUser.balance;
             childAccStatement.date = date1
             childAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+            childAccStatement.Remark = '-'
             const accStatementChild1 = await AccModel.create(childAccStatement)
             if(!accStatementChild || !accStatementChild1){
                 return next(new AppError("Ops, Something went wrong Please try again later", 500))
@@ -7749,6 +7750,7 @@ io.on('connection', (socket) => {
             ParentAccStatement.creditDebitamount = data.amount * 1;
             ParentAccStatement.balance = parseInt(data.amount);
             ParentAccStatement.date = date1
+            ParentAccStatement.Remark = '-'
             await AccModel.create(ParentAccStatement)
 
             socket.emit('deniePaymentReq',{status:'success',msg:'payment request denied'})
