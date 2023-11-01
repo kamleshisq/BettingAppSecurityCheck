@@ -233,7 +233,6 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     if(!token){
         return res.redirect('/adminlogin')
     }
-    console.log(token, "tokentokentokentokentokentokentokentokentoken")
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "ID")
     if(!tokenId.isOnline){
@@ -249,10 +248,8 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         })
     }
     let childrenArr = []
-    let children = await User.find({parentUsers:currentUser._id})
-    children.map(ele => {
-        childrenArr.push(ele.userName)
-    })
+    let children = await User.find({parentUsers:currentUser._id, role_type: 5})
+    childrenArr = Array.from(children, ele => ele.userName);
     let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
