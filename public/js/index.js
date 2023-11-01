@@ -109,7 +109,7 @@ $(document).ready(function(){
 
 $(document).on("submit", ".loginFormAdmin", function(e){
     e.preventDefault()
-    // console.log("Working")
+    // console.log("Working") 
     // this.
     try{
         console.log('WORKING')
