@@ -204,7 +204,7 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-    console.log(process.memoryUsage(), "AUTHORIZATION 1")
+    // console.log(process.memoryUsage(), "AUTHORIZATION 1")
     // console.log(req.originalUrl, "111111111111111111111111111111")
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
@@ -287,7 +287,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     req.token = token
     // console.log(req.originalUrl, "2222222222222222222222222222222")
     // console.log("WORKING123456789")
-    console.log(process.memoryUsage(), "AUTHORIZATION 2")
+    // console.log(process.memoryUsage(), "AUTHORIZATION 2")
     next()
 });
 
