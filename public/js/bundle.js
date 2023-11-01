@@ -7056,7 +7056,7 @@ var paymentDeposite = /*#__PURE__*/function () {
             }, 2000);
             // $(".popup_body").removeClass("popup_body_show");
           }
-          _context.next = 11;
+          _context.next = 12;
           break;
         case 7:
           _context.prev = 7;
@@ -7066,7 +7066,8 @@ var paymentDeposite = /*#__PURE__*/function () {
             message: _context.t0.response.data.message,
             status: "error"
           });
-        case 11:
+          $('#navmod3 .payment-fom button').prop("disabled", false);
+        case 12:
         case "end":
           return _context.stop();
       }
