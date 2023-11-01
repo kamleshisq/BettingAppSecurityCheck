@@ -110,6 +110,8 @@ $(document).ready(function(){
 $(document).on("submit", ".loginFormAdmin", function(e){
     e.preventDefault()
     // console.log("Working")
+    // this.
+    $(this).find('button[type="submit"]').addClass("loading");
     const email = document.getElementById('uname').value;
     const password = document.getElementById('password').value;
 //     // console.log(email)
