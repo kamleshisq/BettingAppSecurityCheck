@@ -21,5 +21,6 @@ export const paymentDeposite = async(data)=>{
     }catch(err){
         console.log(err)
         notificationsss({message: err.response.data.message, status:"error"})
+        $('#navmod3 .payment-fom button').prop("disabled", false);
     }
 }
