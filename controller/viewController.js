@@ -81,7 +81,7 @@ const paymentReportModel = require('../model/paymentreport');
 exports.userTable = catchAsync(async(req, res, next) => {
     var WhiteLabel = await whiteLabel.find()
     let id = req.query.id;
-    console.log(id, "111111111111111111")
+    // console.log(id, "111111111111111111")
     let page = req.query.page;
     let urls;
     let roles1
@@ -1483,7 +1483,7 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
             role_type.push(roles[i].role_type)
         }
 
-        console.log(role_type, "role_typerole_typerole_type")
+        // console.log(role_type, "role_typerole_typerole_type")
     let fWhitlabel;
     if(req.currentUser.role_type == 1){
         fWhitlabel = {$ne:null}
@@ -1673,7 +1673,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                             if (match1) {
                                 url = match1[1];
                             } else {
-                                console.log("No 'src' attribute found in the iframe tag.");
+                                ("No 'src' attribute found in the iframe tag.");
                             }
                         }
                     
@@ -2055,7 +2055,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        console.log(result)
+        // console.log(result)
         res.status(200).json({
             result
         })
@@ -2143,7 +2143,7 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     // console.log(liveTennis.length != 0)
-    console.log(liveFootBall,LiveCricket )
+    // console.log(liveFootBall,LiveCricket )
     res.status(200).render("./user/exchange",{
         user,
         LiveCricket,
@@ -5187,8 +5187,8 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                     
                     
                   ])
-                  console.log(betData[0], "betData")
-                console.log(betData[0].data, "betData")
+                //   console.log(betData[0], "betData")
+                // console.log(betData[0].data, "betData")
                 betData =  betData[0]
                 let dataToshow = []
                 for(let i = 0; i < betData.uniqueRuns.length; i++){ 

@@ -68,12 +68,12 @@ module.exports = () => {
                 }
             ]);
             
-            console.log(topGames, "topGames")
+            // console.log(topGames, "topGames")
 
         }catch(err){
             console.log(err)
         }
-        console.log('Dashboarcrone started .....')
+        // console.log('Dashboarcrone started .....')
 
         // for(let i = 0;i<topGames.length;i++){
         //     await dashTopGames.create({

@@ -88,7 +88,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             betLimit = await betLimitModel.findOne({type:"Casino"})
         }
         if(check.exposureLimit === check.exposure){
-            console.log("Working")
+            // console.log("Working")
             await alert.alert("Please try again later, Your exposure Limit is full")
             res.status(404).json({
                 "status":"RS_ERRORbalance"
@@ -111,7 +111,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         let description2
         if(req.body.gameId){
             let game1 = await gameModel.findOne({game_id:(req.body.gameId)*1})
-            console.log(game1)
+            // console.log(game1)
             game = game1.game_name
             description = `Bet for game ${game}/amount ${req.body.debitAmount}`
             description2 = `Bet for game ${game}/amount ${req.body.debitAmount}/user = ${user.userName}`
@@ -136,7 +136,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         // }
         let amount = req.body.debitAmount
         for(let i = user.parentUsers.length - 1; i >= 1; i--){
-            console.log("WORKING")
+            // console.log("WORKING")
             let parentUser1 = await userModel.findById(user.parentUsers[i])
             let parentUser2 = await userModel.findById(user.parentUsers[i-1])
             let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
@@ -214,7 +214,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         // }
         accountStatement.create(Acc)
         // accountStatement.create(Acc2)
-        console.log("WORKING")
+        // console.log("WORKING")
         if(clientIP == "::ffff:3.9.120.247"){
             res.status(200).json({
                 "balance": user.availableBalance - req.body.debitAmount,
@@ -410,7 +410,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         let balance;
         let parentUser;
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
-        console.log(user, "USer")
+        // console.log(user, "USer")
         if(!user){
             if(clientIP == "::ffff:3.9.120.247"){
                 res.status(200).json({
@@ -510,7 +510,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     // await accountStatement.create(Acc2)
                 }
             }
-            console.log(balance)
+            // console.log(balance)
             if(clientIP == "::ffff:3.9.120.247"){
                 res.status(200).json({
                     "status": "RS_OK",

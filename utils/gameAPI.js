@@ -56,7 +56,7 @@ var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
     }else{
         await loginLogs.findByIdAndUpdate(loginData[0]._id, {gameToken:DATA.token})
     }
-    console.log(DATA, "GAMEAPI DATA")
+    // console.log(DATA, "GAMEAPI DATA")
     return DATA
 }
 

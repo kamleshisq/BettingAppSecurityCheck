@@ -26,7 +26,7 @@ socket.on('connect', () => {
                 loginData = JSON.parse($('body').attr('data-logindata')) 
             }
         }
-        console.log('loginData',loginData)
+        // console.log('loginData',loginData)
         // if(!loginData){
         // location.reload(true)
         // }
@@ -73,7 +73,7 @@ socket.on('connect', () => {
     //     document.getElementById(id).classList.remove("active");
     // })
 
-    console.log(LOGINDATA,"==>cookie")
+    // console.log(LOGINDATA,"==>cookie")
 
 
     
@@ -135,14 +135,14 @@ socket.on('connect', () => {
         data.pmethod = pmethod
         maindata.data = data
         maindata.LOGINDATA = LOGINDATA
-        console.log(data,'==>payment detail')
+        // console.log(data,'==>payment detail')
         socket.emit('getpaymentdetailbyholdername',maindata)
 
         
     })
 
     socket.on('getpaymentdetailbyholdername',async(data)=>{
-        console.log(data)
+        // console.log(data)
         if(data.status == 'success'){
             let form = $('#navmod3 form')
             if(data.data.pmethod === "banktransfer"){
@@ -165,7 +165,7 @@ socket.on('connect', () => {
     })
 
     socket.on('getPaymentmethodData',async(data)=>{
-        console.log(data)
+        // console.log(data)
         if(data.status == 'success'){
             document.getElementById("loader-overlay").style.display = "none";
             if(data.data){
@@ -206,9 +206,9 @@ socket.on('connect', () => {
     })
     $(document).on('click',"#BANK-DATA .copy-icon",function(e){
         const copyButton = this
-        console.log('clicked')
+        // console.log('clicked')
         // Select the text inside the element
-        console.log(this.parentNode.textContent)
+        // console.log(this.parentNode.textContent)
         const range = document.createRange();
         range.selectNode(this.parentNode);
         window.getSelection().removeAllRanges();
@@ -217,7 +217,7 @@ socket.on('connect', () => {
         // Copy the selected text to the clipboard
         try {
         document.execCommand("copy");
-        console.log("Text copied to clipboard");
+        // console.log("Text copied to clipboard");
         } catch (err) {
         console.error("Unable to copy text: ", err);
         }
@@ -386,7 +386,7 @@ socket.on('connect', () => {
     stakeLableForm()
 
     socket.on('socketStakeLABLEDATA', data => {
-        console.log(data)
+        // console.log(data)
         let html = ''
         if(data.status === "notFound"){
             html = `<form class="set-stake-form">
@@ -663,13 +663,13 @@ socket.on('connect', () => {
         const input1Elements = document.querySelectorAll('.set-stake-form-input1');
         const input2Elements = document.querySelectorAll('.set-stake-form-input2');
 
-        console.log(input1Elements, input2Elements, "input2Elementsinput2Elements")
+        // console.log(input1Elements, input2Elements, "input2Elementsinput2Elements")
 
         const input1Values = Array.from(input1Elements).map((element) => element.value);
         const input2Values = Array.from(input2Elements)
         .map((element) => element.value).slice(-4);
         // .filter((value) => value.trim() !== "");
-                console.log(input2Values)
+                // console.log(input2Values)
                 socket.emit("STAKELABEL", {input1Values, input2Values, LOGINDATA})
             })
 
@@ -2081,7 +2081,7 @@ socket.on('connect', () => {
         // if(W || S || R){
                let page =  0;
                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-               console.log(filterData,id)
+            //    console.log(filterData,id)
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
 
@@ -2099,7 +2099,7 @@ socket.on('connect', () => {
     
     $(document).on('click', ".COMMISSIONADMIN", function(e){
         e.preventDefault()
-        console.log("working")
+        // console.log("working")
         socket.emit("claimCommissionAdmin", {LOGINDATA})
     })
 
@@ -2450,7 +2450,7 @@ socket.on('connect', () => {
           }
 
         document.getElementById('pdfDownload').addEventListener('click', function() {
-            console.log("Working")
+            // console.log("Working")
             const table = document.getElementById('table12');
             
             if (table) {
@@ -2913,7 +2913,7 @@ socket.on('connect', () => {
           }
 
         document.getElementById('pdfDownload').addEventListener('click', function() {
-            console.log("Working")
+            // console.log("Working")
             const table = document.getElementById('table12');
             
             if (table) {
@@ -3393,7 +3393,7 @@ socket.on('connect', () => {
           }
 
         document.getElementById('pdfDownload').addEventListener('click', function() {
-            console.log("Working")
+            // console.log("Working")
             const table = document.getElementById('table12');
             
             if (table) {
@@ -5358,7 +5358,7 @@ socket.on('connect', () => {
 
         $(".logout").click(function(){
             let id = $(this).attr("id")
-            console.log(id,'frontend id')
+            // console.log(id,'frontend id')
             socket.emit("SelectLogoutUserId", id)
         })
 
@@ -5637,7 +5637,7 @@ socket.on('connect', () => {
             return timeRegex.test(timeString);
           }
         $('#fromDate,#toDate,#Sport,#market,#Event,#result,#whiteLabel').change(function(){
-            console.log("working")
+            // console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             fromTime = $('#fromTime').val()
@@ -6054,7 +6054,7 @@ socket.on('connect', () => {
             return timeRegex.test(timeString);
           }
         $('#Fdate,#Tdate,#Sport,#market,#Event').change(function(){
-            console.log("working")
+            // console.log("working")
             let userName = $('.searchUser').val()
             sport = $("#Sport").val()
             market = $("#market").val()
@@ -7151,7 +7151,7 @@ socket.on('connect', () => {
             data.forEach(item => {
                 $('.marketNotification').each(function(){
                     if(this.id == item.marketId){
-                        console.log("WORKING")
+                        // console.log("WORKING")
                         $(this).html(`<marquee>${item.message}</marquee>`)
                     }
                 })
@@ -9141,7 +9141,7 @@ socket.on('connect', () => {
                 $('.acount-stat-tbl-body').append(html)         
             }
         }else{
-            console.log("working")
+            // console.log("working")
                 $('.loadMoredive').html("")
         }
         })
@@ -9280,7 +9280,7 @@ socket.on('connect', () => {
                 $('.acount-stat-tbl-body').append(html)         
             }
         }else{
-            console.log("working")
+            // console.log("working")
                 $('.loadMoredive').html("")
                 if(data.page == 0){
                     $('.acount-stat-tbl-body').html("")
@@ -10114,7 +10114,7 @@ socket.on('connect', () => {
                 $('.acount-stat-tbl-body').append(html)         
             }
         }else{
-            console.log("working")
+            // console.log("working")
                 $('.loadMoredive').html("")
         }
         })
@@ -10191,7 +10191,7 @@ socket.on('connect', () => {
                     $('.acount-stat-tbl-body').append(html)         
                 }
             }else{
-                console.log("working")
+                // console.log("working")
                 $('.loadMoredive').html("")
             }
         })
@@ -10237,7 +10237,7 @@ socket.on('connect', () => {
         marketId()
         let first = true
         socket.on("marketId", async(data) => {
-            console.log(data)
+            // console.log(data)
             // console.log("working")
             $(".match_odd_Blue").each(function() {
                     
@@ -11594,7 +11594,7 @@ socket.on('connect', () => {
     // console.log(pathname)
 
     if(pathname === "/kyc" || pathname === "/Kyc"){
-        console.log("Working")
+        // console.log("Working")
         $(document).on('click', ".submit", function(e){
             e.preventDefault()
             let data = {}
@@ -11605,7 +11605,7 @@ socket.on('connect', () => {
         })
 
         document.getElementById("viewPdfButton").addEventListener("click", function() {
-            console.log("Click")
+            // console.log("Click")
             socket.emit('getPdf', {LOGINDATA})
           });
 
@@ -12366,7 +12366,7 @@ socket.on('connect', () => {
         $('#Sport,#market,#fromDate,#toDate,#result').change(function(){
             $('.pageId').attr('data-pageid','1')
 
-            console.log("working")
+            // console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
@@ -12720,7 +12720,7 @@ socket.on('connect', () => {
                 }
                
             }else{
-                console.log("working")
+                // console.log("working")
                 if(data.page == 0){
                     if(bets.length == 0){
                         html += `<tr class="empty_table">
@@ -12836,7 +12836,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".loadMorediveACC", function(e){
             e.preventDefault();
-            console.log("Working")
+            // console.log("Working")
             let page = parseInt($('.pageIdACC').attr('data-pageid'));
             $('.pageIdACC').attr('data-pageid',page + 1)
             let fromDate = $('#FdateACC').val()
@@ -12946,7 +12946,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".loadMorediveHistory", function(e){
             e.preventDefault();
-            console.log("Working")
+            // console.log("Working")
             let page = parseInt($('.pageIdHistory').attr('data-pageid'));
             $('.pageIdHistory').attr('data-pageid',page + 1)
             let id = search.split("=")[1]
@@ -13288,7 +13288,7 @@ socket.on('connect', () => {
         }
         winnerMarketOPtion()
         socket.on('WINNERMARKET', data => {
-            console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
+            // console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
             let runners = JSON.parse(data.runners)
             // console.log(runners, "runnersrunnersrunners")
             let html = '<option value="" selected></option>'
@@ -13614,7 +13614,7 @@ socket.on('connect', () => {
                 </tr>
                 </tbody>   `
                 if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length === 0){
-                    console.log("WORKING")
+                    // console.log("WORKING")
                     document.getElementById('mapMarket').insertAdjacentHTML('beforeend', html);
                 }else{
                     document.getElementById('mapped-market-table').innerHTML = html
@@ -14501,7 +14501,7 @@ socket.on('connect', () => {
 
             socket.on('FANCYBOOK', data => {
                 if(data.type === "ODD"){
-                    console.log(data.betData)
+                    // console.log(data.betData)
                     let html = ''
                     html += `<table id="FANCYBOOK"
                     <tbody>
@@ -14654,7 +14654,7 @@ socket.on('connect', () => {
                     let type = 'userBook'
                     socket.emit('UerBook', {marketId,LOGINDATA,userName,type})
                 }else{
-                    console.log('WORKING2')
+                    // console.log('WORKING2')
                     $(this).parent('tr').removeClass('active')
                     let userName = $(this).attr('data-usename')
                     let string = `tr.pr${userName}`
@@ -14738,7 +14738,7 @@ socket.on('connect', () => {
                     let type = 'bookList'
                     socket.emit('Book', {marketId,LOGINDATA,userName,type})
                 }else{
-                    console.log('WORKING2')
+                    // console.log('WORKING2')
                     $(this).parent('tr').removeClass('active')
                     let userName = $(this).attr('data-usename')
                     let string = `tr.pr${userName}`
@@ -14914,7 +14914,7 @@ socket.on('connect', () => {
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
                             let html = '';
                             for(let i = 0; i < data.Bets.length; i++){
-                                console.log(data.Bets[i].Bets[0])
+                                // console.log(data.Bets[i].Bets[0])
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                                 if(data.Bets[i].User.roleName == 'user'){
@@ -15592,7 +15592,7 @@ socket.on('connect', () => {
 
 
         $('#fromDate,#toDate').change(function(){
-            console.log("working")
+            // console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
@@ -15813,7 +15813,7 @@ socket.on('connect', () => {
         })
 
         $('#Event').change(function() {
-            console.log("Working")
+            // console.log("Working")
             let Sport = $(this).val()
             let market = $("#market").val()
             let to_date
@@ -16711,7 +16711,7 @@ socket.on('connect', () => {
                 if(data.eventNotificationSetting.status){
                     form.find('input[name = "status"]').prop('checked', true);
                 }else{
-                    console.log("WORKNIG")
+                    // console.log("WORKNIG")
                     form.find('input[name = "status"]').prop('checked', false);
                 }
                 form.find('input[name = "message"]').val(data.eventNotificationSetting.message)

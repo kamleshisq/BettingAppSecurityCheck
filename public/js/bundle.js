@@ -7733,7 +7733,7 @@ $(document).on('submit', ".myloginmodl-form-dv", function (e) {
 });
 $(document).on("click", ".myloginmodl-demo-loginbtnn", function (e) {
   e.preventDefault();
-  console.log("WORKING");
+  // console.log("WORKING")
   (0, _userLogin.userLogin)({
     data: "Demo"
   });
@@ -7752,7 +7752,7 @@ $(document).on('submit', '#navmod3 .payment-fom', function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
-  console.log(fd);
+  // console.log(fd)
   (0, _paymentDeposite.paymentDeposite)(fd);
   // /api/v1/Account/paymentDeposite
 });
