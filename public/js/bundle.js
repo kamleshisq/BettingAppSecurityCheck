@@ -7192,6 +7192,7 @@ $(document).ready(function () {
 });
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
+<<<<<<< HEAD
   // console.log("Working") 
   // this.
   try {
@@ -7200,6 +7201,11 @@ $(document).on("submit", ".loginFormAdmin", function (e) {
   } catch (err) {
     console.log(err);
   }
+=======
+  // console.log("Working")
+  // this.
+  $(this).find('button[type="submit"]').addClass("loading");
+>>>>>>> 38a76f0e6ca9ec4d5380bb4020d526505a8065bb
   var email = document.getElementById('uname').value;
   var password = document.getElementById('password').value;
   //     // console.log(email)

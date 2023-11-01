@@ -7748,7 +7748,7 @@ io.on('connection', (socket) => {
             await AccModel.create(ParentAccStatement)
             ParentAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
             ParentAccStatement.creditDebitamount = data.amount * 1;
-            ParentAccStatement.balance = parseInt(data.amount);
+            ParentAccStatement.balance = parentUser.availableBalance;
             ParentAccStatement.date = date1
             ParentAccStatement.Remark = '-'
             await AccModel.create(ParentAccStatement)
