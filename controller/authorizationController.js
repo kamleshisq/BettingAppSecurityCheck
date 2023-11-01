@@ -6,7 +6,7 @@ const Joi = require('joi');
 const util = require('util');
 const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
-const paymentReportModel = require('./model/paymentreport')
+const paymentReportModel = require('../model/paymentreport')
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
