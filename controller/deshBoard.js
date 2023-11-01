@@ -124,28 +124,28 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ]);
     Categories = []
-    // Categories = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status: { $ne: "OPEN" },
-    //             date: { $gte: sevenDaysAgo },
-    //             userName:{$in:childrenUsername}
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //             _id: "$betType",
-    //             totalBets: { $sum: 1 },
-    //             totalReturns: { $sum: "$Stake" },
-    //             uniqueEvent: { $addToSet: "$event" }
-    //         }
-    //     },
-    //     {
-    //         $sort: {
-    //             totalBets: -1
-    //         }
-    //     }
-    // ])
+    Categories = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" },
+                date: { $gte: sevenDaysAgo },
+                userName:{$in:childrenUsername}
+            }
+        },
+        {
+            $group: {
+                _id: "$betType",
+                totalBets: { $sum: 1 },
+                totalReturns: { $sum: "$Stake" },
+                uniqueEvent: { $addToSet: "$event" }
+            }
+        },
+        {
+            $sort: {
+                totalBets: -1
+            }
+        }
+    ])
 
     var today = new Date();
     var todayFormatted = formatDate(today);
