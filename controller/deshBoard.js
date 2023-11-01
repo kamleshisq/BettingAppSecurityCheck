@@ -29,6 +29,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     }
     
     let childrenUsername = []
+    childrenUsername = await User.distinct('userName', { parentUsers: req.currentUser._id });
     // let children = await User.find({parentUsers:req.currentUser._id})
     // children.map(ele => {
     //     childrenUsername.push(ele.userName) 
@@ -54,36 +55,36 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
     users = []
-    // users = await User.aggregate([
-    //     {
-    //         $match:{
-    //             parentUsers : { $in: [req.currentUser.id] }
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:{
-    //                 whiteLabel:"$whiteLabel",
-    //                 roleType:"$roleName"
-    //             },
-    //             total:{$sum:1}
-    //         }
-    //     },
-    //     { $group : { 
-    //         _id :  "$_id.whiteLabel",
-    //         terms: { 
-    //             $push: { 
-    //                 roleType:"$_id.roleType",
-    //                 total:"$total"
-    //             }
-    //         }
-    //         }
-    //     },    { 
-    //         $sort:{
-    //             _id:1
-    //         }
-    //     }
-    // ]);
+    users = await User.aggregate([
+        {
+            $match:{
+                parentUsers : { $in: [req.currentUser.id] }
+            }
+        },
+        {
+            $group:{
+                _id:{
+                    whiteLabel:"$whiteLabel",
+                    roleType:"$roleName"
+                },
+                total:{$sum:1}
+            }
+        },
+        { $group : { 
+            _id :  "$_id.whiteLabel",
+            terms: { 
+                $push: { 
+                    roleType:"$_id.roleType",
+                    total:"$total"
+                }
+            }
+            }
+        },    { 
+            $sort:{
+                _id:1
+            }
+        }
+    ]);
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     topGames = []
