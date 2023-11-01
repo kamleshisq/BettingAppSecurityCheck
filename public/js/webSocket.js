@@ -1079,6 +1079,7 @@ socket.on('connect', () => {
             setInterval(()=>{
                 socket.emit('getcountofpaymentreq',LOGINDATA)
             },5000)
+            socket.emit('getcountofpaymentreq',LOGINDATA)
         }
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
