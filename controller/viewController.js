@@ -79,6 +79,7 @@ const paymentReportModel = require('../model/paymentreport');
 // });
 
 exports.userTable = catchAsync(async(req, res, next) => {
+    console.log(process.memoryUsage(), "MEMORY DATA")
     var WhiteLabel = await whiteLabel.find()
     let id = req.query.id;
     // console.log(id, "111111111111111111")
@@ -3369,7 +3370,7 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
             },
           },
     ])
-    console.log(process.memoryUsage(), "MEMORY DATA")
+    
     res.status(200).render("./userSideEjs/userProfile/main",{
         title:'My Profile',
         user,
