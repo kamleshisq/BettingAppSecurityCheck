@@ -240,20 +240,20 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     // ]);
     
     turnOver = []
-    // turnOver = await accountModel.aggregate([
-    //     {
-    //         $match:{
-    //             user_id:req.currentUser._id
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //             _id: null,
-    //             totalAmount: { $sum: { $abs: "$creditDebitamount" } },
-    //             Income : {$sum: '$creditDebitamount'},
-    //         }
-    //     }
-    // ])
+    turnOver = await accountModel.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser._id
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                totalAmount: { $sum: { $abs: "$creditDebitamount" } },
+                Income : {$sum: '$creditDebitamount'},
+            }
+        }
+    ])
 
 
     let topBets = []
