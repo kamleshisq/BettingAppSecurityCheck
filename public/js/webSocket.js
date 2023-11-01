@@ -99,6 +99,7 @@ socket.on('connect', () => {
     });
 
     $('.paymentDepositeMenu').click(function(e){
+        document.getElementById("loader-overlay").style.display = "flex";
         socket.emit('getPaymentmethodData',{data:LOGINDATA})
     })
 
@@ -146,6 +147,7 @@ socket.on('connect', () => {
     socket.on('getPaymentmethodData',async(data)=>{
         console.log(data)
         if(data.status == 'success'){
+            document.getElementById("loader-overlay").style.display = "none";
             if(data.data){
                 $('#navmod3 .accountnamecontainer').show()
                 $('#navmod3 .enter-payment-detail').show()
@@ -182,30 +184,24 @@ socket.on('connect', () => {
             
         }
     })
-    const copyButton = document.querySelectorAll("#BANK-DATA .copy-icon");
-    console.log(copyButton)
-    if(copyButton.length != 0){
-        copyButton.forEach(function (button) {
-            button.addEventListener("click", function () {
-                console.log('clicked')
-                // Select the text inside the element
-                console.log(this.parentNode.textContent)
-                const range = document.createRange();
-                range.selectNode(this.parentNode);
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(range);
-        
-                // Copy the selected text to the clipboard
-                try {
-                document.execCommand("copy");
-                console.log("Text copied to clipboard");
-                } catch (err) {
-                console.error("Unable to copy text: ", err);
-                }
-            })
-        })
+    $(document).on('click',"#BANK-DATA .copy-icon",function(e){
+        const copyButton = this
+        console.log('clicked')
+        // Select the text inside the element
+        console.log(this.parentNode.textContent)
+        const range = document.createRange();
+        range.selectNode(this.parentNode);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
 
-    }
+        // Copy the selected text to the clipboard
+        try {
+        document.execCommand("copy");
+        console.log("Text copied to clipboard");
+        } catch (err) {
+        console.error("Unable to copy text: ", err);
+        }
+    })
 
 
 
@@ -214,6 +210,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".bank-img", function(e){
         e.preventDefault();
+        document.getElementById("loader-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'banktransfer'})
@@ -221,6 +218,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".upi-img", function(e){
         e.preventDefault();
+        document.getElementById("loader-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'upi'})
@@ -228,6 +226,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".pytm-img", function(e){
         e.preventDefault();
+        document.getElementById("loader-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'paytm'})
@@ -238,6 +237,7 @@ socket.on('connect', () => {
         if(data.status === "fail"){
 
         }else{
+            document.getElementById("loader-overlay").style.display = "none";
             let html = ''
             if(data.paymentMethodDetail){
                 $('#navmod3 .enter-payment-detail').show()
@@ -17001,7 +17001,14 @@ socket.on('connect', () => {
                 }
             })
             console.log(newData)
-            // socket.emit('editpaymentMethod',newData)
+            socket.emit('editpaymentMethod',newData)
+        })
+
+        socket.on('editpaymentMethod',async(data)=>{
+            alert(data.msg)
+            if(data.status == 'success'){
+                location.reload(true)
+            }
         })
 
         $(document).on('submit','.paymentMethodForm',function(e){
@@ -17139,6 +17146,7 @@ socket.on('connect', () => {
                     }
                     html += `<td>
                     <div class="btn-group">
+                        <button class="btn-group editpaymentmethod" data-bs-toggle="modal" data-bs-target="#myModal1" type="button">Edit</button>
                         <button class="btn delete" data-docid="${paymentmethod[i]._id}">Delete</button>
                     </div>
                     </td>
@@ -17388,6 +17396,27 @@ socket.on('connect', () => {
       
         })
 
+        $(document).on('click','.paymetnreqDeny',function(e){
+            let id = $(this).data('docidapp')
+            if(id){
+                socket.emit('getpaymentdenyreqdata',id)
+            }
+        })
+
+        socket.on('getpaymentdenyreqdata',async(data)=>{
+            console.log(data)
+            if(data.status == 'fail'){
+                alert(data.msg)
+            }else{
+                let form = $('#myModal2 .denypaymentreq_form')
+                form.find('input[name="id"]').val(data.result._id)
+                form.find('input[name="amount"]').val(data.result.amount)
+                
+            }
+
+      
+        })
+
         $(document).on('submit','.paymentreq_form',function(e){
             e.preventDefault()
             let form = $(this)[0];
@@ -17413,16 +17442,18 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('click','.denie',function(e){
-            let id = $(this).data('dociddenie')
-            if(id){
-                if(confirm('do you want to denie this payment request')){
-                    socket.emit('deniePaymentReq',id)
-                }
-            }
+        $(document).on('submit','.denypaymentreq_form',function(e){
+            e.preventDefault()
+            let form = $('.denypaymentreq_form')
+            let id = form.find('input[name="id"]').val()
+            let remark = form.find('input[name="remark"]').val()
+            let amount = form.find('input[name="amount"]').val()
+            console.log(id,remark,amount)
+            socket.emit('deniePaymentReq',{id,remark,amount})
         })
 
         socket.on('deniePaymentReq',async(data)=>{
+            console.log(data.err)
             alert(data.msg)
             if(data.status == 'success'){
                 location.reload(true)

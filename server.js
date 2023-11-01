@@ -7518,9 +7518,11 @@ io.on('connection', (socket) => {
         try{
             let id = data.id
             delete data['id']
-            await PaymentMethodModel.findOneAndUpdate(id,data)
+            console.log(data)
+            await PaymentMethodModel.findByIdAndUpdate(id,data)
+            socket.emit('editpaymentMethod',{status:'success',msg:'data updated successfully'})
         }catch(err){
-
+            socket.emit('editpaymentMethod',{status:'fail',msg:'something went wrong'})
         }
     })
 
@@ -7622,6 +7624,16 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getpaymentdenyreqdata',async(data)=>{
+        try{
+            let result = await paymentReportModel.findById(data)
+            socket.emit('getpaymentdenyreqdata',{status:'success',result})
+        }catch(err){
+            socket.emit('getpaymentdenyreqdata',{status:'fail',msg:'something went wrong'})
+
+        }
+    })
+
     socket.on('acceptpaymetnreq',async(data)=>{
         try{
             const report = await paymentReportModel.findByIdAndUpdate(data.id,{approvedamount:data.approvedamount,status:'approved'})
@@ -7687,10 +7699,62 @@ io.on('connection', (socket) => {
 
     socket.on('deniePaymentReq',async(data)=>{
         try{
-            await paymentReportModel.findByIdAndUpdate(data,{status:'denied'})
+            let report = await paymentReportModel.findByIdAndUpdate(data.id,{status:'denied',remark:data.remark})
+
+            const childUser = await User.findOne({userName:report.username});
+            const parentUser = await User.findById(childUser.parent_id);
+           
+            let childAccStatement = {}
+            let ParentAccStatement = {}
+            let date = Date.now()
+            let date1 = Date.now() + 1000
+
+            // //for child User//
+            childAccStatement.child_id = childUser.id;
+            childAccStatement.user_id = childUser.id;
+            childAccStatement.parent_id = parentUser.id;
+            childAccStatement.description = 'Chips credited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+            childAccStatement.creditDebitamount = data.amount * 1;
+            childAccStatement.balance = childUser.balance + parseInt(data.amount);
+            childAccStatement.date = date
+            childAccStatement.userName = childUser.userName
+            childAccStatement.role_type = childUser.role_type
+            childAccStatement.Remark = data.remark
+
+            const accStatementChild = await AccModel.create(childAccStatement)
+            childAccStatement.creditDebitamount = data.amount * -1;
+            childAccStatement.balance = childUser.balance;
+            childAccStatement.date = date1
+            childAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+            const accStatementChild1 = await AccModel.create(childAccStatement)
+            if(!accStatementChild || !accStatementChild1){
+                return next(new AppError("Ops, Something went wrong Please try again later", 500))
+            }
+            // // console.log(childAccStatement)
+            // // for parent user // 
+            ParentAccStatement.child_id = childUser.id;
+            ParentAccStatement.user_id = parentUser.id;
+            ParentAccStatement.parent_id = parentUser.id;
+            ParentAccStatement.description = 'Chips credited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")"
+            ParentAccStatement.creditDebitamount = data.amount * -1;
+            ParentAccStatement.balance = parentUser.availableBalance - parseInt(data.amount);
+            ParentAccStatement.date = date
+            ParentAccStatement.userName = parentUser.userName;
+            ParentAccStatement.role_type = parentUser.role_type
+            ParentAccStatement.Remark = data.remark
+
+            // // console.log(ParentAccStatement)
+            await AccModel.create(ParentAccStatement)
+            ParentAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+            ParentAccStatement.creditDebitamount = data.amount * 1;
+            ParentAccStatement.balance = parseInt(data.amount);
+            ParentAccStatement.date = date1
+            await AccModel.create(ParentAccStatement)
+
             socket.emit('deniePaymentReq',{status:'success',msg:'payment request denied'})
         }catch(err){
-            socket.emit('deniePaymentReq',{status:'fail',msg:'Somethig went wrong'})
+            socket.emit('deniePaymentReq',{status:'fail',msg:'Somethig went wrong',err})
+            console.log(err)
 
         }
     })

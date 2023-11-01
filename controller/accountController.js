@@ -690,11 +690,13 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
                 console.log(err, "THIS IS ERRRRRR")
             }
             data = {... req.body}
+            // let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod})
             // console.log(paymentMethoDetail)
             data.username = req.currentUser.userName
             data.status = 'pending'
             data.image = imagName
             data.date = new Date()
+            
             console.log(data)
             await paymentReportModel.create(data)
 

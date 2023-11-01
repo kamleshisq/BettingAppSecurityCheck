@@ -21,7 +21,8 @@ const paymentreportSchem = mongoose.Schema({
     },
     utr:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     pmethod:{
         type:String,

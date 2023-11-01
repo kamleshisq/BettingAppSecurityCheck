@@ -7048,6 +7048,7 @@ var paymentDeposite = /*#__PURE__*/function () {
               message: "Thank you for the deposit, Amount will be added into your wallet once it is approved",
               status: "success"
             });
+            $('#navmod3 .payment-fom')[0].reset();
             setTimeout(function () {
               location.reload();
             }, 2000);
@@ -7747,6 +7748,7 @@ $(document).on('submit', ".kycForm", function (e) {
 });
 $(document).on('submit', '#navmod3 .payment-fom', function (e) {
   e.preventDefault();
+  $(this).find('button').prop("disabled", true);
   var form = $(this)[0];
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
