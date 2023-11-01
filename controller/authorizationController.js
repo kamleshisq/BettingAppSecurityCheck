@@ -204,7 +204,7 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-
+    // console.log(process.memoryUsage(), "AUTHORIZATION 1")
     // console.log(req.originalUrl, "111111111111111111111111111111")
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
@@ -233,7 +233,6 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     if(!token){
         return res.redirect('/adminlogin')
     }
-    // console.log(token, "token")
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "ID")
     if(!tokenId.isOnline){
@@ -249,10 +248,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         })
     }
     let childrenArr = []
-    let children = await User.find({parentUsers:currentUser._id})
-    children.map(ele => {
-        childrenArr.push(ele.userName)
-    })
+    // let children = await User.find({parentUsers:currentUser._id, role_type: 5})
+    // childrenArr = Array.from(children, ele => ele.userName);
+    childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
+    //   console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
     let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
@@ -288,6 +287,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     req.token = token
     // console.log(req.originalUrl, "2222222222222222222222222222222")
     // console.log("WORKING123456789")
+    // console.log(process.memoryUsage(), "AUTHORIZATION 2")
     next()
 });
 
