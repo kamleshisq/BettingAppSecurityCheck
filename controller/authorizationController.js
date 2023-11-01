@@ -6,6 +6,7 @@ const Joi = require('joi');
 const util = require('util');
 const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
+const paymentReportModel = require('./model/paymentreport')
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -61,13 +62,20 @@ const createSendToken = async (user, statuscode, res, req)=>{
                             session_id:token, 
                             device_info:req.headers['user-agent']})
     global._loggedInToken.push({token:token,time:time})
+    let childrenArr = []
+    let children = await User.find({parentUsers:user._id})
+    children.map(ele => {
+        childrenArr.push(ele.userName)
+    })
+    let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
     res.status(200).json({
         status:"success",
         token,
         data: {
-            user
+            user,
+            paymentreqcount
         }
     })
 }
