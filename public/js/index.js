@@ -112,6 +112,7 @@ $(document).on("submit", ".loginFormAdmin", function(e){
     // console.log("Working")
     // this.
     try{
+        console.log('WORKING')
         $(this).find('button[type="submit"]').addClass("loading");
     }catch(err){
         console.log(err)
