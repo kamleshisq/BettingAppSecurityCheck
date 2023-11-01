@@ -29,10 +29,10 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     }
     
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    // let children = await User.find({parentUsers:req.currentUser._id})
+    // children.map(ele => {
+    //     childrenUsername.push(ele.userName) 
+    // })
     roles = await User.aggregate([
         {
             $match:{
