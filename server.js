@@ -2915,6 +2915,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('dashboardrefresh',async(data)=>{
+        console.log("WORKING")
         let roles
         let users
         let topGames
