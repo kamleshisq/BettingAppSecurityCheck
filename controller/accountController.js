@@ -353,10 +353,11 @@ exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
     if(req.query.id){
         const idUser = await User.findById(req.query.id)
         if(idUser.userName == req.currentUser.userName){
-            let childUsers = await User.find({parentUsers:req.query.id,roleName: {$ne:'user'}})
-            childUsers.map(ele => {
-                childUsersArr.push(ele._id)
-            })
+            childUsersArr = await User.distinct('userName', {parentUsers:req.query.id,roleName: {$ne:'user'}});
+            // let childUsers = await User.find({parentUsers:req.query.id,roleName: {$ne:'user'}})
+            // childUsers.map(ele => {
+            //     childUsersArr.push(ele._id)
+            // })
         }else{
             childUsersArr.push(idUser._id)
         }

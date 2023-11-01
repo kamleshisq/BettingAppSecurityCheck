@@ -339,15 +339,17 @@ io.on('connection', (socket) => {
         // console.log(filter)
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }
 
         if(data.filterData.userName){
@@ -819,15 +821,17 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id }); 
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             childrenUsername = [data.filterData.userName]
@@ -1242,15 +1246,17 @@ io.on('connection', (socket) => {
 
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }
 
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
@@ -1343,10 +1349,11 @@ io.on('connection', (socket) => {
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             userFilter.userName = data.filterData.userName
         }
-        let children = await User.find(userFilter)
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', userFilter);
+        // let children = await User.find(userFilter)
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
 
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             data.filterData.userName = {$in:childrenUsername}
@@ -1394,10 +1401,11 @@ io.on('connection', (socket) => {
         data.filterData.status = 'OPEN'
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             let childrenUsername = []
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
             data.filterData.userName = {$in:childrenUsername}
             ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
         }else{
@@ -1477,10 +1485,11 @@ io.on('connection', (socket) => {
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             userFilter.userName = data.filterData.userName
         }
-        let children = await User.find(userFilter)
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', userFilter);
+        // let children = await User.find(userFilter)
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
 
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             data.filterData.userName = {$in:childrenUsername}
@@ -1520,15 +1529,17 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             childrenUsername = [data.filterData.userName]
@@ -2779,10 +2790,11 @@ io.on('connection', (socket) => {
             data.LOGINDATA.LOGINUSER = parentUser
         }
         let childrenUsername = []
-        let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+        // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         
         var today = new Date();
         var todayFormatted = formatDate(today);
@@ -2915,7 +2927,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('dashboardrefresh',async(data)=>{
-        console.log("WORKING")
+        // console.log("WORKING")
         let roles
         let users
         let topGames
@@ -3093,7 +3105,7 @@ io.on('connection', (socket) => {
         dashboard.alertBet = alertBet
         dashboard.settlement = betsEventWise
         dashboard.topBets = topBets
-        console.log("WORKINGDONE")
+        // console.log("WORKINGDONE")
         socket.emit('dashboardrefresh',dashboard)
     })
 
@@ -3280,15 +3292,17 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }     
         if(data.LOGINDATA.LOGINUSER.userName != data.filterData.userName){
         }
@@ -3477,15 +3491,18 @@ io.on('connection', (socket) => {
         // console.log(dataobj, "dateObj")
         let childrenUsername = []
         if(me.roleName == 'Operator'){
-            let children = await User.find({parentUsers:{ $in: [me.parent_id] }})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', {parentUsers:{ $in: [me.parent_id] }});
+            
+            // let children = await User.find({parentUsers:{ $in: [me.parent_id] }})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:{ $in: [me._id] }})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', {parentUsers:{ $in: [me._id] }});
+            // let children = await User.find({parentUsers:{ $in: [me._id] }})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
 
         }
     
@@ -6041,14 +6058,17 @@ io.on('connection', (socket) => {
         let childrenUsername = []
         let children
         if(data.USER.roleName == 'Operator'){
-            children = await User.find({parentUsers:me.parent_id})
+            childrenUsername = await User.distinct('userName', {parentUsers:me.parent_id});
+            // children = await User.find({parentUsers:me.parent_id})
         }else{
-            children = await User.find({parentUsers:me._id})
+            childrenUsername = await User.distinct('userName', {parentUsers:me._id});
+            
+            // children = await User.find({parentUsers:me._id})
 
         }
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         let role_type = []
         let roles
         if(data.USER.roleName == 'Operator'){
@@ -6338,16 +6358,19 @@ io.on('connection', (socket) => {
             let childrenUsername = []
            
             if(ele.role_type == 2){
-                let children = await User.find({parentUsers:ele._id,isActive:true,role_type:{$in:role_type}})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', {parentUsers:ele._id,isActive:true,role_type:{$in:role_type}});
+                
+                // let children = await User.find({parentUsers:ele._id,isActive:true,role_type:{$in:role_type}})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
             else if(ele.role_type == 5){
-                let children = await User.find({userName:ele.userName,isActive:true})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', {userName:ele.userName,isActive:true});
+                // let children = await User.find({userName:ele.userName,isActive:true})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
 
             
@@ -6722,15 +6745,17 @@ io.on('connection', (socket) => {
             }
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }else{
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
             let eventData = await newCommissionModel.aggregate([
                 {
@@ -6791,15 +6816,17 @@ io.on('connection', (socket) => {
             // console.log(dateFilter)
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }else{
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
             let accStatements
             if(data.id){
@@ -6890,15 +6917,17 @@ io.on('connection', (socket) => {
             }
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }else{
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
             let userWiseData = await newCommissionModel.aggregate([
                 {
@@ -7800,15 +7829,17 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }     
         if(data.LOGINDATA.LOGINUSER.userName != data.filterData.username){
         }
@@ -7825,10 +7856,11 @@ io.on('connection', (socket) => {
         try{
             // console.log(data)
             let childrenArr = []
-            let children = await User.find({parentUsers:data.LOGINUSER._id})
-            children.map(ele => {
-                childrenArr.push(ele.userName)
-            })
+            childrenArr = await User.distinct('userName', { parentUsers: data.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenArr.push(ele.userName)
+            // })
             let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
             socket.emit('getcountofpaymentreq',{status:'success',paymentreqcount})
         }catch(err){
