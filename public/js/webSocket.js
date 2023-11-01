@@ -1089,8 +1089,6 @@ socket.on('connect', () => {
                     var audio = document.getElementById("notificationSound");
                     audio.play();
                 }
-                var audio = document.getElementById("notificationSound");
-                audio.play();
                 sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
                 $('header .fa-bell').siblings('span').text(data.paymentreqcount)
             }else{
