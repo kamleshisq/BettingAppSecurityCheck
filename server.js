@@ -2930,11 +2930,11 @@ io.on('connection', (socket) => {
             data.LOGINUSER = parentUser
         }
         let childrenUsername = []
-        let children = await User.find({parentUsers:data.LOGINUSER._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
-      
+        // let children = await User.find({parentUsers:data.LOGINUSER._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
+        childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINUSER._id });
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     
