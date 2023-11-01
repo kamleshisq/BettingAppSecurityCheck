@@ -251,7 +251,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     // let children = await User.find({parentUsers:currentUser._id, role_type: 5})
     // childrenArr = Array.from(children, ele => ele.userName);
     childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
-      console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
+    //   console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
     let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
