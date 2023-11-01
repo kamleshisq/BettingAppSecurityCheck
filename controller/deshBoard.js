@@ -88,41 +88,41 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     topGames = []
-    // topGames = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status: { $ne: "OPEN" },
-    //             date: { $gte: sevenDaysAgo },
-    //             userName:{$in:childrenUsername}
-    //         }
-    //     },
+    topGames = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" },
+                date: { $gte: sevenDaysAgo },
+                userName:{$in:childrenUsername}
+            }
+        },
 
-    //     {
-    //         $group: {
-    //             _id: "$event",
-    //             totalCount: { $sum: 1 },
-    //             uniqueUsers: { $addToSet: "$userId" },
-    //             totalReturns: { $sum: "$Stake" }
-    //         }
-    //     },
-    //     {
-    //         $project: {
-    //             _id: 0,
-    //             event: "$_id",
-    //             totalCount: 1,
-    //             noOfUniqueUsers: { $size: "$uniqueUsers" },
-    //             totalReturns: 1
-    //         }
-    //     },
-    //     {
-    //         $sort: {
-    //             totalCount: -1
-    //         }
-    //     },
-    //     {
-    //         $limit: 5
-    //     }
-    // ]);
+        {
+            $group: {
+                _id: "$event",
+                totalCount: { $sum: 1 },
+                uniqueUsers: { $addToSet: "$userId" },
+                totalReturns: { $sum: "$Stake" }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                event: "$_id",
+                totalCount: 1,
+                noOfUniqueUsers: { $size: "$uniqueUsers" },
+                totalReturns: 1
+            }
+        },
+        {
+            $sort: {
+                totalCount: -1
+            }
+        },
+        {
+            $limit: 5
+        }
+    ]);
     Categories = []
     // Categories = await betModel.aggregate([
     //     {
