@@ -668,6 +668,16 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
 
 exports.paymentDeposite = catchAsync(async(req, res, next)=>{
     // console.log(req.body,'==>paymentDeposite body')
+    function validateUTR(utr) {
+        // Define your UTR validation criteria here
+        var utrPattern = /^[A-Za-z0-9]{12,}$/; // Minimum 12 alphanumeric characters
+
+        // Check if the UTR matches the pattern
+        return utrPattern.test(utr);
+    }
+    if(!validateUTR(req.body.utr)){
+        return next(new AppError('enter valid utr',400))
+    }
     console.log(req.files)
     let imagName;
     let data;

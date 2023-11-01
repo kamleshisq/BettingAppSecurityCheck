@@ -98,6 +98,26 @@ socket.on('connect', () => {
         clearTimeout(popupTimeout);
     });
 
+    $('#navmod3 form input[name="utr"]').keyup(function(e){
+        function validateUTR(utr) {
+            // Define your UTR validation criteria here
+            var utrPattern = /^[A-Za-z0-9]{12,}$/; // Minimum 12 alphanumeric characters
+
+            // Check if the UTR matches the pattern
+            return utrPattern.test(utr);
+        }
+
+        let check = validateUTR($(this).val())
+        console.log(check,'check')
+        if(!check){
+            $(this).siblings('span.input_err').addClass('error')
+            $(this).siblings('span.input_err').text('enter valid utr(minimum 12 digit alpha numarical)')
+        }else{
+            $(this).siblings('span.input_err').removeClass('error')
+            $(this).siblings('span.input_err').text('')
+        }
+    })
+
     $('.paymentDepositeMenu').click(function(e){
         document.getElementById("loader-overlay").style.display = "flex";
         socket.emit('getPaymentmethodData',{data:LOGINDATA})

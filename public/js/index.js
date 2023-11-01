@@ -30,6 +30,7 @@ import { createSlider } from "./addSlider";
 import { userLogin } from "./userLogin";
 import { KYC } from "./kyc";
 import { paymentDeposite } from "./paymentDeposite";
+import { notificationsss } from "./notificationsss";
 // import { func } from "joi";
 
 
@@ -688,6 +689,20 @@ $(document).on('submit','#navmod3 .payment-fom',function(e){
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
     // console.log(fd)
-    paymentDeposite(fd)
+    function validateUTR(utr) {
+        // Define your UTR validation criteria here
+        var utrPattern = /^[A-Za-z0-9]{12,}$/; // Minimum 12 alphanumeric characters
+
+        // Check if the UTR matches the pattern
+        return utrPattern.test(utr);
+    }
+
+    let check = validateUTR($(this).val())
+    if(check){
+        paymentDeposite(fd)
+    }else{
+        notificationsss({message: 'Please enter valid UTR', status:"error"})
+    }
+
     // /api/v1/Account/paymentDeposite
 })
