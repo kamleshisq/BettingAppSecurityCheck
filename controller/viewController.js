@@ -416,10 +416,11 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     let betsDetails
     if(userDetails.roleName != "user"){
         let childrenUsername = []
-        let children = await User.find({parentUsers:req.query.id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.query.id});
+        // let children = await User.find({parentUsers:req.query.id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         bets = await betModel.aggregate([
             {
                 $match: {
@@ -650,15 +651,17 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let bets = await betModel.aggregate([
         {
@@ -740,15 +743,17 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -1165,15 +1170,19 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
     let limit = 10;
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let Logs = await loginLogs.aggregate([
       
@@ -1252,15 +1261,19 @@ exports.plreport = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
 
     let betResult = await betModel.aggregate([
@@ -1404,16 +1417,20 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     fiveDaysAgo.setDate(currentDate.getDate() - 5);
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
-    }else{
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
 
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
+    }else{
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let betsEventWise = await betModel.aggregate([
         {
@@ -1768,15 +1785,19 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
 
     let childrenUsername = []
     if(req.currentUser.roleName == "Operator"){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -1847,15 +1868,19 @@ exports.getBetAlertPage = catchAsync(async(req, res, next) => {
     }
     let childrenUsername = []
     if(req.currentUser.roleName == "Operator"){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let betResult = await betModel.aggregate([
         {
@@ -1951,15 +1976,19 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
     let limit = 10;
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -2234,10 +2263,12 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         id = parentUser._id.toString()
     }
     let childrenUsername = []
-    let children = await User.find({parentUsers:id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    childrenUsername = await User.distinct('userName', {parentUsers:id});
+
+    // let children = await User.find({parentUsers:id})
+    // children.map(ele => {
+    //     childrenUsername.push(ele.userName) 
+    // })
 
     // console.log(childrenUsername, "+====>> childrenUsername ")
     // console.log(req.currentUser)
@@ -3431,15 +3462,17 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let inprogressData = await InprogreshModel.find({eventId:req.query.id})
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let betsEventWiseOpen = await betModel.aggregate([
         {
@@ -3647,15 +3680,19 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
     // if()
     // console.log(req.currentUser)
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     
     let eventWiseData = await commissionNewModel.aggregate([
@@ -4370,10 +4407,12 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
         let childrenUsername = []
-        let children = await User.find({parentUsers:mainId})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:mainId});
+
+        // let children = await User.find({parentUsers:mainId})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         let SportLimits = betLimit.find(item => item.type === "Sport")
         let min 
         let max 
@@ -4455,10 +4494,12 @@ exports.marketBets = catchAsync(async(req, res, next) => {
     let limit = 10;
     let page = 0;
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+    // let children = await User.find({parentUsers:req.currentUser._id})
+    // children.map(ele => {
+    //     childrenUsername.push(ele.userName) 
+    // })
     let bets = await betModel.find({marketId:req.query.id,userName:{$in:childrenUsername} ,status: 'OPEN'}).sort({'date':-1}).skip(limit * page).limit(limit)
         res.status(200).render("./riskMarketsBets/main",{
             title:"Risk Analysis",
@@ -4578,10 +4619,12 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let match = req.query.event
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+    // let children = await User.find({parentUsers:req.currentUser._id})
+    // children.map(ele => {
+    //     childrenUsername.push(ele.userName) 
+    // })
     if(req.query.market){
         let market 
         let marketName 
@@ -5296,10 +5339,12 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
-    let chils = await User.find({parentUsers:req.currentUser._id})
-    let newChilds = chils.map(ele => {
-        return ele.userName
-    })
+    newChilds = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+    // let chils = await User.find({parentUsers:req.currentUser._id})
+    // let newChilds = chils.map(ele => {
+    //     return ele.userName
+    // })
     let paymentreq = await paymentReportModel.find({username:{$in:newChilds}}).sort({date:-1}).limit(10)
     // console.log(paymentreq)
     res.render('./PaymentApproval/PaymentApproval',{
