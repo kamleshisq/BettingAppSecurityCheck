@@ -43,6 +43,17 @@ const paymentreportSchem = mongoose.Schema({
     notes:{
         type:String
     },
+    accountnumber:{
+        type:String,
+        unique:true
+    },
+    upiid:{
+        type:String,
+        unique:true
+    },
+    phonenumber:{
+        type:String
+    },
     remark:{
         type:String
     }

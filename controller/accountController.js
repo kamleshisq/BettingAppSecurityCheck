@@ -690,11 +690,21 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
                 console.log(err, "THIS IS ERRRRRR")
             }
             data = {... req.body}
-            // let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod})
+            let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod,accountholdername:req.body.accountholdername})
             // console.log(paymentMethoDetail)
             data.username = req.currentUser.userName
             data.status = 'pending'
             data.image = imagName
+            if(req.body.pmethod == 'banktransfer'){
+
+                data.accountnumber = paymentMethoDetail.accountnumber
+            }else if(req.body.pmethod == 'upi'){
+
+                data.upiid = paymentMethoDetail.upiid
+            }else if(req.body.pmethod == 'paytm'){
+
+                data.phonenumber = paymentMethoDetail.phonenumber
+            }
             data.date = new Date()
             
             console.log(data)
