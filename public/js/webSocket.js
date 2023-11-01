@@ -1078,11 +1078,18 @@ socket.on('connect', () => {
         if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Admin'){
             setInterval(()=>{
                 socket.emit('getcountofpaymentreq',LOGINDATA)
-            },1000)
+            },5000)
         }
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
                 console.log(data.paymentreqcount)
+                let oldcount = JSON.parse(sessionStorage.getItem('notiCount'))
+                console.log(oldcount,'oldcount')
+                if(oldcount < data.paymentreqcount){
+                    var audio = document.getElementById("notificationSound");
+                    audio.play();
+                }
+                sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
                 $('header .fa-bell').siblings('span').text(data.paymentreqcount)
             }else{
                 console.log(data.msg)

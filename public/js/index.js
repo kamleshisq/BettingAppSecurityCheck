@@ -697,7 +697,7 @@ $(document).on('submit','#navmod3 .payment-fom',function(e){
         return utrPattern.test(utr);
     }
 
-    let check = validateUTR($(this).val())
+    let check = validateUTR(data.utr)
     if(check){
         paymentDeposite(fd)
     }else{

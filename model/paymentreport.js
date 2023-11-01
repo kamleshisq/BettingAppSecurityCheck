@@ -44,12 +44,12 @@ const paymentreportSchem = mongoose.Schema({
         type:String
     },
     accountnumber:{
-        type:String,
-        unique:true
+        type:String
+        
     },
     upiid:{
-        type:String,
-        unique:true
+        type:String
+        
     },
     phonenumber:{
         type:String
