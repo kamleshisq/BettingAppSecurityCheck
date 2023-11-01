@@ -9105,8 +9105,14 @@ socket.on('connect', () => {
 
                     html += `<td title="Pts" >0</td>
                     <td title="Closing" >${userAcc[i].balance}</td>
-                    <td title="Description" >${userAcc[i].description}</td>
-                    <td title="Remark" >-</td>`
+                    <td title="Description" >${userAcc[i].description}</td>`
+                    if(userAcc[i].Remark){
+
+                        html += `<td title="Remark" >${userAcc[i].Remark}</td>`
+                    }else{
+                        html += `<td title="Remark" >-</td>`
+
+                    }
             }
             count += 20
             if(data.page == 0){

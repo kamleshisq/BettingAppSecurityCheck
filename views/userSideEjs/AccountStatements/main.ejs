@@ -91,7 +91,11 @@
                                     <td title="Pts">0</td>
                                     <td title="Closing"><%=data[i].balance%></td>
                                     <td title="Description"><%=data[i].description%></td>
-                                    <td title="Remark">-</td>
+                                    <%if(data[i].Remark){%>
+                                      <td title="Remark"><%=data[i].Remark%></td>
+                                    <%}else{%>
+                                      <td title="Remark">-</td>
+                                    <%}%>
                                 </tr>
                                 <%}%>
                                 <%}%>
