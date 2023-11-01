@@ -268,7 +268,7 @@ io.on('connection', (socket) => {
                         $in:role_type
                     }
                     data.filterData.role_type = role_Type
-                    console.log(data.filterData)
+                    // console.log(data.filterData)
                     user = await User.find(data.filterData).skip(skip).limit(limit)
                 }
             }
@@ -371,7 +371,7 @@ io.on('connection', (socket) => {
                 $limit:10
             }
         ])
-        console.log(users)
+        // console.log(users)
         socket.emit('userHistory',{users,page})
     })
     
@@ -425,7 +425,7 @@ io.on('connection', (socket) => {
                 headers: { 'Authorization': `Bearer ` + loginData.Token }
             }).then(res => res.json())
             .then(json =>{
-                console.log(json.status)
+                // console.log(json.status)
                 if(json.status == "success"){
                     socket.emit("SelectLogoutUserId", "success")
                 }
@@ -556,7 +556,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("AccountScroll2", async(data)=>{
-        console.log(data)
+        // console.log(data)
         const user = await User.findById(data.id)
         let fullUrl
         let account;
@@ -1070,7 +1070,7 @@ io.on('connection', (socket) => {
         let cricketList;
         let footballList;
         let tennisList;
-        console.log(data);
+        // console.log(data);
         const sportData = await getCrkAndAllData()
         // console.log(sportData)
         cricketList = sportData[0].gameList[0].eventList
@@ -1080,7 +1080,7 @@ io.on('connection', (socket) => {
         tennisList = tennisList.eventList
         let sportList = cricketList.concat(footballList,tennisList)
         sportList = sportList.filter(item => item.eventData.name.toLowerCase().includes(data.x.toLowerCase()))
-        console.log(sportList)
+        // console.log(sportList)
         socket.emit("searchEvents", {sportList,type:data.type})
     })
     socket.on("SearchACC", async(data) => {
@@ -1238,7 +1238,7 @@ io.on('connection', (socket) => {
         if(data.filterData.status == 'All'){
             data.filterData.status = {$ne: "OPEN"}
         }
-        console.log(data.filterData)
+        // console.log(data.filterData)
 
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
@@ -1265,7 +1265,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('betMoniter',async(data)=>{
-        console.log(data.filterData)
+        // console.log(data.filterData)
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
@@ -1379,7 +1379,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('matchBets',async(data)=>{
-        console.log(data.filterData)
+        // console.log(data.filterData)
         let ubDetails;
         let limit = 10;
         let page = data.page;
@@ -1601,7 +1601,7 @@ io.on('connection', (socket) => {
 
     socket.on('OnlineUser', async(data) => {
         // console.log(data.filterData, 12121)
-        console.log(data)
+        // console.log(data)
         let page
         let limit = 10
         page = data.page
@@ -1837,7 +1837,7 @@ io.on('connection', (socket) => {
             // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        console.log(data ,'++++++==>DATA')
+        // console.log(data ,'++++++==>DATA')
         let result = await placeBet(data)
         let openBet = []
         if(data.pathname === "/exchange/multimarkets"){
@@ -1845,7 +1845,7 @@ io.on('connection', (socket) => {
         }else{
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
         }
-        console.log(openBet, "openBet")
+        // console.log(openBet, "openBet")
         let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
         socket.emit("betDetails", {result, openBet, user})
     })
@@ -2310,7 +2310,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("UserUpdatePass", async(data) => {
-        console.log(data.LOGINDATA.LOGINTOKEN)
+        // console.log(data.LOGINDATA.LOGINTOKEN)
         let fullUrl = "http://127.0.0.1/api/v1/users/updateCurrentUserPass"
         fetch(fullUrl, {
             method: 'POST',
@@ -2333,7 +2333,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updatePage", async(data) => {
-        console.log(data)
+        // console.log(data)
         let page = await pagesModel.findByIdAndUpdate(data.id,data)
         if(page){
             socket.emit("updatePage", "success")
@@ -2351,7 +2351,7 @@ io.on('connection', (socket) => {
         }
         let fevGames = []
         if(data.LOGINDATA.LOGINUSER != "" && data.LOGINDATA.LOGINUSER != undefined){
-            console.log(data.LOGINDATA.LOGINUSER._id)
+            // console.log(data.LOGINDATA.LOGINUSER._id)
            let fevGames1 = await CasinoFevoriteModel.findOne({userId:data.LOGINDATA.LOGINUSER._id})
            if(fevGames1){
                fevGames = fevGames1.gameId
@@ -2365,7 +2365,7 @@ io.on('connection', (socket) => {
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
     let limit = 20;
     let page = data.page;
-    console.log(data.filterData)
+    // console.log(data.filterData)
     // console.log(data.LOGINDATA.LOGINUSER)
     let filter = {}
     filter.user_id = data.LOGINDATA.LOGINUSER._id
@@ -2527,7 +2527,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('socketStakeLABLEDATA', async(data) => {
-        console.log(data)
+        // console.log(data)
         let check = []
         if(data.LOGINUSER){
             check = await stakeLabelModel.find({userId:data.LOGINUSER._id})
@@ -2575,7 +2575,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("createNewRule", async(data) =>{
-        console.log(data.data)
+        // console.log(data.data)
         try{
             let data1 = await gameRuleModel.create(data.data)
             socket.emit("createNewRule", {message:"updated", data1})
@@ -2591,7 +2591,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateRules", async(data) => {
-        console.log(data)
+        // console.log(data)
         try{
             await gameRuleModel.findByIdAndUpdate(data.id, {name:data.name, description:data.description})
             let updated = await gameRuleModel.findById(data.id)
@@ -2621,7 +2621,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('getPdf', async(data) => {
-        console.log(data)
+        // console.log(data)
         const fileName = `${data.LOGINDATA.LOGINUSER.userName}`; 
         const filePath = `/var/www/bettingApp/documents/${fileName}.pdf`;
         fs.readFile(filePath, (err, data1) => {
@@ -2873,7 +2873,7 @@ io.on('connection', (socket) => {
             }
         ])
 
-        console.log(turnOver,'turnOver')
+        // console.log(turnOver,'turnOver')
         if(turnOver.length > 0){
             result.turnOver = turnOver[0].totalAmount
             result.Income = turnOver[0].Income
@@ -3172,7 +3172,7 @@ io.on('connection', (socket) => {
                 let parentUse = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
                 if(parentUse.roleName === "Admin"){ 
                     let user = await User.findByIdAndUpdate(parentUse._id.toString(), {$inc:{balance:parseFloat(data.data.amount), availableBalance:parseFloat(data.data.amount)}})
-                console.log(user,122122)
+                // console.log(user,122122)
                 let date = Date.now()
                 let data1 = {
                     userId:parentUse._id.toString(),
@@ -3237,7 +3237,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('AlertBet',async(data)=>{
-        console.log(data.filterData)
+        // console.log(data.filterData)
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
@@ -3323,7 +3323,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("BETSFORUSERAdminSide", async(data) => {
-        console.log(data)
+        // console.log(data)
         try{
             let limit = 20
             let page = 0
@@ -3351,7 +3351,7 @@ io.on('connection', (socket) => {
             if(data.filterData.type != "All Bets"){
                 filter.status = data.filterData.type
             }
-            console.log(filter)
+            // console.log(filter)
             if(user.roleName != "user"){
                 bets = await Bet.aggregate([
                     {
@@ -3428,9 +3428,9 @@ io.on('connection', (socket) => {
         }else if (data.filterData.type === "1"){
             filter.stake = undefined
         }
-        console.log(filter)
+        // console.log(filter)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
-        console.log(userAcc)
+        // console.log(userAcc)
         socket.emit("ACCSTATEMENTADMINSIDE", {userAcc, page})
     }catch(err){
         console.log(err)
@@ -3446,12 +3446,12 @@ io.on('connection', (socket) => {
     })
 
     socket.on("Autosettle", async(data) => {
-        console.log(data)
+        // console.log(data)
         await settlement.findOneAndUpdate({userId:data.LOGINDATA.LOGINUSER._id},{status:data.status})
     })
 
     socket.on('settlement',async(data)=>{
-        console.log(data)
+        // console.log(data)
         const me = data.LOGINUSER
         let dataobj;
 
@@ -3472,7 +3472,7 @@ io.on('connection', (socket) => {
             toDate.setDate(toDate.getDate() + 1);
             dataobj = {$lte:new Date(toDate)}
         }
-        console.log(dataobj, "dateObj")
+        // console.log(dataobj, "dateObj")
         let childrenUsername = []
         if(me.roleName == 'Operator'){
             let children = await User.find({parentUsers:{ $in: [me.parent_id] }})
@@ -3572,7 +3572,7 @@ io.on('connection', (socket) => {
         }else if(data.to_date && !data.from_date){
             filter.date = {$lte:new Date(data.to_date)}
         }
-        console.log(filter)
+        // console.log(filter)
      
         if(operationroleName === "Admin"){
         }else{
@@ -3668,7 +3668,7 @@ io.on('connection', (socket) => {
     socket.on("VoidBetIn22", async(data) => {
         // let marketIds = [`${data.id}`]
         try{
-             console.log(data, "BETDATA")
+            //  console.log(data, "BETDATA")
              if(data.result != ""){
                 // let bets = await Bet.aggregate([
                 //     {
@@ -3732,7 +3732,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateCommission", async(data) => {
-        console.log(data)
+        // console.log(data)
         try{
             let newValues = {
                 matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
@@ -3778,12 +3778,12 @@ io.on('connection', (socket) => {
         }
 
         let CommissionData = await AccModel.find(filter).sort({date:-1}).skip(page * limit).limit(limit)
-        console.log(CommissionData)
+        // console.log(CommissionData)
         socket.emit("CommissionRReport", {CommissionData, page})
     })
 
     socket.on('sportStatusChange',async(data) => {
-        console.log(data)
+        // console.log(data)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
@@ -3843,7 +3843,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sportStatusChange2',async(data) => {
-        console.log(data)
+        // console.log(data)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
@@ -3905,7 +3905,7 @@ io.on('connection', (socket) => {
         // }
     })
     socket.on('sportStatusChange3',async(data) => {
-        console.log(data)
+        // console.log(data)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
@@ -3944,7 +3944,7 @@ io.on('connection', (socket) => {
         }
     })
     socket.on('sportStatusChange4',async(data) => {
-        console.log(data)
+        // console.log(data)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
@@ -4021,7 +4021,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("commissionMarketbyId", async(data) => {
-        console.log(data)
+        // console.log(data)
         try{
             if(data.isChecked){
                 let data1 = await commissionMarketModel.create({marketId:data.marketId})
@@ -4055,7 +4055,7 @@ io.on('connection', (socket) => {
         if(user){
             if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
-                    console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
+                    // console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
                     let commission = commissionAmount[0].totalCommission
                     user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
                     let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission}})
@@ -4789,7 +4789,7 @@ io.on('connection', (socket) => {
     })
     
     socket.on('Book', async(data) => {
-        console.log(data, "datadatadatadata")
+        // console.log(data, "datadatadatadata")
         let users = []
         let falg = false
         let Id 
@@ -5475,7 +5475,7 @@ io.on('connection', (socket) => {
                             }
 
                         ])
-                        console.log(Bets, "BETSBETS")
+                        // console.log(Bets, "BETSBETS")
                         // console.log(Bets[0].selections, "selectionsselections")
                         if(Bets.length > 0){
 
@@ -5721,7 +5721,7 @@ io.on('connection', (socket) => {
                 // console.log(betData[0].data, "betData[0].databetData[0].databetData[0].data")
                 socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
             }else{
-                console.log('WORKING123', data)
+                // console.log('WORKING123', data)
                 let betData = await Bet.aggregate([
                     {
                         $match: {
@@ -6007,7 +6007,7 @@ io.on('connection', (socket) => {
                         }
                     }
                 }
-                console.log(dataToshow, "betData")
+                // console.log(dataToshow, "betData")
                 socket.emit('FANCYBOOK', {betData : dataToshow, type:'Fancy'})
             }
 
@@ -6279,7 +6279,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('childGameAnalist',async(data)=>{
-        console.log(data)
+        // console.log(data)
         let roleType = data.roleType;
         let parent = data.parent
         let users;
@@ -6396,7 +6396,7 @@ io.on('connection', (socket) => {
             }
         }
 
-        console.log(result)
+        // console.log(result)
 
         socket.emit('childGameAnalist',{result,page,type,breadcum})
 
@@ -6405,9 +6405,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('getEvetnsOfSport',async(data)=>{
-        console.log(data);
+        // console.log(data);
         const sportData = await getCrkAndAllData()
-        console.log(sportData)
+        // console.log(sportData)
         let sportList;
         if(data.sport == '4'){
             sportList = sportData[0].gameList[0]
@@ -6445,7 +6445,7 @@ io.on('connection', (socket) => {
                 }
               }
         ])
-        console.log(commissionAmount, "commissionAmountcommissionAmountcommissionAmountcommissionAmount")
+        // console.log(commissionAmount, "commissionAmountcommissionAmountcommissionAmountcommissionAmount")
         if(user){
             if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
@@ -6537,7 +6537,7 @@ io.on('connection', (socket) => {
 
     socket.on('updateBetLimitMATCH', async(data) => {
 
-        console.log(data)
+        // console.log(data)
         let data1 = await betLimit.findOne({type:data.id})
         if(data1 != null){
             socket.emit('updateBetLimitMATCH', {marketData:data1, data:data.innerText, id:data.id})
@@ -6563,7 +6563,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('updateBetLimitMarket', async(data) => {
-        console.log('WORKING')
+        // console.log('WORKING')
        let dbData = await betLimit.findOne({type:data.id})
        if(dbData){
         // console.log(dbData)
@@ -6768,7 +6768,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('commissionAccFilter', async(data) => {
-        console.log(data.data, data.id)
+        // console.log(data.data, data.id)
         try{
             let dateFilter
             if(data.data.fromTime == '' && data.data.toTime != ''){
@@ -6786,7 +6786,7 @@ io.on('connection', (socket) => {
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
                   }
             }
-            console.log(dateFilter)
+            // console.log(dateFilter)
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
                 let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
@@ -6857,7 +6857,7 @@ io.on('connection', (socket) => {
         }
 
 
-            console.log(accStatements,"accStatements")
+            // console.log(accStatements,"accStatements")
             socket.emit("commissionAccFilter", {accStatements, page:data.page})
         }catch(err){
             console.log(err)
@@ -6950,7 +6950,7 @@ io.on('connection', (socket) => {
                     $limit:10
                   }
             ])
-            console.log(userWiseData, "userWiseData")
+            // console.log(userWiseData, "userWiseData")
             socket.emit('commissionUserLevel', {userWiseData, page:data.page})
         }catch(err){
             console.log(err)
@@ -6959,7 +6959,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('timelyVoideBEt', async(data) => {
-        console.log(data)
+        // console.log(data)
         try{
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPassword(data.data.password, user.password)
@@ -7518,7 +7518,7 @@ io.on('connection', (socket) => {
         try{
             let id = data.id
             delete data['id']
-            console.log(data)
+            // console.log(data)
             await PaymentMethodModel.findByIdAndUpdate(id,data)
             socket.emit('editpaymentMethod',{status:'success',msg:'data updated successfully'})
         }catch(err){
@@ -7760,7 +7760,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('paymentApprovaltable',async(data)=>{
-        console.log(data.filterData)
+        // console.log(data.filterData)
         if(data.filterData.status == "All"){
             delete data.filterData.status
         }

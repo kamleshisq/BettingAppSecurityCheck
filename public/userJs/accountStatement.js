@@ -45,7 +45,7 @@ function generatePDF(table) {
   }
 
 document.getElementById('pdfDownload').addEventListener('click', function() {
-    console.log("Working")
+    // console.log("Working")
     const table = document.getElementById('123456');
     
     if (table) {

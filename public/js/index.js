@@ -668,7 +668,7 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
 
 $(document).on("click", ".myloginmodl-demo-loginbtnn", function(e){
     e.preventDefault()
-    console.log("WORKING")
+    // console.log("WORKING")
     userLogin({data:"Demo"})
 })
 
@@ -687,7 +687,7 @@ $(document).on('submit','#navmod3 .payment-fom',function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
-    console.log(fd)
+    // console.log(fd)
     paymentDeposite(fd)
     // /api/v1/Account/paymentDeposite
 })

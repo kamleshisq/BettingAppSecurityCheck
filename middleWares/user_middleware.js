@@ -101,7 +101,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     }else if(req.originalUrl == "/"){
         if(req.headers.cookie){
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
-            console.log(login)
+            // console.log(login)
             if(login == null){
                 return next()
             }

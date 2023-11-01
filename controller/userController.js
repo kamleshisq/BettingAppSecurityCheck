@@ -544,7 +544,7 @@ exports.currentUserPasswordupdate = catchAsync(async(req, res, next) => {
 exports.getOwnChild = catchAsync(async(req, res, next) => {
 
     try{
-        console.log(req.currentUser, "req.currentUserreq.currentUserreq.currentUserreq.currentUser")
+        // console.log(req.currentUser, "req.currentUserreq.currentUserreq.currentUserreq.currentUser")
         let child;
         let Rows;
         let me;
