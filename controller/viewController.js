@@ -340,7 +340,7 @@ exports.dashboard = catchAsync(async(req, res, nex) => {
     var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/deshBoard/getDeshboardUserManagement'
     let me;
     const currentUser = req.currentUser
-    if(currentUser.role.roleName = 'Operator'){
+    if(currentUser.role.roleName === 'Operator'){
         me = await User.findById(currentUser.parent_id)
     }else{
         me = currentUser
