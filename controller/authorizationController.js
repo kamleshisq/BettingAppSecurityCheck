@@ -233,7 +233,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     if(!token){
         return res.redirect('/adminlogin')
     }
-    // console.log(token, "token")
+    console.log(token, "tokentokentokentokentokentokentokentokentoken")
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "ID")
     if(!tokenId.isOnline){
