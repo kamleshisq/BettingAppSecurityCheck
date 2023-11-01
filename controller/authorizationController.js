@@ -62,8 +62,8 @@ const createSendToken = async (user, statuscode, res, req)=>{
                             session_id:token, 
                             device_info:req.headers['user-agent']})
     global._loggedInToken.push({token:token,time:time})
-    // let childrenArr = []
-    let childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
+    
+    let childrenArr = await User.distinct('userName', { parentUsers: user._id, role_type: 5 });
     let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
