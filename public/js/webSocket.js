@@ -1083,7 +1083,7 @@ socket.on('connect', () => {
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
                 console.log(data.paymentreqcount)
-                let oldcount = parse.JSON(sessionStorage.getItem('notiCount'))
+                let oldcount = JSON.parse(sessionStorage.getItem('notiCount'))
                 console.log(oldcount,'oldcount')
                 if(oldcount < data.paymentreqcount){
                     var audio = document.getElementById("notificationSound");
