@@ -17396,7 +17396,7 @@ socket.on('connect', () => {
                 if(paymentreq[i].status == 'pending'){
                 html += `<div class="btn-group">
                     <button data-bs-toggle="modal" data-bs-target="#myModaladduser" class="btn paymetnreqApprove" data-docidapp="${paymentreq[i]._id}">Approve</button>
-                    <button class="btn denie" data-dociddenie="${paymentreq[i]._id}">Deny</button>
+                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn paymetnreqDeny" data-docidapp="${paymentreq[i]._id}">Deny</button>
                 </div>`
                 }else{
                 html += `${paymentreq[i].status}`
