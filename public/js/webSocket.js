@@ -7105,7 +7105,7 @@ socket.on('connect', () => {
                     }
                     return output;
                   }
-                  const encryptionKey = JK;
+                  const encryptionKey = 'JK';
                   const encryptedUrl = xorEncrypt(data, encryptionKey);
                 window.addEventListener('load', function() {
                     const iframe = document.getElementById('myIframe');
