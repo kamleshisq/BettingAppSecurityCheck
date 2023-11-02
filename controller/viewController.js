@@ -201,9 +201,9 @@ exports.userTable = catchAsync(async(req, res, next) => {
             if(me.parentUsers[i] == currentUser._id.toString()){
                 console.log("WORKING")
                 adminBredcumArray.push({
-                    userName:me.userName,
-                    role:me.roleName,
-                    id : me._id.toString(),
+                    userName:currentUser.userName,
+                    role:currentUser.roleName,
+                    id : currentUser._id.toString(),
                     status:true
                 })
             }else{
@@ -216,6 +216,12 @@ exports.userTable = catchAsync(async(req, res, next) => {
                 })
             }
         }
+        adminBredcumArray.push({
+            userName:me.userName,
+            role:me.roleName,
+            id : me._id.toString(),
+            status:false
+        })
     }
     console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
