@@ -186,9 +186,20 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }else{
         sum = 0
     }
-
-    console.log(currentUser, "currentUsercurrentUsercurrentUser")
-    console.log(me, "memememememememememe")
+    let adminBredcumArray = []
+    if(me.parent_id.length == 0){
+        adminBredcumArray.push({
+            userName:me.userName,
+            role:'House Admin'
+        })
+    }else{
+        for(let i = 0; i < me.parent_id.length; i++){
+            let object = await User.findById(me.parent_id[i], 'userName roleName')
+            console.log(object, "objectobjectobjectobject")
+        }
+    }
+    // console.log(currentUser, "currentUsercurrentUsercurrentUser")
+    // console.log(me, "memememememememememe")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
