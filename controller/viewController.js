@@ -191,7 +191,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
-            role:dataOBJ.roleName,
+            role:me.roleName,
             id : me._id.toString(),
             status:true
         })
