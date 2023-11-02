@@ -8,9 +8,20 @@
       <div class="new-head bet-limit-breadcrum"> 
         <div class="bredcum-container">
           <ul>
-              <li><a href="/admin/userManagement"><%=currentUser.userName%></a></li>
-              <li> <a href="/admin/commissionReportEvent?event=Pakistan v Bangladesh"> Pakistan v Bangladesh</a></li>
-              <li class="active"> BOOKMAKER</li>
+            <%for(let i = 0; i < adminBredcumArray.length; i++){%>
+              <%if(adminBredcumArray[i].role === "Admin"){%>
+                <li><a href="/admin/userManagement"><%=adminBredcumArray[i].userName%></a></li>
+
+              <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
+
+              <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
+
+              <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
+
+              <%}%>
+            <%}%>
+              <!-- <li> <a href="/admin/commissionReportEvent?event=Pakistan v Bangladesh"> Pakistan v Bangladesh</a></li> -->
+              <!-- <li class="active"> BOOKMAKER</li> -->
           </ul>
         </div>              
     </div>
