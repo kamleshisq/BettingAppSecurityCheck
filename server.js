@@ -7845,6 +7845,7 @@ io.on('connection', (socket) => {
                 }
             }else{
                 liveStream = await liveStreameData(data.channelId, ip)
+                console.log(liveStream, "liveStreamliveStreamliveStream")
                 const src_regex = /src='([^']+)'/;
                 let match1
                 // let src
@@ -7859,7 +7860,7 @@ io.on('connection', (socket) => {
                     }
                 }
             }
-            console.log(srs)
+            console.log(srs, "liveStreamliveStreamliveStream")
             socket.emit("channelId", srs)
         }
     })
