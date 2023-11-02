@@ -7859,7 +7859,7 @@ io.on('connection', (socket) => {
                     }
                 }
             }
-
+            console.log(srs)
             socket.emit("channelId", srs)
         }
     })
