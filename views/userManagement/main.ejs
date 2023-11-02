@@ -10,7 +10,7 @@
           <ul>
             <%for(let i = 0; i < adminBredcumArray.length; i++){%>
               <%if(adminBredcumArray[i].role === "Admin"){%>
-                <li><a href="/admin/userManagement"> <span>House Admin</span> <%=adminBredcumArray[i].userName%></a></li>
+                <li><a href="/admin/userManagement"> <span>House </span> <%=adminBredcumArray[i].userName%></a></li>
 
               <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
                 <%if(adminBredcumArray[i].status){%>
