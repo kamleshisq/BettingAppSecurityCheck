@@ -1176,7 +1176,7 @@ exports.adminaccount = catchAsync(async(req, res, next) => {
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json())
     .then(json =>{ 
-        console.log(json, "JASON123456789")
+        // console.log(json, "JASON123456789")
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/adminAccountStatment',{
         title:"Admin Account Statement",
