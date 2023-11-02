@@ -7092,7 +7092,8 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'  ){
         let channelId = document.getElementById('myIframe').getAttribute('data-id');
-        console.log(channelId, "channelIdchannelIdchannelId")
+        // console.log(channelId, "channelIdchannelIdchannelId")
+        socket.emit('channelId', {channelId, search})
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
         //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()

@@ -7827,6 +7827,11 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on('channelId', async(data) => {
+        console.log(data)
+    })
+
   
 
 })
