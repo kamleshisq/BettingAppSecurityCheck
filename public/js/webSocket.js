@@ -7098,9 +7098,18 @@ socket.on('connect', () => {
         socket.on('channelId', data => {
             console.log(data)
             try{
+                function xorEncrypt(input, key) {
+                    let output = '';
+                    for (let i = 0; i < input.length; i++) {
+                      output += String.fromCharCode(input.charCodeAt(i) ^ key);
+                    }
+                    return output;
+                  }
+                  const encryptionKey = JK;
+                  const encryptedUrl = xorEncrypt(data, encryptionKey);
                 window.addEventListener('load', function() {
                     const iframe = document.getElementById('myIframe');
-                    iframe.src = data;
+                    iframe.src = encryptedUrl;
                   });
 
             }catch(err){
