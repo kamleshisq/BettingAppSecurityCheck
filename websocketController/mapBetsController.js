@@ -72,9 +72,9 @@ exports.mapbet = async(data) => {
   //FUNCTION FOR PROCESS BET
     
   async function processBets() {
-//   console.log("WORKING +==>>", data)
+  console.log("WORKING +==>>", data)
   const betPromises = bets.map(async (bet) => {
-    // console.log(bet, data.result, "DATADATA123456")
+    console.log(bet, data.result, "DATADATA123456")
     if(!(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('winn') || bet.marketName.toLowerCase().startsWith('match'))){ 
         if(bet.marketId.slice(-2).startsWith('OE')){
             if((bet.secId === "odd_Even_No" && data.result === "LAY") || (bet.secId === "odd_Even_Yes" && data.result === "BACK")) {
