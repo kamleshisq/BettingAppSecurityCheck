@@ -80,9 +80,7 @@
 
 <script type="text/javascript" src="../js/bundle.js"></script>
 <script>
-  $(document).ready(function(){
-$('.nav-login-regstr-btn').click(function(){
-    $('.myloginmodl-form-dv input[autofocus]').focus();
-});
+ $('.modal').on('shown.bs.modal', function() {
+    $(this).find('[autofocus]').focus();
 });
 </script>
