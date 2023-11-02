@@ -187,6 +187,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         sum = 0
     }
     let adminBredcumArray = []
+    console.log(me, "memememememememememe")
     if(me.parent_id.length == 0){
         adminBredcumArray.push({
             userName:me.userName,
@@ -194,12 +195,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         })
     }else{
         for(let i = 0; i < me.parent_id.length; i++){
-            let object = await User.findById(me.parent_id[i], 'userName roleName')
-            console.log(object, "objectobjectobjectobject")
+            let dataOBJ = await User.findById(me.parent_id[i], 'userName roleName')
+            console.log(dataOBJ, "objectobjectobjectobject")
         }
     }
     // console.log(currentUser, "currentUsercurrentUsercurrentUser")
-    console.log(me, "memememememememememe")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
