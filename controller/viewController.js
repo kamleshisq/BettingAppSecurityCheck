@@ -187,7 +187,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         sum = 0
     }
     let adminBredcumArray = []
-    // console.log(me, "memememememememememe")
+    console.log(me, "memememememememememe")
+    console.log(currentUser, "CURR")
     if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
