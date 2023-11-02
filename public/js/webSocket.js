@@ -7097,10 +7097,15 @@ socket.on('connect', () => {
 
         socket.on('channelId', data => {
             console.log(data)
-            window.addEventListener('load', function() {
-                const iframe = document.getElementById('myIframe');
-                iframe.src = data;
-              });
+            try{
+                window.addEventListener('load', function() {
+                    const iframe = document.getElementById('myIframe');
+                    iframe.src = data;
+                  });
+
+            }catch(err){
+                console.log(err)
+            }
         })
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
