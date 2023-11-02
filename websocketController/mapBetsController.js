@@ -435,7 +435,7 @@ exports.mapbet = async(data) => {
         let exposure = bet.exposure
         user = await userModel.findByIdAndUpdate(bet.userId, {$inc:{Loss:1, exposure:-exposure, availableBalance: -exposure, myPL:-exposure, uplinePL:exposure, pointsWL:-exposure}})
         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/LOSS`
-        let debitAmountForP = -exposure
+        let debitAmountForP = exposure
                         for(let i = user.parentUsers.length - 1; i >= 1; i--){
                             let parentUser1 = await userModel.findById(user.parentUsers[i])
                             let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
@@ -626,7 +626,7 @@ exports.mapbet = async(data) => {
         
       }
     }
-
+    console.log("GOT GERE ")
     let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
     if((checkDelete.settledBet + 1) == checkDelete.length){
       await InprogressModel.findOneAndDelete({marketId : bet.marketId, progressType:'SettleMent'})
