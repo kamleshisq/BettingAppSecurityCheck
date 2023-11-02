@@ -341,7 +341,7 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
 exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
     console.log(req.query)
     try{
-    let userAcc
+    let userAcc = []
     let page = req.query.page
     let filter = {}
     let childUsersArr = []
