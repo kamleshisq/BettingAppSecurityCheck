@@ -7107,10 +7107,13 @@ socket.on('connect', () => {
                   }
                   const encryptionKey = 'JK';
                   const encryptedUrl = xorEncrypt(data, encryptionKey);
-                window.addEventListener('load', function() {
-                    const iframe = document.getElementById('myIframe');
-                    iframe.src = encryptedUrl;
-                  });
+                  $(document).ready(function() {
+                    $('#myIframe').attr('src', encryptedUrl);
+                });
+                // window.addEventListener('load', function() {
+                //     const iframe = document.getElementById('myIframe');
+                //     iframe.src = encryptedUrl;
+                //   });
 
             }catch(err){
                 console.log(err)
