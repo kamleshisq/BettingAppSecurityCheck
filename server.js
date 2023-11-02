@@ -3685,55 +3685,14 @@ io.on('connection', (socket) => {
     })
 
     socket.on("VoidBetIn22", async(data) => {
-        // let marketIds = [`${data.id}`]
         try{
-            //  console.log(data, "BETDATA")
              if(data.result != ""){
-                // let bets = await Bet.aggregate([
-                //     {
-                //       $match: {
-                //         marketId: `${data.id}`,
-                //         status: "OPEN",
-                //       },
-                //     },
-                //     {
-                //       $lookup: {
-                //         from: "users",
-                //         localField: "userName",
-                //         foreignField: "userName",
-                //         as: "user",
-                //       },
-                //     },
-                //     {
-                //       $unwind: "$user",
-                //     },
-                //     {
-                //       $match: {
-                //         "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
-                //       },
-                //     },
-                //     {
-                //       $group: {
-                //         _id: null,
-                //         betIds: { $push: { $toString: "$_id" } }, 
-                //       },
-                //     },
-                //     {
-                //       $project: {
-                //         _id: 0, 
-                //         betIds: 1, 
-                //       },
-                //     },
-                //   ]);
-                // console.log(bets)
                 await Bet.updateMany({marketId:data.id, status:'OPEN'}, {$set:{result:data.result, status:'MAP'}})
                 let betdata = await Bet.findOne({marketId:data.id})
                 socket.emit('VoidBetIn22', {status:"success", betdata, result:data.result})
              }else{
                 socket.emit('VoidBetIn22', {message:"Please select a result", status:"error"})
              }
-            //  let data1 = mapBet.mapbet(data)
-            //  socket.emit('VoidBetIn22', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn22",{message:"err", status:"error"})
