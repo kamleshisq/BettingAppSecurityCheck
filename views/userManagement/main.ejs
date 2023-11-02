@@ -10,26 +10,26 @@
           <ul>
             <%for(let i = 0; i < adminBredcumArray.length; i++){%>
               <%if(adminBredcumArray[i].role === "Admin"){%>
-                <span class="bredcum-span-tag">House </span> <li><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+                <li><span class="bredcum-span-tag">House </span> <a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
 
               <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
                 <%if(adminBredcumArray[i].status){%>
-                  <span class="bredcum-span-tag">SDM</span><li><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+                  <li><span class="bredcum-span-tag">SDM</span><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
                 <%}else{%>
-                  <span class="bredcum-span-tag">SDM</span> <li><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+                  <li><span class="bredcum-span-tag">SDM</span> <a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
                 <%}%>
 
               <%}else if(adminBredcumArray[i].role === "Super-Admin"){%>
                 <%if(adminBredcumArray[i].status){%>
-                  <span class="bredcum-span-tag">SM</span><li><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+                  <li><span class="bredcum-span-tag">SM</span><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
                 <%}else{%>
-                  <span class="bredcum-span-tag">SM</span><li><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+                  <li><span class="bredcum-span-tag">SM</span><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
                 <%}%>
               <%}else if(adminBredcumArray[i].role === "Duper-Admin"){%>
                 <%if(adminBredcumArray[i].status){%>
-                  <span class="bredcum-span-tag">DM</span><li><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+                  <li><span class="bredcum-span-tag">DM</span><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
                 <%}else{%>
-                  <span class="bredcum-span-tag">DM</span><li><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+                  <li><span class="bredcum-span-tag">DM</span><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
                 <%}%>
               <%}%>
             <%}%>
