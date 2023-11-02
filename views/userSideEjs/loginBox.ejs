@@ -80,7 +80,10 @@
 
 <script type="text/javascript" src="../js/bundle.js"></script>
 <script>
- $('.modal').on('shown.bs.modal', function() {
+ 
+$(document).ready(function(){
+  $('.modal').on('shown.bs.modal', function() {
     $(this).find('[autofocus]').focus();
+});
 });
 </script>
