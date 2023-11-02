@@ -13572,13 +13572,14 @@ socket.on('connect', () => {
 
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
-            let id =  this.id
-            var newColumnCell = $(this).closest('tr').find('.selectOption');
-            // console.log(newColumnCell.val())
-            let result = newColumnCell.val()
-            // console.log(result, "resultresultresultresultresultresult")
-            socket.emit("VoidBetIn22", {LOGINDATA, id, result})
-            // console.log(id)
+            console.log("WORKING 123456789")
+            // let id =  this.id
+            // var newColumnCell = $(this).closest('tr').find('.selectOption');
+            // // console.log(newColumnCell.val())
+            // let result = newColumnCell.val()
+            // // console.log(result, "resultresultresultresultresultresult")
+            // socket.emit("VoidBetIn22", {LOGINDATA, id, result})
+            // // console.log(id)
         })
 
         socket.on("VoidBetIn22", async(data) => {
