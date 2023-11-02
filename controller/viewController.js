@@ -187,7 +187,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         sum = 0
     }
 
-
+    console.log(currentUser, "currentUsercurrentUsercurrentUser")
+    console.log(me, "memememememememememe")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
