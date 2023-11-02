@@ -188,13 +188,13 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }
     let adminBredcumArray = []
     console.log(me, "memememememememememe")
-    if(me.parent_id.length == 0){
+    if(me.parentUsers.length == 0){
         adminBredcumArray.push({
             userName:me.userName,
             role:'House Admin'
         })
     }else{
-        for(let i = 0; i < me.parent_id.length; i++){
+        for(let i = 0; i < me.parentUsers.length; i++){
             let dataOBJ = await User.findById(me.parent_id[i], 'userName roleName')
             console.log(dataOBJ, "objectobjectobjectobject")
         }
