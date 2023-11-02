@@ -17,17 +17,20 @@ exports.mapbet = async(data) => {
       let childrenUsername = []
       let operatorId;
       if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-        let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await userModel.distinct('userName', {parentUsers:data.LOGINDATA.LOGINUSER.parent_id});
+        // let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         operatorId = data.LOGINDATA.LOGINUSER.parent_id
 
       }else{
-        let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await userModel.distinct('userName', {parentUsers:data.LOGINDATA.LOGINUSER._id});
+
+        // let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         operatorId = data.LOGINDATA.LOGINUSER._id
 
       }
@@ -650,10 +653,12 @@ exports.mapbet = async(data) => {
    let usercommissiondata3
     if(commissionMarket.some(item => (item.marketId == bets[0].marketId))){
         console.log('in commission market')
-      let filterUser = await commissionModel.find({"Bookmaker.type":'NET_LOSS'})
-      let newfilterUser = filterUser.map(ele => {
-          return ele.userId
-      })
+        newfilterUser = await commissionModel.distinct('userId', {"Bookmaker.type":'NET_LOSS'});
+
+    //   let filterUser = await commissionModel.find({"Bookmaker.type":'NET_LOSS'})
+    //   let newfilterUser = filterUser.map(ele => {
+    //       return ele.userId
+    //   })
     
     console.log(newfilterUser,'newfilterUser')
       let netLossingCommission = await betModel.aggregate([
