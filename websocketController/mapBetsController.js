@@ -18,21 +18,10 @@ exports.mapbet = async(data) => {
       let operatorId;
       if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
         childrenUsername = await userModel.distinct('userName', {parentUsers:data.LOGINDATA.LOGINUSER.parent_id});
-        // let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
         operatorId = data.LOGINDATA.LOGINUSER.parent_id
-
       }else{
         childrenUsername = await userModel.distinct('userName', {parentUsers:data.LOGINDATA.LOGINUSER._id});
-
-        // let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
         operatorId = data.LOGINDATA.LOGINUSER._id
-
       }
      
 //FOR OPEN BETS 
