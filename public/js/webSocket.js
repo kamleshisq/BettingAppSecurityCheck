@@ -7091,7 +7091,7 @@ socket.on('connect', () => {
 
 
     if(pathname === '/exchange_inPlay/match'  ){
-
+        
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
         //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()

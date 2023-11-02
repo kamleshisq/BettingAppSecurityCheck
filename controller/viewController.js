@@ -2993,7 +2993,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             minFancy,
             maxFancy,
             commissionmarkerarr,
-            notification
+            notification,
+            channel:match.eventData.channelId
     })
 });
 
