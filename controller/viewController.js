@@ -188,25 +188,16 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }
     let adminBredcumArray = []
     // console.log(me, "memememememememememe")
-    if(me.parentUsers.length == 0){
+    if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
-            role:'Admin',
-            id : me._id.toString()
+            role:dataOBJ.roleName,
+            id : me._id.toString(),
+            status:true
         })
     }else{
         for(let i = 0; i < me.parentUsers.length; i++){
-            let dataOBJ = await User.findById(me.parentUsers[i]).select('userName roleName _id').lean().exec();
-            adminBredcumArray.push({
-                userName:dataOBJ.userName,
-                role:dataOBJ.roleName,
-                id : dataOBJ._id.toString()
-            })
-            adminBredcumArray.push({
-                userName:me.userName,
-                role:me.roleName,
-                id : me._id.toString()
-            })
+            
         }
     }
     console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
