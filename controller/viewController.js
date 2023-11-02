@@ -187,19 +187,29 @@ exports.userTable = catchAsync(async(req, res, next) => {
         sum = 0
     }
     let adminBredcumArray = []
-    console.log(me, "memememememememememe")
+    // console.log(me, "memememememememememe")
     if(me.parentUsers.length == 0){
         adminBredcumArray.push({
             userName:me.userName,
-            role:'House Admin'
+            role:'Admin',
+            id : me._id.toString()
         })
     }else{
         for(let i = 0; i < me.parentUsers.length; i++){
             let dataOBJ = await User.findById(me.parentUsers[i]).select('userName roleName _id').lean().exec();
-            console.log(dataOBJ, "objectobjectobjectobject")
+            adminBredcumArray.push({
+                userName:dataOBJ.userName,
+                role:dataOBJ.roleName,
+                id : dataOBJ._id.toString()
+            })
+            adminBredcumArray.push({
+                userName:currentUser.userName,
+                role:currentUser.roleName,
+                id : currentUser._id.toString()
+            })
         }
     }
-    // console.log(currentUser, "currentUsercurrentUsercurrentUser")
+    console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
@@ -208,7 +218,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         me,
         WhiteLabel,
         roles,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        adminBredcumArray
         // userLogin:global._loggedInToken
     })
 
