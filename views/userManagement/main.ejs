@@ -19,11 +19,11 @@
                   <li><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>"> <span>SDM</span> <%=adminBredcumArray[i].userName%></a></li>
                 <%}%>
 
-              <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
+              <%}else if(adminBredcumArray[i].role === "Super-Admin"){%>
                 <%if(adminBredcumArray[i].status){%>
-                  <li><a href="/admin/userManagement"> <span>SDM</span> <%=adminBredcumArray[i].userName%></a></li>
+                  <li><a href="/admin/userManagement"> <span>SM</span> <%=adminBredcumArray[i].userName%></a></li>
                 <%}else{%>
-                  <li><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>"> <span>SDM</span> <%=adminBredcumArray[i].userName%></a></li>
+                  <li><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>"> <span>SM</span> <%=adminBredcumArray[i].userName%></a></li>
                 <%}%>
               <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
                 <%if(adminBredcumArray[i].status){%>
