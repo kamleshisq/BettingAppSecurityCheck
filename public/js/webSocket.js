@@ -7094,6 +7094,10 @@ socket.on('connect', () => {
         let channelId = document.getElementById('myIframe').getAttribute('data-id');
         // console.log(channelId, "channelIdchannelIdchannelId")
         socket.emit('channelId', {channelId, search, LOGINDATA})
+
+        socket.on('channelId', data => {
+            console.log(data)
+        })
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
         //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()

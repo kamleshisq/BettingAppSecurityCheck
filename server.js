@@ -7831,30 +7831,36 @@ io.on('connection', (socket) => {
 
 
     socket.on('channelId', async(data) => {
+
         console.log(data)
-        let eventId = data.search.split('=')[1]
-        let StreamData = await streamModel.findOne({eventId:eventId})
-        let srs = ''
-        if(StreamData){
-            if(StreamData.status){
-                src = StreamData.url
-                status = true
-            }
-        }else{
-            liveStream = await liveStreameData(data.channelId, "ipv4")
-            const src_regex = /src='([^']+)'/;
-            let match1
-            // let src
-            if(liveStream.data){
-        
-                match1 = liveStream.data.match(src_regex);
-                if (match1) {
-                    src = match1[1];
+        if(data.LOGINDATA.LOGINUSER){
+            let ip = data.LOGINDATA.IP.split('::ffff:')[1];
+            let eventId = data.search.split('=')[1]
+            let StreamData = await streamModel.findOne({eventId:eventId})
+            let srs = ''
+            if(StreamData){
+                if(StreamData.status){
+                    src = StreamData.url
                     status = true
-                } else {
-                    console.log("No 'src' attribute found in the iframe tag.");
+                }
+            }else{
+                liveStream = await liveStreameData(data.channelId, ip)
+                const src_regex = /src='([^']+)'/;
+                let match1
+                // let src
+                if(liveStream.data){
+            
+                    match1 = liveStream.data.match(src_regex);
+                    if (match1) {
+                        src = match1[1];
+                        status = true
+                    } else {
+                        console.log("No 'src' attribute found in the iframe tag.");
+                    }
                 }
             }
+
+            socket.emit("channelId", srs)
         }
     })
 
