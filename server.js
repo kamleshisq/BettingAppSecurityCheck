@@ -7840,7 +7840,7 @@ io.on('connection', (socket) => {
             let srs = ''
             if(StreamData){
                 if(StreamData.status){
-                    src = StreamData.url
+                    srs = StreamData.url
                     status = true
                 }
             }else{
@@ -7853,7 +7853,7 @@ io.on('connection', (socket) => {
             
                     match1 = liveStream.data.match(src_regex);
                     if (match1) {
-                        src = match1[1];
+                        srs = match1[1];
                         status = true
                     } else {
                         console.log("No 'src' attribute found in the iframe tag.");
