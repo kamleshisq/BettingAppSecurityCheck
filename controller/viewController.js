@@ -195,7 +195,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         })
     }else{
         for(let i = 0; i < me.parentUsers.length; i++){
-            let dataOBJ = await User.findById(me.parentUsers[i], 'userName roleName').lean().exec();
+            let dataOBJ = await User.findById(me.parentUsers[i]).select('userName roleName _id').lean().exec();
             console.log(dataOBJ, "objectobjectobjectobject")
         }
     }
