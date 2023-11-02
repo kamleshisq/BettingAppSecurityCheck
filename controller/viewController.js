@@ -199,6 +199,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }else{
         for(let i = 0; i < me.parentUsers.length; i++){
             if(me.parentUsers[i] == currentUser._id.toString()){
+                console.log("WORKING")
                 adminBredcumArray.push({
                     userName:me.userName,
                     role:me.roleName,
