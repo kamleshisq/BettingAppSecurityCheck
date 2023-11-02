@@ -339,7 +339,8 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     })
 });
 exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
-    // console.log(req.query)
+    console.log(req.query)
+    try{
     let userAcc
     let page = req.query.page
     let filter = {}
@@ -377,6 +378,9 @@ exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
         status:"success",
         userAcc
     })
+}catch(err){
+    console.log(err)
+}
 });
 
 
