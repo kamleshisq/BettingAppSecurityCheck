@@ -2729,6 +2729,16 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     }
     let tennisSeries = [];
     Tennis.forEach(match => {
+        let fancyCount = 0
+        if(match.marketList.session != null){
+            let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
+            fancyCount += count
+        }
+        if(match.marketList.odd_even != null){
+            let count = match.marketList.odd_even.length
+            fancyCount += count
+        }
+        match.fancyCount = fancyCount
         let seriesIndex = tennisSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
@@ -2750,7 +2760,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         userMultimarkets,
         tennisSeries,
-        catalog
+        catalog,
     })
 })
 
