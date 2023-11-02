@@ -203,9 +203,9 @@ exports.userTable = catchAsync(async(req, res, next) => {
                 id : dataOBJ._id.toString()
             })
             adminBredcumArray.push({
-                userName:currentUser.userName,
-                role:currentUser.roleName,
-                id : currentUser._id.toString()
+                userName:me.userName,
+                role:me.roleName,
+                id : me._id.toString()
             })
         }
     }
