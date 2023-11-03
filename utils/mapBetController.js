@@ -461,11 +461,11 @@ async function mapBet(data){
             }
         }
 
-        let data = {
+        let data12 = {
             marketId : bets[0].marketId,
             match : bets[0].match
         }
-        commitssionData(data)
+        commitssionData(data12)
 
       }catch(err){
         console.log(err)
