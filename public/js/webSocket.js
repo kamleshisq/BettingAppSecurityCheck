@@ -13346,6 +13346,7 @@ socket.on('connect', () => {
         // }
         let status = false
         socket.on('getinProgressData', data => {
+            console.log('WORKING', 123456789)
             let html= ''
             for(let i = 0; i < data.length; i++){
                 html = `<tr class="RAWCLASS" id="${data[i].marketId}"><td>${data[i].marketName}</td>
