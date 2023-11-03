@@ -134,6 +134,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
         if(req.body.password !== req.body.passwordConfirm){
             return next(new AppError('Passwords are not matching', 404))
         }else{
+            let parentArray = parentUser.parentUsers.push(parentUser.id)
             let userData = {
                 userName : req.body.userName,
                 name : req.body.name,
@@ -142,8 +143,14 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
                 parent_id : parentUser.id,
                 role : '6492fe4fd09db28e00761694',
                 role_type:5,
-    
+                password:req.body.password,
+                passwordConfirm:req.body.passwordConfirm,
+                parentUsers:parentArray,
+                contact:req.body.contectNumber,
+                email:req.body.email
             }
+
+            console.log(userData, "userDatauserDatauserData")
 
         }
     }else{
