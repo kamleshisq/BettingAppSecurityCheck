@@ -12,7 +12,7 @@ const Decimal = require('decimal.js');
 const runnerDataModel = require("../model/runnersData");
 
 exports.mapbet = async(data) => {
-    console.log(data, "DATADATA")
+    // console.log(data, "DATADATA")
   //FOR CHILD OF LOGIN USER
       let childrenUsername = []
       let operatorId;
@@ -72,9 +72,9 @@ exports.mapbet = async(data) => {
   //FUNCTION FOR PROCESS BET
     
   async function processBets() {
-  console.log("WORKING +==>>", data)
+//   console.log("WORKING +==>>", data)
   const betPromises = bets.map(async (bet) => {
-    console.log(bet, data.result, "DATADATA123456")
+    // console.log(bet, data.result, "DATADATA123456")
     // if(!(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('winn') || bet.marketName.toLowerCase().startsWith('match'))){ 
     //     if(bet.marketId.slice(-2).startsWith('OE')){
     //         if((bet.secId === "odd_Even_No" && data.result === "LAY") || (bet.secId === "odd_Even_Yes" && data.result === "BACK")) {
@@ -626,7 +626,7 @@ exports.mapbet = async(data) => {
         
     //   }
     // }
-    console.log("GOT GERE ")
+    // console.log("GOT GERE ")
     try{
         let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
         if((checkDelete.settledBet + 1) == checkDelete.length){
