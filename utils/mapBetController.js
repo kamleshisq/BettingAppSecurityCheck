@@ -447,6 +447,18 @@ async function mapBet(data){
 
 
             }
+
+
+            console.log("GOT GERE ")
+            try{
+                let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bets[bet].marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
+                if((checkDelete.settledBet + 1) == checkDelete.length){
+                await InprogressModel.findOneAndDelete({marketId : bets[bet].marketId, progressType:'SettleMent'})
+                await runnerDataModel.findOneAndDelete({marketId:bets[bet].marketId})
+                }
+            }catch(err){
+                console.log(err)
+            }
         }
 
       }catch(err){
