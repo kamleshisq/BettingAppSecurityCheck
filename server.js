@@ -6652,6 +6652,7 @@ io.on('connection', (socket) => {
     socket.on('getinProgressData', async(data) => {
         try{
             let inprogressData = await InprogreshModel.find({eventId:data})
+            console.log(inprogressData, "inprogressDatainprogressDatainprogressDatainprogressDatainprogressData")
             socket.emit('getinProgressData', inprogressData)
         }catch(err){
             console.log(err)
