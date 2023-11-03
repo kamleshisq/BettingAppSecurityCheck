@@ -7742,6 +7742,13 @@ $(document).on('submit', ".myloginmodl-form-dv", function (e) {
   var data = Object.fromEntries(fd.entries());
   (0, _userLogin.userLogin)(data);
 });
+$(document).on('submit', ".createUser-form", function (e) {
+  e.preventDefault();
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  var data = Object.fromEntries(fd.entries());
+  console.log(data);
+});
 $(document).on("click", ".myloginmodl-demo-loginbtnn", function (e) {
   e.preventDefault();
   // console.log("WORKING")

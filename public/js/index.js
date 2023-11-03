@@ -674,6 +674,15 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
     userLogin(data)
 })
 
+
+$(document).on('submit', ".createUser-form", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let data = Object.fromEntries(fd.entries());
+    console.log(data)
+})
+
 $(document).on("click", ".myloginmodl-demo-loginbtnn", function(e){
     e.preventDefault()
     // console.log("WORKING")
