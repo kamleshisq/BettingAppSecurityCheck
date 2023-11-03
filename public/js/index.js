@@ -17,7 +17,7 @@ import { updateRow } from "./updateRow";
 import {updatePromotion} from "./updatePromotion";
 import { createPromotion } from "./createPromotion";
 import { deletePromotion } from "./deletePormotion";
-import { betLimit } from "./betLimit";
+// import { betLimit } from "./betLimit";
 import { createHorizontalMenu } from "./createHorizontalMenu";
 import { updateHorizontalMenu } from "./updateHorizonatlMenu";
 import { createBanner } from "./createBanner";
@@ -28,6 +28,7 @@ import { editSliderInImage } from "./editSliderInImage";
 import { updateSlider } from "./updateSlider";
 import { createSlider } from "./addSlider";
 import { userLogin } from "./userLogin";
+import { createAndLoginUser } from "./createAndLoginUser";
 import { KYC } from "./kyc";
 import { paymentDeposite } from "./paymentDeposite";
 import { notificationsss } from "./notificationsss";
@@ -680,7 +681,8 @@ $(document).on('submit', ".regestermodl-form", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
-    console.log(data)
+    // console.log(data)
+    createAndLoginUser(data)
 })
 
 $(document).on("click", ".myloginmodl-demo-loginbtnn", function(e){
