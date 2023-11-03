@@ -13586,20 +13586,20 @@ socket.on('connect', () => {
             socket.emit('Settle', {LOGINDATA, id, result})
         })
 
-        socket.on('Settle', data => {
-            if(data.status === "error"){
-                alert(data.message.toUpperCase())
-            }else{
-                // alert(data.message)
-                // const deleteButton = document.getElementById(data.id);
-                // const row = deleteButton.closest('tr'); 
-                // if (row) {
-                //     const table = row.parentNode;
-                //     const rowIndex = Array.from(table.rows).indexOf(row);
-                //     row.remove(); 
-                //   }
-            }
-        })
+        // socket.on('Settle', data => {
+        //     if(data.status === "error"){
+        //         alert(data.message.toUpperCase())
+        //     }else{
+        //         // alert(data.message)
+        //         // const deleteButton = document.getElementById(data.id);
+        //         // const row = deleteButton.closest('tr'); 
+        //         // if (row) {
+        //         //     const table = row.parentNode;
+        //         //     const rowIndex = Array.from(table.rows).indexOf(row);
+        //         //     row.remove(); 
+        //         //   }
+        //     }
+        // })
 
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
