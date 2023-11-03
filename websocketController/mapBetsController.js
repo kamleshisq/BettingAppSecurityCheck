@@ -75,8 +75,10 @@ exports.mapbet = async(data) => {
 //   console.log("WORKING +==>>", data)
 const betPromises = bets.map(async (bet) => { 
     console.log(bet)
+
     try{
         let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
+        console.log(checkDelete, "checkDeletecheckDeletecheckDelete")
         if((checkDelete.settledBet + 1) == checkDelete.length){
           await InprogressModel.findOneAndDelete({marketId : bet.marketId, progressType:'SettleMent'})
           await runnerDataModel.findOneAndDelete({marketId:bet.marketId})
