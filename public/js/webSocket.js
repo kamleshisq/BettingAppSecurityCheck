@@ -13590,7 +13590,7 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
-                alert(data.message)
+                // alert(data.message)
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
                 if (row) {
