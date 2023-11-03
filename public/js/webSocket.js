@@ -13510,12 +13510,13 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
-                // console.log(deleteButton)
+                console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
                 if (row) {
                     const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
+                    console.log("rowremove")
                     // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
                     // rowsToUpdate.forEach((row, index) => {
                     //     const srNoCell = row.cells[0]; 
