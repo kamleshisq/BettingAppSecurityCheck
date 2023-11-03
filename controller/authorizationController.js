@@ -138,7 +138,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
             parentArray.push(parentUser.id)
             console.log(parentArray)
             let userData = {
-                userName : req.body.userName,
+                userName : req.body.userName.toLowerCase(),
                 name : req.body.name,
                 roleName : 'user',
                 whiteLabel:'withDrowTesting',
