@@ -13591,13 +13591,13 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 // alert(data.message)
-                const deleteButton = document.getElementById(data.id);
-                const row = deleteButton.closest('tr'); 
-                if (row) {
-                    const table = row.parentNode;
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove(); 
-                  }
+                // const deleteButton = document.getElementById(data.id);
+                // const row = deleteButton.closest('tr'); 
+                // if (row) {
+                //     const table = row.parentNode;
+                //     const rowIndex = Array.from(table.rows).indexOf(row);
+                //     row.remove(); 
+                //   }
             }
         })
 
