@@ -790,15 +790,18 @@
   <script>
     const customOptionCheckbox = document.getElementById('customOptionCheckbox');
     const newWhiteLabelInput = document.getElementById('newWhiteLabelInput');
+    const nnewB2C = document.getElementById('B2C')
     const SElectWhiteLable = document.getElementById("whiteLabel")
   
     customOptionCheckbox.addEventListener('change', function () {
       if (this.checked) {
         newWhiteLabelInput.classList.remove('hide')
+        nnewB2C.classList.remove('hide')
         // Hide the select element
         SElectWhiteLable.classList.add('hide')
       } else {
         newWhiteLabelInput.classList.add('hide')
+        nnewB2C.classList.add('hide')
         SElectWhiteLable.classList.remove('hide')
       }
     });
