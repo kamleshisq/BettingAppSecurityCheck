@@ -675,7 +675,7 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
 })
 
 
-$(document).on('submit', ".createUser-form", function(e){
+$(document).on('submit', ".regestermodl-form", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
