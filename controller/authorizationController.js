@@ -127,7 +127,9 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
 
 
 exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
-    console.log(req.body, 12345689)
+    // console.log(req.body, 12345689)
+    let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
+    console.log(parentUser)
 }))
 
 exports.login = catchAsync (async(req, res, next) => {
