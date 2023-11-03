@@ -6934,7 +6934,7 @@ var createAndLoginUser = /*#__PURE__*/function () {
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _notificationsss.notificationsss)({
-              message: 'Logged in successfully!!!!',
+              message: 'Registered successfully!!!!',
               status: "success"
             });
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));

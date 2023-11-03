@@ -9,7 +9,7 @@ export const createAndLoginUser = async(data) => {
             data
         });
         if(res.data.status === 'success'){
-            notificationsss({message : 'Logged in successfully!!!!', status:"success"});
+            notificationsss({message : 'Registered successfully!!!!', status:"success"});
             sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');

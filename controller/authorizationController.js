@@ -156,8 +156,11 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
             if(!new_USer){
                 return next(new AppError('Please try again later', 404))
             }else{
-                await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
-                createSendToken(new_USer, 200, res, req);
+                // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
+                // createSendToken(new_USer, 200, res, req);
+                res.status(200).json({
+                    
+                })
             }
 
         }
