@@ -8,7 +8,7 @@ const InprogressModel = require('../model/InprogressModel');
 const newCommissionModel = require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
 const runnerDataModel = require("../model/runnersData");
-
+const commitssionData = require('./createNetLoosingCommission');
 
 async function mapBet(data){
     console.log(data, "datadatadata1234564879")
@@ -460,6 +460,12 @@ async function mapBet(data){
                 console.log(err)
             }
         }
+
+        let data = {
+            marketId : bets[0].marketId,
+            match : bets[0].match
+        }
+        commitssionData(data)
 
       }catch(err){
         console.log(err)
