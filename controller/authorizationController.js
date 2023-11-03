@@ -125,6 +125,11 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     })
 }
 
+
+exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
+    console.log(req.body, 12345689)
+}))
+
 exports.login = catchAsync (async(req, res, next) => {
     let {
 		userName,
