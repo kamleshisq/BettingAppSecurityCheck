@@ -127,11 +127,13 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
 
 
 exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
-    // console.log(req.body, 12345689)
+    console.log(req.body, 12345689)
     let parentUser 
     // console.log(parentUser)
     if(parentUser){
+        let userData = {
 
+        }
     }else{
         return next(new AppError('Please try again later', 404))
     }
