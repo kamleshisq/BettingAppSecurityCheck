@@ -128,10 +128,22 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
 
 exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
     console.log(req.body, 12345689)
-    let parentUser 
+    let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
     // console.log(parentUser)
     if(parentUser){
-        let userData = {
+        if(req.body.password !== req.body.passwordConfirm){
+            return next(new AppError('Passwords are not matching', 404))
+        }else{
+            let userData = {
+                userName : req.body.userName,
+                name : req.body.name,
+                roleName : 'user',
+                whiteLabel:'withDrowTesting',
+                parent_id : parentUser.id,
+                role : '6492fe4fd09db28e00761694',
+                role_type:5,
+    
+            }
 
         }
     }else{
