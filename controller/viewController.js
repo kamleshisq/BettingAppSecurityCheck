@@ -2317,78 +2317,78 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
     // // console.log(childrenUsername, "+====>> childrenUsername ")
     // // console.log(req.currentUser)
-    // let openBet = topGames = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status:"OPEN" ,
-    //             userName:{$in:childrenUsername},
-    //             marketId:{$in:marketIds}
-    //         }
-    //     },
-    //     {
-    //         $addFields: {
-    //             shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
-    //         }
-    //     },
-    //     {
-    //         $match: {
-    //             shortMarketName: { $in: ["mat", "boo", "tos"] }
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //             _id: {
-    //                 betType: "$betType",
-    //                 marketId: "$marketId",
-    //                 beton: "$selectionName"
-    //             },
-    //             marketName: { $first: "$marketName" },
-    //             match: { $first: "$match" },
-    //             date: { $first: "$date" },
-    //             secId : { $first: "$secId" },
-    //             stake: { $sum: "$Stake" },
-    //             eventId : {$first : '$eventId'},
-    //             count:{$sum:1}
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //             _id: {
-    //                 betType: "$_id.betType",
-    //                 marketId: "$_id.marketId"
-    //             },
-    //             details: {
-    //                 $push: {
-    //                     id: "$_id.marketId",
-    //                     marketName: "$marketName",
-    //                     shortMarketName: "$shortMarketName",
-    //                     match: "$match",
-    //                     date: "$date",
-    //                     secId: '$secId',
-    //                     count:'$count',
-    //                     stake: "$stake",
-    //                     beton: "$_id.beton",
-    //                     eventId: '$eventId'
-    //                 }
-    //             }
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //             _id: "$_id.betType",
-    //             details: { $push: "$details" }
-    //         }
-    //     },
-    //     {
-    //         $project: {
-    //             _id: 0,
-    //             bettype: "$_id",
-    //             details: 1
-    //         }
-    //     }
-    // ])
+    let openBet = topGames = await betModel.aggregate([
+        {
+            $match: {
+                status:"OPEN" ,
+                userName:{$in:childrenUsername},
+                marketId:{$in:marketIds}
+            }
+        },
+        {
+            $addFields: {
+                shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
+            }
+        },
+        {
+            $match: {
+                shortMarketName: { $in: ["mat", "boo", "tos"] }
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    betType: "$betType",
+                    marketId: "$marketId",
+                    beton: "$selectionName"
+                },
+                marketName: { $first: "$marketName" },
+                match: { $first: "$match" },
+                date: { $first: "$date" },
+                secId : { $first: "$secId" },
+                stake: { $sum: "$Stake" },
+                eventId : {$first : '$eventId'},
+                count:{$sum:1}
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    betType: "$_id.betType",
+                    marketId: "$_id.marketId"
+                },
+                details: {
+                    $push: {
+                        id: "$_id.marketId",
+                        marketName: "$marketName",
+                        shortMarketName: "$shortMarketName",
+                        match: "$match",
+                        date: "$date",
+                        secId: '$secId',
+                        count:'$count',
+                        stake: "$stake",
+                        beton: "$_id.beton",
+                        eventId: '$eventId'
+                    }
+                }
+            }
+        },
+        {
+            $group: {
+                _id: "$_id.betType",
+                details: { $push: "$details" }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                bettype: "$_id",
+                details: 1
+            }
+        }
+    ])
 
-    // // // console.log(openBet[0].details, "openBetopenBet")
+    console.log(openBet[0].details, "openBetopenBet")
     // res.status(200).render("./liveMarket/liveMarket", {
     //     title:"Live Market",
 
