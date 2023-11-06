@@ -8,7 +8,7 @@
           <div class="container-fluid">
             <div class="new-head">
               <% let runnersData = JSON.parse(runners[i].runners) %>
-              <h3 class="head-hr"><%=  runnersData[0].runner +  'V' + runnersData[1].runner  %></h3>
+              <h3 class="head-hr"><%=  runnersData[0].runner +  ' V ' + runnersData[1].runner  %></h3>
               <a class="btn-filter" href="/admin/riskAnalysis?id=<%= runners[i].eventId %>" >View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
             </div>
             <div class="video-section-1">
