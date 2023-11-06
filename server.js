@@ -2023,7 +2023,7 @@ io.on('connection', (socket) => {
             data.LOGINUSER = parentUser
         }
         // console.log(data.LOGINUSER._id.toString(), "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
-        let userIds = await User.distinct('_id', {parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }})
+        let userIds = await User.distinct('_id', {parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }}).lean();
         console.log(userIds, "userIdsuserIdsuserIds")
         User.aggregate([
             {
