@@ -1,8 +1,9 @@
 <div id="Cricket" class="tabcontent">
   <div class="row">
-    
+   <%let checkC = false %> 
   <%for(let i = 0; i < runners.length; i++){%>
     <%if(runners[i].sport === "Cricket"){%>
+      <%checkC = true%>
       <section>
         <div class="container-fluid">
           <div class="new-head">
@@ -41,6 +42,9 @@
         </div>
       </section>
     <%}%>
+  <%}%>
+  <%if(checkC){%>
+    No data to display
   <%}%>
   </div>
   <!-- <button class="btn btn-view-all">View All</button> -->
