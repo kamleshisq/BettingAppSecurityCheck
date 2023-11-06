@@ -1442,6 +1442,7 @@ exports.getoperationsPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
+    console.log('WORKING')
     const me = req.currentUser
     // console.log(me)
     let settlement
@@ -1469,6 +1470,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         //     childrenUsername.push(ele.userName) 
         // })
     }
+    console.log('START')
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
@@ -1521,6 +1523,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             }
         }
       ]);
+      console.log('END')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
         me,
