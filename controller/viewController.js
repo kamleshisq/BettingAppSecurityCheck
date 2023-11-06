@@ -48,6 +48,7 @@ const commissionNewModel = require('../model/commissioNNModel');
 const resumeSuspendModel = require('../model/resumeSuspendMarket');
 const PaymentMethodModel = require('../model/paymentmethodmodel')
 const paymentReportModel = require('../model/paymentreport');
+const runnerData = require('../model/runnersData');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -2289,109 +2290,111 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 
 
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
-    const sportData = await getCrkAndAllData()
-    const cricket = sportData[0].gameList[0].eventList
-    let liveCricket = cricket;
-    const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
-    const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
-    let liveFootBall = footBall.eventList;
-    let liveTennis = Tennis.eventList
-    let currentUser =  req.currentUser
-    let id = req.currentUser._id
-    if(req.currentUser.role.roleName == 'Operator'){
-        let parentUser = await User.findById(req.currentUser.parent_id)
-        id = parentUser._id.toString()
-    }
-    let childrenUsername = []
-    childrenUsername = await User.distinct('userName', {parentUsers:id});
+    const runners = await runnerData.find()
+    console.log(runners, "runnersrunnersrunners")
+    // const sportData = await getCrkAndAllData()
+    // const cricket = sportData[0].gameList[0].eventList
+    // let liveCricket = cricket;
+    // const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
+    // const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
+    // let liveFootBall = footBall.eventList;
+    // let liveTennis = Tennis.eventList
+    // let currentUser =  req.currentUser
+    // let id = req.currentUser._id
+    // if(req.currentUser.role.roleName == 'Operator'){
+    //     let parentUser = await User.findById(req.currentUser.parent_id)
+    //     id = parentUser._id.toString()
+    // }
+    // let childrenUsername = []
+    // childrenUsername = await User.distinct('userName', {parentUsers:id});
 
-    // let children = await User.find({parentUsers:id})
-    // children.map(ele => {
-    //     childrenUsername.push(ele.userName) 
+    // // let children = await User.find({parentUsers:id})
+    // // children.map(ele => {
+    // //     childrenUsername.push(ele.userName) 
+    // // })
+
+    // // console.log(childrenUsername, "+====>> childrenUsername ")
+    // // console.log(req.currentUser)
+    // let openBet = topGames = await betModel.aggregate([
+    //     {
+    //         $match: {
+    //             status:"OPEN" ,
+    //             userName:{$in:childrenUsername}
+    //         }
+    //     },
+    //     {
+    //         $addFields: {
+    //             shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
+    //         }
+    //     },
+    //     {
+    //         $match: {
+    //             shortMarketName: { $in: ["mat", "boo", "tos"] }
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //             _id: {
+    //                 betType: "$betType",
+    //                 marketId: "$marketId",
+    //                 beton: "$selectionName"
+    //             },
+    //             marketName: { $first: "$marketName" },
+    //             match: { $first: "$match" },
+    //             date: { $first: "$date" },
+    //             secId : { $first: "$secId" },
+    //             stake: { $sum: "$Stake" },
+    //             eventId : {$first : '$eventId'},
+    //             count:{$sum:1}
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //             _id: {
+    //                 betType: "$_id.betType",
+    //                 marketId: "$_id.marketId"
+    //             },
+    //             details: {
+    //                 $push: {
+    //                     id: "$_id.marketId",
+    //                     marketName: "$marketName",
+    //                     shortMarketName: "$shortMarketName",
+    //                     match: "$match",
+    //                     date: "$date",
+    //                     secId: '$secId',
+    //                     count:'$count',
+    //                     stake: "$stake",
+    //                     beton: "$_id.beton",
+    //                     eventId: '$eventId'
+    //                 }
+    //             }
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //             _id: "$_id.betType",
+    //             details: { $push: "$details" }
+    //         }
+    //     },
+    //     {
+    //         $project: {
+    //             _id: 0,
+    //             bettype: "$_id",
+    //             details: 1
+    //         }
+    //     }
+    // ])
+
+    // // console.log(openBet[0].details, "openBetopenBet")
+    // res.status(200).render("./liveMarket/liveMarket", {
+    //     title:"Live Market",
+    //     liveCricket,
+    //     liveFootBall,
+    //     liveTennis,
+    //     currentUser,
+    //     openBet,
+    //     me: currentUser
     // })
-
-    // console.log(childrenUsername, "+====>> childrenUsername ")
-    // console.log(req.currentUser)
-    let openBet = topGames = await betModel.aggregate([
-        {
-            $match: {
-                status:"OPEN" ,
-                userName:{$in:childrenUsername}
-            }
-        },
-        {
-            $addFields: {
-                shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
-            }
-        },
-        {
-            $match: {
-                shortMarketName: { $in: ["mat", "boo", "tos"] }
-            }
-        },
-        {
-            $group: {
-                _id: {
-                    betType: "$betType",
-                    marketId: "$marketId",
-                    beton: "$selectionName"
-                },
-                marketName: { $first: "$marketName" },
-                match: { $first: "$match" },
-                date: { $first: "$date" },
-                secId : { $first: "$secId" },
-                stake: { $sum: "$Stake" },
-                eventId : {$first : '$eventId'},
-                count:{$sum:1}
-            }
-        },
-        {
-            $group: {
-                _id: {
-                    betType: "$_id.betType",
-                    marketId: "$_id.marketId"
-                },
-                details: {
-                    $push: {
-                        id: "$_id.marketId",
-                        marketName: "$marketName",
-                        shortMarketName: "$shortMarketName",
-                        match: "$match",
-                        date: "$date",
-                        secId: '$secId',
-                        count:'$count',
-                        stake: "$stake",
-                        beton: "$_id.beton",
-                        eventId: '$eventId'
-                    }
-                }
-            }
-        },
-        {
-            $group: {
-                _id: "$_id.betType",
-                details: { $push: "$details" }
-            }
-        },
-        {
-            $project: {
-                _id: 0,
-                bettype: "$_id",
-                details: 1
-            }
-        }
-    ])
-
-    // console.log(openBet[0].details, "openBetopenBet")
-    res.status(200).render("./liveMarket/liveMarket", {
-        title:"Live Market",
-        liveCricket,
-        liveFootBall,
-        liveTennis,
-        currentUser,
-        openBet,
-        me: currentUser
-    })
 })
 
 
