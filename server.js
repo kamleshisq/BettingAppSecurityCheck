@@ -4698,15 +4698,15 @@ io.on('connection', (socket) => {
             const result = resultPromise.filter(item => item && item.Bets && item.Bets.length > 0);
             console.log(result, "resultresultresultresult")
             
-        //     let matchName2 = await Bet.findOne({marketId: data.marketId})
-        //     let matchName
-        //     let sport
-        //     if(matchName2){
-        //         matchName = matchName2.match
-        //         sport = matchName2.betType
-        //     }
+            let matchName2 = await Bet.findOne({marketId: data.marketId})
+            let matchName
+            let sport
+            if(matchName2){
+                matchName = matchName2.match
+                sport = matchName2.betType
+            }
 
-        //    socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
+           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
         }catch(err){
             console.log(err)
             socket.emit('UerBook', {message:"err", status:"error"})
