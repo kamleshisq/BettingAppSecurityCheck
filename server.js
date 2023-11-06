@@ -2024,49 +2024,65 @@ io.on('connection', (socket) => {
         }
         // console.log(data.LOGINUSER._id.toString(), "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
         let userIds = await User.distinct('userName', {parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }}).lean();
-        console.log(userIds, "userIdsuserIdsuserIds")
-        User.aggregate([
+        let bets = await Bet.aggregate([
             {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }
-              }
-            },
-            {
-              $group: {
-                _id: null,
-                userIds: { $push: '$_id' } 
-              }
-            }
-          ])
-            .then((userResult) => {
-                // console.log(userResult, "userResultuserResultuserResultuserResult")
-              const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-            //   console.log(userIds, "aggreataggreataggreataggreataggreataggreat")
-              Bet.aggregate([
-                {
-                  $match: {
-                    userId: { $in: userIds },
+                $match: {
+                    userName: { $in: userIds },
                     status: 'OPEN'
-                  }
-                },
-                {
-                    $group:{
-                        _id: '$secId',
-                        totalStake: { $sum: '$Stake' },
-                        count: { $sum: 1 }
-                    }
                 }
-              ])
-                .then((betResult) => {
-                  socket.emit("aggreat", betResult)
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+              },
+              {
+                  $group:{
+                      _id: '$secId',
+                      totalStake: { $sum: '$Stake' },
+                      count: { $sum: 1 }
+                  }
+              }
+        ])
+        // console.log(userIds, "userIdsuserIdsuserIds")
+        socket.emit("aggreat", bets)
+        // User.aggregate([
+        //     {
+        //       $match: {
+        //         parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }
+        //       }
+        //     },
+        //     {
+        //       $group: {
+        //         _id: null,
+        //         userIds: { $push: '$_id' } 
+        //       }
+        //     }
+        //   ])
+        //     .then((userResult) => {
+        //         // console.log(userResult, "userResultuserResultuserResultuserResult")
+        //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+        //     //   console.log(userIds, "aggreataggreataggreataggreataggreataggreat")
+        //       Bet.aggregate([
+        //         {
+        //           $match: {
+        //             userId: { $in: userIds },
+        //             status: 'OPEN'
+        //           }
+        //         },
+        //         {
+        //             $group:{
+        //                 _id: '$secId',
+        //                 totalStake: { $sum: '$Stake' },
+        //                 count: { $sum: 1 }
+        //             }
+        //         }
+        //       ])
+        //         .then((betResult) => {
+        //           socket.emit("aggreat", betResult)
+        //         })
+        //         .catch((error) => {
+        //           console.error(error);
+        //         });
+        //     })
+        //     .catch((error) => {
+        //       console.error(error);
+        //     });
 
     })
 
