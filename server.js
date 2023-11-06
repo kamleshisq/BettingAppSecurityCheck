@@ -4097,7 +4097,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('UerBook', async(data) => {
-        // console.log(data)
+        console.log('START')
         // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
         let users = []
         let falg = false
@@ -4121,6 +4121,7 @@ io.on('connection', (socket) => {
             Id = data.LOGINDATA.LOGINUSER.userName
 
         }
+        console.log('MIDDLE')
         try{
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
@@ -4693,27 +4694,23 @@ io.on('connection', (socket) => {
                 }
             })
             let resultPromise = await Promise.all(newUser)
-            let result = []
-            for(let i = 0;i<resultPromise.length;i++){
-                // console.log(resultPromise[i], 123)
-                if(resultPromise[i] && resultPromise[i].Bets.length > 0){
-                    result.push(resultPromise[i])
-                    // console.log(resultPromise[i].Bets)
-                    // console.log(resultPromise[i].Bets[0].selections)
-                }
-            }
+            console.log(resultPromise, "resultPromiseresultPromise")
+        //     let result = []
+        //     for(let i = 0;i<resultPromise.length;i++){
+        //         if(resultPromise[i] && resultPromise[i].Bets.length > 0){
+        //             result.push(resultPromise[i])
+        //         }
+        //     }
             
-            let matchName2 = await Bet.findOne({marketId: data.marketId})
-            let matchName
-            let sport
-            if(matchName2){
-                matchName = matchName2.match
-                sport = matchName2.betType
-            }
+        //     let matchName2 = await Bet.findOne({marketId: data.marketId})
+        //     let matchName
+        //     let sport
+        //     if(matchName2){
+        //         matchName = matchName2.match
+        //         sport = matchName2.betType
+        //     }
 
-            // console.log(Id, "IdIdIdIdIdIdId")
-           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
-        //    socket.emit();
+        //    socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
         }catch(err){
             console.log(err)
             socket.emit('UerBook', {message:"err", status:"error"})
