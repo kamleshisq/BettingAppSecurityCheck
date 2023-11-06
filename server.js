@@ -4113,12 +4113,12 @@ io.on('connection', (socket) => {
             if(thatUSer){
                 Id = thatUSer.userName
                 falg = true
-                users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}}).skip(10 * data.page).limit(10)
+                users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
                 // parentIdOfClickedUser = thatUSer._id
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
-            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}}).skip(10 * data.page).limit(10)
+            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
             // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
             Id = data.LOGINDATA.LOGINUSER.userName
 
