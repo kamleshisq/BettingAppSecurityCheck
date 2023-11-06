@@ -4079,7 +4079,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.eventData.count = count
 
-         return item
+        return item
     })
     let newfootballEvents =  footballList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
@@ -4105,7 +4105,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.eventData.count = count
 
-         return item
+        return item
     })
     let newtennisEvents = tennisList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
@@ -4130,7 +4130,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.eventData.count = count
 
-         return item
+        return item
     })
 
     cricketEvents = await Promise.all(newcricketEvents);
