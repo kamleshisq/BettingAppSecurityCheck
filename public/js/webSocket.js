@@ -6740,31 +6740,9 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/liveMarket"){
-        // function marketId(){
-            // $(document).ready(function() {
-            //     var ids = [];
-          
-            //     $(".MarketIds").each(function() {
-            //       ids.push(this.id);
-            //     });
-            //     // console.log(ids)
-            //     socket.emit("aggreat", {ids, LOGINDATA})
-            //   });
-        //       setTimeout(()=>{
-        //         marketId()
-        //       }, 60000)
-        // }
-        // marketId()
         function marketId(){
             $(document).ready(function() {
-                // var ids = [];
-          
-                // $(".MarketIdsR").each(function() {
-                //   ids.push(this.id);
-                // });
-                // console.log(ids)
                 socket.emit("aggreat",  LOGINDATA)
-                // socket.emit("aggreat", LOGINDATA)
               });
               setTimeout(()=>{
                 if(pathname === "/admin/liveMarket"){
@@ -6776,16 +6754,13 @@ socket.on('connect', () => {
         
 
         socket.on("aggreat", async(data) => {
-            // console.log(data)
             let stake1 = 0;
             let stake2 = 0;
             data.forEach(item => {
-                // item.betData.forEach(bet => {
                     if(document.getElementById(`${item._id}`)){
                         document.getElementById(`${item._id}`).innerText = item.totalStake
                         document.getElementById(`${item._id}B`).innerText = item.count
                     }
-                // })
             })
         })
     }
