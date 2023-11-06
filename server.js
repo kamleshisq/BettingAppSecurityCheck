@@ -2017,76 +2017,10 @@ io.on('connection', (socket) => {
 
 
     socket.on("aggreat", async(data) => {
-        // console.log(data.ids)
-        // const sportData = await getCrkAndAllData()
-        // const cricket = sportData[0].gameList[0].eventList
-        // let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
-        // const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
-        // const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
-        // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-        // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
-        // let liveData = liveCricket.concat(liveFootBall, liveTennis);
-        // console.log(liveData)
-        // console.log(data)
-        // Bet.aggregate([
-        //     {
-        //       $match: {
-        //         status: 'OPEN'
-        //       }
-        //     },
-            // {
-            //   $group: {
-            //     _id: '$secId',
-            //     totalStake: { $sum: '$Stake' },
-            //     count: { $sum: 1 }
-            //   }
-            // }
-        //   ])
-            // .then(result => {
-            //     // console.log(result)
-            //   socket.emit("aggreat", result)
-            // })
-        //     User.aggregate([
-        //         {
-        //           $match: {
-                    // parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
-        //           }
-        //         },
-        //         {
-        //           $lookup: {
-        //             from: 'betmodels',
-        //             localField: '_id',
-        //             foreignField: 'userId',
-        //             as: 'bets'
-        //           }
-        //         },
-        //         {
-        //           $unwind: '$bets'
-        //         },
-        //         {
-        //           $match: {
-        //             'bets.status': 'OPEN'
-        //           }
-        //         },
-        //         {
-        //           $group: {
-                    // _id: '$secId',
-                    // totalStake: { $sum: '$bets.Stake' },
-                    // count: { $sum: 1 }
-        //           }
-        //         }
-        // ]).then(result => {
-        //     console.log(result)
-        //   socket.emit("aggreat", result)
-        // })
         let id = ``
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
-            // data.LOGINUSER._id = data.LOGINUSER._id.toString()
-        //     id = data.LOGINUSER._id.toString()
-        // }else{
-        //     id =data.LOGINUSER._id
         }
         // console.log(data.LOGINUSER._id.toString(), "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
         User.aggregate([
@@ -2103,9 +2037,9 @@ io.on('connection', (socket) => {
             }
           ])
             .then((userResult) => {
-                // console.log(userResult, "userResultuserResultuserResultuserResult")
+                console.log(userResult, "userResultuserResultuserResultuserResult")
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-            //   console.log(userIds, "userIds")
+              console.log(userIds, "aggreataggreataggreataggreataggreataggreat")
               Bet.aggregate([
                 {
                   $match: {

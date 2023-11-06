@@ -6765,7 +6765,7 @@ socket.on('connect', () => {
                 if(pathname === "/admin/liveMarket"){
                     marketId()
                 }
-              }, 500)
+              }, 1000)
         }
         marketId()
         
