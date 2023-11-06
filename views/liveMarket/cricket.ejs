@@ -10,6 +10,14 @@
             <h3 class="head-hr"><%=  runnersData[0].runner +  'V' + runnersData[1].runner  %></h3>
             <a class="btn-filter" href="/admin/riskAnalysis?id=<%= runners[i].eventId %>" >View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
           </div>
+          <div class="video-section-1">
+            <div class="video-play">
+              <div class="hed-data">
+                <h3 class="live-head"> <%=runners[i].marketTitle%> </h3>
+              </div>
+              
+            </div>
+          </div>
         </div>
       </section>
     <%}%>
