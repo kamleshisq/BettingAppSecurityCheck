@@ -258,7 +258,7 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
         eventId:marketDetails.eid,
         marketId:marketDetails.marketId,
         sport:sportName,
-        marketDetails:marketDetails.title.toLowerCase()
+        marketTitle:marketDetails.title.toLowerCase()
     }
     await runnerDataModel.create(data)}
 }
