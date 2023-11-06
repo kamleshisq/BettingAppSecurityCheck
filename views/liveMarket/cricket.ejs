@@ -24,8 +24,14 @@
                       <th>TOTAL BETS</th>
                     </tr>
                   </thead>
-                  <tbody  class="MarketIdsR">
-
+                  <tbody id="<%=runners[i].marketId%>" class="MarketIdsR">
+                    <%for(let j = 0; j < runnersData.length; j++){%>
+                      <tr>
+                        <td><%=runnersData[j].runner%></td>
+                          <td id="<%=runnersData[j].secId%>">00</td>
+                          <td id="<%=runnersData[j].secId%>B">00</td>
+                      </tr>
+                    <%}%>
                   </tbody>
                 </table>
               </div>
