@@ -1,98 +1,19 @@
 <div id="Cricket" class="tabcontent">
   <div class="row">
     
-    <%let check1 = false %>
-    <%for(let i = 0; i < openBet.length; i++){%>
-      <%if(openBet[i].bettype == "Cricket"){%>
-        <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
-          <%
-          let check = liveCricket.some(item => item.eventData.eventId == openBet[i].details[j][0].eventId)
-          %>
-        <%if(check){%>
-          <% check1=true %>
-        <section>
-          <div class="container-fluid">
-            <div class="new-head">
-              <h3 class="head-hr"><%=  openBet[i].details[j][0].match %></h3>
-              <a class="btn-filter" href="/admin/riskAnalysis?id=<%= openBet[i].details[j][0].eventId %>" >View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
-            </div>
-              <div class="video-section-1">
-                <div class="video-play">
-                  <div class="hed-data">
-                    <h3 class="live-head"> <%=openBet[i].details[j][0].marketName%> </h3>
-                  </div>
-                  <div class="full-adta">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>OUTCOMES/RUNNER</th>
-                          <th>EXPOSURE</th>
-                          <th>TOTAL BETS</th>
-                        </tr>
-                      </thead>
-                      <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
-                        <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
-                          <%if(k < 1){%>
-                          <%
-                            let data 
-                            let matchodd = false
-                            data = liveCricket.find(item => (item.marketList) && (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
-                            if(!data){
-                              matchodd = true
-                              data = liveCricket.find(item => (item.marketList) && (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
-                            }
-                          %>
-                          <%if(data){%>
-                          <%if(!matchodd){%>
-                            <% let runners = JSON.parse(data.marketList.match_odd.runners); %>
-                            <% const runners1 = []; %>
-                            <%const secIds = []; %>
-                            <%runners.forEach(item => {%>
-                            <%runners1.push(item.runner);%>
-                            <%secIds.push(item.secId);%>
-                            <%});%>
-                            <%for(let j = 0; j < runners1.length; j++){%>
-                              <tr>
-                                <td><%=runners1[j]%></td>
-                                  <td id="<%=secIds[j]%>">00</td>
-                                  <td id="<%=secIds[j]%>B">00</td>
-                              </tr>
-                            <%}%>
-                          <%}else{%>
-                            <% let runners = JSON.parse(data.marketList.bookmaker[0].runners); %>
-                            <% const runners1 = []; %>
-                            <%const secIds = []; %>
-                            <%runners.forEach(item => {%>
-                            <%runners1.push(item.runner);%>
-                            <%secIds.push(item.secId);%>
-                            <%});%>
-                            <%for(let j = 0; j < runners1.length; j++){%>
-                              <tr>
-                                <td><%=runners1[j]%></td>
-                                  <td id="<%=secIds[j]%>">00</td>
-                                  <td id="<%=secIds[j]%>B">00</td>
-                              </tr>
-                            <%}%>
-                          <%}%>
-                          <%}%>
-                          <%}%>
-                        <%}%>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div> 
-          </section>
-          <%}%>
-          <%}%>
-      <%}%>
+  <%for(let i = 0; i < runners.length; i++){%>
+    <%if(runners[i].sport === "Cricket"){%>
+      <section>
+        <div class="container-fluid">
+          <div class="new-head">
+            <%let runnersData = JSON.parse(runners[i].runners)%>
+            <h3 class="head-hr"><%=  runnersData[0].runner V runnersData[1].runner  %></h3>
+            <a class="btn-filter" href="/admin/riskAnalysis?id=<%= runners[i].eventId %>" >View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </section>
     <%}%>
-    <%if(!openBet.some(item => item.bettype == "Cricket")){%>
-      No data to display
-    <%}else if (!check1){%>
-      No data to display
-      <%}%>
+  <%}%>
   </div>
   <!-- <button class="btn btn-view-all">View All</button> -->
 </div>
