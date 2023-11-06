@@ -4043,6 +4043,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
+    console.log('START')
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     let cricketEvents;
@@ -4056,7 +4057,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
     let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
 
-    cricketEvents = cricketList.eventList.map(async(item) => {
+    let newcricketEvents = cricketList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
@@ -4080,7 +4081,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
          return item
     })
-    footballEvents =  footballList.eventList.map(async(item) => {
+    let newfootballEvents =  footballList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
@@ -4106,7 +4107,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
          return item
     })
-    tennisEvents = tennisList.eventList.map(async(item) => {
+    let newtennisEvents = tennisList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
@@ -4132,9 +4133,9 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          return item
     })
 
-    // cricketEvents = await Promise.all(newcricketEvents);
-    // footballEvents = await Promise.all(newfootballEvents);
-    // tennisEvents = await Promise.all(newtennisEvents);
+    cricketEvents = await Promise.all(newcricketEvents);
+    footballEvents = await Promise.all(newfootballEvents);
+    tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
     console.log(data, "fhdhhfdhfd")
     // data = {}
