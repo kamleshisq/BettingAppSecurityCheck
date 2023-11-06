@@ -1084,8 +1084,8 @@ socket.on('connect', () => {
         }
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
-                console.log(data.paymentreqcount)
-                console.log(oldcount,'oldcount')
+                // console.log(data.paymentreqcount)
+                // console.log(oldcount,'oldcount')
                 if(oldcount === 0){
                     oldcount = data.paymentreqcount
                 }
