@@ -8581,10 +8581,10 @@ socket.on('connect', () => {
                     togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                 }else{
                     if(data.odds != '\n                        \n                      '){
-                        alert('132456')
+                        // alert('132456')
+                        showLoader();
                         socket.emit("betDetails", {data, LOGINDATA})
                         // console.log(data)
-                        showLoader();
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                     }
@@ -8598,9 +8598,9 @@ socket.on('connect', () => {
                         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                     }else{
                         if(data.odds != '\n                        \n                      '){
-                            alert('132456')
-                            socket.emit("betDetails", {data, LOGINDATA})
+                            // alert('132456')
                             showLoader();
+                            socket.emit("betDetails", {data, LOGINDATA})
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                         }
@@ -11445,10 +11445,10 @@ socket.on('connect', () => {
                         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                     }else{
                         if(data.odds != '\n                        \n                      '){
-                            alert('132456')
+                            // alert('132456')
+                            showLoader();
                             socket.emit("betDetails", {data, LOGINDATA})
                             // console.log(data)
-                            showLoader();
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                         }
@@ -11462,9 +11462,9 @@ socket.on('connect', () => {
                             togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                         }else{
                             if(data.odds != '\n                        \n                      '){
-                                alert('132456')
-                                socket.emit("betDetails", {data, LOGINDATA})
+                                // alert('132456')
                                 showLoader();
+                                socket.emit("betDetails", {data, LOGINDATA})
                             }else{
                                 togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                             }
