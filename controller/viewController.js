@@ -2291,7 +2291,8 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const runners = await runnerData.find()
-    console.log(runners, "runnersrunnersrunners")
+    let marketIds = await runnerData.distinct('marketId', {})
+    console.log(runners,marketIds, "runnersrunnersrunners")
     // const sportData = await getCrkAndAllData()
     // const cricket = sportData[0].gameList[0].eventList
     // let liveCricket = cricket;
