@@ -1079,7 +1079,7 @@ socket.on('connect', () => {
         if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Admin'){
             setInterval(()=>{
                 socket.emit('getcountofpaymentreq',LOGINDATA)
-            },1000)
+            },5000)
             socket.emit('getcountofpaymentreq',LOGINDATA)
         }
         socket.on('getcountofpaymentreq',async(data)=>{
