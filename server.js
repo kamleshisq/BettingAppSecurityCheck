@@ -2023,6 +2023,8 @@ io.on('connection', (socket) => {
             data.LOGINUSER = parentUser
         }
         // console.log(data.LOGINUSER._id.toString(), "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
+        let userIds = await User.distinct('id', {parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }})
+        console.log(userIds, "userIdsuserIdsuserIds")
         User.aggregate([
             {
               $match: {
@@ -2037,9 +2039,9 @@ io.on('connection', (socket) => {
             }
           ])
             .then((userResult) => {
-                console.log(userResult, "userResultuserResultuserResultuserResult")
+                // console.log(userResult, "userResultuserResultuserResultuserResult")
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-              console.log(userIds, "aggreataggreataggreataggreataggreataggreat")
+            //   console.log(userIds, "aggreataggreataggreataggreataggreataggreat")
               Bet.aggregate([
                 {
                   $match: {
