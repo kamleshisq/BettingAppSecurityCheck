@@ -2292,6 +2292,7 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const runners = await runnerData.find()
     let marketIds = await runnerData.distinct('marketId', {})
+
     console.log(runners,marketIds, "runnersrunnersrunners")
     // const sportData = await getCrkAndAllData()
     // const cricket = sportData[0].gameList[0].eventList
@@ -2300,14 +2301,14 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     // const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
     // let liveFootBall = footBall.eventList;
     // let liveTennis = Tennis.eventList
-    // let currentUser =  req.currentUser
-    // let id = req.currentUser._id
-    // if(req.currentUser.role.roleName == 'Operator'){
-    //     let parentUser = await User.findById(req.currentUser.parent_id)
-    //     id = parentUser._id.toString()
-    // }
-    // let childrenUsername = []
-    // childrenUsername = await User.distinct('userName', {parentUsers:id});
+    let currentUser =  req.currentUser
+    let id = req.currentUser._id
+    if(req.currentUser.role.roleName == 'Operator'){
+        let parentUser = await User.findById(req.currentUser.parent_id)
+        id = parentUser._id.toString()
+    }
+    let childrenUsername = []
+    childrenUsername = await User.distinct('userName', {parentUsers:id});
 
     // // let children = await User.find({parentUsers:id})
     // // children.map(ele => {
@@ -2320,7 +2321,8 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     //     {
     //         $match: {
     //             status:"OPEN" ,
-    //             userName:{$in:childrenUsername}
+    //             userName:{$in:childrenUsername},
+    //             marketId:{$in:marketIds}
     //         }
     //     },
     //     {
@@ -2386,12 +2388,13 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     //     }
     // ])
 
-    // // console.log(openBet[0].details, "openBetopenBet")
+    // // // console.log(openBet[0].details, "openBetopenBet")
     // res.status(200).render("./liveMarket/liveMarket", {
     //     title:"Live Market",
-    //     liveCricket,
-    //     liveFootBall,
-    //     liveTennis,
+
+    //     // liveCricket,
+    //     // liveFootBall,
+    //     // liveTennis,
     //     currentUser,
     //     openBet,
     //     me: currentUser

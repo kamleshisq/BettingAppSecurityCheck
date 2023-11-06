@@ -256,7 +256,9 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
     let data = {
         runners:marketDetails.runners,
         eventId:marketDetails.eid,
-        marketId:marketDetails.marketId
+        marketId:marketDetails.marketId,
+        sport:sportName,
+        marketDetails:marketDetails.title.toLowerCase()
     }
     await runnerDataModel.create(data)}
 }
