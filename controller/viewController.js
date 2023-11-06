@@ -4057,40 +4057,86 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
     let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
 
-    async function processEventList(eventList, modelName) {
-        const eventIds = eventList.map(item => item.eventData.eventId);
-    
-        // Batch fetch data
-        const batchSize = 50; // You can adjust the batch size as needed
-        const batches = [];
-        for (let i = 0; i < eventIds.length; i += batchSize) {
-            const batchIds = eventIds.slice(i, i + batchSize);
-            const batchData = await modelName.find({ Id: { $in: batchIds } });
-            batches.push(batchData);
+    let newcricketEvents = cricketList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
         }
-    
-        // Merge batched data
-        const mergedData = [].concat(...batches);
-    
-        // Create a map for quick lookups
-        const dataMap = new Map(mergedData.map(data => [data.Id, data]));
-    
-        // Process the events
-        return eventList.map(item => {
-            const event = item.eventData;
-            const data = dataMap.get(event.eventId);
-            event.status = data ? false : true;
-            event.featureStatus = data ? true : false;
-            event.inPlayStatus = data ? true : false;
-            event.count = betModel.count({ eventId: event.eventId, status: "OPEN" });
-            return item;
-        });
-    }
-    
-    const newCricketEvents = await processEventList(cricketList.eventList, catalogController);
-    const newFootballEvents = await processEventList(footballList.eventList, catalogController);
-    const newTennisEvents = await processEventList(tennisList.eventList, catalogController);
-     data = { cricketEvents: newCricketEvents, footballEvents: newFootballEvents, tennisEvents: newTennisEvents };
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
+
+         return item
+    })
+    let newfootballEvents =  footballList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+
+
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
+
+         return item
+    })
+    let newtennisEvents = tennisList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
+
+         return item
+    })
+
+    cricketEvents = await Promise.all(newcricketEvents);
+    footballEvents = await Promise.all(newfootballEvents);
+    tennisEvents = await Promise.all(newtennisEvents);
+    data = {cricketEvents,footballEvents,tennisEvents}
     console.log(data, "fhdhhfdhfd")
     // data = {}
 
