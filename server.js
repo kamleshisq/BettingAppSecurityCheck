@@ -4695,12 +4695,8 @@ io.on('connection', (socket) => {
             })
             let resultPromise = await Promise.all(newUser)
             console.log(resultPromise, "resultPromiseresultPromise")
-        //     let result = []
-        //     for(let i = 0;i<resultPromise.length;i++){
-        //         if(resultPromise[i] && resultPromise[i].Bets.length > 0){
-        //             result.push(resultPromise[i])
-        //         }
-        //     }
+            const result = resultPromise.filter(item => item && item.Bets && item.Bets.length > 0);
+            console.log(result, "resultresultresultresult")
             
         //     let matchName2 = await Bet.findOne({marketId: data.marketId})
         //     let matchName
