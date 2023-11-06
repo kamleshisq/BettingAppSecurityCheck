@@ -1090,6 +1090,7 @@ socket.on('connect', () => {
                     oldcount = data.paymentreqcount
                 }
                 else if(oldcount < data.paymentreqcount){
+                    console.log('WORKING123456496879879897987987')
                     oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
                     audio.play();
