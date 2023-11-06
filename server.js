@@ -4127,15 +4127,15 @@ io.on('connection', (socket) => {
                 let children
                 let parentIdOfClickedUser
                 if(falg){
-                    children = await User.find({parentUsers:ele.id})
+                    childrenUsername1 = await User.distinct("userName", {parentUsers:ele.id})
                     parentIdOfClickedUser = ele.id
                 }else{
-                    children = await User.find({parentUsers:ele._id})
+                    childrenUsername1 = await User.distinct("userName", {parentUsers:ele._id})
                     parentIdOfClickedUser = ele._id
                 }
-                children.map(ele1 => {
-                    childrenUsername1.push(ele1.userName) 
-                })
+                // children.map(ele1 => {
+                //     childrenUsername1.push(ele1.userName) 
+                // })
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
                         {
