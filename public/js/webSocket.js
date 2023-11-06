@@ -1075,6 +1075,7 @@ socket.on('connect', () => {
     }
 
     if(pathname.startsWith('/admin')){
+        let oldcount = 0 
         if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Admin'){
             setInterval(()=>{
                 socket.emit('getcountofpaymentreq',LOGINDATA)
@@ -1084,13 +1085,16 @@ socket.on('connect', () => {
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
                 console.log(data.paymentreqcount)
-                let oldcount = JSON.parse(sessionStorage.getItem('notiCount'))
                 console.log(oldcount,'oldcount')
-                if(oldcount < data.paymentreqcount){
+                if(oldcount === 0){
+                    oldcount = data.paymentreqcount
+                }
+                else if(oldcount < data.paymentreqcount){
+                    oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
                     audio.play();
                 }
-                sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
+                // sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
                 $('header .fa-bell').siblings('span').text(data.paymentreqcount)
             }else{
                 console.log(data.msg)
