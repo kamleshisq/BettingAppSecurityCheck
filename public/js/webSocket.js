@@ -14488,7 +14488,8 @@ socket.on('connect', () => {
                         $("#match_odd").html('Please wait a moment')
                         let type = 'userBook'
                         let newData = true
-                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+                        let page = 0
+                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData, page})
                     } else {
                         console.log('Market not found.');
                     }
