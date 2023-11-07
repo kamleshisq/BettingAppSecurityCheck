@@ -4140,7 +4140,7 @@ io.on('connection', (socket) => {
                         pipeline: [
                             {
                                 $match: {
-                                    userName: "$$userName",
+                                    userName: "$userName",
                                     // status: 'OPEN',
                                     // $or: [
                                     //     {
