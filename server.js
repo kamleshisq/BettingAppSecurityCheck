@@ -7320,7 +7320,7 @@ io.on('connection', (socket) => {
                 exposer3Amount = exposure3[0].amount
             }
         
-            console.log(exposure3, exposure2, exposure1)
+            // console.log(exposure3, exposure2, exposure1)
 
             function getExposure(runs,obj){
                 runs.sort((a, b) => a - b)
@@ -7445,10 +7445,10 @@ io.on('connection', (socket) => {
             }else{
                 exposureOther = exposure1[0].totalAmount
             }
-            console.log(exposureOther, exposureFancy, exposer3Amount)
+            // console.log(exposureOther, exposureFancy, exposer3Amount)
             totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
             // totalExposure = totalExposure + exposer3Amount
-            console.log(totalExposure, "totalExposuretotalExposuretotalExposure")
+            // console.log(totalExposure, "totalExposuretotalExposuretotalExposure")
             socket.emit('userLoginBalance', {userData,totalExposure})
         }
     })
