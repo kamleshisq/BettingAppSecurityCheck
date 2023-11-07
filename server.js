@@ -4119,49 +4119,49 @@ io.on('connection', (socket) => {
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
-            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
+            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
             // users = await User.find({userName:'testing_sdm-10000'})
-            // users = await User.aggregate([
-            //     {
-            //         $match: {
-            //             parent_id: data.LOGINDATA.LOGINUSER._id.toString(),
-            //             isActive: true,
-            //             roleName: { $ne: 'Operator' }
-            //         }
-            //     },
-            //     {
-            //         $addFields: {
-            //             userIdString: { $toString: "$_id" }
-            //         }
-            //     },
-            //     {
-            //         $lookup: {
-            //             from: "betmodels", 
-            //             let: { userId: "$userIdString", userName: "$userName" },
-            //             pipeline: [
-            //                 {
-            //                     $match: {
-            //                         marketId : data.marketId,
-            //                         $expr: {
-            //                             $or: [
-            //                                 { $in: ["$$userId", "$parentArray.parentUSerId"] },
-            //                                 { $eq: ["$$userName", "$userName"] }
-            //                             ]
-            //                         },
-            //                         status: 'OPEN',
-            //                     }
-            //                 },
-            //                 { $limit: 1 }
-            //             ],
-            //             as: "openBets"
-            //         }
-            //     },
-            //     {
-            //         $match: {
-            //             openBets: { $not: { $size: 0 } }
-            //         }
-            //     }
-            // ]);
+            users = await User.aggregate([
+                {
+                    $match: {
+                        parent_id: data.LOGINDATA.LOGINUSER._id.toString(),
+                        isActive: true,
+                        roleName: { $ne: 'Operator' }
+                    }
+                },
+                {
+                    $addFields: {
+                        userIdString: { $toString: "$_id" }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "betmodels", 
+                        let: { userId: "$userIdString", userName: "$userName" },
+                        pipeline: [
+                            {
+                                $match: {
+                                    marketId : data.marketId,
+                                    $expr: {
+                                        $or: [
+                                            { $in: ["$$userId", "$parentArray.parentUSerId"] },
+                                            { $eq: ["$$userName", "$userName"] }
+                                        ]
+                                    },
+                                    status: 'OPEN',
+                                }
+                            },
+                            { $limit: 1 }
+                        ],
+                        as: "openBets"
+                    }
+                },
+                {
+                    $match: {
+                        openBets: { $not: { $size: 0 } }
+                    }
+                }
+            ]);
             // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
             Id = data.LOGINDATA.LOGINUSER.userName
 
