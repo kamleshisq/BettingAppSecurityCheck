@@ -4136,17 +4136,23 @@ io.on('connection', (socket) => {
                 {
                     $lookup: {
                         from: "betmodels",
-                        let: {
-                            userId: { $toString: "$userIdString" },
-                            userName: "$userName"
-                        },
+                        let: { userId: "$userIdString" },
                         pipeline: [
                             {
                                 $match: {
                                     status: 'OPEN',
                                     "parentArray.parentUSerId": "$$userId"
                                 }
-                            },
+                            }
+                        ],
+                        as: "openBetsByUserId"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "betmodels",
+                        let: { userName: "$userName" },
+                        pipeline: [
                             {
                                 $match: {
                                     status: 'OPEN',
@@ -4154,9 +4160,9 @@ io.on('connection', (socket) => {
                                 }
                             }
                         ],
-                        as: "openBets"
+                        as: "openBetsByUserName"
                     }
-                }
+                },
                 // {
                 //     $match: {
                 //         openBets: { $not: { $size: 0 } }
