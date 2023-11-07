@@ -4135,14 +4135,14 @@ io.on('connection', (socket) => {
                 },
                 {
                     $lookup : {
-                        from:'betmodels',
+                        from:"betmodels",
                         pipeline:[
                             {
                                 $match: { 
-                                    status: 'OPEN',
+                                    status: "OPEN",
                                     $or: [ 
                                         { "parentArray.parentUSerId": "64e5c1892ceb9abbb4e4d1b4" },
-                                        { 'userName': "com_sdm" }
+                                        { userName: "com_sdm" }
                                     ]
                                 }
                             }
