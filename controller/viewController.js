@@ -5343,3 +5343,18 @@ exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
         check:"PaymentRepo"
     })
 })
+
+
+exports.getManagementAccount = catchAsync(async(req, res, next) => {
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    res.status(200).render("./userSideEjs/manageAccounts/main", {
+        title:"Manage Accounts",
+        user:req.currentUser,
+        check:"ACCC",
+        userLog,
+        notifications:req.notifications
+    })
+})
