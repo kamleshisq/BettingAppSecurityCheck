@@ -4144,7 +4144,9 @@ io.on('connection', (socket) => {
                                     $or: [
                                         { userName: "$$userName" },
                                         {
-                                            $in: ["$$userId", "$parentArray.parentUSerId"]
+                                            parentArray: {
+                                                $elemMatch: { parentUSerId: "$$userId" }
+                                            }
                                         }
                                     ]
                                 }
