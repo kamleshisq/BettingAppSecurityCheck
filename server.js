@@ -4119,8 +4119,8 @@ io.on('connection', (socket) => {
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
-            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
-            users = await User.find({userName:'testing_sdm-10000'})
+            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
+            // users = await User.find({userName:'testing_sdm-10000'})
             // users = await User.aggregate([
             //     {
             //         $match: {
