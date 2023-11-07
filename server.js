@@ -7299,14 +7299,14 @@ io.on('connection', (socket) => {
                         amount: 1
                         }
                     },
-                    // {
-                    //     $project:{
-                    //         _id:0,
-                    //         amount:{
-                    //             $sum:'$amount'
-                    //         }
-                    //     }
-                    // }
+                    {
+                        $project:{
+                            _id:0,
+                            amount:{
+                                $sum:'$amount'
+                            }
+                        }
+                    }
             ])
 
             let exposer3Amount = 0
