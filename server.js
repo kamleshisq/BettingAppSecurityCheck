@@ -4148,7 +4148,8 @@ io.on('connection', (socket) => {
                                         ]
                                     }
                                 }
-                            }
+                            },
+                            { $limit: 100 }
                         ],
                         as: "openBets"
                     }
