@@ -4134,35 +4134,39 @@ io.on('connection', (socket) => {
                     }
                 },
                 {
-                    $lookup: {
-                        from: "betmodels",
-                        let: { userId: "$userIdString" },
-                        pipeline: [
+                    $lookup : {
+                        from:'betmodels',
+                        pipeline:[
                             {
-                                $match: {
-                                    // status: 'OPEN',
-                                    "parentArray.parentUSerId": "$$userId"
+                                $match: { 
+                                    status: 'OPEN',
+                                    $or: [ 
+                                        { "parentArray.parentUSerId": "64e5c1892ceb9abbb4e4d1b4" },
+                                        { userName: "com_sdm" }
+                                    ]
                                 }
                             }
-                        ],
-                        as: "openBetsByUserId"
+                        ]
                     }
-                },
-                {
-                    $lookup: {
-                        from: "betmodels",
-                        let: { userName: "$userName" },
-                        pipeline: [
-                            {
-                                $match: {
-                                    // status: 'OPEN',
-                                    userName: "$$userName"
-                                }
-                            }
-                        ],
-                        as: "openBetsByUserName"
-                    }
-                },
+                }
+                // {
+                //     $lookup: {
+                //         from: "betmodels", 
+                //         let: { userId: "$userIdString", userName: "$userName" },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     status: 'OPEN',
+                //                     $or: [
+                //                         { "parentArray.parentUSerId": "$$userId" },
+                //                         { userName: "$$userName" }
+                //                     ]
+                //                 }
+                //             }
+                //         ],
+                //         as: "openBets"
+                //     }
+                // },
                 // {
                 //     $match: {
                 //         openBets: { $not: { $size: 0 } }
