@@ -4114,11 +4114,38 @@ io.on('connection', (socket) => {
                 Id = thatUSer.userName
                 falg = true
                 users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
+
                 // parentIdOfClickedUser = thatUSer._id
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
-            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
+            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
+            users = await User.aggregate([
+                {
+                    $match: {
+                        parent_id: data.LOGINDATA.LOGINUSER._id.toString(),
+                        isActive: true,
+                        roleName: { $ne: 'Operator' }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "betmodels", // Replace with the actual name of your "betmodels" collection
+                        let: { userId: "$userId", userName: "$userName" },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $or: [
+                                        { userName: "$$userName" },
+                                        { "parentArray.parentUSerId": "$$userId" }
+                                    ]
+                                }
+                            }
+                        ],
+                        as: "betmodelsData"
+                    }
+                }
+            ]);
             // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
             Id = data.LOGINDATA.LOGINUSER.userName
 
