@@ -4136,7 +4136,7 @@ io.on('connection', (socket) => {
                 {
                     $lookup: {
                         from: "betmodels", // Replace with the actual name of your "betmodels" collection
-                        let: { userId: "$userIdString", userName: "$userName" },
+                        let: { userId: "$userIdString", userName: "com_user" },
                         pipeline: [
                             {
                                 $match: {
