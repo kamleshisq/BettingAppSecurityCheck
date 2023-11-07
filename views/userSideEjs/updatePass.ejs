@@ -144,15 +144,13 @@
                 </div>
             </div>
         </div>
-        <div class="enter-payment-detail">
+        <div class="enter-withdraw-detail">
             <div class="title">Enter withdraw Details</div>
-            <form  class="payment-fom" method="post" action="">
+            <form  class="withdraw-fom" method="post" action="">
                 <div class="change-pass-model-form-inputs">
                     <!-- <label for="exampleInputPassword1" class="form-label">Enter Amount</label> -->
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                       <input type="text" class="form-control" name="amount" placeholder="Enter Amount" required>
-                      <input type="" name="pmethod" class="pmethod" value="banktransfer">
-                      <input type="" name="accountholdername" value="">
                     </div>
                 </div>
                 <div class="change-pass-model-form-inputs">
@@ -164,14 +162,8 @@
                 <div class="change-pass-model-form-inputs">
                     <!-- <label for="exampleInputPassword1" class="form-label">Enter Reference ID</label> -->
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <input type="text" class="form-control" name="utr" placeholder="Enter Transaction Reference ID" required>
+                      <input type="password" class="form-control" name="utr" placeholder="Enter your password" required>
                       <span class="input_err"></span>
-                    </div>
-                </div>
-                <div class="change-pass-model-form-inputs">
-                    <!-- <label for="payment-img-upload" class="form-label">Image</label> -->
-                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <input type="file" class="form-control" name="file" id="payment-img-upload" required>
                     </div>
                 </div>
                 <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
