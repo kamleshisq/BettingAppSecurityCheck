@@ -4129,21 +4129,31 @@ io.on('connection', (socket) => {
                     }
                 },
                 {
+                    $addFields: {
+                        userIdString: { $toString: "$_id" }
+                    }
+                },
+                {
                     $lookup: {
                         from: "betmodels", // Replace with the actual name of your "betmodels" collection
-                        let: { userId: "$userId", userName: "$userName" },
+                        let: { userId: "$userIdString", userName: "$userName" },
                         pipeline: [
                             {
                                 $match: {
                                     status: 'OPEN',
-                                    // $or: [
-                                    //     { userName: "$$userName" },
-                                    //     { "parentArray.parentUSerId": "$$userId" }
-                                    // ]
+                                    $or: [
+                                        { userName: "$$userName" },
+                                        { "parentArray.parentUSerId": { $in: ["$$userId"] } }
+                                    ]
                                 }
                             }
                         ],
-                        as: "betmodelsData"
+                        as: "openBets"
+                    }
+                },
+                {
+                    $match: {
+                        openBets: { $not: { $size: 0 } }
                     }
                 }
             ]);
