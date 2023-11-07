@@ -4135,21 +4135,19 @@ io.on('connection', (socket) => {
                 },
                 {
                     $lookup: {
-                        from: "betmodels", // Replace with the actual name of your "betmodels" collection
-                        let: { userId: "$userIdString", userName: "com_user" },
+                        from: "betmodels",
+                        let: { userId: "$userIdString", userName: "$userName" },
                         pipeline: [
                             {
                                 $match: {
-                                    userName: "$userName",
-                                    // status: 'OPEN',
-                                    // $or: [
-                                    //     {
-                                    //         parentArray: {
-                                    //             $elemMatch: { parentUSerId: "$$userId" }
-                                    //         }
-                                    //     },
-                                    //     // { userName: "$$userName" },
-                                    // ]
+                                    status: 'OPEN',
+                                    $or: [
+                                        {
+                                            parentArray: {
+                                                $elemMatch: { parentUSerId: "$$userId" }
+                                            }
+                                        },
+                                    ]
                                 }
                             }
                         ],
