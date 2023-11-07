@@ -4134,39 +4134,23 @@ io.on('connection', (socket) => {
                     }
                 },
                 {
-                    $lookup : {
-                        from:"betmodels",
-                        pipeline:[
+                    $lookup: {
+                        from: "betmodels", 
+                        let: { userId: "$userIdString", userName: "$userName" },
+                        pipeline: [
                             {
-                                $match: { 
-                                    status: "OPEN",
-                                    $or: [ 
+                                $match: {
+                                    status: 'OPEN',
+                                    $or: [
                                         { "parentArray.parentUSerId": "64e5c1892ceb9abbb4e4d1b4" },
                                         { userName: "com_sdm" }
                                     ]
                                 }
                             }
-                        ]
+                        ],
+                        as: "openBets"
                     }
-                }
-                // {
-                //     $lookup: {
-                //         from: "betmodels", 
-                //         let: { userId: "$userIdString", userName: "$userName" },
-                //         pipeline: [
-                //             {
-                //                 $match: {
-                //                     status: 'OPEN',
-                //                     $or: [
-                //                         { "parentArray.parentUSerId": "$$userId" },
-                //                         { userName: "$$userName" }
-                //                     ]
-                //                 }
-                //             }
-                //         ],
-                //         as: "openBets"
-                //     }
-                // },
+                },
                 // {
                 //     $match: {
                 //         openBets: { $not: { $size: 0 } }
