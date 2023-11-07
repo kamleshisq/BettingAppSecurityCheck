@@ -123,6 +123,7 @@ router.get("/myCommissionReportsInEvent", authController.isProtected_User, notif
 router.get("/myCommissionReportsMatch", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporMatch);
 router.get("/myProfile", authController.isProtected_User, notificationController.myNotifications ,viewController.myProfile);
 router.get("/profile", authController.isProtected_User, notificationController.myNotifications ,viewController.getMyProfileUser);
+router.get("/manageAccounts", authController.isProtected_User, notificationController.myNotifications ,viewController.getManagementAccount);
 router.get("/Kyc", authController.isProtected_User, notificationController.myNotifications ,viewController.getMyKycPage);
 
 
