@@ -4135,8 +4135,11 @@ io.on('connection', (socket) => {
                 },
                 {
                     $lookup: {
-                        from: "betmodels", 
-                        let: { userId: "$userIdString", userName: "$userName" },
+                        from: "betmodels",
+                        let: {
+                            userId: { $toString: "$userIdString" },
+                            userName: "$userName"
+                        },
                         pipeline: [
                             {
                                 $match: {
@@ -4150,7 +4153,7 @@ io.on('connection', (socket) => {
                         ],
                         as: "openBets"
                     }
-                },
+                }
                 // {
                 //     $match: {
                 //         openBets: { $not: { $size: 0 } }
