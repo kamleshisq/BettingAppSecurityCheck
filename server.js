@@ -4133,28 +4133,28 @@ io.on('connection', (socket) => {
                         userIdString: { $toString: "$_id" }
                     }
                 },
-                // {
-                //     $lookup: {
-                //         from: "betmodels", // Replace with the actual name of your "betmodels" collection
-                //         let: { userId: "$userIdString", userName: "$userName" },
-                //         pipeline: [
-                //             {
-                //                 $match: {
-                //                     status: 'OPEN',
-                //                     $or: [
-                //                         {
-                //                             parentArray: {
-                //                                 $elemMatch: { parentUSerId: "$$userId" }
-                //                             }
-                //                         },
-                //                         { userName: "$$userName" },
-                //                     ]
-                //                 }
-                //             }
-                //         ],
-                //         as: "openBets"
-                //     }
-                // },
+                {
+                    $lookup: {
+                        from: "betmodels", // Replace with the actual name of your "betmodels" collection
+                        let: { userId: "$userIdString", userName: "$userName" },
+                        pipeline: [
+                            {
+                                $match: {
+                                    status: 'OPEN',
+                                    $or: [
+                                        {
+                                            parentArray: {
+                                                $elemMatch: { parentUSerId: "$$userId" }
+                                            }
+                                        },
+                                        // { userName: "$$userName" },
+                                    ]
+                                }
+                            }
+                        ],
+                        as: "openBets"
+                    }
+                },
                 // {
                 //     $match: {
                 //         openBets: { $not: { $size: 0 } }
