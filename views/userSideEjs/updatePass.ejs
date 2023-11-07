@@ -113,6 +113,84 @@
         </div>
       </div>
     </div>
+    <!-- <div id="loader-overlay">
+      <div class="loader"></div>
+    </div> -->
+  </div>
+
+
+
+  <div class="modal fade change-pass-model paymentDepositePopup" id="navmod4" tabindex="-1" aria-labelledby="navmod4Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+      <div class="modal-content change-pass-model-txt">
+        <div class="modal-header change-pass-model-hed">
+          <div class="featured-sec-ro--titl-txt">
+            <span class="titl-bodr-lft-spn-model"></span>
+            <h3 class="featured-sec-ro--titl-txt-tg-model">withdraw</h3>
+          </div>
+          <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body change-pass-model-body">
+          <div class="choose-payment-option">
+            <div class="payment-tab">
+                <div class="payment-tab-list">
+                    <a href="#" class="img-payment bank-img active"><img src="http://ollscores.com/images/bank-transfer.png"></a>
+                    <a href="#" class="img-payment upi-img"><img src="http://ollscores.com/images/upi-pay.png"></a>
+                    <a href="#" class="img-payment pytm-img"><img src="http://ollscores.com/images/paytm-pay.png"></a>
+                </div>
+                <div class="payment-tab-content">
+                    <div class="title">Choose Beneficiary Account</div>
+                    <div class="luck-enterprise">
+                      <div class="accountnamecontainer">
+                        <div class="luck-enterprise-tag" id="Acc-Name-button" data-accountname="" active></div>
+                      </div>
+                        
+                        <ul id="BANK-DATA">
+                            <li id="Acc-Name"> <span class="copy-icon"></span></li>
+                            <li id="Acc-Number"> <span class="copy-icon"></span></li>
+                            <li id="Bank-Name"> <span class="copy-icon"></span></li>
+                            <li id="IFSC"> <span class="copy-icon"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="enter-payment-detail">
+            <div class="title">Enter Payment Details</div>
+            <form  class="payment-fom" method="post" action="">
+                <div class="change-pass-model-form-inputs">
+                    <!-- <label for="exampleInputPassword1" class="form-label">Enter Amount</label> -->
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="text" class="form-control" name="amount" placeholder="Enter Amount" required>
+                      <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
+                      <input type="hidden" name="accountholdername" value="">
+                    </div>
+                </div>
+                <div class="change-pass-model-form-inputs">
+                    <!-- <label for="exampleInputPassword1" class="form-label">Enter Notes</label> -->
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="text" class="form-control" name="notes" placeholder="Enter Notes" required>
+                    </div>
+                </div>
+                <div class="change-pass-model-form-inputs">
+                    <!-- <label for="exampleInputPassword1" class="form-label">Enter Reference ID</label> -->
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="text" class="form-control" name="utr" placeholder="Enter Transaction Reference ID" required>
+                      <span class="input_err"></span>
+                    </div>
+                </div>
+                <div class="change-pass-model-form-inputs">
+                    <!-- <label for="payment-img-upload" class="form-label">Image</label> -->
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="file" class="form-control" name="file" id="payment-img-upload" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+            </form>
+        </div>
+        </div>
+      </div>
+    </div>
     <div id="loader-overlay">
       <div class="loader"></div>
     </div>
