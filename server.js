@@ -7437,6 +7437,7 @@ io.on('connection', (socket) => {
             }else{
                 exposureOther = exposure1[0].totalAmount
             }
+            console.log(exposureOther, exposureFancy, exposer3Amount)
             totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
             // totalExposure = totalExposure + exposer3Amount
             console.log(totalExposure, "totalExposuretotalExposuretotalExposure")
