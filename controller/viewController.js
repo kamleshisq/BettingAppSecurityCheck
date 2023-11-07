@@ -5350,11 +5350,13 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/manageAccounts/main", {
         title:"Manage Accounts",
         user:req.currentUser,
         check:"ACCC",
         userLog,
+        verticalMenus,
         notifications:req.notifications
     })
 })
