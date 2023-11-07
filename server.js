@@ -4140,15 +4140,16 @@ io.on('connection', (socket) => {
                         pipeline: [
                             {
                                 $match: {
-                                    status: 'OPEN',
-                                    $or: [
-                                        {
-                                            parentArray: {
-                                                $elemMatch: { parentUSerId: "$$userId" }
-                                            }
-                                        },
-                                        // { userName: "$$userName" },
-                                    ]
+                                    userName: "$$userName",
+                                    // status: 'OPEN',
+                                    // $or: [
+                                    //     {
+                                    //         parentArray: {
+                                    //             $elemMatch: { parentUSerId: "$$userId" }
+                                    //         }
+                                    //     },
+                                    //     // { userName: "$$userName" },
+                                    // ]
                                 }
                             }
                         ],
