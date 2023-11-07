@@ -4135,19 +4135,20 @@ io.on('connection', (socket) => {
                 },
                 {
                     $lookup: {
-                        from: "betmodels",
+                        from: "betmodels", 
                         let: { userId: "$userIdString", userName: "$userName" },
                         pipeline: [
                             {
                                 $match: {
                                     status: 'OPEN',
-                                    // $or: [
-                                        
+                                    $or: [
+                                        {
                                             parentArray: {
                                                 $elemMatch: { parentUSerId: "$$userId" }
                                             }
-                                        
-                                    // ]
+                                        },
+                                        { userName: "com_user" },
+                                    ]
                                 }
                             }
                         ],
