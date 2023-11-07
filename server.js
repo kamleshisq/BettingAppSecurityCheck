@@ -4141,13 +4141,13 @@ io.on('connection', (socket) => {
                             {
                                 $match: {
                                     status: 'OPEN',
-                                    $or: [
-                                        {
+                                    // $or: [
+                                        
                                             parentArray: {
                                                 $elemMatch: { parentUSerId: "$$userId" }
                                             }
-                                        },
-                                    ]
+                                        
+                                    // ]
                                 }
                             }
                         ],
