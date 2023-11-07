@@ -7314,6 +7314,8 @@ io.on('connection', (socket) => {
                 exposer3Amount = exposure3[0].amount
             }
         
+            console.log(exposure3, exposure2, exposure1)
+
             function getExposure(runs,obj){
                 runs.sort((a, b) => a - b)
                 obj.sort((a, b) => a.run - b.run)
