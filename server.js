@@ -4142,8 +4142,8 @@ io.on('connection', (socket) => {
                                 $match: {
                                     status: 'OPEN',
                                     $or: [
-                                        { "parentArray.parentUSerId": "65410e67bba0d7d26d377df1" },
-                                        { userName: "testing_sdm-10000" }
+                                        { "parentArray.parentUSerId": "64e5c1892ceb9abbb4e4d1b4" },
+                                        { userName: "com_sdm" }
                                     ]
                                 }
                             }
