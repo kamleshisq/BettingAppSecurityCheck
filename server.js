@@ -7299,12 +7299,18 @@ io.on('connection', (socket) => {
                         amount: 1
                         }
                     },
+                    // {
+                    //     $project:{
+                    //         _id:0,
+                    //         amount:{
+                    //             $sum:'$amount'
+                    //         }
+                    //     }
+                    // }
                     {
-                        $project:{
-                            _id:0,
-                            amount:{
-                                $sum:'$amount'
-                            }
+                        $group:{
+                            _id:null,
+                            amount:{ $sum:'$amount'}
                         }
                     }
             ])
