@@ -4133,33 +4133,33 @@ io.on('connection', (socket) => {
                         userIdString: { $toString: "$_id" }
                     }
                 },
-                // {
-                //     $lookup: {
-                //         from: "betmodels", 
-                //         let: { userId: "$userIdString", userName: "$userName" },
-                //         pipeline: [
-                //             {
-                //                 $match: {
-                //                     marketId : data.marketId,
-                //                     status: 'OPEN',
-                //                     $expr: {
-                //                         $or: [
-                //                             { $in: ["$$userId", "$parentArray.parentUSerId"] },
-                //                             { $eq: ["$$userName", "$userName"] }
-                //                         ]
-                //                     }
-                //                 }
-                //             },
-                //             { $limit: 1 }
-                //         ],
-                //         as: "openBets"
-                //     }
-                // },
-                // {
-                //     $match: {
-                //         openBets: { $not: { $size: 0 } }
-                //     }
-                // }
+                {
+                    $lookup: {
+                        from: "betmodels", 
+                        let: { userId: "$userIdString", userName: "$userName" },
+                        pipeline: [
+                            {
+                                $match: {
+                                    marketId : data.marketId,
+                                    $expr: {
+                                        $or: [
+                                            { $in: ["$$userId", "$parentArray.parentUSerId"] },
+                                            { $eq: ["$$userName", "$userName"] }
+                                        ]
+                                    },
+                                    status: 'OPEN',
+                                }
+                            },
+                            { $limit: 1 }
+                        ],
+                        as: "openBets"
+                    }
+                },
+                {
+                    $match: {
+                        openBets: { $not: { $size: 0 } }
+                    }
+                }
             ]);
             // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
             Id = data.LOGINDATA.LOGINUSER.userName
