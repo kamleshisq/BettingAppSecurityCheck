@@ -7439,6 +7439,7 @@ io.on('connection', (socket) => {
             }
             totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
             // totalExposure = totalExposure + exposer3Amount
+            console.log(totalExposure, "totalExposuretotalExposuretotalExposure")
             socket.emit('userLoginBalance', {userData,totalExposure})
         }
     })
