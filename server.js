@@ -4163,7 +4163,7 @@ io.on('connection', (socket) => {
             //     }
             // ]);
             // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
-            Id = data.LOGINDATA.LOGINUSER.userName
+            Id = data.LOGINDATA.LOGINUSER.userName   
 
         }
         console.log('MIDDLE')
