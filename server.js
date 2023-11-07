@@ -4143,7 +4143,9 @@ io.on('connection', (socket) => {
                                     status: 'OPEN',
                                     $or: [
                                         { userName: "$$userName" },
-                                        { "parentArray.parentUSerId": { $in: ["$$userId"] } }
+                                        {
+                                            $in: ["$$userId", "$parentArray.parentUSerId"]
+                                        }
                                     ]
                                 }
                             }
