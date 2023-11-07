@@ -4140,6 +4140,7 @@ io.on('connection', (socket) => {
                         pipeline: [
                             {
                                 $match: {
+                                    marketId : data.marketId,
                                     status: 'OPEN',
                                     $expr: {
                                         $or: [
