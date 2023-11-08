@@ -319,7 +319,7 @@ socket.on('connect', () => {
     })
 
     socket.on('getAccountsData', async(data) => {
-        console.log(data)
+        // console.log(data)
         if(data.status === 'err'){
             togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
         }else{
@@ -356,6 +356,37 @@ socket.on('connect', () => {
         e.preventDefault()
         $('#navmod4').find('.img-payment').removeClass('active')
         $(this).addClass('active')
+        socket.emit('getAccountsDataUPI', LOGINDATA)
+    })
+
+    socket.on('getAccountsDataUPI', async(data) => {
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            document.getElementById("loader3-overlay").style.display = "none";
+            if(data.data.length > 0){
+                $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+                let htmlTag = ''
+                for(let i = 0; i<data.data.length;i++){
+                    if(i == 0){
+                        htmlTag += `<div class="luck-enterprise-tag active">${data.data[i].accountholdername}</div>`
+                    }else{
+                        htmlTag += `<div class="luck-enterprise-tag">${data.data[i].accountholdername}</div>`
+                    }
+                }
+
+                $('#navmod4 .accountnamecontainer').html(htmlTag)
+
+                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}<span class="copy-icon"></span></li>
+                <li id="Acc-Number"> ${data.data[0].upiid}<span class="copy-icon"></span></li>`
+                document.getElementById('BANK-DATA1').innerHTML = htmlData
+            }else{
+                $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
+                html = 'In this payment method there is no account data.'
+                document.getElementById('BANK-DATA1').innerHTML = html
+            }
+
+        }
     })
 
     $(document).on('click', ".pytmW-img", function(e){

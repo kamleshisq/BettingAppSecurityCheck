@@ -7985,6 +7985,18 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getAccountsDataUPI', async(data) => {
+        if(data.LOGINUSER){
+            try{
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'upiW'})
+                socket.emit('getAccountsDataUPI', {status:'sucess', data:accounts})
+            }catch{
+                console.log(err)
+                socket.emit('getAccountsDataUPI', {status:'err', msg:'Please try again leter'})
+            }
+        }
+    })
+
 })
 
 http.listen(8080,()=> {
