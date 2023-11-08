@@ -49,6 +49,7 @@ const resumeSuspendModel = require('../model/resumeSuspendMarket');
 const PaymentMethodModel = require('../model/paymentmethodmodel')
 const paymentReportModel = require('../model/paymentreport');
 const runnerData = require('../model/runnersData');
+const manageAccountUser = require('../model/paymentMethodUserSide');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -5350,6 +5351,8 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
+    let accounts = manageAccountUser.find({userName:req.currentUser.userName})
+    console.log(accounts, "accountsaccounts")
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/manageAccounts/main", {
         title:"Manage Accounts",
@@ -5357,6 +5360,7 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
         check:"MNGACC",
         userLog,
         verticalMenus,
-        notifications:req.notifications
+        notifications:req.notifications,
+        accounts
     })
 })
