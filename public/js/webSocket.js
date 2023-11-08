@@ -17539,6 +17539,7 @@ socket.on('connect', () => {
     if(pathname == '/manageAccounts'){
         $(document).on('click', ".add-Bank", function(e){
             e.preventDefault();
+            $('.addBankUser-fom').find('input').val('')
             $('.img-payment').removeClass("active");
             $(this).addClass('active')
             $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
@@ -17553,6 +17554,7 @@ socket.on('connect', () => {
         
         $(document).on('click', ".add-Upi", function(e){
             e.preventDefault();
+            $('.addBankUser-fom').find('input').val('')
             $('.img-payment').removeClass("active");
             $(this).addClass('active')
             $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
@@ -17567,6 +17569,7 @@ socket.on('connect', () => {
         
         $(document).on('click', ".add-Paytm", function(e){
             e.preventDefault();
+            $('.addBankUser-fom').find('input').val('')
             $('.img-payment').removeClass("active");
             $(this).addClass('active')
             $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
