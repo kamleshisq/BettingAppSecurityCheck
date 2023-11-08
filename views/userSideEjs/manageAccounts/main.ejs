@@ -48,6 +48,7 @@
                             </tr>
                         </thead>
                         <tbody class="acount-stat-tbl-body">
+                          <%if(accounts.length > 0){%>
                           <% for(let i = 0; i < accounts.length; i++){%>
                             <tr class="acount-stat-tbl-body-tr">
                             <td title="Account Holder Name" ><%=accounts[i].accountholdername%></td>
@@ -114,10 +115,11 @@
                             </td>
                             </tr>
                           <%}%>
+                          <%}else{%>
+                            No Data to Display
+                          <%}%>
                         </tbody>
-                        <%}else{%>
-                          No Data To Display
-                        <%}%>
+                        
                         
 
                     </table>
