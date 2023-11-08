@@ -346,6 +346,7 @@ socket.on('connect', () => {
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
                 html = 'In this payment method there is no account data.'
                 document.getElementById('BANK-DATA1').innerHTML = html
+                $('#navmod4 .accountnamecontainer').html('')
             }
 
         }
@@ -384,6 +385,7 @@ socket.on('connect', () => {
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
                 html = 'In this payment method there is no account data.'
                 document.getElementById('BANK-DATA1').innerHTML = html
+                $('#navmod4 .accountnamecontainer').html('')
             }
 
         }
@@ -421,6 +423,7 @@ socket.on('connect', () => {
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
                 html = 'In this payment method there is no account data.'
                 document.getElementById('BANK-DATA1').innerHTML = html
+                $('#navmod4 .accountnamecontainer').html('')
             }
 
         }
