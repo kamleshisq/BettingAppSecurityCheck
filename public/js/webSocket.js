@@ -399,6 +399,7 @@ socket.on('connect', () => {
         e.preventDefault()
         $('#navmod4').find('.img-payment').removeClass('active')
         $(this).addClass('active')
+        socket.emit('getAccountsData', LOGINDATA)
     })
 
 
