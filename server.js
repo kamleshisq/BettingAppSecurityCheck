@@ -8003,6 +8003,7 @@ io.on('connection', (socket) => {
         if(data.LOGINUSER){
             try{
                 let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'paytmW'})
+                console.log(accounts, "accountsaccounts")
                 socket.emit('getAccountDataPaytm', {status:'sucess', data:accounts})
             }catch{
                 console.log(err)
