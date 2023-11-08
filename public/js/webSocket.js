@@ -1,4 +1,3 @@
-const { compareSync } = require("bcrypt");
 
 const socket = io();
 socket.on('disconnect', () => {
