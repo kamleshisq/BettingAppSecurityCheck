@@ -326,6 +326,16 @@ socket.on('connect', () => {
             document.getElementById("loader3-overlay").style.display = "none";
             if(data.data.length > 0){
                 $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+                let htmlTag = ''
+                for(let i = 0; i<data.data.length;i++){
+                    if(i == 0){
+                        htmltag += `<div class="luck-enterprise-tag active">${data.data[i].accountholdername}</div>`
+                    }else{
+                        htmltag += `<div class="luck-enterprise-tag">${data.data[i].accountholdername}</div>`
+                    }
+                }
+
+                $('#navmod4 .accountnamecontainer').html(htmltag)
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
                 html = 'In this payment method there is no account data.'
