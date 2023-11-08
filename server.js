@@ -7884,6 +7884,9 @@ io.on('connection', (socket) => {
             if(data.data.accountnumber === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Account Number'})
                 errorEmitted = true;
+            }else if (data.data.accountnumber.length != 16){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a valid Account Number'})
+                errorEmitted = true;
             }
             if(data.data.ifsccode === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Bank IFSC Code'})
@@ -7905,6 +7908,9 @@ io.on('connection', (socket) => {
         }else{
             if(data.data.phonenumber === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Phone Number'})
+                errorEmitted = true;
+            }else if (data.data.phonenumber != 10){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a valid Phone Number'})
                 errorEmitted = true;
             }
         }
