@@ -442,7 +442,8 @@ socket.on('connect', () => {
 
     $(document).on('click', '#navmod4 .luck-enterprise-tag', function(e){
         e.preventDefault()
-        console.log('working')  
+        $('.luck-enterprise-tag').removeClass('active')
+        $(this).addClass('active')
     })
 
 
