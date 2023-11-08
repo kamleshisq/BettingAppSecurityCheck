@@ -329,9 +329,9 @@ socket.on('connect', () => {
                 let htmlTag = ''
                 for(let i = 0; i<data.data.length;i++){
                     if(i == 0){
-                        htmlTag += `<div class="luck-enterprise-tag active">${data.data[i].accountholdername}</div>`
+                        htmlTag += `<div class="luck-enterprise-tag1 active">${data.data[i].accountholdername}</div>`
                     }else{
-                        htmlTag += `<div class="luck-enterprise-tag">${data.data[i].accountholdername}</div>`
+                        htmlTag += `<div class="luck-enterprise-tag1">${data.data[i].accountholdername}</div>`
                     }
                 }
 
@@ -370,9 +370,9 @@ socket.on('connect', () => {
                 let htmlTag = ''
                 for(let i = 0; i<data.data.length;i++){
                     if(i == 0){
-                        htmlTag += `<div class="luck-enterprise-tag active">${data.data[i].accountholdername}</div>`
+                        htmlTag += `<div class="luck-enterprise-tag1 active">${data.data[i].accountholdername}</div>`
                     }else{
-                        htmlTag += `<div class="luck-enterprise-tag">${data.data[i].accountholdername}</div>`
+                        htmlTag += `<div class="luck-enterprise-tag1">${data.data[i].accountholdername}</div>`
                     }
                 }
 
@@ -408,9 +408,9 @@ socket.on('connect', () => {
                 let htmlTag = ''
                 for(let i = 0; i<data.data.length;i++){
                     if(i == 0){
-                        htmlTag += `<div class="luck-enterprise-tag active">${data.data[i].accountholdername}</div>`
+                        htmlTag += `<div class="luck-enterprise-tag1 active">${data.data[i].accountholdername}</div>`
                     }else{
-                        htmlTag += `<div class="luck-enterprise-tag">${data.data[i].accountholdername}</div>`
+                        htmlTag += `<div class="luck-enterprise-tag1">${data.data[i].accountholdername}</div>`
                     }
                 }
 
