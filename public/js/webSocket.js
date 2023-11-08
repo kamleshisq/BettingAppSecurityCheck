@@ -17531,6 +17531,33 @@ socket.on('connect', () => {
             $('#myModal3').find('img').attr('src',imgpath)
         })
     }
+
+
+
+
+
+    if(pathname == '/manageAccounts'){
+        $(document).on('click', ".add-Bank", function(e){
+            e.preventDefault();
+            // document.getElementById("loader2-overlay").style.display = "flex";
+            $('.img-payment').removeClass("active");
+            $(this).addClass('active')
+        })
+        
+        $(document).on('click', ".add-Upi", function(e){
+            e.preventDefault();
+            // document.getElementById("loader2-overlay").style.display = "flex";
+            $('.img-payment').removeClass("active");
+            $(this).addClass('active')
+        })
+        
+        $(document).on('click', ".add-Paytm", function(e){
+            e.preventDefault();
+            // document.getElementById("loader2-overlay").style.display = "flex";
+            $('.img-payment').removeClass("active");
+            $(this).addClass('active')
+        })
+    }
     
 
 })
