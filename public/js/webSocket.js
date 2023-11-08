@@ -329,13 +329,13 @@ socket.on('connect', () => {
                 let htmlTag = ''
                 for(let i = 0; i<data.data.length;i++){
                     if(i == 0){
-                        htmltag += `<div class="luck-enterprise-tag active">${data.data[i].accountholdername}</div>`
+                        htmlTag += `<div class="luck-enterprise-tag active">${data.data[i].accountholdername}</div>`
                     }else{
-                        htmltag += `<div class="luck-enterprise-tag">${data.data[i].accountholdername}</div>`
+                        htmlTag += `<div class="luck-enterprise-tag">${data.data[i].accountholdername}</div>`
                     }
                 }
 
-                $('#navmod4 .accountnamecontainer').html(htmltag)
+                $('#navmod4 .accountnamecontainer').html(htmlTag)
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
                 html = 'In this payment method there is no account data.'
