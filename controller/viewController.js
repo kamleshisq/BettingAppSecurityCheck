@@ -5354,7 +5354,7 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
     res.status(200).render("./userSideEjs/manageAccounts/main", {
         title:"Manage Accounts",
         user:req.currentUser,
-        check:"ACCC",
+        check:"MNGACC",
         userLog,
         verticalMenus,
         notifications:req.notifications
