@@ -50,36 +50,36 @@
                         <tbody class="acount-stat-tbl-body">
                           <% for(let i = 0; i < accounts.length; i++){%>
                             <tr class="acount-stat-tbl-body-tr">
-                            <td><%=accounts[i].accountholdername%></td>
+                            <td title="Account Holder Name" ><%=accounts[i].accountholdername%></td>
                             <%if(accounts[i].pmethod == 'banktransferW'){%>
                       
-                              <td>Bank Transfer</td>
+                              <td title="Account Number" ><%=accounts[i].accountnumber%></td>
                               <%}else if(accounts[i].pmethod == 'upiW'){%>
-                              <td>UPI Payment</td>
+                              <td title="Account Number" ><%=accounts[i].upiid%></td>
                               
                               <%}else if(accounts[i].pmethod == 'paytmW'){%>
-                              <td>Paytm</td>
+                              <td title="Account Number" ><%=accounts[i].phonenumber%></td>
                       
                               <%}%>
                               <%if(accounts[i].ifsccode){%>
-                              <td><%=accounts[i].ifsccode%></td>
+                              <td title="Ifsc Code" ><%=accounts[i].ifsccode%></td>
                               <%}else{%>
-                              <td>-</td>
+                              <td title="Ifsc Code" >-</td>
                               <%}%>
                               <%if(accounts[i].bankname){%>
-                              <td><%=accounts[i].bankname%></td>
+                              <td title="Bank Name" ><%=accounts[i].bankname%></td>
                               <%}else{%>
-                              <td>-</td>
+                              <td title="Bank Name" >-</td>
                               <%}%>
                               <%if(accounts[i].branchname){%>
-                              <td><%=accounts[i].branchname%></td>
+                              <td title="Branch Name" ><%=accounts[i].branchname%></td>
                               <%}else{%>
-                              <td>-</td>
+                              <td title="Branch Name" >-</td>
                               <%}%>
-                            <td><%=accounts[i].displayname%></td>
-                            <td><%=accounts[i].pmethod%></td>
+                            <td title="Display Name" ><%=accounts[i].displayname%></td>
+                            <td title="Payment Method" ><%=accounts[i].pmethod%></td>
                             <%if(accounts[i].status){%>
-                              <td>
+                              <td title="Status" >
                                 <div class="on-off-btn-section">
                                   <span class="on-off">OFF &nbsp; <label class="switch on">
                                   <input class="checkbox status_check_payment" type="checkbox" checked>
@@ -88,7 +88,7 @@
                                 </div>
                               </td>
                             <%}else{%>
-                              <td>
+                              <td title="Status" >
                                 <div class="on-off-btn-section">
                                   <span class="on-off">OFF &nbsp; <label class="switch">
                                   <input class="checkbox status_check_payment" type="checkbox">
@@ -97,7 +97,7 @@
                                 </div>
                               </td>
                             <%}%>
-                            <td>
+                            <td title="Actions" >
                               <div class="btn-set">
                                 <button class="site-button edit-btn" data-bs-toggle="modal" data-bs-target="#myModal1" type="button">Edit</button>
                                 <button class="site-button delete-btn">Delete</button>
