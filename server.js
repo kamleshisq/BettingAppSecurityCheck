@@ -7914,13 +7914,13 @@ io.on('connection', (socket) => {
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPassword(data.data.password, user.password)
             if(passcheck){
-                let NewDATA = []
+                try{
+                let NewDATA = {}
                 Object.keys(data.data).map((ele) => {
                     if(data.data[ele] != ""){
                         NewDATA[ele] = data.data[ele]
                     }
                 })
-                try{
                     let filterdata = {}
                     let filterarr = []
                     if(NewDATA.pmethod === 'banktransferW'){
