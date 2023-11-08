@@ -17541,42 +17541,42 @@ socket.on('connect', () => {
             e.preventDefault();
             $('.img-payment').removeClass("active");
             $(this).addClass('active')
-            $('[name="' + "accountholdername" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "accountnumber" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "displayname" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "ifsccode" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "bankname" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "branchname" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "upiid" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "phonenumber" + '"]').closest('.input-group').addClass('hide');
+            $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
         })
         
         $(document).on('click', ".add-Upi", function(e){
             e.preventDefault();
             $('.img-payment').removeClass("active");
             $(this).addClass('active')
-            $('[name="' + "accountholdername" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "accountnumber" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "displayname" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "bankname" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "branchname" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "upiid" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "phonenumber" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "ifsccode" + '"]').closest('.input-group').addClass('hide');
+            $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
         })
         
         $(document).on('click', ".add-Paytm", function(e){
             e.preventDefault();
             $('.img-payment').removeClass("active");
             $(this).addClass('active')
-            $('[name="' + "accountholdername" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "accountnumber" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "displayname" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "bankname" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "branchname" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "upiid" + '"]').closest('.input-group').addClass('hide');
-            $('[name="' + "phonenumber" + '"]').closest('.input-group').removeClass('hide');
-            $('[name="' + "ifsccode" + '"]').closest('.input-group').addClass('hide');
+            $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
         })
     }
     
