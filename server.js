@@ -8012,6 +8012,9 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('tabAccountData', async(data) => {
+        console.log(data)
+    })
 
 
 })
