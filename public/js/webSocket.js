@@ -1,3 +1,4 @@
+const { func } = require("joi");
 
 const socket = io();
 socket.on('disconnect', () => {
@@ -436,6 +437,13 @@ socket.on('connect', () => {
         $('#navmod4').find('.img-payment').removeClass('active')
         $(this).addClass('active')
         socket.emit('getAccountsData', LOGINDATA)
+    })
+
+
+
+    $(document).on('click', '#navmod4.luck-enterprise-tag', function(e){
+        e.preventDefault()
+        console.log('working')
     })
 
 
