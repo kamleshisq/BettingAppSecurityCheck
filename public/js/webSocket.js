@@ -17585,6 +17585,14 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            // var element = $('active');
+            if($('.add-Bank').hasClass('active')){
+                data.pmethod = 'banktransferW'
+            }else if ($('.add-Upi').hasClass('active')){
+                data.pmethod = 'upiW'
+            }else{
+                data.pmethod = 'paytmW'
+            }
             console.log(data, 123456879)
         })
 
