@@ -17612,6 +17612,11 @@ socket.on('connect', () => {
             }
         })
 
+        $(document).on('change', '#select', function(e){
+            e.preventDefault()
+            console.log('WORKING')
+        })
+
 
     }
     
