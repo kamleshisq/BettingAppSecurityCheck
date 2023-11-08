@@ -50,7 +50,7 @@
                         <tbody class="acount-stat-tbl-body">
                           <%if(accounts.length > 0){%>
                           <% for(let i = 0; i < accounts.length; i++){%>
-                            <tr class="acount-stat-tbl-body-tr">
+                            <tr class="acount-stat-tbl-body-tr" id="<%=accounts[i]._id%>">
                             <td title="Account Holder Name" ><%=accounts[i].accountholdername%></td>
                               <%if(accounts[i].pmethod == 'banktransferW'){%>
                       
