@@ -7966,8 +7966,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on('UpdateStatusAccount', async(data) => {
-        console.log(data)
-        
+        // console.log(data)
+        let thatData = await manageAccountsUser.findById(data)
+        if(thatData){
+            let statusUpdated = !thatData.status
+            await manageAccountsUser.findByIdAndUpdate(data, {status:statusUpdated})
+        }
+
     })
 
 })
