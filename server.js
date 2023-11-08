@@ -7965,6 +7965,11 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('UpdateStatusAccount', async(data) => {
+        console.log(data)
+        
+    })
+
 })
 
 http.listen(8080,()=> {

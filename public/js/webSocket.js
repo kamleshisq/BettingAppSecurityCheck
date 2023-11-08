@@ -17696,6 +17696,8 @@ socket.on('connect', () => {
         $(document).on('change', '.status_check_payment', function(e){
             e.preventDefault()
             console.log('Working')
+            let id = $(this).closest('tr').attr('id')
+            socket.emit('UpdateStatusAccount', id)
         })
 
 
