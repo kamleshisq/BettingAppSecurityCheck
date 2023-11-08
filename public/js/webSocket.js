@@ -312,6 +312,19 @@ socket.on('connect', () => {
     //     console.log(fd)
     // })
 
+    $('.WithrowReqMenu').click(function(e){
+        e.preventDefault()
+        document.getElementById("loader3-overlay").style.display = "flex";
+        socket.emit('getAccountsData', LOGINDATA)
+    })
+
+    socket.on('getAccountsData', async(data) => {
+        console.log(data)
+        
+    })
+
+
+
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
     if(inputElementSearch != null){

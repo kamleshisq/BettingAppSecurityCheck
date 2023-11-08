@@ -7966,13 +7966,18 @@ io.on('connection', (socket) => {
     })
 
     socket.on('UpdateStatusAccount', async(data) => {
-        // console.log(data)
         let thatData = await manageAccountsUser.findById(data)
         if(thatData){
             let statusUpdated = !thatData.status
             await manageAccountsUser.findByIdAndUpdate(data, {status:statusUpdated})
         }
+    })
 
+    socket.on('getAccountsData', async(data) => {
+        if(data.LOGINUSER){
+            let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'banktransferW'})
+            socket.emit('getAccountsData', accounts)
+        }
     })
 
 })
