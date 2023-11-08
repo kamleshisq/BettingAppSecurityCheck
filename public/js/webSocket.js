@@ -17600,6 +17600,11 @@ socket.on('connect', () => {
             socket.emit('addBenkDetailsUserSide', {data, LOGINDATA})
         })
 
+        socket.on('addBenkDetailsUserSide', async(data) => {
+            if(data.status == 'err'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }
+        })
 
 
     }
