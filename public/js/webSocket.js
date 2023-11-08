@@ -17614,7 +17614,10 @@ socket.on('connect', () => {
 
         $(document).on('change', '#select', function(e){
             e.preventDefault()
-            console.log('WORKING')
+            // console.log('WORKING')
+            let val = this.val()
+            console.log(val, "VAL")
+            socket.emit('FilterAccounts',{LOGINDATA, val} )
         })
 
 
