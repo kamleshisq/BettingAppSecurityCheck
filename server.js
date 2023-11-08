@@ -7909,7 +7909,7 @@ io.on('connection', (socket) => {
             if(data.data.phonenumber === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Phone Number'})
                 errorEmitted = true;
-            }else if (data.data.phonenumber != 10){
+            }else if (data.data.phonenumber.length != 10){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a valid Phone Number'})
                 errorEmitted = true;
             }
