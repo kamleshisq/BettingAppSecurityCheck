@@ -7870,31 +7870,31 @@ io.on('connection', (socket) => {
 
     socket.on('addBenkDetailsUserSide', async(data) => {
         // console.log(data)
-        if(data.data.accountholdername != ''){
+        if(data.data.accountholdername === ''){
             socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Account Name'})
         }
-        if(data.data.displayname != ''){
+        if(data.data.displayname === ''){
             socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Display Name'})
         }
         if(data.data.pmethod === 'banktransferW'){
-            if(data.data.accountnumber != ''){
+            if(data.data.accountnumber === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Account Number'})
             }
-            if(data.data.ifsccode != ''){
+            if(data.data.ifsccode === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Bank IFSC Code'})
             }
-            if(data.data.bankname != ''){
+            if(data.data.bankname === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Bank Name'})
             }
-            if(data.data.branchname != ''){
+            if(data.data.branchname === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Branch Name'})
             }
         }else if (data.data.pmethod === 'banktransferW'){
-            if(data.data.upiid != ''){
+            if(data.data.upiid === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a UPI Id'})
             }
         }else{
-            if(data.data.phonenumber != ''){
+            if(data.data.phonenumber === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Phone Number'})
             }
         }
