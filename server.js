@@ -7931,6 +7931,7 @@ io.on('connection', (socket) => {
                         filterarr.push({phonenumber:data.phonenumber})
                     }
                     filterdata.$or = filterarr
+                    console.log(filterdata)
                     NewDATA.userName = user.userName
                     if(!await manageAccountsUser.findOne(filterdata)){
                         await manageAccountsUser.create(NewDATA)
