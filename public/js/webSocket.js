@@ -17654,8 +17654,7 @@ socket.on('connect', () => {
                     html += `<td title="Payment Method" >UPI Payment</td>`
                     
                     }else if(data[i].pmethod == 'paytmW'){
-                    html += `<td title="Payment Method" >Paytm</td>
-`            
+                    html += `<td title="Payment Method" >Paytm</td>`            
                     }
                   if(data[i].status){
                     html += `<td title="Status" >
@@ -17691,6 +17690,12 @@ socket.on('connect', () => {
                 html = 'No Data to Display'
                 $('#TABLE tbody').html(html)
             }
+        })
+
+
+        $(document).on('change', '.status_check_payment', function(e){
+            e.preventDefault()
+            console.log('Working')
         })
 
 
