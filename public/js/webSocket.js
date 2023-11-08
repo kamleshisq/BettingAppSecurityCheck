@@ -325,11 +325,11 @@ socket.on('connect', () => {
         }else{
             document.getElementById("loader3-overlay").style.display = "none";
             if(data.data.length > 0){
-                console.log('WORKING')
+                $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+            }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
                 html = 'In this payment method there is no account data.'
                 document.getElementById('BANK-DATA1').innerHTML = html
-            }else{
             }
 
         }
