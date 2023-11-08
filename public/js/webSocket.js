@@ -326,7 +326,7 @@ socket.on('connect', () => {
             document.getElementById("loader3-overlay").style.display = "none";
             if(data.data.length > 0){
                 console.log('WORKING')
-                $('#navmod4').find('form').addClass('hide-elemnt')
+                $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
                 html = 'In this payment method there is no account data.'
                 document.getElementById('BANK-DATA1').innerHTML = html
             }else{
