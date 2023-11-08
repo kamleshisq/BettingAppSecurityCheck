@@ -315,6 +315,7 @@ socket.on('connect', () => {
     $('.WithrowReqMenu').click(function(e){
         e.preventDefault()
         document.getElementById("loader3-overlay").style.display = "flex";
+        $('#navmod4').find('.img-payment').removeClass('active')
         $('#navmod4').find('.bankW-img').addClass('active')
         socket.emit('getAccountsData', LOGINDATA)
     })
