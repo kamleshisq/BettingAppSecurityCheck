@@ -7924,11 +7924,11 @@ io.on('connection', (socket) => {
                     let filterdata = {}
                     let filterarr = []
                     if(NewDATA.pmethod === 'banktransferW'){
-                        filterarr.push({accountnumber:data.accountnumber})
+                        filterarr.push({accountnumber:data.data.accountnumber})
                     }else if(NewDATA.pmethod === 'upiW'){
-                        filterarr.push({upiid:data.upiid})
+                        filterarr.push({upiid:data.data.upiid})
                     }else{
-                        filterarr.push({phonenumber:data.phonenumber})
+                        filterarr.push({phonenumber:data.data.phonenumber})
                     }
                     filterdata.$or = filterarr
                     console.log(filterdata)
