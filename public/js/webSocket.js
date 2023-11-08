@@ -17596,11 +17596,12 @@ socket.on('connect', () => {
             }else{
                 data.pmethod = 'paytmW'
             }
-            console.log(data, 123456879)
+            // console.log(data, 123456879)
             socket.emit('addBenkDetailsUserSide', {data, LOGINDATA})
         })
 
         socket.on('addBenkDetailsUserSide', async(data) => {
+            console.log(data, "ReturnData")
             if(data.status == 'err'){
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
             }
