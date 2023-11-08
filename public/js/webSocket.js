@@ -328,7 +328,7 @@ socket.on('connect', () => {
                 console.log('WORKING')
                 $('#navmod4').find('form').addClass('hide-elemnt')
                 html = 'This Payment method not allowed yet!!'
-                document.getElementById('BANK-DATA').innerHTML = html
+                document.getElementById('BANK-DATA1').innerHTML = html
             }else{
             }
 
