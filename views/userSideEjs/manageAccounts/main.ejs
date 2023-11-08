@@ -51,7 +51,7 @@
                           <% for(let i = 0; i < accounts.length; i++){%>
                             <tr class="acount-stat-tbl-body-tr">
                             <td title="Account Holder Name" ><%=accounts[i].accountholdername%></td>
-                            <%if(accounts[i].pmethod == 'banktransferW'){%>
+                              <%if(accounts[i].pmethod == 'banktransferW'){%>
                       
                               <td title="Account Number" ><%=accounts[i].accountnumber%></td>
                               <%}else if(accounts[i].pmethod == 'upiW'){%>
@@ -77,7 +77,16 @@
                               <td title="Branch Name" >-</td>
                               <%}%>
                             <td title="Display Name" ><%=accounts[i].displayname%></td>
-                            <td title="Payment Method" ><%=accounts[i].pmethod%></td>
+                            <%if(accounts[i].pmethod == 'banktransferW'){%>
+                      
+                              <td title="Payment Method" >Bank Transfer</td>
+                              <%}else if(accounts[i].pmethod == 'upiW'){%>
+                              <td title="Payment Method" >UPI Payment</td>
+                              
+                              <%}else if(accounts[i].pmethod == 'paytmW'){%>
+                              <td title="Payment Method" >Paytm</td>
+                      
+                              <%}%>
                             <%if(accounts[i].status){%>
                               <td title="Status" >
                                 <div class="on-off-btn-section">
