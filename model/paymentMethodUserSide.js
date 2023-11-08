@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const paymentMethodUSerSiedeSchema = await mongoose.Schema({
+const paymentMethodUSerSiedeSchema = mongoose.Schema({
         userName:{
             type:String,
             required:true
