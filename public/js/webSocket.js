@@ -17622,7 +17622,71 @@ socket.on('connect', () => {
             // console.log(data, "<++++===data")
             let html = ''
             if(data.length > 0){
+               for(let i = 0; i < data.length; i++){
+                html += `<tr class="acount-stat-tbl-body-tr"> <td title="Account Holder Name" >${data[i].accountholdername}</td>`
+                if(data[i].pmethod == 'banktransferW'){
+                    html += `<td title="Account Number" >${data[i].accountnumber}</td>`
+                }else if (data[i].pmethod == 'upiW'){
+                    html += `<td title="Account Number" >${data[i].upiid}</td>`
+                }else{
+                    html += `<td title="Account Number" >${data[i].phonenumber}</td>`
+                }
+                if(data[i].ifsccode){
+                   html += `<td title="Ifsc Code" >${data[i].ifsccode}</td>`
+                }else{
+                    html += `<td title="Ifsc Code" >-</td>`
+                }
+                if(data[i].bankname){
+                   html += `<td title="Bank Name" >${data[i].bankname}</td>`
+                }else{
+                    html += `<td title="Bank Name" >-</td>`
+                }
+                if(data[i].branchname){
+                    html += `<td title="Branch Name" >${data[i].branchname}</td>`
+                }else{
+                    html += `<td title="Branch Name" >-</td>`
+                }
+                html += `<td title="Display Name" >${data[i].displayname}</td>`
+                if(data[i].pmethod == 'banktransferW'){
+                      
+                    html += `<td title="Payment Method" >Bank Transfer</td>`
+                    }else if(data[i].pmethod == 'upiW'){
+                    html += `<td title="Payment Method" >UPI Payment</td>`
+                    
+                    }else if(data[i].pmethod == 'paytmW'){
+                    html += `<td title="Payment Method" >Paytm</td>
+`            
+                    }
+                  if(data[i].status){
+                    html += `<td title="Status" >
+                      <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch on">
+                        <input class="checkbox status_check_payment" type="checkbox" checked>
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                      </div>
+                    </td>`
+                  }else{
+                    html += `<td title="Status" >
+                      <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch">
+                        <input class="checkbox status_check_payment" type="checkbox">
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                      </div>
+                    </td>`
+                  }
 
+                  html += `<td title="Actions" >
+                    <div class="btn-set">
+                      <button class="site-button edit-btn" data-bs-toggle="modal" data-bs-target="#myModal1" type="button">Edit</button>
+                      <button class="site-button delete-btn">Delete</button>
+                    </div>
+                  </td>
+                  </tr>`
+               }
+
+               $('#TABLE tbody').html(html)
             }else{
                 html = ' No Data To Display'
                 document.getElementById('TABLE').innerHTML = html
