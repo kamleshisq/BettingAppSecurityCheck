@@ -352,17 +352,17 @@ socket.on('connect', () => {
     })
 
 
-    $(document).on('click', "upiW-img", function(e){
+    $(document).on('click', ".upiW-img", function(e){
         e.preventDefault()
         $('#navmod4').find('.img-payment').removeClass('active')
     })
 
-    $(document).on('click', "pytmW-img", function(e){
+    $(document).on('click', ".pytmW-img", function(e){
         e.preventDefault()
         $('#navmod4').find('.img-payment').removeClass('active')
     })
 
-    $(document).on('click', "bankW-img", function(e){
+    $(document).on('click', ".bankW-img", function(e){
         e.preventDefault()
         $('#navmod4').find('.img-payment').removeClass('active')
     })
