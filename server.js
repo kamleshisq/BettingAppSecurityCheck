@@ -7897,7 +7897,7 @@ io.on('connection', (socket) => {
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Branch Name'})
                 errorEmitted = true;
             }
-        }else if (data.data.pmethod === 'banktransferW'){
+        }else if (data.data.pmethod === 'upiW'){
             if(data.data.upiid === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a UPI Id'})
                 errorEmitted = true;
