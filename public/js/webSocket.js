@@ -448,6 +448,27 @@ socket.on('connect', () => {
         socket.emit('tabAccountData', {LOGINDATA, id})
     })
 
+    socket.on('tabAccountData', async(data) => {
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            let htmlData = ''
+            if(data.data.pmethod === 'banktransferW'){
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}<span class="copy-icon"></span></li>
+                <li id="Acc-Number"> ${data.data.accountnumber}<span class="copy-icon"></span></li>
+                <li id="Bank-Name"> ${data.data.bankname}<span class="copy-icon"></span></li>
+                <li id="IFSC"> ${data.data.ifsccode}<span class="copy-icon"></span></li>`
+            }else if(data.data.pmethod === 'upiW'){
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}<span class="copy-icon"></span></li>
+                <li id="Acc-Number"> ${data.data.upiid}<span class="copy-icon"></span></li>`
+            }else{
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}<span class="copy-icon"></span></li>
+                <li id="Acc-Number"> ${data.data.accountnumber}<span class="copy-icon"></span></li>`
+            }
+            document.getElementById('BANK-DATA1').innerHTML = htmlData
+        }
+    })
+
 
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');

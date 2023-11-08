@@ -8013,7 +8013,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on('tabAccountData', async(data) => {
-        console.log(data)
+        // console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            try{
+                let accounts = await manageAccountsUser.findById(data.id)
+                // console.log(accounts, "accountsaccounts")
+                if(accounts){
+                    socket.emit('tabAccountData', {status:'sucess', data:accounts})
+                }else{
+                    socket.emit('tabAccountData', {status:'err', msg:'Please try again leter'})
+                }
+            }catch{
+                console.log(err)
+                socket.emit('tabAccountData', {status:'err', msg:'Please try again leter'})
+            }
+        }
     })
 
 
