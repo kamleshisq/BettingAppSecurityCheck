@@ -47,6 +47,65 @@
                                 <!-- <th >Amount</th> -->
                             </tr>
                         </thead>
+                        <tbody class="acount-stat-tbl-body">
+                          <% for(let i = 0; i < accounts.length; i++){%>
+                            <tr class="acount-stat-tbl-body-tr">
+                            <td><%=accounts[i].accountholdername%></td>
+                            <%if(accounts[i].pmethod == 'banktransferW'){%>
+                      
+                              <td><%=accounts[i].accountnumber%></td>
+                              <%}else if(accounts[i].pmethod == 'upiW'){%>
+                              <td><%=accounts[i].upiid%></td>
+                              
+                              <%}else if(accounts[i].pmethod == 'paytmW'){%>
+                              <td><%=accounts[i].phonenumber%></td>
+                      
+                              <%}%>
+                              <%if(accounts[i].ifsccode){%>
+                              <td><%=accounts[i].ifsccode%></td>
+                              <%}else{%>
+                              <td>-</td>
+                              <%}%>
+                              <%if(accounts[i].bankname){%>
+                              <td><%=accounts[i].bankname%></td>
+                              <%}else{%>
+                              <td>-</td>
+                              <%}%>
+                              <%if(accounts[i].branchname){%>
+                              <td><%=accounts[i].branchname%></td>
+                              <%}else{%>
+                              <td>-</td>
+                              <%}%>
+                            <td><%=accounts[i].displayname%></td>
+                            <td><%=accounts[i].pmethod%></td>
+                            <%if(accounts[i].status){%>
+                              <td>
+                                <div class="on-off-btn-section">
+                                  <span class="on-off">OFF &nbsp; <label class="switch on">
+                                  <input class="checkbox status_check_payment" type="checkbox" data-statusid="<%=accounts[i]._id%>" checked="">
+                                  <span class="slider round"></span>
+                                  </label>&nbsp; ON</span>
+                                </div>
+                              </td>
+                            <%}else{%>
+                              <td>
+                                <div class="on-off-btn-section">
+                                  <span class="on-off">OFF &nbsp; <label class="switch">
+                                  <input class="checkbox status_check_payment" type="checkbox" data-statusid="<%=accounts[i]._id%>">
+                                  <span class="slider round"></span>
+                                  </label>&nbsp; ON</span>
+                                </div>
+                              </td>
+                            <%}%>
+                            <td>
+                              <div class="btn-group">
+                                <button class="btn-group editaccounts" data-bs-toggle="modal" data-bs-target="#myModal1" type="button">Edit</button>
+                                <button class="btn delete" data-docid="<%=accounts[i]._id%>">Delete</button>
+                              </div>
+                            </td>
+                            </tr>
+                          <%}%>
+                        </tbody>
                         <%}else{%>
                           No Data To Display
                         <%}%>
