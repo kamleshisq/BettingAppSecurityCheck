@@ -7931,7 +7931,7 @@ io.on('connection', (socket) => {
                         filterarr.push({phonenumber:data.data.phonenumber})
                     }
                     filterdata.$or = filterarr
-                    console.log(filterdata)
+                    // console.log(filterdata)
                     NewDATA.userName = user.userName
                     if(!await manageAccountsUser.findOne(filterdata)){
                         await manageAccountsUser.create(NewDATA)
@@ -7940,7 +7940,7 @@ io.on('connection', (socket) => {
                         socket.emit('addBenkDetailsUserSide',{status:'err',msg:'this account number is alredy exist'})
                     }
                 }catch(err){
-                    console.log(err)
+                    // console.log(err)
                     socket.emit('addBenkDetailsUserSide',{status:'err',msg:'something went wrong'})
                 }
             }else{

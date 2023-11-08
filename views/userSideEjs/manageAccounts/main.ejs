@@ -53,12 +53,12 @@
                             <td><%=accounts[i].accountholdername%></td>
                             <%if(accounts[i].pmethod == 'banktransferW'){%>
                       
-                              <td><%=accounts[i].accountnumber%></td>
+                              <td>Bank Transfer</td>
                               <%}else if(accounts[i].pmethod == 'upiW'){%>
-                              <td><%=accounts[i].upiid%></td>
+                              <td>UPI Payment</td>
                               
                               <%}else if(accounts[i].pmethod == 'paytmW'){%>
-                              <td><%=accounts[i].phonenumber%></td>
+                              <td>Paytm</td>
                       
                               <%}%>
                               <%if(accounts[i].ifsccode){%>
