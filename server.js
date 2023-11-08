@@ -7958,6 +7958,9 @@ io.on('connection', (socket) => {
     socket.on('FilterAccounts', async(data) => {
         if(data.LOGINDATA){
             let accounts = await manageAccountsUser.find({pmethod:data.val, userName:data.LOGINDATA.LOGINUSER.userName})
+            if(data.val === 'All'){
+                accounts = await manageAccountsUser.find({userName:data.LOGINDATA.LOGINUSER.userName})
+            }
             socket.emit('FilterAccounts', accounts)
         }
     })
