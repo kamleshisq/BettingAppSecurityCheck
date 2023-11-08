@@ -82,22 +82,8 @@
             <div class="enter-withdraw-detail">
                 <form  class="withdraw-fom" method="post" action="">
                     <div class="change-pass-model-form-inputs">
-                        <!-- <label for="exampleInputPassword1" class="form-label">Enter Amount</label> -->
                         <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                          <input type="text" class="form-control" name="amount" placeholder="Enter Amount" required>
-                        </div>
-                    </div>
-                    <div class="change-pass-model-form-inputs">
-                        <!-- <label for="exampleInputPassword1" class="form-label">Enter Notes</label> -->
-                        <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                          <input type="text" class="form-control" name="notes" placeholder="Enter Notes" required>
-                        </div>
-                    </div>
-                    <div class="change-pass-model-form-inputs">
-                        <!-- <label for="exampleInputPassword1" class="form-label">Enter Reference ID</label> -->
-                        <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                          <input type="password" class="form-control" name="utr" placeholder="Enter your password" required>
-                          <span class="input_err"></span>
+                          <input ype="hidden" name="pmethod" class="pmethod" value="banktransfer">
                         </div>
                     </div>
                     <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
