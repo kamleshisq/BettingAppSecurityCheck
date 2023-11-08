@@ -12,11 +12,13 @@ const paymentMethodUSerSiedeSchema = mongoose.Schema({
         },
         accountnumber:{
             type:String,
-            unique:true
+            unique:true,
+            sparse: true
         },
         upiid:{
             type:String,
-            unique:true
+            unique:true,
+            sparse: true
         },
         phonenumber:{
             type:String
