@@ -17689,7 +17689,7 @@ socket.on('connect', () => {
                $('#TABLE tbody').html(html)
             }else{
                 html = ' No Data To Display'
-                document.getElementById('TABLE').innerHTML = html
+                $('#TABLE tbody').html(html)
             }
         })
 
