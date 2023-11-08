@@ -17619,7 +17619,14 @@ socket.on('connect', () => {
         })
 
         socket.on('FilterAccounts', async(data) => {
-            console.log(data, "<++++===data")
+            // console.log(data, "<++++===data")
+            let html = ''
+            if(data.length > 0){
+
+            }else{
+                html = ' No Data To Display'
+                document.getElementById('TABLE').innerHTML = html
+            }
         })
 
 
