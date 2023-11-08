@@ -7976,7 +7976,7 @@ io.on('connection', (socket) => {
     socket.on('getAccountsData', async(data) => {
         if(data.LOGINUSER){
             try{
-                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'banktransferW'})
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'banktransferW', status:true})
                 socket.emit('getAccountsData', {status:'sucess', data:accounts})
             }catch{
                 console.log(err)
@@ -7988,7 +7988,7 @@ io.on('connection', (socket) => {
     socket.on('getAccountsDataUPI', async(data) => {
         if(data.LOGINUSER){
             try{
-                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'upiW'})
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'upiW', status:true})
                 socket.emit('getAccountsDataUPI', {status:'sucess', data:accounts})
             }catch{
                 console.log(err)
@@ -8002,7 +8002,7 @@ io.on('connection', (socket) => {
     socket.on('getAccountDataPaytm', async(data) => {
         if(data.LOGINUSER){
             try{
-                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'paytmW'})
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'paytmW', status:true})
                 console.log(accounts, "accountsaccounts")
                 socket.emit('getAccountDataPaytm', {status:'sucess', data:accounts})
             }catch{
