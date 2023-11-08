@@ -340,7 +340,7 @@ socket.on('connect', () => {
                 let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}<span class="copy-icon"></span></li>
                 <li id="Acc-Number"> ${data.data[0].accountnumber}<span class="copy-icon"></span></li>
                 <li id="Bank-Name"> ${data.data[0].bankname}<span class="copy-icon"></span></li>
-                <li id="IFSC"> ${data.data[0].innerHTML}<span class="copy-icon"></span></li>`
+                <li id="IFSC"> ${data.data[0].ifsccode}<span class="copy-icon"></span></li>`
                 document.getElementById('BANK-DATA1').innerHTML = htmlData
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
