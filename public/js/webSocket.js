@@ -17623,7 +17623,7 @@ socket.on('connect', () => {
             let html = ''
             if(data.length > 0){
                for(let i = 0; i < data.length; i++){
-                html += `<tr class="acount-stat-tbl-body-tr"> <td title="Account Holder Name" >${data[i].accountholdername}</td>`
+                html += `<tr class="acount-stat-tbl-body-tr" id=${data[i]._id}> <td title="Account Holder Name" >${data[i].accountholdername}</td>`
                 if(data[i].pmethod == 'banktransferW'){
                     html += `<td title="Account Number" >${data[i].accountnumber}</td>`
                 }else if (data[i].pmethod == 'upiW'){
