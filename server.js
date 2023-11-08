@@ -7997,6 +7997,22 @@ io.on('connection', (socket) => {
         }
     })
 
+
+
+    socket.on('getAccountDataPaytm', async(data) => {
+        if(data.LOGINUSER){
+            try{
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'paytmW'})
+                socket.emit('getAccountDataPaytm', {status:'sucess', data:accounts})
+            }catch{
+                console.log(err)
+                socket.emit('getAccountDataPaytm', {status:'err', msg:'Please try again leter'})
+            }
+        }
+    })
+
+
+
 })
 
 http.listen(8080,()=> {
