@@ -59,7 +59,93 @@
         </div>
       </section>
       <!-- ----= CARDS CONTENT SECTION END =-----   -->
-
+      <div class="modal fade deposit-withdraw-modal" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-header">
+              <h4 class="modal-title">Select Payment Method</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-data paymentMethodForm">
+                    <div class="row">
+                      <div class="col">
+                        <p class="withdrawWD addBank active">Add Bank</p>
+                      </div>
+                      <div class="col">
+                        <p class="withdrawWD UPI">Add UPI</p>
+                      </div>
+                      <div class="col">
+                        <p class="withdrawWD addPaytm">Add Paytm</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="">Account Name</label>
+                        <input type="text" class="form-control ml0" placeholder="Account Name" name="accountholdername">
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label for="">Account Number</label>
+                            <input type="number" class="form-control ml0" placeholder="Account Number" name="accountnumber" >
+                        </div>
+                    </div>
+                    <div class="row mt-2" >
+                        <div class="col hide">
+                            <label for="">UPI Id</label>
+                            <input type="text" class="form-control ml0 upiTransferInp" placeholder="UPI Id" name="upiid">
+                        </div>
+                    </div>
+                    <div class="row mt-2" >
+                        <div class="col hide">
+                            <label for="">Phone Number</label>
+                            <input type="number" class="form-control ml0 paytmTransferInp" placeholder="Phone Number" name="phonenumber">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label for="">Display Name</label>
+                            <input type="text" class="form-control ml0"  name="displayname">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label for="">Ifsc Code</label>
+                            <input type="text" class="form-control ml0"  name="ifsccode">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="">Bank Name</label>
+                        <input type="text" class="form-control ml0"  name="bankname">
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="">Branch Name</label>
+                        <input type="text" class="form-control ml0"  name="branchname">
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <button type="submit" class="btn-submit mt-3">Submit</button>
+                        </div>
+                    </div>
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- ----= SIDEBAR SECTION START =-----   -->
       <%-include('../sideBar')%>
       <!-- ----= SIDEBAR SECTION END =-----   -->
