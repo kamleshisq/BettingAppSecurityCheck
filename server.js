@@ -7867,6 +7867,11 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on('addBenkDetailsUserSide', async(data) => {
+        console.log(data)
+    })
+
   
 
 })
