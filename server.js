@@ -7933,7 +7933,7 @@ io.on('connection', (socket) => {
                     filterdata.$or = filterarr
                     NewDATA.userName = user.userName
                     if(!await manageAccountsUser.findOne(filterdata)){
-                        await manageAccountsUser.create(NewDATA)
+                        // await manageAccountsUser.create(NewDATA)
                         socket.emit('addpaymentMethod',{status:'success',msg:'payment method added successfully'})
                     }else{
                         socket.emit('addpaymentMethod',{status:'err',msg:'this account number is alredy exist'})
