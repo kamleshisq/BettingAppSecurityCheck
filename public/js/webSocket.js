@@ -320,7 +320,17 @@ socket.on('connect', () => {
 
     socket.on('getAccountsData', async(data) => {
         console.log(data)
-        
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            document.getElementById("loader3-overlay").style.display = "none";
+            if(data.data.length > 0){
+                $('#navmod4').find('form').addClass('hide')
+
+            }else{
+            }
+
+        }
     })
 
 

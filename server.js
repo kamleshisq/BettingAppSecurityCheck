@@ -7975,8 +7975,13 @@ io.on('connection', (socket) => {
 
     socket.on('getAccountsData', async(data) => {
         if(data.LOGINUSER){
-            let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'banktransferW'})
-            socket.emit('getAccountsData', accounts)
+            try{
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'banktransferW'})
+                socket.emit('getAccountsData', {status:'sucess', data:accounts})
+            }catch{
+                console.log(err)
+                socket.emit('getAccountsData', {status:'err', msg:'Please try again leter'})
+            }
         }
     })
 
