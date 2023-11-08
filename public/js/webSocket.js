@@ -17688,7 +17688,7 @@ socket.on('connect', () => {
 
                $('#TABLE tbody').html(html)
             }else{
-                html = '<tr>No Data to Display</tr>'
+                html = 'No Data to Display'
                 $('#TABLE tbody').html(html)
             }
         })
