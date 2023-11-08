@@ -63,8 +63,9 @@ const timelyNotificationModel = require('./model/timelyVoideNotification');
 const resumeSuspendModel = require('./model/resumeSuspendMarket');
 const Decimal = require('decimal.js');
 const runnerDataModel = require('./model/runnersData');
-const streamModel = require('./model/streammanagement')
-const liveStreameData = require('./utils/getLiveStream')
+const streamModel = require('./model/streammanagement');
+const liveStreameData = require('./utils/getLiveStream');
+const manageAccountsUser = require('./model/paymentMethodUserSide');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -7870,32 +7871,79 @@ io.on('connection', (socket) => {
 
     socket.on('addBenkDetailsUserSide', async(data) => {
         // console.log(data)
+        let errorEmitted = false;
         if(data.data.accountholdername === ''){
             socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Account Name'})
+            errorEmitted = true;
         }
         if(data.data.displayname === ''){
             socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Display Name'})
+            errorEmitted = true;
         }
         if(data.data.pmethod === 'banktransferW'){
             if(data.data.accountnumber === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Account Number'})
+                errorEmitted = true;
             }
             if(data.data.ifsccode === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Bank IFSC Code'})
+                errorEmitted = true;
             }
             if(data.data.bankname === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Bank Name'})
+                errorEmitted = true;
             }
             if(data.data.branchname === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Branch Name'})
+                errorEmitted = true;
             }
         }else if (data.data.pmethod === 'banktransferW'){
             if(data.data.upiid === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a UPI Id'})
+                errorEmitted = true;
             }
         }else{
             if(data.data.phonenumber === ''){
                 socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Phone Number'})
+                errorEmitted = true;
+            }
+        }
+
+
+        if(!errorEmitted){
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            const passcheck = await user.correctPassword(data.data.password, user.password)
+            if(passcheck){
+                let NewDATA = []
+                Object.keys(data.data).map((ele) => {
+                    if(data.data[ele] != ""){
+                        NewDATA[ele] = data.data[ele]
+                    }
+                })
+                try{
+                    let filterdata = {}
+                    let filterarr = []
+                    if(NewDATA.pmethod === 'banktransferW'){
+                        filterarr.push({accountnumber:data.accountnumber})
+                    }else if(NewDATA.pmethod === 'upiW'){
+                        filterarr.push({upiid:data.upiid})
+                    }else{
+                        filterarr.push({phonenumber:data.phonenumber})
+                    }
+                    filterdata.$or = filterarr
+                    NewDATA.userName = user.userName
+                    if(!await manageAccountsUser.findOne(filterdata)){
+                        await manageAccountsUser.create(NewDATA)
+                        socket.emit('addpaymentMethod',{status:'success',msg:'payment method added successfully'})
+                    }else{
+                        socket.emit('addpaymentMethod',{status:'err',msg:'this account number is alredy exist'})
+                    }
+                }catch(err){
+                    console.log(err)
+                    socket.emit('addBenkDetailsUserSide',{status:'err',msg:'something went wrong'})
+                }
+            }else{
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a valid password'})
             }
         }
     })

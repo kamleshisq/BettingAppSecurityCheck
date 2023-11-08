@@ -17075,7 +17075,7 @@ socket.on('connect', () => {
             })
             newData.status = true
             newData.userName = LOGINDATA.LOGINUSER.userName
-            console.log(newData)
+            // console.log(newData)
             socket.emit('addpaymentMethod',newData)
         })
 

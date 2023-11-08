@@ -41,7 +41,8 @@ const paymentMethodUSerSiedeSchema = await mongoose.Schema({
         },
         status:{
             type:Boolean,
-            required:true
+            required:true,
+            default:true
         }
 })
 
