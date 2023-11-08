@@ -17578,6 +17578,18 @@ socket.on('connect', () => {
             $('[name="' + "phonenumber" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
             $('[name="' + "ifsccode" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
         })
+
+
+        $(document).on('submit', '.addBankUser-fom', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            console.log(data, 123456879)
+        })
+
+
+
     }
     
 
