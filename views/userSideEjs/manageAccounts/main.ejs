@@ -22,7 +22,7 @@
                         </select>
                     </div>
                     <div class="">
-                      <button  class="form-select form-select-sm acount-stat-ro-form-input" data-bs-toggle="modal" data-bs-target="#myModal" type="button"><i class="fa-solid fa-plus"></i> &nbsp; Add Payment Method</button>
+                      <a href="" title="" data-bs-toggle="modal"  data-bs-target="#addPayment"> Add Payment Method</a>
                     </div>
                     </form>
                 </div>
@@ -59,92 +59,62 @@
         </div>
       </section>
       <!-- ----= CARDS CONTENT SECTION END =-----   -->
-      <div class="modal fade deposit-withdraw-modal" id="myModal" role="dialog">
-        <div class="modal-dialog">
-        
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      <div class="modal fade change-pass-model paymentDepositePopup" id="addPayment" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+          <div class="modal-content change-pass-model-txt">
+            <div class="modal-header change-pass-model-hed">
+              <div class="featured-sec-ro--titl-txt">
+                <span class="titl-bodr-lft-spn-model"></span>
+                <h3 class="featured-sec-ro--titl-txt-tg-model">withdraw</h3>
+              </div>
+              <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-header">
-              <h4 class="modal-title">Select Payment Method</h4>
+            <div class="modal-body change-pass-model-body">
+              <div class="choose-payment-option">
+                <div class="payment-tab">
+                    <div class="payment-tab-list">
+                        <a class="img-payment bankW-img active"><img src="http://ollscores.com/images/bank-transfer.png"></a>
+                        <a class="img-payment upiW-img"><img src="http://ollscores.com/images/upi-pay.png"></a>
+                        <a class="img-payment pytmW-img"><img src="http://ollscores.com/images/paytm-pay.png"></a>
+                        <a class="payment-mng-link" href="/manageAccounts" >Manage Accounts</a>
+                    </div>
+                    <div class="payment-tab-content">
+                        <div class="title">Choose Beneficiary Account for withdraw</div>
+                        
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form class="form-data paymentMethodForm">
-                    <div class="row">
-                      <div class="col">
-                        <p class="withdrawWD addBank active">Add Bank</p>
-                      </div>
-                      <div class="col">
-                        <p class="withdrawWD UPI">Add UPI</p>
-                      </div>
-                      <div class="col">
-                        <p class="withdrawWD addPaytm">Add Paytm</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <input type="hidden" name="pmethod" class="pmethod" value="banktransfer">
-                      </div>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col">
-                        <label for="">Account Name</label>
-                        <input type="text" class="form-control ml0" placeholder="Account Name" name="accountholdername">
-                      </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col">
-                            <label for="">Account Number</label>
-                            <input type="number" class="form-control ml0" placeholder="Account Number" name="accountnumber" >
+            <div class="enter-withdraw-detail">
+                <div class="title">Enter withdraw Details</div>
+                <form  class="withdraw-fom" method="post" action="">
+                    <div class="change-pass-model-form-inputs">
+                        <!-- <label for="exampleInputPassword1" class="form-label">Enter Amount</label> -->
+                        <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                          <input type="text" class="form-control" name="amount" placeholder="Enter Amount" required>
                         </div>
                     </div>
-                    <div class="row mt-2" >
-                        <div class="col hide">
-                            <label for="">UPI Id</label>
-                            <input type="text" class="form-control ml0 upiTransferInp" placeholder="UPI Id" name="upiid">
+                    <div class="change-pass-model-form-inputs">
+                        <!-- <label for="exampleInputPassword1" class="form-label">Enter Notes</label> -->
+                        <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                          <input type="text" class="form-control" name="notes" placeholder="Enter Notes" required>
                         </div>
                     </div>
-                    <div class="row mt-2" >
-                        <div class="col hide">
-                            <label for="">Phone Number</label>
-                            <input type="number" class="form-control ml0 paytmTransferInp" placeholder="Phone Number" name="phonenumber">
+                    <div class="change-pass-model-form-inputs">
+                        <!-- <label for="exampleInputPassword1" class="form-label">Enter Reference ID</label> -->
+                        <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                          <input type="password" class="form-control" name="utr" placeholder="Enter your password" required>
+                          <span class="input_err"></span>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col">
-                            <label for="">Display Name</label>
-                            <input type="text" class="form-control ml0"  name="displayname">
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col">
-                            <label for="">Ifsc Code</label>
-                            <input type="text" class="form-control ml0"  name="ifsccode">
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col">
-                        <label for="">Bank Name</label>
-                        <input type="text" class="form-control ml0"  name="bankname">
-                      </div>
-                    </div>
-                    <div class="row mt-2">
-                      <div class="col">
-                        <label for="">Branch Name</label>
-                        <input type="text" class="form-control ml0"  name="branchname">
-                      </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col">
-                            <button type="submit" class="btn-submit mt-3">Submit</button>
-                        </div>
-                    </div>
-                  </form>
+                    <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+                </form>
+            </div>
             </div>
           </div>
         </div>
+        <!-- <div id="loader-overlay">
+          <div class="loader"></div>
+        </div> -->
       </div>
       <!-- ----= SIDEBAR SECTION START =-----   -->
       <%-include('../sideBar')%>
