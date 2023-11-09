@@ -8034,7 +8034,7 @@ io.on('connection', (socket) => {
     socket.on('withrowReq', async(data) => {
         if(data.LOGINDATA.LOGINUSER){
             try{
-
+                console.log(data)
             }catch{
                 console.log(err)
                 socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
