@@ -8037,7 +8037,7 @@ io.on('connection', (socket) => {
             try{
                 console.log(data)
                 let newData = {}
-                newData.userName =  data.LOGINDATA.LOGINUSER
+                newData.userName =  data.LOGINDATA.LOGINUSER.userName
                 let sdmId 
                 if(data.LOGINDATA.LOGINUSER.parentUsers[1]){
                     sdmId = data.LOGINDATA.LOGINUSER.parentUsers[1]
