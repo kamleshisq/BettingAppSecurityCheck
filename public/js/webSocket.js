@@ -17950,10 +17950,17 @@ socket.on('connect', () => {
         $(document).on('click', ".RequestApprove", function(e){
             let id = $(this).closest('tr').attr('id')
             let amount = $(this).closest('tr').find('td:eq(2)').text();
-            // console.log(amount, "amountamountamount")
             $('#APPROVE').find('.Approv_form').attr('id', id)
             $('#APPROVE .Approv_form').find('input[name="approvedamount"]').val(amount)
+        })
 
+
+        $(document).on('submit', ".Approv_form", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            console.log(data, "DATADATA")
         })
     }
     
