@@ -17942,6 +17942,14 @@ socket.on('connect', () => {
                 document.getElementById('AccountData').innerHTML = html
             }
         })
+
+
+
+        $(document).on('click', ".RequestApprove", function(e){
+            e.preventDefault()
+            let id = $(this).closest('tr').attr('id')
+            console.log(id)
+        })
     }
     
 
