@@ -8055,7 +8055,7 @@ io.on('connection', (socket) => {
                 }else{
                     socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
                 }
-            }catch{
+            }catch(err){
                 console.log(err)
                 socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
             }
