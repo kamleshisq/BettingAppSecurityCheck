@@ -43,18 +43,57 @@
                   <thead class="acount-stat-tbl-hed">
                       <tr class="acount-stat-tbl-hed-tr">
                           <th class="bod-red-lft">Request Date</th>
-                          <th>PayMent Method</th>
                           <th>Amount</th>
                           <th>status</th>
                           <th>Remark</th>
                           <th>Note</th>
-                          <th>Approval Date</th>
-                          <th class="bod-red-rit">Description</th>
+                          <th class="bod-red-rit">Approval Date</th>
                       </tr>
                   </thead>
 
                   <tbody class="acount-stat-tbl-body">
-                      
+                    <%for(let i = 0; i < withrowReqData.length; i++){%>
+                                <%
+                                    var date = new Date(withrowReqData[i].reqDate);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
+                                %>
+                                <tr class="acount-stat-tbl-body-tr">
+                                    <td title="Request Date" > <%=formattedTime%> </td>
+                                    <td title="Amount" > <%=withrowReqData[i].amount%> </td>
+                                    <td title="status" > <%=withrowReqData[i].reqStatus%> </td>
+                                    <%if(withrowReqData[i].sdmRemark){%>
+                                        <td title="Remark" > <%=withrowReqData[i].sdmRemark%> </td>
+                                    <%}else{%>
+                                        <td title="Remark" > - </td>
+                                    <%}%>
+                                    <td title="Note" > <%=withrowReqData[i].note%> </td>
+                                    <%if(withrowReqData[i].approvalDate){%>
+                                        <%
+                                            var date2 = new Date(withrowReqData[i].approvalDate);
+                                            var options = { 
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                                hour: 'numeric',
+                                                minute: 'numeric',
+                                                hour12: true
+                                            };
+                                            var formattedTime2 = date2.toLocaleString('en-US', options);
+                                        %>
+                                        <td title="Approval Date" > <%=formattedTime2%> </td>
+                                    <%}else{%>
+                                        <td title="Approval Date" > - </td>
+                                    <%}%>
+                                </tr>
+                    <%}%>
                   </tbody>
 
               </table>
