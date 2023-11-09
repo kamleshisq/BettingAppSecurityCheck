@@ -1,3 +1,4 @@
+const { func } = require("joi");
 
 const socket = io();
 socket.on('disconnect', () => {
@@ -17949,6 +17950,10 @@ socket.on('connect', () => {
             $('#APPROVE .Approv_form').find('input[name="approvedamount"]').val(amount)
         })
 
+        $(document).on('click', '.RequestDeny', function(e){
+            let id = $(this).closest('tr').attr('id')
+            $('#APPROVE').find('.denyWithorowel_form').attr('id', id)
+        })
 
         $(document).on('submit', ".Approv_form", function(e){
             e.preventDefault()
