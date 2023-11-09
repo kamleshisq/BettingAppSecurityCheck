@@ -17914,6 +17914,30 @@ socket.on('connect', () => {
                             </ul>
                         </div>
                     </div>`
+                }else if (data.data.pmethod === "banktransferW"){
+                    html += `<div class="payment-tab-content">
+                    <div class="title">Bank Transfer</div>
+                    <div class="luck-enterprise">
+                      <div class="accountnamecontainer"><div class="luck-enterprise-tag">${data.data.accountholdername}</div></div>
+                            <ul id="BANK-DATA1">
+                                <li id="Acc-Name"> ${data.data.accountholdername}</li>
+                                <li id="Acc-Number"> ${data.data.accountnumber}</li>
+                                <li id="Bank-Name">  ${data.data.bankname}</li>
+                                <li id="IFSC">  ${data.data.ifsccode}</li>
+                            </ul>
+                        </div>
+                    </div>`
+                }else{
+                    html += `<div class="payment-tab-content">
+                    <div class="title">Paytm</div>
+                    <div class="luck-enterprise">
+                      <div class="accountnamecontainer"><div class="luck-enterprise-tag">${data.data.accountholdername}</div></div>
+                            <ul id="BANK-DATA1">
+                                <li id="Acc-Name"> ${data.data.accountholdername}</li>
+                                <li id="Acc-Number"> ${data.data.phonenumber}</li>
+                            </ul>
+                        </div>
+                    </div>`
                 }
                 document.getElementById('AccountData').innerHTML = html
             }
