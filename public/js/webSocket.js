@@ -17958,7 +17958,7 @@ socket.on('connect', () => {
             console.log(data, "DATADATA")
             if(data.status){
                 data.id = $(this).attr('id')
-                
+                socket.emit('')
             }else{
                 alert('Please tick the checkbox')
             }
