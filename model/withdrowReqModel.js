@@ -26,6 +26,11 @@ const withdowReqSchema = mongoose.Schema({
         required:true,
         default:false
     },
+    reqStatus:{
+        type:String,
+        enum:['pending', 'transferred', 'cancel'],
+        default:'pending'
+    },
     sdmRemark:{
         type:String
     },
