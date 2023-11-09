@@ -8146,6 +8146,6 @@ io.on('connection', (socket) => {
 
 })
 
-http.listen(8080,()=> {
-    console.log('app is running on port 8080')
+http.listen(80,()=> {
+    console.log('app is running on port 80')
 })
