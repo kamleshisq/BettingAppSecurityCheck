@@ -28,6 +28,13 @@ const withdowReqSchema = mongoose.Schema({
     },
     sdmRemark:{
         type:String
+    },
+    reqDate:{
+        type:Date,
+        default:Date.now
+    },
+    approvalDate:{
+        type:Date
     }
 })
 

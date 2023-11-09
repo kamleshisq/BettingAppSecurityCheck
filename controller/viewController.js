@@ -50,6 +50,7 @@ const PaymentMethodModel = require('../model/paymentmethodmodel')
 const paymentReportModel = require('../model/paymentreport');
 const runnerData = require('../model/runnersData');
 const manageAccountUser = require('../model/paymentMethodUserSide');
+const withdrawalRequestModel = require('../model/withdrowReqModel');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -5368,9 +5369,11 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
 
 
 exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
+    let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName})
     res.render('./withrowalReqAdmin/main',{
         title:'Withdrawal request',
         currentUser:req.currentUser,
         check:"WithdrawalReq",
+        data
     })
 })
