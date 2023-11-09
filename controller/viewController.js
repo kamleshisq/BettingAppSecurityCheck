@@ -5386,7 +5386,7 @@ exports.myWithrowReq = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
-    res.status(200).render("./userSideEjs/AccountStatements/main", {
+    res.status(200).render("./userSideEjs/withrowReqPage/main", {
         title:"withdrawal request.",
         user:req.currentUser,
         verticalMenus,
