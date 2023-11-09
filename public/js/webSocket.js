@@ -17961,6 +17961,12 @@ socket.on('connect', () => {
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             console.log(data, "DATADATA")
+            if(data.status){
+                data.id = $(this).attr('id')
+                console.log(data)
+            }else{
+                alert('Please tick the checkbox')
+            }
         })
     }
     
