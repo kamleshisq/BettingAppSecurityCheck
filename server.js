@@ -8081,10 +8081,42 @@ io.on('connection', (socket) => {
         try{
             let reqData = await withdowReqModel.findById(data.data.id)
             if(reqData){
-                console.log(reqData, "reqDatareqDatareqData")
+                // console.log(reqData, "reqDatareqDatareqData")
                 let user = await User.findOne({userName:reqData.userName})
                 let parentUser = await User.findById(user.parent_id)
-                // let amount = 
+                let amount = (data.data.approvedamount * 1)
+                let userAccData = {
+                    child_id:user.id,
+                    user_id:user.id,
+                    parent_id:user.parent_id,
+                    description:'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")",
+                    creditDebitamount : -amount,
+                    balance: user.availableBalance - amount,
+                    date: Date.now(),
+                    userName:reqData.userName,
+                    role_type:user.role_type,
+                    Remark:reqData.note
+                }
+                let ParentData = {
+                    child_id:user.id,
+                    user_id:user.parent_id,
+                    parent_id:user.parent_id,
+                    description:'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")",
+                    creditDebitamount : amount,
+                    balance: parentUser.availableBalance + amount,
+                    date: Date.now(),
+                    userName:parentUser.userName,
+                    role_type:parentUser.role_type,
+                    Remark:reqData.note
+                }
+                let updatedParentUser = await User.findByIdAndUpdate(user.parent_id, {$in:{availableBalance:amount, balance:amount}})
+                let updatedUser = await User.findByIdAndUpdate(user.id, {$in:{availableBalance: -amount, balance: -amount}})
+                if(updatedParentUser && updatedUser){
+                    await AccModel.create(userAccData)
+                    await AccModel.create(ParentData)
+                    let updatedReq = await withdowReqModel.findByIdAndUpdate(data.data.id, {approvalDate:Date.now(), reqStatus:'transferred'})
+                    socket.emit('reqApproveUpdate', {status:'sucess', updatedReq, reqStatus:'transferred'})
+                }
             }else{
                 socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
             }

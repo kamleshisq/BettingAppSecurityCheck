@@ -17981,6 +17981,10 @@ socket.on('connect', () => {
         })
 
 
+        socket.on('reqApproveUpdate', async(data) => {
+            console.log(data)
+        })
+
 
     }
     
