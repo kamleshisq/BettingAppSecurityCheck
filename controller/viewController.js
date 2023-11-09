@@ -5364,3 +5364,13 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
         accounts
     })
 })
+
+
+
+exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
+    res.render('./withrowalReqAdmin/main',{
+        title:'Withdrawal request',
+        currentUser:req.currentUser,
+        check:"WithdrawalReq",
+    })
+})
