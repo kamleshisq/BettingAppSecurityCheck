@@ -17948,7 +17948,6 @@ socket.on('connect', () => {
 
 
         $(document).on('click', ".RequestApprove", function(e){
-            e.preventDefault()
             let id = $(this).closest('tr').attr('id')
             console.log(id)
         })
