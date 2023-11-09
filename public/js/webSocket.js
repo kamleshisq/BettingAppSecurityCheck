@@ -17952,6 +17952,7 @@ socket.on('connect', () => {
 
         $(document).on('click', '.RequestDeny', function(e){
             let id = $(this).closest('tr').attr('id')
+            console.log(id, "idid")
             $('#APPROVE').find('.denyWithorowel_form').attr('id', id)
         })
 
