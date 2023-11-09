@@ -8048,7 +8048,7 @@ io.on('connection', (socket) => {
                 newData.sdmUserName = sdmUser.userName
                 newData.payMentMethodId = data.data.id
                 newData.amount = data.data.amount
-                newData.notes = data.data.notes
+                newData.note = data.data.notes
                 let createdData = await withdowReqModel.create(newData)
                 if(createdData){
                     socket.emit('withrowReq', {status:'sucess', msg:'Withdrawal request submitted successfully.'})
