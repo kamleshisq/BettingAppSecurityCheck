@@ -8077,7 +8077,18 @@ io.on('connection', (socket) => {
     })
 
     socket.on('reqApproveUpdate', async(data) => {
-        console.log(data)
+        // console.log(data)
+        try{
+            let reqData = await withdowReqModel.findById(data.data.id)
+            if(reqData){
+                console.log(reqData, "reqDatareqDatareqData")
+            }else{
+                socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
+        }
     })
 
 })
