@@ -17986,7 +17986,7 @@ socket.on('connect', () => {
             if(data.status === 'err'){
                 alert(data.msg)
             }else{
-                
+                console.log(data)
             }
         })
 
