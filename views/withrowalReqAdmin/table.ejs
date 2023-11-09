@@ -18,11 +18,7 @@
                 <td><%=data[i].userName%></td>
                 <td><%=data[i].amount%></td>
                 <td><%=data[i].note%></td>
-                <%if(data[i].status){%>
-                    <td>Approved</td>
-                <%}else{%>
-                    <td>Pending</td>
-                <%}%>
+                <td><%=data[i].reqStatus%></td>
                 <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal4" class="btn user-acc-btn" id="<%=data[i].payMentMethodId%>" >View Account Details</button></td>
                 <td>
                     <div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#APPROVE" class="btn RequestApprove">Approve</button>
