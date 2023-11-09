@@ -5369,7 +5369,8 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
 
 
 exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
-    let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName})
+    let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName}).sort({reqDate:-1}).limit(10)
+    console.log(data)
     res.render('./withrowalReqAdmin/main',{
         title:'Withdrawal request',
         currentUser:req.currentUser,

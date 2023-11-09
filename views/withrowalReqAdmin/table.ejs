@@ -4,56 +4,13 @@
           <th>User Name</th>
           <th>Amount</th>
           <th>Note</th>
-          <th>Transaction Status </th>
-          <th>Payment Method</th>
-          <th>Amount</th>
-          <th>UTR/Reference Number</th>
-          <th>Approved Amount</th>
-          <th>View Image </th>
+          <th>Request Date</th>
+          <th>Request Status</th>
+          <th>Bank Details</th>
           <th>Actions</th>                      
         </tr>
     </thead>
     <tbody class="new-body tbody">
-      <% for(let i = 0; i < paymentreq.length; i++){%>
-        <%
-        let date = paymentreq[i].date
-        %>
-        <tr class="" data-trid="paymentreq[i]._id">
-        <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-        <td class="text-nowrap" ><%=paymentreq[i].username%></td>
-        <td class="text-nowrap" ><%=paymentreq[i].accountholdername%></td>
-        <%if(paymentreq[i].pmethod == 'banktransfer'){%>
-          <td class="text-nowrap" ><%=paymentreq[i].accountnumber%></td>
-        <%}else if(paymentreq[i].pmethod == 'upi'){%>
-          <td class="text-nowrap" ><%=paymentreq[i].upiid%></td>
-        <%}else if(paymentreq[i].pmethod == 'paytm'){%>
-          <td class="text-nowrap" ><%=paymentreq[i].phonenumber%></td>
-        <%}%>
-        <td class="text-nowrap"><%=paymentreq[i].status%></td>
-        <td class="text-nowrap" ><%=paymentreq[i].pmethod%></td>
-        <td class="text-nowrap" ><%=paymentreq[i].amount%></td>
-        <td class="text-nowrap" ><%=paymentreq[i].utr%></td>
-        <%if(paymentreq[i].approvedamount){%>
-          <td class="text-nowrap" ><%=paymentreq[i].approvedamount%></td>
-        <%}else{%>
-          <td>-</td>
-        <%}%>
-       
-        <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal3" class="btn docimg" data-docimg="/paymentimg/<%=paymentreq[i].image%>.png">View Image</button></td>
-        <td>
-        <%if(paymentreq[i].status == 'pending'){%>
-          <div class="btn-group">
-            <button data-bs-toggle="modal" data-bs-target="#myModaladduser" class="btn paymetnreqApprove" data-docidapp="<%=paymentreq[i]._id%>">Approve</button>
-            <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn paymetnreqDeny" data-docidapp="<%=paymentreq[i]._id%>">Deny</button>
-          </div>
-        <%}else{%>
-          <%=paymentreq[i].status%>
-        <%}%>
-        </td>
-        </tr>
-      <%}%>
-      <%if(paymentreq.length == 0){%>
-        <tr class="empty_table"><td>No record found</td></tr>
-      <%}%>
+      
     </tbody>
   </table>
