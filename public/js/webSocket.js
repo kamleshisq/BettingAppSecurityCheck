@@ -17951,8 +17951,7 @@ socket.on('connect', () => {
 
         $(document).on('click', '.RequestDeny', function(e){
             let id = $(this).closest('tr').attr('id')
-            console.log(id, "idid")
-            $('#APPROVE').find('.denyWithorowel_form').attr('id', id)
+            $('#DENY').find('.denyWithorowel_form').attr('id', id)
         })
 
         $(document).on('submit', ".Approv_form", function(e){
@@ -17960,7 +17959,6 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            console.log(data, "DATADATA")
             if(data.status){
                 data.id = $(this).attr('id')
                 socket.emit('reqApproveUpdate', {LOGINDATA, data})
@@ -17968,6 +17966,22 @@ socket.on('connect', () => {
                 alert('Please tick the checkbox')
             }
         })
+
+        $(document).on('submit', '.denyWithorowel_form', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            if(data.status){
+                data.id = $(this).attr('id')
+                socket.emit('reqCancelUpdate', {LOGINDATA, data})
+            }else{
+                alert('Please tick the checkbox')
+            }
+        })
+
+
+
     }
     
 

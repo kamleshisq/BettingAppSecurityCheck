@@ -8084,7 +8084,7 @@ io.on('connection', (socket) => {
                 console.log(reqData, "reqDatareqDatareqData")
                 let user = await User.findOne({userName:reqData.userName})
                 let parentUser = await User.findById(user.parent_id)
-                
+
             }else{
                 socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
             }
@@ -8092,6 +8092,11 @@ io.on('connection', (socket) => {
             console.log(err)
             socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
         }
+    })
+
+
+    socket.on('reqCancelUpdate', async(data) => {
+        console.log(data)
     })
 
 })
