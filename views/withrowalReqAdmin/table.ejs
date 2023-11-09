@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody class="new-body tbody">
-        <%if(data.length < 0){%>
+        <%if(data.length > 0){%>
         <%for(let i = 0; i < data.length; i++){%>
             <tr>
                 <td><%=data[i].reqDate.getDate() + '-' +(data[i].reqDate.getMonth() + 1) + '-' + data[i].reqDate.getFullYear() + ' ' + data[i].reqDate.getHours() + ':' + data[i].reqDate.getMinutes() +':' + data[i].reqDate.getSeconds()%></td>
