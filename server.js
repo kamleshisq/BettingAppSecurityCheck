@@ -66,6 +66,7 @@ const runnerDataModel = require('./model/runnersData');
 const streamModel = require('./model/streammanagement');
 const liveStreameData = require('./utils/getLiveStream');
 const manageAccountsUser = require('./model/paymentMethodUserSide');
+const withdowReqModel = require('./model/withdrowReqModel');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -8035,6 +8036,25 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             try{
                 console.log(data)
+                let newData = {}
+                newData.userName =  data.LOGINDATA.LOGINUSER
+                let sdmId 
+                if(data.LOGINDATA.LOGINUSER.parentUsers[1]){
+                    sdmId = data.LOGINDATA.LOGINUSER.parentUsers[1]
+                }else{
+                    sdmId = data.LOGINDATA.LOGINUSER.parent_id
+                }
+                let sdmUser = await User.findById(sdmId)
+                newData.sdmUserName = sdmUser.userName
+                newData.payMentMethodId = data.data.id
+                newData.amount = data.data.amount
+                newData.notes = data.data.notes
+                let createdData = await withdowReqModel.create(newData)
+                if(createdData){
+                    socket.emit('withrowReq', {status:'sucess', msg:'Withdrawal request submitted successfully.'})
+                }else{
+                    socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
+                }
             }catch{
                 console.log(err)
                 socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
