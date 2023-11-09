@@ -17902,6 +17902,20 @@ socket.on('connect', () => {
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
             }else{
                 console.log(data.data)
+                let html = ''
+                if(data.data.pmethod === "upiW"){
+                    html += `<div class="payment-tab-content">
+                    <div class="title">UPI Payment</div>
+                    <div class="luck-enterprise">
+                      <div class="accountnamecontainer"><div class="luck-enterprise-tag">${data.data.accountholdername}</div></div>
+                            <ul id="BANK-DATA1">
+                                <li id="Acc-Name"> ${data.data.accountholdername}</li>
+                                <li id="Acc-Number"> ${data.data.upiid}</li>
+                            </ul>
+                        </div>
+                    </div>`
+                }
+                document.getElementById('AccountData').innerHTML = html
             }
         })
     }
