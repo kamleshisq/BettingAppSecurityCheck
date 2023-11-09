@@ -17949,7 +17949,8 @@ socket.on('connect', () => {
 
         $(document).on('click', ".RequestApprove", function(e){
             let id = $(this).closest('tr').attr('id')
-            console.log(id)
+            // console.log(id)
+            
         })
     }
     
