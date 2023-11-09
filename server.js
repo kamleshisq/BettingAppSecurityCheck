@@ -8082,6 +8082,9 @@ io.on('connection', (socket) => {
             let reqData = await withdowReqModel.findById(data.data.id)
             if(reqData){
                 console.log(reqData, "reqDatareqDatareqData")
+                let user = await User.findOne({userName:reqData.userName})
+                let parentUser = await User.findById(user.parent_id)
+                
             }else{
                 socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
             }
