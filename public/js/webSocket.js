@@ -17987,7 +17987,8 @@ socket.on('connect', () => {
                 alert(data.msg)
             }else{
                 console.log(data)
-                $(`#${data.data.id}`).find('td:eq(2)').text(`${data.reqStatus}`)
+                $(`#${data.updatedReq._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
+                $(`#${data.updatedReq._id}`).find('td:eq(6)').text(`-`)
                 alert('Status Updated!')
             }
         })
