@@ -90,6 +90,7 @@ router.get("/admin/riskAnalysis", authController.isProtected, authController.isA
 router.get("/admin/matchBets", authController.isProtected, authController.isAdmin,viewController.marketBets);
 router.get("/admin/paymentmethods", authController.isProtected, authController.isAdmin,viewController.paymentMethodPage);
 router.get("/admin/paymentapproval", authController.isProtected, authController.isAdmin,viewController.paymentApprovalPage);
+router.get("/admin/withdrawalRequest", authController.isProtected, authController.isAdmin,viewController.getWithrowReqPage);
 
 //User Panal
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);
