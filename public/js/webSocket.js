@@ -328,6 +328,7 @@ socket.on('connect', () => {
             document.getElementById("loader3-overlay").style.display = "none";
             if(data.data.length > 0){
                 $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+                $('#navmod4').find('#enter-withdraw-detail').find('form').find('input').val('')
                 let htmlTag = ''
                 for(let i = 0; i<data.data.length;i++){
                     if(i == 0){
@@ -369,6 +370,7 @@ socket.on('connect', () => {
             document.getElementById("loader3-overlay").style.display = "none";
             if(data.data.length > 0){
                 $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+                $('#navmod4').find('#enter-withdraw-detail').find('form').find('input').val('')
                 let htmlTag = ''
                 for(let i = 0; i<data.data.length;i++){
                     if(i == 0){
@@ -407,6 +409,7 @@ socket.on('connect', () => {
             document.getElementById("loader3-overlay").style.display = "none";
             if(data.data.length > 0){
                 $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+                $('#navmod4').find('#enter-withdraw-detail').find('form').find('input').val('')
                 let htmlTag = ''
                 for(let i = 0; i<data.data.length;i++){
                     if(i == 0){
