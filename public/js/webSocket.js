@@ -17904,37 +17904,39 @@ socket.on('connect', () => {
                 console.log(data.data)
                 let html = ''
                 if(data.data.pmethod === "upiW"){
-                    html += `<div class="payment-tab-content">
-                    <div class="title">UPI Payment</div>
+                    html += `<div class="payment-method-data">
+                    <div class="title">Payment Method <span>UPI payment</span></div>
                     <div class="luck-enterprise">
-                      <div class="accountnamecontainer"><div class="luck-enterprise-tag">${data.data.accountholdername}</div></div>
+                        <div class="accountnamecontainer">
                             <ul id="BANK-DATA1">
-                                <li id="Acc-Name"> ${data.data.accountholdername}</li>
-                                <li id="Acc-Number"> ${data.data.upiid}</li>
+                                <li><span>Name:</span>${data.data.accountholdername}</li>
+                                <li><span>Ac No:</span> ${data.data.upiid}</li>
                             </ul>
                         </div>
                     </div>`
                 }else if (data.data.pmethod === "banktransferW"){
-                    html += `<div class="payment-tab-content">
-                    <div class="title">Bank Transfer</div>
+                    html += `
+                    <div class="payment-method-data">
+                    <div class="title">Payment Method <span>Bank Transfer</span></div>
                     <div class="luck-enterprise">
-                      <div class="accountnamecontainer"><div class="luck-enterprise-tag">${data.data.accountholdername}</div></div>
+                        <div class="accountnamecontainer">
                             <ul id="BANK-DATA1">
-                                <li id="Acc-Name"> ${data.data.accountholdername}</li>
-                                <li id="Acc-Number"> ${data.data.accountnumber}</li>
-                                <li id="Bank-Name">  ${data.data.bankname}</li>
-                                <li id="IFSC">  ${data.data.ifsccode}</li>
+                                <li><span>Name:</span> ${data.data.accountholdername}</li>
+                                <li><span>Ac No:</span> ${data.data.accountnumber}</li>
+                                <li><span>Bank Name:</span> ${data.data.bankname}</li>
+                                <li><span>Branch:</span> jayesh</li>
+                                <li><span>IFSC Code :</span> ${data.data.ifsccode}</li>
                             </ul>
                         </div>
                     </div>`
                 }else{
-                    html += `<div class="payment-tab-content">
-                    <div class="title">Paytm</div>
+                    html += `<div class="payment-method-data">
+                    <div class="title">Payment Method <span>Bank Transfer</span></div>
                     <div class="luck-enterprise">
-                      <div class="accountnamecontainer"><div class="luck-enterprise-tag">${data.data.accountholdername}</div></div>
+                        <div class="accountnamecontainer">
                             <ul id="BANK-DATA1">
-                                <li id="Acc-Name"> ${data.data.accountholdername}</li>
-                                <li id="Acc-Number"> ${data.data.phonenumber}</li>
+                                <li><span>Name:</span> ${data.data.accountholdername}</li>
+                                <li><span>Ac No:</span> ${data.data.phonenumber}</li>
                             </ul>
                         </div>
                     </div>`
