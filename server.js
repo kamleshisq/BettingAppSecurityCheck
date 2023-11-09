@@ -8031,6 +8031,18 @@ io.on('connection', (socket) => {
     })
 
 
+    socket.on('withrowReq', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            try{
+
+            }catch{
+                console.log(err)
+                socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
+            }
+        }
+    })
+
+
 })
 
 http.listen(8080,()=> {

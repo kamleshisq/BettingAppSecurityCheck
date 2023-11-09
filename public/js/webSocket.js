@@ -482,7 +482,19 @@ socket.on('connect', () => {
         let data = Object.fromEntries(fd.entries());
         let id = $('#navmod4 .luck-enterprise-tag.active').attr('id');
         data.id = id
-        console.log('data======>', data)
+        // console.log('data======>', data)
+        socket.emit('withrowReq', {data, LOGINDATA})
+    })
+
+    socket.on('withrowReq', async(data) => {
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            togglePopupMain('popup-1', "redPopUP", data.msg.toUpperCase())
+            setTimeout(()=>{
+                window.location.reload()
+              }, 1000)
+        }
     })
 
     //....................FOR UPDATE ROLE...................//
