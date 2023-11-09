@@ -167,7 +167,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 <script type="text/javascript" src="../js/bundle.js"></script>
-
+<script>
+    $(document).on('click', '.btn-default', function(e){
+        $(this).closest('.modal-content').find('.payment-tab-content').html('')
+    })
+</script>
 
 </body>
 </html>
