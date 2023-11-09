@@ -18,7 +18,7 @@ const withdowReqSchema = mongoose.Schema({
         required:true
     },
     note:{
-        type:Number,
+        type:String,
         required:true
     },
     status:{
