@@ -17986,10 +17986,19 @@ socket.on('connect', () => {
             if(data.status === 'err'){
                 alert(data.msg)
             }else{
-                console.log(data)
+                // console.log(data)
                 $(`#${data.updatedReq._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
                 $(`#${data.updatedReq._id}`).find('td:eq(6)').text(`-`)
                 alert('Status Updated!')
+            }
+        })
+
+
+        socket.on('reqCancelUpdate', async(data) => {
+            if(data.status === 'err'){
+                alert(data.msg)
+            }else{
+                alert('Request cancel sucessfully!!')
             }
         })
 
