@@ -17952,6 +17952,7 @@ socket.on('connect', () => {
             let amount = $(this).closest('tr').find('td:eq(2)').text();
             // console.log(amount, "amountamountamount")
             $('#APPROVE').find('.Approv_form').attr('id', id)
+            $('#APPROVE .Approv_form').find('input[name="approvedamount"]').val(amount)
 
         })
     }
