@@ -13,7 +13,7 @@
     <tbody class="new-body tbody">
         <%if(data.length > 0){%>
         <%for(let i = 0; i < data.length; i++){%>
-            <tr>
+            <tr id="<%=data[i]._id%>" >
                 <td><%=data[i].reqDate.getDate() + '-' +(data[i].reqDate.getMonth() + 1) + '-' + data[i].reqDate.getFullYear() + ' ' + data[i].reqDate.getHours() + ':' + data[i].reqDate.getMinutes() +':' + data[i].reqDate.getSeconds()%></td>
                 <td><%=data[i].userName%></td>
                 <td><%=data[i].amount%></td>
@@ -24,7 +24,10 @@
                     <td>Pending</td>
                 <%}%>
                 <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal4" class="btn user-acc-btn" id="<%=data[i].payMentMethodId%>" >View Account Details</button></td>
-                <td></td>
+                <td>
+                    <button data-bs-toggle="modal" data-bs-target="#APPROVE" class="btn RequestApprove" >Approve</button>
+                    <button data-bs-toggle="modal" data-bs-target="#DENY" class="btn RequestDeny" >Deny</button>
+                </td>
             </tr>
         <%}%>
         <%}else{%>
