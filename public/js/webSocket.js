@@ -17949,8 +17949,10 @@ socket.on('connect', () => {
 
         $(document).on('click', ".RequestApprove", function(e){
             let id = $(this).closest('tr').attr('id')
-            console.log(id)
+            let amount = $(this).closest('tr').find('td:eq(2)').text();
+            console.log(amount, "amountamountamount")
             $('#APPROVE').find('.Approv_form').attr('id', id)
+
         })
     }
     
