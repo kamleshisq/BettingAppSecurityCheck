@@ -480,7 +480,7 @@ socket.on('connect', () => {
         let form = $(this)[0];
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
-        let data2 =  $('#navmod4 luck-enterprise-tag.active')
+        let data2 =  $('#navmod4 luck-enterprise-tag')
         console.log(data2, "DATA")
         console.log('data======>', data)
     })
