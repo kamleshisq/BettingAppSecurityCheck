@@ -1,19 +1,31 @@
 <table>
     <thead>
         <tr>
-          <th>User Name</th>
-          <th>Amount</th>
-          <th>Note</th>
-          <th>Request Date</th>
-          <th>Request Status</th>
-          <th>Bank Details</th>
-          <th>Actions</th>                      
+            <th>Request Date</th>
+            <th>User Name</th>
+            <th>Amount</th>
+            <th>Note</th>
+            <th>Request Status</th>
+            <th>Bank Details</th>
+            <th>Actions</th>                      
         </tr>
     </thead>
     <tbody class="new-body tbody">
         <%if(data.length < 0){%>
         <%for(let i = 0; i < data.length; i++){%>
-        
+            <tr>
+                <td><%=data[i].reqDate.getDate() + '-' +(data[i].reqDate.getMonth() + 1) + '-' + data[i].reqDate.getFullYear() + ' ' + data[i].reqDate.getHours() + ':' + data[i].reqDate.getMinutes() +':' + data[i].reqDate.getSeconds()%></td>
+                <td><%=data[i].userName%></td>
+                <td><%=data[i].amount%></td>
+                <td><%=data[i].note%></td>
+                <%if(data[i].status){%>
+                    <td>Approved</td>
+                <%}else{%>
+                    <td>Pending</td>
+                <%}%>
+                <td></td>
+                <td></td>
+            </tr>
         <%}%>
         <%}else{%>
             <tr class="empty_table"><td>No record found</td></tr>
