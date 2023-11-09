@@ -17983,6 +17983,11 @@ socket.on('connect', () => {
 
         socket.on('reqApproveUpdate', async(data) => {
             console.log(data)
+            if(data.status === 'err'){
+                alert(data.msg)
+            }else{
+                
+            }
         })
 
 
