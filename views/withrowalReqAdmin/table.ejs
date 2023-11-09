@@ -11,6 +11,12 @@
         </tr>
     </thead>
     <tbody class="new-body tbody">
-      
+        <%if(data.length < 0){%>
+        <%for(let i = 0; i < data.length; i++){%>
+        
+        <%}%>
+        <%}else{%>
+            <tr class="empty_table"><td>No record found</td></tr>
+        <%}%>
     </tbody>
   </table>
