@@ -17986,7 +17986,7 @@ socket.on('connect', () => {
             if(data.status === 'err'){
                 alert(data.msg)
             }else{
-                // console.log(data)
+                console.log(data)
                 $(`#${data.data.id}`).find('td:eq(2)').text(`${data.reqStatus}`)
                 alert('Status Updated!')
             }
