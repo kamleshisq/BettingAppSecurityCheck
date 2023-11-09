@@ -447,6 +447,7 @@ socket.on('connect', () => {
         e.preventDefault()
         $('.luck-enterprise-tag').removeClass('active')
         $(this).addClass('active')
+        $('#navmod4').find('#enter-withdraw-detail').find('form').find('input').val('')
         let id = $(this).attr('id')
         socket.emit('tabAccountData', {LOGINDATA, id})
     })
