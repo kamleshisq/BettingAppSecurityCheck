@@ -17887,6 +17887,24 @@ socket.on('connect', () => {
 
 
     }
+
+
+    if(pathname == "/admin/withdrawalRequest"){
+        $(document).on('click', ".user-acc-btn", function(e){
+            e.preventDefault()
+            let id = $(this).attr('id')
+            socket.emit('GEtACcountData', id)
+        })
+
+
+        socket.on('GEtACcountData', async(data) => {
+            if(data.status == 'err'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else{
+                console.log(data.data)
+            }
+        })
+    }
     
 
 })

@@ -8062,6 +8062,20 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('GEtACcountData', async(data) => {
+        try{
+            let acc = await manageAccountsUser.findById(data)
+            if(acc){
+                socket.emit('GEtACcountData', {status:'sucess', data:acc})
+            }else{
+                socket.emit('GEtACcountData', {status:'err', msg:'Please try again leter'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('GEtACcountData', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
 
 })
 
