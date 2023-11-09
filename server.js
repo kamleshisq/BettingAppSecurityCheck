@@ -8133,8 +8133,8 @@ io.on('connection', (socket) => {
             let reqData = await withdowReqModel.findById(data.data.id)
             if(reqData){
                 // console.log(reqData, "reqDatareqDatareqData")
-                await  withdowReqModel.findByIdAndUpdate(data.data.id, {reqStatus:'cancel', sdmRemark:data.data.remark})
-                socket.emit('reqCancelUpdate', {status:'sucess'})
+                let cancelUpdate  = await  withdowReqModel.findByIdAndUpdate(data.data.id, {reqStatus:'cancel', sdmRemark:data.data.remark})
+                socket.emit('reqCancelUpdate', {status:'sucess', cancelUpdate, reqStatus:'cancel'})
             }else{
                 socket.emit('reqCancelUpdate', {status:'err', msg:'Please try again leter'})
             }
