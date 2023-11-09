@@ -339,10 +339,10 @@ socket.on('connect', () => {
 
                 $('#navmod4 .accountnamecontainer').html(htmlTag)
 
-                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}<span class="copy-icon"></span></li>
-                <li id="Acc-Number"> ${data.data[0].accountnumber}<span class="copy-icon"></span></li>
-                <li id="Bank-Name"> ${data.data[0].bankname}<span class="copy-icon"></span></li>
-                <li id="IFSC"> ${data.data[0].ifsccode}<span class="copy-icon"></span></li>`
+                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
+                <li id="Acc-Number"> ${data.data[0].accountnumber}</li>
+                <li id="Bank-Name"> ${data.data[0].bankname}</li>
+                <li id="IFSC"> ${data.data[0].ifsccode}</li>`
                 document.getElementById('BANK-DATA1').innerHTML = htmlData
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
@@ -380,8 +380,8 @@ socket.on('connect', () => {
 
                 $('#navmod4 .accountnamecontainer').html(htmlTag)
 
-                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}<span class="copy-icon"></span></li>
-                <li id="Acc-Number"> ${data.data[0].upiid}<span class="copy-icon"></span></li>`
+                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
+                <li id="Acc-Number"> ${data.data[0].upiid}</li>`
                 document.getElementById('BANK-DATA1').innerHTML = htmlData
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
@@ -418,8 +418,8 @@ socket.on('connect', () => {
 
                 $('#navmod4 .accountnamecontainer').html(htmlTag)
 
-                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}<span class="copy-icon"></span></li>
-                <li id="Acc-Number"> ${data.data[0].accountnumber}<span class="copy-icon"></span></li>`
+                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
+                <li id="Acc-Number"> ${data.data[0].accountnumber}</li>`
                 document.getElementById('BANK-DATA1').innerHTML = htmlData
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
@@ -454,16 +454,16 @@ socket.on('connect', () => {
         }else{
             let htmlData = ''
             if(data.data.pmethod === 'banktransferW'){
-                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}<span class="copy-icon"></span></li>
-                <li id="Acc-Number"> ${data.data.accountnumber}<span class="copy-icon"></span></li>
-                <li id="Bank-Name"> ${data.data.bankname}<span class="copy-icon"></span></li>
-                <li id="IFSC"> ${data.data.ifsccode}<span class="copy-icon"></span></li>`
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}</li>
+                <li id="Acc-Number"> ${data.data.accountnumber}</li>
+                <li id="Bank-Name"> ${data.data.bankname}</li>
+                <li id="IFSC"> ${data.data.ifsccode}</li>`
             }else if(data.data.pmethod === 'upiW'){
-                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}<span class="copy-icon"></span></li>
-                <li id="Acc-Number"> ${data.data.upiid}<span class="copy-icon"></span></li>`
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}</li>
+                <li id="Acc-Number"> ${data.data.upiid}</li>`
             }else{
-                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}<span class="copy-icon"></span></li>
-                <li id="Acc-Number"> ${data.data.accountnumber}<span class="copy-icon"></span></li>`
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}</li>
+                <li id="Acc-Number"> ${data.data.accountnumber}</li>`
             }
             document.getElementById('BANK-DATA1').innerHTML = htmlData
         }
