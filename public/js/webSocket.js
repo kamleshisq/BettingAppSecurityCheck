@@ -17905,7 +17905,7 @@ socket.on('connect', () => {
                 let html = ''
                 if(data.data.pmethod === "upiW"){
                     html += `<div class="payment-method-data">
-                            <div class="title">Payment Method <span>Bank Transfer</span></div>
+                            <div class="title">Payment Method <span>UPI Payment</span></div>
                                 <div class="account-detail-container">
                                     <ul>
                                         <li><span>Name:</span> ${data.data.accountholdername}</li>
@@ -17927,7 +17927,7 @@ socket.on('connect', () => {
                             </div>`
                 }else{
                     html += `<div class="payment-method-data">
-                    <div class="title">Payment Method <span>Bank Transfer</span></div>
+                    <div class="title">Payment Method <span>Paytm</span></div>
                         <div class="account-detail-container">
                             <ul>
                                 <li><span>Name:</span> ${data.data.accountholdername}</li>
