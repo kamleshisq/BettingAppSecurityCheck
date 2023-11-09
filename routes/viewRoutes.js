@@ -118,6 +118,7 @@ router.get("/myGameReport", authController.isProtected_User, notificationControl
 router.get("/event", authController.isProtected_User, notificationController.myNotifications ,viewController.getGameReportInPageUser);
 router.get("/gameReport/match", authController.isProtected_User, notificationController.myNotifications ,viewController.getGameReportInINPageUser);
 router.get("/myAccountStatment", authController.isProtected_User, notificationController.myNotifications ,viewController.myAccountStatment);
+router.get("/withdrawalRequest", authController.isProtected_User, notificationController.myNotifications ,viewController.myWithrowReq);
 router.get("/myCommissionReports", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReportUserSide);
 router.get("/myCommissionReportsIn", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporIntUserSide);
 router.get("/myCommissionReportsInEvent", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporEvent);

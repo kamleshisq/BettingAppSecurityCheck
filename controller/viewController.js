@@ -5370,7 +5370,6 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
 
 exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
     let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName}).sort({reqDate:-1}).limit(10)
-    console.log(data)
     res.render('./withrowalReqAdmin/main',{
         title:'Withdrawal request',
         currentUser:req.currentUser,
@@ -5378,3 +5377,22 @@ exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
         data
     })
 })
+
+
+
+exports.myWithrowReq = catchAsync(async(req, res, next) => {
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    res.status(200).render("./userSideEjs/AccountStatements/main", {
+        title:"withdrawal request.",
+        user:req.currentUser,
+        verticalMenus,
+        check:"withdrawal",
+        userLog,
+        notifications:req.notifications
+    })
+    // )
+});
