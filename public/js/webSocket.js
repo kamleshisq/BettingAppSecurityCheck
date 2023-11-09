@@ -17905,36 +17905,31 @@ socket.on('connect', () => {
                 let html = ''
                 if(data.data.pmethod === "upiW"){
                     html += `<div class="payment-method-data">
-                    <div class="title">Payment Method <span>UPI payment</span></div>
-                    <div class="luck-enterprise">
-                        <div class="accountnamecontainer">
-                            <ul id="BANK-DATA1">
-                                <li><span>Name:</span>${data.data.accountholdername}</li>
-                                <li><span>Ac No:</span> ${data.data.upiid}</li>
-                            </ul>
-                        </div>
-                    </div>`
+                            <div class="title">Payment Method <span>Bank Transfer</span></div>
+                                <div class="account-detail-container">
+                                    <ul>
+                                        <li><span>Name:</span> ${data.data.accountholdername}</li>
+                                        <li><span>Ac No:</span> ${data.data.upiid}</li>
+                                    </ul>
+                                </div>
+                            </div>`
                 }else if (data.data.pmethod === "banktransferW"){
-                    html += `
-                    <div class="payment-method-data">
-                    <div class="title">Payment Method <span>Bank Transfer</span></div>
-                    <div class="luck-enterprise">
-                        <div class="accountnamecontainer">
-                            <ul id="BANK-DATA1">
-                                <li><span>Name:</span> ${data.data.accountholdername}</li>
-                                <li><span>Ac No:</span> ${data.data.accountnumber}</li>
-                                <li><span>Bank Name:</span> ${data.data.bankname}</li>
-                                <li><span>Branch:</span> jayesh</li>
-                                <li><span>IFSC Code :</span> ${data.data.ifsccode}</li>
-                            </ul>
-                        </div>
-                    </div>`
+                    html += `<div class="payment-method-data">
+                            <div class="title">Payment Method <span>Bank Transfer</span></div>
+                                <div class="account-detail-container">
+                                    <ul>
+                                        <li><span>Name:</span> ${data.data.accountholdername}</li>
+                                        <li><span>Ac No:</span> ${data.data.accountnumber}</li>
+                                        <li><span>Bank Name:</span> ${data.data.bankname}</li>
+                                        <li><span>IFSC Code :</span> ${data.data.ifsccode}</li>
+                                    </ul>
+                                </div>
+                            </div>`
                 }else{
                     html += `<div class="payment-method-data">
                     <div class="title">Payment Method <span>Bank Transfer</span></div>
-                    <div class="luck-enterprise">
-                        <div class="accountnamecontainer">
-                            <ul id="BANK-DATA1">
+                        <div class="account-detail-container">
+                            <ul>
                                 <li><span>Name:</span> ${data.data.accountholdername}</li>
                                 <li><span>Ac No:</span> ${data.data.phonenumber}</li>
                             </ul>
@@ -17963,7 +17958,7 @@ socket.on('connect', () => {
             console.log(data, "DATADATA")
             if(data.status){
                 data.id = $(this).attr('id')
-                console.log(data)
+                
             }else{
                 alert('Please tick the checkbox')
             }
