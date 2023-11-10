@@ -18146,7 +18146,7 @@ socket.on('connect', () => {
                 let html = 'NO ACCOUNT DATA FOUND'
                 document.getElementById('AccountData').innerHTML = html
             }else{
-                console.log(data.data)
+                // console.log(data.data)
                 let html = ''
                 if(data.data.pmethod === "upiW"){
                     html += `<div class="payment-method-data">
