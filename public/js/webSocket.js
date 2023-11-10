@@ -18402,6 +18402,7 @@ socket.on('connect', () => {
             let page = parseInt($('.pageId').attr('data-pageid'));
             $('.pageId').attr('data-pageid',page + 1)
             let filterData = await userWithrowalFilter()
+            console.log('WORKING')
             socket.emit('withdrawalRequestDataUserSide', {filterData, page, LOGINDATA})
         })
 
@@ -18453,7 +18454,7 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     $('#table12').find('tbody').html(html)
                 }else{
-                    console.log('WORKING')
+                    // console.log('WORKING')
                     $('#table12').find('tbody').append(html)
                 }
 
