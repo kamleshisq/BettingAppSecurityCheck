@@ -18074,13 +18074,15 @@ socket.on('connect', () => {
 
     if(pathname == "/admin/withdrawalRequest"){
 
-        var today = new Date();
-        var todayFormatted = formatDate(today);
-        var tomorrow = new Date();
-        tomorrow.setDate(today.getDate() - 7);
-        var tomorrowFormatted = formatDate(tomorrow);
-        $('#fromDate').val(tomorrowFormatted)
-        $('#toDate').val(todayFormatted)
+        // var today = new Date();
+        // var todayFormatted = formatDate(today);
+        // var tomorrow = new Date();
+        // tomorrow.setDate(today.getDate() - 7);
+        // var tomorrowFormatted = formatDate(tomorrow);
+        // $('#fromDate').val(tomorrowFormatted)
+        // $('#toDate').val(todayFormatted)
+
+
         function formatDate(date) {
             var year = date.getFullYear();
             var month = (date.getMonth() + 1).toString().padStart(2, '0');
