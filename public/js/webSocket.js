@@ -17890,7 +17890,7 @@ socket.on('connect', () => {
 
                $('#TABLE tbody').html(html)
             }else{
-                html = '<tr><td class="no-data">No Data to Display</td></tr>'
+                html = '<tr class="no-data"><td>No Data to Display</td></tr>'
                 $('#TABLE tbody').html(html)
             }
         })
@@ -18392,7 +18392,7 @@ socket.on('connect', () => {
             }else{
                 $('.loadMoredive').addClass('hide')
                 if(data.page = 0){
-                    html = '<tr><td class="no-data">No Data to Display</td></tr>'
+                    html = '<tr class="no-data"><td >No Data to Display</td></tr>'
                 }
             }
         })
