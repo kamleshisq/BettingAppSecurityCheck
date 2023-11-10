@@ -109,7 +109,7 @@
                             <%}%>
                             <td title="Actions" >
                               <div class="btn-set">
-                                <button class="site-button edit-btn" data-bs-toggle="modal" data-bs-target="#myModal1" type="button">Edit</button>
+                                <button class="site-button edit-btn" data-bs-toggle="modal" data-bs-target="#editPaymentMmodels" type="button">Edit</button>
                                 <button class="site-button delete-btn">Delete</button>
                               </div>
                             </td>
@@ -205,6 +205,85 @@
         <!-- <div id="loader-overlay">
           <div class="loader"></div>
         </div> -->
+      </div>
+
+
+
+
+
+      <div class="modal fade change-pass-model paymentDepositePopup manage-acccount-popup" id="editPaymentMmodels" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+          <div class="modal-content change-pass-model-txt">
+            <div class="modal-header change-pass-model-hed">
+              <div class="featured-sec-ro--titl-txt">
+                <span class="titl-bodr-lft-spn-model"></span>
+                <h3 class="featured-sec-ro--titl-txt-tg-model">Edit Payment Method</h3>
+              </div>
+              <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body change-pass-model-body">
+              <div class="choose-payment-option">
+                <div class="payment-tab">
+                    <div class="payment-tab-list">
+                        <a class="img-payment add-Bank  active">Add Bank</a>
+                        <a class="img-payment add-Upi">Add UPI</a>
+                        <a class="img-payment add-Paytm">Add Paytm</a>
+                    </div>
+                </div>
+              </div>
+            <div class="enter-withdraw-detail">
+                <form  class="addBankUser-fom" method="post" action="">
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Account Name" name="accountholdername">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="number" placeholder="Account Number" name="accountnumber">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs hide">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="UPI Id" name="upiid">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs hide">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="number" placeholder="Phone Number" name="phonenumber">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Display Name" name="displayname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Ifsc Code" name="ifsccode">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Bank Name" name="bankname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Branch Name" name="branchname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+                </form>
+            </div>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- ----= SIDEBAR SECTION START =-----   -->
       <%-include('../sideBar')%>
