@@ -25,6 +25,7 @@
                         <%if(data[i].reqStatus != 'transferred'){%>
                             Transferred Date :- <%=data[i].approvalDate.getDate() + '-' +(data[i].approvalDate.getMonth() + 1) + '-' + data[i].approvalDate.getFullYear() + ' ' + data[i].approvalDate.getHours() + ':' + data[i].approvalDate.getMinutes() +':' + data[i].approvalDate.getSeconds()%>
                         <%}else{%>
+                            Cancel Date :- <%=data[i].approvalDate.getDate() + '-' +(data[i].approvalDate.getMonth() + 1) + '-' + data[i].approvalDate.getFullYear() + ' ' + data[i].approvalDate.getHours() + ':' + data[i].approvalDate.getMinutes() +':' + data[i].approvalDate.getSeconds()%>
                         <%}%>
                     </td>
                 <%}else{%>

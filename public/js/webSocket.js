@@ -18193,7 +18193,9 @@ socket.on('connect', () => {
                             let letFormetedDate = date2.getDate() + '-' +(date2.getMonth() + 1) + '-' + date2.getFullYear() + ' ' + date2.getHours() + ':' + date2.getMinutes() +':' + date2.getSeconds()
                             html += `<td>Transferred Date :- ${letFormetedDate}</td>`
                         }else{
-                            html += `<td>-</td>`
+                            let date2 = new Date(data.reqData[i].approvalDate)
+                            let letFormetedDate = date2.getDate() + '-' +(date2.getMonth() + 1) + '-' + date2.getFullYear() + ' ' + date2.getHours() + ':' + date2.getMinutes() +':' + date2.getSeconds()
+                            html += `<td>Cancel Date :- ${letFormetedDate}</td>`
                         }
                     }else{
                         html += `<td>
