@@ -22,7 +22,10 @@
                 <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal4" class="btn user-acc-btn" id="<%=data[i].payMentMethodId%>" >View Account Details</button></td>
                 <%if(data[i].reqStatus != 'pending'){%>
                     <td>
-                        -
+                        <%if(data[i].reqStatus != 'transferred'){%>
+                            Transferred Date :- <%=data[i].approvalDate.getDate() + '-' +(data[i].approvalDate.getMonth() + 1) + '-' + data[i].approvalDate.getFullYear() + ' ' + data[i].approvalDate.getHours() + ':' + data[i].approvalDate.getMinutes() +':' + data[i].approvalDate.getSeconds()%>
+                        <%}else{%>
+                        <%}%>
                     </td>
                 <%}else{%>
                     <td>
