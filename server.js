@@ -67,6 +67,7 @@ const streamModel = require('./model/streammanagement');
 const liveStreameData = require('./utils/getLiveStream');
 const manageAccountsUser = require('./model/paymentMethodUserSide');
 const withdowReqModel = require('./model/withdrowReqModel');
+const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -8205,6 +8206,21 @@ io.on('connection', (socket) => {
                         errorEmitted = true;
                     }
                 }
+
+
+                if(!errorEmitted){
+                    let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+                    const passcheck = await user.correctPassword(data.data.password, user.password)
+                    if(passcheck){
+                        let data = await manageAccountsUser.findByIdAndUpdate(data.data.id, data)
+                        if(data){
+                            socket.emit('editData', {status:'err', msg:'Please try again leter'})
+                        }
+                    }else{
+                        socket.emit('editData', {status:'err', msg:'Please provide a valid password'})
+                    }
+                }
+
             }else{
                 socket.emit('editData', {status:'err', msg:'Please try again leter'})
             }
