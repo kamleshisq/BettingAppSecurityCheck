@@ -18131,12 +18131,18 @@ socket.on('connect', () => {
         async function dilterData(){
             let data = {}
             let userName = $('.searchUser').val()
-            data.userName = userName
             let fromDate = $('#fromDate').val()
             let toDate = $('#toDate').val()
             let status = $('#status').val()
-            data.fromDate = fromDate
-            data.toDate = toDate
+            if(data.userName != ""){
+                data.userName = userName
+            }
+            if(data.fromDate != ""){
+                data.fromDate = fromDate
+            }
+            if(data.toDate != ""){
+                data.toDate = toDate
+            }
             data.status = status
             return data
         }
