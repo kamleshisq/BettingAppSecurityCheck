@@ -18014,7 +18014,7 @@ socket.on('connect', () => {
             if(data.status === 'err'){   
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
             }else{
-                togglePopupMain('popup-1', "redPopUP", 'Updated Sucessfully!!')
+                togglePopupMain('popup-1', "redPopUP", 'Updated Sucessfully!!'.toLowerCase())
                 setTimeout(()=>{
                     window.location.reload()
                 }, 1000)
@@ -18031,7 +18031,12 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            console.log(data)
+            // console.log(data)
+            if(data.checkbox){
+                socket.emit('deleteMethod', {LOGINDATA, data})
+            }else{
+                togglePopupMain('popup-2', "redPopUP2", 'PLEASE SELECT CHECKBOX FOR DELETE ACCOUNT DATa')
+            }
         })
 
     }
