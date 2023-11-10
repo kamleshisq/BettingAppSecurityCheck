@@ -18191,7 +18191,7 @@ socket.on('connect', () => {
                         if(data.reqData[i].reqStatus === 'transferred'){
                             let date2 = new Date(data.reqData[i].approvalDate)
                             let letFormetedDate = date2.getDate() + '-' +(date2.getMonth() + 1) + '-' + date2.getFullYear() + ' ' + date2.getHours() + ':' + date2.getMinutes() +':' + date2.getSeconds()
-                            html += `<td>${letFormetedDate}</td>`
+                            html += `<td>Transferred Date :- ${letFormetedDate}</td>`
                         }else{
                             html += `<td>-</td>`
                         }
