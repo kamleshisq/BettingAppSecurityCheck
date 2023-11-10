@@ -8294,18 +8294,10 @@ io.on('connection', (socket) => {
         }else if(!data.filterData.fromDate && data.filterData.toDate) {
             filterData.reqDate = {$lte : new Date(new Date(data.filterData.toDate))}
         }
-        console.log(filterData)
         let reqData = await withdowReqModel.find(filterData).sort({date:-1}).skip(skip).limit(limit)
         socket.emit('WithdrawLoadMoreAdmin', {reqData, page})
 
     })
-
-
-
-    // socket.on('deletePaymentMethodUserSide', async(data) => {
-    //     // console.log(data)
-
-    // })
 
 })
 
