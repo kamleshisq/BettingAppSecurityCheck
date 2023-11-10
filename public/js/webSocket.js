@@ -17945,9 +17945,8 @@ socket.on('connect', () => {
                 }else{
 
                 }
-                // console.log(data)
-                $('#editPaymentMmodels').find('.editBankUser-fom').html(html)
-                $('#editPaymentMmodels').find('.editBankUser-fom').attr('id', data._id)
+                let html2 = $("#editPaymentMmodels")
+                console.log(html2)
             }
         })
 
