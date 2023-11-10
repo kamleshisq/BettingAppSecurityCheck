@@ -343,9 +343,10 @@ socket.on('connect', () => {
                 let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
                 <li id="Acc-Number"> ${data.data[0].accountnumber}</li>
                 <li id="Bank-Name"> ${data.data[0].bankname}</li>
-                <li id="IFSC"> ${data.data[0].ifsccode}</li>
-                <a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
+                <li id="IFSC"> ${data.data[0].ifsccode}</li>`
                 document.getElementById('BANK-DATA1').innerHTML = htmlData
+                let newHTML =`<a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
+                $('.luck-enterprise ul#BANK-DATA1').after(newHTML);
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
                 html = `<a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
@@ -386,9 +387,11 @@ socket.on('connect', () => {
                 let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
                 <li id="Acc-Number"> ${data.data[0].upiid}</li>`
                 document.getElementById('BANK-DATA1').innerHTML = htmlData
+                let newHTML =`<a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
+                $('.luck-enterprise ul#BANK-DATA1').after(newHTML);
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
-                html = 'No accounts available!!'
+                html = `<a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
                 document.getElementById('BANK-DATA1').innerHTML = html
                 $('#navmod4 .accountnamecontainer').html('')
             }
@@ -425,9 +428,11 @@ socket.on('connect', () => {
                 let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
                 <li id="Acc-Number"> ${data.data[0].accountnumber}</li>`
                 document.getElementById('BANK-DATA1').innerHTML = htmlData
+                let newHTML =`<a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
+                $('.luck-enterprise ul#BANK-DATA1').after(newHTML);
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
-                html = 'No accounts available!!'
+                html = `<a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
                 document.getElementById('BANK-DATA1').innerHTML = html
                 $('#navmod4 .accountnamecontainer').html('')
             }
