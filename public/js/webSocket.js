@@ -18146,15 +18146,8 @@ socket.on('connect', () => {
         $('#load-more').click(async function(e){
             let page = parseInt($('.pageId').attr('data-pageid'));
             $('.pageId').attr('data-pageid',page + 1)
-            let data = {}
             let filterData = await dilterData()
-            console.log(filterData, "filterDatafilterDatafilterData")
-            // let userName = $('.searchUser').val()
-            // data.filterData = filterData;
-            // data.page = page
-            // data.LOGINDATA = LOGINDATA
-            // // console.log(data)
-            // socket.emit('paymentApprovaltable',data)
+            socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
         })
 
 

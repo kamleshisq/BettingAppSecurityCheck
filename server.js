@@ -8088,7 +8088,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('reqApproveUpdate', async(data) => {
-        console.log(data)
+        // console.log(data)
         try{
             let reqData = await withdowReqModel.findById(data.data.id)
             if(reqData){
@@ -8259,6 +8259,11 @@ io.on('connection', (socket) => {
         }else{
             socket.emit('deleteMethodUSERACC', {status:'err', msg:'Please try again leter'})
         }
+    })
+
+
+    socket.on('WithdrawLoadMoreAdmin', async(data) => {
+        console.log(data)
     })
 
 
