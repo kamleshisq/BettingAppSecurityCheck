@@ -18142,7 +18142,7 @@ socket.on('connect', () => {
         socket.on('GEtACcountData', async(data) => {
             if(data.status == 'err'){
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
-            }else if(data.status === 'sucesserr'){
+            }else if(data.status == 'sucesserr'){
                 let html = 'NO ACCOUNT DATA FOUND'
                 document.getElementById('AccountData').innerHTML = html
             }
