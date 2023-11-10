@@ -8236,7 +8236,13 @@ io.on('connection', (socket) => {
     socket.on('deleteMethod', async(data) => {
         if(data.LOGINDATA.LOGINUSER){
             if(data.data.checkbox){
-                console.log(data.data)
+                // console.log(data.data)
+                let deleteData = await manageAccountsUser.findByIdAndDelete(data.data.id)
+                if(deleteData){
+                    socket.emit('deleteMethod', {status:'sucess', msg:'deleted Sucessfully!!'})
+                }else{
+                    socket.emit('deleteMethod', {status:'err', msg:'Please try again leter'})
+                }
             }else{
                 socket.emit('deleteMethod', {status:'err', msg:'Please try again leter'})
             }

@@ -18040,6 +18040,14 @@ socket.on('connect', () => {
             }
         })
 
+        socket.on('deleteMethod', async(data) =>{
+            if(data.status == 'err'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else{
+                togglePopupMain('popup-1', "redPopUP1", data.msg.toUpperCase())
+            }
+        })
+
     }
 
 
