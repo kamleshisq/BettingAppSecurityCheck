@@ -17945,7 +17945,7 @@ socket.on('connect', () => {
                 }else{
 
                 }
-                let html2 = $("#editPaymentMmodels").find('form').attr('id', data.id)
+                $("#editPaymentMmodels").find('form').attr('id', data.id)
                 console.log(html2)
             }
         })
