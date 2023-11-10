@@ -18198,10 +18198,19 @@ socket.on('connect', () => {
                         </td>`
                     }
                 html += '</tr>'
-                }
-                $('.new-body').append(html) 
+            }
+            if(data.page == 1){
+                $('.new-body').html(html)
             }else{
-
+                $('.new-body').append(html) 
+            }
+            $('#load-more').show()
+            }else{
+                $('#load-more').hide()
+                if(data.page == 1){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    $('.new-body').html(html)
+                }
             }
         })
 
