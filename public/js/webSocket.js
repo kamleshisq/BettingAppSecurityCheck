@@ -17942,14 +17942,56 @@ socket.on('connect', () => {
                     </div>
                   </div>`
                 }else if(data.data.pmethod == "upiW"){
-
+                    html = `                    <div class="change-pass-model-form-inputs">
+                    <label for="accountholdername"> Account Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.accountholdername}" name="accountholdername">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <label for="upiid"> UPI Id</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="number" value="${data.data.upiid}" name="upiid">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <label for="displayname"> Display Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.displayname}" name="displayname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
+                    </div>
+                  </div>`
                 }else{
-
+                    html = `                    <div class="change-pass-model-form-inputs">
+                    <label for="accountholdername"> Account Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.accountholdername}" name="accountholdername">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <label for="phonenumber"> Phone Number</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="number" value="${data.data.phonenumber}" name="phonenumber">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <label for="displayname"> Display Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.displayname}" name="displayname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
+                    </div>
+                  </div>`
                 }
-                console.log(data)
                 $("#editPaymentMmodels").find('form').attr('id', data.data._id)
                 $("#editPaymentMmodels").find('form').html(html)
-                // console.log(html2)
             }
         })
 
