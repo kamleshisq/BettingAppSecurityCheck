@@ -8291,7 +8291,7 @@ io.on('connection', (socket) => {
             filterData.reqDate = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate))}
         }else if (data.filterData.fromDate && !data.filterData.toDate){
             filterData.reqDate =  {$gte : data.filterData.fromDate}
-        }else{
+        }else if(!data.filterData.fromDate && data.filterData.toDate) {
             filterData.reqDate = {$lte : new Date(new Date(data.filterData.toDate))}
         }
         console.log(filterData)
