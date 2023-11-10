@@ -18128,6 +18128,35 @@ socket.on('connect', () => {
                 document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
         })
+        async function dilterData(){
+            let data = {}
+            let userName = $('.searchUser').val()
+            data.userName = userName
+            let fromDate = $('#fromDate').val()
+            let toDate = $('#toDate').val()
+            let status = $('#status').val()
+            data.fromDate = fromDate
+            data.toDate = toDate
+            data.status = status
+            return data
+        }
+
+
+
+        $('#load-more').click(async function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let data = {}
+            let filterData = await dilterData()
+            console.log(filterData, "filterDatafilterDatafilterData")
+            // let userName = $('.searchUser').val()
+            // data.filterData = filterData;
+            // data.page = page
+            // data.LOGINDATA = LOGINDATA
+            // // console.log(data)
+            socket.emit('paymentApprovaltable',data)
+        })
+
 
 
 
