@@ -17991,6 +17991,7 @@ socket.on('connect', () => {
                     </div>
                   </div>`
                 }
+                html += '<button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>'
                 $("#editPaymentMmodels").find('form').attr('id', data.data._id)
                 $("#editPaymentMmodels").find('form').html(html)
             }
