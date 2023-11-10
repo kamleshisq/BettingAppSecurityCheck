@@ -18145,8 +18145,7 @@ socket.on('connect', () => {
             }else if(data.status == 'sucesserr'){
                 let html = 'NO ACCOUNT DATA FOUND'
                 document.getElementById('AccountData').innerHTML = html
-            }
-            else{
+            }else{
                 console.log(data.data)
                 let html = ''
                 if(data.data.pmethod === "upiW"){
