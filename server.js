@@ -8046,7 +8046,8 @@ io.on('connection', (socket) => {
     socket.on('withrowReq', async(data) => {
         if(data.LOGINDATA.LOGINUSER){
             try{
-                if(data.LOGINDATA.LOGINUSER.availableBalance < data.data.amount){
+                let loginUser = await User.findById(data.LOGINDATA.LOGINUSER._id)
+                if(loginUser.availableBalance < data.data.amount){
                     let newData = {}
                     newData.userName =  data.LOGINDATA.LOGINUSER.userName
                     let sdmId 
