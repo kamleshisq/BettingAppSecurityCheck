@@ -18031,7 +18031,7 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            let id = $(this).attr('id', id)
+            let id = $(this).attr('id')
             data.id = id
             if(data.checkbox){
                 socket.emit('deleteMethod', {LOGINDATA, data})
