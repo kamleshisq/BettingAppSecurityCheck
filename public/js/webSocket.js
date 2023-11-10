@@ -18045,7 +18045,7 @@ socket.on('connect', () => {
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
             }else{
                 console.log(data)
-                togglePopupMain('popup-1', "redPopUP1", data.msg.toUpperCase())
+                togglePopupMain('popup-1', "redPopUP", data.msg.toUpperCase())
             }
         })
 
