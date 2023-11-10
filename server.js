@@ -8212,8 +8212,8 @@ io.on('connection', (socket) => {
                     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
                     const passcheck = await user.correctPassword(data.data.password, user.password)
                     if(passcheck){
-                        let data = await manageAccountsUser.findByIdAndUpdate(data.data.id, data)
-                        if(data){
+                        let data1 = await manageAccountsUser.findByIdAndUpdate(data.data.id, data)
+                        if(data1){
                             socket.emit('editData', {status:'err', msg:'Please try again leter'})
                         }
                     }else{
