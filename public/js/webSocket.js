@@ -18173,7 +18173,34 @@ socket.on('connect', () => {
             socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
         })
 
+        socket.on('WithdrawLoadMoreAdmin', async(data) => {
+            if(data.reqData.length > 0){
+                let html = ""
+                for(let i = 0; i < data.reqData.length; i++){
+                    html += `<tr id="${data.reqData[i]._id}" >
+                    <td>${data.reqData[i].reqDate}.getDate() + '-' +(${data.reqData[i].reqDate.getMonth() + 1}) + '-' + ${data.reqData[i].reqDate.getFullYear()} + ' ' + ${data.reqData[i].reqDate.getHours()} + ':' + ${data.reqData[i].reqDate.getMinutes()} +':' + ${data.reqData[i].reqDate.getSeconds()}</td>
+                    <td>${data.reqData[i].userName}</td>
+                    <td>${data.reqData[i].amount}</td>
+                    <td>${data.reqData[i].note}</td>
+                    <td>${data.reqData[i].reqStatus}</td>
+                    <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal4" class="btn user-acc-btn" id="${data.reqData[i].payMentMethodId}" >View Account Details</button></td>`
+                    if(data.reqData[i].reqStatus != 'pending'){
+                        html += `<td>
+                            -
+                        </td>`
+                    }else{
+                        html += `<td>
+                            <div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#APPROVE" class="btn RequestApprove">Approve</button>
+                            <button data-bs-toggle="modal" data-bs-target="#DENY" class="btn RequestDeny">Deny</button></div>
+                        </td>`
+                    }
+                html += '</tr>'
+                }
+                $('.new-body').append(html) 
+            }else{
 
+            }
+        })
 
 
 

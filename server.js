@@ -8263,7 +8263,39 @@ io.on('connection', (socket) => {
 
 
     socket.on('WithdrawLoadMoreAdmin', async(data) => {
-        console.log(data, 123456789)
+        let limit;
+        let page = data.page;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
+        }
+        let userName = data.LOGINDATA.LOGINUSER.userName
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let ParentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            userName = ParentUser.userName
+        }
+        let filterData = {}
+        filterData.sdmUserName = userName
+        if(data.filterData.userName){
+            filterData.userName = data.filterData.userName
+        }
+        if(data.filterData.status){
+            filterData.status = data.filterData.status
+        }
+
+        if(data.filterData.fromDate && data.filterData.toDate){
+            filterData.reqDate = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate))}
+        }else if (data.filterData.fromDate && !data.filterData.toDate){
+            filterData.reqDate =  {$gte : data.filterData.fromDate}
+        }else{
+            filterData.reqDate = {$lte : new Date(new Date(data.filterData.toDate))}
+        }
+        let reqData = await withdowReqModel.find({filterData}).sort({date:-1}).skip(skip).limit(limit)
+        socket.emit('WithdrawLoadMoreAdmin', {reqData, page})
 
     })
 
