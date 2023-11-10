@@ -18178,8 +18178,8 @@ socket.on('connect', () => {
             if(data.reqData.length > 0){
                 let html = ""
                 for(let i = 0; i < data.reqData.length; i++){
-                    console.log( data.reqData[i].reqDate)
-                    let formetedDate = data.reqData[i].reqDate.getDate() + '-' +(data.reqData[i].reqDate.getMonth() + 1) + '-' + data.reqData[i].reqDate.getFullYear() + ' ' + data.reqData[i].reqDate.getHours() + ':' + data.reqData[i].reqDate.getMinutes() +':' + data.reqData[i].reqDate.getSeconds()
+                    let date = new Date(data.reqData[i].reqDate)
+                    let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
                     html += `<tr id="${data.reqData[i]._id}" >
                     <td>${formetedDate}</td>
                     <td>${data.reqData[i].userName}</td>
