@@ -8233,21 +8233,21 @@ io.on('connection', (socket) => {
 
 
 
-    socket.on('deleteMethod', async(data) => {
+    socket.on('deleteMethodUSERACC', async(data) => {
         if(data.LOGINDATA.LOGINUSER){
             if(data.data.checkbox){
                 // console.log(data.data)
                 let deleteData = await manageAccountsUser.findByIdAndDelete(data.data.id)
                 if(deleteData){
-                    socket.emit('deleteMethod', {status:'sucess', msg:'deleted Sucessfully!!'})
+                    socket.emit('deleteMethodUSERACC', {status:'sucess', msg:'deleted Sucessfully!!'})
                 }else{
-                    socket.emit('deleteMethod', {status:'err', msg:'Please try again leter'})
+                    socket.emit('deleteMethodUSERACC', {status:'err', msg:'Please try again leter'})
                 }
             }else{
-                socket.emit('deleteMethod', {status:'err', msg:'Please try again leter'})
+                socket.emit('deleteMethodUSERACC', {status:'err', msg:'Please try again leter'})
             }
         }else{
-            socket.emit('deleteMethod', {status:'err', msg:'Please try again leter'})
+            socket.emit('deleteMethodUSERACC', {status:'err', msg:'Please try again leter'})
         }
     })
 

@@ -18034,13 +18034,13 @@ socket.on('connect', () => {
             let id = $(this).attr('id')
             data.id = id
             if(data.checkbox){
-                socket.emit('deleteMethod', {LOGINDATA, data})
+                socket.emit('deleteMethodUSERACC', {LOGINDATA, data})
             }else{
                 togglePopupMain('popup-2', "redPopUP2", 'PLEASE SELECT CHECKBOX FOR DELETE ACCOUNT DATa')
             }
         })
 
-        socket.on('deleteMethod', async(data) =>{
+        socket.on('deleteMethodUSERACC', async(data) =>{
             if(data.status == 'err'){
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
             }else{
