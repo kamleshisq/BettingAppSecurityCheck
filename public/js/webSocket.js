@@ -18187,9 +18187,14 @@ socket.on('connect', () => {
                     <td>${data.reqData[i].reqStatus}</td>
                     <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal4" class="btn user-acc-btn" id="${data.reqData[i].payMentMethodId}" >View Account Details</button></td>`
                     if(data.reqData[i].reqStatus != 'pending'){
-                        html += `<td>
-                            -
-                        </td>`
+                        
+                        if(data.reqData[i].reqStatus === 'transferred'){
+                            let date2 = new Date(data.reqData[i].approvalDate)
+                            let letFormetedDate = date2.getDate() + '-' +(date2.getMonth() + 1) + '-' + date2.getFullYear() + ' ' + date2.getHours() + ':' + date2.getMinutes() +':' + date2.getSeconds()
+                            html += `<td>${letFormetedDate}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
                     }else{
                         html += `<td>
                             <div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#APPROVE" class="btn RequestApprove">Approve</button>
