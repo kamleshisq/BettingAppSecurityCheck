@@ -8214,6 +8214,7 @@ io.on('connection', (socket) => {
                     if(passcheck){
                         let data1 = await manageAccountsUser.findByIdAndUpdate(data.data.id, data)
                         if(data1){
+                            console.log('WORKING')
                             socket.emit('editData', {status:'err', msg:'Please try again leter'})
                         }
                     }else{
@@ -8222,6 +8223,7 @@ io.on('connection', (socket) => {
                 }
 
             }else{
+                console.log('WORKING123456')
                 socket.emit('editData', {status:'err', msg:'Please try again leter'})
             }
         }catch(err){
