@@ -18349,6 +18349,34 @@ socket.on('connect', () => {
 
 
     }
+
+
+    if(pathname == "/withdrawalRequest"){
+        async function userWithrowalFilter(){
+            let data = {}
+            let fdate = $('#Fdate').val()
+            let tdate = $('#Tdate').val()
+            let select =$('#select').val()
+            if(fdate.trim() != ''){
+                data.fdate = fdate
+            }
+            if(tdate.trim() != ''){
+                data.tdate = tdate
+            }
+            if(select.trim() != ''){
+                data.select = select
+            }
+            return data
+        }
+
+        $('#select,#Fdate,#Tdate').change(async function(){
+            let filterData = await userWithrowalFilter()
+            $('.pageId').attr('data-pageid','1')
+            let page = 0
+            socket.emit('withdrawalRequestDataUserSide', {filterData, page, LOGINDATA})
+        })
+
+    }
     
 
 })

@@ -8304,6 +8304,12 @@ io.on('connection', (socket) => {
 
     })
 
+
+
+    socket.on('withdrawalRequestDataUserSide', async(data) => {
+        console.log(data)
+    })
+
 })
 
 http.listen(8080,()=> {
