@@ -1283,7 +1283,7 @@ socket.on('connect', () => {
                     audio.play();
                 }
                 // sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
-                $('header .fa-bell').siblings('span').text(data.paymentreqcount)
+                $('header .fa-bell0').siblings('span').text(data.paymentreqcount)
             }else{
                 console.log(data.msg)
             }
@@ -1300,7 +1300,7 @@ socket.on('connect', () => {
                     var audio = document.getElementById("notificationSound");
                     audio.play();
                 }
-                $('header .fa-bell2').siblings('span').text(data.withrowReqCount)
+                $('header .fa-bell1').siblings('span').text(data.withrowReqCount)
             }else{
                 console.log(data.msg)
             }
