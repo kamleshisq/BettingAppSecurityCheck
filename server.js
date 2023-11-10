@@ -8046,25 +8046,28 @@ io.on('connection', (socket) => {
     socket.on('withrowReq', async(data) => {
         if(data.LOGINDATA.LOGINUSER){
             try{
-                console.log(data)
-                let newData = {}
-                newData.userName =  data.LOGINDATA.LOGINUSER.userName
-                let sdmId 
-                if(data.LOGINDATA.LOGINUSER.parentUsers[1]){
-                    sdmId = data.LOGINDATA.LOGINUSER.parentUsers[1]
+                if(data.LOGINDATA.LOGINUSER.availableBalance < data.data.amount){
+                    let newData = {}
+                    newData.userName =  data.LOGINDATA.LOGINUSER.userName
+                    let sdmId 
+                    if(data.LOGINDATA.LOGINUSER.parentUsers[1]){
+                        sdmId = data.LOGINDATA.LOGINUSER.parentUsers[1]
+                    }else{
+                        sdmId = data.LOGINDATA.LOGINUSER.parent_id
+                    }
+                    let sdmUser = await User.findById(sdmId)
+                    newData.sdmUserName = sdmUser.userName
+                    newData.payMentMethodId = data.data.id
+                    newData.amount = data.data.amount
+                    newData.note = data.data.notes
+                    let createdData = await withdowReqModel.create(newData)
+                    if(createdData){
+                        socket.emit('withrowReq', {status:'sucess', msg:'Withdrawal request submitted successfully.'})
+                    }else{
+                        socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
+                    }
                 }else{
-                    sdmId = data.LOGINDATA.LOGINUSER.parent_id
-                }
-                let sdmUser = await User.findById(sdmId)
-                newData.sdmUserName = sdmUser.userName
-                newData.payMentMethodId = data.data.id
-                newData.amount = data.data.amount
-                newData.note = data.data.notes
-                let createdData = await withdowReqModel.create(newData)
-                if(createdData){
-                    socket.emit('withrowReq', {status:'sucess', msg:'Withdrawal request submitted successfully.'})
-                }else{
-                    socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
+                    socket.emit('withrowReq', {status:'err', msg:'Your withdrawal amount is within your available balance'})
                 }
             }catch(err){
                 console.log(err)
