@@ -8213,6 +8213,7 @@ io.on('connection', (socket) => {
                     const passcheck = await user.correctPassword(data.data.password, user.password)
                     if(passcheck){
                         let data1 = await manageAccountsUser.findByIdAndUpdate(data.data.id, data)
+                        console.log(data1)
                         if(data1){
                             console.log('WORKING')
                             socket.emit('editData', {status:'err', msg:'Please try again leter'})
