@@ -18453,6 +18453,7 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     $('#table12').find('tbody').html(html)
                 }else{
+                    console.log('WORKING')
                     $('#table12').find('tbody').append(html)
                 }
 
