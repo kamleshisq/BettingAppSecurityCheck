@@ -17880,7 +17880,6 @@ socket.on('connect', () => {
 
         $(document).on('change', '.status_check_payment', function(e){
             e.preventDefault()
-            // console.log('Working')
             let id = $(this).closest('tr').attr('id')
             socket.emit('UpdateStatusAccount', id)
         })
@@ -17995,6 +17994,18 @@ socket.on('connect', () => {
                 $("#editPaymentMmodels").find('form').attr('id', data.data._id)
                 $("#editPaymentMmodels").find('form').html(html)
             }
+        })
+
+
+
+        $(document).on('submit', '.editBankUser-fom', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id  = $(this).attr('id')
+            data.id = id
+            console.log(data)
         })
 
     }
