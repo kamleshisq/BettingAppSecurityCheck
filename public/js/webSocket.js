@@ -18192,7 +18192,11 @@ socket.on('connect', () => {
             if(data.page == 0){
                 $('.new-body').html(html)
             }else{
-                $('.new-body').append(html) 
+                if(data.refresh){
+                    $('.new-body').html(html)
+                }else{
+                    $('.new-body').append(html) 
+                }
             }
             $('#load-more').show()
             }else{

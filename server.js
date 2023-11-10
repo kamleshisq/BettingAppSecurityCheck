@@ -8267,7 +8267,7 @@ io.on('connection', (socket) => {
         let page = data.page;
         let skip;
         if(data.refreshStatus){
-            console.log('working')
+            // console.log('working')
             limit = (10 * page) + 10
             skip = 0
         }else{
@@ -8296,7 +8296,11 @@ io.on('connection', (socket) => {
             filterData.reqDate = {$lte : new Date(new Date(data.filterData.toDate))}
         }
         let reqData = await withdowReqModel.find(filterData).sort({reqDate:-1}).skip(skip).limit(limit)
-        socket.emit('WithdrawLoadMoreAdmin', {reqData, page})
+        if(data.refreshStatus){
+            socket.emit('WithdrawLoadMoreAdmin', {reqData, page, refresh:true})
+        }else{
+            socket.emit('WithdrawLoadMoreAdmin', {reqData, page})
+        }
 
     })
 
