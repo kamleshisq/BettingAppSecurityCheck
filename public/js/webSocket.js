@@ -18334,7 +18334,8 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             if(data.status){
                 data.id = $(this).attr('id')
-                socket.emit('reqCancelUpdate', {LOGINDATA, data})
+                console.log(data, "datadatadata")
+                // socket.emit('reqCancelUpdate', {LOGINDATA, data})
             }else{
                 alert('Please tick the checkbox')
             }
