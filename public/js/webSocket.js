@@ -18163,6 +18163,13 @@ socket.on('connect', () => {
             socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
         })
 
+        $(document).on("click", ".searchList", async function(){
+            $('.pageId').attr('data-pageid','1')
+            document.getElementById("searchUser").value = this.textContent
+            let page = 0  
+            let filterData = await dilterData()
+            socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
+        })
 
 
 
