@@ -299,7 +299,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
         WithdrawReqCount = await userWithReq.count({username:currentUser.userName, status:'pending'})
     }
-    console.log()
+    // console.log()
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
     // if (req.session.userId && req.session.userId !== currentUser.id) {
