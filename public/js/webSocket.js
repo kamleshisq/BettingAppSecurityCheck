@@ -18154,7 +18154,7 @@ socket.on('connect', () => {
             // data.page = page
             // data.LOGINDATA = LOGINDATA
             // // console.log(data)
-            socket.emit('paymentApprovaltable',data)
+            // socket.emit('paymentApprovaltable',data)
         })
 
 
