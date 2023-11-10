@@ -7835,6 +7835,16 @@ io.on('connection', (socket) => {
     })
 
 
+    socket.on('getcountofWITHROWREQ',async(data)=>{
+        try{
+            let withrowReqCount = await withdowReqModel.count({sdmUserName:data.LOGINUSER.userName,status:'pending'})
+            socket.emit('getcountofWITHROWREQ',{status:'success',withrowReqCount})
+        }catch(err){
+            socket.emit('getcountofWITHROWREQ',{status:'fail',msg:'something went wrong'})
+        }
+    })
+
+
     socket.on('channelId', async(data) => {
 
         console.log(data)

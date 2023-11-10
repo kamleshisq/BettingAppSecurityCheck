@@ -1264,8 +1264,10 @@ socket.on('connect', () => {
         if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Admin'){
             setInterval(()=>{
                 socket.emit('getcountofpaymentreq',LOGINDATA)
+                socket.emit('getcountofWITHROWREQ',LOGINDATA)
             },5000)
             socket.emit('getcountofpaymentreq',LOGINDATA)
+            socket.emit('getcountofWITHROWREQ',LOGINDATA)
         }
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
@@ -1282,6 +1284,23 @@ socket.on('connect', () => {
                 }
                 // sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
                 $('header .fa-bell').siblings('span').text(data.paymentreqcount)
+            }else{
+                console.log(data.msg)
+            }
+        })
+
+        let oldCount1 = 0
+        socket.on('getcountofWITHROWREQ',async(data)=>{
+            if(data.status == 'success'){
+                if(oldCount1 === 0){
+                    oldCount1 = data.withrowReqCount
+                }
+                else if(oldCount1 < data.withrowReqCount){
+                    oldCount1 = data.withrowReqCount
+                    var audio = document.getElementById("notificationSound");
+                    audio.play();
+                }
+                $('header .fa-bell2').siblings('span').text(data.withrowReqCount)
             }else{
                 console.log(data.msg)
             }
@@ -18044,7 +18063,6 @@ socket.on('connect', () => {
             if(data.status == 'err'){
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
             }else{
-                // console.log(data)
                 togglePopupMain('popup-1', "redPopUP", data.msg.toUpperCase())
                 setTimeout(()=>{
                     window.location.reload()

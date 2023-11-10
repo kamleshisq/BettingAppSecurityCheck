@@ -40,7 +40,8 @@
           <!-- <span>Follow us: </span> -->
           <!-- <span><a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-moon"></i></a></span>  -->
           <%if(currentUser.role.roleName === "Super-Duper-Admin"){%>
-            <span> <a   data-toggle="tooltip" data-placement="bottom" title="Notifications" href="/admin/paymentapproval"><i class="fa-solid fa-bell"></i><span><%=paymentreqcount%></span></a></span> 
+            <span> <a   data-toggle="tooltip" data-placement="bottom" title="Notifications" href="/admin/paymentapproval"><i class="fa-solid fa-bell0">D</i><span><%=paymentreqcount%></span></a></span> 
+            <span> <a   data-toggle="tooltip" data-placement="bottom" title="Notifications" href="/admin/withdrawalRequest"><i class="fa-solid fa-bell1">W</i><span><%=WithdrawReqCount%></span></a></span> 
           <%}%>
           <audio id="notificationSound">
             <source src="http://ollscores.com/notificationbip/Notification.mp3" type="audio/mpeg">

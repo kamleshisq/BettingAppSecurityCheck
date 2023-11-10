@@ -7,6 +7,7 @@ const util = require('util');
 const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
 const paymentReportModel = require('../model/paymentreport')
+const userWithReq = require('../model/withdrowReqModel');
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -291,9 +292,13 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     let childrenArr = []
     // let children = await User.find({parentUsers:currentUser._id, role_type: 5})
     // childrenArr = Array.from(children, ele => ele.userName);
-    childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
-    //   console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
-    let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
+    let paymentreqcount = 0
+    let WithdrawReqCount = 0
+    if(req.currentUser.role.roleName === "Super-Duper-Admin"){
+        childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
+        paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
+        WithdrawReqCount = await userWithReq.count({username:req.currentUser.userName, status:'pending'})
+    }
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
     // if (req.session.userId && req.session.userId !== currentUser.id) {
@@ -324,6 +329,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     loginData.User = currentUser
     res.locals.loginData = loginData
     res.locals.paymentreqcount = paymentreqcount
+    res.locals.WithdrawReqCount = WithdrawReqCount
     req.currentUser = currentUser
     req.token = token
     // console.log(req.originalUrl, "2222222222222222222222222222222")
