@@ -18360,7 +18360,9 @@ socket.on('connect', () => {
                 alert(data.msg)
             }else{
                 $(`#${data.cancelUpdate._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
-                $(`#${data.cancelUpdate._id}`).find('td:eq(6)').text(`-`)
+                let date = new Date(data.date1234)
+                let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
+                $(`#${data.cancelUpdate._id}`).find('td:eq(6)').text(`Cancel Date :- ${formetedDate}`)
                 alert('Request cancel sucessfully!!')
             }
         })
