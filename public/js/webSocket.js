@@ -18199,7 +18199,7 @@ socket.on('connect', () => {
                     }
                 html += '</tr>'
             }
-            if(data.page == 1){
+            if(data.page == 0){
                 $('.new-body').html(html)
             }else{
                 $('.new-body').append(html) 
@@ -18207,7 +18207,7 @@ socket.on('connect', () => {
             $('#load-more').show()
             }else{
                 $('#load-more').hide()
-                if(data.page == 1){
+                if(data.page == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                     $('.new-body').html(html)
                 }
