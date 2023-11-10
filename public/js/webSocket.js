@@ -17900,38 +17900,38 @@ socket.on('connect', () => {
                 let html = ''
                 if(data.data.pmethod == "banktransferW"){
                     html = `<div class="change-pass-model-form-inputs">
+                    <label for="accountholdername"> Account Name</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <label for="accountholdername"> Account Name</label>
                       <input class="form-control" type="text" value="${data.data.accountholdername}" name="accountholdername">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
+                  <label for="accountnumber"> Account Number</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <label for="accountnumber"> Account Number</label>
                       <input class="form-control" type="number" value="${data.data.accountnumber}" name="accountnumber">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
+                  <label for="displayname"> Display Name</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <label for="displayname"> Display Name</label>
                       <input class="form-control" type="text" value="${data.data.displayname}" name="displayname">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
+                  <label for="ifsccode">Ifsc Code </label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <label for="ifsccode">Ifsc Code </label>
                       <input class="form-control" type="text" value="${data.data.ifsccode}" name="ifsccode">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
+                  <label for="bankname">Bank Name</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <label for="bankname">Bank Name</label>
                       <input class="form-control" type="text" value="${data.data.bankname}" name="bankname">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
+                  <label for="branchname">Branch Name</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                      <label for="branchname">Branch Name</label>
                       <input class="form-control" type="text" value="${data.data.branchname}" name="branchname">
                     </div>
                   </div>
