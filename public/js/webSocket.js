@@ -18392,7 +18392,7 @@ socket.on('connect', () => {
             }else{
                 $('.loadMoredive').addClass('hide')
                 if(data.page = 0){
-                    let html =
+                    html = '<tr><td class="no-data">No Data to Display</td></tr>'
                 }
             }
         })
