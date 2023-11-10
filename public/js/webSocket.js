@@ -1277,7 +1277,6 @@ socket.on('connect', () => {
                     oldcount = data.paymentreqcount
                 }
                 else if(oldcount < data.paymentreqcount){
-                    console.log('WORKING123456496879879897987987')
                     oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
                     audio.play();
@@ -1292,7 +1291,6 @@ socket.on('connect', () => {
         let oldCount1 = 0
         socket.on('getcountofWITHROWREQ',async(data)=>{
             if(data.status == 'success'){
-                console.log(oldCount1, data.withrowReqCount)
                 if(oldCount1 === 0){
                     oldCount1 = data.withrowReqCount
                 }
@@ -18075,6 +18073,64 @@ socket.on('connect', () => {
 
 
     if(pathname == "/admin/withdrawalRequest"){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        $('#fromDate').val(tomorrowFormatted)
+        $('#toDate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+
+
+        $('.searchUser').keyup(function(){
+            if($(this).hasClass("searchUser")){
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+        socket.on("ACCSEARCHRES", async(data)=>{
+            $('.wrapper').show()
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
+
+
+
+
+
+
         $(document).on('click', ".user-acc-btn", function(e){
             e.preventDefault()
             let id = $(this).attr('id')
