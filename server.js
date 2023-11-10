@@ -8307,7 +8307,8 @@ io.on('connection', (socket) => {
 
 
     socket.on('withdrawalRequestDataUserSide', async(data) => {
-        console.log(data)
+        // console.log(data)
+        
     })
 
 })
