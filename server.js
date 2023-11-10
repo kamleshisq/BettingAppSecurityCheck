@@ -8094,7 +8094,7 @@ io.on('connection', (socket) => {
             if(reqData){
                 // console.log(reqData, "reqDatareqDatareqData")
                 let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-                const passcheck = await user.correctPassword(data.data.password, user.password)
+                const passcheck = await user.correctPassword(data.data.password, userCe.password)
                 if(passcheck){
                     let date123 = Date.now()
                     let user = await User.findOne({userName:reqData.userName})
