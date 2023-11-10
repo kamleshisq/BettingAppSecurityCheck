@@ -18073,6 +18073,7 @@ socket.on('connect', () => {
 
 
     if(pathname == "/admin/withdrawalRequest"){
+        
         var today = new Date();
         var todayFormatted = formatDate(today);
         var tomorrow = new Date();
