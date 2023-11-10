@@ -8283,8 +8283,8 @@ io.on('connection', (socket) => {
         if(data.filterData.userName){
             filterData.userName = data.filterData.userName
         }
-        if(data.filterData.status){
-            filterData.status = data.filterData.status
+        if(data.filterData.status && data.filterData.status != 'All'){
+                filterData.status = data.filterData.status
         }
 
         if(data.filterData.fromDate && data.filterData.toDate){
