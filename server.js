@@ -8148,7 +8148,7 @@ io.on('connection', (socket) => {
         try{
             let resData = await manageAccountsUser.findById(data)
             if(resData){
-                socket.emit('editPaymentMethodUserSide', {status:'err', data:resData})
+                socket.emit('editPaymentMethodUserSide', {status:'sucess', data:resData})
             }else{
                 socket.emit('editPaymentMethodUserSide', {status:'err', msg:'Please try again leter'})
             }
