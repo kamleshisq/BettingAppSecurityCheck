@@ -8093,6 +8093,7 @@ io.on('connection', (socket) => {
             let reqData = await withdowReqModel.findById(data.data.id)
             if(reqData){
                 // console.log(reqData, "reqDatareqDatareqData")
+                let date123 = Date.now()
                 let user = await User.findOne({userName:reqData.userName})
                 let parentUser = await User.findById(user.parent_id)
                 let amount = (data.data.approvedamount * 1)
@@ -8103,7 +8104,7 @@ io.on('connection', (socket) => {
                     description:'Settlement(withdraw) ' + user.name + '(' + user.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")",
                     creditDebitamount : -amount,
                     balance: user.availableBalance - amount,
-                    date: Date.now(),
+                    date: date123,
                     userName:reqData.userName,
                     role_type:user.role_type,
                     Remark:reqData.note
@@ -8115,7 +8116,7 @@ io.on('connection', (socket) => {
                     description:'Settlement(withdraw) ' + user.name + '(' + user.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")",
                     creditDebitamount : amount,
                     balance: parentUser.availableBalance + amount,
-                    date: Date.now(),
+                    date: date123,
                     userName:parentUser.userName,
                     role_type:parentUser.role_type,
                     Remark:reqData.note
@@ -8125,8 +8126,8 @@ io.on('connection', (socket) => {
                 if(updatedParentUser && updatedUser){
                     await AccModel.create(userAccData)
                     await AccModel.create(ParentData)
-                    let updatedReq = await withdowReqModel.findByIdAndUpdate(data.data.id, {approvalDate:Date.now(), reqStatus:'transferred'})
-                    socket.emit('reqApproveUpdate', {status:'sucess', updatedReq, reqStatus:'transferred'})
+                    let updatedReq = await withdowReqModel.findByIdAndUpdate(data.data.id, {approvalDate:date123, reqStatus:'transferred'})
+                    socket.emit('reqApproveUpdate', {status:'sucess', updatedReq, reqStatus:'transferred',date123 })
                 }
             }else{
                 socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})

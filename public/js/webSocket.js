@@ -18347,7 +18347,9 @@ socket.on('connect', () => {
             }else{
                 // console.log(data)
                 $(`#${data.updatedReq._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
-                $(`#${data.updatedReq._id}`).find('td:eq(6)').text(`-`)
+                let date = new Date(data.date123)
+                let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
+                $(`#${data.updatedReq._id}`).find('td:eq(6)').text(`Transferred Date :- ${formetedDate}`)
                 alert('Status Updated!')
             }
         })
