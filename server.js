@@ -8213,9 +8213,7 @@ io.on('connection', (socket) => {
                     const passcheck = await user.correctPassword(data.data.password, user.password)
                     if(passcheck){
                         let data1 = await manageAccountsUser.findByIdAndUpdate(data.data.id, data.data)
-                        // console.log(data1)
                         if(data1){
-                            // console.log('WORKING')
                             socket.emit('editData', {status:'sucess', msg:'Updated Sucessfully!!'})
                         }
                     }else{
@@ -8231,6 +8229,12 @@ io.on('connection', (socket) => {
             console.log(err)
             socket.emit('editData', {status:'err', msg:'Please try again leter'})
         }
+    })
+
+
+
+    socket.on('deletePaymentMethodUserSide', async(data) => {
+        console.log(data)
     })
 
 })

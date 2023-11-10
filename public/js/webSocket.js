@@ -18021,6 +18021,11 @@ socket.on('connect', () => {
             }
         })
 
+        $(document).on('click', '.dlt-mthd', function(e){
+            let id = $(this).closest('tr').attr('id')
+            socket.emit('deletePaymentMethodUserSide', id)
+        })
+
     }
 
 
