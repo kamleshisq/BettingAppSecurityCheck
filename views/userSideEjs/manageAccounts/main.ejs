@@ -110,7 +110,7 @@
                             <td title="Actions" >
                               <div class="btn-set">
                                 <button class="site-button edit-btn edit-paymentButton" data-bs-toggle="modal" data-bs-target="#editPaymentMmodels" type="button">Edit</button>
-                                <button class="site-button delete-btn dlt-mthd">Delete</button>
+                                <button class="site-button delete-btn dlt-mthd" data-bs-toggle="modal" data-bs-target="#deletePaymentMmodels" type="button">Delete</button>
                               </div>
                             </td>
                             </tr>
@@ -267,6 +267,37 @@
                     <div class="change-pass-model-form-inputs">
                       <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                         <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+                </form>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+      <div class="modal fade change-pass-model paymentDepositePopup manage-acccount-popup" id="deletePaymentMmodels" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+          <div class="modal-content change-pass-model-txt">
+            <div class="modal-header change-pass-model-hed">
+              <div class="featured-sec-ro--titl-txt">
+                <span class="titl-bodr-lft-spn-model"></span>
+                <h3 class="featured-sec-ro--titl-txt-tg-model">Confirmation form</h3>
+              </div>
+              <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body change-pass-model-body">
+            <div class="enter-withdraw-detail">
+                <form  class="Confirmation-form">
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="checkbox" name="checkbox">
                       </div>
                     </div>
                     <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>

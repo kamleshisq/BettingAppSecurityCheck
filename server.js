@@ -8233,9 +8233,10 @@ io.on('connection', (socket) => {
 
 
 
-    socket.on('deletePaymentMethodUserSide', async(data) => {
-        console.log(data)
-    })
+    // socket.on('deletePaymentMethodUserSide', async(data) => {
+    //     // console.log(data)
+
+    // })
 
 })
 
