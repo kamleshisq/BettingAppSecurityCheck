@@ -18376,6 +18376,13 @@ socket.on('connect', () => {
             socket.emit('withdrawalRequestDataUserSide', {filterData, page, LOGINDATA})
         })
 
+
+        $('#load-more').click(async function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let filterData = await userWithrowalFilter()
+            socket.emit('withdrawalRequestDataUserSide', {filterData, page, LOGINDATA})
+        })
     }
     
 

@@ -8308,7 +8308,25 @@ io.on('connection', (socket) => {
 
     socket.on('withdrawalRequestDataUserSide', async(data) => {
         // console.log(data)
-        
+        let filterData = {}
+        if(data.LOGINDATA.LOGINUSER){
+            let page = data.page
+            filterData.userName = data.LOGINDATA.LOGINUSER.userName
+            if(data.filterData.select && data.filterData.select !== "All"){
+                filterData.reqStatus = data.filterData.select
+            }
+
+            if(data.filterData.fdate && data.filterData.tdate){
+                filterData.reqDate = {$gte : new Date(data.filterData.fdate),$lte : new Date(new Date(data.filterData.tdate))}
+            }else if(data.filterData.fdate && !data.filterData.tdate){
+                filterData.reqDate = {$gte : data.filterData.fdate}
+            }else if(!data.filterData.fdate && data.filterData.tdate){
+                filterData.reqDate = {$lte : new Date(new Date(data.filterData.tdate))}
+            }
+
+            let returnData = await withdowReqModel.find(filterData).skip(10 * page).limit(10)
+        }
+
     })
 
 })
