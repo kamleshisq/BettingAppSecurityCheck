@@ -17897,7 +17897,57 @@ socket.on('connect', () => {
             if(data.status === 'err'){
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
             }else{
-                console.log(data)
+                let html = ''
+                if(data.pmethod == "banktransferW"){
+                    html = `<div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <label for="accountholdername"> Account Name</label>
+                      <input class="form-control" type="text" value="${data.accountholdername}" name="accountholdername">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <label for="accountnumber"> Account Number</label>
+                      <input class="form-control" type="number" value="${data.accountnumber}" name="accountnumber">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <label for="displayname"> Display Name</label>
+                      <input class="form-control" type="text" value="${data.displayname}" name="displayname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <label for="ifsccode">Ifsc Code </label>
+                      <input class="form-control" type="text" value="${data.ifsccode}" name="ifsccode">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <label for="bankname">Bank Name</label>
+                      <input class="form-control" type="text" value="${data.bankname}" name="bankname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <label for="branchname">Branch Name</label>
+                      <input class="form-control" type="text" value="${data.branchname}" name="branchname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="password" value="Enter Your Password" name="password" required>
+                    </div>
+                  </div>`
+                }else if(data.pmethod == "upiW"){
+
+                }else{
+
+                }
+                // console.log(data)
+                $('#editPaymentMmodels').find('.editBankUser-fom').innerHTML(html)
+                $('#editPaymentMmodels').find('.editBankUser-fom').attr('id', data._id)
             }
         })
 
