@@ -8149,10 +8149,15 @@ io.on('connection', (socket) => {
         try{
             let reqData = await withdowReqModel.findById(data.data.id)
             if(reqData){
-                // console.log(reqData, "reqDatareqDatareqData")
-                let date1234 = Date.now()
-                let cancelUpdate  = await  withdowReqModel.findByIdAndUpdate(data.data.id, {reqStatus:'cancel', sdmRemark:data.data.remark, approvalDate:date1234})
-                socket.emit('reqCancelUpdate', {status:'sucess', cancelUpdate, reqStatus:'cancel', date1234})
+                let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+                const passcheck = await userCe.correctPassword(data.data.password, userCe.password)
+                if(passcheck){
+                    let date1234 = Date.now()
+                    let cancelUpdate  = await  withdowReqModel.findByIdAndUpdate(data.data.id, {reqStatus:'cancel', sdmRemark:data.data.remark, approvalDate:date1234})
+                    socket.emit('reqCancelUpdate', {status:'sucess', cancelUpdate, reqStatus:'cancel', date1234})
+                }else{
+                    socket.emit('reqCancelUpdate', {status:'err', msg:'Please provide a valid password'})
+                }
             }else{
                 socket.emit('reqCancelUpdate', {status:'err', msg:'Please try again leter'})
             }
