@@ -18387,12 +18387,59 @@ socket.on('connect', () => {
 
 
         socket.on('withdrawalRequestDataUserSide', async(data) => {
-            if(data.returnData.length > 0){
+            if(data.returnData.length > 0){ 
+                let html = ``
+                for(let i = 0; i < data.returnData.length; i++){
+                    var date = new Date(data.returnData[i].reqDate);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                    html += `<tr class="acount-stat-tbl-body-tr">
+                    <td title="Request Date" > ${formattedTime} </td>
+                    <td title="Amount" > ${data.returnData[i].amount} </td>
+                    <td title="status" > ${data.returnData[i].reqStatus} </td>`
+
+                    if(data.returnData[i].sdmRemark){
+                       html += `<td title="Remark" > ${data.returnData[i].sdmRemark} </td>`
+                    }else{
+                        html += `<td title="Remark" > - </td>`
+                    }
+                    html += `<td title="Note" > ${data.returnData[i].note} </td>`
+                    if(data.returnData[i].approvalDate){
+                            var date2 = new Date(data.returnData[i].approvalDate);
+                            var options = { 
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                                hour12: true
+                            };
+                            var formattedTime2 = date2.toLocaleString('en-US', options);
+                        html += `<td title="Approval Date" > ${formattedTime2} </td>`
+                    }else{
+                        html += `<td title="Approval Date" > - </td>`
+                    }
+                     html +=   `</tr>`
+                }
+
+                if(data.page == 0){
+                    $('#table12').find('tbody').html(html)
+                }else{
+                    $('#table12').find('tbody').append(html)
+                }
 
             }else{
                 $('.loadMoredive').addClass('hide')
-                if(data.page = 0){
+                if(data.page == 0){
                     html = '<tr class="no-data"><td >No Data to Display</td></tr>'
+                    $('#table12').find('tbody').html(html)
                 }
             }
         })
