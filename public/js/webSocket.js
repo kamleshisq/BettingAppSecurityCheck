@@ -1292,6 +1292,7 @@ socket.on('connect', () => {
         let oldCount1 = 0
         socket.on('getcountofWITHROWREQ',async(data)=>{
             if(data.status == 'success'){
+                console.log(oldCount1, data.withrowReqCount)
                 if(oldCount1 === 0){
                     oldCount1 = data.withrowReqCount
                 }
