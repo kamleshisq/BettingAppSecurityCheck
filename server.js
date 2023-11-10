@@ -8267,6 +8267,7 @@ io.on('connection', (socket) => {
         let page = data.page;
         let skip;
         if(data.refreshStatus){
+            console.log('working')
             limit = (10 * page) + 10
             skip = 0
         }else{

@@ -18164,7 +18164,7 @@ socket.on('connect', () => {
         })
 
         socket.on('WithdrawLoadMoreAdmin', async(data) => {
-            console.log(data, "bodybodybody")
+            // console.log(data, "bodybodybody")
             if(data.reqData.length > 0){
                 let html = ""
                 for(let i = 0; i < data.reqData.length; i++){
@@ -18203,6 +18203,26 @@ socket.on('connect', () => {
                 }
             }
         })
+
+
+        async function refereshPageWithdr(){
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let filterData = await dilterData()
+            let refreshStatus = true;
+            socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA, refreshStatus})
+        }
+
+
+
+
+        $(document).on('click', ".refresh-btn", function(e){
+            refereshPageWithdr()
+        })
+
+        setInterval(()=>{
+            refereshPageWithdr()
+        },1000 * 5)
+
 
 
 
