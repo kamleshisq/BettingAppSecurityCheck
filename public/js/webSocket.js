@@ -18134,13 +18134,13 @@ socket.on('connect', () => {
             let fromDate = $('#fromDate').val()
             let toDate = $('#toDate').val()
             let status = $('#status').val()
-            if(data.userName.trim() != ''){
+            if(userName.trim() != ''){
                 data.userName = userName
             }
-            if(data.fromDate.trim() != ''){
+            if(fromDate.trim() != ''){
                 data.fromDate = fromDate
             }
-            if(data.toDate.trim() != ''){
+            if(toDate.trim() != ''){
                 data.toDate = toDate
             }
             data.status = status
