@@ -362,6 +362,7 @@ socket.on('connect', () => {
         e.preventDefault()
         $('#navmod4').find('.img-payment').removeClass('active')
         $(this).addClass('active')
+        $('.luck-enterprise ul#BANK-DATA1').after('')
         socket.emit('getAccountsDataUPI', LOGINDATA)
     })
 
@@ -403,6 +404,7 @@ socket.on('connect', () => {
         e.preventDefault()
         $('#navmod4').find('.img-payment').removeClass('active')
         $(this).addClass('active')
+        $('.luck-enterprise ul#BANK-DATA1').after('')
         socket.emit('getAccountDataPaytm', LOGINDATA)
     })
 
@@ -444,6 +446,7 @@ socket.on('connect', () => {
         e.preventDefault()
         $('#navmod4').find('.img-payment').removeClass('active')
         $(this).addClass('active')
+        $('.luck-enterprise ul#BANK-DATA1').after('')
         socket.emit('getAccountsData', LOGINDATA)
     })
 
