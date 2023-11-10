@@ -18023,7 +18023,7 @@ socket.on('connect', () => {
 
         $(document).on('click', '.dlt-mthd', function(e){
             let id = $(this).closest('tr').attr('id')
-            $('#deletePaymentMmodels').find('.Confirmation-form').attr('id', id)
+            $('#deletePaymentMmodels').find('.deleteBankUser-fom').attr('id', id)
         })
 
         $(document).on('submit', '.deleteBankUser-fom', function(e){
@@ -18031,7 +18031,8 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            // console.log(data)
+            let id = $(this).attr('id', id)
+            data.id = id
             if(data.checkbox){
                 socket.emit('deleteMethod', {LOGINDATA, data})
             }else{

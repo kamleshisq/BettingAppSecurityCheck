@@ -8233,6 +8233,20 @@ io.on('connection', (socket) => {
 
 
 
+    socket.on('deleteMethod', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            if(data.data.checkbox){
+                console.log(data.data)
+            }else{
+                socket.emit('deleteMethod', {status:'err', msg:'Please try again leter'})
+            }
+        }else{
+            socket.emit('deleteMethod', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
+
+
     // socket.on('deletePaymentMethodUserSide', async(data) => {
     //     // console.log(data)
 
