@@ -17961,8 +17961,8 @@ socket.on('connect', () => {
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
+                  <label for="branchname">Your Password</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                    <label for="branchname">Your Password</label>
                       <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
                     </div>
                   </div>`
@@ -17986,8 +17986,8 @@ socket.on('connect', () => {
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
+                  <label for="branchname">Your Password</label>
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
-                    <label for="branchname">Your Password</label>
                       <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
                     </div>
                   </div>`
