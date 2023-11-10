@@ -8212,11 +8212,11 @@ io.on('connection', (socket) => {
                     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
                     const passcheck = await user.correctPassword(data.data.password, user.password)
                     if(passcheck){
-                        let data1 = await manageAccountsUser.findByIdAndUpdate(data.data.id, data)
-                        console.log(data1)
+                        let data1 = await manageAccountsUser.findByIdAndUpdate(data.data.id, data.data)
+                        // console.log(data1)
                         if(data1){
-                            console.log('WORKING')
-                            socket.emit('editData', {status:'err', msg:'Please try again leter'})
+                            // console.log('WORKING')
+                            socket.emit('editData', {status:'sucess', msg:'Updated Sucessfully!!'})
                         }
                     }else{
                         socket.emit('editData', {status:'err', msg:'Please provide a valid password'})
