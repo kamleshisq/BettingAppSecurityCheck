@@ -343,11 +343,12 @@ socket.on('connect', () => {
                 let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
                 <li id="Acc-Number"> ${data.data[0].accountnumber}</li>
                 <li id="Bank-Name"> ${data.data[0].bankname}</li>
-                <li id="IFSC"> ${data.data[0].ifsccode}</li>`
+                <li id="IFSC"> ${data.data[0].ifsccode}</li>
+                <a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
                 document.getElementById('BANK-DATA1').innerHTML = htmlData
             }else{
                 $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
-                html = 'No accounts available!!'
+                html = `<a class="payment-mng-link" href="/manageAccounts" >Didn't find the account? Click here to add new</a>`
                 document.getElementById('BANK-DATA1').innerHTML = html
                 $('#navmod4 .accountnamecontainer').html('')
             }
