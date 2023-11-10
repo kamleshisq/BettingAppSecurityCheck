@@ -18156,6 +18156,12 @@ socket.on('connect', () => {
             socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
         })
 
+        $('#status,#fromDate,#toDate').change(async function(){
+            $('.pageId').attr('data-pageid','1')
+            let filterData = await dilterData()
+            let page = 0
+            socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
+        })
 
 
 
