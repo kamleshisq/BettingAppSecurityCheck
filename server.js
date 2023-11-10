@@ -8128,7 +8128,6 @@ io.on('connection', (socket) => {
 
 
     socket.on('reqCancelUpdate', async(data) => {
-        console.log(data)
         try{
             let reqData = await withdowReqModel.findById(data.data.id)
             if(reqData){
@@ -8141,6 +8140,16 @@ io.on('connection', (socket) => {
         }catch(err){
             console.log(err)
             socket.emit('reqCancelUpdate', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
+
+    socket.on('editPaymentMethodUserSide', async(data) => {
+        try{
+            console.log(data)
+        }catch(err){
+            console.log(err)
+            socket.emit('editPaymentMethodUserSide', {status:'err', msg:'Please try again leter'})
         }
     })
 

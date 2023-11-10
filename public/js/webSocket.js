@@ -17880,11 +17880,26 @@ socket.on('connect', () => {
 
         $(document).on('change', '.status_check_payment', function(e){
             e.preventDefault()
-            console.log('Working')
+            // console.log('Working')
             let id = $(this).closest('tr').attr('id')
             socket.emit('UpdateStatusAccount', id)
         })
 
+
+        $(document).on('click', '.edit-paymentButton', function(e){
+            e.preventDefault()
+            let id = $(this).closest('tr').attr('id')
+            socket.emit('editPaymentMethodUserSide', id)
+        })
+
+
+        socket.on('editPaymentMethodUserSide', async(data) => {
+            if(data.status === 'err'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else{
+                console.log(data)
+            }
+        })
 
     }
 
