@@ -8325,6 +8325,7 @@ io.on('connection', (socket) => {
             }
 
             let returnData = await withdowReqModel.find(filterData).skip(10 * page).limit(10)
+            socket.emit('withdrawalRequestDataUserSide', {returnData, page})
         }
 
     })

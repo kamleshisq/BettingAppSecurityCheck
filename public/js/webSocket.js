@@ -17890,7 +17890,7 @@ socket.on('connect', () => {
 
                $('#TABLE tbody').html(html)
             }else{
-                html = 'No Data to Display'
+                html = '<tr><td class="no-data">No Data to Display</td></tr>'
                 $('#TABLE tbody').html(html)
             }
         })
@@ -18382,6 +18382,19 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid',page + 1)
             let filterData = await userWithrowalFilter()
             socket.emit('withdrawalRequestDataUserSide', {filterData, page, LOGINDATA})
+        })
+
+
+
+        socket.on('withdrawalRequestDataUserSide', async(data) => {
+            if(data.returnData.length > 0){
+
+            }else{
+                $('.loadMoredive').addClass('hide')
+                if(data.page = 0){
+                    let html =
+                }
+            }
         })
     }
     
