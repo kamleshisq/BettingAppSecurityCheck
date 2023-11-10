@@ -8158,6 +8158,62 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('editData', async(data) => {
+        try{
+            let thatmethod = await manageAccountsUser.findById(data.data.id)
+            if(thatmethod){
+                let errorEmitted = false;
+                if(data.data.accountholdername === ''){
+                    socket.emit('editData', {status:'err', msg : 'Please Provide a Account Name'})
+                    errorEmitted = true;
+                }
+                if(data.data.displayname === ''){
+                    socket.emit('editData', {status:'err', msg : 'Please Provide a Display Name'})
+                    errorEmitted = true;
+                }
+                if(thatmethod.pmethod === 'banktransferW'){
+                    if(data.data.accountnumber === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Account Number'})
+                        errorEmitted = true;
+                    }else if (data.data.accountnumber.length != 16){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a valid Account Number'})
+                        errorEmitted = true;
+                    }
+                    if(data.data.ifsccode === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Bank IFSC Code'})
+                        errorEmitted = true;
+                    }
+                    if(data.data.bankname === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Bank Name'})
+                        errorEmitted = true;
+                    }
+                    if(data.data.branchname === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Branch Name'})
+                        errorEmitted = true;
+                    }
+                }else if (thatmethod.pmethod === 'upiW'){
+                    if(data.data.upiid === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a UPI Id'})
+                        errorEmitted = true;
+                    }
+                }else{
+                    if(data.data.phonenumber === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Phone Number'})
+                        errorEmitted = true;
+                    }else if (data.data.phonenumber.length != 10){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a valid Phone Number'})
+                        errorEmitted = true;
+                    }
+                }
+            }else{
+                socket.emit('editData', {status:'err', msg:'Please try again leter'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('editData', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
 })
 
 http.listen(8080,()=> {

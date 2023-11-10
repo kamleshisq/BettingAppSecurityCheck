@@ -18006,7 +18006,19 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             let id  = $(this).attr('id')
             data.id = id
-            console.log(data)
+            // console.log(data)
+            socket.emit('editData', {data, LOGINDATA})
+        })
+
+        socket.on('editData', async(data) => {
+            if(data.status === 'err'){   
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else{
+                togglePopupMain('popup-1', "redPopUP", 'Updated Sucessfully!!')
+                setTimeout(()=>{
+                    window.location.reload()
+                }, 1000)
+            }
         })
 
     }
