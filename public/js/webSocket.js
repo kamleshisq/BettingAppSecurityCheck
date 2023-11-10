@@ -17898,41 +17898,41 @@ socket.on('connect', () => {
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
             }else{
                 let html = ''
-                if(data.pmethod == "banktransferW"){
+                if(data.data.pmethod == "banktransferW"){
                     html = `<div class="change-pass-model-form-inputs">
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                       <label for="accountholdername"> Account Name</label>
-                      <input class="form-control" type="text" value="${data.accountholdername}" name="accountholdername">
+                      <input class="form-control" type="text" value="${data.data.accountholdername}" name="accountholdername">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                       <label for="accountnumber"> Account Number</label>
-                      <input class="form-control" type="number" value="${data.accountnumber}" name="accountnumber">
+                      <input class="form-control" type="number" value="${data.data.accountnumber}" name="accountnumber">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                       <label for="displayname"> Display Name</label>
-                      <input class="form-control" type="text" value="${data.displayname}" name="displayname">
+                      <input class="form-control" type="text" value="${data.data.displayname}" name="displayname">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                       <label for="ifsccode">Ifsc Code </label>
-                      <input class="form-control" type="text" value="${data.ifsccode}" name="ifsccode">
+                      <input class="form-control" type="text" value="${data.data.ifsccode}" name="ifsccode">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                       <label for="bankname">Bank Name</label>
-                      <input class="form-control" type="text" value="${data.bankname}" name="bankname">
+                      <input class="form-control" type="text" value="${data.data.bankname}" name="bankname">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
                     <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
                       <label for="branchname">Branch Name</label>
-                      <input class="form-control" type="text" value="${data.branchname}" name="branchname">
+                      <input class="form-control" type="text" value="${data.data.branchname}" name="branchname">
                     </div>
                   </div>
                   <div class="change-pass-model-form-inputs">
@@ -17940,12 +17940,13 @@ socket.on('connect', () => {
                       <input class="form-control" type="password" value="Enter Your Password" name="password" required>
                     </div>
                   </div>`
-                }else if(data.pmethod == "upiW"){
+                }else if(data.data.pmethod == "upiW"){
 
                 }else{
 
                 }
-                $("#editPaymentMmodels").find('form').attr('id', data._id)
+                console.log(data)
+                $("#editPaymentMmodels").find('form').attr('id', data.data._id)
                 // console.log(html2)
             }
         })
