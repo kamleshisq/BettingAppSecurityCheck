@@ -8295,7 +8295,7 @@ io.on('connection', (socket) => {
         }else if(!data.filterData.fromDate && data.filterData.toDate) {
             filterData.reqDate = {$lte : new Date(new Date(data.filterData.toDate))}
         }
-        let reqData = await withdowReqModel.find(filterData).sort({date:-1}).skip(skip).limit(limit)
+        let reqData = await withdowReqModel.find(filterData).sort({reqDate:-1}).skip(skip).limit(limit)
         socket.emit('WithdrawLoadMoreAdmin', {reqData, page})
 
     })
