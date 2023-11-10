@@ -8079,7 +8079,7 @@ io.on('connection', (socket) => {
             if(acc){
                 socket.emit('GEtACcountData', {status:'sucess', data:acc})
             }else{
-                socket.emit('GEtACcountData', {status:'err', msg:'Please try again leter'})
+                socket.emit('GEtACcountData', {status:'sucesserr', msg:'Please try again leter'})
             }
         }catch(err){
             console.log(err)

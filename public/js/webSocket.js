@@ -18073,7 +18073,7 @@ socket.on('connect', () => {
 
 
     if(pathname == "/admin/withdrawalRequest"){
-        
+
         var today = new Date();
         var todayFormatted = formatDate(today);
         var tomorrow = new Date();
@@ -18142,7 +18142,11 @@ socket.on('connect', () => {
         socket.on('GEtACcountData', async(data) => {
             if(data.status == 'err'){
                 togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
-            }else{
+            }else if(data.status === 'sucesserr'){
+                let html = 'NO ACCOUNT DATA FOUND'
+                document.getElementById('AccountData').innerHTML = html
+            }
+            else{
                 console.log(data.data)
                 let html = ''
                 if(data.data.pmethod === "upiW"){
