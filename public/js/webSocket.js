@@ -702,6 +702,7 @@ socket.on('connect', () => {
                                 parentElement.parentNode.removeChild(parentElement);
                               }else{
                                 let parentElement2 = childElement.closest('mbl-exc-inn-tbl-datadv-wrp')
+                                console.log(parentElement2, "parentElement2parentElement2parentElement2")
                                 if(parentElement2){
                                     parentElement2.parentNode.removeChild(parentElement2);
                                 }
