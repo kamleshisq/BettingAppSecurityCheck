@@ -21,15 +21,18 @@
         %>
         <%if(result){%>
           <div class="mbl-exc-inn-tbl-datadv-wrp">
-            <div class="exchange-pg-inn-banner-col-titi">
-              <div class="exchange-pg-inn-banner-col-titi-txt">
-                  <h6><span> <%=result.eventData.name%> || Match Odds</span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
-                    <i class="fa-solid fa-circle-info"></i> 
-                  </span></h6>
+            <div class="exchange-pg-inn-banner-col-titi-wrpp">
+              <div class="exchange-pg-inn-banner-col-titi">
+                <div class="exchange-pg-inn-banner-col-titi-txt">
+                    <h6><span> <%=result.eventData.name%> || Match Odds</span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
+                      <i class="fa-solid fa-circle-info"></i> 
+                    </span></h6>
+                </div>
+                <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+                    <h6><b>Min : 100, Max : 1000</b></h6>
+                </div>
               </div>
-              <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-                  <h6><b>Min : 100, Max : 1000</b></h6>
-              </div>
+              <button class="multi_market" id="<%=result.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector2.svg" alt=""></button>
             </div>
         
             <div class="exc-inn-colaps-data-wrpdv">
