@@ -9522,6 +9522,13 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/inPlay" ){
+        // $('.href-div')
+        document.on('click', ".href-div", function(){
+            let grefLimk = $(this).attr('data-href')
+            console.log(grefLimk)
+        })
+
+
         function marketId1(){
             socket.emit("liveData" , "data12")
               setTimeout(()=>{
