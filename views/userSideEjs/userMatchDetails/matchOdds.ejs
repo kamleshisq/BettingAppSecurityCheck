@@ -18,12 +18,12 @@
       <%if(user && userMultimarkets != null){ %>
         <%let check = userMultimarkets.marketIds.find(item => item == match.marketList.match_odd.marketId) %>
         <%if(check){%>
-          <a><img src="/assets/img/exchange/Vector2.svg" alt=""></a> 
+          <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector2.svg" alt=""></button> 
         <%}else{%>
-          <a><img src="/assets/img/exchange/Vector.png" alt=""></a> 
+          <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""></button>  
         <%}%>
       <%}else{%>
-        <a><img src="/assets/img/exchange/Vector.png" alt=""></a>
+        <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""></button> 
       <%}%>
     </div>
   </div>
