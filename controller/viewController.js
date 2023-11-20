@@ -2869,12 +2869,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             maxFancy = FENCY.max_stake
         }
 
-        const commissionmarket = await commissionMarketModel.find();
-        let commissionmarkerarr = [];
-        commissionmarket.map(ele=>{
-            commissionmarkerarr.push(ele.marketId)
-        })
-
+        const commissionmarkerarr = await commissionMarketModel.distinct('marketId');
         // console.log(betLimit)
         // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 
