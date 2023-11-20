@@ -24,7 +24,7 @@
           var formattedTime = date.toLocaleString('en-US', options);
             %>
           <div class="exch-mob-data-tbl-card-wrp">
-            <div class="exch-mob-data-tbl-card-wrp-a href-div" data-href="/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>">
+            <a class="exch-mob-data-tbl-card-wrp-a href-div" href="/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>">
               <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
                 <div class="top-mobile-table-data">
                   <div class="short-score">
@@ -88,7 +88,7 @@
                     </span>
                   <%}%>
                   <span class="mobile-star-mutlimarket exch-mob-data-tbl-card-dv2-spns">
-                    <button href="multimarket.html"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
+                    <button class="multi_market"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
                   </span>
                 </div>
               </div>
@@ -165,7 +165,7 @@
                 </div>
               <%} %>
               </div>
-          </div>
+            </a>
         <%}%>
         <%}%>
       </div>
