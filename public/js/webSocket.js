@@ -695,7 +695,7 @@ socket.on('connect', () => {
                     if(multiMarketTd.id == data.id){
                         function removeParentElementByChildId(childId) {
                             const childElement = document.getElementById(childId);
-                            console.log(childElement)
+                            console.log(childElement, 111)
                             if (childElement) {
                               const parentElement = childElement.closest('.exchange-pg-inn-banner-col2');
                               if (parentElement) {
