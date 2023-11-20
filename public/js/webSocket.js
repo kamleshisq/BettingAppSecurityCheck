@@ -18483,7 +18483,7 @@ socket.on('connect', () => {
     }
     
     if(pathname == "/htmlDATA"){
-        console.log(search)
+        console.log(search, 123456879)
     }
 })
 })
