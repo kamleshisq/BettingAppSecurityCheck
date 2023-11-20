@@ -9523,7 +9523,7 @@ socket.on('connect', () => {
 
     if(pathname === "/exchange/inPlay" ){
         // $('.href-div')
-        document.on('click', ".href-div", function(){
+        $(document).on('click', ".href-div", function(){
             let grefLimk = $(this).attr('data-href')
             console.log(grefLimk)
         })
