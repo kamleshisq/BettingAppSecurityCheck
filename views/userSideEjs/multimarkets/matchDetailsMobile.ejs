@@ -6,18 +6,48 @@
     <div class="mbl-exc-inn-tbl-datadv">
       <%
         for(let i = 0; i < multimarket.marketIds.length; i++){
-            let result
-            result = sportData[0].gameList[0].eventList.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
+          let result
+          let isBookmaker = false
+          let isToss = false
+          result = sportData[0].gameList[0].eventList.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
+          if(!result){
+            let footBall = sportData[1].gameList.find(item => item.sport_name === "Football")
+            footBall = footBall.eventList
+            result = footBall.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
             if(!result){
-                let footBall = sportData[1].gameList.find(item => item.sport_name === "Football")
-                footBall = footBall.eventList
-                result = footBall.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
-                if(!result){
-                    let Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis")
-                    Tennis = Tennis.eventList
-                    result = Tennis.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
+              let Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis")
+              Tennis = Tennis.eventList
+              result = Tennis.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
+              if(!result){
+                result = sportData[0].gameList[0].eventList.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[0] &&  item.marketList.bookmaker[0].marketId == multimarket.marketIds[i])
+                      if(result){
+                        isBookmaker = true
+                      }else{
+        
+                          result = sportData[0].gameList[0].eventList.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[1] &&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
+                          if(result){
+                            isToss = true
+                          }
+                      }
+                      if(!result){
+                        
+        
+                        result = Tennis.find(item => item.marketList.bookmaker != null&&  item.marketList.bookmaker[0].marketId == multimarket.marketIds[i])
+                      if(result){
+                        isBookmaker = true
+                      }else{
+        
+                          result = Tennis.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[1] &&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
+                          if(result){
+                            isToss = true
+                          }
+                      }
+        
+                      }
+                    }
                 }
             }
+          
         %>
         <%if(result){%>
           <div class="mbl-exc-inn-tbl-datadv-wrp">
