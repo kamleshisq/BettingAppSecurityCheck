@@ -9525,7 +9525,7 @@ socket.on('connect', () => {
         // $('.href-div')
         $(document).on('click', ".href-div", function(){
             let grefLimk = $(this).attr('data-href')
-            console.log(grefLimk)
+            window.location = grefLimk
         })
 
 
