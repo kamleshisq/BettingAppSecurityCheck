@@ -3456,25 +3456,25 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
                 userName:{$in:childrenUsername}
             }
         },
-        {
-            $group: {
-              _id: "$marketName",
-              count: { $sum: 1 },
-              marketId: { $first: "$marketId" },
-              match: { $first: "$match" },
-              date: {$first:'$date'}
-            }
-          },
-          {
-            $project: {
-              _id: 0,
-              marketName: "$_id",
-              marketId: 1,
-              count: 1,
-              match : 1,
-              date:1
-            }
-          }
+        // {
+        //     $group: {
+        //       _id: "$marketName",
+        //       count: { $sum: 1 },
+        //       marketId: { $first: "$marketId" },
+        //       match: { $first: "$match" },
+        //       date: {$first:'$date'}
+        //     }
+        //   },
+        //   {
+        //     $project: {
+        //       _id: 0,
+        //       marketName: "$_id",
+        //       marketId: 1,
+        //       count: 1,
+        //       match : 1,
+        //       date:1
+        //     }
+        //   }
     ])
     console.log(betsEventWiseOpen, 456465465465456456456)
     let betsEventWiseMap = await betModel.aggregate([
