@@ -88,7 +88,16 @@
                     </span>
                   <%}%>
                   <span class="mobile-star-mutlimarket exch-mob-data-tbl-card-dv2-spns">
-                    <button class="multi_market"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
+                    <%if(user && userMultimarkets != null){ %>
+                      <%let check = userMultimarkets.marketIds.find(item => item == tennisSeries[i].matchdata[j].marketList.match_odd.marketId) %>
+                      <%if(check){%>
+                      <button class="multi_market" id="<%=tennisSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://ollscores.com:8080/assets/img/exchange/Vector2.png" alt=""/></button> 
+                      <%}else{%>
+                      <button class="multi_market" id="<%=tennisSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
+                      <%}%>
+                    <%}else{%>
+                      <button class="multi_market" id="<%=tennisSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
+                    <%}%>
                   </span>
                 </div>
               </div>
@@ -284,14 +293,11 @@
                     <%if(user && userMultimarkets != null){ %>
                       <%let check = userMultimarkets.marketIds.find(item => item == tennisSeries[i].matchdata[j].marketList.match_odd.marketId) %>
                       <%if(check){%>
-                        <!-- <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a>  -->
                       <button class="multi_market" id="<%=tennisSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://ollscores.com:8080/assets/img/exchange/Vector2.png" alt=""/></button> 
                       <%}else{%>
-                        <!-- <a><img src="../../assets/img/exchange/Vector.png" alt=""></a>  -->
                       <button class="multi_market" id="<%=tennisSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
                       <%}%>
                     <%}else{%>
-                      <!-- <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> -->
                       <button class="multi_market" id="<%=tennisSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
                     <%}%>
                   </span>
