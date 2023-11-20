@@ -18484,7 +18484,25 @@ socket.on('connect', () => {
     
     if(pathname == "/htmlDATA"){
         let matchId = search.split('=')[1]
-        console.log(matchId, "matchIdmatchId")
+        // console.log(matchId, "matchIdmatchId")
+        function htmlDataFun(){
+            socket.emit('HTMLSCOREDATA', matchId)
+            // socket.emit("eventId", id)
+            setTimeout(()=>{
+                htmlDataFun()
+            }, 1000)
+
+        }
+        htmlDataFun()
+
+
+        socket.on('HTMLSCOREDATA', data => {
+            if(data != ""){
+                let score = JSON.parse(data)
+                let element = document.getElementById("data")
+                element.innerHTML = score[0].data
+            }
+        })
     }
 })
 })
