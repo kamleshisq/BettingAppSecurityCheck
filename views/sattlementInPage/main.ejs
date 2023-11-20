@@ -6,7 +6,7 @@
       <div class="new-head bet-limit-breadcrum"> 
         <div class="bredcum-container settelment-bredcrum">
           <ul class="open">
-              <li><a href="/admin/settlement">Settelments</a></li>
+              <li><a href="/admin/settlement">Settelments</a></li> 
               <%
                   var timestamp = data.date ; 
                   var date = new Date(timestamp);
@@ -22,22 +22,6 @@
           </ul>
         </div>     
     </div>
-      <!-- <div class="table-heading">
-        <h3><a href="/admin/settlement">Settelments</a></h3>
-        <div class="form">
-          <%
-          var timestamp = data.date ; 
-          var date = new Date(timestamp);
-          var options = { 
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        };
-        var formattedTime = date.toLocaleString('en-US', options);
-          %>
-          <h4><%=data.match%> / <%=formattedTime%></h4>
-        </div>
-      </div> -->
     </div>
   </section>
     
