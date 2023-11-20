@@ -9523,10 +9523,10 @@ socket.on('connect', () => {
 
     if(pathname === "/exchange/inPlay" ){
         // $('.href-div')
-        $(document).on('click', ".href-div", function(){
-            let grefLimk = $(this).attr('data-href')
-            window.location = grefLimk
-        })
+        // $(document).on('click', ".href-div", function(){
+        //     let grefLimk = $(this).attr('data-href')
+        //     window.location = grefLimk
+        // })
 
 
         function marketId1(){
