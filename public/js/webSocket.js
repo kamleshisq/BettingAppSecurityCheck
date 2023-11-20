@@ -18483,7 +18483,8 @@ socket.on('connect', () => {
     }
     
     if(pathname == "/htmlDATA"){
-        console.log(search, 123456879)
+        let matchId = search.split('=')[1]
+        console.log(matchId, "matchIdmatchId")
     }
 })
 })
