@@ -699,6 +699,11 @@ socket.on('connect', () => {
                               const parentElement = childElement.closest('.exchange-pg-inn-banner-col2');
                               if (parentElement) {
                                 parentElement.parentNode.removeChild(parentElement);
+                              }else{
+                                let parentElement2 = childElement.closest('mbl-exc-inn-tbl-datadv-wrp')
+                                if(parentElement2){
+                                    parentElement2.parentNode.removeChild(parentElement2);
+                                }
                               }
                             }
                           }
