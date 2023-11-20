@@ -20,25 +20,25 @@
                 <%let sessionData = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
                 <%if(sessionData.length > 0){ %>
                   <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab5-tab-mobile" data-bs-toggle="pill" data-bs-target="#fancytab5" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Session</button>
+                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab5-tab" data-bs-toggle="pill" data-bs-target="#fancytab5" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Session</button>
                   </li>
                 <%} %>
                 <% let dataSessionOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && item.title.startsWith("Only")) %>
                 <%if(dataSessionOnly.length > 0){%>
                   <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab3-tab-mobile" data-bs-toggle="pill" data-bs-target="#fancytab3" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Only Over</button>
+                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab3-tab" data-bs-toggle="pill" data-bs-target="#fancytab3" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Only Over</button>
                   </li>
                 <%} %>
                 <% let dataNotOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.includes("Over")) %>
                 <%if(dataNotOnly.length > 0 ) {%>
                   <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab4-tab-mobile" data-bs-toggle="pill" data-bs-target="#fancytab4" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">W/P Market</button>
+                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab4-tab" data-bs-toggle="pill" data-bs-target="#fancytab4" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">W/P Market</button>
                   </li>
                 <%} %>
               <%}%>
               <%if(match.marketList.odd_even != null){%>
                 <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                  <button class="nav-link exch-pg-inn-fancy-tab-btn" id="pills-profile-tab-mobile" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Odd/Even</button>
+                  <button class="nav-link exch-pg-inn-fancy-tab-btn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Odd/Even</button>
                 </li>
               <%}%> 
             </div>       
@@ -264,7 +264,7 @@
               <%if(match.marketList.session != null){%>
               <%let sessionData = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.startsWith("Only") &&  item.title.includes("Over"))%>
               <%if(sessionData.length > 0){ %>
-              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab5" role="tabpanel" aria-labelledby="fancytab5-tab-mobile" tabindex="0">
+              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab5" role="tabpanel" aria-labelledby="fancytab5-tab" tabindex="0">
                 <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                   <table class="acount-stat-tbl mt-2">
       
@@ -318,7 +318,7 @@
               <%} %>
 
               <%if(match.marketList.odd_even != null){%>
-                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab-mobile" tabindex="0">
+                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                   <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                     <table class="acount-stat-tbl mt-2">
         
@@ -374,7 +374,7 @@
               <%if(match.marketList.session != null){%>
                 <% let dataSessionOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && item.title.startsWith("Only")) %>
                 <%if(dataSessionOnly.length != 0){%>
-                  <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab-mobile" tabindex="0">
+                  <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab" tabindex="0">
                     <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                       <table class="acount-stat-tbl mt-2">
           
@@ -431,7 +431,7 @@
               <%if(match.marketList.session != null){%>
               <% let dataNotOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.includes("Over")) %>
               <%if(dataNotOnly.length > 0) {%>
-                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab4" role="tabpanel" aria-labelledby="fancytab4-tab-mobile" tabindex="0">
+                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab4" role="tabpanel" aria-labelledby="fancytab4-tab" tabindex="0">
                   <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                     <table class="acount-stat-tbl mt-2">
         
