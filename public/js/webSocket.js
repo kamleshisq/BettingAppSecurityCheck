@@ -695,14 +695,14 @@ socket.on('connect', () => {
                     if(multiMarketTd.id == data.id){
                         function removeParentElementByChildId(childId) {
                             const childElement = document.getElementById(childId);
-                            console.log(childElement, 111)
+                            // console.log(childElement, 111)
                             if (childElement) {
                               const parentElement = childElement.closest('.exchange-pg-inn-banner-col2');
                               if (parentElement) {
                                 parentElement.parentNode.removeChild(parentElement);
                               }else{
-                                let parentElement2 = childElement.closest('mbl-exc-inn-tbl-datadv-wrp')
-                                console.log(parentElement2, "parentElement2parentElement2parentElement2")
+                                let parentElement2 = childElement.closest('.mbl-exc-inn-tbl-datadv-wrp')
+                                // console.log(parentElement2, "parentElement2parentElement2parentElement2")
                                 if(parentElement2){
                                     parentElement2.parentNode.removeChild(parentElement2);
                                 }
