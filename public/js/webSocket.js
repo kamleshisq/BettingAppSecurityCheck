@@ -18490,7 +18490,7 @@ socket.on('connect', () => {
             // socket.emit("eventId", id)
             setTimeout(()=>{
                 htmlDataFun()
-            }, 1000)
+            }, 1000000000)
 
         }
         htmlDataFun()
