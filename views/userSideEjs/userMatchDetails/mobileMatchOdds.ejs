@@ -1,4 +1,5 @@
 <div class="mbl-exc-inn-tbl-datadv-wrp">
+  <div class="inplay-inner-page-title">
     <div class="exchange-pg-inn-banner-col-titi">
       <div class="exchange-pg-inn-banner-col-titi-txt">
           <h6><span>Match Odds</span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
@@ -9,6 +10,17 @@
           <h6 class="market-limit" id="<%=match.marketList.match_odd.marketId%>"><b>Min : <%=minMatchOdds%>, Max : <%=maxMatchOdds%></b></h6>
       </div>
     </div>
+    <%if(user && userMultimarkets != null){ %>
+      <%let check = userMultimarkets.marketIds.find(item => item == match.marketList.match_odd.marketId) %>
+      <%if(check){%>
+        <a><img src="/assets/img/exchange/Vector2.svg" alt=""></a> 
+      <%}else{%>
+        <a><img src="/assets/img/exchange/Vector.png" alt=""></a> 
+      <%}%>
+    <%}else{%>
+      <a><img src="/assets/img/exchange/Vector.png" alt=""></a>
+    <%}%>
+  </div>
 
     <div class="exc-inn-colaps-data-wrpdv">
 
