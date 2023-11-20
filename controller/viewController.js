@@ -5391,5 +5391,9 @@ exports.myWithrowReq = catchAsync(async(req, res, next) => {
         withrowReqData,
         notifications:req.notifications
     })
-    // )
 });
+
+
+exports.getHTMLSCOREIFRm = catchAsync(async(req, res, next) => {
+    res.status(200).render('./forSimpleHtmlOFSports')
+})
