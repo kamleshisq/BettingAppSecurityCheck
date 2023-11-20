@@ -18482,6 +18482,8 @@ socket.on('connect', () => {
         })
     }
     
-
+    if(pathname == "/htmlDATA"){
+        console.log(search)
+    }
 })
 })
