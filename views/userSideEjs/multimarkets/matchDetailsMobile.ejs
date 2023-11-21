@@ -159,11 +159,11 @@
                     <%for(let j = 0; j < jsonData.length; j++){%>
                           <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href="#">
                               <td colspan="2" style=" text-align: left;">
-                               
+                                <%=jsonData[j].runner%>
                               </td>
                               
                               <td>
-                                <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=jsonData[i].secId%>1">
+                                <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=jsonData[j].secId%>1">
                                         
                                 </span> 
                               </td>
@@ -171,7 +171,7 @@
                               
                 
                               <td>
-                                <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=jsonData[i].secId%>2">
+                                <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=jsonData[j].secId%>2">
                                         
                                 </span> 
                               </td>
