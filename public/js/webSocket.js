@@ -10618,6 +10618,7 @@ socket.on('connect', () => {
                     }
                 }
                 else if (this.id == `${section.selectionId}6`){
+                    console.log(data)
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
