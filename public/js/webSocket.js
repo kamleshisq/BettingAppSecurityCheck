@@ -10446,15 +10446,15 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/multimarkets"){
-        $(document).ready(function(){
-            $(".exchange-pg-inn-tbl .button").click(function(){
-              $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
-              $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
-            });
-            $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
-              $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
-            });
-          });
+        // $(document).ready(function(){
+        //     $(".exchange-pg-inn-tbl .button").click(function(){
+        //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
+        //       $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
+        //     });
+        //     $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
+        //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
+        //     });
+        //   });
 
           $(document).ready(function(){
             $("table .button").click(function(){
