@@ -10478,7 +10478,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 5000)
         }
         marketId()
         let first = true
