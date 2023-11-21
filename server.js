@@ -1689,9 +1689,10 @@ io.on('connection', (socket) => {
             }
 
         }else{
-            for(let i = 0; i < finalResult.item.length; i++){
-                console.log(finalResult.item[i])    
-            }
+            console.log(finalResult)
+            // for(let i = 0; i < finalResult.item.length; i++){
+            //     // console.log(finalResult.item[i])    
+            // }
         }
 
         // console.log(resumeSuspendMarkets)
