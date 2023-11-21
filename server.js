@@ -1689,6 +1689,7 @@ io.on('connection', (socket) => {
             }
 
         }else{
+            console.log(finalResult)
             // for(let i = 0; i < finalResult.item.length; i++){
                 
             // }
