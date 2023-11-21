@@ -409,101 +409,101 @@
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script>
   // Function to handle the click event for the "tbl-bg-blu-spn" spans
-//   function handleSpanClick(event) {
-//     const span = event.target;
-//     if (!span.classList.contains('tbl-bg-blu-spn')) return;
+  function handleSpanClick(event) {
+    const span = event.target;
+    if (!span.classList.contains('tbl-bg-blu-spn')) return;
 
-//     event.preventDefault();
-//     const targetId = span.getAttribute('href');
-//     const targetCollapseDiv = document.querySelector(targetId);
+    event.preventDefault();
+    const targetId = span.getAttribute('href');
+    const targetCollapseDiv = document.querySelector(targetId);
 
-//     // Get the closest "table-data-2" div
-//     const tableDataDiv = span.closest('.table-data-2');
+    // Get the closest "table-data-2" div
+    const tableDataDiv = span.closest('.table-data-2');
 
-//     // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs within the same "table-data-2" div
-//     const collapseDivs = tableDataDiv.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
-//     collapseDivs.forEach(div => {
-//       if (div !== targetCollapseDiv) {
-//         div.classList.remove('show');
-//       }
-//     });
+    // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs within the same "table-data-2" div
+    const collapseDivs = tableDataDiv.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
+    collapseDivs.forEach(div => {
+      if (div !== targetCollapseDiv) {
+        div.classList.remove('show');
+      }
+    });
 
-//     targetCollapseDiv.classList.toggle('show');
-//   }
+    targetCollapseDiv.classList.toggle('show');
+  }
 
-//   // Add a single click event listener to the document to handle all clicks
-//   document.addEventListener('click', handleSpanClick);
-// </script>
-// </script>
-// <script>
-//  $(document).ready(function(){
-//    $("#offsetmenubtnn").click(function(){
-//      $("#offsetmenubody").toggleClass("offset-mnu-width");
-//    });
-//  });
-// </script>
+  // Add a single click event listener to the document to handle all clicks
+  document.addEventListener('click', handleSpanClick);
+</script>
+</script>
+<script>
+ $(document).ready(function(){
+   $("#offsetmenubtnn").click(function(){
+     $("#offsetmenubody").toggleClass("offset-mnu-width");
+   });
+ });
+</script>
 
-// <script>
-//  $(document).ready(function(){
-//    $("#offsetmenubtnn").click(function(){
-//      $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
-//    });
-//  });
-// </script>
+<script>
+ $(document).ready(function(){
+   $("#offsetmenubtnn").click(function(){
+     $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+   });
+ });
+</script>
 
-// <script>
-//  $(document).ready(function(){
-//    $("#offsertmnuclosbtn").click(function(){
-//      $("#offsetmenubody").toggleClass("offset-mnu-width");
-//    });
-//  });
-// </script>
+<script>
+ $(document).ready(function(){
+   $("#offsertmnuclosbtn").click(function(){
+     $("#offsetmenubody").toggleClass("offset-mnu-width");
+   });
+ });
+</script>
 
-// <script>
-//  $(document).ready(function(){
-//    $("#offsertmnuclosbtn").click(function(){
-//      $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
-//    });
-//  });
-// </script>
-// <script>
-//   $(document).ready(function () {
-//     // var currentCollapse = null;
+<script>
+ $(document).ready(function(){
+   $("#offsertmnuclosbtn").click(function(){
+     $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+   });
+ });
+</script>
+<script>
+  $(document).ready(function () {
+    // var currentCollapse = null;
 
-//     // // Toggle corresponding div when span is clicked
-//     // $('[data-toggle="collapse"]').click(function () {
-//     //   var targetDivId = $(this).data('target');
+    // // Toggle corresponding div when span is clicked
+    // $('[data-toggle="collapse"]').click(function () {
+    //   var targetDivId = $(this).data('target');
 
-//     //   // Check if the clicked span is the same as the currentCollapse
-//     //   if (currentCollapse === targetDivId) {
-//     //     // If it's the same, hide the currentCollapse and reset it to null
-//     //     $(targetDivId).collapse('hide');
-//     //     currentCollapse = null;
-//     //   } else {
-//     //     // If it's different, close the currentCollapse (if any) and show the target div
-//     //     if (currentCollapse) $(currentCollapse).collapse('hide');
-//     //     $(targetDivId).collapse('show');
-//     //     currentCollapse = targetDivId;
-//     //   }
-//     // });
+    //   // Check if the clicked span is the same as the currentCollapse
+    //   if (currentCollapse === targetDivId) {
+    //     // If it's the same, hide the currentCollapse and reset it to null
+    //     $(targetDivId).collapse('hide');
+    //     currentCollapse = null;
+    //   } else {
+    //     // If it's different, close the currentCollapse (if any) and show the target div
+    //     if (currentCollapse) $(currentCollapse).collapse('hide');
+    //     $(targetDivId).collapse('show');
+    //     currentCollapse = targetDivId;
+    //   }
+    // });
 
-//     // Generate a random CAPTCHA code
-//     function generateCaptcha() {
-//       var captchaLength = 6; // Length of the captcha
-//       var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; // Characters used for captcha
-//       var captcha = "";
-//       for (var i = 0; i < captchaLength; i++) {
-//         var randomIndex = Math.floor(Math.random() * charset.length);
-//         captcha += charset.charAt(randomIndex);
-//       }
-//       return captcha;
-//     }
+    // Generate a random CAPTCHA code
+    function generateCaptcha() {
+      var captchaLength = 6; // Length of the captcha
+      var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; // Characters used for captcha
+      var captcha = "";
+      for (var i = 0; i < captchaLength; i++) {
+        var randomIndex = Math.floor(Math.random() * charset.length);
+        captcha += charset.charAt(randomIndex);
+      }
+      return captcha;
+    }
 
-//     // Set the CAPTCHA code to the span with ID "captchaSpan"
-//     var captchaCode = generateCaptcha();
-//     $("#captchaSpan").text(captchaCode);
-//   });
-// </script>
+    // Set the CAPTCHA code to the span with ID "captchaSpan"
+    var captchaCode = generateCaptcha();
+    $("#captchaSpan").text(captchaCode);
+  });
+</script>
 
     
     
