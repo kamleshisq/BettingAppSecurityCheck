@@ -10457,14 +10457,14 @@ socket.on('connect', () => {
         //   });
 
           $(document).ready(function(){
-  $(".exchange-pg-inn-tbl .button").click(function(){
-    $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
-    $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
-  });
-  $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
-    $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
-  });
-})
+            $("table .button").click(function(){
+              $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
+              $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
+            });
+            $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
+              $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
+            });
+        });
 
         function showLoader() {
             document.getElementById("loader-overlay").style.display = "flex";
