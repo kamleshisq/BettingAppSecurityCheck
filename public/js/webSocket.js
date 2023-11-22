@@ -92,6 +92,18 @@ socket.on('connect', () => {
         }, 5000);
     }
 
+    $('.button').click(function (event) {
+        // Check if the clicked span has a child with class .mylock-data
+        if ($(this).find('.mylock-data').length > 0) {
+          // Prevent the click event if .mylock-data is found
+          event.stopPropagation();
+          console.log('Clicked on span, but .mylock-data is present.');
+        } else {
+          // Your logic for handling click on the span when .mylock-data is not present
+          console.log('Clicked on span, .mylock-data is not present.');
+        }
+    });
+
     $(document).on('click', ".close-btn", function() {
         const grandParent = $(this).closest('.popup');
         grandParent.removeClass("active");
@@ -7372,7 +7384,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".cashout", function(e){
             let id = $(this).closest('table').attr('id')
-            console.log(id)
+            
         })
 
         function marketLimitId(){
