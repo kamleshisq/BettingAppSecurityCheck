@@ -10479,6 +10479,7 @@ socket.on('connect', () => {
         function marketId(){
             $(document).ready(function() {
                 var ids = [];
+                var pairs = [];
           
                 $(".market").each(function() {
                   ids.push(this.id);

@@ -5348,7 +5348,7 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     let accounts = await manageAccountUser.find({userName:req.currentUser.userName})
-    console.log(accounts, "accountsaccounts")
+    // console.log(accounts, "accountsaccounts")
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/manageAccounts/main", {
         title:"Manage Accounts",
