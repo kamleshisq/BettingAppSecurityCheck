@@ -7362,7 +7362,11 @@ socket.on('connect', () => {
 
         socket.on('cashoutCheck', data => {
             if(data.Status){
-                console.log($('.mo'))
+                // console.log($('.mo'))
+                let tables = $('.mo')
+                tables.each(function (index, table) {
+                    $(table).find('thead tr th:first').text('Market<button class="site-button cashout">CASHOUT</button>');
+                })
             }else{
                 console.log("noMareket")
             }
