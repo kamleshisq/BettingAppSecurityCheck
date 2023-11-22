@@ -7361,7 +7361,7 @@ socket.on('connect', () => {
         cashoutCheck()
 
         socket.on('cashoutCheck', data => {
-            if(data.status){
+            if(data.Status){
                 console.log($('.mo'))
             }else{
                 console.log("noMareket")
