@@ -7360,6 +7360,10 @@ socket.on('connect', () => {
         }
         cashoutCheck()
 
+        socket.on('cashoutCheck', data => {
+            
+        })
+
         function marketLimitId(){
             $(document).ready(function() {
                 var ids = [];

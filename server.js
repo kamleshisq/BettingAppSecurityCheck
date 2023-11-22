@@ -8350,7 +8350,15 @@ io.on('connection', (socket) => {
 
 
     socket.on('cashoutCheck', async(data) => {
-        console.log(data)
+        let Status = false
+        let Bets = []
+        if(data.LOGINDATA.LOGINUSER){
+            Bets = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, marketId:data.id})
+        }
+        if(Bets.length > 0){
+            Status = true
+        }
+        socket.emit('cashoutCheck', {Status})
     })
 
     socket.on('HTMLSCOREDATA', async(data) => {
