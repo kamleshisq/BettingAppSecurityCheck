@@ -1691,7 +1691,7 @@ io.on('connection', (socket) => {
         }else{
             // console.log(finalResult)
             for(let i = 0; i < finalResult.items.length; i++){
-                console.log(finalResult.items[i])    
+                // console.log(finalResult.items[i])
             }
         }
 
