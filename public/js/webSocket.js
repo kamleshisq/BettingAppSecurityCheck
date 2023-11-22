@@ -7352,6 +7352,10 @@ socket.on('connect', () => {
             $(document).ready(function(){
                 let id = $('.mo').attr('id')
                 console.log(id, "111111111111111111111111111111")
+                socket.emit('cashoutCheck', {LOGINDATA, id})
+                setTimeout(()=>{
+                    cashoutCheck()
+                  }, 5000)
             })
         }
         cashoutCheck()

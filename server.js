@@ -8348,6 +8348,11 @@ io.on('connection', (socket) => {
 
     })
 
+
+    socket.on('cashoutCheck', async(data) => {
+        console.log(data)
+    })
+
     socket.on('HTMLSCOREDATA', async(data) => {
         let matchScore = await scores(data)
         socket.emit("HTMLSCOREDATA", matchScore)
