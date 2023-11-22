@@ -96,7 +96,7 @@ socket.on('connect', () => {
         // Check if the clicked span has a child with class .mylock-data
         if ($(this).find('.mylock-data').length > 0) {
           // Prevent the click event if .mylock-data is found
-          event.stopPropagation();
+          event.stopImmediatePropagation();
           console.log('Clicked on span, but .mylock-data is present.');
         } else {
           // Your logic for handling click on the span when .mylock-data is not present
