@@ -7365,7 +7365,7 @@ socket.on('connect', () => {
                 // console.log($('.mo'))
                 let tables = $('.mo')
                 tables.each(function (index, table) {
-                    $(table).find('thead tr th:first').text('Market<button class="site-button cashout">CASHOUT</button>');
+                    $(table).find('thead tr th:first').html('Market <button class="site-button cashout">CASHOUT</button>');
                 })
             }else{
                 console.log("noMareket")
