@@ -7290,6 +7290,7 @@ socket.on('connect', () => {
 
 
     if(pathname === '/exchange_inPlay/match'  ){
+
         if(document.getElementById('myIframe')){
             let channelId = document.getElementById('myIframe').getAttribute('data-id');
             // console.log(channelId, "channelIdchannelIdchannelId")
@@ -7347,8 +7348,13 @@ socket.on('connect', () => {
             });
         });
         
-        
-        
+        function cashoutCheck(){
+            $(document).ready(function(){
+                let id = $('.mo').attr('id')
+                console.log(id, "111111111111111111111111111111")
+            })
+        }
+        cashoutCheck()
 
         function marketLimitId(){
             $(document).ready(function() {
