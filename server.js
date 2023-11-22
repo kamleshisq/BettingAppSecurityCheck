@@ -8355,6 +8355,8 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             Bets = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, marketId:data.id})
         }
+        console.log(Bets, "BetsBetsBetsBets")
+        console.log(data, "datadatadatadatadata")
         if(Bets.length > 0){
             Status = true
         }
