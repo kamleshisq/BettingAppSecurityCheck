@@ -93,15 +93,9 @@ socket.on('connect', () => {
     }
 
     $('.button').click(function (event) {
-        // Check if the clicked span has a child with class .mylock-data
         if ($(this).find('.mylock-data').length > 0) {
-          // Prevent the click event if .mylock-data is found
           event.stopImmediatePropagation();
-          console.log('Clicked on span, but .mylock-data is present.');
-        } else {
-          // Your logic for handling click on the span when .mylock-data is not present
-          console.log('Clicked on span, .mylock-data is not present.');
-        }
+        } 
     });
 
     $(document).on('click', ".close-btn", function() {
