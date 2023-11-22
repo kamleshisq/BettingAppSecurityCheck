@@ -63,7 +63,7 @@
                       <h6><b>Min : 100, Max : 1000</b></h6>
                   </div>
                 </div>
-                <button class="multi_market" id="<%=result.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector2.svg" alt=""></button>
+                <button class="multi_market" id="<%=result.marketList.match_odd.marketId%>"><img src="http://ollscores.com/assets/img/exchange/Vector2.svg" alt=""></button>
               </div>
             
                 <div class="exc-inn-colaps-data-wrpdv">
@@ -209,7 +209,7 @@
                       <h6><b>Min : 100, Max : 1000</b></h6>
                   </div>
                 </div>
-                <button class="multi_market" id="<%=result.marketList.bookmaker[0].marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector2.svg" alt=""></button>
+                <button class="multi_market" id="<%=result.marketList.bookmaker[0].marketId%>"><img src="http://ollscores.com/assets/img/exchange/Vector2.svg" alt=""></button>
               </div>
           
               <div class="exc-inn-colaps-data-wrpdv">
@@ -225,6 +225,80 @@
                   </thead>
                   <%
                   let StringData = result.marketList.bookmaker[0].runners
+                  const cleanedString = StringData.replace(/'/g, '');
+                  const jsonData = JSON.parse(cleanedString);
+              %>
+                  <tbody class="acount-stat-tbl-body">
+                    <%for(let j = 0; j < jsonData.length; j++){%>
+                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href="#">
+                              <td colspan="2" style=" text-align: left;">
+                                <%=jsonData[j].runner%>
+                              </td>
+                              
+                              <td lass="tbl-td-with5" >
+                                <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-blu-spn bookmaker_blue button collapsed" id="<%=jsonData[j].secId%>1">
+                                        
+                                </span> 
+                              </td>
+                
+                              
+                
+                              <td lass="tbl-td-with5 suspended" >
+                                <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-pech-spn bookmaker_red button collapsed" id="<%=jsonData[j].secId%>2">
+                                        
+                                </span> 
+                                <div class="match-status-message">
+                                  Suspended
+                                </div>
+                              </td>
+                              
+                              
+                              
+                          </tr>
+                          <tr>
+                              <td colspan="8">
+                                <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-bookmaker-<%=i%>" >
+                                  
+                                </div>
+                              </td>
+                            </tr>
+                      <%} %>
+                    
+                </tbody>
+                </table>
+          
+                
+              </div>
+            </div>
+          <%}else if(!isBookmaker && isToss){ %>
+            <div class="mbl-exc-inn-tbl-datadv-wrp">
+              <div class="exchange-pg-inn-banner-col-titi-wrpp">
+                <div class="exchange-pg-inn-banner-col-titi">
+                  <div class="exchange-pg-inn-banner-col-titi-txt">
+                      <h6><span> <%=result.eventData.name%> || Toss</span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
+                        <i class="fa-solid fa-circle-info"></i> 
+                      </span></h6>
+                  </div>
+                  <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+                      <h6><b>Min : 100, Max : 1000</b></h6>
+                  </div>
+                </div>
+                <button class="multi_market" id="<%=result.marketList.bookmaker[1].marketId%>"><img src="http://ollscores.com/assets/img/exchange/Vector2.svg" alt=""></button>
+              </div>
+          
+              <div class="exc-inn-colaps-data-wrpdv">
+          
+                <table class="acount-stat-tbl" id="<%=result.marketList.bookmaker[1].marketId%>">
+          
+                  <thead class="acount-stat-tbl-hed2">
+                      <tr class="acount-stat-tbl-hed-tr2">
+                          <th style="text-align: left;" class="bod-red-lft ">Market</th>
+                          <th style="text-align: center;" colspan="2">Back</th>
+                          <th style="text-align: center;" colspan="2" class="bod-red-rit">Lay</th>
+                      </tr>
+                  </thead>
+                  <%
+                  let StringData = result.marketList.bookmaker[1].runners
                   const cleanedString = StringData.replace(/'/g, '');
                   const jsonData = JSON.parse(cleanedString);
               %>
