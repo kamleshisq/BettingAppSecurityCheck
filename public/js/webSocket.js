@@ -7367,9 +7367,12 @@ socket.on('connect', () => {
                 tables.each(function (index, table) {
                     $(table).find('thead tr th:first').html('Market <button class="site-button cashout">CASHOUT</button>');
                 })
-            }else{
-                console.log("noMareket")
             }
+        })
+
+        $(document).on('click', ".cashout", function(e){
+            let id = $(this).closest('table').attr('id')
+            console.log(id)
         })
 
         function marketLimitId(){
