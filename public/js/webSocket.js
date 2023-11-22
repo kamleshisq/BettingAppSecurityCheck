@@ -7378,7 +7378,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".cashout", function(e){
             let id = $(this).closest('table').attr('id')
-            
+            socket.emit('cashOOut', {LOGINDATA, id})
         })
 
         function marketLimitId(){
