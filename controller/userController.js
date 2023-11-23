@@ -32,7 +32,13 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             await whiteLabel.create(data)
         }else{
             await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
-            // let benners = await Benners.find()
+            let banners = await Benners.find({whiteLabelName:"1"})
+            let newbanners = banners.map(ele => {
+                ele.whiteLabelName = req.body.whiteLabel
+                return ele
+            })
+            console.log(newbanners,'==>newbanners')
+            await Benners.insertMany(newbanners)
 
         }
     }
