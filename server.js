@@ -67,7 +67,8 @@ const streamModel = require('./model/streammanagement');
 const liveStreameData = require('./utils/getLiveStream');
 const manageAccountsUser = require('./model/paymentMethodUserSide');
 const withdowReqModel = require('./model/withdrowReqModel');
-const { date } = require('joi');
+const runnerData = require('./model/runnersData');
+// const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -8370,7 +8371,54 @@ io.on('connection', (socket) => {
     socket.on('cashOOut', async(data) => {
         // console.log(data)
         if(data.LOGINDATA.LOGINUSER){
-            console.log(data.eventID, data.id)
+            let runners = await runnerData.findOne({marketId:data.id})
+            runners = JSON.parse(runners.runners)
+            console.log(runners, "runnersrunners")
+            let bets = await Bet.aggregate([
+                {
+                    $match:{
+                        status:'OPEN',
+                        eventId:data.eventID,
+                        marketId:data.id,
+                        userId:data.LOGINDATA.LOGINUSER._id
+                    }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        firstAmount:{
+                            $sum:{
+                                $cond:{
+                                    if:{$eq : ['$secId', `${runners[0].secId}`]},
+                                    then:  {
+                                        $sum: "$exposure"
+                                    },
+                                    else:  {
+                                        $sum: -"$exposure"
+                                    },
+                                }
+                            }
+                        },
+                        secondAmount:{
+                            $sum:{
+                                $cond:{
+                                    if:{$eq : ['$secId', `${runners[1].secId}`]},
+                                    then:  {
+                                        $sum: "$exposure"
+                                    },
+                                    else:  {
+                                        $sum: -"$exposure"
+                                    },
+                                }
+                            }
+                        }
+                    }
+                }
+            ])
+            if(bets.length > 0){
+                bets = bets[0]
+                console.log(bets, "betsbetsbets")
+            }
         }
     })
 
