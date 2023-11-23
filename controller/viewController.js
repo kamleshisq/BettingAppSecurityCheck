@@ -1415,7 +1415,10 @@ const hashedOutput = SHA256(privateKey, textToSign);
 });
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
-    const data = await promotionModel.find()
+    if(req.currentUser.role_type == 1){
+        process.env.whiteLabelName = "1"
+    }
+    const data = await promotionModel.find({whiteLabelName:process.env.whiteLabelName})
     let currentUser = req.currentUser
     // console.log(data)
     res.status(200).render("./promotion/promotion",{
