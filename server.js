@@ -8373,7 +8373,18 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             let runners = await runnerData.findOne({marketId:data.id})
             runners = JSON.parse(runners.runners)
-            console.log(runners, "runnersrunnersrunnersrunners")
+            let bets = await Bet.aggregate([
+                {
+                    $match:{
+                        status:'OPEN',
+                        eventId:data.eventID,
+                        marketId:data.id,
+                        userId:dara.LOGINDATA.LOGINUSER._id
+                    }
+                }
+            ])
+
+            console.log(bets)
         }
     })
 
