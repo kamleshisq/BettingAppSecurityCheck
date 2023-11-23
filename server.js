@@ -8431,7 +8431,7 @@ io.on('connection', (socket) => {
                     biggerValueSecId = runners[0].secId
                 }
                 // console.log(upperAmt, biggerValueSecId)
-                let marketOddsData = await biggerValueSecId([data.id])
+                let marketOddsData = await marketDetailsBymarketID([data.id])
                 console.log(marketOddsData)
             }
         }
