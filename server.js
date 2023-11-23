@@ -8456,7 +8456,7 @@ io.on('connection', (socket) => {
                   } else {
                     console.log('Item with the given id not found');
                   }
-                  console.log(divedAmount, data)
+                  console.log(divedAmount, data1)
                 // console.log(marketOddsData)
             }
         }
