@@ -159,9 +159,9 @@ exports.userTable = catchAsync(async(req, res, next) => {
     });
   
     const data = await Promise.all(requests);
-    if(data[0].status == 'Error'){
-        return res.redirect('/admin/userManagement')
-    }
+    // if(data[0].status == 'Error'){
+    //     return res.redirect('/admin/userManagement')
+    // }
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser
