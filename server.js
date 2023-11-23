@@ -8443,7 +8443,7 @@ io.on('connection', (socket) => {
                     if (otherItem) {
                       const backPrice1Other = parseFloat(otherItem.backPrice1);
                       
-                      if (layPrice1 > backPrice1Other) {
+                      if (layPrice1 < backPrice1Other) {
                         divedAmount = layPrice1
                       } else {
                         divedAmount = backPrice1Other
