@@ -8368,7 +8368,11 @@ io.on('connection', (socket) => {
 
 
     socket.on('cashOOut', async(data) => {
-        console.log(data)
+        // console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            let runnersData = await marketDetailsBymarketID([data.id])
+            console.log(runnersData)
+        }
     })
 
 })
