@@ -8459,8 +8459,9 @@ io.on('connection', (socket) => {
                     console.log('Item with the given id not found');
                   }
               if(divedAmount > 0){
-                let stake = upperAmt / divedAmount
-                console.log(stake, "stakestakestake")
+                let stake = Math.abs(upperAmt) / divedAmount
+                data1.stake = stake
+                console.log(data, "stakestakestake")
               }
             }
         }
