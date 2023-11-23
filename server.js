@@ -8381,6 +8381,29 @@ io.on('connection', (socket) => {
                         marketId:data.id,
                         userId:data.LOGINDATA.LOGINUSER._id
                     }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        firstAmount:{
+                            $sum:{
+                                $cond:{
+                                    if:{$eq : ['$secId', runners[0].secId]},
+                                    then: "$exposure",
+                                    else: -"$exposure"
+                                }
+                            }
+                        },
+                        secondAmount:{
+                            $sum:{
+                                $cond:{
+                                    if:{$eq : ['$secId', runners[1].secId]},
+                                    then: "$exposure",
+                                    else: -"$exposure"
+                                }
+                            }
+                        }
+                    }
                 }
             ])
 
