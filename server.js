@@ -8434,6 +8434,7 @@ io.on('connection', (socket) => {
                 let divedAmount = 0
                 let marketOddsData = await marketDetailsBymarketID([data.id])
                 marketOddsData = marketOddsData.data.items[0].odds
+                console.log(marketOddsData)
                 const selectedItem = marketOddsData.find(item => item.selectionId === `${biggerValueSecId}`);
                 if (selectedItem) {
                     const layPrice1 = parseFloat(selectedItem.layPrice1);
