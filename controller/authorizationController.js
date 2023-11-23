@@ -272,7 +272,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         
         
     }
-    // console.log('at isProtected_admin')
+    console.log(token, "tokentokentokentokentokentokentokentoken")
     if(!token){
         return res.redirect('/adminlogin')
     }
@@ -849,7 +849,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
 
 
 exports.isAdmin = catchAsync(async(req, res, next) => {
-    console.log(req.currentUser.role_type, "req.currentUser.role_typereq.currentUser.role_typereq.currentUser.role_typereq.currentUser.role_type")
+    // console.log(req.currentUser.role_type, "req.currentUser.role_typereq.currentUser.role_typereq.currentUser.role_typereq.currentUser.role_type")
     if(req.currentUser.role_type == 5){
         return next(new AppError('You do not have permission to access this route',404))
     }else{
