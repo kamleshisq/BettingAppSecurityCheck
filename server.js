@@ -8417,7 +8417,7 @@ io.on('connection', (socket) => {
             ])
             if(bets.length > 0){
                 bets = bets[0]
-                let data = {}
+                let data1 = {}
                 let upperAmt = 0
                 let biggerValueSecId
                 if( !isNaN(bets.firstAmount) &&  !isNaN(bets.secondAmount)){
@@ -8433,8 +8433,8 @@ io.on('connection', (socket) => {
                 // console.log(upperAmt, biggerValueSecId)
                 let divedAmount = 0
                 let marketOddsData = await marketDetailsBymarketID([data.id])
-                marketOddsData = marketOddsData.data.items[0].odds
                 console.log(marketOddsData)
+                marketOddsData = marketOddsData.data.items[0].odds
                 const selectedItem = marketOddsData.find(item => item.selectionId === biggerValueSecId);
                 if (selectedItem) {
                     const layPrice1 = parseFloat(selectedItem.layPrice1);
@@ -8445,10 +8445,10 @@ io.on('connection', (socket) => {
                       
                       if (layPrice1 < backPrice1Other) {
                         divedAmount = layPrice1
-                        data.secId = biggerValueSecId
+                        data1.secId = biggerValueSecId
                       } else {
                         divedAmount = backPrice1Other
-                        data.secId = otherItem.selectionId
+                        data1.secId = otherItem.selectionId
                       }
                     } else {
                       console.log('No other item found');
@@ -8456,7 +8456,7 @@ io.on('connection', (socket) => {
                   } else {
                     console.log('Item with the given id not found');
                   }
-                  console.log(divedAmount, data)
+                  console.log(divedAmount, data1)
                 // console.log(marketOddsData)
             }
         }
