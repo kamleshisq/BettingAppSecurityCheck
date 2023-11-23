@@ -2327,7 +2327,7 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
 
 exports.getPageManagement = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    const pages = await pagesModel.find()
+    const pages = await pagesModel.find({whiteLabelName:process.env.whiteLabelName})
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
         user,
@@ -3393,22 +3393,22 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
 
 exports.gameRulesPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let pages = await pagesModel.find()
-    let verticalMenus = await verticalMenuModel.find().sort({num:1})
-    let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
-    let banner = await bannerModel.find()
-    let sliders = await sliderModel.find().sort({Number:1})
-    let rules = await gamrRuleModel.find()
+    // let pages = await pagesModel.find()
+    // let verticalMenus = await verticalMenuModel.find().sort({num:1})
+    // let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
+    // let banner = await bannerModel.find()
+    // let sliders = await sliderModel.find().sort({Number:1})
+    let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
     res.status(200).render("./Cms/ruleManager",{
         title:"Rules Management",
         user,
         me:user,
         currentUser:user,
-        verticalMenus,
-        hosriZontalMenu,
-        banner,
-        pages,
-        sliders,
+        // verticalMenus,
+        // hosriZontalMenu,
+        // banner,
+        // pages,
+        // sliders,
         rules
     })
 });
