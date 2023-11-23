@@ -4,9 +4,10 @@ const AppError = require("../utils/AppError");
 const fs = require('fs')
 
 exports.createNewSlider = catchAsync(async(req, res, next) => {
-    let allSlider = await sliderModel.find()
+    let allSlider = await sliderModel.find({whiteLabelName:process.env.whiteLabelName})
     req.body.Number = (allSlider.length + 1)
     req.body.mainUrl = req.body.url
+    req.body.whiteLabelName = process.env.whiteLabelName
     if(req.files){
         if(req.files.backgroundImage.mimetype.startsWith('image')){
             const image = req.files.backgroundImage

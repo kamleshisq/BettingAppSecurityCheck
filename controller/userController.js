@@ -5,14 +5,16 @@ const Role = require('../model/roleModel');
 const whiteLabel = require('../model/whitelableModel');
 const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
-// const { array } = require('joi');
 const settlementModel = require("../model/sattlementModel");
 const accountStatement = require("../model/accountStatementByUserModel");
 const Benners = require('../model/bannerModel')
-// const { use } = require('../routes/userRoutes')
+const Promossion = require('../model/promotion')
+const PageModel = require('../model/pageModel')
+const sliderModel = require('../model/sliderModel')
+const horizontalBannerModel = require('../model/horizontalMenuModel')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
-    // console.log(req.body)
+    console.log(req.body)
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
     const user_type = await Role.findById(req.body.role);
     // console.log(user_type)
@@ -33,13 +35,42 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         }else{
             await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
             let banners = await Benners.find({whiteLabelName:"1"})
+            let promosions = await Promossion.find({whiteLabelName:"1"})
+            let pages = await PageModel.find({whiteLabelName:"1"})
+            let sliders = await sliderModel.find({whiteLabelName:"1"})
+            let horizontalMenus = await horizontalBannerModel.find({whiteLabelName:"1"})
+            // let promossions = await Pro
             let newbanners = banners.map(ele => {
                 ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
+                return ele
+            })
+            let newpromosions = promosions.map(ele => {
+                ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
+                return ele
+            })
+            let newpages = pages.map(ele => {
+                ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
+                return ele
+            })
+            let newsliders = sliders.map(ele => {
+                ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
+                return ele
+            })
+            let newhorizontalMenus = horizontalMenus.map(ele => {
+                ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
                 return ele
             })
             console.log(newbanners,'==>newbanners')
             await Benners.insertMany(newbanners)
-
+            await Promossion.insertMany(newpromosions)
+            await PageModel.insertMany(newpages)
+            await sliderModel.insertMany(newsliders)
+            await horizontalBannerModel.insertMany(newhorizontalMenus)
         }
     }
     if(user_type.role_level < req.currentUser.role.role_level){
