@@ -8379,7 +8379,7 @@ io.on('connection', (socket) => {
                         status:'OPEN',
                         eventId:data.eventID,
                         marketId:data.id,
-                        userId:dara.LOGINDATA.LOGINUSER._id
+                        userId:data.LOGINDATA.LOGINUSER._id
                     }
                 }
             ])
