@@ -411,7 +411,7 @@ exports.inactiveUser = catchAsync(async(req, res, next) => {
     }
     const currentUser = req.currentUser
     let users
-    if(currentUser.role_type == 1){
+    if(req.currentUser.role_type == 1){
         users = await User.find({isActive:false})
     }else{
         users = await User.find({role_type:{$in:role_type},isActive:false , whiteLabel:currentUser.whiteLabel})
@@ -2306,7 +2306,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    if(currentUser.role_type == 1){
+    if(req.currentUser.role_type == 1){
         process.env.whiteLabelName = 'dev'
     }
     let pages = await pagesModel.find({whiteLabelName:process.env.whiteLabelName})
@@ -2330,6 +2330,9 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
 
 exports.getPageManagement = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+    if(req.currentUser.role_type == 1){
+        process.env.whiteLabelName = 'dev'
+    }
     const pages = await pagesModel.find({whiteLabelName:process.env.whiteLabelName})
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
@@ -3401,6 +3404,9 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     // let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
     // let banner = await bannerModel.find()
     // let sliders = await sliderModel.find().sort({Number:1})
+    if(req.currentUser.role_type == 1){
+        process.env.whiteLabelName = 'dev'
+    }
     let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
     res.status(200).render("./Cms/ruleManager",{
         title:"Rules Management",
