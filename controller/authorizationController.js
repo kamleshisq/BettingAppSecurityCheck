@@ -272,7 +272,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         
         
     }
-    console.log('at isProtected_admin')
+    // console.log('at isProtected_admin')
     if(!token){
         return res.redirect('/adminlogin')
     }
@@ -283,6 +283,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             return res.redirect('/adminlogin')
         }
     }
+    console.log(JWT)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
 
