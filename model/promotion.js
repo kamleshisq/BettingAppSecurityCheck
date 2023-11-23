@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const promotionSchema = mongoose.Schema({
     position:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
     Image:{
         type:String,
