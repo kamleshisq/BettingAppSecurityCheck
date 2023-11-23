@@ -67,7 +67,8 @@ const streamModel = require('./model/streammanagement');
 const liveStreameData = require('./utils/getLiveStream');
 const manageAccountsUser = require('./model/paymentMethodUserSide');
 const withdowReqModel = require('./model/withdrowReqModel');
-const { date } = require('joi');
+const runnerData = require('./model/runnersData');
+// const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -8370,7 +8371,8 @@ io.on('connection', (socket) => {
     socket.on('cashOOut', async(data) => {
         // console.log(data)
         if(data.LOGINDATA.LOGINUSER){
-            console.log(data.eventID, data.id)
+            const runners = await runnerData.findOne({marketId:data.id})
+            console.log(runners, "runnersrunnersrunnersrunners")
         }
     })
 
