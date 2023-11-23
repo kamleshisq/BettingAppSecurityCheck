@@ -12,6 +12,7 @@ const Promossion = require('../model/promotion')
 const PageModel = require('../model/pageModel')
 const sliderModel = require('../model/sliderModel')
 const horizontalBannerModel = require('../model/horizontalMenuModel')
+const gamerulesModel = require('../model/gamesRulesModel')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
     console.log(req.body)
@@ -39,12 +40,14 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let pages = await PageModel.find({whiteLabelName:"1"})
             let sliders = await sliderModel.find({whiteLabelName:"1"})
             let horizontalMenus = await horizontalBannerModel.find({whiteLabelName:"1"})
+            let gamerules = await gamerulesModel.find({whiteLabelName:"1"})
             // let promossions = await Pro
             let newbanners = []
             let newpromosions = []
             let newpages = []
             let newsliders = []
             let newhorizontalMenus = []
+            let newgamerules = []
             banners.map(ele => {
                 newbanners.push({
                     bannerName:ele.bannerName,
@@ -95,12 +98,20 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                     whiteLabelName:req.body.whiteLabel
                 })
             })
+            gamerules.map(ele => {
+                newgamerules.push({
+                    name:ele.name,
+                    description:ele.description,
+                    whiteLabelName:req.body.whiteLabel
+                })
+            })
             console.log(newbanners,'==>newbanners')
             await Benners.insertMany(newbanners)
             await Promossion.insertMany(newpromosions)
             await PageModel.insertMany(newpages)
             await sliderModel.insertMany(newsliders)
             await horizontalBannerModel.insertMany(newhorizontalMenus)
+            await gamerulesModel.insertMany(newgamerules)
         }
     }
     if(user_type.role_level < req.currentUser.role.role_level){
