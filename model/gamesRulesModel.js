@@ -9,6 +9,10 @@ const gamerules = mongoose.Schema({
     description:{
         type:String,
         required:true
+    },
+    whiteLabelName:{
+        type:String,
+        required:true
     }
 })
 
