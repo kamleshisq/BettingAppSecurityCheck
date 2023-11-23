@@ -8368,7 +8368,10 @@ io.on('connection', (socket) => {
 
 
     socket.on('cashOOut', async(data) => {
-        console.log(data)
+        // console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            console.log(data.eventID, data.id)
+        }
     })
 
 })
