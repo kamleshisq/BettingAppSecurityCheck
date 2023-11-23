@@ -8461,7 +8461,7 @@ io.on('connection', (socket) => {
               if(divedAmount > 0){
                 let stake = Math.abs(upperAmt) / divedAmount
                 data1.stake = stake
-                console.log(data, "stakestakestake")
+                console.log(data1, "stakestakestake")
               }
             }
         }
