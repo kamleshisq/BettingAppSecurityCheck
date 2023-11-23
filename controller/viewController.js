@@ -554,11 +554,11 @@ exports.registration = catchAsync(async(req, res, next) => {
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    const data = await promotionModel.find();
+    const data = await promotionModel.find({whiteLabelName: '1'});
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
-    const banner = await bannerModel.find()
-    let sliders = await sliderModel.find().sort({Number:1})
-    let pages = await pagesModel.find()
+    const banner = await bannerModel.find({whiteLabelName: '1'})
+    let sliders = await sliderModel.find({whiteLabelName: '1'}).sort({Number:1})
+    let pages = await pagesModel.find({whiteLabelName: '1'})
     // const sportListData = await getCrkAndAllData()
     // const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []

@@ -4,10 +4,15 @@ const AppError = require("../utils/AppError");
 const fs = require('fs')
 
 exports.createNewSlider = catchAsync(async(req, res, next) => {
-    let allSlider = await sliderModel.find({whiteLabelName:process.env.whiteLabelName})
+    let whiteLabel = process.env.whiteLabelName
+    if(req.currentUser.role_type == 1){
+        whiteLabel = "1"
+    }
+    req.body.whiteLabelName = whiteLabel
+    let allSlider = await sliderModel.find({whiteLabelName:whiteLabel})
     req.body.Number = (allSlider.length + 1)
     req.body.mainUrl = req.body.url
-    req.body.whiteLabelName = process.env.whiteLabelName
+    req.body.whiteLabelName = whiteLabel
     if(req.files){
         if(req.files.backgroundImage.mimetype.startsWith('image')){
             const image = req.files.backgroundImage
@@ -64,7 +69,11 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 
 exports.editSliderinImage =  catchAsync(async(req, res, next) => {
     let name = req.body.id.split("//")[1]
-    let slider = await sliderModel.findOne({name:name})
+    let whiteLabel = process.env.whiteLabelName
+    if(req.currentUser.role_type == 1){
+        whiteLabel = "1"
+    }
+    let slider = await sliderModel.findOne({name:name,whiteLabelName:whiteLabel})
     let imageName = req.body.id.split("//")[0]
     let index = slider.images.findIndex(item => item.name == imageName)
     try{
@@ -80,7 +89,7 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                     // slider.images[index].name = req.body.name
                     // slider.images[index].url = req.body.url
                     // await slider.save()
-                    let updatedslider = await sliderModel.findOneAndUpdate({name:name},{
+                    let updatedslider = await sliderModel.findOneAndUpdate({name:name,whiteLabelName:whiteLabel},{
                         $set: {
                           [`images.${index}.name`]: req.body.name,
                           [`images.${index}.url`]: req.body.url,
@@ -102,7 +111,7 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                   console.log('File renamed successfully');
                 }
               });
-              let updatedslider = await sliderModel.findOneAndUpdate({name:name},{
+              let updatedslider = await sliderModel.findOneAndUpdate({name:name,whiteLabelName:whiteLabel},{
                 $set: {
                   [`images.${index}.name`]: req.body.name,
                   [`images.${index}.url`]: req.body.url,
@@ -125,7 +134,11 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
 
 
 exports.updateSlider = catchAsync(async(req, res, next) => {
-    let allSlider = await sliderModel.find()
+    let whiteLabel = process.env.whiteLabelName
+    if(req.currentUser.role_type == 1){
+        whiteLabel = "1"
+    }
+    let allSlider = await sliderModel.find({whiteLabelName:whiteLabel})
     if(req.files){
         if(req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
@@ -158,7 +171,7 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
             if(newNum > (allSlider.length + 1)){
                 newNum = allSlider.length
             }
-            await sliderModel.findOneAndUpdate({Number:newNum},{Number:Sport.Number})
+            await sliderModel.findOneAndUpdate({Number:newNum,whiteLabelName:whiteLabel},{Number:Sport.Number})
             await sliderModel.findByIdAndUpdate(Sport._id, {mainUrl:req.body.url, name:req.body.name, status:status, Number:newNum})
             
             res.status(200).json({

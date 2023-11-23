@@ -29,7 +29,11 @@ exports.createPosition = catchAsync(async(req, res, next) => {
         data.position = req.body.position
         data.Image = req.body.position
         data.link = req.body.link
-        data.whiteLabelName = process.env.whiteLabelName
+        let whiteLabel = process.env.whiteLabelName
+        if(req.currentUser.role_type == 1){
+            whiteLabel = "1"
+        }
+        req.body.whiteLabelName = whiteLabel
         const newPosition = await promotion.create(data)
         res.status(200).json({
             status:"success",
@@ -66,7 +70,11 @@ exports.updatePosition = catchAsync(async(req, res, next) => {
         data.position = req.body.position
         data.Image = req.body.position
         data.link = req.body.link
-        data.whiteLabelName = process.env.whiteLabelName
+        let whiteLabel = process.env.whiteLabelName
+        if(req.currentUser.role_type == 1){
+            whiteLabel = "1"
+        }
+        req.body.whiteLabelName = whiteLabel
         if(req.body.status == "on"){
             data.status = true
         }else{
