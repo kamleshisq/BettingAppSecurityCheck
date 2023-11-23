@@ -8430,10 +8430,32 @@ io.on('connection', (socket) => {
                     upperAmt = bets.firstAmount
                     biggerValueSecId = runners[0].secId
                 }
-                // console.log(upperAmt, biggerValueSecId)
+                console.log(upperAmt, biggerValueSecId)
+                let divedAmount = 0
                 let marketOddsData = await marketDetailsBymarketID([data.id])
                 marketOddsData = marketOddsData.data.items[0].odds
                 console.log(marketOddsData)
+                const selectedItem = marketOddsData.find(item => item.selectionId === biggerValueSecId);
+                if (selectedItem) {
+                    const layPrice1 = parseFloat(selectedItem.layPrice1);
+                    const otherItem = marketOddsData.find(item => item.selectionId !== biggerValueSecId);
+                    
+                    if (otherItem) {
+                      const backPrice1Other = parseFloat(otherItem.backPrice1);
+                      
+                      if (layPrice1 > backPrice1Other) {
+                        divedAmount = layPrice1
+                      } else {
+                        divedAmount = backPrice1Other
+                      }
+                    } else {
+                      console.log('No other item found');
+                    }
+                  } else {
+                    console.log('Item with the given id not found');
+                  }
+                  console.log(divedAmount)
+                // console.log(marketOddsData)
             }
         }
     })
