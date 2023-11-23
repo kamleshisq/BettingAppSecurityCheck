@@ -8420,10 +8420,13 @@ io.on('connection', (socket) => {
                 console.log(bets, "betsbetsbets")
                 let upperAmt = 0
                 if(bets.firstAmount != NaN && bets.secondAmount != NaN){
+                    console.log('WOR1')
                     upperAmt = bets.firstAmount - bets.secondAmount
                 }else if (bets.firstAmount == NaN && bets.secondAmount != NaN){
+                    console.log('WOR2')
                     upperAmt = bets.secondAmount
                 }else if(bets.firstAmount != NaN && bets.secondAmount == NaN){
+                    console.log('WOR3')
                     upperAmt = bets.firstAmount
                 }
                 console.log(upperAmt, "upperAmtupperAmt")
