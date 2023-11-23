@@ -8426,7 +8426,7 @@ io.on('connection', (socket) => {
                 }else if(bets.firstAmount != NaN && bets.secondAmount == NaN){
                     upperAmt = bets.firstAmount
                 }
-                console.log(upperAmt)
+                console.log(upperAmt, "upperAmtupperAmt")
             }
         }
     })
