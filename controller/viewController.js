@@ -3411,10 +3411,11 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     // let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
     // let banner = await bannerModel.find()
     // let sliders = await sliderModel.find().sort({Number:1})
+    let whiteLabel = process.env.whiteLabelName
     if(req.currentUser.role_type == 1){
-        process.env.whiteLabelName = '1'
+        whiteLabel = '1'
     }
-    let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
+    let rules = await gamrRuleModel.find({whiteLabelName:whiteLabel})
     res.status(200).render("./Cms/ruleManager",{
         title:"Rules Management",
         user,
