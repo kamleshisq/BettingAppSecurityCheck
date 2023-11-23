@@ -8417,7 +8417,7 @@ io.on('connection', (socket) => {
             ])
             if(bets.length > 0){
                 bets = bets[0]
-                let data = {}
+                let data1 = {}
                 let upperAmt = 0
                 let biggerValueSecId
                 if( !isNaN(bets.firstAmount) &&  !isNaN(bets.secondAmount)){
@@ -8434,29 +8434,29 @@ io.on('connection', (socket) => {
                 let divedAmount = 0
                 let marketOddsData = await marketDetailsBymarketID([data.id])
                 console.log(marketOddsData)
-                // marketOddsData = marketOddsData.data.items[0].odds
-                // const selectedItem = marketOddsData.find(item => item.selectionId === biggerValueSecId);
-                // if (selectedItem) {
-                //     const layPrice1 = parseFloat(selectedItem.layPrice1);
-                //     const otherItem = marketOddsData.find(item => item.selectionId !== biggerValueSecId);
+                marketOddsData = marketOddsData.data.items[0].odds
+                const selectedItem = marketOddsData.find(item => item.selectionId === biggerValueSecId);
+                if (selectedItem) {
+                    const layPrice1 = parseFloat(selectedItem.layPrice1);
+                    const otherItem = marketOddsData.find(item => item.selectionId !== biggerValueSecId);
                     
-                //     if (otherItem) {
-                //       const backPrice1Other = parseFloat(otherItem.backPrice1);
+                    if (otherItem) {
+                      const backPrice1Other = parseFloat(otherItem.backPrice1);
                       
-                //       if (layPrice1 < backPrice1Other) {
-                //         divedAmount = layPrice1
-                //         data.secId = biggerValueSecId
-                //       } else {
-                //         divedAmount = backPrice1Other
-                //         data.secId = otherItem.selectionId
-                //       }
-                //     } else {
-                //       console.log('No other item found');
-                //     }
-                //   } else {
-                //     console.log('Item with the given id not found');
-                //   }
-                //   console.log(divedAmount, data)
+                      if (layPrice1 < backPrice1Other) {
+                        divedAmount = layPrice1
+                        data.secId = biggerValueSecId
+                      } else {
+                        divedAmount = backPrice1Other
+                        data.secId = otherItem.selectionId
+                      }
+                    } else {
+                      console.log('No other item found');
+                    }
+                  } else {
+                    console.log('Item with the given id not found');
+                  }
+                  console.log(divedAmount, data)
                 // console.log(marketOddsData)
             }
         }
