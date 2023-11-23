@@ -115,11 +115,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://172.105.58.243/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://dev.ollscores.com/api/v1/users/getOwnChild?id=${id}`,
                 name:'user'
             },
             {
-                url:`http://172.105.58.243/api/v1/role/getAuthROle`,
+                url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -127,16 +127,16 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://172.105.58.243/api/v1/users/getOwnChild`,
+                url:`http://dev.ollscores.com/api/v1/users/getOwnChild`,
                 name:'user'
             },
             {
-                url:`http://172.105.58.243/api/v1/role/getAuthROle`,
+                url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
     }
-    // console.log(fullUrl)
+    console.log(urls, req.token)
     let requests = urls.map((item) => {
         return new Promise((resolve, reject) => {
           request(
@@ -160,9 +160,9 @@ exports.userTable = catchAsync(async(req, res, next) => {
   
     const data = await Promise.all(requests);
     console.log(data,'==>data')
-    // if(data[0].status == 'Error'){
-    //     return res.redirect('/admin/userManagement')
-    // }
+    if(data[0].status == 'Error'){
+        return res.redirect('/admin/userManagement')
+    }
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser
