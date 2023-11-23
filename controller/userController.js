@@ -40,30 +40,60 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let sliders = await sliderModel.find({whiteLabelName:"1"})
             let horizontalMenus = await horizontalBannerModel.find({whiteLabelName:"1"})
             // let promossions = await Pro
-            let newbanners = banners.map(ele => {
-                ele.whiteLabelName = req.body.whiteLabel
-                delete ele._id
-                return ele
+            let newbanners = []
+            let newpromosions = []
+            let newpages = []
+            let newsliders = []
+            let newhorizontalMenus = []
+            banners.map(ele => {
+                newbanners.push({
+                    bannerName:ele.bannerName,
+                    url:ele.url,
+                    banner:ele.banner,
+                    status:ele.status,
+                    whiteLabelName:req.body.whiteLabel
+                })
             })
-            let newpromosions = promosions.map(ele => {
-                ele.whiteLabelName = req.body.whiteLabel
-                delete ele._id
-                return ele
+            promosions.map(ele => {
+                newpromosions.push({
+                    position:ele.position,
+                    Image:ele.Image,
+                    status:ele.status,
+                    video:ele.video,
+                    click:ele.click,
+                    link:ele.link,
+                    whiteLabelName:req.body.whiteLabel
+                })
             })
-            let newpages = pages.map(ele => {
-                ele.whiteLabelName = req.body.whiteLabel
-                delete ele._id
-                return ele
+            pages.map(ele => {
+                newpages.push({
+                    Name:ele.Name,
+                    details:ele.details,
+                    heading:ele.heading,
+                    whiteLabelName:req.body.whiteLabel
+                })
             })
-            let newsliders = sliders.map(ele => {
-                ele.whiteLabelName = req.body.whiteLabel
-                delete ele._id
-                return ele
+            sliders.map(ele => {
+                newsliders.push({
+                    name:ele.name,
+                    images:ele.images,
+                    mainUrl:ele.mainUrl,
+                    Number:ele.Number,
+                    backGroundImage:ele.backGroundImage,
+                    status:ele.status,
+                    whiteLabelName:req.body.whiteLabel
+                })
             })
-            let newhorizontalMenus = horizontalMenus.map(ele => {
-                ele.whiteLabelName = req.body.whiteLabel
-                delete ele._id
-                return ele
+            horizontalMenus.map(ele => {
+                newhorizontalMenus.push({
+                    menuName:ele.menuName,
+                    url:ele.url,
+                    icon:ele.icon,
+                    page:ele.page,
+                    Number:ele.Number,
+                    status:ele.status,
+                    whiteLabelName:req.body.whiteLabel
+                })
             })
             console.log(newbanners,'==>newbanners')
             await Benners.insertMany(newbanners)
