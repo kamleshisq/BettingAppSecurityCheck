@@ -8417,7 +8417,7 @@ io.on('connection', (socket) => {
             ])
             if(bets.length > 0){
                 bets = bets[0]
-                console.log(bets, "betsbetsbets", bets.secondAmount != NaN)
+                console.log(bets, "betsbetsbets", bets.secondAmount !== NaN)
                 let upperAmt = 0
                 if(bets.firstAmount != NaN && bets.secondAmount != NaN){
                     console.log('WOR1')
