@@ -11,7 +11,7 @@ const Benners = require('../model/bannerModel')
 const Promossion = require('../model/promotion')
 const PageModel = require('../model/pageModel')
 const sliderModel = require('../model/sliderModel')
-const horizontalBannerModel = require('../model/horizontalMenuModel')
+const verticalMenuModel = require("../model/verticalMenuModel");
 const gamerulesModel = require('../model/gamesRulesModel')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
@@ -39,14 +39,14 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let promosions = await Promossion.find({whiteLabelName:"1"})
             let pages = await PageModel.find({whiteLabelName:"1"})
             let sliders = await sliderModel.find({whiteLabelName:"1"})
-            let horizontalMenus = await horizontalBannerModel.find({whiteLabelName:"1"})
+            let verticalMenus = await verticalMenuModel.find({whiteLabelName:"1"})
             let gamerules = await gamerulesModel.find({whiteLabelName:"1"})
             // let promossions = await Pro
             let newbanners = []
             let newpromosions = []
             let newpages = []
             let newsliders = []
-            let newhorizontalMenus = []
+            let newverticalMenus = []
             let newgamerules = []
             banners.map(ele => {
                 newbanners.push({
@@ -87,13 +87,12 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                     whiteLabelName:req.body.whiteLabel
                 })
             })
-            horizontalMenus.map(ele => {
-                newhorizontalMenus.push({
+            verticalMenus.map(ele => {
+                newverticalMenus.push({
                     menuName:ele.menuName,
+                    num:ele.num,
                     url:ele.url,
-                    icon:ele.icon,
                     page:ele.page,
-                    Number:ele.Number,
                     status:ele.status,
                     whiteLabelName:req.body.whiteLabel
                 })
@@ -110,7 +109,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             await Promossion.insertMany(newpromosions)
             await PageModel.insertMany(newpages)
             await sliderModel.insertMany(newsliders)
-            await horizontalBannerModel.insertMany(newhorizontalMenus)
+            await verticalMenuModel.insertMany(newverticalMenus)
             await gamerulesModel.insertMany(newgamerules)
         }
     }

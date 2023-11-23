@@ -1416,10 +1416,11 @@ const hashedOutput = SHA256(privateKey, textToSign);
 });
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
+    let whiteLabel = process.env.whiteLabelName
     if(req.currentUser.role_type == 1){
-        process.env.whiteLabelName = "1"
+        whiteLabel = "1"
     }
-    const data = await promotionModel.find({whiteLabelName:process.env.whiteLabelName})
+    const data = await promotionModel.find({whiteLabelName:whiteLabel})
     let currentUser = req.currentUser
     // console.log(data)
     res.status(200).render("./promotion/promotion",{
@@ -2310,14 +2311,15 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+    let whiteLabel = process.env.whiteLabelName
     if(req.currentUser.role_type == 1){
-        process.env.whiteLabelName = '1'
+        whiteLabel = "1"
     }
-    let pages = await pagesModel.find({whiteLabelName:process.env.whiteLabelName})
-    let verticalMenus = await verticalMenuModel.find({whiteLabelName:process.env.whiteLabelName}).sort({num:1})
-    let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:process.env.whiteLabelName}).sort({Number:1})
-    let banner = await bannerModel.find({whiteLabelName:process.env.whiteLabelName})
-    let sliders = await sliderModel.find({whiteLabelName:process.env.whiteLabelName}).sort({Number:1})
+    let pages = await pagesModel.find({whiteLabelName:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabel}).sort({num:1})
+    let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
+    let banner = await bannerModel.find({whiteLabelName:whiteLabel})
+    let sliders = await sliderModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
     res.status(200).render("./Cms/cms",{
         title:"Home Page Management",
         user,
@@ -2334,10 +2336,11 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
 
 exports.getPageManagement = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+    let whiteLabel = process.env.whiteLabelName
     if(req.currentUser.role_type == 1){
-        process.env.whiteLabelName = '1'
+        whiteLabel = "1"
     }
-    const pages = await pagesModel.find({whiteLabelName:process.env.whiteLabelName})
+    const pages = await pagesModel.find({whiteLabelName:whiteLabel})
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
         user,
