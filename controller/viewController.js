@@ -159,6 +159,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     });
   
     const data = await Promise.all(requests);
+    console.log(data,'==>data')
     // if(data[0].status == 'Error'){
     //     return res.redirect('/admin/userManagement')
     // }
