@@ -2306,6 +2306,9 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+    if(currentUser.role_type == 1){
+        process.env.whiteLabelName = 'dev'
+    }
     let pages = await pagesModel.find({whiteLabelName:process.env.whiteLabelName})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName:process.env.whiteLabelName}).sort({num:1})
     let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:process.env.whiteLabelName}).sort({Number:1})
