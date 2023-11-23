@@ -8446,9 +8446,11 @@ io.on('connection', (socket) => {
                       if (layPrice1 < backPrice1Other) {
                         divedAmount = layPrice1
                         data1.secId = biggerValueSecId
+                        data1.betType = 'LAY'
                       } else {
                         divedAmount = backPrice1Other
                         data1.secId = otherItem.selectionId
+                        data1.betType = 'BACK'
                       }
                     } else {
                       console.log('No other item found');
@@ -8456,8 +8458,10 @@ io.on('connection', (socket) => {
                   } else {
                     console.log('Item with the given id not found');
                   }
-                  console.log(divedAmount, data1)
-                // console.log(marketOddsData)
+              if(divedAmount > 0){
+                let stake = upperAmt / divedAmount
+                console.log(stake, "stakestakestake")
+              }
             }
         }
     })
