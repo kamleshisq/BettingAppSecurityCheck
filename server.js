@@ -8372,6 +8372,7 @@ io.on('connection', (socket) => {
         // console.log(data)
         if(data.LOGINDATA.LOGINUSER){
             const runners = await runnerData.findOne({marketId:data.id})
+            runners = JSON.parse(runners.runners)
             console.log(runners, "runnersrunnersrunnersrunners")
         }
     })
