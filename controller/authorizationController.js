@@ -281,7 +281,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     if(!tokenId.isOnline){
         return res.redirect('/adminlogin')
     }
-    const decoded = await util.promisify(ADMIN_JWT.verify)(token, process.env.JWT_SECRET);
+    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
 
     if(!currentUser){
