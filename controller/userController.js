@@ -8,6 +8,7 @@ const catchAsync = require('./../utils/catchAsync');
 // const { array } = require('joi');
 const settlementModel = require("../model/sattlementModel");
 const accountStatement = require("../model/accountStatementByUserModel");
+const Benners = require('../model/bannerModel')
 // const { use } = require('../routes/userRoutes')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
@@ -29,9 +30,9 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                 B2C_Status:true
             }
             await whiteLabel.create(data)
-
         }else{
             await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
+            // let benners = await Benners.find()
 
         }
     }
