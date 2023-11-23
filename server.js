@@ -8383,37 +8383,37 @@ io.on('connection', (socket) => {
                         userId:data.LOGINDATA.LOGINUSER._id
                     }
                 },
-                // {
-                //     $group:{
-                //         _id:null,
-                //         firstAmount:{
-                //             $sum:{
-                //                 $cond:{
-                //                     if:{$eq : ['$secId', runners[0].secId]},
-                //                     then:  {
-                //                         $sum: "$exposure"
-                //                     },
-                //                     else:  {
-                //                         $sum: -"$exposure"
-                //                     },
-                //                 }
-                //             }
-                //         },
-                //         secondAmount:{
-                //             $sum:{
-                //                 $cond:{
-                //                     if:{$eq : ['$secId', runners[1].secId]},
-                //                     then:  {
-                //                         $sum: "$exposure"
-                //                     },
-                //                     else:  {
-                //                         $sum: -"$exposure"
-                //                     },
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
+                {
+                    $group:{
+                        _id:null,
+                        firstAmount:{
+                            $sum:{
+                                $cond:{
+                                    if:{$eq : ['$secId', `${runners[0].secId}`]},
+                                    then:  {
+                                        $sum: "$exposure"
+                                    },
+                                    else:  {
+                                        $sum: -"$exposure"
+                                    },
+                                }
+                            }
+                        },
+                        secondAmount:{
+                            $sum:{
+                                $cond:{
+                                    if:{$eq : ['$secId', `${runners[1].secId}`]},
+                                    then:  {
+                                        $sum: "$exposure"
+                                    },
+                                    else:  {
+                                        $sum: -"$exposure"
+                                    },
+                                }
+                            }
+                        }
+                    }
+                }
             ])
 
             console.log(bets)
