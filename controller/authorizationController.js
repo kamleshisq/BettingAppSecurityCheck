@@ -278,8 +278,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     }
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "ID")
-    if(!tokenId.isOnline){
-        return res.redirect('/adminlogin')
+    if(tokenId.role_Type != 1){
+        if(!tokenId.isOnline){
+            return res.redirect('/adminlogin')
+        }
     }
     // console.log(JWT)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
