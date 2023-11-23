@@ -8371,7 +8371,7 @@ io.on('connection', (socket) => {
         // console.log(data)
         if(data.LOGINDATA.LOGINUSER){
             let runnersData = await marketDetailsBymarketID([data.id])
-            console.log(runnersData)
+            console.log(runnersData.data.items)
         }
     })
 
