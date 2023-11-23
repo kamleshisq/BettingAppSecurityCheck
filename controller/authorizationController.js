@@ -272,14 +272,15 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         
         
     }
-    // if(!token){
-    //     return res.redirect('/adminlogin')
-    // }
-    // const tokenId = await loginLogs.findOne({session_id:token})
-    // // console.log(tokenId, "ID")
-    // if(!tokenId.isOnline){
-    //     return res.redirect('/adminlogin')
-    // }
+    console.log('at isProtected_admin')
+    if(!token){
+        return res.redirect('/adminlogin')
+    }
+    const tokenId = await loginLogs.findOne({session_id:token})
+    // console.log(tokenId, "ID")
+    if(!tokenId.isOnline){
+        return res.redirect('/adminlogin')
+    }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
 
@@ -369,9 +370,9 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 
        
     }
-    if(!token){
-        return next(new AppError('Please log in to access', 404))
-    }
+        if(!token){
+            return next(new AppError('Please log in to access', 404))
+        }
     // console.log(token, "token")
 
         const tokenId = await loginLogs.findOne({session_id:token})
