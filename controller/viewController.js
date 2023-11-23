@@ -115,11 +115,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://dev.ollscores.com/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://ollscores.com/api/v1/users/getOwnChild?id=${id}`,
                 name:'user'
             },
             {
-                url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
+                url:`http://ollscores.com/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -127,11 +127,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://dev.ollscores.com/api/v1/users/getOwnChild`,
+                url:`http://ollscores.com/api/v1/users/getOwnChild`,
                 name:'user'
             },
             {
-                url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
+                url:`http://ollscores.com/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
