@@ -8445,10 +8445,10 @@ io.on('connection', (socket) => {
                       
                       if (layPrice1 < backPrice1Other) {
                         divedAmount = layPrice1
-                        data.secId = biggerValueSecId
+                        data1.secId = biggerValueSecId
                       } else {
                         divedAmount = backPrice1Other
-                        data.secId = otherItem.selectionId
+                        data1.secId = otherItem.selectionId
                       }
                     } else {
                       console.log('No other item found');
