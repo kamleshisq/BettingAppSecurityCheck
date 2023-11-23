@@ -14,6 +14,10 @@ const pages = mongoose.Schema({
     heading:{
         type:String,
         required:true
+    },
+    whiteLabelName:{
+        type:String,
+        required:true
     }
 })
 

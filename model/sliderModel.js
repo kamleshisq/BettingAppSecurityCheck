@@ -23,6 +23,10 @@ const slider = mongoose.Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    whiteLabelName:{
+        type:String,
+        required:true
     }
 });
 

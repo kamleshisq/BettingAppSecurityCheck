@@ -16,6 +16,10 @@ const banner =  mongoose.Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    whiteLabelName:{
+        type:String,
+        required:true
     }
 })
 

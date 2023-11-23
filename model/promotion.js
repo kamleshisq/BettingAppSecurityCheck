@@ -27,6 +27,10 @@ const promotionSchema = mongoose.Schema({
     link:{
         type:String,
         required:true
+    },
+    whiteLabelName:{
+        type:String,
+        required:true
     }
 });
 
