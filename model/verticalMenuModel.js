@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const vertixalMenu = mongoose.Schema({
     menuName:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
     num:{
         type:Number,
