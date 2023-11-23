@@ -272,18 +272,20 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         
         
     }
-    // console.log('at isProtected_admin')
+    // console.log(token, "tokentokentokentokentokentokentokentoken")
     if(!token){
+        console.log('WORKING1')
         return res.redirect('/adminlogin')
     }
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "ID")
     if(tokenId.role_Type != 1){
         if(!tokenId.isOnline){
+            console.log('working12121')
             return res.redirect('/adminlogin')
         }
     }
-    console.log(JWT)
+    // console.log(JWT)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
 
@@ -849,7 +851,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
 
 
 exports.isAdmin = catchAsync(async(req, res, next) => {
-    // console.log(global._User.role_type)
+    // console.log(req.currentUser.role_type, "req.currentUser.role_typereq.currentUser.role_typereq.currentUser.role_typereq.currentUser.role_type")
     if(req.currentUser.role_type == 5){
         return next(new AppError('You do not have permission to access this route',404))
     }else{
