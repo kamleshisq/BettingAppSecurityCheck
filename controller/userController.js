@@ -42,22 +42,27 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             // let promossions = await Pro
             let newbanners = banners.map(ele => {
                 ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
                 return ele
             })
             let newpromosions = promosions.map(ele => {
                 ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
                 return ele
             })
             let newpages = pages.map(ele => {
                 ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
                 return ele
             })
             let newsliders = sliders.map(ele => {
                 ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
                 return ele
             })
             let newhorizontalMenus = horizontalMenus.map(ele => {
                 ele.whiteLabelName = req.body.whiteLabel
+                delete ele._id
                 return ele
             })
             console.log(newbanners,'==>newbanners')
