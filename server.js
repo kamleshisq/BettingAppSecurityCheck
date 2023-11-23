@@ -8389,8 +8389,12 @@ io.on('connection', (socket) => {
                             $sum:{
                                 $cond:{
                                     if:{$eq : ['$secId', runners[0].secId]},
-                                    then: "$exposure",
-                                    else: -"$exposure"
+                                    then:  {
+                                        $sum: "$exposure"
+                                    },
+                                    else:  {
+                                        $sum: -"$exposure"
+                                    },
                                 }
                             }
                         },
@@ -8398,8 +8402,12 @@ io.on('connection', (socket) => {
                             $sum:{
                                 $cond:{
                                     if:{$eq : ['$secId', runners[1].secId]},
-                                    then: "$exposure",
-                                    else: -"$exposure"
+                                    then:  {
+                                        $sum: "$exposure"
+                                    },
+                                    else:  {
+                                        $sum: -"$exposure"
+                                    },
                                 }
                             }
                         }
