@@ -8417,16 +8417,22 @@ io.on('connection', (socket) => {
             ])
             if(bets.length > 0){
                 bets = bets[0]
-                console.log(bets, "betsbetsbets")
+                console.log(bets, "betsbetsbets", bets.secondAmount !== NaN)
                 let upperAmt = 0
-                if(bets.firstAmount != NaN && bets.secondAmount != NaN){
+                let biggerValueSecId
+                if( !isNaN(bets.firstAmount) &&  !isNaN(bets.secondAmount)){
                     upperAmt = bets.firstAmount - bets.secondAmount
-                }else if (bets.firstAmount == NaN && bets.secondAmount != NaN){
+                    biggerValueSecId = bets.firstAmount > bets.secondAmount ? runners[0].secId : bets.firstAmount < bets.secondAmount ? runners[1].secId : 'values are equal';
+                }else if(isNaN(bets.firstAmount) &&  !isNaN(bets.secondAmount)){
                     upperAmt = bets.secondAmount
-                }else if(bets.firstAmount != NaN && bets.secondAmount == NaN){
+                    biggerValueSecId = runners[1].secId
+                }else if (!isNaN(bets.firstAmount) &&  isNaN(bets.secondAmount)){
                     upperAmt = bets.firstAmount
+                    biggerValueSecId = runners[0].secId
                 }
-                console.log(upperAmt, "upperAmtupperAmt")
+                // console.log(upperAmt, biggerValueSecId)
+                let marketOddsData = await biggerValueSecId([data.id])
+                console.log(marketOddsData)
             }
         }
     })
