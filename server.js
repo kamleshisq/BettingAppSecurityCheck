@@ -8430,7 +8430,9 @@ io.on('connection', (socket) => {
                     upperAmt = bets.firstAmount
                     biggerValueSecId = runners[0].secId
                 }
-                console.log(upperAmt, biggerValueSecId)
+                // console.log(upperAmt, biggerValueSecId)
+                let marketOddsData = await biggerValueSecId([data.id])
+                console.log(marketOddsData)
             }
         }
     })
