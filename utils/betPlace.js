@@ -249,13 +249,16 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
 }
 
 // console.log(marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
-if(marketDetails.title === "Winner"){
+if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('book')){
+    console.log('WORKING13546')
     let check = await runnerDataModel.findOne({marketId:marketDetails.marketId})
     if(!check){
     let data = {
         runners:marketDetails.runners,
         eventId:marketDetails.eid,
-        marketId:marketDetails.marketId
+        marketId:marketDetails.marketId,
+        sport:sportName,
+        marketTitle:marketDetails.title.toLowerCase()
     }
     await runnerDataModel.create(data)}
 }

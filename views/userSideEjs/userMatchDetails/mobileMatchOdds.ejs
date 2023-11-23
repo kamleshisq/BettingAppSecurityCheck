@@ -1,4 +1,5 @@
 <div class="mbl-exc-inn-tbl-datadv-wrp">
+  <div class="inplay-inner-page-title">
     <div class="exchange-pg-inn-banner-col-titi">
       <div class="exchange-pg-inn-banner-col-titi-txt">
           <h6><span>Match Odds</span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
@@ -9,10 +10,21 @@
           <h6 class="market-limit" id="<%=match.marketList.match_odd.marketId%>"><b>Min : <%=minMatchOdds%>, Max : <%=maxMatchOdds%></b></h6>
       </div>
     </div>
+    <%if(user && userMultimarkets != null){ %>
+      <%let check = userMultimarkets.marketIds.find(item => item == match.marketList.match_odd.marketId) %>
+      <%if(check){%>
+        <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com/assets/img/exchange/Vector2.svg" alt=""></button>  
+      <%}else{%>
+        <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""></button>  
+      <%}%>
+    <%}else{%>
+      <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""></button> 
+    <%}%>
+  </div>
 
     <div class="exc-inn-colaps-data-wrpdv">
 
-      <table class="acount-stat-tbl" id="<%=match.marketList.match_odd.marketId%>">
+      <table class="acount-stat-tbl mo" id="<%=match.marketList.match_odd.marketId%>">
 
         <thead class="acount-stat-tbl-hed2">
             <tr class="acount-stat-tbl-hed-tr2">
@@ -43,10 +55,13 @@
       
                     
       
-                    <td class="tbl-td-with5">
+                    <td class="tbl-td-with5 suspended">
                         <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[i]%>6" >
                                 
                         </span> 
+                        <div class="match-status-message">
+                          Suspended
+                        </div>
                     </td>
                     
                     

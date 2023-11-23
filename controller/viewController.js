@@ -48,6 +48,9 @@ const commissionNewModel = require('../model/commissioNNModel');
 const resumeSuspendModel = require('../model/resumeSuspendMarket');
 const PaymentMethodModel = require('../model/paymentmethodmodel')
 const paymentReportModel = require('../model/paymentreport');
+const runnerData = require('../model/runnersData');
+const manageAccountUser = require('../model/paymentMethodUserSide');
+const withdrawalRequestModel = require('../model/withdrowReqModel');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -186,8 +189,44 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }else{
         sum = 0
     }
-
-
+    let adminBredcumArray = []
+    console.log(me, "memememememememememe")
+    console.log(currentUser, "CURR")
+    if(me.userName === currentUser.userName){
+        adminBredcumArray.push({
+            userName:me.userName,
+            role:me.roleName,
+            id : me._id.toString(),
+            status:true
+        })
+    }else{
+        for(let i = 0; i < me.parentUsers.length; i++){
+            if(me.parentUsers[i] == currentUser._id.toString()){
+                console.log("WORKING")
+                adminBredcumArray.push({
+                    userName:currentUser.userName,
+                    role:currentUser.roleName,
+                    id : currentUser._id.toString(),
+                    status:true
+                })
+            }else{
+                let thatUser = await User.findById(me.parentUsers[i])
+                adminBredcumArray.push({
+                    userName:thatUser.userName,
+                    role:thatUser.roleName,
+                    id : thatUser._id.toString(),
+                    status:false
+                })
+            }
+        }
+        adminBredcumArray.push({
+            userName:me.userName,
+            role:me.roleName,
+            id : me._id.toString(),
+            status:false
+        })
+    }
+    console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
@@ -196,7 +235,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         me,
         WhiteLabel,
         roles,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        adminBredcumArray
         // userLogin:global._loggedInToken
     })
 
@@ -416,10 +456,11 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     let betsDetails
     if(userDetails.roleName != "user"){
         let childrenUsername = []
-        let children = await User.find({parentUsers:req.query.id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.query.id});
+        // let children = await User.find({parentUsers:req.query.id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         bets = await betModel.aggregate([
             {
                 $match: {
@@ -650,15 +691,17 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let bets = await betModel.aggregate([
         {
@@ -740,15 +783,17 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -1134,7 +1179,7 @@ exports.adminaccount = catchAsync(async(req, res, next) => {
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json())
     .then(json =>{ 
-        // console.log(json)
+        // console.log(json, "JASON123456789")
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/adminAccountStatment',{
         title:"Admin Account Statement",
@@ -1165,15 +1210,19 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
     let limit = 10;
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let Logs = await loginLogs.aggregate([
       
@@ -1252,15 +1301,19 @@ exports.plreport = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
 
     let betResult = await betModel.aggregate([
@@ -1392,6 +1445,7 @@ exports.getoperationsPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
+    console.log('WORKING')
     const me = req.currentUser
     // console.log(me)
     let settlement
@@ -1404,17 +1458,22 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     fiveDaysAgo.setDate(currentDate.getDate() - 5);
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
-    }else{
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
 
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
+    }else{
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
+    console.log('START')
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
@@ -1467,6 +1526,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             }
         }
       ]);
+      console.log('END')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
         me,
@@ -1768,15 +1828,19 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
 
     let childrenUsername = []
     if(req.currentUser.roleName == "Operator"){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -1847,15 +1911,19 @@ exports.getBetAlertPage = catchAsync(async(req, res, next) => {
     }
     let childrenUsername = []
     if(req.currentUser.roleName == "Operator"){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let betResult = await betModel.aggregate([
         {
@@ -1951,15 +2019,19 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
     let limit = 10;
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -2078,7 +2150,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["4.1696509847-F2"]);
+    let body = JSON.stringify(["1.220577046", "1.220570501", "1.220566377"]);
     // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
@@ -2220,105 +2292,12 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 
 
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
-    const sportData = await getCrkAndAllData()
-    const cricket = sportData[0].gameList[0].eventList
-    let liveCricket = cricket;
-    const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
-    const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
-    let liveFootBall = footBall.eventList;
-    let liveTennis = Tennis.eventList
+    const runners = await runnerData.find()
     let currentUser =  req.currentUser
-    let id = req.currentUser._id
-    if(req.currentUser.role.roleName == 'Operator'){
-        let parentUser = await User.findById(req.currentUser.parent_id)
-        id = parentUser._id.toString()
-    }
-    let childrenUsername = []
-    let children = await User.find({parentUsers:id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
-
-    // console.log(childrenUsername, "+====>> childrenUsername ")
-    // console.log(req.currentUser)
-    let openBet = topGames = await betModel.aggregate([
-        {
-            $match: {
-                status:"OPEN" ,
-                userName:{$in:childrenUsername}
-            }
-        },
-        {
-            $addFields: {
-                shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
-            }
-        },
-        {
-            $match: {
-                shortMarketName: { $in: ["mat", "boo", "tos"] }
-            }
-        },
-        {
-            $group: {
-                _id: {
-                    betType: "$betType",
-                    marketId: "$marketId",
-                    beton: "$selectionName"
-                },
-                marketName: { $first: "$marketName" },
-                match: { $first: "$match" },
-                date: { $first: "$date" },
-                secId : { $first: "$secId" },
-                stake: { $sum: "$Stake" },
-                eventId : {$first : '$eventId'},
-                count:{$sum:1}
-            }
-        },
-        {
-            $group: {
-                _id: {
-                    betType: "$_id.betType",
-                    marketId: "$_id.marketId"
-                },
-                details: {
-                    $push: {
-                        id: "$_id.marketId",
-                        marketName: "$marketName",
-                        shortMarketName: "$shortMarketName",
-                        match: "$match",
-                        date: "$date",
-                        secId: '$secId',
-                        count:'$count',
-                        stake: "$stake",
-                        beton: "$_id.beton",
-                        eventId: '$eventId'
-                    }
-                }
-            }
-        },
-        {
-            $group: {
-                _id: "$_id.betType",
-                details: { $push: "$details" }
-            }
-        },
-        {
-            $project: {
-                _id: 0,
-                bettype: "$_id",
-                details: 1
-            }
-        }
-    ])
-
-    // console.log(openBet[0].details, "openBetopenBet")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
-        liveCricket,
-        liveFootBall,
-        liveTennis,
+        runners,
         currentUser,
-        openBet,
         me: currentUser
     })
 })
@@ -2400,6 +2379,16 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         }
     });
     cricket.forEach(match => {
+        let fancyCount = 0
+            if(match.marketList.session != null){
+                let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
+                fancyCount += count
+            }
+            if(match.marketList.odd_even != null){
+                let count = match.marketList.odd_even.length
+                fancyCount += count
+            }
+        match.fancyCount = fancyCount
         let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             cricketSeries.push({ series: match.eventData.league, matchdata: [match] });
@@ -2536,6 +2525,16 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     }
     let cricketSeries = [];
     cricket.forEach(match => {
+        let fancyCount = 0
+            if(match.marketList.session != null){
+                let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
+                fancyCount += count
+            }
+            if(match.marketList.odd_even != null){
+                let count = match.marketList.odd_even.length
+                fancyCount += count
+            }
+            match.fancyCount = fancyCount
         let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             cricketSeries.push({ series: match.eventData.league, matchdata: [match] });
@@ -2661,6 +2660,16 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     }
     let tennisSeries = [];
     Tennis.forEach(match => {
+        let fancyCount = 0
+        if(match.marketList.session != null){
+            let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
+            fancyCount += count
+        }
+        if(match.marketList.odd_even != null){
+            let count = match.marketList.odd_even.length
+            fancyCount += count
+        }
+        match.fancyCount = fancyCount
         let seriesIndex = tennisSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
@@ -2682,7 +2691,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         userMultimarkets,
         tennisSeries,
-        catalog
+        catalog,
     })
 })
 
@@ -2860,12 +2869,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             maxFancy = FENCY.max_stake
         }
 
-        const commissionmarket = await commissionMarketModel.find();
-        let commissionmarkerarr = [];
-        commissionmarket.map(ele=>{
-            commissionmarkerarr.push(ele.marketId)
-        })
-
+        const commissionmarkerarr = await commissionMarketModel.distinct('marketId');
         // console.log(betLimit)
         // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 
@@ -2895,7 +2899,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             minFancy,
             maxFancy,
             commissionmarkerarr,
-            notification
+            notification,
+            channel:match.eventData.channelId
     })
 });
 
@@ -3431,15 +3436,17 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let inprogressData = await InprogreshModel.find({eventId:req.query.id})
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     let betsEventWiseOpen = await betModel.aggregate([
         {
@@ -3469,7 +3476,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-
+    console.log(betsEventWiseOpen, 456465465465456456456)
     let betsEventWiseMap = await betModel.aggregate([
         {
             $match: {
@@ -3647,15 +3654,19 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
     // if()
     // console.log(req.currentUser)
     if(req.currentUser.roleName == 'Operator'){
-        let children = await User.find({parentUsers:req.currentUser.parent_id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
+
+        // let children = await User.find({parentUsers:req.currentUser.parent_id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }else{
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+        // let children = await User.find({parentUsers:req.currentUser._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
     }
     
     let eventWiseData = await commissionNewModel.aggregate([
@@ -3935,6 +3946,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
+    console.log('START')
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     let cricketEvents;
@@ -3945,8 +3957,8 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let data = {};
 
     let cricketList = sportListData[0].gameList[0]
-    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
-    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
 
     let newcricketEvents = cricketList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
@@ -3970,64 +3982,66 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.eventData.count = count
 
-         return item
+        return item
     })
-    let newfootballEvents =  footballList.eventList.map(async(item) => {
-         let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+    // let newfootballEvents =  footballList.eventList.map(async(item) => {
+    //      let status = await catalogController.findOne({Id:item.eventData.eventId})
+    //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+    //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
 
-         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-         if(!status){
-            item.eventData.status = true
-         }else{
-            item.eventData.status = false
-        }
-        if(!featureStatus){
-            item.eventData.featureStatus = false
-        }else{
-            item.eventData.featureStatus = true
-        }
-        if(!inPlayStatus){
-            item.eventData.inPlayStatus = false
-        }else{
-            item.eventData.inPlayStatus = true
-        }
-        item.eventData.count = count
+    //      count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+    //      if(!status){
+    //         item.eventData.status = true
+    //      }else{
+    //         item.eventData.status = false
+    //     }
+    //     if(!featureStatus){
+    //         item.eventData.featureStatus = false
+    //     }else{
+    //         item.eventData.featureStatus = true
+    //     }
+    //     if(!inPlayStatus){
+    //         item.eventData.inPlayStatus = false
+    //     }else{
+    //         item.eventData.inPlayStatus = true
+    //     }
+    //     item.eventData.count = count
 
-         return item
-    })
-    let newtennisEvents = tennisList.eventList.map(async(item) => {
-         let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+    //     return item
+    // })
+    // let newtennisEvents = tennisList.eventList.map(async(item) => {
+    //      let status = await catalogController.findOne({Id:item.eventData.eventId})
+    //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+    //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
-         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-         if(!status){
-            item.eventData.status = true
-         }else{
-            item.eventData.status = false
-        }
-        if(!featureStatus){
-            item.eventData.featureStatus = false
-        }else{
-            item.eventData.featureStatus = true
-        }
-        if(!inPlayStatus){
-            item.eventData.inPlayStatus = false
-        }else{
-            item.eventData.inPlayStatus = true
-        }
-        item.eventData.count = count
+    //      count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+    //      if(!status){
+    //         item.eventData.status = true
+    //      }else{
+    //         item.eventData.status = false
+    //     }
+    //     if(!featureStatus){
+    //         item.eventData.featureStatus = false
+    //     }else{
+    //         item.eventData.featureStatus = true
+    //     }
+    //     if(!inPlayStatus){
+    //         item.eventData.inPlayStatus = false
+    //     }else{
+    //         item.eventData.inPlayStatus = true
+    //     }
+    //     item.eventData.count = count
 
-         return item
-    })
+    //     return item
+    // })
 
     cricketEvents = await Promise.all(newcricketEvents);
-    footballEvents = await Promise.all(newfootballEvents);
-    tennisEvents = await Promise.all(newtennisEvents);
+    // footballEvents = await Promise.all(newfootballEvents);
+    // tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
+    console.log(data, "fhdhhfdhfd")
+    // data = {}
 
     return res.status(200).render("./eventController/eventController", {
         title:"Event Controller",
@@ -4370,10 +4384,12 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
         let childrenUsername = []
-        let children = await User.find({parentUsers:mainId})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', {parentUsers:mainId});
+
+        // let children = await User.find({parentUsers:mainId})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         let SportLimits = betLimit.find(item => item.type === "Sport")
         let min 
         let max 
@@ -4455,10 +4471,12 @@ exports.marketBets = catchAsync(async(req, res, next) => {
     let limit = 10;
     let page = 0;
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+    // let children = await User.find({parentUsers:req.currentUser._id})
+    // children.map(ele => {
+    //     childrenUsername.push(ele.userName) 
+    // })
     let bets = await betModel.find({marketId:req.query.id,userName:{$in:childrenUsername} ,status: 'OPEN'}).sort({'date':-1}).skip(limit * page).limit(limit)
         res.status(200).render("./riskMarketsBets/main",{
             title:"Risk Analysis",
@@ -4578,10 +4596,12 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let match = req.query.event
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+    // let children = await User.find({parentUsers:req.currentUser._id})
+    // children.map(ele => {
+    //     childrenUsername.push(ele.userName) 
+    // })
     if(req.query.market){
         let market 
         let marketName 
@@ -5296,10 +5316,12 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
-    let chils = await User.find({parentUsers:req.currentUser._id})
-    let newChilds = chils.map(ele => {
-        return ele.userName
-    })
+    newChilds = await User.distinct('userName', {parentUsers:req.currentUser._id});
+
+    // let chils = await User.find({parentUsers:req.currentUser._id})
+    // let newChilds = chils.map(ele => {
+    //     return ele.userName
+    // })
     let paymentreq = await paymentReportModel.find({username:{$in:newChilds}}).sort({date:-1}).limit(10)
     // console.log(paymentreq)
     res.render('./PaymentApproval/PaymentApproval',{
@@ -5317,4 +5339,61 @@ exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
         paymentmethod,
         check:"PaymentRepo"
     })
+})
+
+
+exports.getManagementAccount = catchAsync(async(req, res, next) => {
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    let accounts = await manageAccountUser.find({userName:req.currentUser.userName})
+    // console.log(accounts, "accountsaccounts")
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    res.status(200).render("./userSideEjs/manageAccounts/main", {
+        title:"Manage Accounts",
+        user:req.currentUser,
+        check:"MNGACC",
+        userLog,
+        verticalMenus,
+        notifications:req.notifications,
+        accounts
+    })
+})
+
+
+
+exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
+    let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName, reqStatus:'pending'}).sort({reqDate:-1}).limit(10)
+    res.render('./withrowalReqAdmin/main',{
+        title:'Withdrawal request',
+        currentUser:req.currentUser,
+        check:"WithdrawalReq",
+        data
+    })
+})
+
+
+
+exports.myWithrowReq = catchAsync(async(req, res, next) => {
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let withrowReqData = await withdrawalRequestModel.find().sort({reqDate:-1}).limit(10)
+    res.status(200).render("./userSideEjs/withrowReqPage/main", {
+        title:"withdrawal request.",
+        user:req.currentUser,
+        verticalMenus,
+        check:"withdrawal",
+        userLog,
+        withrowReqData,
+        notifications:req.notifications
+    })
+});
+
+
+exports.getHTMLSCOREIFRm = catchAsync(async(req, res, next) => {
+    res.status(200).render('./forSimpleHtmlOFSports')
 })

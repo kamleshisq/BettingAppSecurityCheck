@@ -113,7 +113,75 @@
         </div>
       </div>
     </div>
-    <div id="loader-overlay">
+    <div id="loader2-overlay">
+      <div class="loader"></div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade change-pass-model paymentDepositePopup" id="navmod4" tabindex="-1" aria-labelledby="navmod4Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+      <div class="modal-content change-pass-model-txt">
+        <div class="modal-header change-pass-model-hed">
+          <div class="featured-sec-ro--titl-txt">
+            <span class="titl-bodr-lft-spn-model"></span>
+            <h3 class="featured-sec-ro--titl-txt-tg-model">withdraw</h3>
+          </div>
+          <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body change-pass-model-body">
+          <div class="choose-payment-option">
+            <div class="payment-tab">
+                <div class="payment-tab-list">
+                    <a class="img-payment bankW-img active"><img src="http://ollscores.com/images/bank-transfer.png"></a>
+                    <a class="img-payment upiW-img"><img src="http://ollscores.com/images/upi-pay.png"></a>
+                    <a class="img-payment pytmW-img"><img src="http://ollscores.com/images/paytm-pay.png"></a>
+                    <a class="payment-mng-link" href="/withdrawalRequest" >Past Requests</a>
+                </div>
+                <div class="payment-tab-content">
+                    <div class="title">Choose Beneficiary Account for withdraw</div>
+                    <div class="luck-enterprise">
+                      <div class="accountnamecontainer">
+                        
+                      </div>
+                        
+                        <ul id="BANK-DATA1">
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="enter-withdraw-detail enter-payment-detail"  id="enter-withdraw-detail">
+            <div class="title">Enter withdraw Details</div>
+            <form  class="withdraw-fom">
+                <div class="change-pass-model-form-inputs">
+                    <!-- <label for="exampleInputPassword1" class="form-label">Enter Amount</label> -->
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="number" class="form-control" name="amount" placeholder="Enter Amount" required>
+                    </div>
+                </div>
+                <div class="change-pass-model-form-inputs">
+                    <!-- <label for="exampleInputPassword1" class="form-label">Enter Notes</label> -->
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="text" class="form-control" name="notes" placeholder="Enter Notes" required>
+                    </div>
+                </div>
+                <!-- <div class="change-pass-model-form-inputs">
+                    <label for="exampleInputPassword1" class="form-label">Enter Reference ID</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input type="password" class="form-control" name="utr" placeholder="Enter your password" required>
+                      <span class="input_err"></span>
+                    </div>
+                </div> -->
+                <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+            </form>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div id="loader3-overlay">
       <div class="loader"></div>
     </div>
   </div>

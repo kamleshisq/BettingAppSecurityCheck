@@ -339,8 +339,9 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     })
 });
 exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
-    // console.log(req.query)
-    let userAcc
+    console.log(req.query)
+    try{
+    let userAcc = []
     let page = req.query.page
     let filter = {}
     let childUsersArr = []
@@ -353,10 +354,11 @@ exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
     if(req.query.id){
         const idUser = await User.findById(req.query.id)
         if(idUser.userName == req.currentUser.userName){
-            let childUsers = await User.find({parentUsers:req.query.id,roleName: {$ne:'user'}})
-            childUsers.map(ele => {
-                childUsersArr.push(ele._id)
-            })
+            childUsersArr = await User.distinct('_id', {parentUsers:req.query.id,roleName: {$ne:'user'}});
+            // let childUsers = await User.find({parentUsers:req.query.id,roleName: {$ne:'user'}})
+            // childUsers.map(ele => {
+            //     childUsersArr.push(ele._id)
+            // })
         }else{
             childUsersArr.push(idUser._id)
         }
@@ -376,6 +378,9 @@ exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
         status:"success",
         userAcc
     })
+}catch(err){
+    console.log(err)
+}
 });
 
 

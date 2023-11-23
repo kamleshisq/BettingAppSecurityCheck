@@ -5,6 +5,39 @@
 
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
+      <div class="new-head bet-limit-breadcrum"> 
+        <div class="bredcum-container">
+          <ul>
+            <%for(let i = 0; i < adminBredcumArray.length; i++){%>
+              <%if(adminBredcumArray[i].role === "Admin"){%>
+                <li><span class="bredcum-span-tag">House </span> <a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+
+              <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
+                <%if(adminBredcumArray[i].status){%>
+                  <li><span class="bredcum-span-tag">SDM</span><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+                <%}else{%>
+                  <li><span class="bredcum-span-tag">SDM</span> <a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+                <%}%>
+
+              <%}else if(adminBredcumArray[i].role === "Super-Admin"){%>
+                <%if(adminBredcumArray[i].status){%>
+                  <li><span class="bredcum-span-tag">SM</span><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+                <%}else{%>
+                  <li><span class="bredcum-span-tag">SM</span><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+                <%}%>
+              <%}else if(adminBredcumArray[i].role === "Duper-Admin"){%>
+                <%if(adminBredcumArray[i].status){%>
+                  <li><span class="bredcum-span-tag">DM</span><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+                <%}else{%>
+                  <li><span class="bredcum-span-tag">DM</span><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+                <%}%>
+              <%}%>
+            <%}%>
+              <!-- <li> <a href="/admin/commissionReportEvent?event=Pakistan v Bangladesh"> Pakistan v Bangladesh</a></li> -->
+              <!-- <li class="active"> BOOKMAKER</li> -->
+          </ul>
+        </div>              
+    </div>
       <%- include("./filterSection") %>
     <%- include("../loginUserAdminsideDetails") %>
   </div>
@@ -607,6 +640,9 @@
                     <%} %>
                   </select>
                   <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
+                  <label class="hide" id="B2C" >Is B2C WhiteLabel?
+                    <input type="checkbox" name="B2C">
+                  </label>
                 </div>
               </div>
             <%} %>
@@ -754,15 +790,18 @@
   <script>
     const customOptionCheckbox = document.getElementById('customOptionCheckbox');
     const newWhiteLabelInput = document.getElementById('newWhiteLabelInput');
+    const nnewB2C = document.getElementById('B2C')
     const SElectWhiteLable = document.getElementById("whiteLabel")
   
     customOptionCheckbox.addEventListener('change', function () {
       if (this.checked) {
         newWhiteLabelInput.classList.remove('hide')
+        nnewB2C.classList.remove('hide')
         // Hide the select element
         SElectWhiteLable.classList.add('hide')
       } else {
         newWhiteLabelInput.classList.add('hide')
+        nnewB2C.classList.add('hide')
         SElectWhiteLable.classList.remove('hide')
       }
     });

@@ -87,8 +87,17 @@
                       <span>1</span>
                     </span>
                   <%}%>
-                  <span class="exch-mob-data-tbl-card-dv2-spns">
-                    <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
+                  <span class="mobile-star-mutlimarket exch-mob-data-tbl-card-dv2-spns">
+                    <%if(user && userMultimarkets != null && cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
+                      <%let check = userMultimarkets.marketIds.find(item => item == cricketSeries[i].matchdata[j].marketList.match_odd.marketId) %>
+                      <%if(check){%>
+                      <button class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://ollscores.com/assets/img/exchange/Vector2.svg" alt=""/></button> 
+                      <%}else{%>
+                      <button class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
+                      <%}%>
+                    <%}else{%>
+                      <button class="multi_market"  ><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""/></button> 
+                    <%}%>
                   </span>
                 </div>
               </div>

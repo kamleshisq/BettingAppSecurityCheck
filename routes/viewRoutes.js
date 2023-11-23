@@ -21,6 +21,7 @@ router.get("/getCricketData", viewController.getCricketData);
 router.get("/getMarketDetails", viewController.getmarketDetailsByMarketId);
 router.get("/getLiveTv", viewController.getLiveTv);
 router.get("/getMarketResult", viewController.getMarketResult);
+router.get("/htmlDATA", viewController.getHTMLSCOREIFRm);
 router.post('/getFancyBookDATA', viewController.getFancyBookDATA)
 
 // Admin Panal 
@@ -90,6 +91,7 @@ router.get("/admin/riskAnalysis", authController.isProtected, authController.isA
 router.get("/admin/matchBets", authController.isProtected, authController.isAdmin,viewController.marketBets);
 router.get("/admin/paymentmethods", authController.isProtected, authController.isAdmin,viewController.paymentMethodPage);
 router.get("/admin/paymentapproval", authController.isProtected, authController.isAdmin,viewController.paymentApprovalPage);
+router.get("/admin/withdrawalRequest", authController.isProtected, authController.isAdmin,viewController.getWithrowReqPage);
 
 //User Panal
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);
@@ -117,12 +119,14 @@ router.get("/myGameReport", authController.isProtected_User, notificationControl
 router.get("/event", authController.isProtected_User, notificationController.myNotifications ,viewController.getGameReportInPageUser);
 router.get("/gameReport/match", authController.isProtected_User, notificationController.myNotifications ,viewController.getGameReportInINPageUser);
 router.get("/myAccountStatment", authController.isProtected_User, notificationController.myNotifications ,viewController.myAccountStatment);
+router.get("/withdrawalRequest", authController.isProtected_User, notificationController.myNotifications ,viewController.myWithrowReq);
 router.get("/myCommissionReports", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReportUserSide);
 router.get("/myCommissionReportsIn", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporIntUserSide);
 router.get("/myCommissionReportsInEvent", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporEvent);
 router.get("/myCommissionReportsMatch", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporMatch);
 router.get("/myProfile", authController.isProtected_User, notificationController.myNotifications ,viewController.myProfile);
 router.get("/profile", authController.isProtected_User, notificationController.myNotifications ,viewController.getMyProfileUser);
+router.get("/manageAccounts", authController.isProtected_User, notificationController.myNotifications ,viewController.getManagementAccount);
 router.get("/Kyc", authController.isProtected_User, notificationController.myNotifications ,viewController.getMyKycPage);
 
 

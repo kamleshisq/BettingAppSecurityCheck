@@ -11,6 +11,7 @@ const accountStatement = require("../model/accountStatementByUserModel");
 // const { use } = require('../routes/userRoutes')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
+    // console.log(req.body)
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
     const user_type = await Role.findById(req.body.role);
     // console.log(user_type)
@@ -22,7 +23,17 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     const count = await whiteLabel.find({whiteLabelName:req.body.whiteLabel})
     if(count.length == 0){
         // console.log(req.body.whiteLabel)
-        await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
+        if(req.body.B2C && req.body.B2C === "on"){
+            let data = {
+                whiteLabelName:req.body.whiteLabel,
+                B2C_Status:true
+            }
+            await whiteLabel.create(data)
+
+        }else{
+            await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
+
+        }
     }
     if(user_type.role_level < req.currentUser.role.role_level){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))

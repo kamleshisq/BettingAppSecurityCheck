@@ -29,6 +29,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     }
     
     let childrenUsername = []
+    childrenUsername = await User.distinct('userName', { parentUsers: req.currentUser._id });
     // let children = await User.find({parentUsers:req.currentUser._id})
     // children.map(ele => {
     //     childrenUsername.push(ele.userName) 
@@ -54,97 +55,97 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
     users = []
-    // users = await User.aggregate([
-    //     {
-    //         $match:{
-    //             parentUsers : { $in: [req.currentUser.id] }
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:{
-    //                 whiteLabel:"$whiteLabel",
-    //                 roleType:"$roleName"
-    //             },
-    //             total:{$sum:1}
-    //         }
-    //     },
-    //     { $group : { 
-    //         _id :  "$_id.whiteLabel",
-    //         terms: { 
-    //             $push: { 
-    //                 roleType:"$_id.roleType",
-    //                 total:"$total"
-    //             }
-    //         }
-    //         }
-    //     },    { 
-    //         $sort:{
-    //             _id:1
-    //         }
-    //     }
-    // ]);
+    users = await User.aggregate([
+        {
+            $match:{
+                parentUsers : { $in: [req.currentUser.id] }
+            }
+        },
+        {
+            $group:{
+                _id:{
+                    whiteLabel:"$whiteLabel",
+                    roleType:"$roleName"
+                },
+                total:{$sum:1}
+            }
+        },
+        { $group : { 
+            _id :  "$_id.whiteLabel",
+            terms: { 
+                $push: { 
+                    roleType:"$_id.roleType",
+                    total:"$total"
+                }
+            }
+            }
+        },    { 
+            $sort:{
+                _id:1
+            }
+        }
+    ]);
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     topGames = []
-    // topGames = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status: { $ne: "OPEN" },
-    //             date: { $gte: sevenDaysAgo },
-    //             userName:{$in:childrenUsername}
-    //         }
-    //     },
+    topGames = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" },
+                date: { $gte: sevenDaysAgo },
+                userName:{$in:childrenUsername}
+            }
+        },
 
-    //     {
-    //         $group: {
-    //             _id: "$event",
-    //             totalCount: { $sum: 1 },
-    //             uniqueUsers: { $addToSet: "$userId" },
-    //             totalReturns: { $sum: "$Stake" }
-    //         }
-    //     },
-    //     {
-    //         $project: {
-    //             _id: 0,
-    //             event: "$_id",
-    //             totalCount: 1,
-    //             noOfUniqueUsers: { $size: "$uniqueUsers" },
-    //             totalReturns: 1
-    //         }
-    //     },
-    //     {
-    //         $sort: {
-    //             totalCount: -1
-    //         }
-    //     },
-    //     {
-    //         $limit: 5
-    //     }
-    // ]);
+        {
+            $group: {
+                _id: "$event",
+                totalCount: { $sum: 1 },
+                uniqueUsers: { $addToSet: "$userId" },
+                totalReturns: { $sum: "$Stake" }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                event: "$_id",
+                totalCount: 1,
+                noOfUniqueUsers: { $size: "$uniqueUsers" },
+                totalReturns: 1
+            }
+        },
+        {
+            $sort: {
+                totalCount: -1
+            }
+        },
+        {
+            $limit: 5
+        }
+    ]);
     Categories = []
-    // Categories = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status: { $ne: "OPEN" },
-    //             date: { $gte: sevenDaysAgo },
-    //             userName:{$in:childrenUsername}
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //             _id: "$betType",
-    //             totalBets: { $sum: 1 },
-    //             totalReturns: { $sum: "$Stake" },
-    //             uniqueEvent: { $addToSet: "$event" }
-    //         }
-    //     },
-    //     {
-    //         $sort: {
-    //             totalBets: -1
-    //         }
-    //     }
-    // ])
+    Categories = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" },
+                date: { $gte: sevenDaysAgo },
+                userName:{$in:childrenUsername}
+            }
+        },
+        {
+            $group: {
+                _id: "$betType",
+                totalBets: { $sum: 1 },
+                totalReturns: { $sum: "$Stake" },
+                uniqueEvent: { $addToSet: "$event" }
+            }
+        },
+        {
+            $sort: {
+                totalBets: -1
+            }
+        }
+    ])
 
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -186,59 +187,59 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
     betCount = await betModel.count({userName: {$in:childrenUsername}})
     alertBet = []
-    // alertBet = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             "status": "Alert",
-    //             userName:{$in:childrenUsername}
+    alertBet = await betModel.aggregate([
+        {
+            $match: {
+                "status": "Alert",
+                userName:{$in:childrenUsername}
 
-    //         }
-    //     },
-    //     {
-    //         $sort: {
-    //             Stake: -1
-    //         }
-    //     },
-    //     {
-    //         $limit: 5
-    //     }
-    // ]);
+            }
+        },
+        {
+            $sort: {
+                Stake: -1
+            }
+        },
+        {
+            $limit: 5
+        }
+    ]);
     betsEventWise = []
-    // betsEventWise = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status: "OPEN",
-    //             userName: {$in:childrenUsername}
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //             _id: "$match",
-    //             count: { $sum: 1 },
-    //             eventdate: { $first: "$eventDate" },
-    //             eventid: { $first: "$eventId" },
-    //             series: { $first: "$event" },
-    //             sport: { $first: "$betType" }
-    //         }
-    //     },
-    //     {
-    //         $project: {
-    //             _id: 0,
-    //             matchName: "$_id",
-    //             eventdate: 1,
-    //             eventid: 1,
-    //             series: 1,
-    //             count: 1,
-    //             sport: 1
-    //         }
-    //     },
-    //     {
-    //         $sort: { count: -1 }
-    //     },
-    //     {
-    //         $limit: 5
-    //     }
-    // ]);
+    betsEventWise = await betModel.aggregate([
+        {
+            $match: {
+                status: "OPEN",
+                userName: {$in:childrenUsername}
+            }
+        },
+        {
+            $group: {
+                _id: "$match",
+                count: { $sum: 1 },
+                eventdate: { $first: "$eventDate" },
+                eventid: { $first: "$eventId" },
+                series: { $first: "$event" },
+                sport: { $first: "$betType" }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                matchName: "$_id",
+                eventdate: 1,
+                eventid: 1,
+                series: 1,
+                count: 1,
+                sport: 1
+            }
+        },
+        {
+            $sort: { count: -1 }
+        },
+        {
+            $limit: 5
+        }
+    ]);
     
     turnOver = []
     turnOver = await accountModel.aggregate([
@@ -257,23 +258,23 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     ])
 
 
-    let topBets = []
-    // let topBets = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status:"OPEN",
-    //             userName: {$in:childrenUsername}
-    //         }
-    //     },
-    //     {
-    //         $sort:{
-    //             Stake: -1
-    //         }
-    //     },
-    //     {
-    //         $limit:5
-    //     }
-    // ])
+    // let topBets = []
+    let topBets = await betModel.aggregate([
+        {
+            $match: {
+                status:"OPEN",
+                userName: {$in:childrenUsername}
+            }
+        },
+        {
+            $sort:{
+                Stake: -1
+            }
+        },
+        {
+            $limit:5
+        }
+    ])
         
         
 

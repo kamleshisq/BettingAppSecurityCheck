@@ -1,0 +1,593 @@
+<%-include("../headers")%>
+
+
+      <!-- ----= CARDS CONTENT SECTION START =-----   -->
+      <section class="acount-stat-sec-wrp manage-accounts-sec">
+        <div class="container-fluid acount-stat-contnr">
+            <div class="acount-stat-ro1">
+                <div class="acount-stat-ro-titl">
+                    <div class="featured-sec-ro--titl-txt">
+                        <span class="titl-bodr-lft-spn2"></span>
+                        <h3 class="featured-sec-ro--titl-txt-tg2">Manage Accounts</h3>
+                        <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
+                    </div>
+                    <div class="pageId" data-pageid="1"></div>
+                    <form class="acount-stat-ro-titlselect-form">
+                      <div class="">
+                        <select id="select" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
+                            <option selected value="All">All</option>
+                            <option value="banktransferW">Bank Transfer</option>
+                            <option value="upiW">UPI</option>
+                            <option value="paytmW">Paytm</option>
+                        </select>
+                    </div>
+                    <div class="">
+                      <a class="site-button" href="" title="" data-bs-toggle="modal"  data-bs-target="#addPayment"><i class="fa-solid fa-plus"></i>  Add Payment Method</a>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="acount-stat-ro2">
+                <div class="acount-stat-tbl-txt-wrp userSide-Table">
+                    <table class="acount-stat-tbl" id="TABLE">
+
+                      
+                        <thead class="acount-stat-tbl-hed">
+                            <tr class="acount-stat-tbl-hed-tr">
+                                <th class="bod-red-lft">Account Holder Name</th>
+                                <th>Account Number</th>
+                                <th>Ifsc Code</th>
+                                <th>Bank Name</th>
+                                <th>Branch Name</th>
+                                <th>Display Name</th>
+                                <th>Payment Method</th>
+                                <th>Status</th>
+                                <th class="bod-red-rit">Actions</th>
+                                <!-- <th >Amount</th> -->
+                            </tr>
+                        </thead>
+                        <tbody class="acount-stat-tbl-body">
+                          <%if(accounts.length > 0){%>
+                          <% for(let i = 0; i < accounts.length; i++){%>
+                            <tr class="acount-stat-tbl-body-tr" id="<%=accounts[i]._id%>">
+                            <td title="Account Holder Name" ><%=accounts[i].accountholdername%></td>
+                              <%if(accounts[i].pmethod == 'banktransferW'){%>
+                      
+                              <td title="Account Number" ><%=accounts[i].accountnumber%></td>
+                              <%}else if(accounts[i].pmethod == 'upiW'){%>
+                              <td title="Account Number" ><%=accounts[i].upiid%></td>
+                              
+                              <%}else if(accounts[i].pmethod == 'paytmW'){%>
+                              <td title="Account Number" ><%=accounts[i].phonenumber%></td>
+                      
+                              <%}%>
+                              <%if(accounts[i].ifsccode){%>
+                              <td title="Ifsc Code" ><%=accounts[i].ifsccode%></td>
+                              <%}else{%>
+                              <td title="Ifsc Code" >-</td>
+                              <%}%>
+                              <%if(accounts[i].bankname){%>
+                              <td title="Bank Name" ><%=accounts[i].bankname%></td>
+                              <%}else{%>
+                              <td title="Bank Name" >-</td>
+                              <%}%>
+                              <%if(accounts[i].branchname){%>
+                              <td title="Branch Name" ><%=accounts[i].branchname%></td>
+                              <%}else{%>
+                              <td title="Branch Name" >-</td>
+                              <%}%>
+                            <td title="Display Name" ><%=accounts[i].displayname%></td>
+                            <%if(accounts[i].pmethod == 'banktransferW'){%>
+                      
+                              <td title="Payment Method" >Bank Transfer</td>
+                              <%}else if(accounts[i].pmethod == 'upiW'){%>
+                              <td title="Payment Method" >UPI Payment</td>
+                              
+                              <%}else if(accounts[i].pmethod == 'paytmW'){%>
+                              <td title="Payment Method" >Paytm</td>
+                      
+                              <%}%>
+                            <%if(accounts[i].status){%>
+                              <td title="Status" >
+                                <div class="on-off-btn-section">
+                                  <span class="on-off">OFF &nbsp; <label class="switch on">
+                                  <input class="checkbox status_check_payment" type="checkbox" checked>
+                                  <span class="slider round"></span>
+                                  </label>&nbsp; ON</span>
+                                </div>
+                              </td>
+                            <%}else{%>
+                              <td title="Status" >
+                                <div class="on-off-btn-section">
+                                  <span class="on-off">OFF &nbsp; <label class="switch">
+                                  <input class="checkbox status_check_payment" type="checkbox">
+                                  <span class="slider round"></span>
+                                  </label>&nbsp; ON</span>
+                                </div>
+                              </td>
+                            <%}%>
+                            <td title="Actions" >
+                              <div class="btn-set">
+                                <button class="site-button edit-btn edit-paymentButton" data-bs-toggle="modal" data-bs-target="#editPaymentMmodels" type="button">Edit</button>
+                                <button class="site-button delete-btn dlt-mthd" data-bs-toggle="modal" data-bs-target="#deletePaymentMmodels" type="button">Delete</button>
+                              </div>
+                            </td>
+                            </tr>
+                          <%}%>
+                          <%}else{%>
+                            No Data to Display
+                          <%}%>
+                        </tbody>
+                        
+                        
+
+                    </table>
+                  </div>
+            </div>
+
+        </div>
+      </section>
+      <!-- ----= CARDS CONTENT SECTION END =-----   -->
+      <div class="modal fade change-pass-model paymentDepositePopup manage-acccount-popup" id="addPayment" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+          <div class="modal-content change-pass-model-txt">
+            <div class="modal-header change-pass-model-hed">
+              <div class="featured-sec-ro--titl-txt">
+                <span class="titl-bodr-lft-spn-model"></span>
+                <h3 class="featured-sec-ro--titl-txt-tg-model">Add Payment Method</h3>
+              </div>
+              <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body change-pass-model-body">
+              <div class="choose-payment-option">
+                <div class="payment-tab">
+                    <div class="payment-tab-list">
+                        <a class="img-payment add-Bank  active">Add Bank</a>
+                        <a class="img-payment add-Upi">Add UPI</a>
+                        <a class="img-payment add-Paytm">Add Paytm</a>
+                    </div>
+                </div>
+              </div>
+            <div class="enter-withdraw-detail">
+                <form  class="addBankUser-fom" method="post" action="">
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Account Name" name="accountholdername">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="number" placeholder="Account Number" name="accountnumber">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs hide">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="UPI Id" name="upiid">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs hide">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="number" placeholder="Phone Number" name="phonenumber">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Display Name" name="displayname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Ifsc Code" name="ifsccode">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Bank Name" name="bankname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Branch Name" name="branchname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+                </form>
+            </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div id="loader-overlay">
+          <div class="loader"></div>
+        </div> -->
+      </div>
+
+
+
+
+
+      <div class="modal fade change-pass-model paymentDepositePopup manage-acccount-popup" id="editPaymentMmodels" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+          <div class="modal-content change-pass-model-txt">
+            <div class="modal-header change-pass-model-hed">
+              <div class="featured-sec-ro--titl-txt">
+                <span class="titl-bodr-lft-spn-model"></span>
+                <h3 class="featured-sec-ro--titl-txt-tg-model">Edit Payment Method</h3>
+              </div>
+              <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body change-pass-model-body">
+            <div class="enter-withdraw-detail">
+                <form  class="editBankUser-fom">
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Account Name" name="accountholdername">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="number" placeholder="Account Number" name="accountnumber">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs hide">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="UPI Id" name="upiid">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs hide">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="number" placeholder="Phone Number" name="phonenumber">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Display Name" name="displayname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Ifsc Code" name="ifsccode">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Bank Name" name="bankname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="text" placeholder="Branch Name" name="branchname">
+                      </div>
+                    </div>
+                    <div class="change-pass-model-form-inputs">
+                      <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                        <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+                </form>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+      <div class="modal fade change-pass-model paymentDepositePopup manage-acccount-popup" id="deletePaymentMmodels" tabindex="-1" aria-labelledby="addPaymentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
+          <div class="modal-content change-pass-model-txt">
+            <div class="modal-header change-pass-model-hed">
+              <div class="featured-sec-ro--titl-txt">
+                <span class="titl-bodr-lft-spn-model"></span>
+                <h3 class="featured-sec-ro--titl-txt-tg-model">Confirmation form</h3>
+              </div>
+              <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div >
+            <div class="enter-withdraw-detail">
+              <form  class="deleteBankUser-fom">
+                <div class="change-pass-model-form-inputs">
+                  <label> do you want to delete this payment method?</label>
+                  <input class="" type="checkbox" name="checkbox">
+                </div>
+                <button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ----= SIDEBAR SECTION START =-----   -->
+      <%-include('../sideBar')%>
+      <!-- ----= SIDEBAR SECTION END =-----   -->
+
+      <div class="mbl-botom-mnu-spacer"></div>
+      <!-- ----= MOBILE BOTTOM MENU SECTION START =-----   -->
+      <%-include("../mobileMenu")%>
+      <!-- ----= MOBILE BOTTOM MENU SECTION END =-----   -->
+
+
+      <!-- ----=MODEL1 SECTION START =-----   -->
+      <!-- Modal -->
+      <%-include('../loginBox')%>
+      <%-include('../registration')%>
+      <%-include('../updatePass')%>
+      <%-include("../stakeLabel")%>
+      
+      <!-- ----=MODEL1 SECTION END =-----   -->
+
+    </main>
+
+    <!-- JQUERY  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+      integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- JQUERY  -->
+
+    <!-- AOS ANIMATION CDN  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+      integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      AOS.init({
+        duration: 1200,
+      });
+    </script>
+    <!-- AOS ANIMATION CDN  -->
+
+    <!-- SLICK SLIDER CDN  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+      integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      $(".hiroslide").slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        arrows: true,
+        dots: false,
+        speed: 500,
+        infinite: true,
+        autoplaySpeed: 5000,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: false,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+
+      $(".hiroslide2").slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        arrows: false,
+        dots: true,
+        speed: 300,
+        infinite: true,
+        autoplaySpeed: 1500,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+
+      $(".testimonial").slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
+        dots: true,
+        speed: 300,
+        infinite: true,
+        autoplaySpeed: 3000,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+    </script>
+
+    <!-- SLICK SLIDER CDN  -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    
+    <!-- <script>
+      $('#offsetmenubtnn').click(function() {
+          $('#offsetmenubody').css({
+              'transform': 'translateX(0px)',
+              'transition': 'all 0.3s ease-in-out',
+          });
+      });
+    </script> -->
+
+    <script>
+      $(document).ready(function(){
+        $("#offsetmenubtnn").click(function(){
+          $("#offsetmenubody").toggleClass("offset-mnu-width");
+        });
+      });
+    </script>
+    
+    <script>
+      $(document).ready(function(){
+        $("#offsetmenubtnn").click(function(){
+          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $("#offsertmnuclosbtn").click(function(){
+          $("#offsetmenubody").toggleClass("offset-mnu-width");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $("#offsertmnuclosbtn").click(function(){
+          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+        });
+      });
+    </script>
+    
+    <!-- <script>
+      $(document).ready(function(){
+        $("#botommainmnubtnn").click(function(){
+          $("#botommnuwrp").toggleClass("botom-mnu-wrp");
+        });
+      });
+    </script> -->
+
+    
+
+    <!-- ---------- CAPTCHA CODE ----------  -->
+    <script>
+      // Generate a random CAPTCHA code
+      function generateCaptcha() {
+        var captcha = '';
+        var possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for (var i = 0; i < 6; i++) {
+          captcha += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+        }
+        return captcha;
+      }
+    
+      // Display the CAPTCHA code on the page
+      function displayCaptcha() {
+        var captchaCode = document.getElementById('captchaCode');
+        captcha = generateCaptcha();
+        captchaCode.textContent = captcha;
+      }
+    
+      // Validate the user's input
+      function validateCaptcha() {
+        var userInput = document.getElementById('captchaInput').value;
+        if (userInput === captcha) {
+          alert('CAPTCHA code is correct. Form submitted!');
+        } else {
+          alert('CAPTCHA code is incorrect. Please try again.');
+          displayCaptcha(); // Refresh CAPTCHA on incorrect input
+        }
+        return false; // Prevent form submission
+      }
+    
+      // Refresh the CAPTCHA code
+      document.getElementById('refreshCaptcha').addEventListener('click', displayCaptcha);
+    
+      // Generate a new CAPTCHA code when the page loads
+      var captcha = generateCaptcha();
+      displayCaptcha();
+    
+      // Attach the validation function to the form's submit event
+      document.getElementById('captchaForm').addEventListener('submit', validateCaptcha);
+    </script>
+    
+    
+    <!-- ---------- CAPTCHA CODE ----------  -->
+
+
+  </body>
+</html>

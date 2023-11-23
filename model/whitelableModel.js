@@ -5,6 +5,10 @@ const whiteLabelSchema = mongoose.Schema({
     whiteLabelName:{
         required:true,
         type:String
+    },
+    B2C_Status:{
+        type:Boolean,
+        default:false
     }
 })
 

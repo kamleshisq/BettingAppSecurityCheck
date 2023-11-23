@@ -92,6 +92,12 @@ socket.on('connect', () => {
         }, 5000);
     }
 
+    $('.button').click(function (event) {
+        if ($(this).find('.mylock-data').length > 0) {
+          event.stopImmediatePropagation();
+        } 
+    });
+
     $(document).on('click', ".close-btn", function() {
         const grandParent = $(this).closest('.popup');
         grandParent.removeClass("active");
@@ -119,7 +125,7 @@ socket.on('connect', () => {
     })
 
     $('.paymentDepositeMenu').click(function(e){
-        document.getElementById("loader-overlay").style.display = "flex";
+        document.getElementById("loader2-overlay").style.display = "flex";
         socket.emit('getPaymentmethodData',{data:LOGINDATA})
     })
 
@@ -167,7 +173,7 @@ socket.on('connect', () => {
     socket.on('getPaymentmethodData',async(data)=>{
         // console.log(data)
         if(data.status == 'success'){
-            document.getElementById("loader-overlay").style.display = "none";
+            document.getElementById("loader2-overlay").style.display = "none";
             if(data.data){
                 $('#navmod3 .accountnamecontainer').show()
                 $('#navmod3 .enter-payment-detail').show()
@@ -230,7 +236,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".bank-img", function(e){
         e.preventDefault();
-        document.getElementById("loader-overlay").style.display = "flex";
+        document.getElementById("loader2-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'banktransfer'})
@@ -238,7 +244,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".upi-img", function(e){
         e.preventDefault();
-        document.getElementById("loader-overlay").style.display = "flex";
+        document.getElementById("loader2-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'upi'})
@@ -246,7 +252,7 @@ socket.on('connect', () => {
 
     $(document).on('click', ".pytm-img", function(e){
         e.preventDefault();
-        document.getElementById("loader-overlay").style.display = "flex";
+        document.getElementById("loader2-overlay").style.display = "flex";
         $('.img-payment').removeClass("active");
         $(this).addClass('active')
         socket.emit('getBankData', {LOGINDATA, type:'paytm'})
@@ -257,7 +263,7 @@ socket.on('connect', () => {
         if(data.status === "fail"){
 
         }else{
-            document.getElementById("loader-overlay").style.display = "none";
+            document.getElementById("loader2-overlay").style.display = "none";
             let html = ''
             if(data.paymentMethodDetail){
                 $('#navmod3 .enter-payment-detail').show()
@@ -312,6 +318,200 @@ socket.on('connect', () => {
     //     console.log(fd)
     // })
 
+    $('.WithrowReqMenu').click(function(e){
+        e.preventDefault()
+        document.getElementById("loader3-overlay").style.display = "flex";
+        $('#navmod4').find('.img-payment').removeClass('active')
+        $('#navmod4').find('.bankW-img').addClass('active')
+        socket.emit('getAccountsData', LOGINDATA)
+    })
+
+    socket.on('getAccountsData', async(data) => {
+        // console.log(data)
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            document.getElementById("loader3-overlay").style.display = "none";
+            if(data.data.length > 0){
+                $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+                $('#navmod4').find('#enter-withdraw-detail').find('form').find('input').val('')
+                let htmlTag = ''
+                for(let i = 0; i<data.data.length;i++){
+                    if(i == 0){
+                        htmlTag += `<div class="luck-enterprise-tag active" id='${data.data[i]._id}'>${data.data[i].accountholdername}</div>`
+                    }else{
+                        htmlTag += `<div class="luck-enterprise-tag" id='${data.data[i]._id}'>${data.data[i].accountholdername}</div>`
+                    }
+                }
+
+                $('#navmod4 .accountnamecontainer').html(htmlTag)
+
+                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
+                <li id="Acc-Number"> ${data.data[0].accountnumber}</li>
+                <li id="Bank-Name"> ${data.data[0].bankname}</li>
+                <li id="IFSC"> ${data.data[0].ifsccode}</li>`
+                document.getElementById('BANK-DATA1').innerHTML = htmlData
+                let newHTML =`<p class="act-not-found" >Didn't find the account?<a class="payment-mng-link" href="/manageAccounts" > Click here to add new</a></p>`
+                $('.luck-enterprise ul#BANK-DATA1').after(newHTML);
+            }else{
+                $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
+                html = `<p class="act-not-found" >Didn't find the account?<a class="payment-mng-link" href="/manageAccounts" > Click here to add new</a></p>`
+                document.getElementById('BANK-DATA1').innerHTML = html
+                $('#navmod4 .accountnamecontainer').html('')
+            }
+
+        }
+    })
+
+
+    $(document).on('click', ".upiW-img", function(e){
+        e.preventDefault()
+        $('#navmod4').find('.img-payment').removeClass('active')
+        $(this).addClass('active')
+        $('.luck-enterprise ul#BANK-DATA1').nextAll().remove();
+        socket.emit('getAccountsDataUPI', LOGINDATA)
+    })
+
+    socket.on('getAccountsDataUPI', async(data) => {
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            document.getElementById("loader3-overlay").style.display = "none";
+            if(data.data.length > 0){
+                $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+                $('#navmod4').find('#enter-withdraw-detail').find('form').find('input').val('')
+                let htmlTag = ''
+                for(let i = 0; i<data.data.length;i++){
+                    if(i == 0){
+                        htmlTag += `<div class="luck-enterprise-tag active" id='${data.data[i]._id}'>${data.data[i].accountholdername}</div>`
+                    }else{
+                        htmlTag += `<div class="luck-enterprise-tag" id='${data.data[i]._id}'>${data.data[i].accountholdername}</div>`
+                    }
+                }
+
+                $('#navmod4 .accountnamecontainer').html(htmlTag)
+
+                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
+                <li id="Acc-Number"> ${data.data[0].upiid}</li>`
+                document.getElementById('BANK-DATA1').innerHTML = htmlData
+                let newHTML =`<p class="act-not-found" >Didn't find the account?<a class="payment-mng-link" href="/manageAccounts" > Click here to add new</a></p>`
+                $('.luck-enterprise ul#BANK-DATA1').after(newHTML);
+            }else{
+                $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
+                html = `<p class="act-not-found" >Didn't find the account?<a class="payment-mng-link" href="/manageAccounts" > Click here to add new</a></p>`
+                document.getElementById('BANK-DATA1').innerHTML = html
+                $('#navmod4 .accountnamecontainer').html('')
+            }
+
+        }
+    })
+
+    $(document).on('click', ".pytmW-img", function(e){
+        e.preventDefault()
+        $('#navmod4').find('.img-payment').removeClass('active')
+        $(this).addClass('active')
+        $('.luck-enterprise ul#BANK-DATA1').nextAll().remove();
+        socket.emit('getAccountDataPaytm', LOGINDATA)
+    })
+
+    socket.on('getAccountDataPaytm', async(data) => {
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            document.getElementById("loader3-overlay").style.display = "none";
+            if(data.data.length > 0){
+                $('#navmod4').find('#enter-withdraw-detail').removeClass('hide-elemnt')
+                $('#navmod4').find('#enter-withdraw-detail').find('form').find('input').val('')
+                let htmlTag = ''
+                for(let i = 0; i<data.data.length;i++){
+                    if(i == 0){
+                        htmlTag += `<div class="luck-enterprise-tag active" id='${data.data[i]._id}'>${data.data[i].accountholdername}</div>`
+                    }else{
+                        htmlTag += `<div class="luck-enterprise-tag" id='${data.data[i]._id}'>${data.data[i].accountholdername}</div>`
+                    }
+                }
+
+                $('#navmod4 .accountnamecontainer').html(htmlTag)
+
+                let htmlData = `<li id="Acc-Name"> ${data.data[0].accountholdername}</li>
+                <li id="Acc-Number"> ${data.data[0].accountnumber}</li>`
+                document.getElementById('BANK-DATA1').innerHTML = htmlData
+                let newHTML =`<p class="act-not-found" >Didn't find the account?<a class="payment-mng-link" href="/manageAccounts" > Click here to add new</a></p>`
+                $('.luck-enterprise ul#BANK-DATA1').after(newHTML);
+            }else{
+                $('#navmod4').find('#enter-withdraw-detail').addClass('hide-elemnt')
+                html = `<p class="act-not-found" >Didn't find the account?<a class="payment-mng-link" href="/manageAccounts" > Click here to add new</a></p>`
+                document.getElementById('BANK-DATA1').innerHTML = html
+                $('#navmod4 .accountnamecontainer').html('')
+            }
+
+        }
+    })
+
+    $(document).on('click', ".bankW-img", function(e){
+        e.preventDefault()
+        $('#navmod4').find('.img-payment').removeClass('active')
+        $(this).addClass('active')
+        $('.luck-enterprise ul#BANK-DATA1').nextAll().remove();
+        socket.emit('getAccountsData', LOGINDATA)
+    })
+
+
+
+    $(document).on('click', '#navmod4 .luck-enterprise-tag', function(e){
+        e.preventDefault()
+        $('.luck-enterprise-tag').removeClass('active')
+        $(this).addClass('active')
+        $('#navmod4').find('#enter-withdraw-detail').find('form').find('input').val('')
+        let id = $(this).attr('id')
+        socket.emit('tabAccountData', {LOGINDATA, id})
+    })
+
+    socket.on('tabAccountData', async(data) => {
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            let htmlData = ''
+            if(data.data.pmethod === 'banktransferW'){
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}</li>
+                <li id="Acc-Number"> ${data.data.accountnumber}</li>
+                <li id="Bank-Name"> ${data.data.bankname}</li>
+                <li id="IFSC"> ${data.data.ifsccode}</li>`
+            }else if(data.data.pmethod === 'upiW'){
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}</li>
+                <li id="Acc-Number"> ${data.data.upiid}</li>`
+            }else{
+                htmlData += `<li id="Acc-Name"> ${data.data.accountholdername}</li>
+                <li id="Acc-Number"> ${data.data.accountnumber}</li>`
+            }
+            document.getElementById('BANK-DATA1').innerHTML = htmlData
+        }
+    })
+
+
+
+    $(document).on('submit', '.withdraw-fom', function(e){
+        e.preventDefault()
+        let form = $(this)[0];
+        let fd = new FormData(form);
+        let data = Object.fromEntries(fd.entries());
+        let id = $('#navmod4 .luck-enterprise-tag.active').attr('id');
+        data.id = id
+        // console.log('data======>', data)
+        socket.emit('withrowReq', {data, LOGINDATA})
+    })
+
+    socket.on('withrowReq', async(data) => {
+        if(data.status === 'err'){
+            togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+        }else{
+            togglePopupMain('popup-1', "redPopUP", data.msg.toUpperCase())
+            setTimeout(()=>{
+                window.location.reload()
+              }, 1000)
+        }
+    })
+
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
     if(inputElementSearch != null){
@@ -360,7 +560,7 @@ socket.on('connect', () => {
         socket.emit('userLoginBalance', LOGINDATA)
         setTimeout(()=>{
             balance()
-          }, 500)
+          }, 5000)
     }
     balance()
     socket.on('userLoginBalance', async(data) => {
@@ -501,10 +701,17 @@ socket.on('connect', () => {
                     if(multiMarketTd.id == data.id){
                         function removeParentElementByChildId(childId) {
                             const childElement = document.getElementById(childId);
+                            // console.log(childElement, 111)
                             if (childElement) {
                               const parentElement = childElement.closest('.exchange-pg-inn-banner-col2');
                               if (parentElement) {
                                 parentElement.parentNode.removeChild(parentElement);
+                              }else{
+                                let parentElement2 = childElement.closest('.mbl-exc-inn-tbl-datadv-wrp')
+                                // console.log(parentElement2, "parentElement2parentElement2parentElement2")
+                                if(parentElement2){
+                                    parentElement2.parentNode.removeChild(parentElement2);
+                                }
                               }
                             }
                           }
@@ -1075,23 +1282,46 @@ socket.on('connect', () => {
     }
 
     if(pathname.startsWith('/admin')){
+        let oldcount = 0 
         if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Admin'){
             setInterval(()=>{
                 socket.emit('getcountofpaymentreq',LOGINDATA)
+                socket.emit('getcountofWITHROWREQ',LOGINDATA)
             },5000)
             socket.emit('getcountofpaymentreq',LOGINDATA)
+            socket.emit('getcountofWITHROWREQ',LOGINDATA)
         }
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
-                console.log(data.paymentreqcount)
-                let oldcount = JSON.parse(sessionStorage.getItem('notiCount'))
-                console.log(oldcount,'oldcount')
-                if(oldcount < data.paymentreqcount){
+                // console.log(data.paymentreqcount)
+                // console.log(oldcount,'oldcount')
+                if(oldcount === 0){
+                    oldcount = data.paymentreqcount
+                }
+                else if(oldcount < data.paymentreqcount){
+                    oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
                     audio.play();
                 }
-                sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
-                $('header .fa-bell').siblings('span').text(data.paymentreqcount)
+                // sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
+                $('header .dps-notf').siblings('span').text(data.paymentreqcount)
+            }else{
+                console.log(data.msg)
+            }
+        })
+
+        let oldCount1 = 0
+        socket.on('getcountofWITHROWREQ',async(data)=>{
+            if(data.status == 'success'){
+                if(oldCount1 === 0){
+                    oldCount1 = data.withrowReqCount
+                }
+                else if(oldCount1 < data.withrowReqCount){
+                    oldCount1 = data.withrowReqCount
+                    var audio = document.getElementById("notificationSound");
+                    audio.play();
+                }
+                $('header .wth-notf').siblings('span').text(data.withrowReqCount)
             }else{
                 console.log(data.msg)
             }
@@ -6735,52 +6965,27 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/liveMarket"){
-        // function marketId(){
-            // $(document).ready(function() {
-            //     var ids = [];
-          
-            //     $(".MarketIds").each(function() {
-            //       ids.push(this.id);
-            //     });
-            //     // console.log(ids)
-            //     socket.emit("aggreat", {ids, LOGINDATA})
-            //   });
-        //       setTimeout(()=>{
-        //         marketId()
-        //       }, 60000)
-        // }
-        // marketId()
         function marketId(){
             $(document).ready(function() {
-                // var ids = [];
-          
-                // $(".MarketIdsR").each(function() {
-                //   ids.push(this.id);
-                // });
-                // console.log(ids)
                 socket.emit("aggreat",  LOGINDATA)
-                // socket.emit("aggreat", LOGINDATA)
               });
               setTimeout(()=>{
                 if(pathname === "/admin/liveMarket"){
                     marketId()
                 }
-              }, 500)
+              }, 1000 * 5)
         }
         marketId()
         
 
         socket.on("aggreat", async(data) => {
-            // console.log(data)
             let stake1 = 0;
             let stake2 = 0;
             data.forEach(item => {
-                // item.betData.forEach(bet => {
                     if(document.getElementById(`${item._id}`)){
                         document.getElementById(`${item._id}`).innerText = item.totalStake
                         document.getElementById(`${item._id}B`).innerText = item.count
                     }
-                // })
             })
         })
     }
@@ -7092,6 +7297,36 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'  ){
 
+        if(document.getElementById('myIframe')){
+            let channelId = document.getElementById('myIframe').getAttribute('data-id');
+            // console.log(channelId, "channelIdchannelIdchannelId")
+            socket.emit('channelId', {channelId, search, LOGINDATA})
+    
+            socket.on('channelId', data => {
+                // console.log(data)
+                try{
+                    function xorEncrypt(input, key) {
+                        let output = '';
+                        for (let i = 0; i < input.length; i++) {
+                          output += String.fromCharCode(input.charCodeAt(i) ^ key);
+                        }
+                        return output;
+                      }
+                      const encryptionKey = 'JK';
+                      const encryptedUrl = xorEncrypt(data, encryptionKey);
+                      $(document).ready(function() {
+                        $('#myIframe').attr('src', encryptedUrl);
+                    });
+                    // window.addEventListener('load', function() {
+                    //     const iframe = document.getElementById('myIframe');
+                    //     iframe.src = encryptedUrl;
+                    //   });
+    
+                }catch(err){
+                    console.log(err)
+                }
+            })
+        }
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
         //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
@@ -7119,8 +7354,32 @@ socket.on('connect', () => {
             });
         });
         
-        
-        
+        function cashoutCheck(){
+            $(document).ready(function(){
+                let id = $('.mo').attr('id')
+                // console.log(id, "111111111111111111111111111111")
+                socket.emit('cashoutCheck', {LOGINDATA, id})
+                setTimeout(()=>{
+                    cashoutCheck()
+                  }, 5000)
+            })
+        }
+        cashoutCheck()
+
+        socket.on('cashoutCheck', data => {
+            if(data.Status){
+                // console.log($('.mo'))
+                let tables = $('.mo')
+                tables.each(function (index, table) {
+                    $(table).find('thead tr th:first').html('Market <button class="site-button cashout">CASHOUT</button>');
+                })
+            }
+        })
+
+        $(document).on('click', ".cashout", function(e){
+            let id = $(this).closest('table').attr('id')
+            socket.emit('cashOOut', {LOGINDATA, id})
+        })
 
         function marketLimitId(){
             $(document).ready(function() {
@@ -7362,6 +7621,7 @@ socket.on('connect', () => {
                         
                     }
                 }else if (this.id == `${section.selectionId}6`){
+                    // console.log(data)
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -8547,9 +8807,10 @@ socket.on('connect', () => {
                     togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                 }else{
                     if(data.odds != '\n                        \n                      '){
+                        // alert('132456')
+                        showLoader();
                         socket.emit("betDetails", {data, LOGINDATA})
                         // console.log(data)
-                        showLoader();
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                     }
@@ -8563,8 +8824,9 @@ socket.on('connect', () => {
                         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                     }else{
                         if(data.odds != '\n                        \n                      '){
-                            socket.emit("betDetails", {data, LOGINDATA})
+                            // alert('132456')
                             showLoader();
+                            socket.emit("betDetails", {data, LOGINDATA})
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                         }
@@ -9299,6 +9561,13 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/inPlay" ){
+        // $('.href-div')
+        // $(document).on('click', ".href-div", function(){
+        //     let grefLimk = $(this).attr('data-href')
+        //     window.location = grefLimk
+        // })
+
+
         function marketId1(){
             socket.emit("liveData" , "data12")
               setTimeout(()=>{
@@ -10208,15 +10477,25 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/multimarkets"){
-        $(document).ready(function(){
-            $(".exchange-pg-inn-tbl .button").click(function(){
+        // $(document).ready(function(){
+        //     $(".exchange-pg-inn-tbl .button").click(function(){
+        //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
+        //       $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
+        //     });
+        //     $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
+        //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
+        //     });
+        //   });
+
+          $(document).ready(function(){
+            $("table .button").click(function(){
               $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
               $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
             });
             $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
               $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
             });
-          });
+        });
 
         function showLoader() {
             document.getElementById("loader-overlay").style.display = "flex";
@@ -10231,6 +10510,7 @@ socket.on('connect', () => {
         function marketId(){
             $(document).ready(function() {
                 var ids = [];
+                var pairs = [];
           
                 $(".market").each(function() {
                   ids.push(this.id);
@@ -10240,7 +10520,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 5000)
         }
         marketId()
         let first = true
@@ -10381,16 +10661,16 @@ socket.on('connect', () => {
                     }
                 }
                 else if (this.id == `${section.selectionId}6`){
-                //     if(!data.status){
-                //         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                //         <i class="fa-solid fa-lock"></i>
-                //         </span>`
-                //         this.removeAttribute("data-bs-toggle");
-                //         parentElement.classList.add("suspended");
-                //         $(this).parent().find(".match-status-message").text("Suspended")
-                //     }
-                //    else 
-                   if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
+                    // console.log(data)
+                    // if(!data.status){
+                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    //     <i class="fa-solid fa-lock"></i>
+                    //     </span>`
+                    //     this.removeAttribute("data-bs-toggle");
+                    //     parentElement.classList.add("suspended");
+                    //     $(this).parent().find(".match-status-message").text("Suspended")
+                    // }else 
+                    if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
                     //   </span>`
@@ -10744,15 +11024,14 @@ socket.on('connect', () => {
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
-                    // if(!data.status){
-                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                    //     <i class="fa-solid fa-lock"></i>
-                    //   </span>`
-                    //   this.removeAttribute("data-bs-toggle");
-                    //     parentElement.classList.add("suspended");
-                    //     $(this).parent().find(".match-status-message").text("Suspended")
-                    // }else
-                     if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0"){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                        parentElement.classList.add("suspended");
+                        $(this).parent().find(".match-status-message").text("Suspended")
+                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -11409,9 +11688,10 @@ socket.on('connect', () => {
                         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                     }else{
                         if(data.odds != '\n                        \n                      '){
+                            // alert('132456')
+                            showLoader();
                             socket.emit("betDetails", {data, LOGINDATA})
                             // console.log(data)
-                            showLoader();
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                         }
@@ -11425,8 +11705,9 @@ socket.on('connect', () => {
                             togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                         }else{
                             if(data.odds != '\n                        \n                      '){
-                                socket.emit("betDetails", {data, LOGINDATA})
+                                // alert('132456')
                                 showLoader();
+                                socket.emit("betDetails", {data, LOGINDATA})
                             }else{
                                 togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                             }
@@ -13317,6 +13598,7 @@ socket.on('connect', () => {
         // }
         let status = false
         socket.on('getinProgressData', data => {
+            // console.log('WORKING', 123456789)
             let html= ''
             for(let i = 0; i < data.length; i++){
                 html = `<tr class="RAWCLASS" id="${data[i].marketId}"><td>${data[i].marketName}</td>
@@ -13480,12 +13762,13 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
-                // console.log(deleteButton)
+                console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
                 if (row) {
                     const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
+                    console.log("rowremove")
                     // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
                     // rowsToUpdate.forEach((row, index) => {
                     //     const srNoCell = row.cells[0]; 
@@ -13572,6 +13855,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
+            console.log("WORKING 123456789")
             let id =  this.id
             var newColumnCell = $(this).closest('tr').find('.selectOption');
             // console.log(newColumnCell.val())
@@ -14472,7 +14756,8 @@ socket.on('connect', () => {
                         $("#match_odd").html('Please wait a moment')
                         let type = 'userBook'
                         let newData = true
-                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+                        let page = 0
+                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData, page})
                     } else {
                         console.log('Market not found.');
                     }
@@ -17058,7 +17343,7 @@ socket.on('connect', () => {
             })
             newData.status = true
             newData.userName = LOGINDATA.LOGINUSER.userName
-            console.log(newData)
+            // console.log(newData)
             socket.emit('addpaymentMethod',newData)
         })
 
@@ -17514,7 +17799,752 @@ socket.on('connect', () => {
             $('#myModal3').find('img').attr('src',imgpath)
         })
     }
-    
 
+
+
+
+
+    if(pathname == '/manageAccounts'){
+        $(document).on('click', ".add-Bank", function(e){
+            e.preventDefault();
+            $('.addBankUser-fom').find('input').val('')
+            $('.img-payment').removeClass("active");
+            $(this).addClass('active')
+            $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+        })
+        
+        $(document).on('click', ".add-Upi", function(e){
+            e.preventDefault();
+            $('.addBankUser-fom').find('input').val('')
+            $('.img-payment').removeClass("active");
+            $(this).addClass('active')
+            $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+        })
+        
+        $(document).on('click', ".add-Paytm", function(e){
+            e.preventDefault();
+            $('.addBankUser-fom').find('input').val('')
+            $('.img-payment').removeClass("active");
+            $(this).addClass('active')
+            $('[name="' + "accountholdername" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "accountnumber" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "displayname" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "bankname" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "branchname" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "upiid" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+            $('[name="' + "phonenumber" + '"]').closest('.change-pass-model-form-inputs').removeClass('hide');
+            $('[name="' + "ifsccode" + '"]').closest('.change-pass-model-form-inputs').addClass('hide');
+        })
+
+
+        $(document).on('submit', '.addBankUser-fom', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            // var element = $('active');
+            if($('.add-Bank').hasClass('active')){
+                data.pmethod = 'banktransferW'
+            }else if ($('.add-Upi').hasClass('active')){
+                data.pmethod = 'upiW'
+            }else{
+                data.pmethod = 'paytmW'
+            }
+            // console.log(data, 123456879)
+            socket.emit('addBenkDetailsUserSide', {data, LOGINDATA})
+        })
+
+        socket.on('addBenkDetailsUserSide', async(data) => {
+            // console.log(data, "ReturnData")
+            if(data.status == 'err'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else{
+                togglePopupMain('popup-1', "redPopUP", data.msg.toUpperCase())
+                setTimeout(()=>{
+                    window.location.reload()
+                  }, 1000)
+            }
+        })
+
+        $(document).on('change', '#select', function(e){
+            e.preventDefault()
+            let val = $(this).val()
+            socket.emit('FilterAccounts',{LOGINDATA, val} )
+        })
+
+        socket.on('FilterAccounts', async(data) => {
+            // console.log(data, "<++++===data")
+            let html = ''
+            if(data.length > 0){
+               for(let i = 0; i < data.length; i++){
+                html += `<tr class="acount-stat-tbl-body-tr" id=${data[i]._id}> <td title="Account Holder Name" >${data[i].accountholdername}</td>`
+                if(data[i].pmethod == 'banktransferW'){
+                    html += `<td title="Account Number" >${data[i].accountnumber}</td>`
+                }else if (data[i].pmethod == 'upiW'){
+                    html += `<td title="Account Number" >${data[i].upiid}</td>`
+                }else{
+                    html += `<td title="Account Number" >${data[i].phonenumber}</td>`
+                }
+                if(data[i].ifsccode){
+                   html += `<td title="Ifsc Code" >${data[i].ifsccode}</td>`
+                }else{
+                    html += `<td title="Ifsc Code" >-</td>`
+                }
+                if(data[i].bankname){
+                   html += `<td title="Bank Name" >${data[i].bankname}</td>`
+                }else{
+                    html += `<td title="Bank Name" >-</td>`
+                }
+                if(data[i].branchname){
+                    html += `<td title="Branch Name" >${data[i].branchname}</td>`
+                }else{
+                    html += `<td title="Branch Name" >-</td>`
+                }
+                html += `<td title="Display Name" >${data[i].displayname}</td>`
+                if(data[i].pmethod == 'banktransferW'){
+                      
+                    html += `<td title="Payment Method" >Bank Transfer</td>`
+                    }else if(data[i].pmethod == 'upiW'){
+                    html += `<td title="Payment Method" >UPI Payment</td>`
+                    
+                    }else if(data[i].pmethod == 'paytmW'){
+                    html += `<td title="Payment Method" >Paytm</td>`            
+                    }
+                  if(data[i].status){
+                    html += `<td title="Status" >
+                      <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch on">
+                        <input class="checkbox status_check_payment" type="checkbox" checked>
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                      </div>
+                    </td>`
+                  }else{
+                    html += `<td title="Status" >
+                      <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch">
+                        <input class="checkbox status_check_payment" type="checkbox">
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                      </div>
+                    </td>`
+                  }
+
+                  html += `<td title="Actions" >
+                    <div class="btn-set">
+                      <button class="site-button edit-btn" data-bs-toggle="modal" data-bs-target="#myModal1" type="button">Edit</button>
+                      <button class="site-button delete-btn">Delete</button>
+                    </div>
+                  </td>
+                  </tr>`
+               }
+
+               $('#TABLE tbody').html(html)
+            }else{
+                html = '<tr class="no-data"><td>No Data to Display</td></tr>'
+                $('#TABLE tbody').html(html)
+            }
+        })
+
+
+        $(document).on('change', '.status_check_payment', function(e){
+            e.preventDefault()
+            let id = $(this).closest('tr').attr('id')
+            socket.emit('UpdateStatusAccount', id)
+        })
+
+
+        $(document).on('click', '.edit-paymentButton', function(e){
+            e.preventDefault()
+            let id = $(this).closest('tr').attr('id')
+            socket.emit('editPaymentMethodUserSide', id)
+        })
+
+
+        socket.on('editPaymentMethodUserSide', async(data) => {
+            if(data.status === 'err'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else{
+                let html = ''
+                if(data.data.pmethod == "banktransferW"){
+                    html = `<div class="change-pass-model-form-inputs">
+                    <label for="accountholdername"> Account Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.accountholdername}" name="accountholdername">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                  <label for="accountnumber"> Account Number</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="number" value="${data.data.accountnumber}" name="accountnumber">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                  <label for="displayname"> Display Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.displayname}" name="displayname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                  <label for="ifsccode">Ifsc Code </label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.ifsccode}" name="ifsccode">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                  <label for="bankname">Bank Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.bankname}" name="bankname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                  <label for="branchname">Branch Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.branchname}" name="branchname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                  <label for="branchname">Your Password</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="placeholder" ="Enter Your Password" name="password" required>
+                    </div>
+                  </div>`
+                }else if(data.data.pmethod == "upiW"){
+                    html = `                    <div class="change-pass-model-form-inputs">
+                    <label for="accountholdername"> Account Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.accountholdername}" name="accountholdername">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <label for="upiid"> UPI Id</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.upiid}" name="upiid">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <label for="displayname"> Display Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.displayname}" name="displayname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                  <label for="branchname">Your Password</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
+                    </div>
+                  </div>`
+                }else{
+                    html = `                    <div class="change-pass-model-form-inputs">
+                    <label for="accountholdername"> Account Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.accountholdername}" name="accountholdername">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <label for="phonenumber"> Phone Number</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="number" value="${data.data.phonenumber}" name="phonenumber">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                    <label for="displayname"> Display Name</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="text" value="${data.data.displayname}" name="displayname">
+                    </div>
+                  </div>
+                  <div class="change-pass-model-form-inputs">
+                  <label for="branchname">Your Password</label>
+                    <div class="input-group flex-nowrap mb-2 change-pass-model-form-inputgrup">
+                      <input class="form-control" type="password" placeholder="Enter Your Password" name="password" required>
+                    </div>
+                  </div>`
+                }
+                html += '<button type="submit" class="btn change-pass-model-form-submit-btn">Submit</button>'
+                $("#editPaymentMmodels").find('form').attr('id', data.data._id)
+                $("#editPaymentMmodels").find('form').html(html)
+            }
+        })
+
+
+
+        $(document).on('submit', '.editBankUser-fom', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id  = $(this).attr('id')
+            data.id = id
+            // console.log(data)
+            socket.emit('editData', {data, LOGINDATA})
+        })
+
+        socket.on('editData', async(data) => {
+            if(data.status === 'err'){   
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else{
+                togglePopupMain('popup-1', "redPopUP", 'Updated Sucessfully!!'.toLowerCase())
+                setTimeout(()=>{
+                    window.location.reload()
+                }, 1000)
+            }
+        })
+
+        $(document).on('click', '.dlt-mthd', function(e){
+            let id = $(this).closest('tr').attr('id')
+            $('#deletePaymentMmodels').find('.deleteBankUser-fom').attr('id', id)
+        })
+
+        $(document).on('submit', '.deleteBankUser-fom', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = $(this).attr('id')
+            data.id = id
+            if(data.checkbox){
+                socket.emit('deleteMethodUSERACC', {LOGINDATA, data})
+            }else{
+                togglePopupMain('popup-2', "redPopUP2", 'PLEASE SELECT CHECKBOX FOR DELETE ACCOUNT DATa')
+            }
+        })
+
+        socket.on('deleteMethodUSERACC', async(data) =>{
+            if(data.status == 'err'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else{
+                togglePopupMain('popup-1', "redPopUP", data.msg.toUpperCase())
+                setTimeout(()=>{
+                    window.location.reload()
+                }, 1000)
+            }
+        })
+
+    }
+
+
+    if(pathname == "/admin/withdrawalRequest"){
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+
+
+        $('.searchUser').keyup(function(){
+            if($(this).hasClass("searchUser")){
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+        socket.on("ACCSEARCHRES", async(data)=>{
+            $('.wrapper').show()
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
+        async function dilterData(){
+            let data = {}
+            let userName = $('.searchUser').val()
+            let fromDate = $('#fromDate').val()
+            let toDate = $('#toDate').val()
+            let status = $('#status').val()
+            if(userName.trim() != ''){
+                data.userName = userName
+            }
+            if(fromDate.trim() != ''){
+                data.fromDate = fromDate
+            }
+            if(toDate.trim() != ''){
+                data.toDate = toDate
+            }
+            data.status = status
+            return data
+        }
+
+
+
+        $('#load-more').click(async function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let filterData = await dilterData()
+            socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
+        })
+
+        $('#status,#fromDate,#toDate').change(async function(){
+            $('.pageId').attr('data-pageid','1')
+            let filterData = await dilterData()
+            let page = 0
+            socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
+        })
+
+        $(document).on("click", ".searchList", async function(){
+            $('.pageId').attr('data-pageid','1')
+            document.getElementById("searchUser").value = this.textContent
+            let page = 0  
+            let filterData = await dilterData()
+            $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
+            socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA})
+        })
+
+        socket.on('WithdrawLoadMoreAdmin', async(data) => {
+            // console.log(data, "bodybodybody")
+            if(data.reqData.length > 0){
+                let html = ""
+                for(let i = 0; i < data.reqData.length; i++){
+                    let date = new Date(data.reqData[i].reqDate)
+                    let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
+                    html += `<tr id="${data.reqData[i]._id}" >
+                    <td>${formetedDate}</td>
+                    <td>${data.reqData[i].userName}</td>
+                    <td>${data.reqData[i].amount}</td>
+                    <td>${data.reqData[i].note}</td>
+                    <td>${data.reqData[i].reqStatus}</td>
+                    <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal4" class="btn user-acc-btn" id="${data.reqData[i].payMentMethodId}" >View Account Details</button></td>`
+                    if(data.reqData[i].reqStatus != 'pending'){
+                        
+                        if(data.reqData[i].reqStatus === 'transferred'){
+                            let date2 = new Date(data.reqData[i].approvalDate)
+                            let letFormetedDate = date2.getDate() + '-' +(date2.getMonth() + 1) + '-' + date2.getFullYear() + ' ' + date2.getHours() + ':' + date2.getMinutes() +':' + date2.getSeconds()
+                            html += `<td>Transferred Date :- ${letFormetedDate}</td>`
+                        }else{
+                            let date2 = new Date(data.reqData[i].approvalDate)
+                            let letFormetedDate = date2.getDate() + '-' +(date2.getMonth() + 1) + '-' + date2.getFullYear() + ' ' + date2.getHours() + ':' + date2.getMinutes() +':' + date2.getSeconds()
+                            html += `<td>Cancel Date :- ${letFormetedDate}</td>`
+                        }
+                    }else{
+                        html += `<td>
+                            <div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#APPROVE" class="btn RequestApprove">Approve</button>
+                            <button data-bs-toggle="modal" data-bs-target="#DENY" class="btn RequestDeny">Deny</button></div>
+                        </td>`
+                    }
+                html += '</tr>'
+            }
+            if(data.page == 0){
+                $('.new-body').html(html)
+            }else{
+                if(data.refresh){
+                    $('.new-body').html(html)
+                }else{
+                    $('.new-body').append(html) 
+                }
+            }
+            $('#load-more').show()
+            }else{
+                $('#load-more').hide()
+                if(data.page == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    $('.new-body').html(html)
+                }
+            }
+        })
+
+
+        async function refereshPageWithdr(){
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let filterData = await dilterData()
+            let refreshStatus = true;
+            socket.emit('WithdrawLoadMoreAdmin', {filterData, page, LOGINDATA, refreshStatus})
+        }
+
+
+
+
+        $(document).on('click', ".refresh-btn", function(e){
+            refereshPageWithdr()
+        })
+
+        setInterval(()=>{
+            refereshPageWithdr()
+        },1000 * 5)
+
+
+
+
+        $(document).on('click', ".user-acc-btn", function(e){
+            e.preventDefault()
+            let id = $(this).attr('id')
+            socket.emit('GEtACcountData', id)
+        })
+
+
+        socket.on('GEtACcountData', async(data) => {
+            if(data.status == 'err'){
+                togglePopupMain('popup-2', "redPopUP2", data.msg.toUpperCase())
+            }else if(data.status == 'sucesserr'){
+                let html = 'NO ACCOUNT DATA FOUND'
+                document.getElementById('AccountData').innerHTML = html
+            }else{
+                // console.log(data.data)
+                let html = ''
+                if(data.data.pmethod === "upiW"){
+                    html += `<div class="payment-method-data">
+                            <div class="title">Payment Method <span>UPI Payment</span></div>
+                                <div class="account-detail-container">
+                                    <ul>
+                                        <li><span>Name:</span> ${data.data.accountholdername}</li>
+                                        <li><span>Ac No:</span> ${data.data.upiid}</li>
+                                    </ul>
+                                </div>
+                            </div>`
+                }else if (data.data.pmethod === "banktransferW"){
+                    html += `<div class="payment-method-data">
+                            <div class="title">Payment Method <span>Bank Transfer</span></div>
+                                <div class="account-detail-container">
+                                    <ul>
+                                        <li><span>Name:</span> ${data.data.accountholdername}</li>
+                                        <li><span>Ac No:</span> ${data.data.accountnumber}</li>
+                                        <li><span>Bank Name:</span> ${data.data.bankname}</li>
+                                        <li><span>IFSC Code :</span> ${data.data.ifsccode}</li>
+                                    </ul>
+                                </div>
+                            </div>`
+                }else{
+                    html += `<div class="payment-method-data">
+                    <div class="title">Payment Method <span>Paytm</span></div>
+                        <div class="account-detail-container">
+                            <ul>
+                                <li><span>Name:</span> ${data.data.accountholdername}</li>
+                                <li><span>Ac No:</span> ${data.data.phonenumber}</li>
+                            </ul>
+                        </div>
+                    </div>`
+                }
+                document.getElementById('AccountData').innerHTML = html
+            }
+        })
+
+
+
+        $(document).on('click', ".RequestApprove", function(e){
+            let id = $(this).closest('tr').attr('id')
+            let amount = $(this).closest('tr').find('td:eq(2)').text();
+            $('#APPROVE').find('.Approv_form').attr('id', id)
+            $('#APPROVE .Approv_form').find('input[name="approvedamount"]').val(amount)
+        })
+
+        $(document).on('click', '.RequestDeny', function(e){
+            let id = $(this).closest('tr').attr('id')
+            $('#DENY').find('.denyWithorowel_form').attr('id', id)
+        })
+
+        $(document).on('submit', ".Approv_form", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            if(data.status){
+                data.id = $(this).attr('id')
+                // console.log(data, "datadatadata")
+                socket.emit('reqApproveUpdate', {LOGINDATA, data})
+            }else{
+                alert('Please tick the checkbox')
+            }
+        })
+
+        $(document).on('submit', '.denyWithorowel_form', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            if(data.status){
+                data.id = $(this).attr('id')
+                socket.emit('reqCancelUpdate', {LOGINDATA, data})
+            }else{
+                alert('Please tick the checkbox')
+            }
+        })
+
+
+        socket.on('reqApproveUpdate', async(data) => {
+            // console.log(data)
+            if(data.status === 'err'){
+                alert(data.msg)
+            }else{
+                // console.log(data)
+                $(`#${data.updatedReq._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
+                let date = new Date(data.date123)
+                let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
+                $(`#${data.updatedReq._id}`).find('td:eq(6)').text(`Transferred Date :- ${formetedDate}`)
+                alert('Status Updated!')
+            }
+        })
+
+
+        socket.on('reqCancelUpdate', async(data) => {
+            if(data.status === 'err'){
+                alert(data.msg)
+            }else{
+                $(`#${data.cancelUpdate._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
+                let date = new Date(data.date1234)
+                let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
+                $(`#${data.cancelUpdate._id}`).find('td:eq(6)').text(`Cancel Date :- ${formetedDate}`)
+                alert('Request cancel sucessfully!!')
+            }
+        })
+
+
+    }
+
+
+    if(pathname == "/withdrawalRequest"){
+        async function userWithrowalFilter(){
+            let data = {}
+            let fdate = $('#Fdate').val()
+            let tdate = $('#Tdate').val()
+            let select =$('#select').val()
+            if(fdate.trim() != ''){
+                data.fdate = fdate
+            }
+            if(tdate.trim() != ''){
+                data.tdate = tdate
+            }
+            if(select.trim() != ''){
+                data.select = select
+            }
+            return data
+        }
+
+        $('#select,#Fdate,#Tdate').change(async function(){
+            let filterData = await userWithrowalFilter()
+            $('.pageId').attr('data-pageid','1')
+            let page = 0
+            socket.emit('withdrawalRequestDataUserSide', {filterData, page, LOGINDATA})
+        })
+
+
+        $('#loadMore').click(async function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let filterData = await userWithrowalFilter()
+            // console.log('WORKING')
+            socket.emit('withdrawalRequestDataUserSide', {filterData, page, LOGINDATA})
+        })
+
+
+
+        socket.on('withdrawalRequestDataUserSide', async(data) => {
+            if(data.returnData.length > 0){ 
+                let html = ``
+                for(let i = 0; i < data.returnData.length; i++){
+                    var date = new Date(data.returnData[i].reqDate);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                    html += `<tr class="acount-stat-tbl-body-tr">
+                    <td title="Request Date" > ${formattedTime} </td>
+                    <td title="Amount" > ${data.returnData[i].amount} </td>
+                    <td title="status" > ${data.returnData[i].reqStatus} </td>`
+
+                    if(data.returnData[i].sdmRemark){
+                       html += `<td title="Remark" > ${data.returnData[i].sdmRemark} </td>`
+                    }else{
+                        html += `<td title="Remark" > - </td>`
+                    }
+                    html += `<td title="Note" > ${data.returnData[i].note} </td>`
+                    if(data.returnData[i].approvalDate){
+                            var date2 = new Date(data.returnData[i].approvalDate);
+                            var options = { 
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                                hour12: true
+                            };
+                            var formattedTime2 = date2.toLocaleString('en-US', options);
+                        html += `<td title="Approval Date" > ${formattedTime2} </td>`
+                    }else{
+                        html += `<td title="Approval Date" > - </td>`
+                    }
+                     html +=   `</tr>`
+                }
+
+                if(data.page == 0){
+                    $('#table12').find('tbody').html(html)
+                }else{
+                    // console.log('WORKING')
+                    $('#table12').find('tbody').append(html)
+                }
+
+            }else{
+                $('.loadMoredive').addClass('hide')
+                if(data.page == 0){
+                    html = '<tr class="no-data"><td >No Data to Display</td></tr>'
+                    $('#table12').find('tbody').html(html)
+                }
+            }
+        })
+    }
+    
+    if(pathname == "/htmlDATA"){
+        let matchId = search.split('=')[1]
+        // console.log(matchId, "matchIdmatchId")
+        function htmlDataFun(){
+            socket.emit('HTMLSCOREDATA', matchId)
+            // socket.emit("eventId", id)
+            setTimeout(()=>{
+                htmlDataFun()
+            }, 1000)
+
+        }
+        htmlDataFun()
+
+
+        socket.on('HTMLSCOREDATA', data => {
+            if(data != ""){
+                let score = JSON.parse(data)
+                let element = document.getElementById("data")
+                element.innerHTML = score[0].data
+            }
+        })
+    }
 })
 })

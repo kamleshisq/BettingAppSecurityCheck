@@ -1,0 +1,43 @@
+<table>
+    <thead>
+        <tr>
+            <th>Request Date</th>
+            <th>User Name</th>
+            <th>Amount</th>
+            <th>Note</th>
+            <th>Request Status</th>
+            <th>Bank Details</th>
+            <th>Actions</th>                      
+        </tr>
+    </thead>
+    <tbody class="new-body tbody">
+        <%if(data.length > 0){%>
+        <%for(let i = 0; i < data.length; i++){%>
+            <tr id="<%=data[i]._id%>" >
+                <td><%=data[i].reqDate.getDate() + '-' +(data[i].reqDate.getMonth() + 1) + '-' + data[i].reqDate.getFullYear() + ' ' + data[i].reqDate.getHours() + ':' + data[i].reqDate.getMinutes() +':' + data[i].reqDate.getSeconds()%></td>
+                <td><%=data[i].userName%></td>
+                <td><%=data[i].amount%></td>
+                <td><%=data[i].note%></td>
+                <td><%=data[i].reqStatus%></td>
+                <td class="text-nowrap" ><button data-bs-toggle="modal" data-bs-target="#myModal4" class="btn user-acc-btn" id="<%=data[i].payMentMethodId%>" >View Account Details</button></td>
+                <%if(data[i].reqStatus != 'pending'){%>
+                    <td>
+                        <%if(data[i].reqStatus != 'transferred'){%>
+                            Transferred Date :- <%=data[i].approvalDate.getDate() + '-' +(data[i].approvalDate.getMonth() + 1) + '-' + data[i].approvalDate.getFullYear() + ' ' + data[i].approvalDate.getHours() + ':' + data[i].approvalDate.getMinutes() +':' + data[i].approvalDate.getSeconds()%>
+                        <%}else{%>
+                            Cancel Date :- <%=data[i].approvalDate.getDate() + '-' +(data[i].approvalDate.getMonth() + 1) + '-' + data[i].approvalDate.getFullYear() + ' ' + data[i].approvalDate.getHours() + ':' + data[i].approvalDate.getMinutes() +':' + data[i].approvalDate.getSeconds()%>
+                        <%}%>
+                    </td>
+                <%}else{%>
+                    <td>
+                        <div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#APPROVE" class="btn RequestApprove">Approve</button>
+                        <button data-bs-toggle="modal" data-bs-target="#DENY" class="btn RequestDeny">Deny</button></div>
+                    </td>
+                <%}%>
+            </tr>
+        <%}%>
+        <%}else{%>
+            <tr class="empty_table"><td>No record found</td></tr>
+        <%}%>
+    </tbody>
+  </table>

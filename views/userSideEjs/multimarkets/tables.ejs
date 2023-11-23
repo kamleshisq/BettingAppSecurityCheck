@@ -386,7 +386,7 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
       </div>
     
       <div class="exchange-pg-inn-tbl">
-          <table class="acount-stat-tbl market" id="<%=result.marketList.bookmaker[0].marketId%>">
+          <table class="acount-stat-tbl market" id="<%=result.marketList.bookmaker[1].marketId%>">
     
               <thead class="acount-stat-tbl-hed2">
                   <tr class="acount-stat-tbl-hed-tr2" >
@@ -398,7 +398,7 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
     
               <tbody class="acount-stat-tbl-body">
                 <%
-                        let StringData = result.marketList.bookmaker[0].runners
+                        let StringData = result.marketList.bookmaker[1].runners
                         const cleanedString = StringData.replace(/'/g, '');
                         const jsonData = JSON.parse(cleanedString);
                     %>

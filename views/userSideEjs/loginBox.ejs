@@ -22,7 +22,7 @@
                   <form class="myloginmodl-form-dv">
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label myloginmodl-lbl">E-mail / username</label>
-                      <input type="text" class="form-control myloginmodl-input" id="exampleInputEmail1" aria-describedby="emailHelp" name="userName">
+                      <input type="text" class="form-control myloginmodl-input" id="exampleInputEmail1" aria-describedby="emailHelp" name="userName" autofocus>
                       
                     </div>
                     <div class="mb-3 ">
@@ -36,9 +36,9 @@
                       <button type="submit" class="btn myloginmodl-loginbtnn">LOGIN</button>
                       <button type="button" class="btn myloginmodl-demo-loginbtnn">DEMO LOGIN</button>
                     </div>
-                    <!-- <div class="myloginmodl-form-regesterbtn-dv">
+                    <div class="myloginmodl-form-regesterbtn-dv">
                       <p>Don’t have an account? <a class="myloginmodl-form-regesterbtn" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Register.</a></p>
-                    </div> -->
+                    </div>
                   </form>
                 </div>
               </div>
@@ -79,3 +79,11 @@
 </script>
 
 <script type="text/javascript" src="../js/bundle.js"></script>
+<script>
+ 
+$(document).ready(function(){
+  $('.modal').on('shown.bs.modal', function() {
+    $(this).find('[autofocus]').focus();
+});
+});
+</script>

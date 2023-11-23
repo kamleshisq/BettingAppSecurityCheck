@@ -7,6 +7,7 @@ const util = require('util');
 const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
 const paymentReportModel = require('../model/paymentreport')
+const userWithReq = require('../model/withdrowReqModel');
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -63,16 +64,16 @@ const createSendToken = async (user, statuscode, res, req)=>{
                             device_info:req.headers['user-agent']})
     global._loggedInToken.push({token:token,time:time})
     
-    let childrenArr = await User.distinct('userName', { parentUsers: user._id, role_type: 5 });
-    let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
+    // let childrenArr = await User.distinct('userName', { parentUsers: user._id, role_type: 5 });
+    // let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
     res.status(200).json({
         status:"success",
         token,
         data: {
-            user,
-            paymentreqcount
+            user
+            // paymentreqcount
         }
     })
 }
@@ -124,6 +125,50 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
         }
     })
 }
+
+
+exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
+    console.log(req.body, 12345689)
+    let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
+    console.log(parentUser)
+    if(parentUser){
+        if(req.body.password !== req.body.passwordConfirm){
+            return next(new AppError('Passwords are not matching', 404))
+        }else{
+            let parentArray = parentUser.parentUsers
+            parentArray.push(parentUser.id)
+            console.log(parentArray)
+            let userData = {
+                userName : req.body.userName.toLowerCase(),
+                name : req.body.name,
+                roleName : 'user',
+                whiteLabel:'withDrowTesting',
+                parent_id : parentUser.id,
+                role : '6492fe4fd09db28e00761694',
+                role_type:5,
+                password:req.body.password,
+                passwordConfirm:req.body.passwordConfirm,
+                parentUsers:parentArray,
+                contact:req.body.contectNumber,
+                email:req.body.email
+            }
+
+            let new_USer = await User.create(userData)
+            if(!new_USer){
+                return next(new AppError('Please try again later', 404))
+            }else{
+                // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
+                // createSendToken(new_USer, 200, res, req);
+                res.status(200).json({
+                    status:'success'
+                })
+            }
+
+        }
+    }else{
+        return next(new AppError('Please try again later', 404))
+    }
+}))
 
 exports.login = catchAsync (async(req, res, next) => {
     let {
@@ -247,9 +292,14 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     let childrenArr = []
     // let children = await User.find({parentUsers:currentUser._id, role_type: 5})
     // childrenArr = Array.from(children, ele => ele.userName);
-    childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
-    //   console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
-    let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
+    let paymentreqcount = 0
+    let WithdrawReqCount = 0
+    if(currentUser.role.roleName === "Super-Duper-Admin"){
+        childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
+        paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
+        WithdrawReqCount = await userWithReq.count({username:currentUser.userName, reqStatus:'pending'})
+    }
+    // console.log()
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
     // if (req.session.userId && req.session.userId !== currentUser.id) {
@@ -280,6 +330,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     loginData.User = currentUser
     res.locals.loginData = loginData
     res.locals.paymentreqcount = paymentreqcount
+    res.locals.WithdrawReqCount = WithdrawReqCount
     req.currentUser = currentUser
     req.token = token
     // console.log(req.originalUrl, "2222222222222222222222222222222")

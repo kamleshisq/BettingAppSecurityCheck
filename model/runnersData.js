@@ -12,6 +12,12 @@ const runnerSchema = mongoose.Schema({
     marketId:{
         type:String,
         unique:true
+    },
+    sport:{
+        type:String
+    },
+    marketTitle:{
+        type:String
     }
 })
 

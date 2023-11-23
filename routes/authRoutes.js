@@ -6,6 +6,7 @@ const middlewares = require("../middleWares/middleware");
 const Usermiddlewares = require("../middleWares/user_middleware");
 
 router.post('/login', authController.login);
+router.post('/loginAndCreateUser', authController.createAndLoginUser);
 router.post('/userLogin', authController.userLogin);
 router.post('/userSignUp', authController.signUp);
 router.get('/logOut', Usermiddlewares,authController.isProtected_User, authController.logOut);

@@ -37,7 +37,7 @@ const houseFundModel = require('./model/houseFundmodel');
 const loginLogs =  require("./model/loginLogs");
 const settlement = require("./model/sattlementModel");
 const settlementHistory = require('./model/settelementHistory')
-const mapBet = require("./websocketController/mapBetsController");
+const mapBet = require("./utils/mapBetController");
 const commissionModel = require("./model/CommissionModel");
 const catalogController = require("./model/catalogControllModel");
 const commissionMarketModel = require("./model/CommissionMarketsModel");
@@ -63,6 +63,11 @@ const timelyNotificationModel = require('./model/timelyVoideNotification');
 const resumeSuspendModel = require('./model/resumeSuspendMarket');
 const Decimal = require('decimal.js');
 const runnerDataModel = require('./model/runnersData');
+const streamModel = require('./model/streammanagement');
+const liveStreameData = require('./utils/getLiveStream');
+const manageAccountsUser = require('./model/paymentMethodUserSide');
+const withdowReqModel = require('./model/withdrowReqModel');
+const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -339,15 +344,17 @@ io.on('connection', (socket) => {
         // console.log(filter)
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }
 
         if(data.filterData.userName){
@@ -819,15 +826,17 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id }); 
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             childrenUsername = [data.filterData.userName]
@@ -1242,15 +1251,17 @@ io.on('connection', (socket) => {
 
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }
 
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
@@ -1343,10 +1354,11 @@ io.on('connection', (socket) => {
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             userFilter.userName = data.filterData.userName
         }
-        let children = await User.find(userFilter)
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', userFilter);
+        // let children = await User.find(userFilter)
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
 
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             data.filterData.userName = {$in:childrenUsername}
@@ -1394,10 +1406,11 @@ io.on('connection', (socket) => {
         data.filterData.status = 'OPEN'
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             let childrenUsername = []
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
             data.filterData.userName = {$in:childrenUsername}
             ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
         }else{
@@ -1477,10 +1490,11 @@ io.on('connection', (socket) => {
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             userFilter.userName = data.filterData.userName
         }
-        let children = await User.find(userFilter)
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', userFilter);
+        // let children = await User.find(userFilter)
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
 
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             data.filterData.userName = {$in:childrenUsername}
@@ -1520,15 +1534,17 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             childrenUsername = [data.filterData.userName]
@@ -1673,9 +1689,10 @@ io.on('connection', (socket) => {
             }
 
         }else{
-            // for(let i = 0; i < finalResult.item.length; i++){
-                
-            // }
+            // console.log(finalResult)
+            for(let i = 0; i < finalResult.items.length; i++){
+                // console.log(finalResult.items[i])
+            }
         }
 
         // console.log(resumeSuspendMarkets)
@@ -2004,120 +2021,72 @@ io.on('connection', (socket) => {
 
 
     socket.on("aggreat", async(data) => {
-        // console.log(data.ids)
-        // const sportData = await getCrkAndAllData()
-        // const cricket = sportData[0].gameList[0].eventList
-        // let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
-        // const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
-        // const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
-        // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-        // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
-        // let liveData = liveCricket.concat(liveFootBall, liveTennis);
-        // console.log(liveData)
-        // console.log(data)
-        // Bet.aggregate([
-        //     {
-        //       $match: {
-        //         status: 'OPEN'
-        //       }
-        //     },
-            // {
-            //   $group: {
-            //     _id: '$secId',
-            //     totalStake: { $sum: '$Stake' },
-            //     count: { $sum: 1 }
-            //   }
-            // }
-        //   ])
-            // .then(result => {
-            //     // console.log(result)
-            //   socket.emit("aggreat", result)
-            // })
-        //     User.aggregate([
-        //         {
-        //           $match: {
-                    // parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
-        //           }
-        //         },
-        //         {
-        //           $lookup: {
-        //             from: 'betmodels',
-        //             localField: '_id',
-        //             foreignField: 'userId',
-        //             as: 'bets'
-        //           }
-        //         },
-        //         {
-        //           $unwind: '$bets'
-        //         },
-        //         {
-        //           $match: {
-        //             'bets.status': 'OPEN'
-        //           }
-        //         },
-        //         {
-        //           $group: {
-                    // _id: '$secId',
-                    // totalStake: { $sum: '$bets.Stake' },
-                    // count: { $sum: 1 }
-        //           }
-        //         }
-        // ]).then(result => {
-        //     console.log(result)
-        //   socket.emit("aggreat", result)
-        // })
         let id = ``
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
-            // data.LOGINUSER._id = data.LOGINUSER._id.toString()
-        //     id = data.LOGINUSER._id.toString()
-        // }else{
-        //     id =data.LOGINUSER._id
         }
         // console.log(data.LOGINUSER._id.toString(), "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
-        User.aggregate([
+        let userIds = await User.distinct('userName', {parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }}).lean();
+        let bets = await Bet.aggregate([
             {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }
-              }
-            },
-            {
-              $group: {
-                _id: null,
-                userIds: { $push: '$_id' } 
-              }
-            }
-          ])
-            .then((userResult) => {
-                // console.log(userResult, "userResultuserResultuserResultuserResult")
-              const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-            //   console.log(userIds, "userIds")
-              Bet.aggregate([
-                {
-                  $match: {
-                    userId: { $in: userIds },
+                $match: {
+                    userName: { $in: userIds },
                     status: 'OPEN'
-                  }
-                },
-                {
-                    $group:{
-                        _id: '$secId',
-                        totalStake: { $sum: '$Stake' },
-                        count: { $sum: 1 }
-                    }
                 }
-              ])
-                .then((betResult) => {
-                  socket.emit("aggreat", betResult)
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+              },
+              {
+                  $group:{
+                      _id: '$secId',
+                      totalStake: { $sum: '$Stake' },
+                      count: { $sum: 1 }
+                  }
+              }
+        ])
+        // console.log(userIds, "userIdsuserIdsuserIds")
+        socket.emit("aggreat", bets)
+        // User.aggregate([
+        //     {
+        //       $match: {
+        //         parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }
+        //       }
+        //     },
+        //     {
+        //       $group: {
+        //         _id: null,
+        //         userIds: { $push: '$_id' } 
+        //       }
+        //     }
+        //   ])
+        //     .then((userResult) => {
+        //         // console.log(userResult, "userResultuserResultuserResultuserResult")
+        //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+        //     //   console.log(userIds, "aggreataggreataggreataggreataggreataggreat")
+        //       Bet.aggregate([
+        //         {
+        //           $match: {
+        //             userId: { $in: userIds },
+        //             status: 'OPEN'
+        //           }
+        //         },
+        //         {
+        //             $group:{
+        //                 _id: '$secId',
+        //                 totalStake: { $sum: '$Stake' },
+        //                 count: { $sum: 1 }
+        //             }
+        //         }
+        //       ])
+        //         .then((betResult) => {
+        //           socket.emit("aggreat", betResult)
+        //         })
+        //         .catch((error) => {
+        //           console.error(error);
+        //         });
+        //     })
+        //     .catch((error) => {
+        //       console.error(error);
+        //     });
 
     })
 
@@ -2779,10 +2748,11 @@ io.on('connection', (socket) => {
             data.LOGINDATA.LOGINUSER = parentUser
         }
         let childrenUsername = []
-        let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+        // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         
         var today = new Date();
         var todayFormatted = formatDate(today);
@@ -2915,6 +2885,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('dashboardrefresh',async(data)=>{
+        // console.log("WORKING")
         let roles
         let users
         let topGames
@@ -2930,11 +2901,11 @@ io.on('connection', (socket) => {
             data.LOGINUSER = parentUser
         }
         let childrenUsername = []
-        let children = await User.find({parentUsers:data.LOGINUSER._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
-      
+        // let children = await User.find({parentUsers:data.LOGINUSER._id})
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
+        childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINUSER._id });
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     
@@ -3092,6 +3063,7 @@ io.on('connection', (socket) => {
         dashboard.alertBet = alertBet
         dashboard.settlement = betsEventWise
         dashboard.topBets = topBets
+        // console.log("WORKINGDONE")
         socket.emit('dashboardrefresh',dashboard)
     })
 
@@ -3278,15 +3250,17 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }     
         if(data.LOGINDATA.LOGINUSER.userName != data.filterData.userName){
         }
@@ -3475,15 +3449,18 @@ io.on('connection', (socket) => {
         // console.log(dataobj, "dateObj")
         let childrenUsername = []
         if(me.roleName == 'Operator'){
-            let children = await User.find({parentUsers:{ $in: [me.parent_id] }})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', {parentUsers:{ $in: [me.parent_id] }});
+            
+            // let children = await User.find({parentUsers:{ $in: [me.parent_id] }})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:{ $in: [me._id] }})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', {parentUsers:{ $in: [me._id] }});
+            // let children = await User.find({parentUsers:{ $in: [me._id] }})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
 
         }
     
@@ -3657,7 +3634,7 @@ io.on('connection', (socket) => {
         try{
             // console.log(data)
             socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id})
-            let data1 = mapBet.mapbet(data)
+            let data1 = mapBet(data)
             // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
@@ -3666,55 +3643,14 @@ io.on('connection', (socket) => {
     })
 
     socket.on("VoidBetIn22", async(data) => {
-        // let marketIds = [`${data.id}`]
         try{
-            //  console.log(data, "BETDATA")
              if(data.result != ""){
-                // let bets = await Bet.aggregate([
-                //     {
-                //       $match: {
-                //         marketId: `${data.id}`,
-                //         status: "OPEN",
-                //       },
-                //     },
-                //     {
-                //       $lookup: {
-                //         from: "users",
-                //         localField: "userName",
-                //         foreignField: "userName",
-                //         as: "user",
-                //       },
-                //     },
-                //     {
-                //       $unwind: "$user",
-                //     },
-                //     {
-                //       $match: {
-                //         "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
-                //       },
-                //     },
-                //     {
-                //       $group: {
-                //         _id: null,
-                //         betIds: { $push: { $toString: "$_id" } }, 
-                //       },
-                //     },
-                //     {
-                //       $project: {
-                //         _id: 0, 
-                //         betIds: 1, 
-                //       },
-                //     },
-                //   ]);
-                // console.log(bets)
                 await Bet.updateMany({marketId:data.id, status:'OPEN'}, {$set:{result:data.result, status:'MAP'}})
                 let betdata = await Bet.findOne({marketId:data.id})
                 socket.emit('VoidBetIn22', {status:"success", betdata, result:data.result})
              }else{
                 socket.emit('VoidBetIn22', {message:"Please select a result", status:"error"})
              }
-            //  let data1 = mapBet.mapbet(data)
-            //  socket.emit('VoidBetIn22', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn22",{message:"err", status:"error"})
@@ -4165,7 +4101,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('UerBook', async(data) => {
-        // console.log(data)
+        console.log('START')
         // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
         let users = []
         let falg = false
@@ -4174,36 +4110,83 @@ io.on('connection', (socket) => {
             let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
             data.LOGINDATA.LOGINUSER = parentUser
         }
+
+
         if(data.userName){
             let thatUSer = await User.findOne({userName:data.userName})
             if(thatUSer){
                 Id = thatUSer.userName
                 falg = true
                 users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
+
                 // parentIdOfClickedUser = thatUSer._id
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
+            // users = await User.find({userName:'testing_sdm-10000'})
+            // users = await User.aggregate([
+            //     {
+            //         $match: {
+            //             parent_id: data.LOGINDATA.LOGINUSER._id.toString(),
+            //             isActive: true,
+            //             roleName: { $ne: 'Operator' }
+            //         }
+            //     },
+            //     {
+            //         $addFields: {
+            //             userIdString: { $toString: "$_id" }
+            //         }
+            //     },
+            //     {
+            //         $lookup: {
+            //             from: "betmodels", 
+            //             let: { userId: "$userIdString", userName: "$userName" },
+            //             pipeline: [
+            //                 {
+            //                     $match: {
+            //                         marketId : data.marketId,
+            //                         $expr: {
+            //                             $or: [
+            //                                 { $in: ["$$userId", "$parentArray.parentUSerId"] },
+            //                                 { $eq: ["$$userName", "$userName"] }
+            //                             ]
+            //                         },
+            //                         status: 'OPEN',
+            //                     }
+            //                 },
+            //                 { $limit: 1 }
+            //             ],
+            //             as: "openBets"
+            //         }
+            //     },
+            //     {
+            //         $match: {
+            //             openBets: { $not: { $size: 0 } }
+            //         }
+            //     }
+            // ]);
             // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
-            Id = data.LOGINDATA.LOGINUSER.userName
+            Id = data.LOGINDATA.LOGINUSER.userName   
 
         }
+        console.log('MIDDLE')
+        console.log(users, "usersusersusers")
         try{
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
                 let children
                 let parentIdOfClickedUser
                 if(falg){
-                    children = await User.find({parentUsers:ele.id})
+                    childrenUsername1 = await User.distinct("userName", {parentUsers:ele.id})
                     parentIdOfClickedUser = ele.id
                 }else{
-                    children = await User.find({parentUsers:ele._id})
+                    childrenUsername1 = await User.distinct("userName", {parentUsers:ele._id})
                     parentIdOfClickedUser = ele._id
                 }
-                children.map(ele1 => {
-                    childrenUsername1.push(ele1.userName) 
-                })
+                // children.map(ele1 => {
+                //     childrenUsername1.push(ele1.userName) 
+                // })
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
                         {
@@ -4761,15 +4744,9 @@ io.on('connection', (socket) => {
                 }
             })
             let resultPromise = await Promise.all(newUser)
-            let result = []
-            for(let i = 0;i<resultPromise.length;i++){
-                // console.log(resultPromise[i], 123)
-                if(resultPromise[i] && resultPromise[i].Bets.length > 0){
-                    result.push(resultPromise[i])
-                    // console.log(resultPromise[i].Bets)
-                    // console.log(resultPromise[i].Bets[0].selections)
-                }
-            }
+            console.log(resultPromise, "resultPromiseresultPromise")
+            const result = resultPromise.filter(item => item && item.Bets && item.Bets.length > 0);
+            console.log(result, "resultresultresultresult")
             
             let matchName2 = await Bet.findOne({marketId: data.marketId})
             let matchName
@@ -4779,9 +4756,7 @@ io.on('connection', (socket) => {
                 sport = matchName2.betType
             }
 
-            // console.log(Id, "IdIdIdIdIdIdId")
            socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
-        //    socket.emit();
         }catch(err){
             console.log(err)
             socket.emit('UerBook', {message:"err", status:"error"})
@@ -6039,14 +6014,17 @@ io.on('connection', (socket) => {
         let childrenUsername = []
         let children
         if(data.USER.roleName == 'Operator'){
-            children = await User.find({parentUsers:me.parent_id})
+            childrenUsername = await User.distinct('userName', {parentUsers:me.parent_id});
+            // children = await User.find({parentUsers:me.parent_id})
         }else{
-            children = await User.find({parentUsers:me._id})
+            childrenUsername = await User.distinct('userName', {parentUsers:me._id});
+            
+            // children = await User.find({parentUsers:me._id})
 
         }
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        // children.map(ele => {
+        //     childrenUsername.push(ele.userName) 
+        // })
         let role_type = []
         let roles
         if(data.USER.roleName == 'Operator'){
@@ -6336,16 +6314,19 @@ io.on('connection', (socket) => {
             let childrenUsername = []
            
             if(ele.role_type == 2){
-                let children = await User.find({parentUsers:ele._id,isActive:true,role_type:{$in:role_type}})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', {parentUsers:ele._id,isActive:true,role_type:{$in:role_type}});
+                
+                // let children = await User.find({parentUsers:ele._id,isActive:true,role_type:{$in:role_type}})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
             else if(ele.role_type == 5){
-                let children = await User.find({userName:ele.userName,isActive:true})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', {userName:ele.userName,isActive:true});
+                // let children = await User.find({userName:ele.userName,isActive:true})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
 
             
@@ -6666,6 +6647,7 @@ io.on('connection', (socket) => {
     socket.on('getinProgressData', async(data) => {
         try{
             let inprogressData = await InprogreshModel.find({eventId:data})
+            // console.log(inprogressData, "inprogressDatainprogressDatainprogressDatainprogressDatainprogressData")
             socket.emit('getinProgressData', inprogressData)
         }catch(err){
             console.log(err)
@@ -6720,15 +6702,17 @@ io.on('connection', (socket) => {
             }
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }else{
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
             let eventData = await newCommissionModel.aggregate([
                 {
@@ -6789,15 +6773,17 @@ io.on('connection', (socket) => {
             // console.log(dateFilter)
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }else{
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
             let accStatements
             if(data.id){
@@ -6888,15 +6874,17 @@ io.on('connection', (socket) => {
             }
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }else{
-                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-                children.map(ele => {
-                    childrenUsername.push(ele.userName) 
-                })
+                childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+                // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                // children.map(ele => {
+                //     childrenUsername.push(ele.userName) 
+                // })
             }
             let userWiseData = await newCommissionModel.aggregate([
                 {
@@ -7315,12 +7303,18 @@ io.on('connection', (socket) => {
                         amount: 1
                         }
                     },
+                    // {
+                    //     $project:{
+                    //         _id:0,
+                    //         amount:{
+                    //             $sum:'$amount'
+                    //         }
+                    //     }
+                    // }
                     {
-                        $project:{
-                            _id:0,
-                            amount:{
-                                $sum:'$amount'
-                            }
+                        $group:{
+                            _id:null,
+                            amount:{ $sum:'$amount'}
                         }
                     }
             ])
@@ -7330,6 +7324,8 @@ io.on('connection', (socket) => {
                 exposer3Amount = exposure3[0].amount
             }
         
+            // console.log(exposure3, exposure2, exposure1)
+
             function getExposure(runs,obj){
                 runs.sort((a, b) => a - b)
                 obj.sort((a, b) => a.run - b.run)
@@ -7453,8 +7449,10 @@ io.on('connection', (socket) => {
             }else{
                 exposureOther = exposure1[0].totalAmount
             }
+            // console.log(exposureOther, exposureFancy, exposer3Amount)
             totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
             // totalExposure = totalExposure + exposer3Amount
+            // console.log(totalExposure, "totalExposuretotalExposuretotalExposure")
             socket.emit('userLoginBalance', {userData,totalExposure})
         }
     })
@@ -7798,15 +7796,17 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER.parent_id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }else{
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenUsername.push(ele.userName) 
+            // })
         }     
         if(data.LOGINDATA.LOGINUSER.userName != data.filterData.username){
         }
@@ -7823,10 +7823,11 @@ io.on('connection', (socket) => {
         try{
             // console.log(data)
             let childrenArr = []
-            let children = await User.find({parentUsers:data.LOGINUSER._id})
-            children.map(ele => {
-                childrenArr.push(ele.userName)
-            })
+            childrenArr = await User.distinct('userName', { parentUsers: data.LOGINUSER._id });
+            // let children = await User.find({parentUsers:data.LOGINUSER._id})
+            // children.map(ele => {
+            //     childrenArr.push(ele.userName)
+            // })
             let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
             socket.emit('getcountofpaymentreq',{status:'success',paymentreqcount})
         }catch(err){
@@ -7834,10 +7835,544 @@ io.on('connection', (socket) => {
         }
     })
 
-  
+
+    socket.on('getcountofWITHROWREQ',async(data)=>{
+        try{
+            let withrowReqCount = await withdowReqModel.count({sdmUserName:data.LOGINUSER.userName,reqStatus:'pending'})
+            socket.emit('getcountofWITHROWREQ',{status:'success',withrowReqCount})
+        }catch(err){
+            socket.emit('getcountofWITHROWREQ',{status:'fail',msg:'something went wrong'})
+        }
+    })
+
+
+    socket.on('channelId', async(data) => {
+
+        console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            let ip = data.LOGINDATA.IP.split('::ffff:')[1];
+            let eventId = data.search.split('=')[1]
+            let StreamData = await streamModel.findOne({eventId:eventId})
+            let srs = ''
+            if(StreamData){
+                if(StreamData.status){
+                    srs = StreamData.url
+                    status = true
+                }
+            }else{
+                liveStream = await liveStreameData(data.channelId, ip)
+                console.log(liveStream, "liveStreamliveStreamliveStream")
+                const src_regex = /src='([^']+)'/;
+                let match1
+                // let src
+                if(liveStream.data){
+            
+                    match1 = liveStream.data.match(src_regex);
+                    if (match1) {
+                        srs = match1[1];
+                        status = true
+                    } else {
+                        console.log("No 'src' attribute found in the iframe tag.");
+                    }
+                }
+            }
+            console.log(srs, "liveStreamliveStreamliveStream")
+            socket.emit("channelId", srs)
+        }
+    })
+
+
+    socket.on('addBenkDetailsUserSide', async(data) => {
+        // console.log(data)
+        let errorEmitted = false;
+        if(data.data.accountholdername === ''){
+            socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Account Name'})
+            errorEmitted = true;
+        }
+        if(data.data.displayname === ''){
+            socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Display Name'})
+            errorEmitted = true;
+        }
+        if(data.data.pmethod === 'banktransferW'){
+            if(data.data.accountnumber === ''){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Account Number'})
+                errorEmitted = true;
+            }else if (data.data.accountnumber.length != 16){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a valid Account Number'})
+                errorEmitted = true;
+            }
+            if(data.data.ifsccode === ''){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Bank IFSC Code'})
+                errorEmitted = true;
+            }
+            if(data.data.bankname === ''){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Bank Name'})
+                errorEmitted = true;
+            }
+            if(data.data.branchname === ''){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Branch Name'})
+                errorEmitted = true;
+            }
+        }else if (data.data.pmethod === 'upiW'){
+            if(data.data.upiid === ''){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a UPI Id'})
+                errorEmitted = true;
+            }
+        }else{
+            if(data.data.phonenumber === ''){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a Phone Number'})
+                errorEmitted = true;
+            }else if (data.data.phonenumber.length != 10){
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a valid Phone Number'})
+                errorEmitted = true;
+            }
+        }
+
+
+        if(!errorEmitted){
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            const passcheck = await user.correctPassword(data.data.password, user.password)
+            if(passcheck){
+                try{
+                let NewDATA = {}
+                Object.keys(data.data).map((ele) => {
+                    if(data.data[ele] != ""){
+                        NewDATA[ele] = data.data[ele]
+                    }
+                })
+                    let filterdata = {}
+                    let filterarr = []
+                    if(NewDATA.pmethod === 'banktransferW'){
+                        filterarr.push({accountnumber:data.data.accountnumber})
+                    }else if(NewDATA.pmethod === 'upiW'){
+                        filterarr.push({upiid:data.data.upiid})
+                    }else{
+                        filterarr.push({phonenumber:data.data.phonenumber})
+                    }
+                    filterdata.$or = filterarr
+                    // console.log(filterdata)
+                    NewDATA.userName = user.userName
+                    if(!await manageAccountsUser.findOne(filterdata)){
+                        await manageAccountsUser.create(NewDATA)
+                        socket.emit('addBenkDetailsUserSide',{status:'success',msg:'payment method added successfully'})
+                    }else{
+                        socket.emit('addBenkDetailsUserSide',{status:'err',msg:'this account number is alredy exist'})
+                    }
+                }catch(err){
+                    // console.log(err)
+                    socket.emit('addBenkDetailsUserSide',{status:'err',msg:'something went wrong'})
+                }
+            }else{
+                socket.emit('addBenkDetailsUserSide', {status:'err', msg : 'Please Provide a valid password'})
+            }
+        }
+    })
+
+    socket.on('FilterAccounts', async(data) => {
+        if(data.LOGINDATA){
+            let accounts = await manageAccountsUser.find({pmethod:data.val, userName:data.LOGINDATA.LOGINUSER.userName})
+            if(data.val === 'All'){
+                accounts = await manageAccountsUser.find({userName:data.LOGINDATA.LOGINUSER.userName})
+            }
+            socket.emit('FilterAccounts', accounts)
+        }
+    })
+
+    socket.on('UpdateStatusAccount', async(data) => {
+        let thatData = await manageAccountsUser.findById(data)
+        if(thatData){
+            let statusUpdated = !thatData.status
+            await manageAccountsUser.findByIdAndUpdate(data, {status:statusUpdated})
+        }
+    })
+
+    socket.on('getAccountsData', async(data) => {
+        if(data.LOGINUSER){
+            try{
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'banktransferW', status:true})
+                socket.emit('getAccountsData', {status:'sucess', data:accounts})
+            }catch{
+                console.log(err)
+                socket.emit('getAccountsData', {status:'err', msg:'Please try again leter'})
+            }
+        }
+    })
+
+    socket.on('getAccountsDataUPI', async(data) => {
+        if(data.LOGINUSER){
+            try{
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'upiW', status:true})
+                socket.emit('getAccountsDataUPI', {status:'sucess', data:accounts})
+            }catch{
+                console.log(err)
+                socket.emit('getAccountsDataUPI', {status:'err', msg:'Please try again leter'})
+            }
+        }
+    })
+
+
+
+    socket.on('getAccountDataPaytm', async(data) => {
+        if(data.LOGINUSER){
+            try{
+                let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'paytmW', status:true})
+                console.log(accounts, "accountsaccounts")
+                socket.emit('getAccountDataPaytm', {status:'sucess', data:accounts})
+            }catch{
+                console.log(err)
+                socket.emit('getAccountDataPaytm', {status:'err', msg:'Please try again leter'})
+            }
+        }
+    })
+
+    socket.on('tabAccountData', async(data) => {
+        // console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            try{
+                let accounts = await manageAccountsUser.findById(data.id)
+                // console.log(accounts, "accountsaccounts")
+                if(accounts){
+                    socket.emit('tabAccountData', {status:'sucess', data:accounts})
+                }else{
+                    socket.emit('tabAccountData', {status:'err', msg:'Please try again leter'})
+                }
+            }catch{
+                console.log(err)
+                socket.emit('tabAccountData', {status:'err', msg:'Please try again leter'})
+            }
+        }
+    })
+
+
+    socket.on('withrowReq', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            try{
+                let loginUser = await User.findById(data.LOGINDATA.LOGINUSER._id)
+                if(loginUser.availableBalance > data.data.amount){
+                    let newData = {}
+                    newData.userName =  data.LOGINDATA.LOGINUSER.userName
+                    let sdmId 
+                    if(data.LOGINDATA.LOGINUSER.parentUsers[1]){
+                        sdmId = data.LOGINDATA.LOGINUSER.parentUsers[1]
+                    }else{
+                        sdmId = data.LOGINDATA.LOGINUSER.parent_id
+                    }
+                    let sdmUser = await User.findById(sdmId)
+                    newData.sdmUserName = sdmUser.userName
+                    newData.payMentMethodId = data.data.id
+                    newData.amount = data.data.amount
+                    newData.note = data.data.notes
+                    let createdData = await withdowReqModel.create(newData)
+                    if(createdData){
+                        socket.emit('withrowReq', {status:'sucess', msg:'Withdrawal request submitted successfully.'})
+                    }else{
+                        socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
+                    }
+                }else{
+                    socket.emit('withrowReq', {status:'err', msg:'Your withdrawal amount is within your available balance'})
+                }
+            }catch(err){
+                console.log(err)
+                socket.emit('withrowReq', {status:'err', msg:'Please try again leter'})
+            }
+        }
+    })
+
+    socket.on('GEtACcountData', async(data) => {
+        try{
+            let acc = await manageAccountsUser.findById(data)
+            if(acc){
+                socket.emit('GEtACcountData', {status:'sucess', data:acc})
+            }else{
+                socket.emit('GEtACcountData', {status:'sucesserr', msg:'Please try again leter'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('GEtACcountData', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
+    socket.on('reqApproveUpdate', async(data) => {
+        // console.log(data)
+        try{
+            let reqData = await withdowReqModel.findById(data.data.id)
+            if(reqData){
+                // console.log(reqData, "reqDatareqDatareqData")
+                let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+                const passcheck = await userCe.correctPassword(data.data.password, userCe.password)
+                if(passcheck){
+                    let date123 = Date.now()
+                    let user = await User.findOne({userName:reqData.userName})
+                    let parentUser = await User.findById(user.parent_id)
+                    let amount = (data.data.approvedamount * 1)
+                    let userAccData = {
+                        child_id:user.id,
+                        user_id:user.id,
+                        parent_id:user.parent_id,
+                        description:'Settlement(withdraw) ' + user.name + '(' + user.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")",
+                        creditDebitamount : -amount,
+                        balance: user.availableBalance - amount,
+                        date: date123,
+                        userName:reqData.userName,
+                        role_type:user.role_type,
+                        Remark:reqData.note
+                    }
+                    let ParentData = {
+                        child_id:user.id,
+                        user_id:user.parent_id,
+                        parent_id:user.parent_id,
+                        description:'Settlement(withdraw) ' + user.name + '(' + user.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")",
+                        creditDebitamount : amount,
+                        balance: parentUser.availableBalance + amount,
+                        date: date123,
+                        userName:parentUser.userName,
+                        role_type:parentUser.role_type,
+                        Remark:reqData.note
+                    }
+                    let updatedParentUser = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance:amount, balance:amount}})
+                    let updatedUser = await User.findByIdAndUpdate(user.id, {$inc:{availableBalance: -amount, balance: -amount}})
+                    if(updatedParentUser && updatedUser){
+                        await AccModel.create(userAccData)
+                        await AccModel.create(ParentData)
+                        let updatedReq = await withdowReqModel.findByIdAndUpdate(data.data.id, {approvalDate:date123, reqStatus:'transferred'})
+                        socket.emit('reqApproveUpdate', {status:'sucess', updatedReq, reqStatus:'transferred',date123 })
+                    }
+                }else{
+                    socket.emit('reqApproveUpdate', {status:'err', msg:'Please Provide a valid Password'})
+                }
+            }else{
+                socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
+
+    socket.on('reqCancelUpdate', async(data) => {
+        try{
+            let reqData = await withdowReqModel.findById(data.data.id)
+            if(reqData){
+                let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+                const passcheck = await userCe.correctPassword(data.data.password, userCe.password)
+                if(passcheck){
+                    let date1234 = Date.now()
+                    let cancelUpdate  = await  withdowReqModel.findByIdAndUpdate(data.data.id, {reqStatus:'cancel', sdmRemark:data.data.remark, approvalDate:date1234})
+                    socket.emit('reqCancelUpdate', {status:'sucess', cancelUpdate, reqStatus:'cancel', date1234})
+                }else{
+                    socket.emit('reqCancelUpdate', {status:'err', msg:'Please provide a valid password'})
+                }
+            }else{
+                socket.emit('reqCancelUpdate', {status:'err', msg:'Please try again leter'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('reqCancelUpdate', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
+
+    socket.on('editPaymentMethodUserSide', async(data) => {
+        try{
+            let resData = await manageAccountsUser.findById(data)
+            if(resData){
+                socket.emit('editPaymentMethodUserSide', {status:'sucess', data:resData})
+            }else{
+                socket.emit('editPaymentMethodUserSide', {status:'err', msg:'Please try again leter'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('editPaymentMethodUserSide', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
+    socket.on('editData', async(data) => {
+        try{
+            let thatmethod = await manageAccountsUser.findById(data.data.id)
+            if(thatmethod){
+                let errorEmitted = false;
+                if(data.data.accountholdername === ''){
+                    socket.emit('editData', {status:'err', msg : 'Please Provide a Account Name'})
+                    errorEmitted = true;
+                }
+                if(data.data.displayname === ''){
+                    socket.emit('editData', {status:'err', msg : 'Please Provide a Display Name'})
+                    errorEmitted = true;
+                }
+                if(thatmethod.pmethod === 'banktransferW'){
+                    if(data.data.accountnumber === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Account Number'})
+                        errorEmitted = true;
+                    }else if (data.data.accountnumber.length != 16){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a valid Account Number'})
+                        errorEmitted = true;
+                    }
+                    if(data.data.ifsccode === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Bank IFSC Code'})
+                        errorEmitted = true;
+                    }
+                    if(data.data.bankname === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Bank Name'})
+                        errorEmitted = true;
+                    }
+                    if(data.data.branchname === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Branch Name'})
+                        errorEmitted = true;
+                    }
+                }else if (thatmethod.pmethod === 'upiW'){
+                    if(data.data.upiid === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a UPI Id'})
+                        errorEmitted = true;
+                    }
+                }else{
+                    if(data.data.phonenumber === ''){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a Phone Number'})
+                        errorEmitted = true;
+                    }else if (data.data.phonenumber.length != 10){
+                        socket.emit('editData', {status:'err', msg : 'Please Provide a valid Phone Number'})
+                        errorEmitted = true;
+                    }
+                }
+
+
+                if(!errorEmitted){
+                    let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+                    const passcheck = await user.correctPassword(data.data.password, user.password)
+                    if(passcheck){
+                        let data1 = await manageAccountsUser.findByIdAndUpdate(data.data.id, data.data)
+                        if(data1){
+                            socket.emit('editData', {status:'sucess', msg:'Updated Sucessfully!!'})
+                        }
+                    }else{
+                        socket.emit('editData', {status:'err', msg:'Please provide a valid password'})
+                    }
+                }
+
+            }else{
+                console.log('WORKING123456')
+                socket.emit('editData', {status:'err', msg:'Please try again leter'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('editData', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
+
+
+    socket.on('deleteMethodUSERACC', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            if(data.data.checkbox){
+                // console.log(data.data)
+                let deleteData = await manageAccountsUser.findByIdAndDelete(data.data.id)
+                if(deleteData){
+                    socket.emit('deleteMethodUSERACC', {status:'sucess', msg:'deleted Sucessfully!!'})
+                }else{
+                    socket.emit('deleteMethodUSERACC', {status:'err', msg:'Please try again leter'})
+                }
+            }else{
+                socket.emit('deleteMethodUSERACC', {status:'err', msg:'Please try again leter'})
+            }
+        }else{
+            socket.emit('deleteMethodUSERACC', {status:'err', msg:'Please try again leter'})
+        }
+    })
+
+
+    socket.on('WithdrawLoadMoreAdmin', async(data) => {
+        let limit;
+        let page = data.page;
+        let skip;
+        if(data.refreshStatus){
+            // console.log('working')
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
+        }
+        let userName = data.LOGINDATA.LOGINUSER.userName
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let ParentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            userName = ParentUser.userName
+        }
+        let filterData = {}
+        filterData.sdmUserName = userName
+        if(data.filterData.userName){
+            filterData.userName = data.filterData.userName
+        }
+        if(data.filterData.status && data.filterData.status != 'All'){
+                filterData.reqStatus = data.filterData.status
+        }
+
+        if(data.filterData.fromDate && data.filterData.toDate){
+            filterData.reqDate = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate))}
+        }else if (data.filterData.fromDate && !data.filterData.toDate){
+            filterData.reqDate =  {$gte : data.filterData.fromDate}
+        }else if(!data.filterData.fromDate && data.filterData.toDate) {
+            filterData.reqDate = {$lte : new Date(new Date(data.filterData.toDate))}
+        }
+        let reqData = await withdowReqModel.find(filterData).sort({reqDate:-1}).skip(skip).limit(limit)
+        if(data.refreshStatus){
+            socket.emit('WithdrawLoadMoreAdmin', {reqData, page, refresh:true})
+        }else{
+            socket.emit('WithdrawLoadMoreAdmin', {reqData, page})
+        }
+
+    })
+
+
+
+    socket.on('withdrawalRequestDataUserSide', async(data) => {
+        // console.log(data)
+        let filterData = {}
+        if(data.LOGINDATA.LOGINUSER){
+            let page = data.page
+            filterData.userName = data.LOGINDATA.LOGINUSER.userName
+            if(data.filterData.select && data.filterData.select !== "All"){
+                filterData.reqStatus = data.filterData.select
+            }
+
+            if(data.filterData.fdate && data.filterData.tdate){
+                filterData.reqDate = {$gte : new Date(data.filterData.fdate),$lte : new Date(new Date(data.filterData.tdate))}
+            }else if(data.filterData.fdate && !data.filterData.tdate){
+                filterData.reqDate = {$gte : data.filterData.fdate}
+            }else if(!data.filterData.fdate && data.filterData.tdate){
+                filterData.reqDate = {$lte : new Date(new Date(data.filterData.tdate))}
+            }
+
+            let returnData = await withdowReqModel.find(filterData).skip(10 * page).limit(10)
+            socket.emit('withdrawalRequestDataUserSide', {returnData, page})
+        }
+
+    })
+
+
+    socket.on('cashoutCheck', async(data) => {
+        let Status = false
+        let Bets = []
+        if(data.LOGINDATA.LOGINUSER){
+            Bets = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, marketId:data.id})
+        }
+        if(Bets.length > 0){
+            Status = true
+        }
+        socket.emit('cashoutCheck', {Status})
+    })
+
+    socket.on('HTMLSCOREDATA', async(data) => {
+        let matchScore = await scores(data)
+        socket.emit("HTMLSCOREDATA", matchScore)
+    })
+
+
+    socket.on('cashOOut', async(data) => {
+        console.log(data)
+    })
 
 })
 
-http.listen(80,()=> {
-    console.log('app is running on port 80')
+http.listen(8080,()=> {
+    console.log('app is running on port 8080')
 })
