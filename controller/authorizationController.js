@@ -294,6 +294,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         })
     }
     if(currentUser.role_type != 1){
+        console.log(process.env.whiteLabelName,currentUser.whiteLabel,'==>whitelabels')
         if(currentUser.whiteLabel !== process.env.whiteLabelName){
             return res.status(404).json({
                 status:"success",
