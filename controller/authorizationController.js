@@ -399,14 +399,14 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
             })
         }
 
-     if(currentUser.role_type != 1){
-        if(currentUser.whiteLabel !== process.env.whiteLabelName){
-            return res.status(404).json({
-                status:"success",
-                message:'this is not valid user'
-            })
-        }
-    }
+    //  if(currentUser.role_type != 1){
+    //     if(currentUser.whiteLabel !== process.env.whiteLabelName){
+    //         return res.status(404).json({
+    //             status:"success",
+    //             message:'this is not valid user'
+    //         })
+    //     }
+    // }
     
     // console.log(currentUser.id, "session")
     // console.log(req.session.userId, "session")
@@ -547,14 +547,14 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         })
     }
 
-    if(currentUser.role_type != 1){
-        if(currentUser.whiteLabel !== process.env.whiteLabelName){
-            return res.status(404).json({
-                status:"success",
-                message:'this is not valid user'
-            })
-        }
-    }
+    // if(currentUser.role_type != 1){
+    //     if(currentUser.whiteLabel !== process.env.whiteLabelName){
+    //         return res.status(404).json({
+    //             status:"success",
+    //             message:'this is not valid user'
+    //         })
+    //     }
+    // }
     // if (req.session.userId && req.session.userId !== currentUser.id) {
     //     return next()
     // }
