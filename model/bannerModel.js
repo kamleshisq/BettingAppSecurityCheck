@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const banner =  mongoose.Schema({
     bannerName:{
         type:String,
-        unique:true,
         required:true
     },
     url:{
