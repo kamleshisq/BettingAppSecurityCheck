@@ -8415,8 +8415,10 @@ io.on('connection', (socket) => {
                     }
                 }
             ])
-
-            console.log(bets)
+            if(bets.length > 0){
+                bets = bets[0]
+                console.log(bets, "betsbetsbets")
+            }
         }
     })
 
