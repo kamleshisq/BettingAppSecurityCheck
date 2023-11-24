@@ -2200,6 +2200,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("CmsPage", async(data) => {
+        console.log(data,'==>CmsPage')
         let whiteLabel = process.env.whiteLabelName
         if(data.LOGINUSER.role_type == 1){
             whiteLabel = "1"
