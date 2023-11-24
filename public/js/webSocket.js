@@ -7411,8 +7411,8 @@ socket.on('connect', () => {
                 $(thatSpan).closest("tr").next().removeClass('back-inplaymatch')
                 $(thatSpan).closest("tr").next().addClass('lay-inplaymatch')
             }
-            $(thatSpan).closest("tr").next().find(".set-stake-form-input2").val(parseFloat(data.stake))
-            var result = (parseFloat(data.stake) * parseFloat(data.odds)) - parseFloat(data.stake.toFixed(2));
+            $(thatSpan).closest("tr").next().find(".set-stake-form-input2").val(parseFloat(data.stake.toFixed(2)))
+            var result = (parseFloat(data.stake) * parseFloat(data.odds)) - parseFloat(data.stake);
             $(thatSpan)
                   .closest("tr")
                   .next()
