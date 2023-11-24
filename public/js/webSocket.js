@@ -7403,6 +7403,13 @@ socket.on('connect', () => {
             }
             secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
             numSpan.text(data.odds);
+            if($(thatSpan).hasClass('tbl-bg-blu-spn')){
+                $(thatSpan).closest("tr").next().removeClass('lay-inplaymatch')
+                $(thatSpan).closest("tr").next().addClass('back-inplaymatch')
+            }else{
+                $(thatSpan).closest("tr").next().removeClass('back-inplaymatch')
+                $(thatSpan).closest("tr").next().addClass('lay-inplaymatch')
+            }
         })
 
         function marketLimitId(){
