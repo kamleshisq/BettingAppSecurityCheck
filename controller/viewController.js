@@ -584,7 +584,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
     const data = await promotionModel.find({whiteLabelName: whiteLabel});
-    console.log(data, "datatatata")
+    // console.log(data, "datatatata")
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const banner = await bannerModel.find({whiteLabelName: whiteLabel})
     let sliders = await sliderModel.find({whiteLabelName: whiteLabel}).sort({Number:1})
