@@ -554,11 +554,11 @@ exports.registration = catchAsync(async(req, res, next) => {
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    const data = await promotionModel.find();
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
-    const banner = await bannerModel.find()
-    let sliders = await sliderModel.find().sort({Number:1})
-    let pages = await pagesModel.find()
+    const data = await promotionModel.find({whiteLabelName: '1'});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
+    const banner = await bannerModel.find({whiteLabelName: '1'})
+    let sliders = await sliderModel.find({whiteLabelName: '1'}).sort({Number:1})
+    let pages = await pagesModel.find({whiteLabelName: '1'})
     // const sportListData = await getCrkAndAllData()
     // const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []
@@ -609,7 +609,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     // console.log(req.query.id)
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
     // fetch(fullUrl, {
@@ -637,7 +637,7 @@ exports.myProfile = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     // console.log(req.query.id)
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
     // fetch(fullUrl, {
     //     method: 'POST',
@@ -2370,7 +2370,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     let userLog
     let userMultimarkets
     let cricketSeries = [];
@@ -2459,7 +2459,7 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
     let liveFootBall1 = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
     const data = await promotionModel.find();
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     let userLog
     let userMultimarkets
     if(user){
@@ -2529,7 +2529,7 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     })
     let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
     let userMultimarkets
@@ -2578,7 +2578,7 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
 
 exports.cardsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     let userLog
@@ -2606,7 +2606,7 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
 
 exports.footBallPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
@@ -2654,7 +2654,7 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
 
 exports.TennisPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
@@ -2712,7 +2712,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
 
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
 
     let data = await betModel.aggregate([
         {
@@ -2760,7 +2760,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     }else{
         ipv4 = ip
     }
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
     let match = cricket.find(item => item.eventData.eventId == req.query.id);
@@ -2921,7 +2921,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
 
 exports.multimarkets = catchAsync(async(req, res, next) => {
     
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const sportData = await getCrkAndAllData()
     
     const betLimit = await betLimitModel.find()
@@ -2990,7 +2990,7 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let gameData = await gameModel.findById(req.query.gameId)
     let urldata = await gameAPI(gameData, user)
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
     if(user){
@@ -3054,7 +3054,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     }
     // console.log(CheckingData, "CheckingDataCheckingDataCheckingData")
     // return DATA
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
     if(user){
@@ -3076,7 +3076,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
 
 exports.royalGamingPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({provider_name:"RG"});
     let userLog
@@ -3098,7 +3098,7 @@ exports.royalGamingPage = catchAsync(async(req, res, next) => {
 
 exports.virtualsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     let userLog
@@ -3120,7 +3120,7 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
 
 exports.OthersGames = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
     if(user){
@@ -3140,7 +3140,7 @@ exports.OthersGames = catchAsync(async(req, res, next) => {
 
 exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     let userLog
@@ -3168,7 +3168,7 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
 
 exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     // console.log(user._id)
@@ -3206,7 +3206,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
 
 exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
@@ -3263,7 +3263,7 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
 
 exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
@@ -3324,7 +3324,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
 
 exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
@@ -3346,7 +3346,7 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
 
 exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
@@ -3411,10 +3411,11 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     // let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
     // let banner = await bannerModel.find()
     // let sliders = await sliderModel.find().sort({Number:1})
+    let whiteLabel = process.env.whiteLabelName
     if(req.currentUser.role_type == 1){
-        process.env.whiteLabelName = '1'
+        whiteLabel = '1'
     }
-    let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
+    let rules = await gamrRuleModel.find({whiteLabelName:whiteLabel})
     res.status(200).render("./Cms/ruleManager",{
         title:"Rules Management",
         user,
@@ -3432,7 +3433,7 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
 
 exports.getMyKycPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
@@ -4120,7 +4121,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         sum = 0
     }
     // console.log(commissionData, "commissionData")
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReport/main", {
         title:"Commission Report",
         user:req.currentUser,
@@ -4191,7 +4192,7 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     ])
     // console.log(data2, "commission")
     let sport = sportId
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportsIn/main", {
         title:"Commission Report",
         user:req.currentUser,
@@ -4254,7 +4255,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
     // console.log(data)
     let sport = data[0]._id.sportId
     let event = sportId
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportEventwise/main", {
         title:"Commission Report",
         user:req.currentUser,
@@ -4308,7 +4309,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         sum = 0
     }
     // console.log(data)
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
         title:"Commission Report",
         user:req.currentUser,
@@ -4337,7 +4338,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         let parentUser = await User.findById(req.currentUser.parent_id)
         mainId = parentUser._id.toString()
     }
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
     let match = cricket.find(item => item.eventData.eventId == req.query.id);
@@ -5366,7 +5367,7 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
     }
     let accounts = await manageAccountUser.find({userName:req.currentUser.userName})
     // console.log(accounts, "accountsaccounts")
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     res.status(200).render("./userSideEjs/manageAccounts/main", {
         title:"Manage Accounts",
         user:req.currentUser,
@@ -5397,7 +5398,7 @@ exports.myWithrowReq = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: '1'}).sort({num:1});
     let withrowReqData = await withdrawalRequestModel.find().sort({reqDate:-1}).limit(10)
     res.status(200).render("./userSideEjs/withrowReqPage/main", {
         title:"withdrawal request.",

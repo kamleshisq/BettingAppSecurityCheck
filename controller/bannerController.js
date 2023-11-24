@@ -11,7 +11,11 @@ exports.createBanner = catchAsync(async(req, res, next) => {
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
             req.body.banner = req.body.bannerName
-            req.body.whiteLabelName = process.env.whiteLabelName
+            let whiteLabel = process.env.whiteLabelName
+            if(req.currentUser.role_type == 1){
+                whiteLabel = "1"
+            }
+            req.body.whiteLabelName = whiteLabel
             const newBanner = await bannerModel.create(req.body);
             res.status(200).json({
                 status:"success",
