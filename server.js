@@ -8393,9 +8393,25 @@ io.on('connection', (socket) => {
                                 $cond:{
                                     if:{$eq : ['$secId', `${runners[0].secId}`]},
                                     then:  {
-                                        $sum: "$WinAmount"
+                                        $cond:{
+                                            if:{$eq : ['$bettype2', `BACK`]},
+                                            then:{
+                                                $sum: "$WinAmount"
+                                            },
+                                            else:{
+                                                $subtract: [0, '$exposure']
+                                            }
+                                        }
                                     },
-                                    else: { $subtract: [0, '$exposure'] }
+                                    else: {$cond:{
+                                        if:{$eq : ['$bettype2', `BACK`]},
+                                        then:{
+                                            $subtract: [0, '$exposure']
+                                        },
+                                        else:{
+                                            $sum: "$WinAmount"
+                                        }
+                                    } }
                                 }
                             }
                         },
