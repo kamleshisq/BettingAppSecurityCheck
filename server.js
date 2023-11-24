@@ -8418,9 +8418,25 @@ io.on('connection', (socket) => {
                                 $cond:{
                                     if:{$eq : ['$secId', `${runners[0].secId}`]},
                                     then:  {
-                                        $sum: "$WinAmount"
+                                        $cond:{
+                                            if:{$eq : ['$bettype2', `BACK`]},
+                                            then:{
+                                                $sum: "$WinAmount"
+                                            },
+                                            else:{
+                                                $subtract: [0, '$exposure']
+                                            }
+                                        }
                                     },
-                                    else: { $subtract: [0, '$exposure'] }
+                                    else: {$cond:{
+                                        if:{$eq : ['$bettype2', `BACK`]},
+                                        then:{
+                                            $subtract: [0, '$exposure']
+                                        },
+                                        else:{
+                                            $sum: "$WinAmount"
+                                        }
+                                    } }
                                 }
                             }
                         },
@@ -8429,16 +8445,32 @@ io.on('connection', (socket) => {
                                 $cond:{
                                     if:{$eq : ['$secId', `${runners[1].secId}`]},
                                     then:  {
-                                        $sum: "$WinAmount"
+                                        $cond:{
+                                            if:{$eq : ['$bettype2', `BACK`]},
+                                            then:{
+                                                $sum: "$WinAmount"
+                                            },
+                                            else:{
+                                                $subtract: [0, '$exposure']
+                                            }
+                                        }
                                     },
-                                    else: { $subtract: [0, '$exposure'] }
+                                    else: {$cond:{
+                                        if:{$eq : ['$bettype2', `BACK`]},
+                                        then:{
+                                            $subtract: [0, '$exposure']
+                                        },
+                                        else:{
+                                            $sum: "$WinAmount"
+                                        }
+                                    } }
                                 }
                             }
                         }
                     }
                 }
             ])
-            // console.log(bets, "betsbetsbetsbets")
+            console.log(bets, "betsbetsbetsbets")
             if(bets.length > 0){
                 bets = bets[0]
                 let data1 = {}
