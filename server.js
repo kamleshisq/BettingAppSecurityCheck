@@ -2572,6 +2572,11 @@ io.on('connection', (socket) => {
     socket.on("createNewRule", async(data) =>{
         // console.log(data.data)
         try{
+            let whiteLabel = process.env.whiteLabelName
+            if(data.LOGINDATA.LOGINUSER.role_type == 1){
+                whiteLabel = "1"
+            }
+            data.data.whiteLabelName = whiteLabel
             let data1 = await gameRuleModel.create(data.data)
             socket.emit("createNewRule", {message:"updated", data1})
         }catch(err){
