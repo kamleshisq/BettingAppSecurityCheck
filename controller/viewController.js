@@ -89,13 +89,13 @@ const whiteLabelcheck = (req) => {
     if(!req.currentUser){
         whiteLabel = ''
         hostnameArr = hostname.split('.')
-        let count = hostnameArr.indexOf('ollscores') + 1
+        let count = hostnameArr.indexOf('ollscores')
         for(let i = 0;i<count;i++){
             let addele
             if(i != 0){
                 addele = '.' + hostnameArr[i]
             }else{
-                addele = hostname[i]
+                addele = hostnameArr[i]
             }
             whiteLabel += addele
         }
