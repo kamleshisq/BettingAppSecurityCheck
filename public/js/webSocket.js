@@ -7394,7 +7394,7 @@ socket.on('connect', () => {
             let beton = $(thatSpan).closest("tr").find("td:first-child").text();
             let secondPTag = $(thatSpan).closest("tr").next().find(".beton");
             let numSpan = $(thatSpan).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
-            let secId = thatSpan.id
+            let secId = $(thatSpan).attr('id')
             let secId2;
             if($(thatSpan).hasClass('match_odd_Blue')){
                 secId2 = secId.slice(0,-1) + '1'
