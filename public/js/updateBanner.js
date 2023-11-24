@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const updateBanner = async(data)=>{
     try{
+        console.log(data,'==data')
         const res = await axios({
             method: 'POST',
             url: '/api/v1/banner/updateBanner',
