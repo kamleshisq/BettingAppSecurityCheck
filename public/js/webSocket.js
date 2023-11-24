@@ -7403,6 +7403,7 @@ socket.on('connect', () => {
             }
             secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
             numSpan.text(data.odds);
+            console.log(thatSpan)
             if($(thatSpan).hasClass('tbl-bg-blu-spn')){
                 $(thatSpan).closest("tr").next().removeClass('lay-inplaymatch')
                 $(thatSpan).closest("tr").next().addClass('back-inplaymatch')
