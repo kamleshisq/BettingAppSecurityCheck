@@ -613,7 +613,7 @@ $(document).on('submit', ".form-data24", function(e){
     createBanner(fd)
 })
 
-$(document).on("submit", ".form-data25", function(e){
+$(document).on("submit", ".form-data25",function(e){
     e.preventDefault()
     let id = $(this).attr('id')
     let form = $(this)[0];

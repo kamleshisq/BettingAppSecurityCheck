@@ -50,9 +50,9 @@ global._loggedInToken=[];
 app.set('view engine', "ejs");
 app.set('views', path.join( __dirname, 'views'));
 app.use(express.static(path.join( __dirname, 'public')));
-app.use(express.json({limit:"10kb"}));
+app.use(express.json({limit:"100kb"}));
 app.use(fileUpload());
-app.use(express.urlencoded({ extended:true, limit: '10kb'}));
+app.use(express.urlencoded({ extended:true, limit: '100kb'}));
 app.use(cookieParser());
 // app.use(session({
 //     secret: 'your-secret-key-jk@123@jk',
