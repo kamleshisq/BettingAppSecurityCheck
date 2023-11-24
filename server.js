@@ -8357,7 +8357,9 @@ io.on('connection', (socket) => {
             Bets = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, marketId:data.id})
         }
         if(Bets.length > 0){
-            Status = true
+            if(Bets[0].betType === 'Tennis' || Bets[0].betType === 'Cricket'){
+                Status = true
+            }
         }
         socket.emit('cashoutCheck', {Status})
     })
