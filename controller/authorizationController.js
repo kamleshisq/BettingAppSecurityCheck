@@ -307,7 +307,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"success",
-                message:'this is not valid user'
+                message:'not a valid user'
             })
         }else if(!currentUser){
             return res.status(404).json({
