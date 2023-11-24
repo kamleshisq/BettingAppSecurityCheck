@@ -2576,7 +2576,7 @@ io.on('connection', (socket) => {
             if(data.LOGINDATA.LOGINUSER.role_type == 1){
                 whiteLabel = "1"
             }
-            data.whiteLabelName = whiteLabel
+            data.data.whiteLabelName = whiteLabel
             let data1 = await gameRuleModel.create(data.data)
             socket.emit("createNewRule", {message:"updated", data1})
         }catch(err){
