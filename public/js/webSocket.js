@@ -7390,8 +7390,19 @@ socket.on('connect', () => {
             }else{
                 thatSpan = $(`#${data.secId}1`)
             }
-            console.log(thatSpan, "thatSpanthatSpan")
             $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
+            let beton = $(thatSpan).closest("tr").find("td:first-child").text();
+            let secondPTag = $(thatSpan).closest("tr").next().find(".beton");
+            let numSpan = $(thatSpan).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+            let secId = thatSpan.id
+            let secId2;
+            if($(thatSpan).hasClass('match_odd_Blue')){
+                secId2 = secId.slice(0,-1) + '1'
+            }else{
+                secId2 = secId.slice(0,-1) + '4'
+            }
+            secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
+            numSpan.text(data.odds);
         })
 
         function marketLimitId(){
