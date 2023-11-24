@@ -8411,56 +8411,56 @@ io.on('connection', (socket) => {
                     }
                 }
             ])
-            console.log(bets, "betsbetsbetsbets")
-            // if(bets.length > 0){
-            //     bets = bets[0]
-            //     let data1 = {}
-            //     let upperAmt = 0
-            //     let biggerValueSecId
-            //     if( !isNaN(bets.firstAmount) &&  !isNaN(bets.secondAmount)){
-            //         upperAmt = bets.firstAmount - bets.secondAmount
-            //         biggerValueSecId = bets.firstAmount > bets.secondAmount ? runners[0].secId : bets.firstAmount < bets.secondAmount ? runners[1].secId : 'values are equal';
-            //     }else if(isNaN(bets.firstAmount) &&  !isNaN(bets.secondAmount)){
-            //         upperAmt = bets.secondAmount
-            //         biggerValueSecId = runners[1].secId
-            //     }else if (!isNaN(bets.firstAmount) &&  isNaN(bets.secondAmount)){
-            //         upperAmt = bets.firstAmount
-            //         biggerValueSecId = runners[0].secId
-            //     }
-            //     // console.log(upperAmt, biggerValueSecId)
-            //     let divedAmount = 0
-            //     let marketOddsData = await marketDetailsBymarketID([data.id])
-            //     console.log(marketOddsData)
-            //     marketOddsData = marketOddsData.data.items[0].odds
-            //     const selectedItem = marketOddsData.find(item => item.selectionId === biggerValueSecId);
-            //     if (selectedItem) {
-            //         const layPrice1 = parseFloat(selectedItem.layPrice1);
-            //         const otherItem = marketOddsData.find(item => item.selectionId !== biggerValueSecId);
+            // console.log(bets, "betsbetsbetsbets")
+            if(bets.length > 0){
+                bets = bets[0]
+                let data1 = {}
+                let upperAmt = 0
+                let biggerValueSecId
+                if( !isNaN(bets.firstAmount) &&  !isNaN(bets.secondAmount)){
+                    upperAmt = bets.firstAmount - bets.secondAmount
+                    biggerValueSecId = bets.firstAmount > bets.secondAmount ? runners[0].secId : bets.firstAmount < bets.secondAmount ? runners[1].secId : 'values are equal';
+                }else if(isNaN(bets.firstAmount) &&  !isNaN(bets.secondAmount)){
+                    upperAmt = bets.secondAmount
+                    biggerValueSecId = runners[1].secId
+                }else if (!isNaN(bets.firstAmount) &&  isNaN(bets.secondAmount)){
+                    upperAmt = bets.firstAmount
+                    biggerValueSecId = runners[0].secId
+                }
+                // console.log(upperAmt, biggerValueSecId)
+                let divedAmount = 0
+                let marketOddsData = await marketDetailsBymarketID([data.id])
+                console.log(marketOddsData)
+                marketOddsData = marketOddsData.data.items[0].odds
+                const selectedItem = marketOddsData.find(item => item.selectionId === biggerValueSecId);
+                if (selectedItem) {
+                    const layPrice1 = parseFloat(selectedItem.layPrice1);
+                    const otherItem = marketOddsData.find(item => item.selectionId !== biggerValueSecId);
                     
-            //         if (otherItem) {
-            //           const backPrice1Other = parseFloat(otherItem.backPrice1);
+                    if (otherItem) {
+                      const backPrice1Other = parseFloat(otherItem.backPrice1);
                       
-            //           if (layPrice1 < backPrice1Other) {
-            //             divedAmount = layPrice1
-            //             data1.secId = biggerValueSecId
-            //             data1.betType = 'LAY'
-            //           } else {
-            //             divedAmount = backPrice1Other
-            //             data1.secId = otherItem.selectionId
-            //             data1.betType = 'BACK'
-            //           }
-            //         } else {
-            //           console.log('No other item found');
-            //         }
-            //       } else {
-            //         console.log('Item with the given id not found');
-            //       }
-            //   if(divedAmount > 0){
-            //     let stake = Math.abs(upperAmt) / divedAmount
-            //     data1.stake = stake
-            //     console.log(data1, "stakestakestake")
-            //   }
-            // }
+                      if (layPrice1 < backPrice1Other) {
+                        divedAmount = layPrice1
+                        data1.secId = biggerValueSecId
+                        data1.betType = 'LAY'
+                      } else {
+                        divedAmount = backPrice1Other
+                        data1.secId = otherItem.selectionId
+                        data1.betType = 'BACK'
+                      }
+                    } else {
+                      console.log('No other item found');
+                    }
+                  } else {
+                    console.log('Item with the given id not found');
+                  }
+              if(divedAmount > 0){
+                let stake = Math.abs(upperAmt) / divedAmount
+                data1.stake = stake
+                console.log(data1, "stakestakestake")
+              }
+            }
         }
     })
 
