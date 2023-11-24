@@ -8393,9 +8393,7 @@ io.on('connection', (socket) => {
                                     then:  {
                                         $sum: "$WinAmount"
                                     },
-                                    else:  {
-                                        $sum: -"$exposure"
-                                    },
+                                    else: { $subtract: [0, '$exposure'] }
                                 }
                             }
                         },
@@ -8406,9 +8404,7 @@ io.on('connection', (socket) => {
                                     then:  {
                                         $sum: "$WinAmount"
                                     },
-                                    else:  {
-                                        $sum: -"$exposure"
-                                    },
+                                    else: { $subtract: [0, '$exposure'] }
                                 }
                             }
                         }
