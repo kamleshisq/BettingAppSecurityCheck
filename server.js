@@ -8471,7 +8471,7 @@ io.on('connection', (socket) => {
                     }
                 }
             ])
-            console.log(bets, "betsbetsbetsbets")
+            // console.log(bets, "betsbetsbetsbets")
             if(bets.length > 0){
                 bets = bets[0]
                 let data1 = {}
@@ -8490,7 +8490,7 @@ io.on('connection', (socket) => {
                 // console.log(upperAmt, biggerValueSecId)
                 let divedAmount = 0
                 let marketOddsData = await marketDetailsBymarketID([data.id])
-                console.log(marketOddsData)
+                // console.log(marketOddsData)
                 marketOddsData = marketOddsData.data.items[0].odds
                 const selectedItem = marketOddsData.find(item => item.selectionId === biggerValueSecId);
                 if (selectedItem) {
@@ -8522,7 +8522,11 @@ io.on('connection', (socket) => {
                 data1.eventId = data.eventID
                 data1.odds = divedAmount
                 // console.log(data1, "stakestakestake")
-                socket.emit('cashOOut', data1)
+                if(data1.stake.toFixed(1) >= 1){
+                    socket.emit('cashOOut', data1)
+                }else{
+                    console.log(data1.stake.toFixed(1))
+                }
               }
             }
         }
