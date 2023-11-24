@@ -8458,6 +8458,8 @@ io.on('connection', (socket) => {
               if(divedAmount > 0){
                 let stake = Math.abs(upperAmt) / divedAmount
                 data1.stake = stake
+                data1.marketId = data.id
+                data1.eventId = data.eventID
                 console.log(data1, "stakestakestake")
               }
             }
