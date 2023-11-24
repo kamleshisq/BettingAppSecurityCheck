@@ -7391,6 +7391,7 @@ socket.on('connect', () => {
                 thatSpan = $(`#${data.secId}1`)
             }
             console.log(thatSpan, "thatSpanthatSpan")
+            $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
         })
 
         function marketLimitId(){
