@@ -7384,6 +7384,13 @@ socket.on('connect', () => {
 
         socket.on('cashOOut', async(data) => {
             console.log(data)
+            let thatSpan
+            if(data.betType === "LAY"){
+                thatSpan = $(`#${data.secId}4`)
+            }else{
+                thatSpan = $(`#${data.secId}1`)
+            }
+            console.log(thatSpan, "thatSpanthatSpan")
         })
 
         function marketLimitId(){
