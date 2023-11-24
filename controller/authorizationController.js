@@ -191,10 +191,7 @@ exports.login = catchAsync (async(req, res, next) => {
     }else{
         const user = await User.findOne({userName}).select('+password');
         let whiteLabel = process.env.whiteLabelName
-            if(user.role_type == 1){
-                whiteLabel = "1"
-            }
-        if(user.whiteLabel != whiteLabel){
+        if(user.whiteLabel != whiteLabel && user.role_type !== 1){
             res.status(404).json({
                 status:'error',
                 message:"not a valid user"
@@ -781,10 +778,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
         }else{
             const user = await User.findOne({userName}).select('+password');
             let whiteLabel = process.env.whiteLabelName
-            if(user.role_type == 1){
-                whiteLabel = "1"
-            }
-            if(user.whiteLabel != whiteLabel){
+            if(user.whiteLabel != whiteLabel && user.role_type !== 1){
                 res.status(404).json({
                     status:'error',
                     message:"not a valid user"
