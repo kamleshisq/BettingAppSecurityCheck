@@ -8470,7 +8470,7 @@ io.on('connection', (socket) => {
                     }
                 }
             ])
-            console.log(bets, "betsbetsbetsbets")
+            // console.log(bets, "betsbetsbetsbets")
             if(bets.length > 0){
                 bets = bets[0]
                 let data1 = {}
