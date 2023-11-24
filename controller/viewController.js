@@ -86,7 +86,7 @@ const whiteLabelcheck = (req) => {
     let hostnameArr;
     console.log(req,'==>req')
     console.log(hostname,'==>hostname')
-    const whiteLabel = process.env.whiteLabelName
+    let whiteLabel = process.env.whiteLabelName
     if(!req.currentUser){
         whiteLabel = ''
         hostnameArr = hostname.split('.')
