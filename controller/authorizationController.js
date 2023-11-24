@@ -171,10 +171,6 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
 }))
 
 exports.login = catchAsync (async(req, res, next) => {
-    let whiteLabel = process.env.whiteLabelName
-    if(req.currentUser.role_type == 1){
-        whiteLabel = "1"
-    }
     let {
 		userName,
 		password
@@ -194,6 +190,10 @@ exports.login = catchAsync (async(req, res, next) => {
         })
     }else{
         const user = await User.findOne({userName}).select('+password');
+        let whiteLabel = process.env.whiteLabelName
+            if(user.role_type == 1){
+                whiteLabel = "1"
+            }
         if(user.whiteLabel != whiteLabel){
             res.status(404).json({
                 status:'error',
@@ -295,7 +295,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         })
     }
     let whiteLabel = process.env.whiteLabelName
-    if(req.currentUser.role_type == 1){
+    if(currentUser.role_type == 1){
         whiteLabel = "1"
     }
     let childrenArr = []
@@ -447,17 +447,6 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
         })
     }
 
-    if(currentUser.role_type != 1){
-        if(currentUser.whiteLabel !== process.env.whiteLabelName){
-            return res.status(404).json({
-                status:"success",
-                message:'this is not valid user'
-            })
-        }
-    }
-    // if (req.session.userId && req.session.userId !== currentUser.id) {
-    //     return next()
-    // }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
@@ -776,10 +765,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
 
 exports.userLogin = catchAsync (async(req, res, next) => {
     if(req.body.data != "Demo"){
-        let whiteLabel = process.env.whiteLabelName
-        if(req.currentUser.role_type == 1){
-            whiteLabel = "1"
-        }
+       
         let {
             userName,
             password
@@ -797,6 +783,10 @@ exports.userLogin = catchAsync (async(req, res, next) => {
             })
         }else{
             const user = await User.findOne({userName}).select('+password');
+            let whiteLabel = process.env.whiteLabelName
+            if(user.role_type == 1){
+                whiteLabel = "1"
+            }
             if(user.whiteLabel != whiteLabel){
                 res.status(404).json({
                     status:'error',
