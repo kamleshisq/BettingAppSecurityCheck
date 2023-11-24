@@ -346,11 +346,11 @@ exports.resetPassword = catchAsync(async(req,res,next)=> {
 exports.updateUser = catchAsync(async(req, res, next) => {
     let urls = [
         {
-            url:`http://127.0.0.1/api/v1/users/getUser?id=${req.query.id}`,
+            url:`http://dev.ollscores.com/api/v1/users/getUser?id=${req.query.id}`,
             name:'user'
         },
         {
-            url:`http://127.0.0.1/api/v1/role/getAuthROle`,
+            url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
             name:'role'
         }
     ]
@@ -1807,7 +1807,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let notifications
-    var fullUrl = "http://127.0.0.1/api/v1/notification/myNotifications"
+    var fullUrl = "http://dev.ollscores.com/api/v1/notification/myNotifications"
     await fetch(fullUrl, {
         method:"GET",
         headers: {
