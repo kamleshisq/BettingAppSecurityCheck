@@ -129,11 +129,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://dev.ollscores.com/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://ollscores.com/api/v1/users/getOwnChild?id=${id}`,
                 name:'user'
             },
             {
-                url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
+                url:`http://ollscores.com/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -141,11 +141,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://dev.ollscores.com/api/v1/users/getOwnChild`,
+                url:`http://ollscores.com/api/v1/users/getOwnChild`,
                 name:'user'
             },
             {
-                url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
+                url:`http://ollscores.com/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -333,11 +333,11 @@ exports.resetPassword = catchAsync(async(req,res,next)=> {
 exports.updateUser = catchAsync(async(req, res, next) => {
     let urls = [
         {
-            url:`http://dev.ollscores.com/api/v1/users/getUser?id=${req.query.id}`,
+            url:`http://ollscores.com/api/v1/users/getUser?id=${req.query.id}`,
             name:'user'
         },
         {
-            url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
+            url:`http://ollscores.com/api/v1/role/getAuthROle`,
             name:'role'
         }
     ]
@@ -1795,7 +1795,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let notifications
-    var fullUrl = "http://dev.ollscores.com/api/v1/notification/myNotifications"
+    var fullUrl = "http://ollscores.com/api/v1/notification/myNotifications"
     await fetch(fullUrl, {
         method:"GET",
         headers: {
