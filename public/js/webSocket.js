@@ -7019,7 +7019,6 @@ socket.on('connect', () => {
         $(document).on('click','.getVerticalMenuDetails', function(){
             let id = $(this).attr('id')
             socket.emit("VerticalMenuIdByData", id)
-            // console.log(id)
         });
 
         socket.on("VerticalMenuIdByData", async(data) => {
@@ -7056,20 +7055,24 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             let id  = $(this).attr('id')
             data.id = id
+            data.LOGINDATA = LOGINDATA
             socket.emit("updateVerticalMenu", data)
         });
         
         socket.on("updateVerticalMenu", async(data)=>{
             alert(`${data}`)
-                    window.setTimeout(()=>{
-                        window.location = '/admin/cms'
-                    },500)
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },500)
         })
 
         $(document).on('click', ".deleteVerticalMenuDetails", function(e){
             let id = $(this).attr('id')
+            let data = {}
             if(confirm('do you want to delete this menu')){
-                socket.emit("deleteVerticalMenu", id)
+                data.id = id 
+                data.LOGINDATA = LOGINDATA
+                socket.emit("deleteVerticalMenu", data)
             }
         })
 
@@ -7081,41 +7084,41 @@ socket.on('connect', () => {
         })
 
 
-        $(document).on('click', ".getHorizontalMenuDetails", function(e){
-            let id = $(this).attr('id')
-            socket.emit("HorizontalMenuIdByData", id)
-        })
-        socket.on('HorizontalMenuIdByData', async(data) => {
-                let modleName = "#myModal6"
-                let form = $(modleName).find('.form-data23')
-                let PMD = data
-                form.attr('id', PMD._id);
-                // form.find('input[name = "check"]').removeAttr('checked');
-                form.find('input[name = "menuName"]').attr('value',PMD.menuName)
-                form.find('input[name = "url"]').attr('value',PMD.url)
-                form.find('input[name = "num"]').attr('value',PMD.Number)
-                form.find('input[name = "page"]').attr('value',PMD.page)
-                document.getElementById('img').innerHTML = `<img src="../imgForHMenu/${PMD.icon}.png" alt="img" class="form__user-photo">`
-                if(PMD.status){
-                    form.find('input[name = "check"]').attr("checked", "checked");
-                    form.find('input[name = "check"]').parent('.switch').addClass('on');
-                }else{
-                    form.find('input[name = "check"]').attr("checked", "");
-                    form.find('input[name = "check"]').parent('.switch').removeClass('on');
-                }
-        })
+        // $(document).on('click', ".getHorizontalMenuDetails", function(e){
+        //     let id = $(this).attr('id')
+        //     socket.emit("HorizontalMenuIdByData", id)
+        // })
+        // socket.on('HorizontalMenuIdByData', async(data) => {
+        //         let modleName = "#myModal6"
+        //         let form = $(modleName).find('.form-data23')
+        //         let PMD = data
+        //         form.attr('id', PMD._id);
+        //         // form.find('input[name = "check"]').removeAttr('checked');
+        //         form.find('input[name = "menuName"]').attr('value',PMD.menuName)
+        //         form.find('input[name = "url"]').attr('value',PMD.url)
+        //         form.find('input[name = "num"]').attr('value',PMD.Number)
+        //         form.find('input[name = "page"]').attr('value',PMD.page)
+        //         document.getElementById('img').innerHTML = `<img src="../imgForHMenu/${PMD.icon}.png" alt="img" class="form__user-photo">`
+        //         if(PMD.status){
+        //             form.find('input[name = "check"]').attr("checked", "checked");
+        //             form.find('input[name = "check"]').parent('.switch').addClass('on');
+        //         }else{
+        //             form.find('input[name = "check"]').attr("checked", "");
+        //             form.find('input[name = "check"]').parent('.switch').removeClass('on');
+        //         }
+        // })
 
-        $(document).on('click', ".deleteHorizontalMenu", function(e){
-            e.preventDefault()
-            let id = $(this).attr("id")
-            socket.emit("deleteHorizontalMenu", id)
-        })
-        socket.on('deleteHorizontalMenu', async(data)=>{
-            alert("Menu deleted")
-            window.setTimeout(()=>{
-                window.location = '/admin/cms'
-            },200)
-        })
+        // $(document).on('click', ".deleteHorizontalMenu", function(e){
+        //     e.preventDefault()
+        //     let id = $(this).attr("id")
+        //     socket.emit("deleteHorizontalMenu", id)
+        // })
+        // socket.on('deleteHorizontalMenu', async(data)=>{
+        //     alert("Menu deleted")
+        //     window.setTimeout(()=>{
+        //         window.location = '/admin/cms'
+        //     },200)
+        // })
 
         $(document).on("click", ".getBannerDetails", function(e){
             e.preventDefault()
@@ -7155,7 +7158,7 @@ socket.on('connect', () => {
             },200)
         })
 
-        socket.emit("CmsPage", "Connected")
+        socket.emit("CmsPage", {LOGINDATA})
         socket.on('CmsPage', async(data) => {
             for(let i = 0; i < data.length; i++){
                 let form = $(`#${data[i]._id}`)
@@ -7179,9 +7182,12 @@ socket.on('connect', () => {
 
         $(document).on('click', ".dleteImageSport", function(e){
             e.preventDefault()
+            let data = {}
             let id = $(this).attr("id")
             if(confirm('do you want to delete this image')){
-                socket.emit("dleteImageSport", id)
+                data.id = id
+                data.LOGINDATA = LOGINDATA
+                socket.emit("dleteImageSport", data)
             }
         })
         socket.on("dleteImageSport", async(data)=>{
@@ -7193,11 +7199,14 @@ socket.on('connect', () => {
 
         $(document).on('click', ".editImageSport", function(e){
             e.preventDefault()
+            let data = {}
             let id = $(this).attr('id')
             let modleName = "#EditSliderInImage"
             let form = $(modleName).find('.editImageSportForm')
             form.attr('id', id);
-            socket.emit("editImageSport", id)
+            data.id = id
+            data.LOGINDATA = LOGINDATA
+            socket.emit("editImageSport", data)
         })
 
         socket.on('editImageSport', data => {
@@ -7223,8 +7232,11 @@ socket.on('connect', () => {
         $(document).on('click', ".deleteSlider", function(e){
             e.preventDefault()
             let id = $(this).attr('id')
+            let data = {}
             if(confirm('do you want to delete this slider')){
-                socket.emit('deleteSlider', id)
+                data.id = id 
+                data.LOGINDATA = LOGINDATA
+                socket.emit('deleteSlider', data)
             }
         })
         socket.on('deleteSlider', async(data) => {
