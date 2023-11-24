@@ -295,9 +295,6 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         })
     }
     let whiteLabel = process.env.whiteLabelName
-    if(currentUser.role_type == 1){
-        whiteLabel = "1"
-    }
     let childrenArr = []
     let paymentreqcount = 0
     let WithdrawReqCount = 0
@@ -307,7 +304,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         WithdrawReqCount = await userWithReq.count({username:currentUser.userName, reqStatus:'pending'})
     }
     if(currentUser.roleName != "DemoLogin"){
-        if(currentUser.whiteLabel !== whiteLabel){
+        if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"success",
                 message:'this is not valid user'
@@ -383,7 +380,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }
 
     if(currentUser.roleName != "DemoLogin"){
-        if(currentUser.whiteLabel !== process.env.whiteLabelName){
+        if(currentUser.whiteLabel !== process.env.whiteLabelName && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"success",
                 message:'not a valid user'
