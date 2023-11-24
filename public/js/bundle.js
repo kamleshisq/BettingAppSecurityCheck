@@ -6535,6 +6535,7 @@ var updateBanner = /*#__PURE__*/function () {
           });
         case 3:
           res = _context.sent;
+          console.log(res, '==>res');
           if (res.data.status === 'success') {
             alert('updated successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
@@ -6543,18 +6544,18 @@ var updateBanner = /*#__PURE__*/function () {
               location.assign('/admin/cms');
             }, 200);
           }
-          _context.next = 11;
+          _context.next = 12;
           break;
-        case 7:
-          _context.prev = 7;
+        case 8:
+          _context.prev = 8;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 11:
+        case 12:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee, null, [[0, 8]]);
   }));
   return function updateBanner(_x) {
     return _ref.apply(this, arguments);
@@ -7715,6 +7716,7 @@ $(document).on("submit", ".form-data25", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
+  console.log(fd, '==>fd');
   (0, _updateBanner.updateBanner)(fd);
 });
 $(document).on('submit', ".uploadEJS", function (e) {
@@ -7834,7 +7836,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49915" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50722" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

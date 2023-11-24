@@ -7,6 +7,8 @@ export const updateBanner = async(data)=>{
             url: '/api/v1/banner/updateBanner',
             data
         });
+
+        console.log(res,'==>res')
         if(res.data.status === 'success'){
             alert('updated successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
