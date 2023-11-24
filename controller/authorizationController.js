@@ -255,10 +255,7 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-    let whiteLabel = process.env.whiteLabelName
-    if(req.currentUser.role_type == 1){
-        whiteLabel = "1"
-    }
+    
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
@@ -296,6 +293,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             status:"success",
             message:'the user belonging to this token does no longer available'
         })
+    }
+    let whiteLabel = process.env.whiteLabelName
+    if(req.currentUser.role_type == 1){
+        whiteLabel = "1"
     }
     let childrenArr = []
     let paymentreqcount = 0
