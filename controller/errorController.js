@@ -49,6 +49,9 @@ const sendErrorDev = (err, req,res) => {
         let message = "Opps! Please try again later"
         if(err.message.startsWith('Cannot read properties of undefined')){
             message = "Opps! Please try again later"
+        }else if(err.message.startsWith('not a valid user')){
+            message = "not a valid user"
+
         }
         return res.render('./errorMessage',{
             statusCode : err.statusCode,
