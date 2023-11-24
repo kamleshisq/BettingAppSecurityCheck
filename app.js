@@ -55,9 +55,11 @@ app.use(express.static(path.join( __dirname, 'public')));
 // app.use(bodyParser.json({ limit: '50mb' }));
 // app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-app.use(express.json());
-app.use(fileUpload());
-app.use(express.urlencoded({ extended:true}));
+app.use(express.json({ limit: '50mb' }));
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+  }));
+app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
 // app.use(session({
 //     secret: 'your-secret-key-jk@123@jk',
