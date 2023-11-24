@@ -489,9 +489,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
-        // console.log(token)
     }
-    // console.log(token, "TOKEN")
     if(!token){
         return next()
     }
@@ -500,14 +498,12 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     }
     
     const tokenId = await loginLogs.findOne({session_id:token})
-    // console.log(tokenId, "TOKENID")
     if(!tokenId){
         return next()
     }
     if(!tokenId.isOnline){
         return next()
     }
-    // console.log(token)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
@@ -516,18 +512,6 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-
-    // if(currentUser.role_type != 1){
-    //     if(currentUser.whiteLabel !== process.env.whiteLabelName){
-    //         return res.status(404).json({
-    //             status:"success",
-    //             message:'this is not valid user'
-    //         })
-    //     }
-    // }
-    // if (req.session.userId && req.session.userId !== currentUser.id) {
-    //     return next()
-    // }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({

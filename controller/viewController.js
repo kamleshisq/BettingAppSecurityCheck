@@ -82,11 +82,31 @@ const withdrawalRequestModel = require('../model/withdrowReqModel');
 // });
 
 const whiteLabelcheck = (req) => {
+    let hostname = req.headers.host
+    let hostnameArr;
+    console.log(req,'==>req')
+    console.log(hostname,'==>hostname')
     const whiteLabel = process.env.whiteLabelName
-    console.log(req.currentUser)
-    if(req.currentUser.role_type == 1){
-        whiteLabel = "1"
+    if(!req.currentUser){
+        whiteLabel = ''
+        hostnameArr = hostname.split('.')
+        let count = hostnameArr.indexOf('ollscores') + 1
+        for(let i = 0;i<count;i++){
+            let addele
+            if(count != 0){
+                addele = '.' + hostnameArr[i]
+            }else{
+                addele = hostname[i]
+            }
+            whiteLabel += addele
+        }
+
+    }else{
+        if(req.currentUser.role_type == 1){
+            whiteLabel = "1"
+        }
     }
+    console.log(whiteLabel)
     return whiteLabel
 }
 
