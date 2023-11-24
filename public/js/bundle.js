@@ -7718,8 +7718,9 @@ $(document).on("submit", ".form-data25", function (e) {
   var fd = new FormData(form);
   fd.append('id', id);
   console.log(fd, '==>fd');
-  (0, _updateBanner.updateBanner)(fd);
+  // updateBanner(fd)
 });
+
 $(document).on('submit', ".uploadEJS", function (e) {
   e.preventDefault();
   var form = $(this)[0];

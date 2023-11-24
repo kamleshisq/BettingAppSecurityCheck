@@ -620,7 +620,7 @@ $(document).on("submit", ".form-data25",function(e){
     let fd = new FormData(form);
     fd.append('id', id)
     console.log(fd,'==>fd')
-    updateBanner(fd)
+    // updateBanner(fd)
 })
 
 
