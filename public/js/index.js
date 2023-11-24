@@ -55,7 +55,7 @@ $(document).ready(function(){
     const linkColor = document.querySelectorAll('.nav_link')
 	const operationPathnameArr = ['/admin/houseManagement','/admin/streammanagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
     const reportsPathnameArr = ['/admin/gamereport','/admin/myaccount','/admin/adminaccount','/admin/useraccount','/admin/settlementHistory','/admin/reports','/admin/userhistoryreport','/admin/plreport','/admin/commissionReport']
-    const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules']
+    const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules','/admin/promotion']
     const patmentArr = ['/admin/paymentapproval','/admin/paymentmethods']
 	function colorLink(){
         if(linkColor){
