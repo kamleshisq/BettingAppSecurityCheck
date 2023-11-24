@@ -83,6 +83,7 @@ const withdrawalRequestModel = require('../model/withdrowReqModel');
 
 const whiteLabelcheck = (req) => {
     const whiteLabel = process.env.whiteLabelName
+    console.log(req.currentUser)
     if(req.currentUser.role_type == 1){
         whiteLabel = "1"
     }
