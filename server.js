@@ -8391,11 +8391,9 @@ io.on('connection', (socket) => {
                                 $cond:{
                                     if:{$eq : ['$secId', `${runners[0].secId}`]},
                                     then:  {
-                                        $sum: "$exposure"
+                                        $sum: "$WinAmount"
                                     },
-                                    else:  {
-                                        $sum: -"$exposure"
-                                    },
+                                    else: { $subtract: [0, '$exposure'] }
                                 }
                             }
                         },
@@ -8404,17 +8402,16 @@ io.on('connection', (socket) => {
                                 $cond:{
                                     if:{$eq : ['$secId', `${runners[1].secId}`]},
                                     then:  {
-                                        $sum: "$exposure"
+                                        $sum: "$WinAmount"
                                     },
-                                    else:  {
-                                        $sum: -"$exposure"
-                                    },
+                                    else: { $subtract: [0, '$exposure'] }
                                 }
                             }
                         }
                     }
                 }
             ])
+            // console.log(bets, "betsbetsbetsbets")
             if(bets.length > 0){
                 bets = bets[0]
                 let data1 = {}
@@ -8461,7 +8458,11 @@ io.on('connection', (socket) => {
               if(divedAmount > 0){
                 let stake = Math.abs(upperAmt) / divedAmount
                 data1.stake = stake
-                console.log(data1, "stakestakestake")
+                data1.marketId = data.id
+                data1.eventId = data.eventID
+                data1.odds = divedAmount
+                // console.log(data1, "stakestakestake")
+                socket.emit('cashOOut', data1)
               }
             }
         }
