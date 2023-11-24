@@ -7161,7 +7161,7 @@ $(document).ready(function () {
   var linkColor = document.querySelectorAll('.nav_link');
   var operationPathnameArr = ['/admin/houseManagement', '/admin/streammanagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
   var reportsPathnameArr = ['/admin/gamereport', '/admin/myaccount', '/admin/adminaccount', '/admin/useraccount', '/admin/settlementHistory', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport', '/admin/commissionReport'];
-  var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules'];
+  var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules', '/admin/promotion'];
   var patmentArr = ['/admin/paymentapproval', '/admin/paymentmethods'];
   function colorLink() {
     if (linkColor) {
@@ -7834,7 +7834,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49915" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50722" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

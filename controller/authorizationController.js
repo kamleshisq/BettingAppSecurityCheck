@@ -171,10 +171,6 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
 }))
 
 exports.login = catchAsync (async(req, res, next) => {
-    let whiteLabel = process.env.whiteLabelName
-    if(req.currentUser.role_type == 1){
-        whiteLabel = "1"
-    }
     let {
 		userName,
 		password
@@ -194,6 +190,10 @@ exports.login = catchAsync (async(req, res, next) => {
         })
     }else{
         const user = await User.findOne({userName}).select('+password');
+        let whiteLabel = process.env.whiteLabelName
+            if(user.role_type == 1){
+                whiteLabel = "1"
+            }
         if(user.whiteLabel != whiteLabel){
             res.status(404).json({
                 status:'error',
@@ -255,10 +255,7 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-    let whiteLabel = process.env.whiteLabelName
-    if(req.currentUser.role_type == 1){
-        whiteLabel = "1"
-    }
+    
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
@@ -297,6 +294,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
+    let whiteLabel = process.env.whiteLabelName
     let childrenArr = []
     let paymentreqcount = 0
     let WithdrawReqCount = 0
@@ -306,10 +304,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         WithdrawReqCount = await userWithReq.count({username:currentUser.userName, reqStatus:'pending'})
     }
     if(currentUser.roleName != "DemoLogin"){
-        if(currentUser.whiteLabel !== whiteLabel){
+        if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"success",
-                message:'this is not valid user'
+                message:'not a valid user'
             })
         }else if(!currentUser){
             return res.status(404).json({
@@ -382,7 +380,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }
 
     if(currentUser.roleName != "DemoLogin"){
-        if(currentUser.whiteLabel !== process.env.whiteLabelName){
+        if(currentUser.whiteLabel !== process.env.whiteLabelName && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"success",
                 message:'not a valid user'
@@ -446,17 +444,6 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
         })
     }
 
-    if(currentUser.role_type != 1){
-        if(currentUser.whiteLabel !== process.env.whiteLabelName){
-            return res.status(404).json({
-                status:"success",
-                message:'this is not valid user'
-            })
-        }
-    }
-    // if (req.session.userId && req.session.userId !== currentUser.id) {
-    //     return next()
-    // }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
@@ -489,9 +476,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
-        // console.log(token)
     }
-    // console.log(token, "TOKEN")
     if(!token){
         return next()
     }
@@ -500,14 +485,12 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     }
     
     const tokenId = await loginLogs.findOne({session_id:token})
-    // console.log(tokenId, "TOKENID")
     if(!tokenId){
         return next()
     }
     if(!tokenId.isOnline){
         return next()
     }
-    // console.log(token)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
@@ -516,18 +499,6 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-
-    // if(currentUser.role_type != 1){
-    //     if(currentUser.whiteLabel !== process.env.whiteLabelName){
-    //         return res.status(404).json({
-    //             status:"success",
-    //             message:'this is not valid user'
-    //         })
-    //     }
-    // }
-    // if (req.session.userId && req.session.userId !== currentUser.id) {
-    //     return next()
-    // }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
@@ -791,10 +762,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
 
 exports.userLogin = catchAsync (async(req, res, next) => {
     if(req.body.data != "Demo"){
-        let whiteLabel = process.env.whiteLabelName
-        if(req.currentUser.role_type == 1){
-            whiteLabel = "1"
-        }
+       
         let {
             userName,
             password
@@ -812,6 +780,10 @@ exports.userLogin = catchAsync (async(req, res, next) => {
             })
         }else{
             const user = await User.findOne({userName}).select('+password');
+            let whiteLabel = process.env.whiteLabelName
+            if(user.role_type == 1){
+                whiteLabel = "1"
+            }
             if(user.whiteLabel != whiteLabel){
                 res.status(404).json({
                     status:'error',
