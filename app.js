@@ -32,6 +32,8 @@ const crone = require('./crones/crones');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
 const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
+const bodyParser = require('body-parser');
+
 // const ejs = require("ejs");
 
 
@@ -50,9 +52,12 @@ global._loggedInToken=[];
 app.set('view engine', "ejs");
 app.set('views', path.join( __dirname, 'views'));
 app.use(express.static(path.join( __dirname, 'public')));
-app.use(express.json({limit:"50mb"}));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+// app.use(express.json({limit:"50mb"}));
 app.use(fileUpload());
-app.use(express.urlencoded({ extended:true, limit: '50mb'}));
+// app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
 // app.use(session({
 //     secret: 'your-secret-key-jk@123@jk',
