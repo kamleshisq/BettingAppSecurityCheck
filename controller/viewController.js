@@ -84,7 +84,6 @@ const withdrawalRequestModel = require('../model/withdrowReqModel');
 const whiteLabelcheck = (req) => {
     let hostname = req.headers.host
     let hostnameArr;
-    console.log(req,'==>req')
     console.log(hostname,'==>hostname')
     let whiteLabel = process.env.whiteLabelName
     if(!req.currentUser){
@@ -93,7 +92,7 @@ const whiteLabelcheck = (req) => {
         let count = hostnameArr.indexOf('ollscores') + 1
         for(let i = 0;i<count;i++){
             let addele
-            if(count != 0){
+            if(i != 0){
                 addele = '.' + hostnameArr[i]
             }else{
                 addele = hostname[i]
