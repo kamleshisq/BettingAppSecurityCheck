@@ -2121,8 +2121,12 @@ io.on('connection', (socket) => {
 
     socket.on('updateVerticalMenu', async(data) => {
         let data1
+        let whiteLabel = process.env.whiteLabelName
+        if(data.LOGINDATA.LOGINUSER.role_type == 1){
+            whiteLabel = "1"
+        }
         let check = await verticalMenuModel.findById(data.id);
-        let allMenu =  await verticalMenuModel.find()
+        let allMenu =  await verticalMenuModel.find({whiteLabelName: whiteLabel})
         try{
             if(data.check){
                 data.status = true
@@ -2132,13 +2136,14 @@ io.on('connection', (socket) => {
             if(!(check.num == data.num)){
                 if(data.num > allMenu.length){
                     data.num = allMenu.length
-                    await verticalMenuModel.findOneAndUpdate({num:data.num},{num:check.num})
+                    await verticalMenuModel.findOneAndUpdate({num:data.num,whiteLabelName: whiteLabel},{num:check.num})
                 }else if(data.num < 1){
                     socket.emit("updateVerticalMenu", "Please provide positive number")
                 }else{
-                    await verticalMenuModel.findOneAndUpdate({num:data.num},{num:check.num})
+                    await verticalMenuModel.findOneAndUpdate({num:data.num,whiteLabelName: whiteLabel},{num:check.num})
                 }
             }
+            delete data['LOGINDATA']
             data1 = await verticalMenuModel.findByIdAndUpdate(data.id, data)
             socket.emit("updateVerticalMenu", "Updated Successfully")
         }catch(err){
@@ -2148,8 +2153,12 @@ io.on('connection', (socket) => {
 
     socket.on("deleteVerticalMenu", async(data) => {
         try{
-            let deletedMenu = await verticalMenuModel.findByIdAndDelete(data)
-            await verticalMenuModel.updateMany({num:{$gt:deletedMenu.num}},{$inc:{num:-1}})
+            let whiteLabel = process.env.whiteLabelName
+            if(data.LOGINDATA.LOGINUSER.role_type == 1){
+                whiteLabel = "1"
+            }
+            let deletedMenu = await verticalMenuModel.findByIdAndDelete(data.id)
+            await verticalMenuModel.updateMany({num:{$gt:deletedMenu.num},whiteLabelName: whiteLabel},{$inc:{num:-1}})
             socket.emit("deleteVerticalMenu", "done")
         }catch(err){
             console.log(err)
@@ -2191,14 +2200,22 @@ io.on('connection', (socket) => {
     })
 
     socket.on("CmsPage", async(data) => {
-        let sliders = await sliderModel.find();
+        let whiteLabel = process.env.whiteLabelName
+        if(data.LOGINUSER.role_type == 1){
+            whiteLabel = "1"
+        }
+        let sliders = await sliderModel.find({whiteLabelName: whiteLabel});
         socket.emit('CmsPage', sliders)
     })
 
     socket.on("dleteImageSport", async(data) => {
-        let name = data.split("//")[1]
-        let slider = await sliderModel.findOne({name:name})
-        let imageName = data.split("//")[0]
+        let whiteLabel = process.env.whiteLabelName
+        if(data.LOGINDATA.LOGINUSER.role_type == 1){
+            whiteLabel = "1"
+        }
+        let name = data.id.split("//")[1]
+        let slider = await sliderModel.findOne({name:name,whiteLabelName: whiteLabel})
+        let imageName = data.id.split("//")[0]
         let index = slider.images.findIndex(item => item.name == imageName)
         if(index !== -1) {
             slider.images.splice(index, 1);
@@ -2211,9 +2228,13 @@ io.on('connection', (socket) => {
 
 
     socket.on('editImageSport', async(data) => {
-        let name = data.split("//")[1]
-        let slider = await sliderModel.findOne({name:name})
-        let imageName = data.split("//")[0]
+        let whiteLabel = process.env.whiteLabelName
+        if(data.LOGINUSER.role_type == 1){
+            whiteLabel = "1"
+        }
+        let name = data.id.split("//")[1]
+        let slider = await sliderModel.findOne({name:name,whiteLabelName: whiteLabel})
+        let imageName = data.id.split("//")[0]
         let index = slider.images.findIndex(item => item.name == imageName)
         if(index !== -1) {
             let details = slider.images[index]
@@ -2249,8 +2270,12 @@ io.on('connection', (socket) => {
 
     socket.on('deleteSlider', async(data) => {
         try{
-            let deleted = await sliderModel.findByIdAndDelete(data)
-            await sliderModel.updateMany({Number:{$gt:deleted.Number}},{$inc:{Number:-1}})
+            let whiteLabel = process.env.whiteLabelName
+            if(data.LOGINUSER.role_type == 1){
+                whiteLabel = "1"
+            }
+            let deleted = await sliderModel.findByIdAndDelete(data.id)
+            await sliderModel.updateMany({Number:{$gt:deleted.Number},whiteLabelName: whiteLabel},{$inc:{Number:-1}})
                 socket.emit("deleteSlider", "Deleted successfully")
             }catch(err){
             if(err){
