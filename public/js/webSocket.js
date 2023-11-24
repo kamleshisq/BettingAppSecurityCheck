@@ -7382,6 +7382,10 @@ socket.on('connect', () => {
             socket.emit('cashOOut', {LOGINDATA, id, eventID})
         })
 
+        socket.on('cashOOut', async(data) => {
+            console.log(data)
+        })
+
         function marketLimitId(){
             $(document).ready(function() {
                 var ids = [];

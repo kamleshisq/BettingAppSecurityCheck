@@ -8460,7 +8460,8 @@ io.on('connection', (socket) => {
                 data1.stake = stake
                 data1.marketId = data.id
                 data1.eventId = data.eventID
-                console.log(data1, "stakestakestake")
+                // console.log(data1, "stakestakestake")
+                socket.emit('cashOOut', data1)
               }
             }
         }
