@@ -467,6 +467,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     next()
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
+    console.log('WORKING')
     let token 
     res.locals.loginData = undefined
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
@@ -519,6 +520,8 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.token = token
     next()
+    console.log('WORKING2')
+
 });
 
 exports.restrictTo = (...roles) => {

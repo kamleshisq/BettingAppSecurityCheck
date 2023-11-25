@@ -2523,6 +2523,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 exports.cricketPage = catchAsync(async(req, res, next)=>{
     let user = req.currentUser
+    console.log('cricketPage')
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []
