@@ -364,9 +364,9 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }
 
     const tokenId = await loginLogs.findOne({session_id:token})
-    if(!tokenId.isOnline){
-        return res.redirect('/')
-    }
+    // if(!tokenId.isOnline){
+    //     return res.redirect('/')
+    // }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
