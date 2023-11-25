@@ -94,6 +94,7 @@ const whiteLabelcheck = (req) => {
             whiteLabel = "1"
         }
     }
+    whiteLabel = "1"
     console.log(whiteLabel)
     return whiteLabel
 }
