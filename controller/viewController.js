@@ -90,6 +90,8 @@ const whiteLabelcheck = (req) => {
     }else{
         if(req.currentUser.role_type == 1){
             whiteLabel = "1"
+        }else{
+            whiteLabel = "1"
         }
     }
     console.log(whiteLabel)
