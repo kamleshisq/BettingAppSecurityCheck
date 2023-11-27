@@ -468,6 +468,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
     console.log('WORKING')
+    console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     let token 
     res.locals.loginData = undefined
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
