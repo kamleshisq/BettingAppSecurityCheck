@@ -7397,41 +7397,41 @@ socket.on('connect', () => {
 
         socket.on('cashOOut', async(data) => {
             console.log(data)
-            let thatSpan
-            if(data.betType === "LAY"){
-                thatSpan = $(`#${data.secId}4`)
-            }else{
-                thatSpan = $(`#${data.secId}1`)
-            }
-            $(".my-exc-inn-colaps-txt-dv").removeClass("open");
-            $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
-            let beton = $(thatSpan).closest("tr").find("td:first-child").text();
-            let secondPTag = $(thatSpan).closest("tr").next().find(".beton");
-            let numSpan = $(thatSpan).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
-            let secId = $(thatSpan).attr('id')
-            let secId2;
-            if($(thatSpan).hasClass('match_odd_Blue')){
-                secId2 = secId.slice(0,-1) + '1'
-            }else{
-                secId2 = secId.slice(0,-1) + '4'
-            }
-            secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
-            numSpan.text(data.odds);
-            console.log(thatSpan, $(thatSpan).hasClass('tbl-bg-blu-spn'))
-            if($(thatSpan).hasClass('tbl-bg-blu-spn')){
-                $(thatSpan).closest("tr").next().removeClass('lay-inplaymatch')
-                $(thatSpan).closest("tr").next().addClass('back-inplaymatch')
-            }else{
-                $(thatSpan).closest("tr").next().removeClass('back-inplaymatch')
-                $(thatSpan).closest("tr").next().addClass('lay-inplaymatch')
-            }
-            $(thatSpan).closest("tr").next().find(".set-stake-form-input2").val(parseFloat(data.stake.toFixed(2)))
-            var result = (parseFloat(data.stake) * parseFloat(data.odds)) - parseFloat(data.stake);
-            $(thatSpan)
-                  .closest("tr")
-                  .next()
-                  .find(".c-gren")
-                  .text(result.toFixed(2));
+            // let thatSpan
+            // if(data.betType === "LAY"){
+            //     thatSpan = $(`#${data.secId}4`)
+            // }else{
+            //     thatSpan = $(`#${data.secId}1`)
+            // }
+            // $(".my-exc-inn-colaps-txt-dv").removeClass("open");
+            // $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
+            // let beton = $(thatSpan).closest("tr").find("td:first-child").text();
+            // let secondPTag = $(thatSpan).closest("tr").next().find(".beton");
+            // let numSpan = $(thatSpan).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+            // let secId = $(thatSpan).attr('id')
+            // let secId2;
+            // if($(thatSpan).hasClass('match_odd_Blue')){
+            //     secId2 = secId.slice(0,-1) + '1'
+            // }else{
+            //     secId2 = secId.slice(0,-1) + '4'
+            // }
+            // secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
+            // numSpan.text(data.odds);
+            // console.log(thatSpan, $(thatSpan).hasClass('tbl-bg-blu-spn'))
+            // if($(thatSpan).hasClass('tbl-bg-blu-spn')){
+            //     $(thatSpan).closest("tr").next().removeClass('lay-inplaymatch')
+            //     $(thatSpan).closest("tr").next().addClass('back-inplaymatch')
+            // }else{
+            //     $(thatSpan).closest("tr").next().removeClass('back-inplaymatch')
+            //     $(thatSpan).closest("tr").next().addClass('lay-inplaymatch')
+            // }
+            // $(thatSpan).closest("tr").next().find(".set-stake-form-input2").val(parseFloat(data.stake.toFixed(2)))
+            // var result = (parseFloat(data.stake) * parseFloat(data.odds)) - parseFloat(data.stake);
+            // $(thatSpan)
+            //       .closest("tr")
+            //       .next()
+            //       .find(".c-gren")
+            //       .text(result.toFixed(2));
         })
 
         function marketLimitId(){
