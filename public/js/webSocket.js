@@ -7403,6 +7403,7 @@ socket.on('connect', () => {
             }else{
                 thatSpan = $(`#${data.secId}1`)
             }
+            console.log(thatSpan, thatSpan.length, "thatSpanthatSpan")
             $(".my-exc-inn-colaps-txt-dv").removeClass("open");
             $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
             let beton = $(thatSpan).closest("tr").find("td:first-child").text();
