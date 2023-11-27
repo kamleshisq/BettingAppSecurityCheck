@@ -45,7 +45,25 @@
 
             </div>
 
-            
+            <div class="mbl-featured-sec-slide-ro">
+              <%for(let j = 0; j < sliders[i].images.length; j++){%>
+                <%if(j < 4){%>
+                  <div class="mbl-featured-sec-card-col-dv col-6 pad-r-5 mb-2">
+                    <div class="mbl-featured-sec-card-col-dv-inn">
+                      <%if(sliders[i].name == " ROYAL GAMING" && !user){%>
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                          <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                        </a>
+                      <%}else{%>
+                        <a href="<%=sliders[i].images[j].url%>">
+                          <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                        </a>
+                      <%}%>
+                    </div>
+                  </div>
+                <%}%>
+              <%}%>
+            </div>
 
           </div>
         </div>
