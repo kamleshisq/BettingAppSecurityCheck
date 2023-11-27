@@ -6919,16 +6919,16 @@ socket.on('connect', () => {
 
 
 
-    if(pathname === "/"){
-        $(document).on('click', '.foo', async function(){
-            let id = $(this).attr('id')
-            socket.emit("PromotionId", id)
-        })
+    // if(pathname === "/"){
+    //     $(document).on('click', '.foo', async function(){
+    //         let id = $(this).attr('id')
+    //         socket.emit("PromotionId", id)
+    //     })
 
-        socket.on("PromotionId", async(data) => {
-            window.open(`${data.link}`, "_blank");
-        })
-    }
+    //     socket.on("PromotionId", async(data) => {
+    //         window.open(`${data.link}`, "_blank");
+    //     })
+    // }
 
 
     if(pathname === "/admin/promotion"){
