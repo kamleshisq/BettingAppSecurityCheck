@@ -7396,6 +7396,8 @@ socket.on('connect', () => {
         })
 
         socket.on('cashOOut', async(data) => {
+            $(".my-exc-inn-colaps-txt-dv").removeClass("open");
+
             $('.button').each(function() { 
                 let thatSpan = $(this);
                 let status = false 
@@ -7408,7 +7410,6 @@ socket.on('connect', () => {
                     status = true
                 }
                 if(status){
-                    $(".my-exc-inn-colaps-txt-dv").removeClass("open");
                     $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
                     let beton = $(thatSpan).closest("tr").find("td:first-child").text();
                     let secondPTag = $(thatSpan).closest("tr").next().find(".beton");
