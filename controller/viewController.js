@@ -90,8 +90,11 @@ const whiteLabelcheck = (req) => {
     }else{
         if(req.currentUser.role_type == 1){
             whiteLabel = "1"
+        }else{
+            whiteLabel = "1"
         }
     }
+    whiteLabel = "1"
     console.log(whiteLabel)
     return whiteLabel
 }
@@ -129,11 +132,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://dev.ollscores.com/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://ollscores.com/api/v1/users/getOwnChild?id=${id}`,
                 name:'user'
             },
             {
-                url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
+                url:`http://ollscores.com/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -141,11 +144,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://dev.ollscores.com/api/v1/users/getOwnChild`,
+                url:`http://ollscores.com/api/v1/users/getOwnChild`,
                 name:'user'
             },
             {
-                url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
+                url:`http://ollscores.com/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -333,11 +336,11 @@ exports.resetPassword = catchAsync(async(req,res,next)=> {
 exports.updateUser = catchAsync(async(req, res, next) => {
     let urls = [
         {
-            url:`http://dev.ollscores.com/api/v1/users/getUser?id=${req.query.id}`,
+            url:`http://ollscores.com/api/v1/users/getUser?id=${req.query.id}`,
             name:'user'
         },
         {
-            url:`http://dev.ollscores.com/api/v1/role/getAuthROle`,
+            url:`http://ollscores.com/api/v1/role/getAuthROle`,
             name:'role'
         }
     ]
@@ -1795,7 +1798,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let notifications
-    var fullUrl = "http://dev.ollscores.com/api/v1/notification/myNotifications"
+    var fullUrl = "http://ollscores.com/api/v1/notification/myNotifications"
     await fetch(fullUrl, {
         method:"GET",
         headers: {
@@ -2523,6 +2526,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 exports.cricketPage = catchAsync(async(req, res, next)=>{
     let user = req.currentUser
+    console.log('cricketPage')
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []

@@ -51,6 +51,7 @@ exports.deleteNotification = catchAsync(async(req, res, next) => {
 
 
 exports.myNotifications = catchAsync(async(req, res, next) => {
+    console.log('WORKINGNOTIFICATION')
     if(req.currentUser){
         let user = req.currentUser;
         const today = new Date();
@@ -63,4 +64,5 @@ exports.myNotifications = catchAsync(async(req, res, next) => {
         req.notifications = notifications
         next()
     }
+    console.log('WORKINGNOTIFICATION222')
 })

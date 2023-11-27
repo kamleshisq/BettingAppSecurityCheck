@@ -364,9 +364,9 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }
 
     const tokenId = await loginLogs.findOne({session_id:token})
-    if(!tokenId.isOnline){
-        return res.redirect('/')
-    }
+    // if(!tokenId.isOnline){
+    //     return res.redirect('/')
+    // }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
@@ -467,6 +467,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     next()
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
+    console.log('WORKING')
     let token 
     res.locals.loginData = undefined
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
@@ -519,6 +520,8 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.token = token
     next()
+    console.log('WORKING2')
+
 });
 
 exports.restrictTo = (...roles) => {
