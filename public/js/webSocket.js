@@ -7396,6 +7396,12 @@ socket.on('connect', () => {
         })
 
         socket.on('cashOOut', async(data) => {
+            $('.button').each(function() { 
+                let thatSpan = $(this);
+                let status = false 
+                let id = thatSpan.id
+                console.log(id, "thatSpanthatSpanthatSpanthatSpan")
+            })
             console.log(data)   
             let thatSpan
             if(data.betType === "LAY"){
