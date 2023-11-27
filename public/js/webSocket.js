@@ -7391,6 +7391,7 @@ socket.on('connect', () => {
         $(document).on('click', ".cashout", function(e){
             let id = $(this).closest('table').attr('id')
             let eventID = search.split('=')[1]
+            console.log('Working123456987')
             socket.emit('cashOOut', {LOGINDATA, id, eventID})
         })
 
