@@ -301,6 +301,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         WithdrawReqCount = await userWithReq.count({username:currentUser.userName, reqStatus:'pending'})
     }
     if(currentUser.roleName != "DemoLogin"){
+        console.log(currentUser.whiteLabel, whiteLabel, "whiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabel")
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"success",
