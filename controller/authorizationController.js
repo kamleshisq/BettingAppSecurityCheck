@@ -194,7 +194,7 @@ exports.login = catchAsync (async(req, res, next) => {
         if(user.whiteLabel != whiteLabel && user.role_type !== 1){
             res.status(404).json({
                 status:'error',
-                message:"not a valid user"
+                message:"not a valid user login"
             })
         }else if(!user || !(await user.correctPassword(password, user.password))){
             res.status(404).json({
@@ -306,7 +306,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"err",
-                message:'not a valid user'
+                message:'not a valid user isprotected'
             })
         }else if(!currentUser){
             return res.status(404).json({
@@ -381,8 +381,8 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     if(currentUser.roleName != "DemoLogin"){
         if(currentUser.whiteLabel !== process.env.whiteLabelName && currentUser.role_type !== 1){
             return res.status(404).json({
-                status:"success",
-                message:'not a valid user'
+                status:"succes21212s",
+                message:'not a valid user isprotectedUser'
             })
         }else  if(!currentUser){
             return res.status(404).json({
@@ -788,7 +788,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
             if(user.whiteLabel != whiteLabel && user.role_type !== 1){
                 res.status(404).json({
                     status:'error',
-                    message:"not a valid user"
+                    message:"not a valid user userLogin"
                 })
             }else  if(!user || !(await user.correctPassword(password, user.password))){
                 // console.log()
