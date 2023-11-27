@@ -7404,7 +7404,7 @@ socket.on('connect', () => {
                 if(data.betType === "LAY" && id === `${data.secId}4`){
                     // thatSpan = $(`#${data.secId}4`)
                     status = true
-                }else if(id === `${data.secId}1`) {
+                }else if(data.betType === "BACK" && id === `${data.secId}1`) {
                     status = true
                 }
                 if(status){
