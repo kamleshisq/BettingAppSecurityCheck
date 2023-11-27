@@ -7396,7 +7396,7 @@ socket.on('connect', () => {
         })
 
         socket.on('cashOOut', async(data) => {
-            console.log(data)
+            console.log(data)   
             // let thatSpan
             // if(data.betType === "LAY"){
             //     thatSpan = $(`#${data.secId}4`)
@@ -7630,14 +7630,31 @@ socket.on('connect', () => {
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let parentElement = this.parentNode
                 if(this.id == `${section.selectionId}4` ){
-                    if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                        </span>`
+                        this.removeAttribute("data-bs-toggle");
+                        parentElement.classList.add("suspended");
+                        $(this).parent().find(".match-status-message").text("Suspended")
+                    }
+                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                    }else if(check){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
+                        parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                         if(first){
                             this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }else{
