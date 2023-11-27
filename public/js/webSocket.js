@@ -7399,7 +7399,7 @@ socket.on('connect', () => {
             $('.button').each(function() { 
                 let thatSpan = $(this);
                 let status = false 
-                let id = thatSpan.id
+                let id = $(thatSpan).attr('id')
                 console.log(id, "thatSpanthatSpanthatSpanthatSpan")
             })
             console.log(data)   
