@@ -302,6 +302,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     }
     if(currentUser.roleName != "DemoLogin"){
         console.log(currentUser.whiteLabel, whiteLabel, currentUser.role_type,"whiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabel")
+        console.log(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1)
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"err",
@@ -527,7 +528,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
 });
 
 exports.restrictTo = (...roles) => {
-    console.log('WORKING123456789')
+    // console.log('WORKING123456789')
     return function(req, res, next){
         next()
     }
