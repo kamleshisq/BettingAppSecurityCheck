@@ -7400,7 +7400,7 @@ socket.on('connect', () => {
                 let thatSpan = $(this);
                 let status = false 
                 let id = $(thatSpan).attr('id')
-                console.log(id, data.secId)
+                console.log(id, `${data.secId}4`)
                 if(data.betType === "LAY" && id === $(`${data.secId}4`)){
                     // thatSpan = $(`#${data.secId}4`)
                     status = true
