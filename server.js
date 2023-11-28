@@ -8569,6 +8569,11 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on('getbasicData', async(data) => {
+        console.log(data)
+    })
+
 })
 
 http.listen(process.env.port,()=> {

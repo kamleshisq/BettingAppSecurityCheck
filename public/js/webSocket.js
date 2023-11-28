@@ -18673,7 +18673,8 @@ socket.on('connect', () => {
         $(document).on('click', ".getBannerDetails", function(e){
             e.preventDefault()
             let tableData = $(this).data('bs-target');
-            console.log(tableData, "tableDatatableDatatableData")
+            let id = $(this).attr('id')
+            socket.emit('getbasicData', {id, tableData})
         })
     }
 })
