@@ -22,6 +22,17 @@ exports.createData = catchAsync(async(req, res, next) => {
 
 exports.updateBasicDetails = catchAsync(async(req, res, next) => {
     // if(req.body.files)
+    if(req.body.table == 'myModal9'){
+        let data = await globlalSettingsModel.findByIdAndUpdate(req.body.id, {email:req.body.email, contactNumber:req.body.contact})
+        if(data){
+            res.status(200).json({
+                status:'sucess',
+                data
+            })
+        }else{
+            return next(new AppError("Please try again leter", 404))
+        }
+    }
     console.log(req.body)
     console.log(req.files)
 })
