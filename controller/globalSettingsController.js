@@ -39,7 +39,7 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
-            let data = await globlalSettingsModel.findByIdAndUpdate(req.body.id, {logo1:req.currentUser.whiteLabel})
+            let data = await globlalSettingsModel.findByIdAndUpdate(req.body.id, {logo1:`${req.currentUser.whiteLabel}1`})
             if(data){
                 res.status(200).json({
                     status:'sucess',
