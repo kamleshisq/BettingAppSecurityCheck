@@ -486,9 +486,11 @@
           <button data-bs-toggle="modal" data-bs-target="#latest-notifiction-popup"><i class="fa-solid fa-bell"></i>Latest</button>
             <marquee>
               <%for(let i = 0; i < notifications.length; i++){%>
+                <%if(notifications[i].status){%>
                 &nbsp; &nbsp;
                 <%=notifications[i].message%> 
                 &nbsp; &nbsp;
+                <%}%>
                 <%}%>
             </marquee>
         </div>

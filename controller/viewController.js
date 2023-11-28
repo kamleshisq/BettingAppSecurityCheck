@@ -1816,7 +1816,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let notifications
-    var fullUrl = "http://127.0.0.1:${process.env.port}/api/v1/notification/myNotifications"
+    var fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/myNotifications`
     await fetch(fullUrl, {
         method:"GET",
         headers: {
