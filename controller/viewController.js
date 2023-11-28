@@ -130,7 +130,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     //         game_id:ele.game_id,
     //         game_code:ele.game_code,
     //         url_thumb:ele.url_thumb,
-    //         whiteLabelName:'dev.ollscores.com'
+    //         whiteLabelName:'ollscores.com'
     //     })
     // })
     // await gameModel.insertMany(newgames)
