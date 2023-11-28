@@ -1969,8 +1969,9 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     let data;
     let RG;
     let currentUser = req.currentUser
-    data = await gameModel.find({game_name:new RegExp("32 Cards","i"),whiteLabelName:req.currentUser.whiteLabel})
-    RG = await gameModel.find({sub_provider_name:"Royal Gaming",whiteLabelName:req.currentUser.whiteLabel})
+    let whiteLabel = whiteLabelcheck(req)
+    data = await gameModel.find({game_name:new RegExp("32 Cards","i"),whiteLabelName:whiteLabel})
+    RG = await gameModel.find({sub_provider_name:"Royal Gaming",whiteLabelName:whiteLabel})
     // console.log(RG.length)
     res.status(200).render("./casinoController/casinocontrol", {
         title:"Casino Controller",
@@ -1990,7 +1991,8 @@ exports.promotion = catchAsync(async(req, res, next) => {
 });
 
 exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
-    const data = await gameModel.find({status:true,whiteLabelName:req.currentUser.whiteLabel});
+    let whiteLabel = whiteLabelcheck(req)
+    const data = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let user = req.currentUser
     res.status(200).render('allCasinoGame', {
         title:"All Games",
