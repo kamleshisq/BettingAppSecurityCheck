@@ -4422,7 +4422,7 @@ socket.on('connect', () => {
 
     if(pathname == "/admin/casinocontrol"){
       
-        let BACCARAT,CASUALGAMES,FISHSHOOTING ,ANDARBAHAR,INSTANTWINGAMES,LIVE,BLACKJACK,FH,GAME,KENO,LIVEBACCARAT= false;
+        let BACCARAT,CASUALGAMES,FISHSHOOTING ,ANDARBAHAR,INSTANTWINGAMES,LIVE,BLACKJACK,FH,GAME,KENO,LIVEBACCARAT,CARDS32= false;
         let RGV = false;
         let EZ = false;
         let EG = false;
@@ -4431,6 +4431,13 @@ socket.on('connect', () => {
                 // console.log("1")
                 socket.emit('BACCARAT', {LOGINDATA})
                 BACCARAT = true
+            }
+        })
+        $("#32CARDS").click(function(){
+            if(!CARDS32){
+                // console.log("1")
+                socket.emit('32CARDS', {LOGINDATA})
+                CARDS32 = true
             }
         })
         $("#ANDARBAHAR").click(function(){

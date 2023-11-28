@@ -720,6 +720,13 @@ io.on('connection', (socket) => {
         data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"BACCARAT"})
     })
+
+    socket.on('32CARDS', async(A) => {
+        let data
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("32 Cards","i")},{category:new RegExp("32 Cards","i")},{game_code:new RegExp("32 Cards","i")}],whiteLabelName:whiteLabel})
+        socket.emit('baccarat1', {data,id:"32CARDS"})
+    })
     socket.on('CASUALGAMES', async(A) => {
         let data
         let whiteLabel = checkwhiteLabel(A.LOGINDATA)
