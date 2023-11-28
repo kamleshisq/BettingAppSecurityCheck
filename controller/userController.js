@@ -107,8 +107,8 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                     whiteLabelName:req.body.whiteLabel
                 })
             })
-            gamerules.map(ele => {
-                newgamerules.push({
+            games.map(ele => {
+                newgames.push({
                     game_name:ele.game_name,
                     provider_name:ele.provider_name,
                     sub_provider_name:ele.sub_provider_name,
@@ -127,6 +127,8 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             await sliderModel.insertMany(newsliders)
             await verticalMenuModel.insertMany(newverticalMenus)
             await gamerulesModel.insertMany(newgamerules)
+            await gamemodel.insertMany(newgames)
+
         }
     }
     if(user_type.role_level < req.currentUser.role.role_level){
