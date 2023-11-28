@@ -5,7 +5,11 @@
 
           <div class="footer-sec--logo-ro">
             <a href="/">
-              <img class="footer-logo" src="logo/Royal77701.png" alt="logo">
+              <%if(basicDetails.length > 0){%>
+                <img class="footer-logo" src="logo/<%=basicDetails[0].logo2%>.png" alt="logo">
+              <%}else{%>
+                <img class="footer-logo" src="logo/Royal77701.png" alt="logo">
+              <%}%>
             </a>
           </div>
 

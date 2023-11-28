@@ -32,6 +32,7 @@ import { createAndLoginUser } from "./createAndLoginUser";
 import { KYC } from "./kyc";
 import { paymentDeposite } from "./paymentDeposite";
 import { notificationsss } from "./notificationsss";
+import { updateBasicDetails } from "./updateBasicDetails";
 // import { func } from "joi";
 
 
@@ -699,6 +700,18 @@ $(document).on('submit', ".kycForm", function(e){
     let data = Object.fromEntries(fd.entries());
     // console.log(data)
     KYC(fd)
+})
+
+$(document).on('submit', '.basicDetailsFOrm', function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let id = $(this).attr("id")
+    let table = $(this).closest('.fade').attr('id')
+    fd.append('id', id)
+    fd.append('table', table)
+    updateBasicDetails(fd)
+    // console.log(data, "DATA23232")
 })
 
 $(document).on('submit','#navmod3 .payment-fom',function(e){

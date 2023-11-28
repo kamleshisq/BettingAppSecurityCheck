@@ -68,6 +68,7 @@ const liveStreameData = require('./utils/getLiveStream');
 const manageAccountsUser = require('./model/paymentMethodUserSide');
 const withdowReqModel = require('./model/withdrowReqModel');
 const runnerData = require('./model/runnersData');
+const globalSettingModel = require('./model/globalSetting');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
@@ -8567,6 +8568,12 @@ io.on('connection', (socket) => {
               }
             }
         }
+    })
+
+
+    socket.on('getbasicData', async(data) => {
+        let basicData = await globalSettingModel.findById(data.id)
+        socket.emit('getbasicData', {basicData,tableData: data.tableData})
     })
 
 })

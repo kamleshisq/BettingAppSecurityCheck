@@ -1,7 +1,19 @@
 const mongoose = require('mongoose');
 
 const globalSettingsSchema = mongoose.Schema({
-    name:{
+    logo1:{
+        type:String,
+        required:true
+    },
+    logo2:{
+        type:String,
+        required:true
+    },
+    contactNumber:{
+        type:String,
+        required:true
+    },
+    email:{
         type:String,
         required:true
     },
@@ -9,10 +21,6 @@ const globalSettingsSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    data:{
-        type:String,
-        required:true
-    }
 })
 
 const globalSettingModel = mongoose.model('globalSettingModel', globalSettingsSchema)
