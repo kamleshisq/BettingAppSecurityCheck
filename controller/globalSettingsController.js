@@ -33,13 +33,13 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
             return next(new AppError("Please try again leter", 404))
         }
     }else if (req.body.table == 'myModal7'){
-        if(req.files && req.files.image.mimetype.startsWith('image')){
+        if(req.files && req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
             image.mv(`public/logo/${req.currentUser.whiteLabel}1.png`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
-            let data = await globlalSettingsModel.findByIdAndUpdate(req.body.id, {logo1:req.currentUser.whiteLabel})
+            let data = await globlalSettingsModel.findByIdAndUpdate(req.body.id, {logo1:`${req.currentUser.whiteLabel}1`})
             if(data){
                 res.status(200).json({
                     status:'sucess',
