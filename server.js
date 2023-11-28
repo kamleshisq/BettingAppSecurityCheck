@@ -2373,10 +2373,11 @@ io.on('connection', (socket) => {
 
     socket.on('liveCasinoPage', async(data) => {
         let games
+        let whiteLabel = whiteLabelcheck(data.LOGINDATA);
         if(data.selectedValue === "All"){
-             games = await gameModel.find()
+             games = await gameModel.find({whiteLabelName:whiteLabel,status:true})
         }else{
-            games = await gameModel.find({provider_name:data.selectedValue})
+            games = await gameModel.find({provider_name:data.selectedValue,whiteLabelName:whiteLabel,status:true})
         }
         let fevGames = []
         if(data.LOGINDATA.LOGINUSER != "" && data.LOGINDATA.LOGINUSER != undefined){
