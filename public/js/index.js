@@ -706,7 +706,10 @@ $(document).on('submit', '.basicDetailsFOrm', function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
-    // let data = Object.fromEntries(fd.entries());
+    let id = $(this).attr("id")
+    let table = $(this).closest('.fade').attr('id')
+    fd.append('id', id)
+    fd.append('table', table)
     updateBasicDetails(fd)
     // console.log(data, "DATA23232")
 })

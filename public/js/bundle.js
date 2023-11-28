@@ -7845,7 +7845,10 @@ $(document).on('submit', '.basicDetailsFOrm', function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  // let data = Object.fromEntries(fd.entries());
+  var id = $(this).attr("id");
+  var table = $(this).closest('.fade').attr('id');
+  fd.append('id', id);
+  fd.append('table', table);
   (0, _updateBasicDetails.updateBasicDetails)(fd);
   // console.log(data, "DATA23232")
 });
