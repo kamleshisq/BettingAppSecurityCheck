@@ -18,3 +18,9 @@ exports.createData = catchAsync(async(req, res, next) => {
         }
     }
 })
+
+
+exports.updateBasicDetails = catchAsync(async(req, res, next) => {
+    console.log(req.body)
+    console.log(req.files)
+})

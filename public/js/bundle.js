@@ -7790,9 +7790,11 @@ $(document).on('submit', '.basicDetailsFOrm', function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  var data = Object.fromEntries(fd.entries());
-  console.log(data, "DATA23");
+  // let data = Object.fromEntries(fd.entries());
+  updateBasicDetails(fd);
+  // console.log(data, "DATA23232")
 });
+
 $(document).on('submit', '#navmod3 .payment-fom', function (e) {
   e.preventDefault();
   $(this).find('button').prop("disabled", true);
