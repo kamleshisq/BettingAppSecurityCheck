@@ -133,7 +133,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     //         whiteLabelName:'ollscores.com'
     //     })
     // })
-    await gameModel.insertMany(newgames)
+    // await gameModel.insertMany(newgames)
 
     if(req.currentUser.roleName === "Super-Duper-Admin"){
         roles1 = roles1.filter(item => item.roleName !== 'DemoLogin')
