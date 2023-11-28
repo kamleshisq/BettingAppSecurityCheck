@@ -18680,9 +18680,9 @@ socket.on('connect', () => {
         socket.on('getbasicData', data =>{
             console.log(data)
             let form = $(`${data.tableData}`).find('.form-data25')
-            if(data.tableData == "myModal7"){
+            if(data.tableData === "#myModal7"){
                 form.find('#banner12').html(`<img src="../logo/${data.basicData.logo1}.png" alt="img" class="form__user-photo">`)
-            }else if(data.tableData == "myModa18"){
+            }else if(data.tableData === "#myModa18"){
                 form.find('#banner12').html(`<img src="../logo/${data.basicData.logo2}.png" alt="img" class="form__user-photo">`)
             }
         })
