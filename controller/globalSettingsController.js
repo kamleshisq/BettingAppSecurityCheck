@@ -1,0 +1,1 @@
+const globlalSettingsModel = require('../model/globalSetting');
