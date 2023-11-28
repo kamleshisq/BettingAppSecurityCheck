@@ -8572,7 +8572,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('getbasicData', async(data) => {
-        let basicData = globalSettingModel.findById(data.id)
+        let basicData = await globalSettingModel.findById(data.id)
         socket.emit('getbasicData', {basicData,tableData: data.tableData})
     })
 
