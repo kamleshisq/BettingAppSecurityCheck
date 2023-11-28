@@ -33,7 +33,7 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
             return next(new AppError("Please try again leter", 404))
         }
     }else if (req.body.table == 'myModal7'){
-        if(req.files && req.files.image.mimetype.startsWith('image')){
+        if(req.files && req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
             image.mv(`public/logo/${req.currentUser.whiteLabel}1.png`, (err)=>{
                 if(err) 
