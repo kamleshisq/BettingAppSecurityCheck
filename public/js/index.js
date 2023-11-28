@@ -32,6 +32,7 @@ import { createAndLoginUser } from "./createAndLoginUser";
 import { KYC } from "./kyc";
 import { paymentDeposite } from "./paymentDeposite";
 import { notificationsss } from "./notificationsss";
+import { updateBasicDetails } from "./updateBasicDetails";
 // import { func } from "joi";
 
 
