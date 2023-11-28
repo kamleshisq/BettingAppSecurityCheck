@@ -132,7 +132,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             game_id:ele.game_id,
             game_code:ele.game_code,
             url_thumb:ele.url_thumb,
-            whiteLabelName:'tiger.ollscores.com'
+            whiteLabelName:'dev.ollscores.com'
         })
     })
     
