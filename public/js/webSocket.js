@@ -18684,7 +18684,11 @@ socket.on('connect', () => {
                 form.find('#banner12').html(`<img src="../logo/${data.basicData.logo1}.png" alt="img" class="form__user-photo">`)
             }else if(data.tableData === "#myModa18"){
                 form.find('#banner12').html(`<img src="../logo/${data.basicData.logo2}.png" alt="img" class="form__user-photo">`)
+            }else{
+                form.find('input[name="email"]').val(`${data.basicData.email}`)
+                form.find('input[name="contact"]').val(`${data.basicData.contactNumber}`)
             }
+            form.attr('id', data.basicData._id)
         })
     }
 })
