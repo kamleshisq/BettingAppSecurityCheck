@@ -592,7 +592,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
 
-    console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
+    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         user,
@@ -5516,7 +5516,7 @@ exports.getHTMLSCOREIFRm = catchAsync(async(req, res, next) => {
 exports.getGlobalSetting = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     res.status(200).render("./globalSettings/main",{
         title:"Global settings",
         user,

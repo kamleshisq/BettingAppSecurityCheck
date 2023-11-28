@@ -17,7 +17,44 @@
               </tr>
             </thead>
             <tbody>
-              
+              <%if(basicDetails.length > 0){%>
+                <tr>
+                  <td>Logo With white Background</td>
+                  <td><img src="../../logo/<%=basicDetails[0].logo1%>.png" ></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=basicDetails[0]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Logo With thime color Background</td>
+                  <td><img src="../../logo/<%=basicDetails[0].logo2%>.png" ></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=basicDetails[0]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>contact email</td>
+                  <td><%=basicDetails[0].email%></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=basicDetails[0]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>contact number</td>
+                  <td><%=basicDetails[0].contactNumber%></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=basicDetails[0]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              <%}%>
             </tbody>
           </table>
         </div>
