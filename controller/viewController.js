@@ -124,10 +124,14 @@ exports.userTable = catchAsync(async(req, res, next) => {
    
     games.map(ele => {
         newgamemodel.push({
-            bannerName:ele.bannerName,
-            url:ele.url,
-            banner:ele.banner,
-            status:ele.status,
+            game_name:ele.game_name,
+            provider_name:ele.provider_name,
+            sub_provider_name:ele.sub_provider_name,
+            category:ele.category,
+            status:true,
+            game_id:ele.game_id,
+            game_code:ele.game_code,
+            url_thumb:ele.url_thumb,
             whiteLabelName:'dev.ollscores.com'
         })
     })
