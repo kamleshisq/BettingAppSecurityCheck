@@ -802,9 +802,9 @@ io.on('connection', (socket) => {
         try{
             let whiteLabel = checkwhiteLabel(data.LOGINDATA)
             if(data.status){
-                await gameModel.updateOne({game_id:data.id},{status:true,whiteLabelName:whiteLabel})
+                await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:true})
             }else{
-                await gameModel.updateOne({game_id:data.id},{status:false,whiteLabelName:whiteLabel})
+                await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:false})
             }
             socket.emit('casionoStatusChange',{status:'success'})
         }catch(error){
