@@ -575,7 +575,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     let featureEventId = []
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     const data = await promotionModel.find({whiteLabelName: whiteLabel});
     // console.log(data, "datatatata")
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
@@ -592,7 +592,7 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         userLog = await loginLogs.find({user_id:user._id})
     }
 
-    console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
+    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         user,
@@ -604,7 +604,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         check:"Home",
         userLog,
         notifications:req.notifications,
-        featureStatusArr
+        featureStatusArr,
+        basicDetails
     })
 })
 
@@ -640,7 +641,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         verticalMenus,
         check:"ACCC",
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
     // )
 });
@@ -668,7 +670,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         verticalMenus,
         check:"ACCC",
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
     // )
 });
@@ -1440,7 +1443,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     res.status(200).render("./promotion/promotion",{
         title:"Promotion",
         data,
-        currentUser
+        currentUser,
+        basicDetails
     })
 });
 
@@ -1985,7 +1989,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         data:data,
         RG,
         currentUser,
-        me: currentUser
+        me: currentUser,
+        basicDetails
     })
 })
 
@@ -2005,7 +2010,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     res.status(200).render('allCasinoGame', {
         title:"All Games",
         data,
-        user
+        user,
+        basicDetails
     })
 });
 
@@ -2345,7 +2351,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         hosriZontalMenu,
         banner,
         pages,
-        sliders
+        sliders,
+        basicDetails
     })
 });
 
@@ -2360,7 +2367,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         user,
         me:user,
         currentUser:user,
-        pages
+        pages,
+        basicDetails
     })
 });
 
@@ -2451,6 +2459,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         footbalSeries,
         tennisSeries,
         catalog,        
+        basicDetails
     })
 })
 
@@ -2531,7 +2540,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         cricketSeries,
         footbalSeries,
         tennisSeries,
-        catalog
+        catalog,
+        basicDetails
     })
 })
 
@@ -2592,7 +2602,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         notifications:req.notifications,
         userMultimarkets,
         cricketSeries,
-        catalog
+        catalog,
+        basicDetails
         })
 })
 
@@ -2623,7 +2634,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         userLog,
         notifications:req.notifications,
-        check
+        check,
+        basicDetails
     })
 })
 
@@ -2673,7 +2685,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userMultimarkets,
         footbalSeries,
         catalog,
-        featureStatusArr
+        featureStatusArr,
+        basicDetails
     })
 })
 
@@ -2733,6 +2746,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userMultimarkets,
         tennisSeries,
         catalog,
+        basicDetails
     })
 })
 
@@ -2776,7 +2790,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         verticalMenus,
         check:"plStatemenet",
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 });
 
@@ -2945,7 +2960,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             maxFancy,
             commissionmarkerarr,
             notification,
-            channel:match.eventData.channelId
+            channel:match.eventData.channelId,
+            basicDetails
     })
 });
 
@@ -3005,7 +3021,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         sportData,
         stakeLabledata,
         betsOnthisMatch,
-        rules
+        rules,
+        basicDetails
     })
 });
 
@@ -3039,7 +3056,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check,
         urldata,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 })
 
@@ -3105,7 +3123,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"Sportsbook",
         urldata,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 });
 
@@ -3130,7 +3149,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         check:"Royal Casino",
         games,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 });
 
@@ -3154,6 +3174,7 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         check:"Virtuals",
         games,
         userLog,
+        basicDetails,
         notifications:req.notifications
     })
 });
@@ -3176,7 +3197,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         data,
         check:"Other",
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 });
 
@@ -3206,7 +3228,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         userLog,
         notifications:req.notifications,
-        gamesFe
+        gamesFe,
+        basicDetails
     })
 });
 
@@ -3246,7 +3269,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         userLog,
         bets,
         notifications:req.notifications,
-        betsDetails
+        betsDetails,
+        basicDetails
     })
 });
 
@@ -3306,7 +3330,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         bets,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 })
 
@@ -3369,7 +3394,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         userLog,
         result,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 })
 
@@ -3393,7 +3419,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         userLog,
         result,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 });
 
@@ -3454,7 +3481,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         userLog,
         notifications:req.notifications,
-        userProfileContent
+        userProfileContent,
+        basicDetails
     })
 });
 
@@ -3469,7 +3497,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         user,
         me:user,
         currentUser:user,
-        rules
+        rules,
+        basicDetails
     })
 });
 
@@ -3490,7 +3519,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         check:"Kyc",
         games,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 });
 
@@ -4178,7 +4208,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         notifications:req.notifications,
         // data,
         commissionData,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        basicDetails
     })
 })
 
@@ -4251,7 +4282,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         notifications:req.notifications,
         data,
         sport,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        basicDetails
     })
 })
 
@@ -4317,7 +4349,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         data,
         sport,
         event,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        basicDetails
     })
 })
 
@@ -4371,7 +4404,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userLog,
         notifications:req.notifications,
         data,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        basicDetails
     })
 })
 
@@ -4535,7 +4569,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             min,
             max,
             currentUser:req.currentUser,
-            suspend:check
+            suspend:check,
+            basicDetails
     })
 });
 
@@ -5432,7 +5467,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userLog,
         verticalMenus,
         notifications:req.notifications,
-        accounts
+        accounts,
+        basicDetails
     })
 })
 
@@ -5466,7 +5502,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"withdrawal",
         userLog,
         withrowReqData,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails
     })
 });
 
@@ -5485,5 +5522,6 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         user,
         me:user,
         currentUser:user,
+        basicDetails
     })
 });
