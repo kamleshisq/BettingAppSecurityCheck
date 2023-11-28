@@ -21,7 +21,7 @@ exports.createData = catchAsync(async(req, res, next) => {
 
 
 exports.updateBasicDetails = catchAsync(async(req, res, next) => {
-    if(req.body.files)
+    // if(req.body.files)
     console.log(req.body)
     console.log(req.files)
 })
