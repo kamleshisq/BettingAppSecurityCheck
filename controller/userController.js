@@ -13,6 +13,7 @@ const PageModel = require('../model/pageModel')
 const sliderModel = require('../model/sliderModel')
 const verticalMenuModel = require("../model/verticalMenuModel");
 const gamerulesModel = require('../model/gamesRulesModel')
+const gamemodel = require('../model/gameModel')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
     console.log(req.body)
@@ -41,6 +42,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let sliders = await sliderModel.find({whiteLabelName:"1"})
             let verticalMenus = await verticalMenuModel.find({whiteLabelName:"1"})
             let gamerules = await gamerulesModel.find({whiteLabelName:"1"})
+            let games = await gamemodel.find({whiteLabelName:"1"})
             // let promossions = await Pro
             let newbanners = []
             let newpromosions = []
@@ -48,6 +50,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let newsliders = []
             let newverticalMenus = []
             let newgamerules = []
+            let newgames = []
             banners.map(ele => {
                 newbanners.push({
                     bannerName:ele.bannerName,
@@ -101,6 +104,19 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                 newgamerules.push({
                     name:ele.name,
                     description:ele.description,
+                    whiteLabelName:req.body.whiteLabel
+                })
+            })
+            gamerules.map(ele => {
+                newgamerules.push({
+                    game_name:ele.game_name,
+                    provider_name:ele.provider_name,
+                    sub_provider_name:ele.sub_provider_name,
+                    category:ele.category,
+                    status:true,
+                    game_id:ele.game_id,
+                    game_code:ele.game_code,
+                    url_thumb:ele.url_thumb,
                     whiteLabelName:req.body.whiteLabel
                 })
             })

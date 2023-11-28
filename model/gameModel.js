@@ -33,6 +33,10 @@ const gamemodel = mongoose.Schema({
     url_thumb:{
         type:String,
         required:true
+    },
+    whiteLabelName:{
+        type:String,
+        required:true
     }
 });
 
