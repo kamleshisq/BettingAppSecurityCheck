@@ -8538,6 +8538,6 @@ io.on('connection', (socket) => {
 
 })
 
-http.listen(8080,()=> {
-    console.log('app is running on port 8080')
+http.listen(process.env.port,()=> {
+    console.log(`app is running on port ${process.env.port}`)
 })
