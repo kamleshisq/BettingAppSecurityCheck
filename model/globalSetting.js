@@ -5,7 +5,7 @@ const globalSettingsSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    logo1:{
+    logo2:{
         type:String,
         required:true
     },
