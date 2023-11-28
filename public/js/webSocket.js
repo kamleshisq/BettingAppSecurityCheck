@@ -18670,11 +18670,11 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/globalSettings"){
-        $(document).on('click', ".getBannerDetails", async(function(e){
+        $(document).on('click', ".getBannerDetails", function(e){
             e.preventDefault()
             let tableData = $(this).data('bs-target');
             console.log(tableData, "tableDatatableDatatableData")
-        }))
+        })
     }
 })
 })
