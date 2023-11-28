@@ -18678,7 +18678,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getbasicData', data =>{
-            let form = $(`#${data.tableData}`).find('.form-data25')
+            let form = $(`${data.tableData}`).find('.form-data25')
             form.find('#banner12').html(`<img src="../logo/${data.basicData.logo1}.png" alt="img" class="form__user-photo">`)
         })
     }
