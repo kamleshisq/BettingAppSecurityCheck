@@ -4429,77 +4429,77 @@ socket.on('connect', () => {
         $("#BACCARAT").click(function(){
             if(!BACCARAT){
                 // console.log("1")
-                socket.emit('BACCARAT', "on")
+                socket.emit('BACCARAT', {LOGINDATA})
                 BACCARAT = true
             }
         })
         $("#ANDARBAHAR").click(function(){
             if(!ANDARBAHAR){
                 // console.log("1")
-                socket.emit('ANDARBAHAR', "on")
+                socket.emit('ANDARBAHAR', {LOGINDATA})
                 ANDARBAHAR = true
             }
         })
         $("#CASUALGAMES").click(function(){
             if(!CASUALGAMES){
                 // console.log("1")
-                socket.emit('CASUALGAMES', "on")
+                socket.emit('CASUALGAMES', {LOGINDATA})
                 CASUALGAMES = true
             }
         })
         $("#FISHSHOOTING").click(function(){
             if(!FISHSHOOTING){
                 // console.log("1")
-                socket.emit('FISHSHOOTING', "on")
+                socket.emit('FISHSHOOTING', {LOGINDATA})
                 FISHSHOOTING = true
             }
         })
         $("#INSTANTWINGAMES").click(function(){
             if(!INSTANTWINGAMES){
                 // console.log("1")
-                socket.emit('INSTANTWINGAMES', "on")
+                socket.emit('INSTANTWINGAMES', {LOGINDATA})
                 INSTANTWINGAMES = true
             }
         })
         $("#LIVE").click(function(){
             if(!LIVE){
                 // console.log("1")
-                socket.emit('LIVE', "on")
+                socket.emit('LIVE', {LOGINDATA})
                 LIVE = true
             }
         })
         $("#BLACKJACK").click(function(){
             if(!BLACKJACK){
                 // console.log("1")
-                socket.emit('BLACKJACK', "on")
+                socket.emit('BLACKJACK', {LOGINDATA})
                 BLACKJACK = true
             }
         })
         $("#FH").click(function(){
             if(!FH){
                 // console.log("1")
-                socket.emit('FH', "on")
+                socket.emit('FH', {LOGINDATA})
                 FH = true
             }
         })
         $("#GAME").click(function(){
             if(!GAME){
                 // console.log("1")
-                socket.emit('GAME', "on")
+                socket.emit('GAME', {LOGINDATA})
                 GAME = true
             }
         })
         $("#KENO").click(function(){
             if(!KENO){
                 // console.log("1")
-                socket.emit('KENO', "on")
+                socket.emit('KENO', {LOGINDATA})
                 KENO = true
             }
         })
         $("#LIVEBACCARAT").click(function(){
             if(!LIVEBACCARAT){
                 // console.log("1")
-                socket.emit('LIVEBACCARAT', "on")
+                socket.emit('LIVEBACCARAT', {LOGINDATA})
                 LIVEBACCARAT = true
             }
         })
@@ -4535,21 +4535,21 @@ socket.on('connect', () => {
         $("#RGV").click(function(){
             if(!RGV){
                 // console.log(2)
-                socket.emit('RGV', "on")
+                socket.emit('RGV',  {LOGINDATA})
                 RGV=true
             }
         })
 
         $('#EZ').click(function(){
             if(!EZ){
-                socket.emit('EZ', "on")
+                socket.emit('EZ',  {LOGINDATA})
                 EZ = true
             }
         })
 
         $('#EG').click(function(){
             if(!EG){
-                socket.emit('EG', "on")
+                socket.emit('EG',  {LOGINDATA})
                 EG = true
             }
         })
@@ -4629,7 +4629,7 @@ socket.on('connect', () => {
             }
             if(id){
                 if(confirm('do you want to change status')){
-                    socket.emit('casionoStatusChange',{status,id})
+                    socket.emit('casionoStatusChange',{status,id,LOGINDATA})
                 }else{
                     $(this).prop('checked') ? $(this).prop('checked',false) : $(this).prop('checked',true)
                 }
