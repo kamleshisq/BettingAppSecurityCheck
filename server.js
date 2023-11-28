@@ -96,6 +96,17 @@ io.on('connection', (socket) => {
         }
     }
 
+    const checkwhiteLabel = (LOGINDATA) => {
+        let whiteLabel;
+        if(LOGINDATA.LOGINUSER.role_type == 1){
+            whiteLabel = "1"
+        }else{
+            whiteLabel = process.env.whiteLabelName
+        }
+
+        return whiteLabel
+    }
+
 
 //.........................for update role................//
 
@@ -705,57 +716,68 @@ io.on('connection', (socket) => {
 
     socket.on('BACCARAT', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"BACCARAT"})
     })
     socket.on('CASUALGAMES', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("CASUAL","i")},{category:new RegExp("CASUAL","i")},{game_code:new RegExp("CASUAL","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("CASUAL","i")},{category:new RegExp("CASUAL","i")},{game_code:new RegExp("CASUAL","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"CASUALGAMES"})
     })
     socket.on('FISHSHOOTING', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("FISH","i")},{category:new RegExp("FISH","i")},{game_code:new RegExp("FISH","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("FISH","i")},{category:new RegExp("FISH","i")},{game_code:new RegExp("FISH","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"FISHSHOOTING"})
     })
     socket.on('INSTANTWINGAMES', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("INSTANT","i")},{category:new RegExp("INSTANT","i")},{game_code:new RegExp("INSTANT","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("INSTANT","i")},{category:new RegExp("INSTANT","i")},{game_code:new RegExp("INSTANT","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"INSTANTWINGAMES"})
     })
     socket.on('LIVE', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("LIVE","i")},{category:new RegExp("LIVE","i")},{game_code:new RegExp("LIVE","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("LIVE","i")},{category:new RegExp("LIVE","i")},{game_code:new RegExp("LIVE","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"LIVE"})
     })
     socket.on('BLACKJACK', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BLACK","i")},{category:new RegExp("BLACK","i")},{game_code:new RegExp("BLACK","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("BLACK","i")},{category:new RegExp("BLACK","i")},{game_code:new RegExp("BLACK","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"BLACKJACK"})
     })
     socket.on('FH', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("FH","i")},{category:new RegExp("FH","i")},{game_code:new RegExp("FH","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("FH","i")},{category:new RegExp("FH","i")},{game_code:new RegExp("FH","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"FH"})
     })
     socket.on('GAME', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("GAME","i")},{category:new RegExp("GAME","i")},{game_code:new RegExp("GAME","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("GAME","i")},{category:new RegExp("GAME","i")},{game_code:new RegExp("GAME","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"GAME"})
     })
     socket.on('KENO', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("KENO","i")},{category:new RegExp("KENO","i")},{game_code:new RegExp("KENO","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("KENO","i")},{category:new RegExp("KENO","i")},{game_code:new RegExp("KENO","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"KENO"})
     })
     socket.on('LIVEBACCARAT', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"LIVEBACCARAT"})
     })
     socket.on('ANDARBAHAR', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("ANDAR","i")},{category:new RegExp("ANDAR","i")},{game_code:new RegExp("ANDAR","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("ANDAR","i")},{category:new RegExp("ANDAR","i")},{game_code:new RegExp("ANDAR","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"ANDARBAHAR"})
     })
 
@@ -763,17 +785,19 @@ io.on('connection', (socket) => {
 
     socket.on("RGV", async(A)=>{
         let data;
-        data = await gameModel.find({sub_provider_name:"Royal Gaming Virtual"})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({sub_provider_name:"Royal Gaming Virtual",whiteLabelName:whiteLabel})
        
         socket.emit("RGV1", {data, provider:"RGV"})
     })
 
     socket.on('casionoStatusChange',async(data)=>{
         try{
+            let whiteLabel = checkwhiteLabel(data.LOGINDATA)
             if(data.status){
-                await gameModel.updateOne({game_id:data.id},{status:true})
+                await gameModel.updateOne({game_id:data.id},{status:true,whiteLabelName:whiteLabel})
             }else{
-                await gameModel.updateOne({game_id:data.id},{status:false})
+                await gameModel.updateOne({game_id:data.id},{status:false,whiteLabelName:whiteLabel})
             }
             socket.emit('casionoStatusChange',{status:'success'})
         }catch(error){
@@ -804,13 +828,15 @@ io.on('connection', (socket) => {
 
     socket.on("EZ", async(A)=>{
         let data;
-        data = await gameModel.find({sub_provider_name:"Ezugi"})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({sub_provider_name:"Ezugi",whiteLabelName:whiteLabel})
         socket.emit("RGV1", {data, provider:"EZ"})
     })
 
     socket.on("EG", async(A)=>{
         let data;
-        data = await gameModel.find({sub_provider_name:"Evolution Gaming"})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({sub_provider_name:"Evolution Gaming",whiteLabelName:whiteLabel})
         socket.emit("RGV1", {data, provider:"EG"})
     })
 
