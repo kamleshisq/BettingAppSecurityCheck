@@ -117,7 +117,23 @@ exports.userTable = catchAsync(async(req, res, next) => {
         operationparentId = req.currentUser.parent_id
 
     }
+    // let games = await gameModel.find({whiteLabelName:"1"})
 
+    // let newgames = []
+    // games.map(ele => {
+    //     newgames.push({
+    //         game_name:ele.game_name,
+    //         provider_name:ele.provider_name,
+    //         sub_provider_name:ele.sub_provider_name,
+    //         category:ele.category,
+    //         status:true,
+    //         game_id:ele.game_id,
+    //         game_code:ele.game_code,
+    //         url_thumb:ele.url_thumb,
+    //         whiteLabelName:'ollscores.com'
+    //     })
+    // })
+    // await gameModel.insertMany(newgames)
 
     if(req.currentUser.roleName === "Super-Duper-Admin"){
         roles1 = roles1.filter(item => item.roleName !== 'DemoLogin')
