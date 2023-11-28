@@ -5436,19 +5436,10 @@ exports.getHTMLSCOREIFRm = catchAsync(async(req, res, next) => {
 exports.getGlobalSetting = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-    let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabel}).sort({num:1})
-    let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
-    let banner = await bannerModel.find({whiteLabelName:whiteLabel})
-    let sliders = await sliderModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
-    res.status(200).render("./Cms/cms",{
-        title:"Home Page Management",
+    res.status(200).render("./globalSettings/main",{
+        title:"Global settings",
         user,
         me:user,
         currentUser:user,
-        verticalMenus,
-        hosriZontalMenu,
-        banner,
-        pages,
-        sliders
     })
 });

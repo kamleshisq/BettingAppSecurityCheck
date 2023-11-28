@@ -92,6 +92,7 @@ router.get("/admin/matchBets", authController.isProtected, authController.isAdmi
 router.get("/admin/paymentmethods", authController.isProtected, authController.isAdmin,viewController.paymentMethodPage);
 router.get("/admin/paymentapproval", authController.isProtected, authController.isAdmin,viewController.paymentApprovalPage);
 router.get("/admin/withdrawalRequest", authController.isProtected, authController.isAdmin,viewController.getWithrowReqPage);
+router.get("/admin/globalSettings", authController.isProtected, authController.isAdmin,viewController.getGlobalSetting);
 
 //User Panal
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);
