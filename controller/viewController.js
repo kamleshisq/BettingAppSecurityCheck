@@ -51,6 +51,7 @@ const paymentReportModel = require('../model/paymentreport');
 const runnerData = require('../model/runnersData');
 const manageAccountUser = require('../model/paymentMethodUserSide');
 const withdrawalRequestModel = require('../model/withdrowReqModel');
+
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -115,6 +116,23 @@ exports.userTable = catchAsync(async(req, res, next) => {
         operationparentId = req.currentUser.parent_id
 
     }
+
+    let games = await gameModel.find({whiteLabelName:"1"})
+   
+    // let promossions = await Pro
+    let newgamemodel = []
+   
+    games.map(ele => {
+        newgamemodel.push({
+            bannerName:ele.bannerName,
+            url:ele.url,
+            banner:ele.banner,
+            status:ele.status,
+            whiteLabelName:'dev.ollscores.com'
+        })
+    })
+    
+    await gameModel.insertMany(newgamemodel)
 
     if(req.currentUser.roleName === "Super-Duper-Admin"){
         roles1 = roles1.filter(item => item.roleName !== 'DemoLogin')
