@@ -8,7 +8,7 @@ export const updateBasicDetails = async(data)=>{
             data
         });
         if(res.data.status === 'sucess'){
-            alert('image added successfully!!!!');
+            alert('updated successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{

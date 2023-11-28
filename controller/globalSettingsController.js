@@ -32,6 +32,25 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
         }else{
             return next(new AppError("Please try again leter", 404))
         }
+    }else if (req.body.table == 'myModal7'){
+        if(req.files && req.files.image.mimetype.startsWith('image')){
+            const image = req.files.file
+            image.mv(`public/logo/${req.currentUser.whiteLabel}1.png`, (err)=>{
+                if(err) 
+                return next(new AppError("Something went wrong please try again later", 400))
+            })
+            let data = await globlalSettingsModel.findByIdAndUpdate(req.body.id, {logo1:req.currentUser.whiteLabel})
+            if(data){
+                res.status(200).json({
+                    status:'sucess',
+                    data
+                })
+            }else{
+                return next(new AppError("Please try again leter", 404))
+            }
+        }else{
+            return next(new AppError("Please upload an Image", 404))
+        }
     }
     console.log(req.body)
     console.log(req.files)
