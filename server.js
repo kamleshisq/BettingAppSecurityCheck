@@ -720,6 +720,13 @@ io.on('connection', (socket) => {
         data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"BACCARAT"})
     })
+
+    socket.on('32CARDS', async(A) => {
+        let data
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("32 Cards","i")},{category:new RegExp("32 Cards","i")},{game_code:new RegExp("32 Cards","i")}],whiteLabelName:whiteLabel})
+        socket.emit('baccarat1', {data,id:"32CARDS"})
+    })
     socket.on('CASUALGAMES', async(A) => {
         let data
         let whiteLabel = checkwhiteLabel(A.LOGINDATA)
@@ -795,9 +802,9 @@ io.on('connection', (socket) => {
         try{
             let whiteLabel = checkwhiteLabel(data.LOGINDATA)
             if(data.status){
-                await gameModel.updateOne({game_id:data.id},{status:true,whiteLabelName:whiteLabel})
+                await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:true})
             }else{
-                await gameModel.updateOne({game_id:data.id},{status:false,whiteLabelName:whiteLabel})
+                await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:false})
             }
             socket.emit('casionoStatusChange',{status:'success'})
         }catch(error){
