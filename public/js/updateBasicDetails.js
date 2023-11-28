@@ -7,7 +7,7 @@ export const updateBasicDetails = async(data)=>{
             url: '/api/v1/globalRoutes/updateBasicDetails',
             data
         });
-        if(res.data.status === 'success'){
+        if(res.data.status === 'sucess'){
             alert('image added successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
 
