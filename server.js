@@ -8585,7 +8585,7 @@ io.on('connection', (socket) => {
             if(colorCodesForThatUser){
                 // console.log(data.data)
                 data.data.whitelabel = data.LOGINDATA.LOGINUSER.whiteLabel
-                let UpdatedDATA = await colorCodeModel.findOneAndUpdate({whitelabel:data.LOGINDATA.LOGINUSER.whiteLabel}, data.data.whitelabel)
+                let UpdatedDATA = await colorCodeModel.findOneAndUpdate({whitelabel:data.LOGINDATA.LOGINUSER.whiteLabel}, data.data)
                 if(UpdatedDATA){
                     socket.emit('colorCode', {status:'sucess'})
                 }else{
@@ -8594,7 +8594,7 @@ io.on('connection', (socket) => {
             }else{
                 console.log(data.data, "jgfghfghf")
                 data.data.whitelabel = data.LOGINDATA.LOGINUSER.whiteLabel
-                let UpdatedDATA = await colorCodeModel.create(data.data.whitelabel)
+                let UpdatedDATA = await colorCodeModel.create(data.data)
                 if(UpdatedDATA){
                     socket.emit('colorCode', {status:'sucess'})
                 }else{
