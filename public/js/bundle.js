@@ -7218,8 +7218,8 @@ $(document).ready(function () {
   var linkColor = document.querySelectorAll('.nav_link');
   var operationPathnameArr = ['/admin/houseManagement', '/admin/streammanagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
   var reportsPathnameArr = ['/admin/gamereport', '/admin/myaccount', '/admin/adminaccount', '/admin/useraccount', '/admin/settlementHistory', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport', '/admin/commissionReport'];
-  var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules', '/admin/promotion'];
-  var patmentArr = ['/admin/paymentapproval', '/admin/paymentmethods'];
+  var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules', '/admin/promotion', '/admin/globalSettings'];
+  var patmentArr = ['/admin/paymentapproval', '/admin/paymentmethods', '/admin/withdrawalRequest'];
   function colorLink() {
     if (linkColor) {
       linkColor.forEach(function (l) {

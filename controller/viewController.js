@@ -88,7 +88,7 @@ const whiteLabelcheck = (req) => {
     let hostname = req.headers.host
     console.log(hostname,'==>hostname')
     let whiteLabel = process.env.whiteLabelName
-    if(!req.currentUser){
+    if(!req.currentUser || req.currentUser.roleName == "DemoLogin"){
         whiteLabel = hostname
     }else{
         if(req.currentUser.role_type == 1){
