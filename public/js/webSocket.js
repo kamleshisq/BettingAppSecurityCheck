@@ -21,17 +21,17 @@ socket.on('connect', () => {
             for (let i = 0; i < styleSheets.length; i++) {
                 const styleSheet = styleSheets[i];
                 if(styleSheet.href){
-                    const cssFileName = styleSheet.href.split('/').pop();
-                    if (cssFileName === 'style.css' || cssFileName === 'loggedin-page-style.css' || cssFileName === 'media.css') { 
+                    // const cssFileName = styleSheet.href.split('/').pop();
+                    // if (cssFileName === 'style.css' || cssFileName === 'loggedin-page-style.css' || cssFileName === 'media.css') { 
                         console.log(styleSheet)
-                        document.documentElement.style.setProperty('--color123', `linear-gradient(135deg, ${data.color1_1} 0%, ${data.color1_2} 100%);`);
+                        document.documentElement.style.setProperty('--color1', `linear-gradient(135deg, ${data.color1_1} 0%, ${data.color1_2} 100%);`);
                         document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
                         document.documentElement.style.setProperty('--color2', `${data.color2}`);
                         document.documentElement.style.setProperty('--color7', `${data.color7}`);
                         document.documentElement.style.setProperty('--color14', `${data.color14}`);
                         document.documentElement.style.setProperty('--color15', `${data.color15}`);
                         document.documentElement.style.setProperty('--color13', `${data.color13}`);
-                    }
+                    // }
                 }
             }
         })
