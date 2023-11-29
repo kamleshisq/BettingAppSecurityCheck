@@ -81,6 +81,10 @@ io.on('connection', (socket) => {
         loginData:global.loginData,
         socket:socket.request.connection.remoteAddress
     })
+
+    socket.on('hostname1ColoreCOde', async(data) =>{
+        console.log(data,"datadata121")
+    })
     const urlRequestAdd = async(url,method, Token, user) => {
         const login = await loginlogs.findOne({session_id:Token, isOnline:true})
         

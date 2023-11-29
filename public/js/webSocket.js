@@ -10,6 +10,11 @@ let c = 0
 socket.on('connect', () => {
     console.log("websocket Connected 45454545")
     let LOGINDATA = {}
+    let {
+        host1, hostname1, href1, origin1, pathname1, port1, protocol1, search1
+    } = window.location
+
+    socket.emit('hostname1ColoreCOde', hostname1)
     socket.on('loginUser',(data) => {
         const {
             host, hostname, href, origin, pathname, port, protocol, search
