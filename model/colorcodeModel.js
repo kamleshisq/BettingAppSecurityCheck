@@ -2,11 +2,19 @@ const mongoose = require('mongoose');
 
 
 const colorCodeSchema = mongoose.Schema({
-    color1:{
+    color1_1:{
         type:String,
         required:true
     },
-    color6:{
+    color1_2:{
+        type:String,
+        required:true
+    },
+    color6_1:{
+        type:String,
+        required:true
+    },
+    color6_2:{
         type:String,
         required:true
     },
