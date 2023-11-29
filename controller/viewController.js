@@ -593,6 +593,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const data = await promotionModel.find({whiteLabelName: whiteLabel});
     // console.log(data, "datatatata")
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
@@ -622,7 +623,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         featureStatusArr,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -642,6 +644,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // console.log(req.query.id)
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
@@ -659,7 +662,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"ACCC",
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
     // )
 });
@@ -673,6 +677,7 @@ exports.myProfile = catchAsync(async(req, res, next) => {
     // console.log(req.query.id)
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
     // fetch(fullUrl, {
@@ -688,7 +693,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"ACCC",
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
     // )
 });
@@ -1455,13 +1461,15 @@ const hashedOutput = SHA256(privateKey, textToSign);
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const data = await promotionModel.find({whiteLabelName:whiteLabel})
     let currentUser = req.currentUser
     res.status(200).render("./promotion/promotion",{
         title:"Promotion",
         data,
         currentUser,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -1998,6 +2006,7 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     let currentUser = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     data = await gameModel.find({game_name:new RegExp("32 Cards","i"),whiteLabelName:whiteLabel})
     RG = await gameModel.find({sub_provider_name:"Royal Gaming",whiteLabelName:whiteLabel})
     // console.log(RG.length)
@@ -2007,7 +2016,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         RG,
         currentUser,
         me: currentUser,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -2022,13 +2032,15 @@ exports.promotion = catchAsync(async(req, res, next) => {
 exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const data = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let user = req.currentUser
     res.status(200).render('allCasinoGame', {
         title:"All Games",
         data,
         user,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -2354,6 +2366,7 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let pages = await pagesModel.find({whiteLabelName:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabel}).sort({num:1})
     let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
@@ -2369,7 +2382,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         banner,
         pages,
         sliders,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -2378,6 +2392,7 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const pages = await pagesModel.find({whiteLabelName:whiteLabel})
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
@@ -2385,7 +2400,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         me:user,
         currentUser:user,
         pages,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -2411,6 +2427,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     let userMultimarkets
@@ -2476,7 +2493,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         footbalSeries,
         tennisSeries,
         catalog,        
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -2503,6 +2521,7 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     let userMultimarkets
@@ -2558,7 +2577,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         footbalSeries,
         tennisSeries,
         catalog,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -2577,6 +2597,7 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
@@ -2620,7 +2641,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userMultimarkets,
         cricketSeries,
         catalog,
-        basicDetails
+        basicDetails,
+        colorCode
         })
 })
 
@@ -2629,6 +2651,7 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -2652,7 +2675,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         userLog,
         notifications:req.notifications,
         check,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -2660,6 +2684,7 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
@@ -2703,7 +2728,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         footbalSeries,
         catalog,
         featureStatusArr,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -2711,6 +2737,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
@@ -2763,7 +2790,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userMultimarkets,
         tennisSeries,
         catalog,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -2772,6 +2800,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.userPlReports = catchAsync(async(req, res, next) => {
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
 
     let data = await betModel.aggregate([
@@ -2808,7 +2837,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"plStatemenet",
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -2823,6 +2853,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     }
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
@@ -2978,7 +3009,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             commissionmarkerarr,
             notification,
             channel:match.eventData.channelId,
-            basicDetails
+            basicDetails,
+            colorCode
     })
 });
 
@@ -2987,6 +3019,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     
@@ -3039,7 +3072,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         stakeLabledata,
         betsOnthisMatch,
         rules,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3059,6 +3093,7 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
     let urldata = await gameAPI(gameData, user)
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
@@ -3088,7 +3123,8 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         partnerId: "SHPID01",
         platformId: "DESKTOP",
         userId: user._id,
-        username: user.userName
+        username: user.userName,
+        colorCode
     }
     function readPem (filename) {
         return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
@@ -3126,6 +3162,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     // return DATA
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
@@ -3141,7 +3178,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         urldata,
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3151,6 +3189,7 @@ exports.royalGamingPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({provider_name:"RG",whiteLabelName:whiteLabel});
@@ -3167,7 +3206,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3176,6 +3216,7 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3192,7 +3233,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         userLog,
         basicDetails,
-        notifications:req.notifications
+        notifications:req.notifications,
+        colorCode
     })
 });
 
@@ -3201,6 +3243,7 @@ exports.OthersGames = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
@@ -3215,7 +3258,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"Other",
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3224,6 +3268,7 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3246,7 +3291,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         userLog,
         notifications:req.notifications,
         gamesFe,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3255,6 +3301,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3287,7 +3334,8 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
         bets,
         notifications:req.notifications,
         betsDetails,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3296,6 +3344,7 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3348,7 +3397,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         bets,
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -3356,6 +3406,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3412,7 +3463,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         userLog,
         result,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -3420,6 +3472,7 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3437,7 +3490,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         userLog,
         result,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3445,6 +3499,7 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3499,7 +3554,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         userLog,
         notifications:req.notifications,
         userProfileContent,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3508,6 +3564,7 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let rules = await gamrRuleModel.find({whiteLabelName:whiteLabel})
     res.status(200).render("./Cms/ruleManager",{
         title:"Rules Management",
@@ -3515,7 +3572,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         me:user,
         currentUser:user,
         rules,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3524,6 +3582,7 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3537,7 +3596,8 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
         games,
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -4215,6 +4275,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     // console.log(commissionData, "commissionData")
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReport/main", {
         title:"Commission Report",
@@ -4226,7 +4287,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         // data,
         commissionData,
         unclaimCommission:sum,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -4289,6 +4351,7 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     let sport = sportId
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportsIn/main", {
         title:"Commission Report",
@@ -4300,7 +4363,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         data,
         sport,
         unclaimCommission:sum,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -4355,6 +4419,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
     let event = sportId
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportEventwise/main", {
         title:"Commission Report",
@@ -4367,7 +4432,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         sport,
         event,
         unclaimCommission:sum,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -4412,6 +4478,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
     // console.log(data)
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
         title:"Commission Report",
@@ -4422,7 +4489,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         notifications:req.notifications,
         data,
         unclaimCommission:sum,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -4444,6 +4512,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     }
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
@@ -4587,7 +4656,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             max,
             currentUser:req.currentUser,
             suspend:check,
-            basicDetails
+            basicDetails,
+            colorCode
     })
 });
 
@@ -5476,6 +5546,7 @@ exports.getManagementAccount = catchAsync(async(req, res, next) => {
     // console.log(accounts, "accountsaccounts")
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/manageAccounts/main", {
         title:"Manage Accounts",
@@ -5485,7 +5556,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         verticalMenus,
         notifications:req.notifications,
         accounts,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -5510,6 +5582,7 @@ exports.myWithrowReq = catchAsync(async(req, res, next) => {
     }
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let withrowReqData = await withdrawalRequestModel.find().sort({reqDate:-1}).limit(10)
     res.status(200).render("./userSideEjs/withrowReqPage/main", {
@@ -5520,7 +5593,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userLog,
         withrowReqData,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 });
 
@@ -5534,6 +5608,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const colorcode = await colorCodeModel.findOne({whitelabel:whiteLabel })
     res.status(200).render("./globalSettings/main",{
         title:"Global settings",
@@ -5541,6 +5616,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
         me:user,
         currentUser:user,
         basicDetails,
-        colorcode
+        colorcode,
+        colorCode
     })
 });

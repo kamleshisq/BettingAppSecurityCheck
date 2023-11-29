@@ -72,6 +72,33 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/webSocket.js"></script>
     <!-- LOCAL CSS  -->
+    <%if(colorCode){%>
+      <script>
+        const styleSheets = document.styleSheets;
+        for (let i = 0; i < styleSheets.length; i++) { 
+          const styleSheet = styleSheets[i];
+              if (styleSheet.href) {
+                if(styleSheet.href == "http://dev.ollscores.com/assets/css/style.css" || styleSheet.href == "http://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://dev.ollscores.com/assets/css/media.css"){
+
+                    // console.log('Processing stylesheet:', styleSheet.href, data);
+                    try {
+                      document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${colorCode.color6_1} 0%, ${colorCode.color6_2} 100%)`);
+                      document.documentElement.style.setProperty('--color1', `linear-gradient(136deg, ${colorCode.color1_1} 0%, ${colorCode.color1_2} 100%)`);
+                      document.documentElement.style.setProperty('--color2', `${colorCode.color2}`);
+                      document.documentElement.style.setProperty('--color7', `${colorCode.color7}`);
+                      document.documentElement.style.setProperty('--color14', `${colorCode.color14}`);
+                      document.documentElement.style.setProperty('--color15', `${colorCode.color15}`);
+                      document.documentElement.style.setProperty('--color13', `${colorCode.color13}`);
+                      document.documentElement.style.setProperty('--color5', `${colorCode.color5}`);
+                      document.documentElement.style.setProperty('--color3', `${colorCode.color3}`);
+                    } catch (err) {
+                      console.error('Error setting styles:', err);
+                    }
+                }
+              }
+        }
+      </script>
+    <%}%>
 
     <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <style type="text/css">
