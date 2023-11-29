@@ -44,7 +44,8 @@ const colorCodeSchema = mongoose.Schema({
     },
     whitelabel:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     }
 })
 
