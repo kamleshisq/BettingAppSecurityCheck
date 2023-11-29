@@ -86,12 +86,12 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     // }
     else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin" && req.originalUrl.startsWith('/admin') && !req.originalUrl.startsWith('/bundle.js.map')) || req.originalUrl.startsWith("/api/v1")){
         // console.log(req.headers.cookie, "MIDDLEWARES")
-        console.log(process.memoryUsage(), "MEMORY DATA")
+        // console.log(process.memoryUsage(), "MEMORY DATA")
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
             // //console.log(req.headers.cookie)
-            // console.log(login.user_id)
+            console.log(login.user_id, 1212121212122111111111111)
             if(login == null){
                 return next()
             }
