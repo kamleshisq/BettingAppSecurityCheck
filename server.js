@@ -69,6 +69,7 @@ const manageAccountsUser = require('./model/paymentMethodUserSide');
 const withdowReqModel = require('./model/withdrowReqModel');
 const runnerData = require('./model/runnersData');
 const globalSettingModel = require('./model/globalSetting');
+const colorCodeModel = require('./model/colorcodeModel');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
@@ -8575,6 +8576,18 @@ io.on('connection', (socket) => {
     socket.on('getbasicData', async(data) => {
         let basicData = await globalSettingModel.findById(data.id)
         socket.emit('getbasicData', {basicData,tableData: data.tableData})
+    })
+
+
+    socket.on('colorCode', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            let colorCodesForThatUser = await colorCodeModel.findOne({whitelabel:data.LOGINDATA.LOGINUSER.whiteLabel})
+            if(colorCodesForThatUser){
+                console.log(data.data)
+            }else{
+                console.log(data.data, "jgfghfghf")
+            }
+        }
     })
 
 })

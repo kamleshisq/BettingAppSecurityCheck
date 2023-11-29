@@ -18678,7 +18678,6 @@ socket.on('connect', () => {
         })
 
         socket.on('getbasicData', data =>{
-            console.log(data)
             let form = $(`${data.tableData}`).find('.basicDetailsFOrm')
             if(data.tableData === "#myModal7"){
                 form.find('#banner12').html(`<img src="../logo/${data.basicData.logo1}.png" alt="img" class="form__user-photo">`)
@@ -18689,6 +18688,15 @@ socket.on('connect', () => {
                 form.find('input[name="contact"]').val(`${data.basicData.contactNumber}`)
             }
             form.attr('id', data.basicData._id)
+        })
+
+        $(document).on('submit', ".basicDetailsFOrm", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            // console.log(data, "DATA")
+            socket.emit('colorCode', {data, LOGINDATA})
         })
     }
 })
