@@ -26,7 +26,7 @@ socket.on('connect', () => {
                         console.log(styleSheet)
                         document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
                         try{
-                            document.documentElement.style.setProperty('--color1', `linear-gradient(135deg, ${data.color1_1} 0%, ${data.color1_2} 100%);`);
+                            document.documentElement.style.setProperty('--color1', `linear-gradient(136deg, ${data.color1_1} 0%, ${data.color1_2} 100%);`);
                         }catch(err){
                             console.log(err, "ERRRRR")
                         }
