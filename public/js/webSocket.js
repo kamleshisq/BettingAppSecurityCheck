@@ -32,6 +32,7 @@ socket.on('connect', () => {
                       document.documentElement.style.setProperty('--color15', `${data.color15}`);
                       document.documentElement.style.setProperty('--color13', `${data.color13}`);
                       document.documentElement.style.setProperty('--color5', `${data.color5}`);
+                      document.documentElement.style.setProperty('--color3', `${data.color3}`);
                     } catch (err) {
                       console.error('Error setting styles:', err);
                     }

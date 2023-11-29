@@ -41,6 +41,9 @@ const colorCodeSchema = mongoose.Schema({
     color5:{
         type:String
     },
+    color3:{
+        type:String
+    },
     whitelabel:{
         type:String,
         required:true,
