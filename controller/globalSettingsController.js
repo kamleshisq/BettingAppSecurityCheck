@@ -2,6 +2,7 @@ const globlalSettingsModel = require('../model/globalSetting');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const whiteLabel = require('../model/whitelableModel');
+const colorCodeModel = require('../model/colorcodeModel');
 
 exports.createData = catchAsync(async(req, res, next) => {
     const whiteLabels = await whiteLabel.find()
@@ -71,6 +72,9 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
             return next(new AppError("Please upload an Image", 404))
         }
     }
+})
+
+
+exports.updateColorCode = catchAsync(async(req, res, next) => {
     console.log(req.body)
-    console.log(req.files)
 })
