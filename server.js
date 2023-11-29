@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('hostname1ColoreCOde', async(data) =>{
-        console.log(data,"datadata121")
+        // console.log(data,"datadata121")
         let colorCodeModeldata = await colorCodeModel.findOne({whitelabel:data}) 
         if(colorCodeModeldata){
             socket.emit('hostname1ColoreCOde',colorCodeModeldata )
