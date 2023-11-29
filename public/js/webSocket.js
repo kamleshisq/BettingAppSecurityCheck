@@ -17,29 +17,28 @@ socket.on('connect', () => {
         socket.emit('hostname1ColoreCOde', hostname)
         socket.on('hostname1ColoreCOde', data => {
             const styleSheets = document.styleSheets;
-            console.log(data)
             for (let i = 0; i < styleSheets.length; i++) {
-                const styleSheet = styleSheets[i];
-                if(styleSheet.href){
-                    // const cssFileName = styleSheet.href.split('/').pop();
-                    // if (cssFileName === 'style.css' || cssFileName === 'loggedin-page-style.css' || cssFileName === 'media.css') { 
-                        console.log(styleSheet)
-                        document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
-                        try{
-                            document.documentElement.style.setProperty('--color1', `linear-gradient(136deg, ${data.color1_1} 0%, ${data.color1_2} 100%);`);
-                        }catch(err){
-                            console.log(err, "ERRRRR")
-                        }
-                        document.documentElement.style.setProperty('--color2', `${data.color2}`);
-                        document.documentElement.style.setProperty('--color7', `${data.color7}`);
-                        document.documentElement.style.setProperty('--color14', `${data.color14}`);
-                        document.documentElement.style.setProperty('--color15', `${data.color15}`);
-                        document.documentElement.style.setProperty('--color13', `${data.color13}`);
-                        document.documentElement.style.setProperty('--color5', `${data.color5}`);
-                    // }
+              const styleSheet = styleSheets[i];
+              if (styleSheet.href) {
+                if(styleSheet.href == "http://dev.ollscores.com/assets/css/style.css" || styleSheet.href == "http://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://dev.ollscores.com/assets/css/media.css"){
+
+                    console.log('Processing stylesheet:', styleSheet.href);
+                    try {
+                      document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
+                      document.documentElement.style.setProperty('--color1', `linear-gradient(136deg, ${data.color1_1} 0%, ${data.color1_2} 100%)`);
+                      document.documentElement.style.setProperty('--color2', `${data.color2}`);
+                      document.documentElement.style.setProperty('--color7', `${data.color7}`);
+                      document.documentElement.style.setProperty('--color14', `${data.color14}`);
+                      document.documentElement.style.setProperty('--color15', `${data.color15}`);
+                      document.documentElement.style.setProperty('--color13', `${data.color13}`);
+                      document.documentElement.style.setProperty('--color5', `${data.color5}`);
+                    } catch (err) {
+                      console.error('Error setting styles:', err);
+                    }
                 }
+              }
             }
-        })
+          });
         // console.log('WORKING45654', data)
         let loginData
         if(pathname.startsWith('/admin')){
