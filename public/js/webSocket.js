@@ -16,14 +16,14 @@ socket.on('connect', () => {
         } = window.location
         socket.emit('hostname1ColoreCOde', hostname)
         socket.on('hostname1ColoreCOde', data => {
-            console.log(data)
             const styleSheets = document.styleSheets;
+            console.log(data)
             for (let i = 0; i < styleSheets.length; i++) {
                 const styleSheet = styleSheets[i];
-                console.log(styleSheet)
                 if(styleSheet.href){
                     const cssFileName = styleSheet.href.split('/').pop();
                     if (cssFileName === 'style.css' || cssFileName === 'loggedin-page-style.css' || cssFileName === 'media.css') { 
+                        console.log(styleSheet)
                         document.documentElement.style.setProperty('--color1', `linear-gradient(135deg, ${data.color1_1} 0%, ${data.color1_2} 100%);`);
                         document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
                         document.documentElement.style.setProperty('--color2', `${data.color2}`);
