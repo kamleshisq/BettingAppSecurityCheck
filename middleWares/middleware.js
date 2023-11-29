@@ -92,7 +92,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
             // //console.log(req.headers.cookie)
             console.log(login, 1212121212122111111111111)
-            if(login == null){
+            if(login === null){
                 return next()
             }
             const user = await User.findById(login.user_id._id)

@@ -72,7 +72,7 @@ app.use(cookieParser());
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
-app.use(middlewares);
+// app.use(middlewares);
 // crone();
 // userCrone(); 
 // betCrone();
