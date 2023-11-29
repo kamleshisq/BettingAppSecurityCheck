@@ -180,7 +180,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._User = ""
         }
     }
-    
+    console.log('123654789')
     next()
 })
 
