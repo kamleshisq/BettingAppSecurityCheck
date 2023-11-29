@@ -72,6 +72,21 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/webSocket.js"></script>
     <!-- LOCAL CSS  -->
+    <style>
+      <%if(colorCode){%>
+        :root {
+          --color6: linear-gradient(135deg, <%= colorCode.color6_1 %> 0%, <%= colorCode.color6_2 %> 100%);
+          --color1: linear-gradient(136deg, <%= colorCode.color1_1 %> 0%, <%= colorCode.color1_2 %> 100%);
+          --color2: <%= colorCode.color2 %>;
+          --color7: <%= colorCode.color7 %>;
+          --color14: <%= colorCode.color14 %>;
+          --color15: <%= colorCode.color15 %>;
+          --color13: <%= colorCode.color13 %>;
+          --color5: <%= colorCode.color5 %>;
+          --color3: <%= colorCode.color3 %>;
+        }
+        <%}%>
+    </style>
 
     <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <style type="text/css">

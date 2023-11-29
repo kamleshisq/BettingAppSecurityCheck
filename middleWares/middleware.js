@@ -18,7 +18,7 @@ function parseCookies(cookieString) {
 
 
 const LoginLogs = catchAsync(async(req, res, next) => { 
-    console.log("WORKING MIDDLEWARE")
+    console.log("WORKING MIDDLEWARE121212")
     // console.log(req.headers.cookie, 456)
     // if(req.headers.cookie){
     //     console.log(parseCookies(req.headers.cookie).JWT)
@@ -90,9 +90,10 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
-            // //console.log(req.headers.cookie)
-            // console.log(login.user_id)
-            if(login == null){
+            console.log(req.headers.cookie)
+            console.log(parseCookies(req.headers.cookie).ADMIN_JWT)
+            console.log(login, 1212)
+            if(login === null){
                 return next()
             }
             const user = await User.findById(login.user_id._id)
@@ -180,7 +181,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._User = ""
         }
     }
-    
+    console.log('123654789')
     next()
 })
 
