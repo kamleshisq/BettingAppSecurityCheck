@@ -29,6 +29,7 @@ const path = require('path');
 const middlewares = require("./middleWares/middleware");
 const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
+const cors = require('cors');
 const crone = require('./crones/crones');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -39,6 +40,7 @@ const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
 
 
 app.use(requestIp.mw());
+app.use(cors());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
 mongoose.connect(process.env.db2,{
