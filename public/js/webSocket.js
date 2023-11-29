@@ -18690,13 +18690,24 @@ socket.on('connect', () => {
             form.attr('id', data.basicData._id)
         })
 
-        $(document).on('submit', ".basicDetailsFOrm", function(e){
+        $(document).on('submit', ".basicDetailsFOrmCOLORCODE", function(e){
             e.preventDefault()
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             // console.log(data, "DATA")
             socket.emit('colorCode', {data, LOGINDATA})
+        })
+
+        socket.on('colorCode', data => {
+            if(data.status === "sucess"){
+                alert('updated!!')
+                setTimeout(()=>{
+                    window.location.reload()
+                }, 1000)
+            }else{
+                alert('Please try again later')
+            }
         })
     }
 })

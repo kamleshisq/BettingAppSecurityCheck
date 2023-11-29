@@ -18,10 +18,6 @@ const colorCodeSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    color11:{
-        type:String,
-        required:true
-    },
     color2:{
         type:String,
         required:true
