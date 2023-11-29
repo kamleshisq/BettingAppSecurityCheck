@@ -14,6 +14,7 @@ const sliderModel = require('../model/sliderModel')
 const verticalMenuModel = require("../model/verticalMenuModel");
 const gamerulesModel = require('../model/gamesRulesModel')
 const gamemodel = require('../model/gameModel')
+const globalSettingModel = require('../model/globalSetting')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
     console.log(req.body)
@@ -43,6 +44,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let verticalMenus = await verticalMenuModel.find({whiteLabelName:"1"})
             let gamerules = await gamerulesModel.find({whiteLabelName:"1"})
             let games = await gamemodel.find({whiteLabelName:"1"})
+            let globalsetting = await globalSettingModel.findOne({whiteLabel:"1"})
             // let promossions = await Pro
             let newbanners = []
             let newpromosions = []
@@ -51,10 +53,29 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let newverticalMenus = []
             let newgamerules = []
             let newgames = []
+
+            let newglobalsetting = {logo1:globalsetting.logo1,
+                logo2:globalsetting.logo2,
+                contactNumber:globalsetting.contactNumber,
+                email:globalsetting.email,
+                whiteLabel:req.body.whiteLabel
+            }
+
             banners.map(ele => {
+                let newurl;
+                let url = ele.url;
+                let result = url.match(/\/\/([^/]+)/);
+                if (result) {
+                    let extractedWord = result[1];
+                    newurl = url.replace(extractedWord, req.body.whiteLabel);
+                    console.log(newurl,'==>newurl')
+                } else {
+                    newurl = ele.url
+                    console.log("No match found");
+                }
                 newbanners.push({
                     bannerName:ele.bannerName,
-                    url:ele.url,
+                    url:newurl,
                     banner:ele.banner,
                     status:ele.status,
                     whiteLabelName:req.body.whiteLabel
@@ -120,7 +141,9 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                     whiteLabelName:req.body.whiteLabel
                 })
             })
-            console.log(newbanners,'==>newbanners')
+
+           
+            // console.log(newbanners,'==>newbanners')
             await Benners.insertMany(newbanners)
             await Promossion.insertMany(newpromosions)
             await PageModel.insertMany(newpages)
@@ -128,6 +151,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             await verticalMenuModel.insertMany(newverticalMenus)
             await gamerulesModel.insertMany(newgamerules)
             await gamemodel.insertMany(newgames)
+            await globalSettingModel.create(newglobalsetting)
 
         }
     }
