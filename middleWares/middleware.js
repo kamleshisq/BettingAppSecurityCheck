@@ -18,7 +18,7 @@ function parseCookies(cookieString) {
 
 
 const LoginLogs = catchAsync(async(req, res, next) => { 
-    console.log("WORKING MIDDLEWARE")
+    console.log("WORKING MIDDLEWARE121212")
     // console.log(req.headers.cookie, 456)
     // if(req.headers.cookie){
     //     console.log(parseCookies(req.headers.cookie).JWT)
