@@ -14,6 +14,17 @@ socket.on('connect', () => {
         const {
             host, hostname, href, origin, pathname, port, protocol, search
         } = window.location
+        socket.emit('hostname1ColoreCOde', hostname)
+        socket.on('hostname1ColoreCOde', data => {
+            console.log(data)
+            document.documentElement.style.setProperty('--color1', `linear-gradient(135deg, ${data.color1_1} 0%, ${data.color1_2} 100%);`);
+            document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
+            document.documentElement.style.setProperty('--color2', `${data.color2}`);
+            document.documentElement.style.setProperty('--color7', `${data.color7}`);
+            document.documentElement.style.setProperty('--color14', `${data.color14}`);
+            document.documentElement.style.setProperty('--color15', `${data.color15}`);
+            document.documentElement.style.setProperty('--color13', `${data.color13}`);
+        })
         console.log('WORKING45654', data)
         let loginData
         if(pathname.startsWith('/admin')){
@@ -18690,13 +18701,24 @@ socket.on('connect', () => {
             form.attr('id', data.basicData._id)
         })
 
-        $(document).on('submit', ".basicDetailsFOrm", function(e){
+        $(document).on('submit', ".basicDetailsFOrmCOLORCODE", function(e){
             e.preventDefault()
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             // console.log(data, "DATA")
             socket.emit('colorCode', {data, LOGINDATA})
+        })
+
+        socket.on('colorCode', data => {
+            if(data.status === "sucess"){
+                alert('updated!!')
+                setTimeout(()=>{
+                    window.location.reload()
+                }, 1000)
+            }else{
+                alert('Please try again later')
+            }
         })
     }
 })

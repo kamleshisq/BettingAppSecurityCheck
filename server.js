@@ -81,6 +81,14 @@ io.on('connection', (socket) => {
         loginData:global.loginData,
         socket:socket.request.connection.remoteAddress
     })
+
+    socket.on('hostname1ColoreCOde', async(data) =>{
+        console.log(data,"datadata121")
+        let colorCodeModeldata = await colorCodeModel.findOne({whitelabel:data}) 
+        if(colorCodeModeldata){
+            socket.emit('hostname1ColoreCOde',colorCodeModeldata )
+        }
+    })
     const urlRequestAdd = async(url,method, Token, user) => {
         const login = await loginlogs.findOne({session_id:Token, isOnline:true})
         
@@ -8583,9 +8591,23 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             let colorCodesForThatUser = await colorCodeModel.findOne({whitelabel:data.LOGINDATA.LOGINUSER.whiteLabel})
             if(colorCodesForThatUser){
-                console.log(data.data)
+                // console.log(data.data)
+                data.data.whitelabel = data.LOGINDATA.LOGINUSER.whiteLabel
+                let UpdatedDATA = await colorCodeModel.findOneAndUpdate({whitelabel:data.LOGINDATA.LOGINUSER.whiteLabel}, data.data)
+                if(UpdatedDATA){
+                    socket.emit('colorCode', {status:'sucess'})
+                }else{
+                    socket.emit('colorCode', {status:'err'})
+                }
             }else{
                 console.log(data.data, "jgfghfghf")
+                data.data.whitelabel = data.LOGINDATA.LOGINUSER.whiteLabel
+                let UpdatedDATA = await colorCodeModel.create(data.data)
+                if(UpdatedDATA){
+                    socket.emit('colorCode', {status:'sucess'})
+                }else{
+                    socket.emit('colorCode', {status:'err'})
+                }
             }
         }
     })

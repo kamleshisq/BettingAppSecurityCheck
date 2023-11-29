@@ -52,6 +52,7 @@ const runnerData = require('../model/runnersData');
 const manageAccountUser = require('../model/paymentMethodUserSide');
 const withdrawalRequestModel = require('../model/withdrowReqModel');
 const globalSettingModel = require('../model/globalSetting');
+const colorCodeModel = require('../model/colorcodeModel');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -5533,11 +5534,13 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    const colorcode = await colorCodeModel.findOne({whitelabel:whiteLabel })
     res.status(200).render("./globalSettings/main",{
         title:"Global settings",
         user,
         me:user,
         currentUser:user,
-        basicDetails
+        basicDetails,
+        colorcode
     })
 });
