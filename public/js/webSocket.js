@@ -22,7 +22,7 @@ socket.on('connect', () => {
               if (styleSheet.href) {
                 if(styleSheet.href == "http://dev.ollscores.com/assets/css/style.css" || styleSheet.href == "http://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://dev.ollscores.com/assets/css/media.css"){
 
-                    console.log('Processing stylesheet:', styleSheet.href);
+                    console.log('Processing stylesheet:', styleSheet.href, data);
                     try {
                       document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
                       document.documentElement.style.setProperty('--color1', `linear-gradient(136deg, ${data.color1_1} 0%, ${data.color1_2} 100%)`);
