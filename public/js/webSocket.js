@@ -15,6 +15,16 @@ socket.on('connect', () => {
             host, hostname, href, origin, pathname, port, protocol, search
         } = window.location
         socket.emit('hostname1ColoreCOde', hostname)
+        socket.on('hostname1ColoreCOde', data => {
+            console.log(data)
+            document.documentElement.style.setProperty('--color1', `linear-gradient(135deg, ${data.color1_1} 0%, ${data.color1_2} 100%);`);
+            document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
+            document.documentElement.style.setProperty('--color2', `${data.color2}`);
+            document.documentElement.style.setProperty('--color7', `${data.color7}`);
+            document.documentElement.style.setProperty('--color14', `${data.color14}`);
+            document.documentElement.style.setProperty('--color15', `${data.color15}`);
+            document.documentElement.style.setProperty('--color13', `${data.color13}`);
+        })
         console.log('WORKING45654', data)
         let loginData
         if(pathname.startsWith('/admin')){
