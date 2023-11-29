@@ -7391,7 +7391,7 @@ io.on('connection', (socket) => {
                 exposer3Amount = exposure3[0].amount
             }
         
-            // console.log(exposure3, exposure2, exposure1)
+            console.log(exposure3, exposure2, exposure1,'==>exposures')
 
             function getExposure(runs,obj){
                 runs.sort((a, b) => a - b)

@@ -3253,7 +3253,7 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
 exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3272,7 +3272,7 @@ let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
               totalReturns: { $sum: '$returns' },
               totalCount: { $sum: 1 }
             }
-          }
+        }
     ])
     // console.log(betsDetails)
     res.status(200).render("./userSideEjs/myBetsPage/main", {

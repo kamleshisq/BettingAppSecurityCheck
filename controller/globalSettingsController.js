@@ -8,6 +8,7 @@ exports.createData = catchAsync(async(req, res, next) => {
     console.log('i am here')
     const whiteLabels = await whiteLabel.find()
     if(whiteLabels.length > 0){
+        
         for(let i = 0; i < whiteLabels.length; i++){
             let data = {
                 logo1:'Royal777',
