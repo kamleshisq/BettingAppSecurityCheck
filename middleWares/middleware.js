@@ -90,7 +90,8 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
-            // //console.log(req.headers.cookie)
+            console.log(req.headers.cookie)
+            console.log(login, 1212)
             if(login === null){
                 return next()
             }
