@@ -252,7 +252,7 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-    
+    console.log('isProtectedisProtectedisProtectedisProtected')
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
