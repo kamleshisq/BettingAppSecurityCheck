@@ -533,11 +533,11 @@ exports.searchUser = catchAsync(async (req, res, next) => {
 //         return next(new AppError('You do not have permission to perform this action',400))
 //     }
 //     if(req.query.id){
-//         Rows = await User.count({parent_id: req.query.id,isActive:true})
+//         Rows = await User.countDocuments({parent_id: req.query.id,isActive:true})
 //         child = await User.find({parent_id: req.query.id,isActive:true}).skip(0 * 100).limit(100);
 //         me = await User.findById(req.query.id)
 //     }else{
-//         Rows = await User.count({parent_id: req.currentUser._id,isActive:true})
+//         Rows = await User.countDocuments({parent_id: req.currentUser._id,isActive:true})
 //         child = await User.find({parent_id: req.currentUser._id,isActive:true}).skip(0 * 100).limit(100);
 //         me = await User.findById(req.currentUser._id)
 //     }
@@ -707,10 +707,10 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
             // if(me.role.role_level < req.currentUser.role.role_level){
             //     return next(new AppError('You do not have permission to perform this action',400))
             // }
-            Rows = await User.count({parent_id: req.query.id})
+            Rows = await User.countDocuments({parent_id: req.query.id})
             child = await User.find({parent_id: req.query.id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
         }else{
-            Rows = await User.count({parent_id: operationId})
+            Rows = await User.countDocuments({parent_id: operationId})
             child = await User.find({parent_id: operationId,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
             me = await User.findById(req.currentUser._id)
         }

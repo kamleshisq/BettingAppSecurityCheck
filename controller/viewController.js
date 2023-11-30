@@ -4084,11 +4084,11 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                     //     name:item.eventData.name,
                     //     type:"event"
                     // })
-                    count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
                     seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
                     
                 }else{
-                    count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
                     seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
 
                 }
@@ -4134,7 +4134,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
-         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
             item.eventData.status = true
          }else{
@@ -4160,7 +4160,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
 
-    //      count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+    //      count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
     //      if(!status){
     //         item.eventData.status = true
     //      }else{
@@ -4185,7 +4185,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
     //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
-    //      count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+    //      count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
     //      if(!status){
     //         item.eventData.status = true
     //      }else{

@@ -7903,7 +7903,7 @@ io.on('connection', (socket) => {
             // children.map(ele => {
             //     childrenArr.push(ele.userName)
             // })
-            let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
+            let paymentreqcount = await paymentReportModel.countDocuments({username:{$in:childrenArr},status:'pending'})
             socket.emit('getcountofpaymentreq',{status:'success',paymentreqcount})
         }catch(err){
             socket.emit('getcountofpaymentreq',{status:'fail',msg:'something went wrong'})
@@ -7913,7 +7913,7 @@ io.on('connection', (socket) => {
 
     socket.on('getcountofWITHROWREQ',async(data)=>{
         try{
-            let withrowReqCount = await withdowReqModel.count({sdmUserName:data.LOGINUSER.userName,reqStatus:'pending'})
+            let withrowReqCount = await withdowReqModel.countDocuments({sdmUserName:data.LOGINUSER.userName,reqStatus:'pending'})
             socket.emit('getcountofWITHROWREQ',{status:'success',withrowReqCount})
         }catch(err){
             socket.emit('getcountofWITHROWREQ',{status:'fail',msg:'something went wrong'})
