@@ -692,14 +692,14 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
                 const image = req.files.file
                 // console.log(logo)
                 let STRING = `public/paymentimg/${imagName}.png`
-                console.log(STRING, "STRINGSTRINGSTRING")
+                // console.log(STRING, "STRINGSTRINGSTRING")
                 try{
                     image.mv(STRING, (err)=>{
                         console.log(err)
                         if(err) return next(new AppError("Something went wrong please try again later", 400))
                     })
                 }catch(err){
-                    console.log(err, "THIS IS ERRRRRR")
+                    // console.log(err, "THIS IS ERRRRRR")
                 }
                 data = {... req.body}
                 let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod,accountholdername:req.body.accountholdername})

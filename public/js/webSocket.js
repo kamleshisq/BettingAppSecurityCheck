@@ -1327,6 +1327,7 @@ socket.on('connect', () => {
                 else if(oldcount < data.paymentreqcount){
                     oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
+                    console.log('WORKING')
                     audio.play();
                 }
                 // sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
@@ -1345,6 +1346,7 @@ socket.on('connect', () => {
                 else if(oldCount1 < data.withrowReqCount){
                     oldCount1 = data.withrowReqCount
                     var audio = document.getElementById("notificationSound");
+                    console.log('WORKING')
                     audio.play();
                 }
                 $('header .wth-notf').siblings('span').text(data.withrowReqCount)
