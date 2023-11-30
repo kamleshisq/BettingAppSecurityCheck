@@ -297,8 +297,9 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     let WithdrawReqCount = 0
     if(currentUser.role.roleName === "Super-Duper-Admin"){
         childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
-        paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
-        WithdrawReqCount = await userWithReq.count({username:currentUser.userName, reqStatus:'pending'})
+        console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
+        paymentreqcount = await paymentReportModel.countDocuments({username:{$in:childrenArr},status:'pending'})
+        WithdrawReqCount = await userWithReq.countDocuments({username:currentUser.userName, reqStatus:'pending'})
     }
     if(currentUser.roleName != "DemoLogin"){
         console.log(currentUser.whiteLabel, whiteLabel, currentUser.role_type,"whiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabel")
