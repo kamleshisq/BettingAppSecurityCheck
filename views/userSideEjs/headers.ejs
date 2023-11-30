@@ -396,12 +396,14 @@
                                         <%}else{%>
                                         <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
                                       <%}%>
+                                      <%if(user.whiteLabel === 'b2c.ollscores.com'){%>
                                       <li class="profile-bord-botm">
                                         <a href="" title="" data-bs-toggle="modal" class="paymentDepositeMenu" data-bs-target="#navmod3"> Deposit</a>
                                       </li>
                                       <li class="profile-bord-botm">
                                         <a href="" title="" data-bs-toggle="modal" class="WithrowReqMenu" data-bs-target="#navmod4"> withdraw</a>
                                       </li>
+                                      <%}%>
                                       <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
                                   </ul>
                                   <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
