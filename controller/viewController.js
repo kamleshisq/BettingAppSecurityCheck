@@ -5539,6 +5539,9 @@ exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
 
 exports.getManagementAccount = catchAsync(async(req, res, next) => {
     let userLog
+    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
@@ -5580,13 +5583,16 @@ exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
 
 exports.myWithrowReq = catchAsync(async(req, res, next) => {
     let userLog
+    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let withrowReqData = await withdrawalRequestModel.find().sort({reqDate:-1}).limit(10)
     res.status(200).render("./userSideEjs/withrowReqPage/main", {
         title:"withdrawal request.",
