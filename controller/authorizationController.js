@@ -341,6 +341,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
+    res.locals.whiteLabel = process.env.whiteLabelName
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
@@ -471,10 +472,11 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     next()
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
-    console.log('WORKING')
-    console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+    // console.log('WORKING')
+    // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     let token 
     res.locals.loginData = undefined
+    res.locals.whiteLabel = process.env.whiteLabelName
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
