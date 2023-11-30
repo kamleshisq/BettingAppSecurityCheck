@@ -130,11 +130,19 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
 
 exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
     const { recaptchaToken } = req.body;
-    const response = await axios.post('https://www.google.com/recaptcha/api/siteverify', {
-        secret: '6LcFdCEpAAAAAImXcw73zbjF0Epdpus_4HvxhPCP',
-        response: recaptchaToken,
-      });
-    console.log(response.data)
+    const response = await axios.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        {
+          secret: '6LcFdCEpAAAAAImXcw73zbjF0Epdpus_4HvxhPCP',
+          response: recaptchaToken,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
+    console.log(response.data, "response.data")
 
     // let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
     // if(parentUser){
