@@ -205,12 +205,12 @@ const userSchema = mongoose.Schema({
         }]
 })
 
-userSchema.pre('save', async function(next){
-    // console.log(this.password, "asdfghjtyui")
-    this.password = await bycrypt.hash(this.password, 12)
-    this.passwordConfirm = undefined;
-    next();
-})
+// userSchema.pre('save', async function(next){
+//     // console.log(this.password, "asdfghjtyui")
+//     this.password = await bycrypt.hash(this.password, 12)
+//     this.passwordConfirm = undefined;
+//     next();
+// })
 
 userSchema.pre(/^find/, function(next){
     this.populate({
@@ -304,9 +304,9 @@ userSchema.post(/^find/, function (docs) {
 
 
 
-// userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
-//     return await bycrypt.compare(candidatePassword, userPassword)
-// };
+userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
+    return await bycrypt.compare(candidatePassword, userPassword)
+};
 
 const User = mongoose.model('User', userSchema);
 
