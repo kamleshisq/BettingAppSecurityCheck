@@ -5511,14 +5511,11 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
+    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     newChilds = await User.distinct('userName', {parentUsers:req.currentUser._id});
-
-    // let chils = await User.find({parentUsers:req.currentUser._id})
-    // let newChilds = chils.map(ele => {
-    //     return ele.userName
-    // })
     let paymentreq = await paymentReportModel.find({username:{$in:newChilds}}).sort({date:-1}).limit(10)
-    // console.log(paymentreq)
     res.render('./PaymentApproval/PaymentApproval',{
         title:'Payment Approval',
         currentUser:req.currentUser,
@@ -5527,6 +5524,9 @@ exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
+    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     let paymentmethod = await PaymentMethodModel.find({userName:req.currentUser.userName});
     res.render('./PaymentMethod/paymentMethod',{
         title:'Payment Method',
@@ -5564,6 +5564,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 
 exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
+    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName, reqStatus:'pending'}).sort({reqDate:-1}).limit(10)
     res.render('./withrowalReqAdmin/main',{
         title:'Withdrawal request',
