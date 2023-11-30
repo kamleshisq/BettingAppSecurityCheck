@@ -1366,9 +1366,16 @@ socket.on('connect', () => {
                 else if(oldCount1 < data.withrowReqCount){
                     oldCount1 = data.withrowReqCount
                     var audio = document.getElementById("notificationSound");
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var clickEvent = new Event('click');
+                        var myButton = document.getElementById('notificationSound');
+                        myButton.dispatchEvent(clickEvent);
+                        myButton.addEventListener('click', function() {
+                            audio.play();
+                        });
+                    });
                     console.log('WORKING')
-                    audioSource.start(0);
-                    audio.play();
+                    // audioSource.start(0);
                 }
                 $('header .wth-notf').siblings('span').text(data.withrowReqCount)
             }else{
