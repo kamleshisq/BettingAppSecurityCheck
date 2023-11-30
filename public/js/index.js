@@ -684,7 +684,7 @@ $(document).on('submit', ".regestermodl-form", function(e){
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
     // console.log(data)
-    // createAndLoginUser(data)
+    createAndLoginUser(data)
 })
 
 $(document).on("click", ".myloginmodl-demo-loginbtnn", function(e){

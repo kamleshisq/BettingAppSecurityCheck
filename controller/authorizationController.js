@@ -8,6 +8,7 @@ const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
 const paymentReportModel = require('../model/paymentreport')
 const userWithReq = require('../model/withdrowReqModel');
+const axios = require('axios')
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -128,46 +129,50 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
 
 
 exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
-    console.log(req.body, 12345689)
-    let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
-    console.log(parentUser)
-    if(parentUser){
-        if(req.body.password !== req.body.passwordConfirm){
-            return next(new AppError('Passwords are not matching', 404))
-        }else{
-            let parentArray = parentUser.parentUsers
-            parentArray.push(parentUser.id)
-            console.log(parentArray)
-            let userData = {
-                userName : req.body.userName.toLowerCase(),
-                name : req.body.name,
-                roleName : 'user',
-                whiteLabel:'withDrowTesting',
-                parent_id : parentUser.id,
-                role : '6492fe4fd09db28e00761694',
-                role_type:5,
-                password:req.body.password,
-                passwordConfirm:req.body.passwordConfirm,
-                parentUsers:parentArray,
-                contact:req.body.contectNumber,
-                email:req.body.email
-            }
+    const { recaptchaToken } = req.body;
+    const response = await axios.post('https://www.google.com/recaptcha/api/siteverify', {
+        secret: '6LcFdCEpAAAAAImXcw73zbjF0Epdpus_4HvxhPCP',
+        response: recaptchaToken,
+      });
+    console.log(response.data)
 
-            let new_USer = await User.create(userData)
-            if(!new_USer){
-                return next(new AppError('Please try again later', 404))
-            }else{
-                // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
-                // createSendToken(new_USer, 200, res, req);
-                res.status(200).json({
-                    status:'success'
-                })
-            }
+    // let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
+    // if(parentUser){
+    //     if(req.body.password !== req.body.passwordConfirm){
+    //         return next(new AppError('Passwords are not matching', 404))
+    //     }else{
+    //         let parentArray = parentUser.parentUsers
+    //         parentArray.push(parentUser.id)
+    //         let userData = {
+    //             userName : req.body.userName.toLowerCase(),
+    //             name : req.body.name,
+    //             roleName : 'user',
+    //             whiteLabel:'withDrowTesting',
+    //             parent_id : parentUser.id,
+    //             role : '6492fe4fd09db28e00761694',
+    //             role_type:5,
+    //             password:req.body.password,
+    //             passwordConfirm:req.body.passwordConfirm,
+    //             parentUsers:parentArray,
+    //             contact:req.body.contectNumber,
+    //             email:req.body.email
+    //         }
 
-        }
-    }else{
-        return next(new AppError('Please try again later', 404))
-    }
+    //         let new_USer = await User.create(userData)
+    //         if(!new_USer){
+    //             return next(new AppError('Please try again later', 404))
+    //         }else{
+    //             // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
+    //             // createSendToken(new_USer, 200, res, req);
+    //             res.status(200).json({
+    //                 status:'success'
+    //             })
+    //         }
+
+    //     }
+    // }else{
+    //     return next(new AppError('Please try again later', 404))
+    // }
 }))
 
 exports.login = catchAsync (async(req, res, next) => {
