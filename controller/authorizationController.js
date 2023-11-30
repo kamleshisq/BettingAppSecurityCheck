@@ -146,43 +146,47 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
       );
     console.log(response.data, "response.data")
 
-    // let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
-    // if(parentUser){
-    //     if(req.body.password !== req.body.passwordConfirm){
-    //         return next(new AppError('Passwords are not matching', 404))
-    //     }else{
-    //         let parentArray = parentUser.parentUsers
-    //         parentArray.push(parentUser.id)
-    //         let userData = {
-    //             userName : req.body.userName.toLowerCase(),
-    //             name : req.body.name,
-    //             roleName : 'user',
-    //             whiteLabel:'withDrowTesting',
-    //             parent_id : parentUser.id,
-    //             role : '6492fe4fd09db28e00761694',
-    //             role_type:5,
-    //             password:req.body.password,
-    //             passwordConfirm:req.body.passwordConfirm,
-    //             parentUsers:parentArray,
-    //             contact:req.body.contectNumber,
-    //             email:req.body.email
-    //         }
-
-    //         let new_USer = await User.create(userData)
-    //         if(!new_USer){
-    //             return next(new AppError('Please try again later', 404))
-    //         }else{
-    //             // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
-    //             // createSendToken(new_USer, 200, res, req);
-    //             res.status(200).json({
-    //                 status:'success'
-    //             })
-    //         }
-
-    //     }
-    // }else{
-    //     return next(new AppError('Please try again later', 404))
-    // }
+    if(response.data.success){
+        let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
+        if(parentUser){
+            if(req.body.password !== req.body.passwordConfirm){
+                return next(new AppError('Passwords are not matching', 404))
+            }else{
+                let parentArray = parentUser.parentUsers
+                parentArray.push(parentUser.id)
+                let userData = {
+                    userName : req.body.userName.toLowerCase(),
+                    name : req.body.name,
+                    roleName : 'user',
+                    whiteLabel:'withDrowTesting',
+                    parent_id : parentUser.id,
+                    role : '6492fe4fd09db28e00761694',
+                    role_type:5,
+                    password:req.body.password,
+                    passwordConfirm:req.body.passwordConfirm,
+                    parentUsers:parentArray,
+                    contact:req.body.contectNumber,
+                    email:req.body.email
+                }
+    
+                let new_USer = await User.create(userData)
+                if(!new_USer){
+                    return next(new AppError('Please try again later', 404))
+                }else{
+                    // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
+                    // createSendToken(new_USer, 200, res, req);
+                    res.status(200).json({
+                        status:'success'
+                    })
+                }
+    
+            }
+        }else{
+            return next(new AppError('Please try again later', 404))
+        }
+    }else{
+        return next(new AppError('Please verify captcha', 404))
+    }
 }))
 
 exports.login = catchAsync (async(req, res, next) => {
