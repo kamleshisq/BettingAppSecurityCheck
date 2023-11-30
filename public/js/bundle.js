@@ -6950,10 +6950,10 @@ var createAndLoginUser = /*#__PURE__*/function () {
             // }else{
             setTimeout(function () {
               window.location.reload();
-            }, 300);
+            }, 100);
             // }
           }
-          _context.next = 12;
+          _context.next = 11;
           break;
         case 7:
           _context.prev = 7;
@@ -6963,11 +6963,11 @@ var createAndLoginUser = /*#__PURE__*/function () {
             message: _context.t0.response.data.message,
             status: "error"
           });
-          setTimeout(function () {
-            window.location.reload();
-          }, 2000);
+          // setTimeout(function() {
+          //     window.location.reload();
+          //   }, 2000);
           // setTimeout(alert(err.response.data.message), 1500)
-        case 12:
+        case 11:
         case "end":
           return _context.stop();
       }

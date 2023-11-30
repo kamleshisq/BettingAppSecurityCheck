@@ -21,16 +21,16 @@ export const createAndLoginUser = async(data) => {
             // }else{
                 setTimeout(function() {
                     window.location.reload();
-                  }, 300);
+                  }, 1000);
             // }
         }
 
     }catch(err){
         console.log(err)
         notificationsss({message : err.response.data.message, status:"error"});
-        setTimeout(function() {
-            window.location.reload();
-          }, 2000);
+        // setTimeout(function() {
+        //     window.location.reload();
+        //   }, 2000);
     // setTimeout(alert(err.response.data.message), 1500)
     }
 }
