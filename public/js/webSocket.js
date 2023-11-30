@@ -1333,8 +1333,7 @@ socket.on('connect', () => {
                             console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
                             audio.play();
                         });
-                        var clickEvent = new Event('click');
-                        myButton.dispatchEvent(clickEvent);
+                        myButton.click();
                     });
                     // console.log('WORKING')
                     // audioSource.start(0);
@@ -1362,8 +1361,7 @@ socket.on('connect', () => {
                             console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
                             audio.play();
                         });
-                        var clickEvent = new Event('click');
-                        myButton.dispatchEvent(clickEvent);
+                        myButton.click();
                     });
                     console.log('WORKING')
                     // audioSource.start(0);
