@@ -20,7 +20,7 @@ export const createAndLoginUser = async(data) => {
             //     }, 100)
             // }else{
                 setTimeout(function() {
-                    location.reload();
+                    window.location.reload();
                   }, 300);
             // }
         }
@@ -28,6 +28,9 @@ export const createAndLoginUser = async(data) => {
     }catch(err){
         console.log(err)
         notificationsss({message : err.response.data.message, status:"error"});
+        setTimeout(function() {
+            window.location.reload();
+          }, 2000);
     // setTimeout(alert(err.response.data.message), 1500)
     }
 }

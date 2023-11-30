@@ -147,7 +147,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
     console.log(response.data, "response.data")
 
     if(response.data.success){
-        let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
+        let parentUser = await User.findOne({whiteLabel:'b2c.ollscores.com', roleName: 'Super-Duper-Admin'})
         if(parentUser){
             if(req.body.password !== req.body.passwordConfirm){
                 return next(new AppError('Passwords are not matching', 404))
@@ -158,7 +158,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
                     userName : req.body.userName.toLowerCase(),
                     name : req.body.name,
                     roleName : 'user',
-                    whiteLabel:'withDrowTesting',
+                    whiteLabel:'b2c.ollscores.com',
                     parent_id : parentUser.id,
                     role : '6492fe4fd09db28e00761694',
                     role_type:5,

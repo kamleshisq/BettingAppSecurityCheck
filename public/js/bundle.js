@@ -6949,11 +6949,11 @@ var createAndLoginUser = /*#__PURE__*/function () {
             //     }, 100)
             // }else{
             setTimeout(function () {
-              location.reload();
+              window.location.reload();
             }, 300);
             // }
           }
-          _context.next = 11;
+          _context.next = 12;
           break;
         case 7:
           _context.prev = 7;
@@ -6963,8 +6963,11 @@ var createAndLoginUser = /*#__PURE__*/function () {
             message: _context.t0.response.data.message,
             status: "error"
           });
+          setTimeout(function () {
+            window.location.reload();
+          }, 2000);
           // setTimeout(alert(err.response.data.message), 1500)
-        case 11:
+        case 12:
         case "end":
           return _context.stop();
       }
