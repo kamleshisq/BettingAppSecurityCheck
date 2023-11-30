@@ -1346,9 +1346,18 @@ socket.on('connect', () => {
                 else if(oldcount < data.paymentreqcount){
                     oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
-                    console.log('WORKING')
-                    audioSource.start(0);
-                    audio.play();
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var clickEvent = new Event('click');
+                        var myButton = document.getElementById('notificationSound');
+                        myButton.addEventListener('click', function() {
+                            console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
+                            audio.play();
+                        });
+                        myButton.dispatchEvent(clickEvent);
+                    });
+                    // console.log('WORKING')
+                    // audioSource.start(0);
+                    // audio.play();
                 }
                 // sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
                 $('header .dps-notf').siblings('span').text(data.paymentreqcount)
