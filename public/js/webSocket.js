@@ -1371,6 +1371,7 @@ socket.on('connect', () => {
                         var myButton = document.getElementById('notificationSound');
                         myButton.dispatchEvent(clickEvent);
                         myButton.addEventListener('click', function() {
+                            console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
                             audio.play();
                         });
                     });
