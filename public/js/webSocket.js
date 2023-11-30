@@ -1347,12 +1347,12 @@ socket.on('connect', () => {
                     oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
                     document.addEventListener('DOMContentLoaded', function() {
-                        var clickEvent = new Event('click');
                         var myButton = document.getElementById('notificationSound');
                         myButton.addEventListener('click', function() {
                             console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
                             audio.play();
                         });
+                        var clickEvent = new Event('click');
                         myButton.dispatchEvent(clickEvent);
                     });
                     // console.log('WORKING')
@@ -1376,12 +1376,12 @@ socket.on('connect', () => {
                     oldCount1 = data.withrowReqCount
                     var audio = document.getElementById("notificationSound");
                     document.addEventListener('DOMContentLoaded', function() {
-                        var clickEvent = new Event('click');
                         var myButton = document.getElementById('notificationSound');
                         myButton.addEventListener('click', function() {
                             console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
                             audio.play();
                         });
+                        var clickEvent = new Event('click');
                         myButton.dispatchEvent(clickEvent);
                     });
                     console.log('WORKING')
