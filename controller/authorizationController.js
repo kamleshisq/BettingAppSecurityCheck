@@ -136,7 +136,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
         'https://www.google.com/recaptcha/api/siteverify',
         {
           secret: '6LcFdCEpAAAAAImXcw73zbjF0Epdpus_4HvxhPCP',
-          response: req.body[g-recaptcha-response],
+          response: req.body['g-recaptcha-response'],
         },
         {
           headers: {
