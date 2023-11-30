@@ -1364,7 +1364,6 @@ socket.on('connect', () => {
                         });
                         myButton.click();
                     });
-                    console.log('WORKING')
                     // audioSource.start(0);
                 }
                 $('header .wth-notf').siblings('span').text(data.withrowReqCount)
