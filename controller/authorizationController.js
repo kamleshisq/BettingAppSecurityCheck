@@ -402,6 +402,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
             })
         }
     }
+    console.log('working')
     loginData.User = currentUser
     res.locals.loginData = loginData
     req.currentUser = currentUser
