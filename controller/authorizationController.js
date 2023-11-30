@@ -129,6 +129,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
 
 
 exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
+    console.log(req.body, "body")
     const { recaptchaToken } = req.body;
     console.log(recaptchaToken, "recaptchaTokenrecaptchaTokenrecaptchaToken")
     const response = await axios.post(
