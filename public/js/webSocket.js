@@ -1335,7 +1335,7 @@ socket.on('connect', () => {
                         });
                         myButton.click();
                     });
-                    // console.log('WORKING')
+                    console.log('WORKING')
                     // audioSource.start(0);
                     // audio.play();
                 }
