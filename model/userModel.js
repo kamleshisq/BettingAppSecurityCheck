@@ -101,7 +101,7 @@ const userSchema = mongoose.Schema({
         type:String,
         required:[true, "please provide a password"],
         minlength:[8, "Please inter at-least 8 char."],
-        select: false
+        // select: false
     },
     passwordConfirm:{
         type:String,
@@ -212,13 +212,27 @@ userSchema.pre('save', async function(next){
     next();
 })
 
-userSchema.pre(/^find/, function(next){
+// userSchema.pre(/^find/, function(next){
+//     this.populate({
+//         path:'role',
+//         select:'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController'
+//     })
+//     next()
+// })
+
+userSchema.pre(/^find/, function (next) {
+    const includePassword = this._fields && this._fields.password === 1;
+    const roleSelect = includePassword
+        ? 'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController +password'
+        : 'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController -password';
+
     this.populate({
-        path:'role',
-        select:'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController'
-    })
-    next()
-})
+        path: 'role',
+        select: roleSelect,
+    });
+
+    next();
+});
 
 // userSchema.pre('save', function (next) {
 //     this.myPL = roundToTwoDecimals(this.myPL);
