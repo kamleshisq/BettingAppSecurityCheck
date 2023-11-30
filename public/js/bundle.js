@@ -7824,8 +7824,9 @@ $(document).on('submit', ".regestermodl-form", function (e) {
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
   // console.log(data)
-  (0, _createAndLoginUser.createAndLoginUser)(data);
+  // createAndLoginUser(data)
 });
+
 $(document).on("click", ".myloginmodl-demo-loginbtnn", function (e) {
   e.preventDefault();
   // console.log("WORKING")

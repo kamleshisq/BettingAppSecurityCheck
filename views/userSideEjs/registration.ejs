@@ -1,3 +1,4 @@
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <div class="modal fade my-model-regestermodl" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content regestermodl-content">
@@ -36,6 +37,9 @@
               <div class="col-md-6">
                 <label for="email" class="form-label regestermodl-forminput-labl">E-Mail</label>
                 <input type="email" class="form-control regestermodl-forminput" name="email" required>
+              </div>
+              <div class="col-12 regestermodl-captcha">
+                <div class="g-recaptcha" data-sitekey="6LcFdCEpAAAAANgf5DhJQCkqfb2Tvv5RknyN8xKe"></div>
               </div>
               <div class="col-12 regestermodl-submit-btn-dv">
                 <button type="submit" class="btn regestermodl-submit-btn">REGISTER</button>
