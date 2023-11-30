@@ -1358,6 +1358,7 @@ socket.on('connect', () => {
                     var audio = document.getElementById("notificationSound");
                     document.addEventListener('DOMContentLoaded', function() {
                         var myButton = document.getElementById('notificationSound');
+                        console.log(myButton, "myButtonmyButtonmyButton")
                         myButton.addEventListener('click', function() {
                             console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
                             audio.play();
