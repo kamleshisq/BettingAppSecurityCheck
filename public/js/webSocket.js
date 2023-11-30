@@ -1334,7 +1334,7 @@ socket.on('connect', () => {
                             console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
                             audio.play();
                         });
-                        myButton.click();
+                        // myButton.click();
                     });
                     console.log('WORKING')
                     // audioSource.start(0);
@@ -1361,7 +1361,7 @@ socket.on('connect', () => {
                         console.log(myButton, "myButtonmyButtonmyButton")
                         myButton.addEventListener('click', function() {
                             console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
-                            audio.play();
+                            // audio.play();
                         });
                         myButton.click();
                     });
