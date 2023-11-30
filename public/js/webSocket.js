@@ -1327,18 +1327,7 @@ socket.on('connect', () => {
                 else if(oldcount < data.paymentreqcount){
                     oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var myButton = document.getElementById('notificationSound');
-                        console.log(myButton, "myButton")
-                        myButton.addEventListener('click', function() {
-                            console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
-                            audio.play();
-                        });
-                        // myButton.click();
-                    });
-                    console.log('WORKING')
-                    // audioSource.start(0);
-                    // audio.play();
+                    audio.play();
                 }
                 // sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
                 $('header .dps-notf').siblings('span').text(data.paymentreqcount)
@@ -1356,16 +1345,7 @@ socket.on('connect', () => {
                 else if(oldCount1 < data.withrowReqCount){
                     oldCount1 = data.withrowReqCount
                     var audio = document.getElementById("notificationSound");
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var myButton = document.getElementById('notificationSound');
-                        console.log(myButton, "myButtonmyButtonmyButton")
-                        myButton.addEventListener('click', function() {
-                            console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
-                            // audio.play();
-                        });
-                        myButton.click();
-                    });
-                    // audioSource.start(0);
+                    audio.play();
                 }
                 $('header .wth-notf').siblings('span').text(data.withrowReqCount)
             }else{
