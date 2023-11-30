@@ -221,11 +221,15 @@ userSchema.pre('save', async function(next){
 // })
 
 userSchema.pre(/^find/, function (next) {
+    // Check if the query explicitly includes the password field
     const includePassword = this._fields && this._fields.password === 1;
-    const roleSelect = includePassword
-        ? 'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController'
-        : 'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController -password';
 
+    // Build the select option for the role population based on the includePassword flag
+    const roleSelect = includePassword
+        ? 'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController password'
+        : 'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController';
+
+    // Conditionally include or exclude the password field in the population
     this.populate({
         path: 'role',
         select: roleSelect,
