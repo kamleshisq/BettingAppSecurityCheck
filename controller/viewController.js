@@ -5593,7 +5593,7 @@ exports.myWithrowReq = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    let withrowReqData = await withdrawalRequestModel.find().sort({reqDate:-1}).limit(10)
+    let withrowReqData = await withdrawalRequestModel.find({userName:req.currentUser.userName}).sort({reqDate:-1}).limit(10)
     res.status(200).render("./userSideEjs/withrowReqPage/main", {
         title:"withdrawal request.",
         user:req.currentUser,
