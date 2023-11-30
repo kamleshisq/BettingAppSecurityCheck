@@ -101,7 +101,7 @@ const userSchema = mongoose.Schema({
         type:String,
         required:[true, "please provide a password"],
         minlength:[8, "Please inter at-least 8 char."],
-        select: false
+        // select: false
     },
     passwordConfirm:{
         type:String,
@@ -205,12 +205,12 @@ const userSchema = mongoose.Schema({
         }]
 })
 
-// userSchema.pre('save', async function(next){
-//     // console.log(this.password, "asdfghjtyui")
-//     this.password = await bycrypt.hash(this.password, 12)
-//     this.passwordConfirm = undefined;
-//     next();
-// })
+userSchema.pre('save', async function(next){
+    // console.log(this.password, "asdfghjtyui")
+    this.password = await bycrypt.hash(this.password, 12)
+    this.passwordConfirm = undefined;
+    next();
+})
 
 userSchema.pre(/^find/, function(next){
     this.populate({
