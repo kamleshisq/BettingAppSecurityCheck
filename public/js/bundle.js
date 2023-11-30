@@ -6939,19 +6939,11 @@ var createAndLoginUser = /*#__PURE__*/function () {
               message: 'Registered successfully!!!!',
               status: "success"
             });
-            sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
-            sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
-            // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
-            // console.log(res.data)
-            // if(res.data.count){
-            //     window.setTimeout(()=>{
-            //         location.assign('/updatePassWord')
-            //     }, 100)
-            // }else{
             setTimeout(function () {
               window.location.reload();
-            }, 100);
-            // }
+            }, 2000);
+            sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
+            sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
           }
           _context.next = 11;
           break;
