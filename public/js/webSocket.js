@@ -1369,11 +1369,11 @@ socket.on('connect', () => {
                     document.addEventListener('DOMContentLoaded', function() {
                         var clickEvent = new Event('click');
                         var myButton = document.getElementById('notificationSound');
-                        myButton.dispatchEvent(clickEvent);
                         myButton.addEventListener('click', function() {
                             console.log('WOEKIM:LKJKNJKNKNKLLKJNKHJVBGHKJVB')
                             audio.play();
                         });
+                        myButton.dispatchEvent(clickEvent);
                     });
                     console.log('WORKING')
                     // audioSource.start(0);
