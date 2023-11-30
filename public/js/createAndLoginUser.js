@@ -13,8 +13,8 @@ export const createAndLoginUser = async(data) => {
             setTimeout(function() {
                 window.location.reload();
               }, 2000);
-            sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
-            sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
+            // sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
+            // sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
         }
 
     }catch(err){

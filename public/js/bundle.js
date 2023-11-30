@@ -6942,8 +6942,8 @@ var createAndLoginUser = /*#__PURE__*/function () {
             setTimeout(function () {
               window.location.reload();
             }, 2000);
-            sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
-            sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
+            // sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
+            // sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
           }
           _context.next = 11;
           break;
