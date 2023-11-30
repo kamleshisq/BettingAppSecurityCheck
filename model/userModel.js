@@ -304,9 +304,9 @@ userSchema.post(/^find/, function (docs) {
 
 
 
-userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
-    return await bycrypt.compare(candidatePassword, userPassword)
-};
+// userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
+//     return await bycrypt.compare(candidatePassword, userPassword)
+// };
 
 const User = mongoose.model('User', userSchema);
 
