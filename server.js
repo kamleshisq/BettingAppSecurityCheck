@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
 
     const checkwhiteLabel = (LOGINDATA) => {
         let whiteLabel;
-        if(LOGINDATA.LOGINUSER.role_type == 1){
+        if(LOGINDATA.LOGINUSER && LOGINDATA.LOGINUSER.role_type == 1){
             whiteLabel = "1"
         }else{
             whiteLabel = process.env.whiteLabelName
