@@ -1317,6 +1317,25 @@ socket.on('connect', () => {
             socket.emit('getcountofpaymentreq',LOGINDATA)
             socket.emit('getcountofWITHROWREQ',LOGINDATA)
         }
+        // Initialize the Web Audio API
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Load the audio file
+        const audioSource = audioContext.createBufferSource();
+        const audioRequest = new XMLHttpRequest();
+        audioRequest.open('GET', 'http://b2c.ollscores.com/notificationbip/Notification.mp3', true);
+        audioRequest.responseType = 'arraybuffer';
+
+        audioRequest.onload = function () {
+        audioContext.decodeAudioData(audioRequest.response, function (buffer) {
+            audioSource.buffer = buffer;
+            audioSource.connect(audioContext.destination);
+        }, function (error) {
+            console.error('Error decoding audio file', error);
+        });
+        };
+
+        audioRequest.send();
         socket.on('getcountofpaymentreq',async(data)=>{
             if(data.status == 'success'){
                 // console.log(data.paymentreqcount)
@@ -1328,6 +1347,7 @@ socket.on('connect', () => {
                     oldcount = data.paymentreqcount
                     var audio = document.getElementById("notificationSound");
                     console.log('WORKING')
+                    audioSource.start(0);
                     audio.play();
                 }
                 // sessionStorage.setItem('notiCount',JSON.stringify(data.paymentreqcount))
@@ -1347,6 +1367,7 @@ socket.on('connect', () => {
                     oldCount1 = data.withrowReqCount
                     var audio = document.getElementById("notificationSound");
                     console.log('WORKING')
+                    audioSource.start(0);
                     audio.play();
                 }
                 $('header .wth-notf').siblings('span').text(data.withrowReqCount)
