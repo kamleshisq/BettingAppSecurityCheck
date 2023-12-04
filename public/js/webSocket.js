@@ -1876,7 +1876,8 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
-            socket.emit("getUserDetaisl111", {id, dataId})
+            console.log('working123654789')
+            // socket.emit("getUserDetaisl111", {id, dataId})
         })
 
         $(document).on('change keyup','#myModalSE .form-data input[name="amount"]',function(e){
