@@ -130,9 +130,9 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
 
 
 exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
-    console.log(req.body, "body")
+    // console.log(req.body, "body")
     const { recaptchaToken } = req.body;
-    console.log(recaptchaToken, "recaptchaTokenrecaptchaTokenrecaptchaToken")
+    // console.log(recaptchaToken, "recaptchaTokenrecaptchaTokenrecaptchaToken")
     const response = await axios.post(
         'https://www.google.com/recaptcha/api/siteverify',
         {
@@ -148,39 +148,45 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
     console.log(response.data, "response.data")
 
     if(response.data.success){
-        let parentUser = await User.findOne({whiteLabel:'b2c.ollscores.com', roleName: 'Super-Duper-Admin'})
-        if(parentUser){
-            if(req.body.password !== req.body.passwordConfirm){
-                return next(new AppError('Passwords are not matching', 404))
-            }else{
-                let parentArray = parentUser.parentUsers
-                parentArray.push(parentUser.id)
-                let userData = {
-                    userName : req.body.userName.toLowerCase(),
-                    name : req.body.name,
-                    roleName : 'user',
-                    whiteLabel:'b2c.ollscores.com',
-                    parent_id : parentUser.id,
-                    role : '6492fe4fd09db28e00761694',
-                    role_type:5,
-                    password:req.body.password,
-                    passwordConfirm:req.body.passwordConfirm,
-                    parentUsers:parentArray,
-                    contact:req.body.contectNumber,
-                    email:req.body.email
-                }
-    
-                let new_USer = await User.create(userData)
-                if(!new_USer){
-                    return next(new AppError('Please try again later', 404))
+        let check = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+        if(check && check.B2C_Status){
+
+            let parentUser = await User.findOne({whiteLabel:process.env.whiteLabelName, roleName: 'Super-Duper-Admin'})
+            if(parentUser){
+                if(req.body.password !== req.body.passwordConfirm){
+                    return next(new AppError('Passwords are not matching', 404))
                 }else{
-                    // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
-                    // createSendToken(new_USer, 200, res, req);
-                    res.status(200).json({
-                        status:'success'
-                    })
+                    let parentArray = parentUser.parentUsers
+                    parentArray.push(parentUser.id)
+                    let userData = {
+                        userName : req.body.userName.toLowerCase(),
+                        name : req.body.name,
+                        roleName : 'user',
+                        whiteLabel:'b2c.ollscores.com',
+                        parent_id : parentUser.id,
+                        role : '6492fe4fd09db28e00761694',
+                        role_type:5,
+                        password:req.body.password,
+                        passwordConfirm:req.body.passwordConfirm,
+                        parentUsers:parentArray,
+                        contact:req.body.contectNumber,
+                        email:req.body.email
+                    }
+        
+                    let new_USer = await User.create(userData)
+                    if(!new_USer){
+                        return next(new AppError('Please try again later', 404))
+                    }else{
+                        // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
+                        // createSendToken(new_USer, 200, res, req);
+                        res.status(200).json({
+                            status:'success'
+                        })
+                    }
+        
                 }
-    
+            }else{
+                return next(new AppError('Please try again later', 404))
             }
         }else{
             return next(new AppError('Please try again later', 404))
