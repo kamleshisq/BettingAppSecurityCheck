@@ -257,7 +257,9 @@
                           <div class="menu-item"><a class="nav_link" href="/admin/adminaccount">Admin Account Statment</a></div>
                           <div class="menu-item"><a class="nav_link" href="/admin/useraccount">User Account Statment</a></div>
                           <div class="menu-item"><a class="nav_link" href="/admin/reports">Bet List</a></div>
+                          <%if(currentUser.role_type == 1){%>
                           <div class="menu-item"><a class="nav_link" href="/admin/settlementHistory">Settlements History</a></div>
+                          <%}%>
                           <div class="menu-item"><a class="nav_link" href="/admin/userhistoryreport">User history</a></div>
                           <div class="menu-item"><a class="nav_link" href="/admin/plreport">P/L report</a></div>
                           <div class="menu-item"><a class="nav_link" href="/admin/commissionReport">Commission Report </a></div>
