@@ -8205,7 +8205,7 @@ io.on('connection', (socket) => {
                         role_type:parentUser.role_type,
                         Remark:reqData.note
                     }
-                    let updatedParentUser = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance:amount, balance:amount}})
+                    let updatedParentUser = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance:amount, balance:amount, downlineBalance : -amount}})
                     let updatedUser = await User.findByIdAndUpdate(user.id, {$inc:{availableBalance: -amount, balance: -amount}})
                     if(updatedParentUser && updatedUser){
                         await AccModel.create(userAccData)
