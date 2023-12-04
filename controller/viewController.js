@@ -2353,10 +2353,10 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const runners = await runnerData.find()
     let currentUser =  req.currentUser
-    console.log(runners[0])
+    // console.log(runners[0])
     let childrenUsername = await User.distinct('userName', { parentUsers : req.currentUser.id, role_type: 5 });
     let bets = await betModel.distinct('marketId', {userName : {$in:childrenUsername}})
-    console.log(bets, "betsbetsbetsbets")
+    // console.log(bets, "betsbetsbetsbets")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         runners,
@@ -4121,7 +4121,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
-    console.log('START')
+    // console.log('START')
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     let cricketEvents;
