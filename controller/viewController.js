@@ -2360,6 +2360,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         runners,
+        bets,
         currentUser,
         me: currentUser
     })
