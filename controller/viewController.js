@@ -3128,8 +3128,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         partnerId: "SHPID01",
         platformId: "DESKTOP",
         userId: user._id,
-        username: user.userName,
-        colorCode
+        username: user.userName
     }
     function readPem (filename) {
         return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
