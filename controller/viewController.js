@@ -5511,6 +5511,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
+    console.log(res.locals.B2C_Status)
     if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
         return next(new AppError('You do not have permission to perform this action', 404))
     }
