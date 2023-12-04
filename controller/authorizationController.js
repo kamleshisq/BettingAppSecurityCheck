@@ -305,7 +305,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         return res.redirect('/adminlogin')
     }
     const tokenId = await loginLogs.findOne({session_id:token})
-    if(!tokenId.isOnline){
+    if( tokenId &&!tokenId.isOnline){
         // console.log('working12121')
         return res.redirect('/adminlogin')
     }
