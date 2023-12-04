@@ -518,6 +518,8 @@
                   <%if(currentUser.roleName === "Admin"){%>
                     <option value="6492fe4fd09db28e00761695">Super-Duper-Admin</option>
                     <option value="650bccdbb3fdc8c922c34bbe">Operator</option>
+                  <%}else if (B2C_Status){%>
+                    <option value="6492fe4fd09db28e00761694">user</option>
                   <%}else{%>
                     <%for(let i = 0;i<roles.length; i++){%>
                       <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
