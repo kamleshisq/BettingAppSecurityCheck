@@ -3114,7 +3114,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         urldata,
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
