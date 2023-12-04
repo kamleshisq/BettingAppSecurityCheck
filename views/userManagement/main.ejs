@@ -522,7 +522,9 @@
                     <option value="6492fe4fd09db28e00761694">user</option>
                   <%}else{%>
                     <%for(let i = 0;i<roles.length; i++){%>
+                      <%if(roles[i]._id != '6492fe4fd09db28e00761694'){%>
                       <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                      <%}%>
                     <%}%>
                   <%}%>
                 </select>
