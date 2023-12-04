@@ -4132,8 +4132,8 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let data = {};
 
     let cricketList = sportListData[0].gameList[0]
-    // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
-    // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
 
     let newcricketEvents = cricketList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
