@@ -278,7 +278,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     }else{
         res.locals.B2C_Status = false
     }
-    console.log('isProtectedisProtectedisProtectedisProtected')
+    // console.log('isProtectedisProtectedisProtectedisProtected')
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
@@ -301,12 +301,12 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         
     }
     if(!token){
-        console.log('WORKING1')
+        // console.log('WORKING1')
         return res.redirect('/adminlogin')
     }
     const tokenId = await loginLogs.findOne({session_id:token})
     if(!tokenId.isOnline){
-        console.log('working12121')
+        // console.log('working12121')
         return res.redirect('/adminlogin')
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
@@ -323,13 +323,13 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     let WithdrawReqCount = 0
     if(currentUser.role.roleName === "Super-Duper-Admin"){
         childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
-        console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
+        // console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
         paymentreqcount = await paymentReportModel.countDocuments({username:{$in:childrenArr},status:'pending'})
         WithdrawReqCount = await userWithReq.countDocuments({username:currentUser.userName, reqStatus:'pending'})
     }
     if(currentUser.roleName != "DemoLogin"){
-        console.log(currentUser.whiteLabel, whiteLabel, currentUser.role_type,"whiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabel")
-        console.log(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1)
+        // console.log(currentUser.whiteLabel, whiteLabel, currentUser.role_type,"whiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabel")
+        // console.log(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1)
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"err",
