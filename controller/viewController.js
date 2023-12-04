@@ -2353,6 +2353,7 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const runners = await runnerData.find()
     let currentUser =  req.currentUser
+    console.log(runners[0])
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         runners,
