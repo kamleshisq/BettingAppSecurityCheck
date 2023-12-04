@@ -4215,7 +4215,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     // footballEvents = await Promise.all(newfootballEvents);
     // tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
-    // console.log(data, "fhdhhfdhfd")
+    console.log(data.footballEvents, "fhdhhfdhfd")
     // data = {}
 
     return res.status(200).render("./eventController/eventController", {
