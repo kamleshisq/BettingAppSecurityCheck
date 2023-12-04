@@ -5511,8 +5511,8 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
-    console.log(res.locals.B2C_Status, 121212212222222121)
-    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+    // console.log(res.locals.B2C_Status, 121212212222222121)
+    if(res.locals.B2C_Status){
         return next(new AppError('You do not have permission to perform this action', 404))
     }
     newChilds = await User.distinct('userName', {parentUsers:req.currentUser._id});
@@ -5525,7 +5525,7 @@ exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
-    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+    if(res.locals.B2C_Status){
         return next(new AppError('You do not have permission to perform this action', 404))
     }
     let paymentmethod = await PaymentMethodModel.find({userName:req.currentUser.userName});
@@ -5540,7 +5540,7 @@ exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
 
 exports.getManagementAccount = catchAsync(async(req, res, next) => {
     let userLog
-    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+    if(res.locals.B2C_Status){
         return next(new AppError('You do not have permission to perform this action', 404))
     }
     if(req.currentUser){
@@ -5568,7 +5568,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 
 exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
-    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+    if(res.locals.B2C_Status){
         return next(new AppError('You do not have permission to perform this action', 404))
     }
     let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName, reqStatus:'pending'}).sort({reqDate:-1}).limit(10)
@@ -5584,7 +5584,7 @@ exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
 
 exports.myWithrowReq = catchAsync(async(req, res, next) => {
     let userLog
-    if(req.currentUser.whiteLabel !== "b2c.ollscores.com" || process.env.whiteLabelName !== "b2c.ollscores.com"){
+    if(res.locals.B2C_Status){
         return next(new AppError('You do not have permission to perform this action', 404))
     }
     if(req.currentUser){
