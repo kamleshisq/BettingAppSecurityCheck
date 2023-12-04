@@ -2355,7 +2355,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let currentUser =  req.currentUser
     // console.log(runners[0])
     let childrenUsername = await User.distinct('userName', { parentUsers : req.currentUser.id, role_type: 5 });
-    let bets = await betModel.distinct('marketId', {userName : {$in:childrenUsername}})
+    let bets = await betModel.distinct('marketId', {userName : {$in:childrenUsername}, status: 'OPEN'})
     // console.log(bets, "betsbetsbetsbets")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
