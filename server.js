@@ -8172,7 +8172,7 @@ io.on('connection', (socket) => {
         try{
             let reqData = await withdowReqModel.findById(data.data.id)
             console.log(reqData)
-            if(reqData || reqData.reqStatus === "pending"){
+            if(reqData && reqData.reqStatus === "pending"){
                 // console.log(reqData, "reqDatareqDatareqData")
                 let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
                 const passcheck = await userCe.correctPassword(data.data.password, userCe.password)
