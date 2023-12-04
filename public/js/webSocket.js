@@ -1971,8 +1971,8 @@ socket.on('connect', () => {
 
             form.find('.deposite').removeClass('active')
             form.find('.withdraw').removeClass('active')
+            console.log(userData)
             if(userData.uplinePL >= 0){
-                console.log(userData)
                 form.find('.deposite').addClass('active')
                 form.find('input[name = "type"]').val("deposit")
                 form.find('input[name = "toUser"]').attr('value',userData.userName)
