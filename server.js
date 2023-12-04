@@ -8171,7 +8171,7 @@ io.on('connection', (socket) => {
         // console.log(data)
         try{
             let reqData = await withdowReqModel.findById(data.data.id)
-            if(reqData){
+            if(reqData || reqData.reqStatus === "pending"){
                 // console.log(reqData, "reqDatareqDatareqData")
                 let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
                 const passcheck = await userCe.correctPassword(data.data.password, userCe.password)
@@ -8216,7 +8216,7 @@ io.on('connection', (socket) => {
                     socket.emit('reqApproveUpdate', {status:'err', msg:'Please Provide a valid Password'})
                 }
             }else{
-                socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
+                socket.emit('reqApproveUpdate', {status:'err', msg:'There is no pending request found with that Id'})
             }
         }catch(err){
             console.log(err)
