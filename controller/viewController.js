@@ -4159,61 +4159,61 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
         return item
     })
-    // let newfootballEvents =  footballList.eventList.map(async(item) => {
-    //      let status = await catalogController.findOne({Id:item.eventData.eventId})
-    //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-    //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+    let newfootballEvents =  footballList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
 
-    //      count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
-    //      if(!status){
-    //         item.eventData.status = true
-    //      }else{
-    //         item.eventData.status = false
-    //     }
-    //     if(!featureStatus){
-    //         item.eventData.featureStatus = false
-    //     }else{
-    //         item.eventData.featureStatus = true
-    //     }
-    //     if(!inPlayStatus){
-    //         item.eventData.inPlayStatus = false
-    //     }else{
-    //         item.eventData.inPlayStatus = true
-    //     }
-    //     item.eventData.count = count
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
 
-    //     return item
-    // })
-    // let newtennisEvents = tennisList.eventList.map(async(item) => {
-    //      let status = await catalogController.findOne({Id:item.eventData.eventId})
-    //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-    //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+        return item
+    })
+    let newtennisEvents = tennisList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
-    //      count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
-    //      if(!status){
-    //         item.eventData.status = true
-    //      }else{
-    //         item.eventData.status = false
-    //     }
-    //     if(!featureStatus){
-    //         item.eventData.featureStatus = false
-    //     }else{
-    //         item.eventData.featureStatus = true
-    //     }
-    //     if(!inPlayStatus){
-    //         item.eventData.inPlayStatus = false
-    //     }else{
-    //         item.eventData.inPlayStatus = true
-    //     }
-    //     item.eventData.count = count
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
 
-    //     return item
-    // })
+        return item
+    })
 
     cricketEvents = await Promise.all(newcricketEvents);
-    // footballEvents = await Promise.all(newfootballEvents);
-    // tennisEvents = await Promise.all(newtennisEvents);
+    footballEvents = await Promise.all(newfootballEvents);
+    tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
     console.log(data.footballEvents, "fhdhhfdhfd")
     // data = {}
