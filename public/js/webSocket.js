@@ -18422,7 +18422,7 @@ socket.on('connect', () => {
             }else{
                 $('#load-more').hide()
                 if(data.page == 0){
-                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    let html = `<tr class="empty_table"><td>No record found</td></tr>`
                     $('.new-body').html(html)
                 }
             }
