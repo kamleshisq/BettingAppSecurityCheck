@@ -4256,7 +4256,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
-                userId: req.currentUser.id
+                userId: req.currentUser.id,
+                commissionStatus: { $ne : 'cancel'}
             }
         },
         {
@@ -4337,7 +4338,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId: req.currentUser.id,
-                sportId:sportId
+                sportId:sportId,
+                commissionStatus: { $ne : 'cancel'}
             }
         },
         {
@@ -4402,6 +4404,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
           $match: {
             userId: req.currentUser.id,
             seriesName: sportId,
+            commissionStatus: { $ne : 'cancel'}
           },
         },
         {
@@ -4449,7 +4452,8 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId: req.currentUser.id,
-                eventName:sportId
+                eventName:sportId,
+                commissionStatus: { $ne : 'cancel'}
             }
         }
     ])
