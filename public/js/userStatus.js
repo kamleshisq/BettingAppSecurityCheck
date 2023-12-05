@@ -15,6 +15,8 @@ export const userStatus = (data, rawId) => {
                 }else{
                     alert("Updated!")
                 }
+            }else{
+                alert(data.message)
             }
             // console.log(data, 1212121)
         },

@@ -262,7 +262,7 @@ exports.checkPass = catchAsync(async(req, res, next) => {
     if(!req.body.Password){
        return res.status(404).json({
             status:'error',
-            message:"Please provide password"
+            message:"Please provide valid password"
         })
     }
     const passcheck = await user.correctPassword(req.body.Password, user.password)
