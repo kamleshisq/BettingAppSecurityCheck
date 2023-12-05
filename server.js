@@ -2825,11 +2825,6 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
-        // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
-        
         var today = new Date();
         var todayFormatted = formatDate(today);
         var tomorrow = new Date();
@@ -2918,8 +2913,6 @@ io.on('connection', (socket) => {
                 }
             }
         ])
-
-        // console.log(turnOver,'turnOver')
         if(turnOver.length > 0){
             result.turnOver = turnOver[0].totalAmount
             result.Income = turnOver[0].Income
@@ -2927,34 +2920,8 @@ io.on('connection', (socket) => {
             result.turnOver = 0
             result.Income = 0
         }
-
-        if(data.value === "all"){
-            betCount = await Bet.aggregate([
-                {
-                    $match:{
-                        date:filter2,
-                        userName : {$in:childrenUsername}
-                    }
-                }
-               
-              ])
-        }else{
-            betCount = await Bet.aggregate([
-                {
-                    $match:{
-                        date:filter2,
-                        userName : {$in:childrenUsername}
-                    }
-                }
-            
-              ])
-        }
-
-        // console.log(betCount,'betCount')
-
-        result.betCount = betCount.length
-        // console.log(turnOver)
-        // console.log(turnOver.length)
+        betcount = await Bet.countDocuments({date:filter2,userName : {$in:childrenUsername}})
+        result.betCount = betCount
         console.log('WORKING2')
         socket.emit("FIlterDashBoard", {result})
 
