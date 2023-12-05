@@ -444,7 +444,6 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
                     let childUser = await userModel.findById(user.parentUsers[i])
                     let parentUser = await userModel.findById(user.parentUsers[i - 1])
                     let commissionChild = await commissionModel.find({userId:childUser.id})
-                    console.log(commissionChild,commissionChild[0].fency, "commissionChildcommissionChildcommissionChild")
                     let commissionPer = 0
                     if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
                       commissionPer = commissionChild[0].Bookmaker.percentage
