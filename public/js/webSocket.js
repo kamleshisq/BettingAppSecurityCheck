@@ -12382,7 +12382,7 @@ socket.on('connect', () => {
             }else{
                 document.getElementById('loadMorediveEvent').innerHTML = ""
                 if(data.page == 0){
-                    $('#event-tbody').html("NO MORE DATA ")
+                    $('#event-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
             }
             // if(data.page == 0){
@@ -12471,7 +12471,7 @@ socket.on('connect', () => {
             }else{
                 document.getElementById('loadMorediveAccCom').innerHTML = ""
                 if(data.page == 0){
-                    $('#AccountCom-tbody').html("NO MORE DATA ")
+                    $('#AccountCom-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
             }
         })
@@ -12568,7 +12568,7 @@ socket.on('connect', () => {
             }else{
                 document.getElementById('loadMorediveUser').innerHTML = ""
                 if(data.page == 0){
-                    $('#userLevel-tbody').html("NO MORE DATA ")
+                    $('#userLevel-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
             }
             // console.log(data)
