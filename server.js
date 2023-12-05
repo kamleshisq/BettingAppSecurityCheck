@@ -2815,7 +2815,7 @@ io.on('connection', (socket) => {
     
 
     socket.on("FIlterDashBoard", async(data) => {
-        console.log('WORKING')
+        // console.log('WORKING')
         let filter;
         let filter2;
         let result = {}
@@ -2922,7 +2922,7 @@ io.on('connection', (socket) => {
         }
         let  betcount = await Bet.countDocuments({date:filter2,userName : {$in:childrenUsername}})
         result.betCount = betcount
-        console.log('WORKING2')
+        // console.log('WORKING2')
         socket.emit("FIlterDashBoard", {result})
 
     })
