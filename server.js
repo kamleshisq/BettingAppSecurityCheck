@@ -2928,26 +2928,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on('dashboardrefresh',async(data)=>{
-        // console.log("WORKING")
-        // let roles
-        // let users
         let topGames
         let Categories
-        // let userCount = 0
-        // let adminCount = 0
-        // let betCount = 0
         let alertBet
         let betsEventWise
-        // let turnOver
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
         }
         let childrenUsername = []
-        // let children = await User.find({parentUsers:data.LOGINUSER._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
         childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINUSER._id });
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -2960,7 +2949,6 @@ io.on('connection', (socket) => {
                     userName:{$in:childrenUsername}
                 }
             },
-    
             {
                 $group: {
                     _id: "$event",
