@@ -1557,6 +1557,9 @@ socket.on('connect', () => {
                     form.find('select[name="fency"]').val(`${data.commissionData[0].fency.percentage}`)
                     form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
                 }else{
+                    $('[name="BookmakerStatus"]').prop('checked', false);
+                    $('[name="fencyStatus"]').prop('checked', false);
+                    $('[name="matchOddsStatus"]').prop('checked', false);
                   let  optionhtml = `<option value="0.025">0.025</option>
                         <option value="0.05">0.05</option>
                         <option value="0.075">0.075</option>
