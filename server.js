@@ -2920,8 +2920,8 @@ io.on('connection', (socket) => {
             result.turnOver = 0
             result.Income = 0
         }
-        betcount = await Bet.countDocuments({date:filter2,userName : {$in:childrenUsername}})
-        result.betCount = betCount
+        let  betcount = await Bet.countDocuments({date:filter2,userName : {$in:childrenUsername}})
+        result.betCount = betcount
         console.log('WORKING2')
         socket.emit("FIlterDashBoard", {result})
 
@@ -2929,16 +2929,16 @@ io.on('connection', (socket) => {
 
     socket.on('dashboardrefresh',async(data)=>{
         // console.log("WORKING")
-        let roles
-        let users
+        // let roles
+        // let users
         let topGames
         let Categories
-        let userCount = 0
-        let adminCount = 0
-        let betCount = 0
+        // let userCount = 0
+        // let adminCount = 0
+        // let betCount = 0
         let alertBet
         let betsEventWise
-        let turnOver
+        // let turnOver
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
