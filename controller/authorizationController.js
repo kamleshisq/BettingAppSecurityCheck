@@ -162,7 +162,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
                         userName : req.body.userName.toLowerCase(),
                         name : req.body.name,
                         roleName : 'user',
-                        whiteLabel:'b2c.ollscores.com',
+                        whiteLabel:process.env.whiteLabelName,
                         parent_id : parentUser.id,
                         role : '6492fe4fd09db28e00761694',
                         role_type:5,
