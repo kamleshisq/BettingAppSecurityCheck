@@ -249,12 +249,15 @@ exports.userTable = catchAsync(async(req, res, next) => {
                 })
             }else{
                 let thatUser = await User.findById(me.parentUsers[i])
-                adminBredcumArray.push({
-                    userName:thatUser.userName,
-                    role:thatUser.roleName,
-                    id : thatUser._id.toString(),
-                    status:false
-                })
+                if(thatUser.role_type > currentUser.role_type){
+                    adminBredcumArray.push({
+                        userName:thatUser.userName,
+                        role:thatUser.roleName,
+                        id : thatUser._id.toString(),
+                        status:false
+                    })
+
+                }
             }
         }
         adminBredcumArray.push({
