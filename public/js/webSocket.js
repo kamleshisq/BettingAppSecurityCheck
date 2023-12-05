@@ -12071,7 +12071,7 @@ socket.on('connect', () => {
                 socket.emit('chartMain', LOGINDATA) 
                 socket.emit("FIlterDashBoard", { LOGINDATA, value });
                 socket.emit('dashboardrefresh',LOGINDATA)
-            },1000 * 60)
+            },1000 * 15)
             socket.emit('chartMain', LOGINDATA) 
 
             socket.on("chartMain", data => {
