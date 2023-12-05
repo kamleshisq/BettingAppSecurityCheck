@@ -3,7 +3,8 @@ const User = require('../model/userModel');
 const AccModel = require('../model/accountStatementByUserModel');
 const settlementHistoryModel = require('../model/settelementHistory');
 const InprogressModel = require('../model/InprogressModel');
-const Decimal =  require('decimal.js')
+const Decimal =  require('decimal.js');
+const commissionNewModel = require('../model/commissioNNModel');
 
 
 
@@ -17,6 +18,7 @@ async function voidbetBeforePlace(data){
     try{
 
         let bets = await Bet.find({marketId:data.id, status : {$in: ['OPEN', 'MAP']}})
+        await commissionNewModel.findAndUpdate({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
         let inprogressData = await InprogressModel.findOne({marketId:data.id, progressType:'VoideBet'})
         if(inprogressData === null){
             try{

@@ -3,7 +3,8 @@ let accountStatementModel = require('../model/accountStatementByUserModel');
 let Bet = require('../model/betmodel');
 let settlementHistory = require("../model/settelementHistory");
 const InprogressModel = require('../model/InprogressModel');
-let Decimal = require('decimal.js')
+let Decimal = require('decimal.js');
+const commissionNewModel = require('../model/commissioNNModel');
 
 
 async function rollBack(data){
@@ -13,6 +14,7 @@ async function rollBack(data){
         return 'please provide a valid password'
     }else{ 
         let allBetWithMarketId = await Bet.find({marketId:data.id})
+        await commissionNewModel.findAndUpdate({marketId:data.id,commissionStatus : 'cancel'}, {commissionStatus : 'Unclaimed'})
         let InProgress = await InprogressModel.findOne({marketId : allBetWithMarketId[0].marketId, progressType:'RollBack'})
         if(InProgress === null){
             try{

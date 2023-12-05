@@ -4,6 +4,7 @@ const Bet = require('../model/betmodel');
 const settlementHistory = require('../model/settelementHistory')
 const InprogressModel = require('../model/InprogressModel');
 const Decimal = require('decimal.js');
+const commissionNewModel = require('../model/commissioNNModel');
 
 async function voidBET(data){
 //  console.log(data, 444)  
@@ -12,6 +13,7 @@ async function voidBET(data){
     return 'please provide a valid password'
 }else{
     let allBetWithMarketId = await Bet.find({marketId:data.id})
+    await commissionNewModel.findAndUpdate({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
     let inprogressData = await InprogressModel.findOne({marketId:data.id, progressType:'VoideBet'})
     if(inprogressData === null){
         try{
