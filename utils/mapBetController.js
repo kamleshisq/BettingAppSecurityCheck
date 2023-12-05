@@ -141,10 +141,12 @@ async function mapBet(data){
               if(commissionMarket.some(item => item.marketId == bets[bet].marketId)){ 
                 try{
                     let commission = await commissionModel.find({userId:user.id})
+                    console.log(commission, "commissioncommissioncommissioncommission")
                     let commissionPer = 0
                     if (bets[bet].marketName.toLowerCase().startsWith('match') && commission[0].matchOdd.status){
                         commissionPer = commission[0].matchOdd.percentage
                     }
+                    console.log(commissionPer, "commissionPercommissionPercommissionPer")
                     let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                     if(commissionPer > 0){
                         let commissiondata = {
