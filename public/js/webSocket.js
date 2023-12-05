@@ -12189,11 +12189,11 @@ socket.on('connect', () => {
             $(document).ready(function() {
                 $(".dropdown .item").click(function(e) {
                     e.preventDefault();
-                    console.log('WORKING')
-                    // let value = $(this).attr("id");
-                    // $("#destination").text($(this).text());
-                    // $('.dropdown').attr('data-summary',value)
-                    // socket.emit("FIlterDashBoard", { LOGINDATA, value });
+                    // console.log('WORKING')
+                    let value = $(this).attr("id");
+                    $("#destination").text($(this).text());
+                    $('.dropdown').attr('data-summary',value)
+                    socket.emit("FIlterDashBoard", { LOGINDATA, value });
                     // console.log(value)
                 });
             });

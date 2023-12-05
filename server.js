@@ -2815,6 +2815,7 @@ io.on('connection', (socket) => {
     
 
     socket.on("FIlterDashBoard", async(data) => {
+        console.log('WORKING')
         let filter;
         let filter2;
         let result = {}
@@ -2954,7 +2955,7 @@ io.on('connection', (socket) => {
         result.betCount = betCount.length
         // console.log(turnOver)
         // console.log(turnOver.length)
-
+        console.log('WORKING2')
         socket.emit("FIlterDashBoard", {result})
 
     })
