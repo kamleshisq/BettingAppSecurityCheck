@@ -6139,6 +6139,7 @@ var userStatus = function userStatus(data, rawId) {
     },
 
     error: function error(err) {
+      console.log(err);
       alert(err.response.data.message);
     }
   });
