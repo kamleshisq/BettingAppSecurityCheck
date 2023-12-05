@@ -829,16 +829,8 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
