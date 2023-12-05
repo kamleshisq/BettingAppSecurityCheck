@@ -33,6 +33,7 @@
           </tr>
       </thead>
       <tbody class="new-body" id="AccountCom-tbody">
+        <%if(accStatements.length > 0){%>
         <%for(let i = 0; i < accStatements.length; i++){%>
             <%
                 var timestamp = accStatements[i].date ; 
@@ -59,6 +60,9 @@
                 <td><%=bal%></td>
                 <td><%=accStatements[i].balance.toFixed(2)%></td>
             </tr>
+        <%}%>
+        <%}else{%>
+          <tr class="empty_table"><td>No record found</td></tr>
         <%}%>
       </tbody>
     </table>
