@@ -407,6 +407,7 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
         let commissionMarket = await commissionMarketModel.find()
         if(commissionMarket.some(item => item.marketId == data.data.market)){
             let commission = await commissionModel.find({userId:user.id})
+            if(commission.length > 0){
             // console.log(commission, 456)
             let commissionPer = 0
             if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
@@ -437,13 +438,14 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
                     
                 }
                 usercommissiondata = await newCommissionModel.create(commissiondata)
-            }
+            }}
         
             try{
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
                     let childUser = await userModel.findById(user.parentUsers[i])
                     let parentUser = await userModel.findById(user.parentUsers[i - 1])
                     let commissionChild = await commissionModel.find({userId:childUser.id})
+                    if(commissionChild.length > 0){
                     let commissionPer = 0
                     if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
                       commissionPer = commissionChild[0].Bookmaker.percentage
@@ -475,7 +477,7 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
                             uniqueId:usercommissiondata._id
                         }
                         let commissionData = await newCommissionModel.create(commissiondata)
-                    }
+                    }}
                 }
             }catch(err){
                 console.log(err)

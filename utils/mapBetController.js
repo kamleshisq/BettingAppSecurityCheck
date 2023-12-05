@@ -142,6 +142,7 @@ async function mapBet(data){
                 try{
                     let commission = await commissionModel.find({userId:user.id})
                     console.log(commission, "commissioncommissioncommissioncommission")
+                    if(commission.length > 0){
                     let commissionPer = 0
                     if (bets[bet].marketName.toLowerCase().startsWith('match') && commission[0].matchOdd.status){
                         commissionPer = commission[0].matchOdd.percentage
@@ -168,7 +169,7 @@ async function mapBet(data){
                             date:Date.now()
                         }
                         usercommissiondata = await newCommissionModel.create(commissiondata)
-                    }
+                    }}
                     }catch(err){
                         console.log(err)
                     }
@@ -178,6 +179,7 @@ async function mapBet(data){
                             let childUser = await userModel.findById(user.parentUsers[i])
                             let parentUser = await userModel.findById(user.parentUsers[i - 1])
                             let commissionChild = await commissionModel.find({userId:childUser.id})
+                            if(commissionChild.length > 0){
                             let commissionPer = 0
                             if (bets[bet].marketName.toLowerCase().startsWith('match') && commissionChild[0].matchOdd.status){
                                 commissionPer = commissionChild[0].matchOdd.percentage
@@ -204,7 +206,7 @@ async function mapBet(data){
                                     date:Date.now()
                                 }
                                 let commissionData = await newCommissionModel.create(commissiondata)
-                            }
+                            }}
                         }
                     }catch(err){
                         console.log(err)
@@ -380,6 +382,7 @@ async function mapBet(data){
               if(commissionMarket.some(item => item.marketId == bets[bet].marketId)){
                   try{
                       let commission = await commissionModel.find({userId:user.id})
+                      if(commission.length > 0){
                       let commissionPer = 0
                       if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status){
                           commissionPer = commission[0].Bookmaker.percentage
@@ -405,7 +408,7 @@ async function mapBet(data){
                               parentIdArray:user.parentUsers
                           }
                           usercommissiondata = await newCommissionModel.create(commissiondata)
-                      }
+                      }}
                       }catch(err){
                           console.log(err)
                       } 
@@ -414,6 +417,7 @@ async function mapBet(data){
                               let childUser = await userModel.findById(user.parentUsers[i])
                               let parentUser = await userModel.findById(user.parentUsers[i - 1])
                               let commissionChild = await commissionModel.find({userId:childUser.id})
+                              if(commissionChild.length > 0){
                               let commissionPer = 0
                               if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status){
                               commissionPer = commissionChild[0].Bookmaker.percentage
@@ -440,7 +444,7 @@ async function mapBet(data){
                                       uniqueId:usercommissiondata._id
                                   }
                                   let commissionData = await newCommissionModel.create(commissiondata)
-                              }
+                              }}
                           }
                       }catch(err){
                           console.log(err)
