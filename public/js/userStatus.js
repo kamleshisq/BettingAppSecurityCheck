@@ -22,7 +22,7 @@ export const userStatus = (data, rawId) => {
         },
         error:function(err){
             console.log(err)
-            alert(err.response.message)
+            alert(err.responseJSON.message)
         }
     })
 }
