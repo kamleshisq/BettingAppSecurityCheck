@@ -1556,6 +1556,17 @@ socket.on('connect', () => {
                     form.find('select[name="Bookmaker"]').val(`${data.commissionData[0].Bookmaker.percentage}`)
                     form.find('select[name="fency"]').val(`${data.commissionData[0].fency.percentage}`)
                     form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
+                }else{
+                  let  optionhtml = `<option value="0.025">0.025</option>
+                        <option value="0.05">0.05</option>
+                        <option value="0.075">0.075</option>
+                        <option value="0.1">0.1</option>
+                        <option value="0.125">0.125</option>
+                        <option value="0.15">0.15</option>
+                        <option value="0.175">0.175</option>
+                        <option value="0.2">0.2</option>
+                        `
+                        document.getElementById("bookmakerPer").innerHTML = optionhtml
                 }
             }
         })
