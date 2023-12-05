@@ -13,7 +13,7 @@ async function voidBET(data){
     return 'please provide a valid password'
 }else{
     let allBetWithMarketId = await Bet.find({marketId:data.id})
-    await commissionNewModel.findAndUpdate({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
+    await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
     let inprogressData = await InprogressModel.findOne({marketId:data.id, progressType:'VoideBet'})
     if(inprogressData === null){
         try{

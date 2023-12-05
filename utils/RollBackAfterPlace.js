@@ -14,7 +14,7 @@ async function rollBack(data){
         return 'please provide a valid password'
     }else{ 
         let allBetWithMarketId = await Bet.find({marketId:data.id})
-        await commissionNewModel.findAndUpdate({marketId:data.id,commissionStatus : 'cancel'}, {commissionStatus : 'Unclaimed'})
+        await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'cancel'}, {commissionStatus : 'Unclaimed'})
         let InProgress = await InprogressModel.findOne({marketId : allBetWithMarketId[0].marketId, progressType:'RollBack'})
         if(InProgress === null){
             try{

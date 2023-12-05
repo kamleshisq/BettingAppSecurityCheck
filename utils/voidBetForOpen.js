@@ -18,7 +18,7 @@ async function voidbetBeforePlace(data){
     try{
 
         let bets = await Bet.find({marketId:data.id, status : {$in: ['OPEN', 'MAP']}})
-        await commissionNewModel.findAndUpdate({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
+        await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
         let inprogressData = await InprogressModel.findOne({marketId:data.id, progressType:'VoideBet'})
         if(inprogressData === null){
             try{
