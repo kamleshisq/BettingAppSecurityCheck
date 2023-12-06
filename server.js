@@ -8390,6 +8390,9 @@ io.on('connection', (socket) => {
         if(Bets.length > 0){
             if(Bets[0].betType === 'Tennis' || Bets[0].betType === 'Cricket'){
                 Status = true
+                if(Bets[0].event.toLowerCase().startsWith('test')){
+                    Status = false
+                }
             }
         }
         socket.emit('cashoutCheck', {Status})
