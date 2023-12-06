@@ -1708,7 +1708,7 @@ io.on('connection', (socket) => {
                         { $limit: 1 } // Limit to one document
                     ],
                     otherWhiteLabel: [
-                        { $match: { whiteLabel: 'dev.ollscores.com' } }
+                        { $match: { whiteLabel: process.env.whiteLabelName } }
                     ]
                 }
             },
