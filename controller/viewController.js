@@ -2903,7 +2903,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let stakeLabledata
         let userMultimarkets
         let betsOnthisMatch = []
-        let rules = await gamrRuleModel.find()
+        let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:req.currentUser._id})
             userMultimarkets = await multimarkets.findOne({userId:req.currentUser._id})
@@ -3025,7 +3025,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     const sportData = await getCrkAndAllData()
     
     const betLimit = await betLimitModel.find()
-    // let rules = await gamrRuleModel.find()
+    // let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
     //     let date = new Date(item.updated_on);
@@ -3046,7 +3046,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     let multimarket 
     let stakeLabledata
     let betsOnthisMatch = []
-    let rules = await gamrRuleModel.find()
+    let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
@@ -4606,7 +4606,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let stakeLabledata
         let userMultimarkets
         let Bets = []
-        let rules = await gamrRuleModel.find()
+        let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:mainId})
             userMultimarkets = await multimarkets.findOne({userId:mainId})
