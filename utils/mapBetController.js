@@ -105,8 +105,8 @@ async function mapBet(data){
                             commissionPercentage:commissionPer,
                             date:Date.now(),
                             marketName:bets[bet].marketName,
-                            loginUserId:data.LOGINDATA.LOGINUSER._id,
-                            parentIdArray:data.LOGINDATA.LOGINUSER.parentUsers
+                            loginUserId:user.id,
+                            parentIdArray:user.parentUsers
                             
                         }
                         usercommissiondata = await newCommissionModel.create(commissiondata)
@@ -144,7 +144,7 @@ async function mapBet(data){
                                     commissionPercentage:commissionPer,
                                     date:Date.now(),
                                     marketName:bets[bet].marketName,
-                                    loginUserId:data.LOGINDATA.LOGINUSER._id,
+                                    loginUserId:user.id,
                                     parentIdArray:childUser.parentUsers,
                                     uniqueId:usercommissiondata._id
                                 }
