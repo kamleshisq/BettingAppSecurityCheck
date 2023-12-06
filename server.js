@@ -1699,21 +1699,28 @@ io.on('connection', (socket) => {
                         $in:data.ids
                     },
                     status:false,
-                    $or: [
-                        {
-                            whiteLabel: '1'
-                        },
-                        {
-                            $and: [
-                                {
-                                    whiteLabel: { $ne: '1' }
-                                },
-                                {
-                                    whiteLabel: 'dev.ollscores.com'
-                                }
-                            ]
-                        }
+                }
+            },
+            {
+                $facet: {
+                    whiteLabel1: [
+                        { $match: { whiteLabel: '1' } },
+                        { $limit: 1 } // Limit to one document
+                    ],
+                    otherWhiteLabel: [
+                        { $match: { whiteLabel: 'dev.ollscores.com' } }
                     ]
+                }
+            },
+            {
+                $project: {
+                    result: {
+                        $cond: {
+                            if: { $gt: [{ $size: '$whiteLabel1' }, 0] },
+                            then: '$whiteLabel1',
+                            else: '$otherWhiteLabel'
+                        }
+                    }
                 }
             }
         ])
