@@ -3019,9 +3019,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.multimarkets = catchAsync(async(req, res, next) => {
     
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     
     const betLimit = await betLimitModel.find()
