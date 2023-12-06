@@ -1701,12 +1701,10 @@ io.on('connection', (socket) => {
                     status:false,
                     $or: [
                         {
-                            whiteLabel: {
-                                $in: ["1"]
-                            }
+                            whiteLabel: "1"
                         },
                         {
-                            whiteLabel: process.env.whiteLabelName
+                            whiteLabel: "jkjk"
                         }
                     ]
                 }
