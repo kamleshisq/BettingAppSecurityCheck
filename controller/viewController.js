@@ -4638,7 +4638,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let check = await resumeSuspendModel.aggregate([
             {
                 $match:{
-                    status:false
+                    status:false,
+                    whiteLabel:req.currentUser.whiteLabel
                 }
             }
         ])
