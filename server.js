@@ -1706,7 +1706,7 @@ io.on('connection', (socket) => {
                             }
                         },
                         {
-                            whiteLabel: "jkjk"
+                            whiteLabel: process.env.whiteLabelName
                         }
                     ]
                 }
