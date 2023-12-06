@@ -1725,6 +1725,11 @@ io.on('connection', (socket) => {
             }
         ])
         let forFancy 
+        if(resumeSuspendMarkets && resumeSuspendMarkets.length > 0){
+            resumeSuspendMarkets = resumeSuspendMarkets[0].result
+        }else{
+            resumeSuspendMarkets = []
+        }
         console.log(resumeSuspendMarkets, "finalResult[1].event_idfinalResult[1].event_id")
         if(finalResult.items.length > 0 ){
             if(finalResult.items[1]){
