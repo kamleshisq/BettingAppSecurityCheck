@@ -7490,13 +7490,13 @@ io.on('connection', (socket) => {
 
     socket.on('suspendResume', async(data) => {
         try{
-            let check = await resumeSuspendModel.findOne({marketId:data.id})
+            let check = await resumeSuspendModel.findOne({marketId:data.id, whiteLabel:process.env.whiteLabelName})
             let status 
             if(check){
-                await resumeSuspendModel.findOneAndUpdate({marketId:data.id}, {userName:data.LOGINDATA.LOGINUSER.userName, status:!check.status})
+                await resumeSuspendModel.findOneAndUpdate({marketId:data.id, whiteLabel:process.env.whiteLabelName}, {userName:data.LOGINDATA.LOGINUSER.userName, status:!check.status})
                 status = !check.status
             }else{
-                await resumeSuspendModel.create({marketId:data.id, userName:data.LOGINDATA.LOGINUSER.userName, status:false})
+                await resumeSuspendModel.create({marketId:data.id, userName:data.LOGINDATA.LOGINUSER.userName, status:false, whiteLabel:process.env.whiteLabelName})
                 status = false
             }
             socket.emit('suspendResume', {status, marketId:data.id, status2:'success'})
