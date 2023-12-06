@@ -4159,7 +4159,6 @@ io.on('connection', (socket) => {
 
     socket.on('UerBook', async(data) => {
         console.log('START')
-        // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
         let users = []
         let falg = false
         let Id 
@@ -4176,74 +4175,21 @@ io.on('connection', (socket) => {
                 falg = true
                 users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
 
-                // parentIdOfClickedUser = thatUSer._id
             }
-            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
-            // users = await User.find({userName:'testing_sdm-10000'})
-            // users = await User.aggregate([
-            //     {
-            //         $match: {
-            //             parent_id: data.LOGINDATA.LOGINUSER._id.toString(),
-            //             isActive: true,
-            //             roleName: { $ne: 'Operator' }
-            //         }
-            //     },
-            //     {
-            //         $addFields: {
-            //             userIdString: { $toString: "$_id" }
-            //         }
-            //     },
-            //     {
-            //         $lookup: {
-            //             from: "betmodels", 
-            //             let: { userId: "$userIdString", userName: "$userName" },
-            //             pipeline: [
-            //                 {
-            //                     $match: {
-            //                         marketId : data.marketId,
-            //                         $expr: {
-            //                             $or: [
-            //                                 { $in: ["$$userId", "$parentArray.parentUSerId"] },
-            //                                 { $eq: ["$$userName", "$userName"] }
-            //                             ]
-            //                         },
-            //                         status: 'OPEN',
-            //                     }
-            //                 },
-            //                 { $limit: 1 }
-            //             ],
-            //             as: "openBets"
-            //         }
-            //     },
-            //     {
-            //         $match: {
-            //             openBets: { $not: { $size: 0 } }
-            //         }
-            //     }
-            // ]);
-            // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
             Id = data.LOGINDATA.LOGINUSER.userName   
-
         }
-        console.log('MIDDLE')
-        console.log(users, "usersusersusers")
+        
         try{
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
-                let children
-                let parentIdOfClickedUser
                 if(falg){
                     childrenUsername1 = await User.distinct("userName", {parentUsers:ele.id})
-                    parentIdOfClickedUser = ele.id
                 }else{
                     childrenUsername1 = await User.distinct("userName", {parentUsers:ele._id})
-                    parentIdOfClickedUser = ele._id
                 }
-                // children.map(ele1 => {
-                //     childrenUsername1.push(ele1.userName) 
-                // })
+                
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
                         {
@@ -4801,9 +4747,7 @@ io.on('connection', (socket) => {
                 }
             })
             let resultPromise = await Promise.all(newUser)
-            console.log(resultPromise, "resultPromiseresultPromise")
             const result = resultPromise.filter(item => item && item.Bets && item.Bets.length > 0);
-            console.log(result, "resultresultresultresult")
             
             let matchName2 = await Bet.findOne({marketId: data.marketId})
             let matchName
