@@ -295,6 +295,7 @@ exports.allOperators = catchAsync(async(req, res, next)=>{
 })
 
 exports.login = catchAsync(async(req, res, next) => {
+    console.log('adminLogin PAge')
     if(req.currentUser){
         if(req.currentUser.role_type < 5){
            return res.redirect('/admin/dashboard')

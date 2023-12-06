@@ -450,6 +450,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 });
 
 exports.isLogin_Admin = catchAsync( async (req, res, next) => {
+    console.log('adminLogin')
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
