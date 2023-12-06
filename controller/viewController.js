@@ -4844,26 +4844,26 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                     as: "parentdata"
                 }
             },
-            {
-                $group: {
-                    _id: "$userName",
-                    totalCommission: { $sum: "$commission" },
-                    netupline: { $sum:{
-                        $reduce:{
-                            input:'$parentdata',
-                            initialValue:0,
-                            in: { $add: ["$$value", "$$this.commission"] }
-                        }
-                    }},
-                }
-            },
-            {
-                $sort:{
-                _id : -1,
-                totalCommission : 1,
-                netupline : 1
-                }
-            }
+            // {
+            //     $group: {
+            //         _id: "$userName",
+            //         totalCommission: { $sum: "$commission" },
+            //         netupline: { $sum:{
+            //             $reduce:{
+            //                 input:'$parentdata',
+            //                 initialValue:0,
+            //                 in: { $add: ["$$value", "$$this.commission"] }
+            //             }
+            //         }},
+            //     }
+            // },
+            // {
+            //     $sort:{
+            //     _id : -1,
+            //     totalCommission : 1,
+            //     netupline : 1
+            //     }
+            // }
         ])
         console.log(thatMarketData, "thatMarketData")
         res.status(200).render('./commissionMarketWise/commissionMarketWise2/commissionMarketWise2.ejs', {
