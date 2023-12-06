@@ -1698,12 +1698,20 @@ io.on('connection', (socket) => {
                     marketId : {
                         $in:data.ids
                     },
-                    status:false
+                    status:false,
+                    $or: [
+                        {
+                            $expr: {
+                                $in: ["1", "$whiteLabel"]
+                            }
+                        },
+                        { whiteLabel: "jkjk" }
+                    ]
                 }
             }
         ])
         let forFancy 
-        // console.log(finalResult, "finalResult[1].event_idfinalResult[1].event_id")
+        console.log(resumeSuspendMarkets, "finalResult[1].event_idfinalResult[1].event_id")
         if(finalResult.items.length > 0 ){
             if(finalResult.items[1]){
                 forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
