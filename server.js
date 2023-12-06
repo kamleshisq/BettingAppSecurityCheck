@@ -1730,7 +1730,6 @@ io.on('connection', (socket) => {
         }else{
             resumeSuspendMarkets = []
         }
-        console.log(resumeSuspendMarkets, "finalResult[1].event_idfinalResult[1].event_id")
         if(finalResult.items.length > 0 ){
             if(finalResult.items[1]){
                 forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
