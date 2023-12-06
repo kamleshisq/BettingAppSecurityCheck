@@ -4802,6 +4802,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     //     childrenUsername.push(ele.userName) 
     // })
     if(req.query.market){
+        console.log(req.query.market, "req.query.marketreq.query.marketreq.query.market")
         let market 
         let marketName 
         if(req.query.market.toLowerCase().startsWith('book')){
