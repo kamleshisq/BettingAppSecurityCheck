@@ -1701,11 +1701,13 @@ io.on('connection', (socket) => {
                     status:false,
                     $or: [
                         {
-                            $expr: {
-                                $in: ["1", "$whiteLabel"]
+                            whiteLabel: {
+                                $in: ["1"]
                             }
                         },
-                        { whiteLabel: "jkjk" }
+                        {
+                            whiteLabel: "jkjk"
+                        }
                     ]
                 }
             }
