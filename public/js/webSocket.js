@@ -118,6 +118,10 @@ socket.on('connect', () => {
         }, 5000);
     }
 
+    $(document).ready(function() {
+        $(".main-loader").addClass("hide");
+    });
+
     $('.button').click(function (event) {
         if ($(this).find('.mylock-data').length > 0) {
           event.stopImmediatePropagation();

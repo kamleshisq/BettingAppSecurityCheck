@@ -65,9 +65,9 @@
     <!-- AOS ANOMATION CDN  -->
 
     <!-- LOCAL CSS  -->
-    <link rel="stylesheet" href="http://ollscores.com/assets/css/style.css" />
-    <link rel="stylesheet" href="http://ollscores.com/assets/css/loggedin-page-style.css" />
-    <link rel="stylesheet" href="http://ollscores.com/assets/css/media.css" />
+    <link rel="stylesheet" href="http://dev.ollscores.com/assets/css/style.css" />
+    <link rel="stylesheet" href="http://dev.ollscores.com/assets/css/loggedin-page-style.css" />
+    <link rel="stylesheet" href="http://dev.ollscores.com/assets/css/media.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/webSocket.js"></script>
@@ -106,6 +106,7 @@
       <%}else{%>
     <body >
   <%}%>
+  <div class="main-loader"><div class="loader"></div></div>
     <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <div class="popup" id="popup-1">
       <div class="overlay"></div>
