@@ -1701,10 +1701,17 @@ io.on('connection', (socket) => {
                     status:false,
                     $or: [
                         {
-                            whiteLabel: "1"
+                            whiteLabel: '1'
                         },
                         {
-                            whiteLabel: process.env.whiteLabelName
+                            $and: [
+                                {
+                                    whiteLabel: { $ne: '1' }
+                                },
+                                {
+                                    whiteLabel: 'dev.ollscores.com'
+                                }
+                            ]
                         }
                     ]
                 }
