@@ -18761,7 +18761,7 @@ socket.on('connect', () => {
     $(document).ready(function() {
         setTimeout(function() {
           $(".main-loader").addClass("hide");
-        }, 2000);
+        }, 1000);
       });
 })
 })
