@@ -4814,7 +4814,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             market = req.query.market
             marketName = req.query.market
         }
-        // console.log(market)
+        console.log(market)
         let thatMarketData = await commissionNewModel.aggregate([
             {
                 $match: {
