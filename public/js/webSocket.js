@@ -13923,8 +13923,7 @@ socket.on('connect', () => {
         $(document).on('click', ".Unmap", function(e){
             e.preventDefault()
             let id = this.id
-            console.log('WORKING')
-            // socket.emit('unmapBet', {LOGINDATA, id})
+            socket.emit('unmapBet', {LOGINDATA, id})
         })
 
         socket.on('unmapBet', data => {
@@ -13932,21 +13931,20 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
-                console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
+                const table = row.parentNode;
                 if (row) {
-                    const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
-                    console.log("rowremove")
-                    // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    // rowsToUpdate.forEach((row, index) => {
-                    //     const srNoCell = row.cells[0]; 
-                    //     srNoCell.textContent = index + rowIndex + 1;
-                    //   });
+                  }
+                  let length = $(table).find('tr').length;
+                  if(length < 1){
+                    try{
+                        $('#mapMarket').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
+                    }catch(err){
+                    }
                   }
                   let html = ``
-                //   console.log(document.getElementById('open-market-table').getElementsByClassName('empty_table'))
                   if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
@@ -14046,7 +14044,6 @@ socket.on('connect', () => {
                   let length = $(table).find('tr').length;
                   if(length < 1){
                     try{
-                        // $(table).find('tbody').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
                         $('#openmarket').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
                     }catch(err){
                     }
