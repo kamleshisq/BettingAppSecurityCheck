@@ -13833,7 +13833,7 @@ socket.on('connect', () => {
                     var targetRow = allRowsvoid.filter(`#${targetId}`);
                 
                     if (targetRow.length > 0) {
-                        targetRow.find('td:eq(2)').text(`${data.cancelledBetData[i].count}`);
+                        targetRow.find('td:eq(1)').text(`${data.cancelledBetData[i].count}`);
                     }
                 }
                 allRowsvoid.each(function () {
