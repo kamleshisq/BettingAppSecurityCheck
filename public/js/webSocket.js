@@ -13898,7 +13898,9 @@ socket.on('connect', () => {
         socket.on('ROLLBACKDETAILS', data => {
             if(data.status === "error"){
                 alert("Please try again later")
-            }else{ 
+            }else if(data.status === "err"){
+                alert(data.msg)
+            }else { 
                 console.log(data)
                 alert(data.message)
                 // const deleteButton = document.getElementById(data.id);

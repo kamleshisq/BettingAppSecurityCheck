@@ -6567,7 +6567,7 @@ io.on('connection', (socket) => {
             
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
-                socket.emit('ROLLBACKDETAILS', 'please provide a valid password') 
+                socket.emit('ROLLBACKDETAILS', {msg:'please provide a valid password', status:'err'}) 
             }else{ 
                 let betdata = await Bet.findOne({marketId:data.id})
                 let runnersData = await runnerDataModel.findOne({marketId:data.id})
