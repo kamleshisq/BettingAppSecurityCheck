@@ -14089,7 +14089,7 @@ socket.on('connect', () => {
                 const row = deleteButton.closest('tr'); 
                 const table = row.parentNode;
                 let check = $('#settle-market-table').find(`tr#${data.id.replace(/\./g, '\\.')}`)
-                console.log(check, "checkcheckcheckcheck")
+                console.log(check.length, "checkcheckcheckcheck")
                 if(check.length > 0){
 
                 }
