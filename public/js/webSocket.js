@@ -13972,13 +13972,29 @@ socket.on('connect', () => {
                     let option = data.betdata.match.split(" v ")
                     let option1 = option[0]
                     let option2 = option[1]
-                    html += `<td>
-                                <select class="selectOption">
-                                <option value="" selected></option>
-                                <option value="${option1 }">${option1 }</option>
-                                <option value="${option2 }">${option2 }</option>
-                                </select>
-                            </td>`
+                    let runners1
+                    if(data.runnersData){
+                        runners1 = JSON.parse(data.runnersData.runners)
+                    }
+                    if(runners1){
+                        html += `<td>
+                        <select class="selectOption">
+                        <option value="" selected></option>`
+                        for(let i = 0; i < runners1.length; i++){
+                            html += `<option value="${runners1.runner }">${runners1.runner }</option>`
+                        }
+                        html  += `</select>
+                    </td>`
+                    }else{
+
+                        html += `<td>
+                                    <select class="selectOption">
+                                    <option value="" selected></option>
+                                    <option value="${option1 }">${option1 }</option>
+                                    <option value="${option2 }">${option2 }</option>
+                                    </select>
+                                </td>`
+                    }
                 }
                 html += `<td>
                     <div class="btn-group">

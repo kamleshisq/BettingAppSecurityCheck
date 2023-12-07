@@ -3680,7 +3680,8 @@ io.on('connection', (socket) => {
         try{
             await Bet.updateMany({ marketId: data.id, status: 'MAP' }, { $unset: { result: 1 }, $set: { status: 'OPEN' } });
             let betdata = await Bet.findOne({marketId:data.id})
-            socket.emit('unmapBet', {status:"success", betdata, result:data.result})
+            let runnersData = await runnerDataModel.findOne({marketId:data.id})
+            socket.emit('unmapBet', {status:"success", betdata, result:data.result, runnersData})
         }catch(err){
             console.log(err)
             socket.emit('unmapBet', {message:'err', status:'error'})
