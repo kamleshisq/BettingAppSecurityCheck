@@ -13823,7 +13823,7 @@ socket.on('connect', () => {
                     }
                 });
             }else{
-                $('#settle-market-table').html('<tr class="empty_table"><td>No SETTLED Markets! </td></tr>')
+                $('#settle-market-table tbody').html('<tr class="empty_table"><td>No SETTLED Markets! </td></tr>')
             }
 
             if(data.cancelledBetData.length > 0){
@@ -13846,7 +13846,7 @@ socket.on('connect', () => {
                     }
                 });
             }else{
-                $('#void-market-table').html('<tr class="empty_table"><td>No VOIDED Markets! </td></tr>')
+                $('#void-market-table tbody').html('<tr class="empty_table"><td>No VOIDED Markets! </td></tr>')
             }
             
             // for(let i = 0; i < data.settledeBetData.length; i++){
