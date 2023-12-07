@@ -13781,7 +13781,7 @@ socket.on('connect', () => {
         socket.on('getRefresh', async(data) => {
             for(let i = 0; i < data.getMapBetData.length; i++){
                 console.log(data.getMapBetData[i])
-                console.log($('#mapMarket').find(`tr #${data.getMapBetData[i]._id}`))
+                console.log($('#mapMarket').find(`tr#${data.getMapBetData[i]._id}`))
             }
         })
 
