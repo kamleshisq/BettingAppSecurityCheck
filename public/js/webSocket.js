@@ -13799,7 +13799,7 @@ socket.on('connect', () => {
         socket.on('getRefresh', async(data) => {
             data.getMapBetData.map(data1 => {
                 console.log('working')
-                $('#mapMarket').find(`.Unmap #${data1._id}`).find('td:eq(2)').text(`${data1.count}`);
+                $('#mapMarket').find(`.Unmap #${data1._id}`).closest('tr').find('td:eq(2)').text(`${data1.count}`);
             })
         })
 
