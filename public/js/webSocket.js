@@ -13780,11 +13780,7 @@ socket.on('connect', () => {
 
         socket.on('getRefresh', async(data) => {
             data.getMapBetData.map(data1 => {
-                // console.log('working', data1)
-                let id = `#${data1._id}`
-                console.log(id)
-                console.log($(`#${data1._id}`))
-                $(`#mapMarket tr:has(button.Unmap#${data1._id})`)
+                
             })
         })
 
@@ -14062,14 +14058,14 @@ socket.on('connect', () => {
                       <th>Action</th>
                     </tr>
                   </thead>`}
-                html += ` <tbody class="new-body" id="mapMarket"><tr>
+                html += ` <tbody class="new-body" id="mapMarket"><tr id="${data.betdata.marketId}">
                 <td>${data.betdata.marketName}</td>
                 <td class="Result" >${data.result}</td>
-                <td>
+                <td >
                     <div class="btn-group">
-                        <button class="Unmap" id="${data.betdata.marketId}"> Unmap</button>
-                        <button class="Settle" id="${data.betdata.marketId}"> Settle</button>
-                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
+                        <button class="Unmap" > Unmap</button>
+                        <button class="Settle" > Settle</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" > VOID</button>
                     </div>
                 </td>
                 </tr>
