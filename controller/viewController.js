@@ -3669,7 +3669,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-
+    console.log(betsEventWiseMap, "betsEventWiseMapbetsEventWiseMapbetsEventWiseMapbetsEventWiseMap")
     let betsEventWiseCancel = await betModel.aggregate([
         {
             $match: {
