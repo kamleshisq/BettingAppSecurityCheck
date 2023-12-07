@@ -14043,7 +14043,7 @@ socket.on('connect', () => {
                    
                   }
                   let length = $(table).find('tr').length;
-                  console.log(length)
+                  console.log(length, "lengthlengthlength")
                   if(length < 1){
                     $(table).find('tbody').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
                   }
