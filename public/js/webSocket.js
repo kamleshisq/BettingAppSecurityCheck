@@ -13779,9 +13779,10 @@ socket.on('connect', () => {
 
 
         socket.on('getRefresh', async(data) => {
-            data.getMapBetData.map(data1 => {
-                
-            })
+            for(let i = 0; i < data.getMapBetData.length; i++){
+                console.log(data.getMapBetData[i])
+                console.log($('#mapMarket').find(`tr #${data.getMapBetData[i]._id}`))
+            }
         })
 
         $(document).on('click', '.voidBet2', function(e){
