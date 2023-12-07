@@ -3693,7 +3693,7 @@ io.on('connection', (socket) => {
             // console.log(data)
             let thatBet = await Bet.findOne({marketId : data.id})
             socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id, thatBet, result:data.result})
-            // let data1 = mapBet(data)
+            let data1 = mapBet(data)
             // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
