@@ -8563,7 +8563,7 @@ io.on('connection', (socket) => {
             },
             {
                 $group: {
-                  _id: "$marketName",
+                  _id: "$marketId",
                   count: { $sum: 1 },
                 }
             }
