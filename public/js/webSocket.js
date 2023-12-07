@@ -14096,7 +14096,16 @@ socket.on('connect', () => {
                     </td>
                   </tr>`
                   console.log(html)
-                  $('#settle-market-table').append(html)
+                  $('#settle-market-table tbody').append(html)
+                  if(!($('#settle-market-table thead tr').length > 0)){
+                    let html = `<tr>
+                    <th>Market Name</th>
+                    <th>Result</th>
+                    <th>Settled Bets</th>
+                    <th>Action</th>
+                  </tr>`
+                    $('#settle-market-table thead').html(html)
+                  }
                 }
 
                 // if (row) {
