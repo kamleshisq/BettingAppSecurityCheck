@@ -14027,8 +14027,7 @@ socket.on('connect', () => {
             let id =  this.id
             var newColumnCell = $(this).closest('tr').find('.selectOption');
             let result = newColumnCell.val()
-            console.log('WORKING')
-            // socket.emit("VoidBetIn22", {LOGINDATA, id, result})
+            socket.emit("VoidBetIn22", {LOGINDATA, id, result})
         })
 
         socket.on("VoidBetIn22", async(data) => {
