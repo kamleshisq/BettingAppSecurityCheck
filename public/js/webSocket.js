@@ -14055,12 +14055,14 @@ socket.on('connect', () => {
                     <tr>
                       <th>Market Name</th>
                       <th>Result</th>
+                      <th>Count</th>
                       <th>Action</th>
                     </tr>
                   </thead>`}
                 html += ` <tbody class="new-body" id="mapMarket"><tr id="${data.betdata.marketId}">
                 <td>${data.betdata.marketName}</td>
                 <td class="Result" >${data.result}</td>
+                <td class="count" >0</td>
                 <td >
                     <div class="btn-group">
                         <button class="Unmap" > Unmap</button>
