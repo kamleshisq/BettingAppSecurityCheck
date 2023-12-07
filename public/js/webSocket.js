@@ -14088,6 +14088,11 @@ socket.on('connect', () => {
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
                 const table = row.parentNode;
+                let check = $('#settle-market-table').find(`tr#${data.id.replace(/\./g, '\\.')}`)
+                console.log(check, "checkcheckcheckcheck")
+                if(check.length > 0){
+
+                }
                 // if (row) {
                 //     const rowIndex = Array.from(table.rows).indexOf(row);
                 //     row.remove(); 
