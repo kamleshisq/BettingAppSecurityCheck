@@ -14009,7 +14009,8 @@ socket.on('connect', () => {
             let id = $(this).closest('tr').attr('id')
             let resultTag = $(this).closest('tr').find('.Result')
             let result = resultTag.text()
-            socket.emit('Settle', {LOGINDATA, id, result})
+            console.log(id, "idididid")
+            // socket.emit('Settle', {LOGINDATA, id, result})
         })
 
         socket.on('Settle', data => {
