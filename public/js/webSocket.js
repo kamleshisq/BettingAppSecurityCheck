@@ -13804,7 +13804,7 @@ socket.on('connect', () => {
 
             if(data.settledeBetData.length > 0){
 
-                var allRowssettle = $('#settle-market-table tr');
+                var allRowssettle = $('#settle-market-table tbody tr');
                 for (let i = 0; i < data.settledeBetData.length; i++) {
                     var targetId = data.settledeBetData[i]._id.replace(/\./g, '\\.');
                     var targetRow = allRowssettle.filter(`#${targetId}`);
@@ -13827,7 +13827,7 @@ socket.on('connect', () => {
             }
 
             if(data.cancelledBetData.length > 0){
-                var allRowsvoid = $('#void-market-table tr');
+                var allRowsvoid = $('#void-market-table tbody tr');
                 for (let i = 0; i < data.cancelledBetData.length; i++) {
                     var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
                     var targetRow = allRowsvoid.filter(`#${targetId}`);
