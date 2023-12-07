@@ -13780,9 +13780,7 @@ socket.on('connect', () => {
 
         socket.on('getRefresh', async(data) => {
             for(let i = 0; i < data.getMapBetData.length; i++){
-                console.log(data.getMapBetData[i]._id)
-                console.log($('#mapMarket').find(`tr#${data.getMapBetData[i]._id.replace(/\./g, '\\.')}`))
-
+                $('#mapMarket').find(`tr#${data.getMapBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.getMapBetData[i].count}`)
             }
         })
 
