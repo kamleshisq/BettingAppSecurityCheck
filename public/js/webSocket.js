@@ -14089,10 +14089,22 @@ socket.on('connect', () => {
                 const row = deleteButton.closest('tr'); 
                 const table = row.parentNode;
                 let check = $('#settle-market-table').find(`tr#${data.id.replace(/\./g, '\\.')}`)
-                console.log(check.length, "checkcheckcheckcheck")
-                if(check.length > 0){
-
+                // console.log(check.length, "checkcheckcheckcheck")
+                if(!(check.length > 0)){
+                    let html = `<tr id="${data.id}">
+                    <td>${data.thatBet.marketName}</td>
+                    <td>${data.thatBet.result}</td>
+                    <td>1</td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="ROLLBACK" data-bs-toggle="modal" data-bs-target="#myModalSE2"> ROLLBACK</button>
+                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1"> VOID</button>
+                      </div>
+                    </td>
+                  </tr>`
+                  $('#settle-market-table').append(html)
                 }
+
                 // if (row) {
                 //     const rowIndex = Array.from(table.rows).indexOf(row);
                 //     row.remove(); 
