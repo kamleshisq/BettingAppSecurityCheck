@@ -13819,17 +13819,17 @@ socket.on('connect', () => {
                 }
             });
 
-            var allRows = $('#void-market-table tr');
+            var allRowsvoid = $('#void-market-table tr');
             for (let i = 0; i < data.cancelledBetData.length; i++) {
                 var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
-                var targetRow = allRows.filter(`#${targetId}`);
+                var targetRow = allRowsvoid.filter(`#${targetId}`);
             
                 // If the target row is found, update the count
                 if (targetRow.length > 0) {
                     targetRow.find('td:eq(2)').text(`${data.cancelledBetData[i].count}`);
                 }
             }
-            allRows.each(function () {
+            allRowsvoid.each(function () {
                 var rowId = $(this).attr('id');
                 var found = data.cancelledBetData.some(item => item._id === rowId);
             
