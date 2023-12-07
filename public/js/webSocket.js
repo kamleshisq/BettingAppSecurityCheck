@@ -14024,6 +14024,7 @@ socket.on('connect', () => {
                       <th>Cancel Bet</th>
                     </tr>
                   </thead>`}
+                  console.log($('#void-market-table tr'), `#${data.betdata.marketId.replace(/\./g, '\\.')}`)
                   console.log($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`).length)
                   if($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`).length > 0){
 
