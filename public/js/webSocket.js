@@ -13900,9 +13900,9 @@ socket.on('connect', () => {
                 alert("Please try again later")
             }else{ 
                 alert(data.message)
-                const deleteButton = document.getElementById(data.id);
-                const row = deleteButton.closest('tr'); 
-                const table = row.parentNode;
+                // const deleteButton = document.getElementById(data.id);
+                // const row = deleteButton.closest('tr'); 
+                // const table = row.parentNode;
                 // if (row) {
                 //     const rowIndex = Array.from(table.rows).indexOf(row);
                 //     row.remove();
