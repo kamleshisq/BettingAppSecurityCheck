@@ -13779,9 +13779,27 @@ socket.on('connect', () => {
 
 
         socket.on('getRefresh', async(data) => {
-            for(let i = 0; i < data.getMapBetData.length; i++){
-                $('#mapMarket').find(`tr#${data.getMapBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.getMapBetData[i].count}`)
+            var allRows = $('#mapMarket tr');
+            for (let i = 0; i < data.getMapBetData.length; i++) {
+                var targetId = data.getMapBetData[i]._id.replace(/\./g, '\\.');
+                var targetRow = allRows.filter(`#${targetId}`);
+            
+                // If the target row is found, update the count
+                if (targetRow.length > 0) {
+                    targetRow.find('td:eq(2)').text(`${data.getMapBetData[i].count}`);
+                }
             }
+            allRows.each(function () {
+                var rowId = $(this).attr('id');
+                var found = data.getMapBetData.some(item => item._id === rowId);
+            
+                if (!found) {
+                    $(this).remove();
+                }
+            });
+            // for(let i = 0; i < data.getMapBetData.length; i++){
+            //     $('#mapMarket').find(`tr#${data.getMapBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.getMapBetData[i].count}`)
+            // }
             for(let i = 0; i < data.settledeBetData.length; i++){
                 $('#settle-market-table').find(`tr#${data.settledeBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.settledeBetData[i].count}`)
             }
@@ -14009,22 +14027,26 @@ socket.on('connect', () => {
             let id = $(this).closest('tr').attr('id')
             let resultTag = $(this).closest('tr').find('.Result')
             let result = resultTag.text()
-            console.log(id, "idididid")
-            // socket.emit('Settle', {LOGINDATA, id, result})
+            socket.emit('Settle', {LOGINDATA, id, result})
         })
 
         socket.on('Settle', data => {
+            console.log(data)
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
                 alert(data.message)
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
+                const table = row.parentNode;
                 if (row) {
-                    const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
-                  }
+                }
+                let length = $(table).find('tr').length;
+                if(length < 1){
+                      $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
+                }
             }
         })
 

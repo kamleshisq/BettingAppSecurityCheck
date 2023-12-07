@@ -3691,7 +3691,8 @@ io.on('connection', (socket) => {
     socket.on('Settle', async(data) => {
         try{
             // console.log(data)
-            socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id})
+            let thatBet = await Bet.findOne({marketId : data.id})
+            socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id, thatBet, result:data.result})
             let data1 = mapBet(data)
             // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
