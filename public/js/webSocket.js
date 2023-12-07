@@ -13798,8 +13798,10 @@ socket.on('connect', () => {
 
         socket.on('getRefresh', async(data) => {
             data.getMapBetData.map(data1 => {
-                console.log('working', data1)
-                console.log($('#mapMarket').find(`#${data1._id}`))
+                // console.log('working', data1)
+                let id = `#${data1._id}`
+                console.log(id)
+                console.log($('#mapMarket').find(`${id}`))
                 $('#mapMarket').find(`.Unmap #${data1._id}`).closest('tr').find('td:eq(2)').text(`${data1.count}`);
             })
         })
