@@ -3732,7 +3732,9 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
 
     let data = await betModel.findOne({eventId:req.query.id})
     let openBetsMarketIds = await betModel.distinct('marketId', {status:"OPEN", eventId:req.query.id, userName:{$in:childrenUsername}})
-    console.log(openBetsMarketIds, "openBetsMarketIdsopenBetsMarketIdsopenBetsMarketIds")
+    // console.log(openBetsMarketIds, "openBetsMarketIdsopenBetsMarketIdsopenBetsMarketIds")
+    let runnersData = await runnerData.find({marketId:{$in:openBetsMarketIds}})
+    console.log(runnersData, "runnersDatarunnersDatarunnersData")
     res.status(200).render("./sattlementInPage/main",{
         title:"Settlements",
         me,
