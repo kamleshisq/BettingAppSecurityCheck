@@ -13783,7 +13783,7 @@ socket.on('connect', () => {
                 // console.log('working', data1)
                 let id = `#${data1._id}`
                 console.log(id)
-                console.log($(`#mapMarket #${data1._id})`))
+                console.log($(`#mapMarket)`).find(`#${data1._id}`))
                 $(`#mapMarket tr:has(button.Unmap#${data1._id})`)
             })
         })
