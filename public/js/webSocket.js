@@ -13848,13 +13848,6 @@ socket.on('connect', () => {
             }else{
                 $('#void-market-table tbody').html('<tr class="empty_table"><td>No VOIDED Markets! </td></tr>')
             }
-            
-            // for(let i = 0; i < data.settledeBetData.length; i++){
-            //     $('#settle-market-table').find(`tr#${data.settledeBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.settledeBetData[i].count}`)
-            // }
-            // for(let i = 0; i < data.cancelledBetData.length; i++){
-            //     $('#void-market-table').find(`tr#${data.cancelledBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.cancelledBetData[i].count}`)
-            // }
         })
 
         $(document).on('click', '.voidBet2', function(e){
