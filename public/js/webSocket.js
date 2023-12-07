@@ -13782,6 +13782,12 @@ socket.on('connect', () => {
             for(let i = 0; i < data.getMapBetData.length; i++){
                 $('#mapMarket').find(`tr#${data.getMapBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.getMapBetData[i].count}`)
             }
+            for(let i = 0; i < data.settledeBetData.length; i++){
+                $('#settle-market-table').find(`tr#${data.settledeBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.settledeBetData[i].count}`)
+            }
+            for(let i = 0; i < data.cancelledBetData.length; i++){
+                $('#void-market-table').find(`tr#${data.cancelledBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.cancelledBetData[i].count}`)
+            }
         })
 
         $(document).on('click', '.voidBet2', function(e){
