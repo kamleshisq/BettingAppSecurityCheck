@@ -8554,6 +8554,21 @@ io.on('connection', (socket) => {
 
     socket.on('getRefresh', async(data) => {
         console.log(data, "getRefreshgetRefreshgetRefresh")
+        let getMapBetData = await Bet.aggregate([
+            {
+                $match: {
+                    status:"MAP",
+                    eventId:req.query.id,
+                }
+            },
+            {
+                $group: {
+                  _id: "$marketName",
+                  count: { $sum: 1 },
+                }
+            }
+        ])
+        console.log(getMapBetData, "getMapBetDatagetMapBetDatagetMapBetDatagetMapBetData")
     })
 
 })
