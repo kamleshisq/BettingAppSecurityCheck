@@ -14016,7 +14016,6 @@ socket.on('connect', () => {
                     row.remove(); 
                   }
                   let html = ``
-                  console.log(document.getElementById('void-market-table').getElementsByClassName('empty_table'))
                   if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
@@ -14025,15 +14024,18 @@ socket.on('connect', () => {
                       <th>Cancel Bet</th>
                     </tr>
                   </thead>`}
-                html += ` <tbody class="new-body" id="voidMarket"><tr id='${data.betdata.marketId}'>
-                <td>${data.betdata.marketName}</td><td>0</td></tr>
-                </tbody>`
+                  if($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`).length > 0){
+
+                  }else{
+                      html += ` <tbody class="new-body" id="voidMarket"><tr id='${data.betdata.marketId}'>
+                      <td>${data.betdata.marketName}</td><td>0</td></tr>
+                      </tbody>`
+                  }
                 if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length === 0){
                     document.getElementById('voidMarket').insertAdjacentHTML('beforeend', html);
                 }else{
                     document.getElementById('void-market-table').innerHTML = html
                 }
-                alert('Bets canceled successfully')
             }
         })
 
