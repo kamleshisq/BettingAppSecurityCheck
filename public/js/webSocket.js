@@ -14094,7 +14094,7 @@ socket.on('connect', () => {
                     let html = `<tr id="${data.id}">
                     <td>${data.thatBet.marketName}</td>
                     <td>${data.thatBet.result}</td>
-                    <td>1</td>
+                    <td>0</td>
                     <td>
                       <div class="btn-group">
                         <button class="ROLLBACK" data-bs-toggle="modal" data-bs-target="#myModalSE2"> ROLLBACK</button>
