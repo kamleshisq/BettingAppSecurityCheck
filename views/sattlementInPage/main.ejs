@@ -203,14 +203,14 @@
                 </thead>
                 <tbody class="new-body">
                   <%for(let i = 0; i < betsEventWiseSettel.length; i++){ %>
-                  <tr>
+                  <tr id="<%=betsEventWiseSettel[i].marketId%>">
                     <td><%= betsEventWiseSettel[i].marketName%></td>
                     <td><%= betsEventWiseSettel[i].result%></td>
                     <td><%= betsEventWiseSettel[i].count%></td>
                     <td>
                       <div class="btn-group">
-                        <button class="ROLLBACK" data-bs-toggle="modal" data-bs-target="#myModalSE2" id="<%=betsEventWiseSettel[i].marketId%>"> ROLLBACK</button>
-                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1" id="<%=betsEventWiseSettel[i].marketId%>"> VOID</button>
+                        <button class="ROLLBACK" data-bs-toggle="modal" data-bs-target="#myModalSE2" > ROLLBACK</button>
+                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1" > VOID</button>
                       </div>
                     </td>
                   </tr>
@@ -240,7 +240,7 @@
                 </thead>
                 <tbody class="new-body" id="voidMarket">
                   <%for(let i = 0; i < betsEventWiseCancel.length; i++){ %>
-                  <tr>
+                  <tr id="<%betsEventWiseCancel[i].marketId%>">
                     <td><%= betsEventWiseCancel[i].marketName%></td>
                     <td><%= betsEventWiseCancel[i].count%></td>
                   </tr>
