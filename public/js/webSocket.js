@@ -14083,7 +14083,6 @@ socket.on('connect', () => {
                 let check = $('#settle-market-table').find(`tr#${data.id.replace(/\./g, '\\.')}`)
                 // console.log(check.length, "checkcheckcheckcheck")
                 if(!(check.length > 0)){
-                    console.log('working')
                     let html = `<tr id="${data.id}">
                     <td>${data.thatBet.marketName}</td>
                     <td>${data.thatBet.result}</td>
@@ -14095,9 +14094,7 @@ socket.on('connect', () => {
                       </div>
                     </td>
                   </tr>`
-                  console.log(html)
                   $('#settle-market-table tbody').append(html)
-                  console.log($('#settle-market-table thead tr').length, "WORKING" )
                   if($('#settle-market-table thead tr').length === 0){
                     let html = `<tr>
                     <th>Market Name</th>
@@ -14108,6 +14105,7 @@ socket.on('connect', () => {
                   var thead = $('<thead>');
                   thead.html(html)
                   $('#settle-market-table').prepend(thead);
+                  $('#settle-market-table tbody').find('.empty_table').remove()
                   }
                 }
 
