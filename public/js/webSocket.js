@@ -13899,6 +13899,7 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{ 
+                console.log(data)
                 alert(data.message)
                 // const deleteButton = document.getElementById(data.id);
                 // const row = deleteButton.closest('tr'); 
