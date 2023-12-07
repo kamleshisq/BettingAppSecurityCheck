@@ -13732,8 +13732,6 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/settlementIn"){
-        // let inprogressTable = document.getElementById('InprogresDATA')
-        // if(inprogressTable){
 
         function winnerMarketOPtion(){
             let id 
@@ -13746,9 +13744,7 @@ socket.on('connect', () => {
         }
         winnerMarketOPtion()
         socket.on('WINNERMARKET', data => {
-            // console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
             let runners = JSON.parse(data.runners)
-            // console.log(runners, "runnersrunnersrunners")
             let html = '<option value="" selected></option>'
             for(let i = 0; i < runners.length; i++){
                 html += `<option value="${runners[i].runner}">${runners[i].runner}</option>`
@@ -13758,16 +13754,16 @@ socket.on('connect', () => {
             function getinProgressData(){
                 $(document).ready(function() {
                     socket.emit("getinProgressData", search.split('=')[1])
+                    socket.emit('getRefresh', search.split('=')[1])
                   });
                   setTimeout(()=>{
                     getinProgressData()
-                  }, 500)
+                  }, 1000)
             }
             getinProgressData()
         // }
         let status = false
         socket.on('getinProgressData', data => {
-            // console.log('WORKING', 123456789)
             let html= ''
             for(let i = 0; i < data.length; i++){
                 html = `<tr class="RAWCLASS" id="${data[i].marketId}"><td>${data[i].marketName}</td>
@@ -13797,7 +13793,6 @@ socket.on('connect', () => {
                     window.location.reload()
                 }
             }
-
         })
 
         $(document).on('click', '.voidBet2', function(e){
