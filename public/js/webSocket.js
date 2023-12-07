@@ -13832,7 +13832,6 @@ socket.on('connect', () => {
                     var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
                     var targetRow = allRowsvoid.filter(`#${targetId}`);
                 
-                    // If the target row is found, update the count
                     if (targetRow.length > 0) {
                         targetRow.find('td:eq(2)').text(`${data.cancelledBetData[i].count}`);
                     }
