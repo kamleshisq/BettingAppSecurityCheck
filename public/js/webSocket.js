@@ -13808,14 +13808,14 @@ socket.on('connect', () => {
                     targetRow.find('td:eq(2)').text(`${data.settledeBetData[i].count}`);
                 }
             }
-            allRowssettle.each(function () {
-                var rowId = $(this).attr('id');
-                var found = data.settledeBetData.some(item => item._id === rowId);
+            // allRowssettle.each(function () {
+            //     var rowId = $(this).attr('id');
+            //     var found = data.settledeBetData.some(item => item._id === rowId);
             
-                if (!found) {
-                    $(this).remove();
-                }
-            });
+            //     if (!found) {
+            //         $(this).remove();
+            //     }
+            // });
 
             var allRows = $('#void-market-table tr');
             for (let i = 0; i < data.cancelledBetData.length; i++) {
