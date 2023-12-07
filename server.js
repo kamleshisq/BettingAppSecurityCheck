@@ -8582,7 +8582,21 @@ io.on('connection', (socket) => {
                 }
             }
         ])
-        console.log(settledeBetData, "getMapBetDatagetMapBetDatagetMapBetDatagetMapBetData")
+        let cancelledBetData = await Bet.aggregate([
+            {
+                $match: {
+                    status:"CANCEL",
+                    eventId:data
+                }
+            },
+            {
+                $group: {
+                  _id: "$marketId",
+                  count: { $sum: 1 },
+                }
+            }
+        ])
+        console.log(cancelledBetData, "getMapBetDatagetMapBetDatagetMapBetDatagetMapBetData")
     })
 
 })
