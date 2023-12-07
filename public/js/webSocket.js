@@ -13801,7 +13801,7 @@ socket.on('connect', () => {
                 // console.log('working', data1)
                 let id = `#${data1._id}`
                 console.log(id)
-                console.log($('#mapMarket'))
+                console.log($('#mapMarket tr:has(button#154654)'))
                 $('#mapMarket').find(`.Unmap #${data1._id}`).closest('tr').find('td:eq(2)').text(`${data1.count}`);
             })
         })
