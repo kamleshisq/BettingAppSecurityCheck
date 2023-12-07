@@ -13816,8 +13816,6 @@ socket.on('connect', () => {
                 }
                 allRowssettle.each(function () {
                     var rowId = $(this).attr('id');
-                    console.log(rowId)
-                    console.log(data.settledeBetData)
                     var found = data.settledeBetData.some(item => item._id === rowId);
                 
                     if (!found) {
