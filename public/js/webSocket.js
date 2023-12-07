@@ -13819,24 +13819,24 @@ socket.on('connect', () => {
                 }
             });
 
-            var allRowsvoid = $('#void-market-table tr');
-            for (let i = 0; i < data.cancelledBetData.length; i++) {
-                var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
-                var targetRow = allRowsvoid.filter(`#${targetId}`);
+            // var allRowsvoid = $('#void-market-table tr');
+            // for (let i = 0; i < data.cancelledBetData.length; i++) {
+            //     var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
+            //     var targetRow = allRowsvoid.filter(`#${targetId}`);
             
-                // If the target row is found, update the count
-                if (targetRow.length > 0) {
-                    targetRow.find('td:eq(2)').text(`${data.cancelledBetData[i].count}`);
-                }
-            }
-            allRowsvoid.each(function () {
-                var rowId = $(this).attr('id');
-                var found = data.cancelledBetData.some(item => item._id === rowId);
+            //     // If the target row is found, update the count
+            //     if (targetRow.length > 0) {
+            //         targetRow.find('td:eq(2)').text(`${data.cancelledBetData[i].count}`);
+            //     }
+            // }
+            // allRowsvoid.each(function () {
+            //     var rowId = $(this).attr('id');
+            //     var found = data.cancelledBetData.some(item => item._id === rowId);
             
-                if (!found) {
-                    $(this).remove();
-                }
-            });
+            //     if (!found) {
+            //         $(this).remove();
+            //     }
+            // });
             
             // for(let i = 0; i < data.settledeBetData.length; i++){
             //     $('#settle-market-table').find(`tr#${data.settledeBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.settledeBetData[i].count}`)
