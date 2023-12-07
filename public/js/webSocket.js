@@ -13981,7 +13981,7 @@ socket.on('connect', () => {
                         <select class="selectOption">
                         <option value="" selected></option>`
                         for(let i = 0; i < runners1.length; i++){
-                            html += `<option value="${runners1.runner }">${runners1.runner }</option>`
+                            html += `<option value="${runners1[i].runner }">${runners1[i].runner }</option>`
                         }
                         html  += `</select>
                     </td>`
