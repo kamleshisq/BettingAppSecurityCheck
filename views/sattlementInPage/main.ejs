@@ -158,6 +158,7 @@
                   <tr>
                     <th>Market Name</th>
                     <th>Result</th>
+                    <th>Count</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -166,6 +167,7 @@
                   <tr>
                     <td><%= betsEventWiseMap[i].marketName%></td>
                     <td class="Result" ><%= betsEventWiseMap[i].result%></td>
+                    <td class="count" ><%= betsEventWiseMap[i].count%></td>
                     <td>
                       <div class="btn-group">
                         <button class="Unmap" id="<%=betsEventWiseMap[i].marketId%>"> Unmap</button>
