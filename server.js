@@ -3650,7 +3650,8 @@ io.on('connection', (socket) => {
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
                 socket.emit("VoidBetIn",{message:"please provide a valid password", status:"error"})
             }else{
-                socket.emit('VoidBetIn', {message: 'Void Bet Process Start', id:data.id})
+                let betdata = await Bet.findOne({marketId:data.id})
+                socket.emit('VoidBetIn', {message: 'Void Bet Process Start', id:data.id, betdata})
                 let result = await voidBetBeforePlace(data)
             }
         }catch(err){
