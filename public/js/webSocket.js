@@ -14047,7 +14047,8 @@ socket.on('connect', () => {
                   if(length < 1){
                     console.log('working')
                     try{
-                        $(table).find('tbody').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
+                        // $(table).find('tbody').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
+                        $('#openmarket').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
                     }catch(err){
                         console.log(err)
                     }
