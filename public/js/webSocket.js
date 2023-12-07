@@ -14015,25 +14015,25 @@ socket.on('connect', () => {
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
                   }
-                //   let html = ``
-                //   console.log(document.getElementById('void-market-table').getElementsByClassName('empty_table'))
-                //   if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
-                //     html += `
-                //     <thead>
-                //     <tr>
-                //       <th>Market Name</th>
-                //       <th>Cancel Bet</th>
-                //     </tr>
-                //   </thead>`}
-                // html += ` <tbody class="new-body" id="voidMarket"><tr>
-                // <td>${data.betdata.marketName}</td><td>${data.count + 1}</td></tr>
-                // </tbody>`
-                // if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length === 0){
-                //     document.getElementById('voidMarket').insertAdjacentHTML('beforeend', html);
-                // }else{
-                //     document.getElementById('void-market-table').innerHTML = html
-                // }
-                // alert('Bets canceled successfully')
+                  let html = ``
+                  console.log(document.getElementById('void-market-table').getElementsByClassName('empty_table'))
+                  if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
+                    html += `
+                    <thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Cancel Bet</th>
+                    </tr>
+                  </thead>`}
+                html += ` <tbody class="new-body" id="voidMarket"><tr id='${data.betdata.marketId}'>
+                <td>${data.betdata.marketName}</td><td>0</td></tr>
+                </tbody>`
+                if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length === 0){
+                    document.getElementById('voidMarket').insertAdjacentHTML('beforeend', html);
+                }else{
+                    document.getElementById('void-market-table').innerHTML = html
+                }
+                alert('Bets canceled successfully')
             }
         })
 
