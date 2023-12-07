@@ -14098,7 +14098,7 @@ socket.on('connect', () => {
                   console.log(html)
                   $('#settle-market-table tbody').append(html)
                   console.log($('#settle-market-table thead tr').length, "WORKING" )
-                  if(!($('#settle-market-table thead tr').length > 0)){
+                  if($('#settle-market-table thead tr').length === 0){
                     let html = `<tr>
                     <th>Market Name</th>
                     <th>Result</th>
