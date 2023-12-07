@@ -13797,7 +13797,9 @@ socket.on('connect', () => {
 
 
         socket.on('getRefresh', async(data) => {
-            console.log(data)
+            getMapBetData.map(data1 => {
+                $('#mapMarket').find(`.Unmap #${data1._id}`).find('td:eq(2)').text(`${data1.count}`);
+            })
         })
 
         $(document).on('click', '.voidBet2', function(e){
