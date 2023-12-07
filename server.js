@@ -8558,7 +8558,7 @@ io.on('connection', (socket) => {
             {
                 $match: {
                     status:"MAP",
-                    eventId:req.query.id,
+                    eventId:data,
                 }
             },
             {
