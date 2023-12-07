@@ -13779,64 +13779,77 @@ socket.on('connect', () => {
 
 
         socket.on('getRefresh', async(data) => {
-            var allRows = $('#mapMarket tr');
-            for (let i = 0; i < data.getMapBetData.length; i++) {
-                var targetId = data.getMapBetData[i]._id.replace(/\./g, '\\.');
-                var targetRow = allRows.filter(`#${targetId}`);
-            
-                // If the target row is found, update the count
-                if (targetRow.length > 0) {
-                    targetRow.find('td:eq(2)').text(`${data.getMapBetData[i].count}`);
+            if(data.getMapBetData.length > 0){
+                var allRows = $('#mapMarket tr');
+                for (let i = 0; i < data.getMapBetData.length; i++) {
+                    var targetId = data.getMapBetData[i]._id.replace(/\./g, '\\.');
+                    var targetRow = allRows.filter(`#${targetId}`);
+                
+                    // If the target row is found, update the count
+                    if (targetRow.length > 0) {
+                        targetRow.find('td:eq(2)').text(`${data.getMapBetData[i].count}`);
+                    }
                 }
+                allRows.each(function () {
+                    var rowId = $(this).attr('id');
+                    var found = data.getMapBetData.some(item => item._id === rowId);
+                
+                    if (!found) {
+                        $(this).remove();
+                    }
+                });
+            }else{
+                $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
             }
-            allRows.each(function () {
-                var rowId = $(this).attr('id');
-                var found = data.getMapBetData.some(item => item._id === rowId);
-            
-                if (!found) {
-                    $(this).remove();
-                }
-            });
 
-            var allRowssettle = $('#settle-market-table tr');
-            for (let i = 0; i < data.settledeBetData.length; i++) {
-                var targetId = data.settledeBetData[i]._id.replace(/\./g, '\\.');
-                var targetRow = allRowssettle.filter(`#${targetId}`);
-            
-                // If the target row is found, update the count
-                if (targetRow.length > 0) {
-                    targetRow.find('td:eq(2)').text(`${data.settledeBetData[i].count}`);
+            if(data.settledeBetData.length > 0){
+
+                var allRowssettle = $('#settle-market-table tr');
+                for (let i = 0; i < data.settledeBetData.length; i++) {
+                    var targetId = data.settledeBetData[i]._id.replace(/\./g, '\\.');
+                    var targetRow = allRowssettle.filter(`#${targetId}`);
+                
+                    // If the target row is found, update the count
+                    if (targetRow.length > 0) {
+                        targetRow.find('td:eq(2)').text(`${data.settledeBetData[i].count}`);
+                    }
                 }
+                allRowssettle.each(function () {
+                    var rowId = $(this).attr('id');
+                    console.log(rowId)
+                    console.log(data.settledeBetData)
+                    var found = data.settledeBetData.some(item => item._id === rowId);
+                
+                    if (!found) {
+                        $(this).remove();
+                    }
+                });
+            }else{
+                $('#settle-market-table').html('<tr class="empty_table"><td>No SETTLED Markets! </td></tr>')
             }
-            allRowssettle.each(function () {
-                var rowId = $(this).attr('id');
-                console.log(rowId)
-                console.log(data.settledeBetData)
-                var found = data.settledeBetData.some(item => item._id === rowId);
-            
-                if (!found) {
-                    $(this).remove();
-                }
-            });
 
-            // var allRowsvoid = $('#void-market-table tr');
-            // for (let i = 0; i < data.cancelledBetData.length; i++) {
-            //     var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
-            //     var targetRow = allRowsvoid.filter(`#${targetId}`);
-            
-            //     // If the target row is found, update the count
-            //     if (targetRow.length > 0) {
-            //         targetRow.find('td:eq(2)').text(`${data.cancelledBetData[i].count}`);
-            //     }
-            // }
-            // allRowsvoid.each(function () {
-            //     var rowId = $(this).attr('id');
-            //     var found = data.cancelledBetData.some(item => item._id === rowId);
-            
-            //     if (!found) {
-            //         $(this).remove();
-            //     }
-            // });
+            if(data.cancelledBetData.length > 0){
+                var allRowsvoid = $('#void-market-table tr');
+                for (let i = 0; i < data.cancelledBetData.length; i++) {
+                    var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
+                    var targetRow = allRowsvoid.filter(`#${targetId}`);
+                
+                    // If the target row is found, update the count
+                    if (targetRow.length > 0) {
+                        targetRow.find('td:eq(2)').text(`${data.cancelledBetData[i].count}`);
+                    }
+                }
+                allRowsvoid.each(function () {
+                    var rowId = $(this).attr('id');
+                    var found = data.cancelledBetData.some(item => item._id === rowId);
+                
+                    if (!found) {
+                        $(this).remove();
+                    }
+                });
+            }else{
+                $('#void-market-table').html('<tr class="empty_table"><td>No VOIDED Markets! </td></tr>')
+            }
             
             // for(let i = 0; i < data.settledeBetData.length; i++){
             //     $('#settle-market-table').find(`tr#${data.settledeBetData[i]._id.replace(/\./g, '\\.')}`).find('td:eq(2)').text(`${data.settledeBetData[i].count}`)
