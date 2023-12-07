@@ -13899,16 +13899,81 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{ 
-                // console.log(data, " <=== Data")
                 alert(data.message)
                 const deleteButton = document.getElementById(data.id);
-                // console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
-                if (row) {
-                    const table = row.parentNode;
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove();
-                  }
+                const table = row.parentNode;
+                // if (row) {
+                //     const rowIndex = Array.from(table.rows).indexOf(row);
+                //     row.remove();
+                //   }
+                let html = ``
+                if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length != 0){
+                    html += `
+                    <thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Result</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>`
+                }
+                html += ` <tbody class="new-body" id="openmarket"><tr>
+                <td>${data.betdata.marketName}</td>`
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM"){
+                    if(data.betdata.marketId.slice(-2).startsWith('OE')){
+                        html += `<td>
+                        <select class="selectOption" >
+                            <option value="" selected></option>
+                            <option value="LAY">LAY</option>
+                            <option value="BACK">BACK</option>
+                         </select>
+                      </td>`
+                    }else{
+                        html += `<td><input type="number" class="selectOption" placeholder="0"></td>`
+                    }
+                }else{
+                    let option = data.betdata.match.split(" v ")
+                    let option1 = option[0]
+                    let option2 = option[1]
+                    let runners1
+                    if(data.runnersData){
+                        runners1 = JSON.parse(data.runnersData.runners)
+                    }
+                    if(runners1){
+                        html += `<td>
+                        <select class="selectOption">
+                        <option value="" selected></option>`
+                        for(let i = 0; i < runners1.length; i++){
+                            html += `<option value="${runners1[i].runner }">${runners1[i].runner }</option>`
+                        }
+                        html  += `</select>
+                    </td>`
+                    }else{
+        
+                        html += `<td>
+                                    <select class="selectOption">
+                                    <option value="" selected></option>
+                                    <option value="${option1 }">${option1 }</option>
+                                    <option value="${option2 }">${option2 }</option>
+                                    </select>
+                                </td>`
+                    }
+                }
+                html += `<td>
+                    <div class="btn-group">
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
+                        <button class="acceptBet" id="${data.betdata.marketId}"> MAP</button>
+                    </div>
+                </td>
+                </tr>
+                </tbody>   `
+        
+                if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length === 0){
+                    document.getElementById('openmarket').insertAdjacentHTML('beforeend', html);
+                }else{
+                    document.getElementById('open-market-table').innerHTML = html
+                }
             }
         })
        

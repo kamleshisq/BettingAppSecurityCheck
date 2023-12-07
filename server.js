@@ -6569,7 +6569,9 @@ io.on('connection', (socket) => {
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
                 socket.emit('ROLLBACKDETAILS', 'please provide a valid password') 
             }else{ 
-                socket.emit('ROLLBACKDETAILS', {message:'RollBack Process Start', id:data.id})
+                let betdata = await Bet.findOne({marketId:data.id})
+                let runnersData = await runnerDataModel.findOne({marketId:data.id})
+                socket.emit('ROLLBACKDETAILS', {message:'RollBack Process Start', id:data.id, betdata, runnersData})
                 let resultDate = rollBackBet(data)
             }
         }catch(err){
