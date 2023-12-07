@@ -78,12 +78,23 @@
                   let option = betsEventWiseOpen[i].match.split(" v ")
                   let option1 = option[0]
                   let option2 = option[1]
+                  let thatMarket = runnersData.find(item => item.marketId == betsEventWiseOpen[i].marketId)
+                  let runnersData1
+                  if(thatMarket){
+                    runnersData1 = JSON.parse(thatMarket.runners)
+                  }
                   %>
                   <td>
                     <select class="selectOption">
                       <option value="" selected></option>
-                      <option value="<%=option1 %>"><%=option1 %></option>
-                      <option value="<%=option2 %>"><%=option2 %></option>
+                      <%if(runnersData1){%>
+                        <%for(let j = 0; j < runnersData1.length; j++){%>
+                          <option value="<%=runnersData1[j].runner %>"><%=runnersData1[j].runner %></option>
+                        <%}%>
+                      <%}else{%>
+                        <option value="<%=option1 %>"><%=option1 %></option>
+                        <option value="<%=option2 %>"><%=option2 %></option>
+                      <%}%>
                     </select>
                   </td>
                   <%}%>
