@@ -13696,25 +13696,7 @@ socket.on('connect', () => {
             }
         })
 
-        // $(window).scroll(async function() {
-        //     var scroll = $(window).scrollTop();
-        //     var windowHeight = $(window).height();
-        //     var documentHeight = $(document).height();
-        //     if (scroll + windowHeight + 1 >= documentHeight) {
-        //         console.log('working')
-        //         let page = parseInt($('.rowId').attr('data-rowid'))
-        //         $('.rowId').attr('data-rowid',page + 1)
-        //         let to_date;
-        //         let from_date
-        //         if($('#Fdate').val() != ''){
-        //             from_date = $('#Fdate').val()
-        //         }
-        //         if($('#Tdate').val() != ''){
-        //             to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
-        //         }
-        //         socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
-        //     }
-        // })
+       
 
         $(document).on('click', ".load-more", function(e){
             let page = parseInt($('.rowId').attr('data-rowid'))
@@ -13801,7 +13783,7 @@ socket.on('connect', () => {
                 // console.log('working', data1)
                 let id = `#${data1._id}`
                 console.log(id)
-                console.log($(`#mapMarket tr:has(button.Unmap#${data1._id})`))
+                console.log($(`#mapMarket tr:has(button#${data1._id})`))
                 $(`#mapMarket tr:has(button.Unmap#${data1._id})`)
             })
         })
