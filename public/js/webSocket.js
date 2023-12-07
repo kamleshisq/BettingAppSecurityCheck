@@ -13940,7 +13940,7 @@ socket.on('connect', () => {
                   let length = $(table).find('tr').length;
                   if(length < 1){
                     try{
-                        $('#mapMarket').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
+                        $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
                     }catch(err){
                     }
                   }
