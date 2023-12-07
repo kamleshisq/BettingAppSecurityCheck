@@ -14091,6 +14091,7 @@ socket.on('connect', () => {
                 let check = $('#settle-market-table').find(`tr#${data.id.replace(/\./g, '\\.')}`)
                 // console.log(check.length, "checkcheckcheckcheck")
                 if(!(check.length > 0)){
+                    console.log('working')
                     let html = `<tr id="${data.id}">
                     <td>${data.thatBet.marketName}</td>
                     <td>${data.thatBet.result}</td>
