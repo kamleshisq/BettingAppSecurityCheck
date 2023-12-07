@@ -13795,6 +13795,11 @@ socket.on('connect', () => {
             }
         })
 
+
+        socket.on('getRefresh', async(data) => {
+            console.log(data)
+        })
+
         $(document).on('click', '.voidBet2', function(e){
             e.preventDefault()
             let id =  this.id

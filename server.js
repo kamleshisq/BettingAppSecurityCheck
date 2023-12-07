@@ -8553,7 +8553,6 @@ io.on('connection', (socket) => {
 
 
     socket.on('getRefresh', async(data) => {
-        console.log(data, "getRefreshgetRefreshgetRefresh")
         let getMapBetData = await Bet.aggregate([
             {
                 $match: {
@@ -8596,7 +8595,7 @@ io.on('connection', (socket) => {
                 }
             }
         ])
-        console.log(cancelledBetData, "getMapBetDatagetMapBetDatagetMapBetDatagetMapBetData")
+       socket.emit('getRefresh', {getMapBetData, settledeBetData, cancelledBetData})
     })
 
 })
