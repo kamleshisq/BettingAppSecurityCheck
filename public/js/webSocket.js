@@ -14105,7 +14105,9 @@ socket.on('connect', () => {
                     <th>Settled Bets</th>
                     <th>Action</th>
                   </tr>`
-                    $('#settle-market-table thead').html(html)
+                  var thead = $('<thead>');
+                  thead.html(html)
+                  $('#settle-market-table').prepend(thead);
                   }
                 }
 
