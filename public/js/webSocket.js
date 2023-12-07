@@ -14029,7 +14029,7 @@ socket.on('connect', () => {
                   var rowFound = false;
                   $('#void-market-table tbody tr').each(function () {
                     var currentRowId = $(this).attr('id');
-                    if (currentRowId === marketIdToCheck) {
+                    if (currentRowId == data.betdata.marketId) {
                       rowFound = true;
                       return false;
                     }
