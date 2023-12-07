@@ -13859,7 +13859,7 @@ socket.on('connect', () => {
 
         $(document).on('click', '.ROLLBACK', function(e){
             e.preventDefault()
-            let id = this.id
+            let id = $(this).closest('tr').attr('id')
             let modleName = "#myModalSE2"
             let form = $(modleName).find('.rollBack-form')
             form.attr('id', id);
