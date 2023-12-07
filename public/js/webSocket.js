@@ -13808,7 +13808,7 @@ socket.on('connect', () => {
 
         $(document).on('click', '.voidBet2', function(e){
             e.preventDefault()
-            let id =  this.id
+            let id = $(this).closest('tr').attr('id')
             let modleName = "#myModalSE1"
             let form = $(modleName).find('.voidbet-form2')
             form.attr('id', id);
@@ -13929,8 +13929,7 @@ socket.on('connect', () => {
         $(document).on('click', ".Unmap", function(e){
             e.preventDefault()
             let id = $(this).closest('tr').attr('id')
-            console.log(id)
-            // socket.emit('unmapBet', {LOGINDATA, id})
+            socket.emit('unmapBet', {LOGINDATA, id})
         })
 
         socket.on('unmapBet', data => {
@@ -14023,7 +14022,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".Settle", function(e){
             e.preventDefault()
-            let id = this.id
+            let id = $(this).closest('tr').attr('id')
             let resultTag = $(this).closest('tr').find('.Result')
             let result = resultTag.text()
             socket.emit('Settle', {LOGINDATA, id, result})
