@@ -13928,8 +13928,9 @@ socket.on('connect', () => {
 
         $(document).on('click', ".Unmap", function(e){
             e.preventDefault()
-            let id = this.id
-            socket.emit('unmapBet', {LOGINDATA, id})
+            let id = $(this).closest('tr').attr('id')
+            console.log(id)
+            // socket.emit('unmapBet', {LOGINDATA, id})
         })
 
         socket.on('unmapBet', data => {

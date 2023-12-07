@@ -164,15 +164,15 @@
                 </thead>
                 <tbody class="new-body" id="mapMarket">
                   <%for(let i = 0; i < betsEventWiseMap.length; i++){ %>
-                  <tr>
+                  <tr id="<%=betsEventWiseMap[i].marketId%>">
                     <td><%= betsEventWiseMap[i].marketName%></td>
                     <td class="Result" ><%= betsEventWiseMap[i].result%></td>
                     <td class="count" ><%= betsEventWiseMap[i].count%></td>
                     <td>
                       <div class="btn-group">
-                        <button class="Unmap" id="<%=betsEventWiseMap[i].marketId%>"> Unmap</button>
-                        <button class="Settle" id="<%=betsEventWiseMap[i].marketId%>"> Settle</button>
-                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE"  id="<%=betsEventWiseMap[i].marketId%>"> VOID</button>
+                        <button class="Unmap" > Unmap</button>
+                        <button class="Settle"> Settle</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" > VOID</button>
                       </div>
                     </td>
                   </tr>
