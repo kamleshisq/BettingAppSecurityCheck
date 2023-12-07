@@ -14088,10 +14088,10 @@ socket.on('connect', () => {
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
                 const table = row.parentNode;
-                if (row) {
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove(); 
-                }
+                // if (row) {
+                //     const rowIndex = Array.from(table.rows).indexOf(row);
+                //     row.remove(); 
+                // }
                 let length = $(table).find('tr').length;
                 if(length < 1){
                       $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
