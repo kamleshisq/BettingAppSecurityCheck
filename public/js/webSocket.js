@@ -13923,7 +13923,8 @@ socket.on('connect', () => {
         $(document).on('click', ".Unmap", function(e){
             e.preventDefault()
             let id = this.id
-            socket.emit('unmapBet', {LOGINDATA, id})
+            console.log('WORKING')
+            // socket.emit('unmapBet', {LOGINDATA, id})
         })
 
         socket.on('unmapBet', data => {
@@ -14043,14 +14044,11 @@ socket.on('connect', () => {
                    
                   }
                   let length = $(table).find('tr').length;
-                  console.log(length, "lengthlengthlength")
                   if(length < 1){
-                    console.log('working')
                     try{
                         // $(table).find('tbody').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
                         $('#openmarket').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
                     }catch(err){
-                        console.log(err)
                     }
                   }
                   let html = ``
