@@ -14036,15 +14036,15 @@ socket.on('connect', () => {
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
                 const row = deleteButton.closest('tr'); 
+                const table = row.parentNode;
                 if (row) {
-                    const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
                    
                   }
-                  let length = deleteButton.closest('table').find('tr').length;
+                  let length = $(table).find('tr').length;
                   if(length < 1){
-                    deleteButton.closest('table').find('tbody').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
+                    $(table).find('tbody').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
                   }
                   let html = ``
                   if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length != 0){
