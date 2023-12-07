@@ -14103,6 +14103,7 @@ socket.on('connect', () => {
                       </div>
                     </td>
                   </tr>`
+                  console.log(html)
                   $('#settle-market-table').append(html)
                 }
 
