@@ -14035,20 +14035,18 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
-                // console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
                 if (row) {
                     const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
-                    // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    // rowsToUpdate.forEach((row, index) => {
-                    //     const srNoCell = row.cells[0]; 
-                    //     srNoCell.textContent = index + rowIndex + 1;
-                    //   });
+                   
+                  }
+                  let length = deleteButton.closest('table').find('tr').length;
+                  if(length < 1){
+                    deleteButton.closest('table').find('tbody').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
                   }
                   let html = ``
-                //   console.log(document.getElementById('mapped-market-table').getElementsByClassName('empty_table'))
                   if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
