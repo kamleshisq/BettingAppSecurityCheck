@@ -14025,10 +14025,8 @@ socket.on('connect', () => {
                     </tr>
                   </thead>`}
                   console.log($('#void-market-table tr'), `#${data.betdata.marketId.replace(/\./g, '\\.')}`)
-                  console.log($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`).length)
-                  if($('#void-market-table tr').find(`#${data.betdata.marketId}`).length > 0){
-
-                  }else{
+                  console.log($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`))
+                  if($('#void-market-table tr').find(`#${data.betdata.marketId}`).length != 0){
                       html += ` <tbody class="new-body" id="voidMarket"><tr id='${data.betdata.marketId}'>
                       <td>${data.betdata.marketName}</td><td>0</td></tr>
                       </tbody>`
