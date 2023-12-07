@@ -240,7 +240,7 @@
                 </thead>
                 <tbody class="new-body" id="voidMarket">
                   <%for(let i = 0; i < betsEventWiseCancel.length; i++){ %>
-                  <tr id="<%betsEventWiseCancel[i].marketId%>">
+                  <tr id="<%= betsEventWiseCancel[i].marketId%>">
                     <td><%= betsEventWiseCancel[i].marketName%></td>
                     <td><%= betsEventWiseCancel[i].count%></td>
                   </tr>
