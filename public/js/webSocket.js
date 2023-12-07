@@ -13740,7 +13740,7 @@ socket.on('connect', () => {
                   });
                   setTimeout(()=>{
                     getinProgressData()
-                  }, 2000)
+                  }, 5000)
             }
             getinProgressData()
         // }
