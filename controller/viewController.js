@@ -3608,16 +3608,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     let betsEventWiseOpen = await betModel.aggregate([
         {
@@ -3647,7 +3639,6 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(betsEventWiseOpen, 456465465465456456456)
     let betsEventWiseMap = await betModel.aggregate([
         {
             $match: {
@@ -3740,6 +3731,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     ])
 
     let data = await betModel.findOne({eventId:req.query.id})
+    let openBetsMarketIds = await betModel.distinct('marketId', {status:"OPEN", eventId:req.query.id, userName:{$in:childrenUsername}})
+    console.log(openBetsMarketIds, "openBetsMarketIdsopenBetsMarketIdsopenBetsMarketIds")
     res.status(200).render("./sattlementInPage/main",{
         title:"Settlements",
         me,
