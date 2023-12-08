@@ -13994,6 +13994,7 @@ socket.on('connect', () => {
                 }
                 html += `<td>
                     <div class="btn-group">
+                    <button class="result" data-bs-toggle="modal" data-bs-target="#myModalre" id="${data.betdata.marketId}"> Result</button>
                         <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
                         <button class="acceptBet" id="${data.betdata.marketId}"> MAP</button>
                     </div>
@@ -14157,6 +14158,7 @@ socket.on('connect', () => {
                 }
                 html += `<td>
                     <div class="btn-group">
+                    <button class="result" data-bs-toggle="modal" data-bs-target="#myModalre" id="${data.betdata.marketId}"> Result</button>
                         <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
                         <button class="acceptBet" id="${data.betdata.marketId}"> MAP</button>
                     </div>
