@@ -518,7 +518,7 @@ module.exports = () => {
                     }
                 })
                 //for runnerDataDELETE
-                await runnerDataModel.findOneAndDelete({marketId:marketresult.mid})
+                // await runnerDataModel.findOneAndDelete({marketId:marketresult.mid})
 
                 //NET LOSING COMMISSION
 
