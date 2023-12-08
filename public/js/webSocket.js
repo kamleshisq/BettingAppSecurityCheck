@@ -14013,6 +14013,9 @@ socket.on('connect', () => {
         $(document).on("click", ".voidBet", function(e){
             e.preventDefault()
             let id =  this.id
+            if(!id){
+                id = $(this).closest('tr').attr('id')
+            }
             let modleName = "#myModalSE"
             let form = $(modleName).find('.voidbet-form')
             form.attr('id', id);
@@ -14273,7 +14276,7 @@ socket.on('connect', () => {
                     <div class="btn-group">
                         <button class="Unmap" > Unmap</button>
                         <button class="Settle" > Settle</button>
-                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1" > VOID</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" > VOID</button>
                     </div>
                 </td>
                 </tr>
