@@ -26,7 +26,7 @@ module.exports = () => {
                 'Content-Type': 'application/json',
                 'accept': 'application/json'
                 },
-            body:JSON.stringify(marketIds)
+            body:JSON.stringify(openBetsMarketIds)
         }).then(res =>res.json())
         .then(data => {
             result = data
