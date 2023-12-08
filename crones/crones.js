@@ -16,7 +16,8 @@ module.exports = () => {
         console.log("Working")
         let check = await autoSettleCheck.findOne({userName: 'admin'})
         if(check && check.status){
-        // let openBetsMarketIds = 
+        let openBetsMarketIds = await betModel.distinct({status: 'OPEN'})
+        console.log(openBetsMarketIds, "openBetsMarketIdsopenBetsMarketIdsopenBetsMarketIds")
         }
     })
 }
