@@ -14244,7 +14244,7 @@ socket.on('connect', () => {
                     <div class="btn-group">
                         <button class="Unmap" > Unmap</button>
                         <button class="Settle" > Settle</button>
-                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" > VOID</button>
+                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1" > VOID</button>
                     </div>
                 </td>
                 </tr>
