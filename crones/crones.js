@@ -14,7 +14,7 @@ const autoSettleCheck = require('../model/sattlementModel');
 module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
         console.log("Working")
-        let check = await autoSettleCheck.findOne({userName: 'admin'})
+        let check = await autoSettleCheck.findOne('marketId', {userName: 'admin'})
         if(check && check.status){
         let openBetsMarketIds = await betModel.distinct({status: 'OPEN'})
         console.log(openBetsMarketIds, "openBetsMarketIdsopenBetsMarketIdsopenBetsMarketIds")
