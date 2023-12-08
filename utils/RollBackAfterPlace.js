@@ -5,6 +5,7 @@ let settlementHistory = require("../model/settelementHistory");
 const InprogressModel = require('../model/InprogressModel');
 let Decimal = require('decimal.js');
 const commissionNewModel = require('../model/commissioNNModel');
+const revokeCommission = require('./commissionRevocke');
 
 
 async function rollBack(data){
