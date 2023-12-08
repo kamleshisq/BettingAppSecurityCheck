@@ -15,7 +15,7 @@ module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
         console.log("Working")
         let check = await autoSettleCheck.findOne({userName: 'admin'})
-        if(check){
+        if(check && check.status){
             console.log('WORKING123')
         }
     })
