@@ -17,7 +17,23 @@ module.exports = () => {
         let check = await autoSettleCheck.findOne({userName: 'admin'})
         if(check && check.status){
         let openBetsMarketIds = await betModel.distinct('marketId', {status: 'OPEN'})
-        console.log(openBetsMarketIds, "openBetsMarketIdsopenBetsMarketIdsopenBetsMarketIds")
+
+        const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
+        let result;
+        await fetch(fullUrl, {
+            method:'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'accept': 'application/json'
+                },
+            body:JSON.stringify(marketIds)
+        }).then(res =>res.json())
+        .then(data => {
+            result = data
+        })
+        if(result.data.length != 0){
+            console.log(result.data)
+        }
         }
     })
 }
