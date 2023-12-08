@@ -31,8 +31,8 @@ module.exports = () => {
         .then(data => {
             result = data
         })
+        console.log(result.data)
         if(result.data.length != 0){
-            console.log(result.data)
         }
         }
     })
