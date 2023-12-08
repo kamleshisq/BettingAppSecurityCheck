@@ -10,9 +10,10 @@ const newCommissionModel = require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
 const runnerDataModel = require('../model/runnersData');
 const autoSettleCheck = require('../model/sattlementModel');
+const commitssionData = require('../utils/createNetLoosingCommission');
 
 module.exports = () => {
-    cron.schedule('*/5 * * * * *', async() => {
+    cron.schedule('*/5 * * * *', async() => {
         console.log("Working")
         let check = await autoSettleCheck.findOne({userName: 'admin'})
         if(check && check.status){
