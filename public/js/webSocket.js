@@ -13879,7 +13879,36 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{ 
-                alert(data)
+                alert(data.msg)
+                let html = ``
+                if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
+                  html += `
+                  <thead>
+                  <tr>
+                    <th>Market Name</th>
+                    <th>Cancel Bet</th>
+                  </tr>
+                </thead>`}
+              //   console.log($('#void-market-table tr'), `#${data.betdata.marketId.replace(/\./g, '\\.')}`)
+              //   console.log($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`))
+                var rowFound = false;
+                $('#void-market-table tbody tr').each(function () {
+                  var currentRowId = $(this).attr('id');
+                  if (currentRowId == data.betdata.marketId) {
+                    rowFound = true;
+                    return false;
+                  }
+                });
+                if(!rowFound){
+                    html += ` <tbody class="new-body" id="voidMarket"><tr id='${data.betdata.marketId}'>
+                    <td>${data.betdata.marketName}</td><td>0</td></tr>
+                    </tbody>`
+                }
+              if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length === 0){
+                  document.getElementById('voidMarket').insertAdjacentHTML('beforeend', html);
+              }else{
+                  document.getElementById('void-market-table').innerHTML = html
+              }
                 // window.location.reload()
             }
         })

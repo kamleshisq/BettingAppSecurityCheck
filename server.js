@@ -3667,7 +3667,8 @@ io.on('connection', (socket) => {
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
                 socket.emit('VoidBetIn2', 'please provide a valid password') 
             }else{
-                socket.emit('VoidBetIn2', 'Void Bet Process Start')
+                let betdata = await Bet.findOne({marketId : data.id})
+                socket.emit('VoidBetIn2', {msg : 'Void Bet Process Start', betdata})
                 let reultData = await voidbetAfterPlace(data)
             }
         }catch(err){
