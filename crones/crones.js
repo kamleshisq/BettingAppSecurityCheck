@@ -16,7 +16,7 @@ module.exports = () => {
         console.log("Working")
         let check = await autoSettleCheck.findOne({userName: 'admin'})
         if(check && check.status){
-            console.log('WORKING123')
+        // let openBetsMarketIds = 
         }
     })
 }
