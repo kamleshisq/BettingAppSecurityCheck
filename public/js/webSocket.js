@@ -13983,7 +13983,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".voidBet", function(e){
             e.preventDefault()
-            let id =  $(this).closest('tr').attr('id')
+            let id =  this.id
             let modleName = "#myModalSE"
             let form = $(modleName).find('.voidbet-form')
             form.attr('id', id);
