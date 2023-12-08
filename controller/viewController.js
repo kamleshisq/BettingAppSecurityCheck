@@ -1494,9 +1494,9 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     // console.log(me)
     let settlement
-    settlement = await sattlementModel.findOne({userId:me.id})
+    settlement = await sattlementModel.findOne({userName:me.userName})
     if(settlement === null){
-        settlement = await sattlementModel.create({userId:me.id})
+        settlement = await sattlementModel.create({userId:me.id, userName:me.userName})
     }
     const currentDate = new Date(); // Current date
     const fiveDaysAgo = new Date(currentDate);

@@ -9,9 +9,10 @@ const sattlement = mongoose.Schema({
         type:Boolean,
         default:false
     },
-    eventName:[{
-        type:String
-    }]
+    userName:{
+        type:String,
+        required:true
+    }
 });
 
 
