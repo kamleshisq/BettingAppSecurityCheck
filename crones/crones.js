@@ -12,8 +12,11 @@ const runnerDataModel = require('../model/runnersData');
 const autoSettleCheck = require('../model/sattlementModel');
 
 module.exports = () => {
-    cron.schedule('*/5 * * * *', async() => {
+    cron.schedule('*/5 * * * * *', async() => {
         console.log("Working")
-        let check = await autoSettleCheck.findOne()
+        let check = await autoSettleCheck.findOne({userName: 'admin'})
+        if(check){
+            console.log('WORKING123')
+        }
     })
 }
