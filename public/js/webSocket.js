@@ -14296,6 +14296,8 @@ socket.on('connect', () => {
 
         $(document).on('click', ".result", function(){
             let id = this.id
+            let div = $('#myModalre')
+            $(div).find('.payment-method-data').html(`<div class="title">wait for the moment</div>`)
             socket.emit('GETMarketResult', id)
         })
 
