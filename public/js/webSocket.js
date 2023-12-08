@@ -14297,6 +14297,11 @@ socket.on('connect', () => {
             socket.emit('GETMarketResult', id)
         })
 
+        socket.on('GETMarketResult', data => {
+            let div = $('#myModalre')
+            $(div).find('.payment-method-data').html(`<div class="title">${data.result}</div>`)
+        })
+
         // socket.on("Settle", async(data) => {
         //     if(data.status === "error"){
         //         alert(data.message.toUpperCase())

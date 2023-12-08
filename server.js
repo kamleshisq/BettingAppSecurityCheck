@@ -8605,20 +8605,30 @@ io.on('connection', (socket) => {
 
     socket.on('GETMarketResult', async(data) => {
 
-        const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
-        let result;
-        await fetch(fullUrl, {
-            method:'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'accept': 'application/json'
-                },
-            body:JSON.stringify([data])
-        }).then(res =>res.json())
-        .then(data => {
-            result = data
-        })
-        console.log(result)
+        try{
+            const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
+            let result;
+            await fetch(fullUrl, {
+                method:'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json'
+                    },
+                body:JSON.stringify([data])
+            }).then(res =>res.json())
+            .then(data => {
+                result = data
+            })
+            // console.log(result)
+            if(result.data.length > 0){
+                socket.emit('GETMarketResult', {result:result.data[0].result, status:'sucess'})
+            }else{
+                socket.emit('GETMarketResult', {result:'result yet to be declared', status:'sucess'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('GETMarketResult', {result:'Please try again leter', status:'err'})
+        }
     })
 
 })
