@@ -253,14 +253,18 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
     console.log('WORKING13546')
     let check = await runnerDataModel.findOne({marketId:marketDetails.marketId})
     if(!check){
-    let data = {
-        runners:marketDetails.runners,
-        eventId:marketDetails.eid,
-        marketId:marketDetails.marketId,
-        sport:sportName,
-        marketTitle:marketDetails.title.toLowerCase()
-    }
-    await runnerDataModel.create(data)}
+        if(marketDetails.runners){
+
+            let data = {
+                runners:marketDetails.runners,
+                eventId:marketDetails.eid,
+                marketId:marketDetails.marketId,
+                sport:sportName,
+                marketTitle:marketDetails.title.toLowerCase()
+            }
+            await runnerDataModel.create(data)
+        }
+}
 }
 
 //FOR BET PLACE DATA 
