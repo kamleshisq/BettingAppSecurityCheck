@@ -8603,6 +8603,24 @@ io.on('connection', (socket) => {
        socket.emit('getRefresh', {getMapBetData, settledeBetData, cancelledBetData})
     })
 
+    socket.on('GETMarketResult', async(data) => {
+
+        const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
+        let result;
+        await fetch(fullUrl, {
+            method:'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'accept': 'application/json'
+                },
+            body:JSON.stringify([data])
+        }).then(res =>res.json())
+        .then(data => {
+            result = data
+        })
+        console.log(result)
+    })
+
 })
 
 http.listen(process.env.port,()=> {

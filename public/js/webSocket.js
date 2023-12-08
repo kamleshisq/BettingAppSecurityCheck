@@ -14292,7 +14292,10 @@ socket.on('connect', () => {
             }
         })
 
-
+        $(document).on('click', ".result", function(){
+            let id = this.id
+            socket.emit('GETMarketResult', id)
+        })
 
         // socket.on("Settle", async(data) => {
         //     if(data.status === "error"){
