@@ -13983,7 +13983,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".voidBet", function(e){
             e.preventDefault()
-            let id =  this.id
+            let id =  $(this).closest('tr').attr('id')
             let modleName = "#myModalSE"
             let form = $(modleName).find('.voidbet-form')
             form.attr('id', id);
@@ -14024,8 +14024,8 @@ socket.on('connect', () => {
                       <th>Cancel Bet</th>
                     </tr>
                   </thead>`}
-                  console.log($('#void-market-table tr'), `#${data.betdata.marketId.replace(/\./g, '\\.')}`)
-                  console.log($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`))
+                //   console.log($('#void-market-table tr'), `#${data.betdata.marketId.replace(/\./g, '\\.')}`)
+                //   console.log($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`))
                   var rowFound = false;
                   $('#void-market-table tbody tr').each(function () {
                     var currentRowId = $(this).attr('id');
