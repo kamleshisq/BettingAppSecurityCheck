@@ -9619,6 +9619,7 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
                 filterData.type = type
+                console.log(page, filterData, "filterDatafilterDatafilterData")
                 socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
             });
         });
