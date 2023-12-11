@@ -15454,7 +15454,7 @@ socket.on('connect', () => {
                             for(let i = 0; i < data.Bets.length; i++){
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("The Drow"))
+                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the drow"))
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
@@ -15824,7 +15824,7 @@ socket.on('connect', () => {
                             for(let i = 0; i < data.Bets.length; i++){
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("The Drow"))
+                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the drow"))
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
