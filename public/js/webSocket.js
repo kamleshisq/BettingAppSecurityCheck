@@ -9715,7 +9715,7 @@ socket.on('connect', () => {
             count += 20
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
-                $('.loadMoredive').html('<a id="loadMore">Load More</a>')
+                $('.loadMoredive').html('<a id="loadMore"> Load More </a>')
             }else{
                 $('.acount-stat-tbl-body').append(html)         
             }
@@ -9723,7 +9723,7 @@ socket.on('connect', () => {
             // console.log("working")
                 $('.loadMoredive').html("")
                 if(data.page == 0){
-                    $('.acount-stat-tbl-body').html("")
+                    $('.acount-stat-tbl-body').html(`<tr class="empty_table"><td>No data found! </td></tr>`)
                 }
         }
         })
