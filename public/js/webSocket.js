@@ -15814,7 +15814,7 @@ socket.on('connect', () => {
             socket.on('UerBook', async(data) => {
                 if(data.Bets.length > 0){
                     if(data.Bets[0].userName){ 
-                        if(data.sport == "Football"){   
+                        if(data.check){   
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
                             // let team3 = 
@@ -16004,7 +16004,7 @@ socket.on('connect', () => {
                             $('#match_odd').find(string).after(html)
                         }
                     }else{
-                       if(data.sport == "Football"){
+                       if(data.check){
     
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()

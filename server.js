@@ -4760,8 +4760,15 @@ io.on('connection', (socket) => {
                 matchName = matchName2.match
                 sport = matchName2.betType
             }
-
-           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
+            let runnerData = await runnerDataModel.findOne({marketId:data.marketId})
+            let check = false
+            if(runnerData){
+                let runn = JSON.parse(runnerData.runners)
+                if(runn.length === 3){
+                    check = true
+                }
+            }
+           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport, check});
         }catch(err){
             console.log(err)
             socket.emit('UerBook', {message:"err", status:"error"})
