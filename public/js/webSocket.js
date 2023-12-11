@@ -15649,7 +15649,7 @@ socket.on('connect', () => {
                             html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                             let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('The Draw'))
+                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('the draw'))
                             if(team1Data && team2Data && team3Data){
                                 if (team1Data.winAmount > 0){
                                     html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
@@ -16016,7 +16016,7 @@ socket.on('connect', () => {
                             html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                             let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('The Draw'))
+                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('the draw'))
                             if(team1Data && team2Data && team3Data){
                                 if (team1Data.winAmount > 0){
                                     html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
