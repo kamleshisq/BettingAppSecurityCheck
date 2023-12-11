@@ -2233,6 +2233,11 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
     var fullUrl = 'https://score-session.dbm9.com/api/tv-stream-2';
     fetch(fullUrl, {
         method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'accept': 'application/json' ,
+            "Origin":"http://ollscores.com/",
+            "Referer":"http://ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
