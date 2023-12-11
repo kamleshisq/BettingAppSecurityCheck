@@ -239,10 +239,10 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             return next(new AppError("Ops, Something went wrong Please try again later", 500))
         }
     }
-    // res.status(200).json({
-    //     status:'success',
-    //     User: newUser
-    // })
+    res.status(200).json({
+        status:'success',
+        User: newUser
+    })
 })
 
 exports.deletUser = catchAsync(async(req, res, next) =>{
