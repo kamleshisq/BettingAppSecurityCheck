@@ -4463,7 +4463,7 @@ io.on('connection', (socket) => {
                                                                                 else:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else : {$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                     }
                                                                 },
                                                                 flag:false
