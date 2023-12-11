@@ -9587,25 +9587,6 @@ socket.on('connect', () => {
 
 
     if(pathname === "/mybets"){
-        // console.log("WORKING")
-        // $(window).scroll(function() {
-        //     var scroll = $(window).scrollTop();
-        //     var windowHeight = $(window).height();
-        //     var documentHeight = $(document).height();
-        //     if (scroll + windowHeight >= documentHeight) {
-                // let page = parseInt($('.pageId').attr('data-pageid'));
-                // $('.pageId').attr('data-pageid',page + 1)
-                // let fromDate = $('#Fdate').val()
-                // let toDate = $('#Tdate').val()
-                // let type = $("#select").val()
-                // let filterData = {}
-                // filterData.fromDate = fromDate,
-                // filterData.toDate = toDate
-                // filterData.type = type
-                // socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
-        //     }
-        // });
-
         $(function () {
             $("div").slice(0, 4).show();
             $("#loadMore").on('click', function (e) {
@@ -12063,10 +12044,10 @@ socket.on('connect', () => {
             socket.emit("KYC", {data, LOGINDATA})
         })
 
-        document.getElementById("viewPdfButton").addEventListener("click", function() {
-            // console.log("Click")
-            socket.emit('getPdf', {LOGINDATA})
-          });
+        // document.getElementById("viewPdfButton").addEventListener("click", function() {
+        //     // console.log("Click")
+        //     socket.emit('getPdf', {LOGINDATA})
+        //   });
 
 
           socket.on('getPdf', pdfData => {
