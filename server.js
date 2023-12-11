@@ -4531,7 +4531,7 @@ io.on('connection', (socket) => {
                                         in: { 
                                             selectionName: "$$selection.selectionName",
                                             totalAmount: "$$selection.totalWinAmount",
-                                            exposure :"$$selection.exposure",
+                                            exposure : {$multiply:["$$selection.exposure", -1]},
                                             winAmount: { 
                                                 $add : [
                                                     "$$selection.totalWinAmount", 
