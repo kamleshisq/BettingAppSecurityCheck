@@ -2227,8 +2227,8 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
 
 exports.getLiveTv = catchAsync(async(req, res, next) => {
     let body = {
-        ipv4 : "46.101.225.192",
-        channel : "9002"
+        ipv4 : "172.105.58.243",
+        channel : "1029"
     }
     var fullUrl = 'https://score-session.dbm9.com/api/tv-stream-2';
     fetch(fullUrl, {
