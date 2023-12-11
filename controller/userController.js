@@ -166,7 +166,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     req.body.role_type = user_type.role_type
     req.body.roleName = user_type.roleName
     req.body.parent_id = req.currentUser.id
-    req.body.parent_user_type_id = req.currentUser.user_type_id
+    // req.body.parent_user_type_id = req.currentUser.user_type_id
     req.body.userName = req.body.userName.toLowerCase();
     req.body.parentUsers = []
     if(req.currentUser.parentUsers){
@@ -184,61 +184,61 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         req.body.myShare = req.body.Visible
     }
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
-    console.log(req.body, 'req.bodyreq.bodyreq.body')
-    // const newUser = await User.create(req.body);
+    // console.log(req.body, 'req.bodyreq.bodyreq.body')
+    const newUser = await User.create(req.body);
     // if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
     //    await settlementModel.create({userId:newUser.id})
     // }
-    // if(req.body.Credit != ''){
-    //     if(req.currentUser.availableBalance < req.body.Credit){
-    //         return next(new AppError("Insufficient Credit Limit !"))
-    //     }
-    //     newUser.balance = parseFloat(req.body.Credit);
-    //     newUser.availableBalance = parseFloat(req.body.Credit);
-    //     newUser.creditReference = parseFloat(req.body.Credit);
-    //     req.currentUser.availableBalance = parseFloat(req.currentUser.availableBalance - req.body.Credit);
-    //     req.currentUser.downlineBalance = parseFloat(req.currentUser.downlineBalance) + parseFloat(req.body.Credit);
-    //     const updatedChild = await User.findByIdAndUpdate(newUser.id, newUser,{
-    //         new:true
-    //     });
-    //     const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, {availableBalance:req.currentUser.availableBalance, downlineBalance:req.currentUser.downlineBalance});
-    //     // const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, req.currentUser);
-    //     if(!updatedChild || !updatedparent){
-    //         return next(new AppError("Ops, Something went wrong While Fund Debit Please try again later", 500))
-    //     }
-    //     let childAccStatement = {}
-    //     let ParentAccStatement = {}
-    //     let date = Date.now()
-    //     childAccStatement.child_id = newUser.id;
-    //     childAccStatement.user_id = newUser.id;
-    //     childAccStatement.parent_id = req.currentUser.id;
-    //     childAccStatement.description = 'Chips credited to ' + newUser.name + '(' + newUser.userName + ') from parent user ' + req.currentUser.name + "(" + req.currentUser.userName + ")";
-    //     childAccStatement.creditDebitamount = parseFloat(req.body.Credit);
-    //     childAccStatement.balance = newUser.availableBalance;
-    //     childAccStatement.date = date
-    //     childAccStatement.userName = newUser.userName
-    //     childAccStatement.role_type = newUser.role_type
-    //     // childAccStatement.Remark = req.body.remark
-    //     const accStatementChild = await accountStatement.create(childAccStatement)
-    //     if(!accStatementChild){
-    //         return next(new AppError("Ops, Something went wrong While Fund Debit Please try again later", 500))
-    //     }
+    if(req.body.Credit != ''){
+        if(req.currentUser.availableBalance < req.body.Credit){
+            return next(new AppError("Insufficient Credit Limit !"))
+        }
+        newUser.balance = parseFloat(req.body.Credit);
+        newUser.availableBalance = parseFloat(req.body.Credit);
+        newUser.creditReference = parseFloat(req.body.Credit);
+        req.currentUser.availableBalance = parseFloat(req.currentUser.availableBalance - req.body.Credit);
+        req.currentUser.downlineBalance = parseFloat(req.currentUser.downlineBalance) + parseFloat(req.body.Credit);
+        const updatedChild = await User.findByIdAndUpdate(newUser.id, newUser,{
+            new:true
+        });
+        const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, {availableBalance:req.currentUser.availableBalance, downlineBalance:req.currentUser.downlineBalance});
+        // const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, req.currentUser);
+        if(!updatedChild || !updatedparent){
+            return next(new AppError("Ops, Something went wrong While Fund Debit Please try again later", 500))
+        }
+        let childAccStatement = {}
+        let ParentAccStatement = {}
+        let date = Date.now()
+        childAccStatement.child_id = newUser.id;
+        childAccStatement.user_id = newUser.id;
+        childAccStatement.parent_id = req.currentUser.id;
+        childAccStatement.description = 'Chips credited to ' + newUser.name + '(' + newUser.userName + ') from parent user ' + req.currentUser.name + "(" + req.currentUser.userName + ")";
+        childAccStatement.creditDebitamount = parseFloat(req.body.Credit);
+        childAccStatement.balance = newUser.availableBalance;
+        childAccStatement.date = date
+        childAccStatement.userName = newUser.userName
+        childAccStatement.role_type = newUser.role_type
+        // childAccStatement.Remark = req.body.remark
+        const accStatementChild = await accountStatement.create(childAccStatement)
+        if(!accStatementChild){
+            return next(new AppError("Ops, Something went wrong While Fund Debit Please try again later", 500))
+        }
 
-    //     ParentAccStatement.child_id = newUser.id;
-    //     ParentAccStatement.user_id = req.currentUser.id;
-    //     ParentAccStatement.parent_id = req.currentUser.id;
-    //     ParentAccStatement.description = 'Chips credited to ' + newUser.name + '(' + newUser.userName + ') from parent user ' + req.currentUser.name + "(" + req.currentUser.userName + ")";
-    //     ParentAccStatement.creditDebitamount = -parseFloat(req.body.Credit);
-    //     ParentAccStatement.balance = req.currentUser.availableBalance;
-    //     ParentAccStatement.date = date
-    //     ParentAccStatement.userName = req.currentUser.userName;
-    //     ParentAccStatement.role_type = req.currentUser.role_type
-    //     // ParentAccStatement.Remark = req.body.remark
-    //     const accStatementparent = await accountStatement.create(ParentAccStatement)
-    //     if(!accStatementparent){
-    //         return next(new AppError("Ops, Something went wrong Please try again later", 500))
-    //     }
-    // }
+        ParentAccStatement.child_id = newUser.id;
+        ParentAccStatement.user_id = req.currentUser.id;
+        ParentAccStatement.parent_id = req.currentUser.id;
+        ParentAccStatement.description = 'Chips credited to ' + newUser.name + '(' + newUser.userName + ') from parent user ' + req.currentUser.name + "(" + req.currentUser.userName + ")";
+        ParentAccStatement.creditDebitamount = -parseFloat(req.body.Credit);
+        ParentAccStatement.balance = req.currentUser.availableBalance;
+        ParentAccStatement.date = date
+        ParentAccStatement.userName = req.currentUser.userName;
+        ParentAccStatement.role_type = req.currentUser.role_type
+        // ParentAccStatement.Remark = req.body.remark
+        const accStatementparent = await accountStatement.create(ParentAccStatement)
+        if(!accStatementparent){
+            return next(new AppError("Ops, Something went wrong Please try again later", 500))
+        }
+    }
     // res.status(200).json({
     //     status:'success',
     //     User: newUser
