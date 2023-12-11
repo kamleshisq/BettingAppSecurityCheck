@@ -12044,6 +12044,14 @@ socket.on('connect', () => {
             socket.emit("KYC", {data, LOGINDATA})
         })
 
+
+        let viewButton = document.getElementById('viewPdfButton')
+        if(viewButton){
+            viewButton.addEventListener("click", function() {
+                    // console.log("Click")
+                    socket.emit('getPdf', {LOGINDATA})
+                  });
+        }
         // document.getElementById("viewPdfButton").addEventListener("click", function() {
         //     // console.log("Click")
         //     socket.emit('getPdf', {LOGINDATA})
