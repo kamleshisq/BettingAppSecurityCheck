@@ -191,7 +191,7 @@ async function mapBet(data){
                   }
 
                 let bet1 = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:debitCreditAmount, result: data.result})
-                let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, Won:1, exposure:-exposure, uplinePL:-debitCreditAmount, pointsWL:debitCreditAmount}})
+                let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
                 let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/WON`
 
                 let debitAmountForP = debitCreditAmount
@@ -229,7 +229,7 @@ async function mapBet(data){
                 "user_id":user._id,
                 "description": description,
                 "creditDebitamount" : parseFloat(debitCreditAmount),
-                "balance" : user.availableBalance + parseFloat(debitCreditAmount),
+                "balance" : parseFloat(user.availableBalance) + parseFloat(debitCreditAmount),
                 "date" : Date.now(),
                 "userName" : user.userName,
                 "role_type" : user.role_type,
@@ -326,7 +326,7 @@ async function mapBet(data){
                     debitCreditAmount = bets[bet].Stake
                 }
                 let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:debitCreditAmount, result:data.result})
-                let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, Won:1, exposure:-parseFloat(exposure), uplinePL:-debitCreditAmount, pointsWL:debitCreditAmount}})
+                let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
                 let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/WON`
 
                 let debitAmountForP = parseFloat(debitCreditAmount)
@@ -364,7 +364,7 @@ async function mapBet(data){
                   "user_id":user._id,
                   "description": description,
                   "creditDebitamount" : debitCreditAmount,
-                  "balance" : user.availableBalance + parseFloat(debitCreditAmount),
+                  "balance" : parseFloat(user.availableBalance) + parseFloat(debitCreditAmount),
                   "date" : Date.now(),
                   "userName" : user.userName,
                   "role_type" : user.role_type,
@@ -381,7 +381,7 @@ async function mapBet(data){
                             creditDebitamount = bets[bet].Stake
                         }
                         let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:creditDebitamount, result:data.result})
-                        let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: creditDebitamount, myPL: creditDebitamount, Won:1, exposure:-parseFloat(exposure), uplinePL:-creditDebitamount, pointsWL:creditDebitamount}})
+                        let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(creditDebitamount), myPL: parseFloat(creditDebitamount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(creditDebitamount), pointsWL:parseFloat(creditDebitamount)}})
                         let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/WON`
 
                         let debitAmountForP = parseFloat(creditDebitamount)
@@ -419,7 +419,7 @@ async function mapBet(data){
                           "user_id":user._id,
                           "description": description,
                           "creditDebitamount" : creditDebitamount,
-                          "balance" : user.availableBalance + parseFloat(creditDebitamount),
+                          "balance" : parseFloat(user.availableBalance) + parseFloat(creditDebitamount),
                           "date" : Date.now(),
                           "userName" : user.userName,
                           "role_type" : user.role_type,
@@ -431,7 +431,7 @@ async function mapBet(data){
                 let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"LOSS", result:data.result})
                 let user 
                 let exposure = bets[bet].exposure
-                user = await userModel.findByIdAndUpdate(bets[bet].userId, {$inc:{Loss:1, exposure:-exposure, availableBalance: -exposure, myPL:-exposure, uplinePL:exposure, pointsWL:-exposure}})
+                user = await userModel.findByIdAndUpdate(bets[bet].userId, {$inc:{Loss:1, exposure:-parseFloat(exposure), availableBalance: -parseFloat(exposure), myPL:-parseFloat(exposure), uplinePL:parseFloat(exposure), pointsWL:-parseFloat(exposure)}})
                 let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/LOSS`
 
                 let debitAmountForP = exposure
@@ -468,7 +468,7 @@ async function mapBet(data){
                     "user_id":user._id,
                     "description": description,
                     "creditDebitamount" : -exposure,
-                    "balance" : user.availableBalance - exposure,
+                    "balance" : parseFloat(user.availableBalance) - parseFloat(exposure),
                     "date" : Date.now(),
                     "userName" : user.userName,
                     "role_type" : user.role_type,
