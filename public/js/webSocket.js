@@ -15815,6 +15815,7 @@ socket.on('connect', () => {
                 if(data.Bets.length > 0){
                     console.log(data.Bets[0].userName, "data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
                     if(data.Bets[0].userName){ 
+                        console.log('working', data.check)
                         if(data.check){   
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
