@@ -2161,7 +2161,7 @@ socket.on('connect', () => {
             // console.log(data.refreshStatus)
             // console.log(data)
             // console.log('rows',data.result)
-            // let headHight = document.getElementsByClassName('HeadRow').height()
+            // let headHight = document.getElementsByClassName('Headraw').height()
             // console.log( "user row height", $('.UserRow').height())
             // loadHight += (data.result * $('.UserRow').height()) 
             let response = data.response;
@@ -15454,7 +15454,7 @@ socket.on('connect', () => {
                             for(let i = 0; i < data.Bets.length; i++){
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the drow"))
+                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the draw"))
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
@@ -15644,7 +15644,7 @@ socket.on('connect', () => {
                         let html = `<tr class="headDetail"><th>User name</th>
                         <th>${team1}</th>
                         <th>${team2}</th>
-                        <th>The Drow</th></tr>`
+                        <th>The draw</th></tr>`
                         for(let i = 0; i < data.Bets.length; i++){
                             html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
@@ -15824,7 +15824,7 @@ socket.on('connect', () => {
                             for(let i = 0; i < data.Bets.length; i++){
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the drow"))
+                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the draw"))
                                 console.log(team1Data, team2Data, team3Data, "team3Datateam3Datateam3Datateam3Data")
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
@@ -16014,7 +16014,7 @@ socket.on('connect', () => {
                         let html = `<tr class="headDetail"><th>User name</th>
                         <th>${team1}</th>
                         <th>${team2}</th>
-                        <th>The Drow</th></tr>`
+                        <th>The draw</th></tr>`
                         for(let i = 0; i < data.Bets.length; i++){
                             html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
