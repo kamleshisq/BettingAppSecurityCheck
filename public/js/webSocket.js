@@ -15446,7 +15446,7 @@ socket.on('connect', () => {
             socket.on('Book',async(data)=>{
                 if(data.Bets.length > 0){
                     if(data.Bets[0].userName){ 
-                        if(data.check){   
+                        if(data.sport == "Football"){   
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
                             // let team3 = 
@@ -15499,16 +15499,16 @@ socket.on('connect', () => {
                                     }else{
                                         html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if ((-team1Data.exposure - team2Data.exposure) > 0){
-                                        html += `<td class="green">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                    if ((team1Data.lossAmount + team2Data.lossAmount) > 0){
+                                        html += `<td class="green">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        html += `<td class="red">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
                                     }
                                 }else if (!team1Data && (team2Data && team3Data)){
-                                    if ((-team3Data.exposure - team2Data.exposure) > 0){
-                                        html += `<td class="green">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                    if ((team3Data.lossAmount + team2Data.lossAmount) > 0){
+                                        html += `<td class="green">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        html += `<td class="red">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
                                     }
                                     if (team2Data.winAmount > 0){
                                         html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
@@ -15526,10 +15526,10 @@ socket.on('connect', () => {
                                     }else{
                                         html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if ((-team3Data.exposure - team1Data.exposure) > 0){
-                                        html += `<td class="green">${(-team3Data.exposure - team1Data.exposure).toFixed(2)}</td>`
+                                    if ((team3Data.lossAmount + team1Data.lossAmount) > 0){
+                                        html += `<td class="green">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(-team3Data.exposure - team1Data.exposure).toFixed(2)}</td>`
+                                        html += `<td class="red">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
                                     }
                                     if (team3Data.winAmount > 0){
                                         html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
@@ -15637,7 +15637,7 @@ socket.on('connect', () => {
                             $('#match_odd_Book').find(string).after(html)
                         }
                     }else{
-                       if(data.check){
+                       if(data.sport == "Football"){
     
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
@@ -15677,16 +15677,16 @@ socket.on('connect', () => {
                                 }else{
                                     html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
                                 }
-                                if ((-team1Data.exposure - team2Data.exposure) > 0){
-                                    html += `<td class="green">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                if ((team1Data.lossAmount + team2Data.lossAmount) > 0){
+                                    html += `<td class="green">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
                                 }else{
-                                    html += `<td class="red">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                    html += `<td class="red">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
                                 }
                             }else if (!team1Data && (team2Data && team3Data)){
-                                if ((-team3Data.exposure - team2Data.exposure) > 0){
-                                    html += `<td class="green">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                if ((team3Data.lossAmount + team2Data.lossAmount) > 0){
+                                    html += `<td class="green">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
                                 }else{
-                                    html += `<td class="red">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                    html += `<td class="red">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
                                 }
                                 if (team2Data.winAmount > 0){
                                     html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
@@ -15704,10 +15704,10 @@ socket.on('connect', () => {
                                 }else{
                                     html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
                                 }
-                                if ((-team3Data.exposure - team2Data.exposure) > 0){
-                                    html += `<td class="green">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                if ((team3Data.lossAmount + team1Data.lossAmount) > 0){
+                                    html += `<td class="green">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
                                 }else{
-                                    html += `<td class="red">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                    html += `<td class="red">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
                                 }
                                 if (team3Data.winAmount > 0){
                                     html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`

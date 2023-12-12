@@ -5051,18 +5051,9 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $cond:{
-                                                                                if : {$eq : ["$parentId", loginId]},
-                                                                                then:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                                else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
-                                                                            }
+                                                                            $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else :{$cond:{
-                                                                            if : {$eq : ['$$value.flag', true]},
-                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                            else:"$$value.value"
-                                                                        }}
-                                                                        
+                                                                        else : "$$value.value"
                                                                     }
                                                                 },
                                                                 flag:false
@@ -5103,18 +5094,9 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $cond:{
-                                                                                if : {$eq : ["$parentId", loginId]},
-                                                                                then:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                                else:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
-                                                                            }
+                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else :{$cond:{
-                                                                            if : {$eq : ['$$value.flag', true]},
-                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                            else:"$$value.value"
-                                                                        }}
-                                                                        
+                                                                        else : "$$value.value"
                                                                     }
                                                                 },
                                                                 flag:false
@@ -5122,59 +5104,7 @@ io.on('connection', (socket) => {
                                                         }
                                                     }
                                                 }
-                                            },
-                                            exposure: {
-                                                $reduce:{
-                                                    input:'$parentArray',
-                                                    initialValue: { value: 0, flag: true },
-                                                    in : {
-                                                        $cond:{
-                                                            if : {
-                                                                $and: [
-                                                                  { $ne: ['$$this.parentUSerId', loginId] }, 
-                                                                  { $eq: ['$$value.flag', true] } 
-                                                                ]
-                                                              },
-                                                            then : {
-                                                                value: { 
-                                                                    $cond:{
-                                                                        if:{ $eq: ["$$value.value", 0] },
-                                                                        then:{
-                                                                            $multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]
-                                                                        },
-                                                                        else:{
-                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
-                                                                        }
-                                                                    }
-                                                                },
-                                                                flag: true,
-                                                                
-                                                            },
-                                                            else : {
-                                                                value: {
-                                                                    $cond : {
-                                                                        if : { $eq : ["$$value.value" , 0]},
-                                                                        then : {
-                                                                            $cond:{
-                                                                                if : {$eq : ["$parentId", loginId]},
-                                                                                then:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                                else:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
-                                                                            }
-                                                                        },
-                                                                        else :{$cond:{
-                                                                            if : {$eq : ['$$value.flag', true]},
-                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                            else:"$$value.value"
-                                                                        }}
-                                                                        
-                                                                    }
-                                                                },
-                                                                flag:false
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            },
+                                            }
                                         }
                                     }
                                 }
@@ -5190,8 +5120,7 @@ io.on('connection', (socket) => {
                                 selectionName: "$selections2.selectionName"
                               },
                               totalWinAmount: { $sum: "$selections2.winAmount2.value" },
-                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" },
-                              exposure : { $sum: "$selections2.exposure.value"}
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
                             }
                         },
                         {
@@ -5205,9 +5134,6 @@ io.on('connection', (socket) => {
                                 },
                                 totalLossAmount:{
                                     $multiply:["$totalLossAmount", -1]
-                                },
-                                exposure:{
-                                    $multiply:["$exposure", 1]
                                 }
                               }
                             }
@@ -5236,7 +5162,6 @@ io.on('connection', (socket) => {
                                         in: { 
                                             selectionName: "$$selection.selectionName",
                                             totalAmount: "$$selection.totalWinAmount",
-                                            exposure:"$$selection.exposure",
                                             winAmount: { 
                                                 $add : [
                                                     "$$selection.totalWinAmount", 
@@ -5288,11 +5213,10 @@ io.on('connection', (socket) => {
                         },
                     ])
 
+
                     if(falg){
-                        console.log(Bets[0].selections)
                         return({User:ele, Bets:Bets, userName:data.userName})
                     }else{
-                        console.log(Bets[0].selections)
                         return({User:ele, Bets:Bets})
                     }
 
@@ -5642,17 +5566,8 @@ io.on('connection', (socket) => {
                 matchName = matchName2.match
                 sport = matchName2.betType
             }
-            let runnerData = await runnerDataModel.findOne({marketId:data.marketId})
-            let check = false
-            if(runnerData){
-                let runn = JSON.parse(runnerData.runners)
-                if(runn.length === 3){
-                    check = true
-                }
-            }
 
-
-           socket.emit('Book', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport, check});
+           socket.emit('Book', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
         }catch(err){
             console.log(err)
             socket.emit('Book', {message:"err", status:"error"})
