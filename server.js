@@ -4357,7 +4357,12 @@ io.on('connection', (socket) => {
                                                                             },
                                                                         },
                                                                         else:{
-                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:"$$value.value",
+                                                                                else:{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}
+                                                                            }
+                                                                            // $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
                                                                         }
                                                                     }
                                                                 },
@@ -4415,7 +4420,12 @@ io.on('connection', (socket) => {
                                                                             // $multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]
                                                                         },
                                                                         else:{
-                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:"$$value.value",
+                                                                                else:{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}
+                                                                            }
+                                                                            // $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
                                                                         }
                                                                     }
                                                                 },
