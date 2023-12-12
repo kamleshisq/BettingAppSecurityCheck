@@ -5212,7 +5212,7 @@ io.on('connection', (socket) => {
                                         in: { 
                                             selectionName: "$$selection.selectionName",
                                             totalAmount: "$$selection.totalWinAmount",
-                                            exposure : {$multiply:["$$selection.exposure", 1]},
+                                            exposure : {$multiply:["$$selection.exposure", -1]},
                                             winAmount: { 
                                                 $add : [
                                                     "$$selection.totalWinAmount", 
