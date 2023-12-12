@@ -5825,7 +5825,7 @@ io.on('connection', (socket) => {
                                                         then :
                                                         {
                                                             $cond:{
-                                                                if : {$eq : ["$parentId", loginId]},
+                                                                if : {$eq : ["$parentId", data.id]},
                                                                 then:{$subtract : ["$$totalAmount",{$multiply: ["$$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
                                                                 else:{$subtract : ["$$totalAmount",{$multiply: ["$$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                             }
@@ -5880,7 +5880,7 @@ io.on('connection', (socket) => {
                                                         if : { $eq : ["$$value.value" , 0]},
                                                         then : {
                                                             $cond:{
-                                                                if : {$eq : ["$parentId", loginId]},
+                                                                if : {$eq : ["$parentId", data.id]},
                                                                 then:{$subtract : ["$$totalWinAmount",{$multiply: ["$$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
                                                                 else:{$subtract : ["$$totalWinAmount",{$multiply: ["$$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                             }
