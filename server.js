@@ -4193,6 +4193,7 @@ io.on('connection', (socket) => {
                 }else{
                     childrenUsername1 = await User.distinct("userName", {parentUsers:ele._id})
                 }
+                console.log(ele.id, "ele.idele.id")
                 
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
