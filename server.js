@@ -5175,8 +5175,7 @@ io.on('connection', (socket) => {
                         {
                             $project: {
                               _id: 0,
-                              elementUser: "$_id.elementUser",
-                              exposure:"$exposure",
+                              elementUser: "$_id.elementUser", 
                               selection: {
                                 selectionName: "$_id.selectionName",
                                 totalWinAmount: {
@@ -5184,7 +5183,8 @@ io.on('connection', (socket) => {
                                 },
                                 totalLossAmount:{
                                     $multiply:["$totalLossAmount", -1]
-                                }
+                                },
+                                exposure:"$exposure",
                               }
                             }
                         },
