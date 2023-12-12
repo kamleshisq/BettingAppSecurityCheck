@@ -4883,13 +4883,13 @@ io.on('connection', (socket) => {
                 let childrenUsername1 = []
                 let children
                 if(falg){
-                    children = await User.find({parentUsers:ele.id})
+                    childrenUsername1 = await User.distinct("userName", {parentUsers:ele.id})
                 }else{
-                    children = await User.find({parentUsers:ele._id})
+                    childrenUsername1 = await User.distinct("userName", {parentUsers:ele.id})
                 }
-                children.map(ele1 => {
-                    childrenUsername1.push(ele1.userName) 
-                })
+                // children.map(ele1 => {
+                //     childrenUsername1.push(ele1.userName) 
+                // })
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
                         {
@@ -5745,10 +5745,10 @@ io.on('connection', (socket) => {
             data.id = parentUser._id.toString()
         }
         let forcheck = await Bet.find({marketId: data.marketId}) 
-        let children = await User.find({parentUsers:data.id, role_type: 5})
-        children.map(ele1 => {
-            childrenUsername1.push(ele1.userName) 
-        })
+        childrenUsername1 = await User.distinct("userName", {parentUsers:data.id, role_type: 5})
+        // children.map(ele1 => {
+        //     childrenUsername1.push(ele1.userName) 
+        // })
         // let checkBET = await Bet.findOne({marketId:data.marketId})
         if(forcheck.length > 0){
             if(data.marketId.slice(-2).startsWith('OE')){
