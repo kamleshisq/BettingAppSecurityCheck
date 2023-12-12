@@ -5670,6 +5670,7 @@ io.on('connection', (socket) => {
                 matchName = matchName2.match
                 sport = matchName2.betType
             }
+            let runnerData = await runnerDataModel.findOne({marketId:data.marketId})
             let check = false
             if(runnerData){
                 let runn = JSON.parse(runnerData.runners)
