@@ -15460,16 +15460,16 @@ socket.on('connect', () => {
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                     if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team1Data.winAmount = (team1Data.winAmount) 
+                                        team1Data.lossAmount = (team1Data.lossAmount) 
                                     }
                                     if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team2Data.winAmount = (team2Data.winAmount) 
+                                        team2Data.lossAmount = (team2Data.lossAmount) 
                                     }
                                     if(team3Data){
-                                        team3Data.winAmount = (team3Data.winAmount - (team3Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team3Data.lossAmount = (team3Data.lossAmount - (team3Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team3Data.winAmount = (team3Data.winAmount) 
+                                        team3Data.lossAmount = (team3Data.lossAmount) 
                                     }
                                 }
                                 if(team1Data && team2Data && team3Data){
@@ -15594,12 +15594,12 @@ socket.on('connect', () => {
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                     if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team1Data.winAmount = (team1Data.winAmount) 
+                                        team1Data.lossAmount = (team1Data.lossAmount) 
                                     }
                                     if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team2Data.winAmount = (team2Data.winAmount) 
+                                        team2Data.lossAmount = (team2Data.lossAmount) 
                                     }
                                 }
                                 // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
@@ -15831,16 +15831,16 @@ socket.on('connect', () => {
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                     if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team1Data.winAmount = (team1Data.winAmount) 
+                                        team1Data.lossAmount = (team1Data.lossAmount) 
                                     }
                                     if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team2Data.winAmount = (team2Data.winAmount) 
+                                        team2Data.lossAmount = (team2Data.lossAmount) 
                                     }
                                     if(team3Data){
-                                        team3Data.winAmount = (team3Data.winAmount - (team3Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team3Data.lossAmount = (team3Data.lossAmount - (team3Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team3Data.winAmount = (team3Data.winAmount) 
+                                        team3Data.lossAmount = (team3Data.lossAmount) 
                                     }
                                 }
                                 if(team1Data && team2Data && team3Data){
@@ -15964,12 +15964,12 @@ socket.on('connect', () => {
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                     if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team1Data.winAmount = (team1Data.winAmount) 
+                                        team1Data.lossAmount = (team1Data.lossAmount) 
                                     }
                                     if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team2Data.winAmount = (team2Data.winAmount) 
+                                        team2Data.lossAmount = (team2Data.lossAmount) 
                                     }
                                 }
                                 // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
