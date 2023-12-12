@@ -15444,6 +15444,7 @@ socket.on('connect', () => {
             })
 
             socket.on('Book',async(data)=>{
+                console.log(data.Bets)
                 if(data.Bets.length > 0){
                     if(data.Bets[0].userName){ 
                         if(data.check){   
