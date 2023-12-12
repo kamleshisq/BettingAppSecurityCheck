@@ -5266,10 +5266,10 @@ io.on('connection', (socket) => {
 
 
                     if(falg){
-                        console.log(Bets[0].selection)
+                        console.log(Bets[0].selections)
                         return({User:ele, Bets:Bets, userName:data.userName})
                     }else{
-                        console.log(Bets[0].selection)
+                        console.log(Bets[0].selections)
                         return({User:ele, Bets:Bets})
                     }
 
