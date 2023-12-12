@@ -5289,10 +5289,10 @@ io.on('connection', (socket) => {
                     ])
 
                     if(falg){
-                        console.log(Bets)
+                        console.log(Bets.selections)
                         return({User:ele, Bets:Bets, userName:data.userName})
                     }else{
-                        console.log(Bets)
+                        console.log(Bets.selections)
                         return({User:ele, Bets:Bets})
                     }
 
