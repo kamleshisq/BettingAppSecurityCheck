@@ -4956,6 +4956,9 @@ io.on('connection', (socket) => {
                                         }
                                     }
                                 },
+                                exposure:{
+                                    $sum:'$exposure'
+                                },
                                 parentArray: { $first: "$parentArray" },
                                 role_type : { $first: "$role_type" }
                             }
@@ -4971,6 +4974,7 @@ io.on('connection', (socket) => {
                                         totalAmount: "$totalAmount",
                                         matchName: "$_id.matchName",
                                         Stake: { $multiply: ["$Stake", -1] },
+                                        exposure:"$exposure"
                                     }
                                 }
                             }
@@ -4991,7 +4995,8 @@ io.on('connection', (socket) => {
                                             matchName: "$$selection.matchName",
                                             Stake: "$$selection.Stake",
                                             winAmount: "$$selection.totalAmount",
-                                            lossAmount:"$$selection.Stake"
+                                            lossAmount:"$$selection.Stake",
+                                            exposure: "$$selections.exposure"
                                         }
                                     }
                                 }
@@ -5104,6 +5109,49 @@ io.on('connection', (socket) => {
                                                         }
                                                     }
                                                 }
+                                            },
+                                            exposure:{
+                                                $reduce:{ 
+                                                    input:'$parentArray',
+                                                    initialValue: { value: 0, flag: true },
+                                                    in : {
+                                                        $cond:{
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
+                                                            then : {
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                flag: true,
+                                                                
+                                                            },
+                                                            else : {
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : {
+                                                                            $subtract:["$$selection.exposure", {$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                        },
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
+                                                                flag:false
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -5120,13 +5168,15 @@ io.on('connection', (socket) => {
                                 selectionName: "$selections2.selectionName"
                               },
                               totalWinAmount: { $sum: "$selections2.winAmount2.value" },
-                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" },
+                              exposure : { $sum : "$selections2.exposure.value"}
                             }
                         },
                         {
                             $project: {
                               _id: 0,
                               elementUser: "$_id.elementUser",
+                              exposure:"$exposure",
                               selection: {
                                 selectionName: "$_id.selectionName",
                                 totalWinAmount: {
@@ -5162,6 +5212,7 @@ io.on('connection', (socket) => {
                                         in: { 
                                             selectionName: "$$selection.selectionName",
                                             totalAmount: "$$selection.totalWinAmount",
+                                            exposure : {$multiply:["$$selection.exposure", 1]},
                                             winAmount: { 
                                                 $add : [
                                                     "$$selection.totalWinAmount", 
@@ -5205,7 +5256,7 @@ io.on('connection', (socket) => {
                                                         }
                                                     }
                                                 ]
-                                            },
+                                            }
                                         }
                                     }
                                 }
@@ -5215,8 +5266,10 @@ io.on('connection', (socket) => {
 
 
                     if(falg){
+                        console.log(Bets[0].selection)
                         return({User:ele, Bets:Bets, userName:data.userName})
                     }else{
+                        console.log(Bets[0].selection)
                         return({User:ele, Bets:Bets})
                     }
 
