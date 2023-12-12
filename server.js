@@ -5647,7 +5647,7 @@ io.on('connection', (socket) => {
                         ])
                         // console.log(Bets, "BETSBETS")
                         if(Bets.length > 0){
-                            console.log(Bets[0].selections, "selectionsselections")
+                            // console.log(Bets[0].selections, "selectionsselections")
 
                             return({User:ele, Bets:Bets, status:'User', userName:data.userName})
                         }
@@ -5670,8 +5670,15 @@ io.on('connection', (socket) => {
                 matchName = matchName2.match
                 sport = matchName2.betType
             }
+            let check = false
+            if(runnerData){
+                let runn = JSON.parse(runnerData.runners)
+                if(runn.length === 3){
+                    check = true
+                }
+            }
 
-           socket.emit('Book', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
+           socket.emit('Book', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport,check});
         }catch(err){
             console.log(err)
             socket.emit('Book', {message:"err", status:"error"})
