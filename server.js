@@ -4375,7 +4375,8 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : {$and: [
                                                                             { $eq: ['$$this.parentUSerId', ele.id] }, 
-                                                                            { $eq : ["$$value.value" , 0] } 
+                                                                            { $eq : ["$$value.value" , 0] },
+                                                                            {$eq : ['$$value.flag', true]} 
                                                                           ]},
                                                                         then : {
                                                                             $cond:{
@@ -4441,7 +4442,8 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : {$and: [
                                                                             { $eq: ['$$this.parentUSerId', ele.id] }, 
-                                                                            { $eq : ["$$value.value" , 0] } 
+                                                                            { $eq : ["$$value.value" , 0] } ,
+                                                                            {$eq : ['$$value.flag', true]}
                                                                           ]},
                                                                         then : {
                                                                             $cond:{
