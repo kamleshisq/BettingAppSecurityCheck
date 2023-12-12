@@ -5056,9 +5056,18 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", loginId]},
+                                                                                then:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
+                                                                            // $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else :{$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
                                                                     }
                                                                 },
                                                                 flag:false
@@ -5099,9 +5108,17 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", loginId]},
+                                                                                then:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else : {$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
                                                                     }
                                                                 },
                                                                 flag:false
@@ -5142,9 +5159,17 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract:["$$selection.exposure", {$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", loginId]},
+                                                                                then:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else : {$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
                                                                     }
                                                                 },
                                                                 flag:false
