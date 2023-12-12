@@ -6061,9 +6061,21 @@ io.on('connection', (socket) => {
                                                     $cond : {
                                                         if : { $eq : ["$$value.value" , 0]},
                                                         then : {
-                                                            $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                            $cond:{
+                                                                if : {$eq : ["$parentId", data.id]},
+                                                                then:{$subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                else:{$subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                            }
                                                         },
-                                                        else : "$$value.value"
+                                                        
+                                                        // {
+                                                        //     $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        // },
+                                                        else : {$cond:{
+                                                            if : {$eq : ['$$value.flag', true]},
+                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                            else:"$$value.value"
+                                                        }}
                                                     }
                                                 },
                                                 flag:false
@@ -6104,9 +6116,20 @@ io.on('connection', (socket) => {
                                                     $cond : {
                                                         if : { $eq : ["$$value.value" , 0]},
                                                         then : {
-                                                            $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                            $cond:{
+                                                                if : {$eq : ["$parentId", loginId]},
+                                                                then:{$subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                else:{$subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                            }
                                                         },
-                                                        else : "$$value.value"
+                                                        // {
+                                                        //     $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        // },
+                                                        else : {$cond:{
+                                                            if : {$eq : ['$$value.flag', true]},
+                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                            else:"$$value.value"
+                                                        }}
                                                     }
                                                 },
                                                 flag:false
