@@ -4996,7 +4996,7 @@ io.on('connection', (socket) => {
                                             Stake: "$$selection.Stake",
                                             winAmount: "$$selection.totalAmount",
                                             lossAmount:"$$selection.Stake",
-                                            exposure: "$$selections.exposure"
+                                            exposure: "$$selection.exposure"
                                         }
                                     }
                                 }
