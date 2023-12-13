@@ -9104,7 +9104,7 @@ socket.on('connect', () => {
                         var table = $(this);
                         let trLength = table.find("tr:eq(1)").find('td').length
                         console.log(trLength, "trLengthtrLengthtrLength")
-                        table.find('tr.back-inplaymatch').each(function(){
+                        table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                             $(this).find('td:eq(0)').attr('colspan', 9)
                         })
                         if(trLength === 2 || trLength === 6){
