@@ -9107,7 +9107,7 @@ socket.on('connect', () => {
                         table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
                             $(this).find('td:eq(0)').attr('colspan', 9)
                         })
-                        if(trLength === 2 || trLength === 6){
+                        if(trLength === 4 || trLength === 8){
                             if(team1Amount > 0){
                                 var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
                             }else{
