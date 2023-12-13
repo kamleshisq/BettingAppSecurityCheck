@@ -9034,11 +9034,11 @@ socket.on('connect', () => {
                 var ids = [];
                 var pairs = [];
           
-                $(".market").each(function() {
-                    // if(!(this.id.split('-')[1].startsWith('OE') || this.id.split('-')[1].startsWith('F2'))){
-                        ids.push(this.id);
-                    // }
-                });
+                // $(".market").each(function() {
+                //     // if(!(this.id.split('-')[1].startsWith('OE') || this.id.split('-')[1].startsWith('F2'))){
+                //         ids.push(this.id);
+                //     // }
+                // });
                 // console.log(ids)
                 let eventId = search.split('=')[1]
                 socket.emit("marketIdbookDetails", {ids, LOGINDATA, eventId})
@@ -9052,7 +9052,12 @@ socket.on('connect', () => {
 
         socket.on('marketIdbookDetails', data => {
             for(let i = 0; i < data.length; i++){
-                console.log(data[i]._id, data[i].selections, "selections")
+                // console.log(data[i]._id, data[i].selections, "selections")
+                $("table.market").each(function() { 
+                    if(this.id == data[i]._id){
+                        console.log(data[i].selections, data[i].runnersData)
+                    }
+                })
             }
         })
         socket.on("betDetails" , (data) => {
