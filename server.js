@@ -3458,7 +3458,7 @@ io.on('connection', (socket) => {
         let page = data.page
         console.log(page)
         let userDetails = await User.findById(data.id)
-        let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).skip(page*20).limit(20)
+        let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).skip(page*10).limit(10)
         console.log(historty, "histortyhistortyhistorty")
         socket.emit("loadMorediveHistory", historty)
     })
