@@ -9128,21 +9128,22 @@ socket.on('connect', () => {
                                 table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
                             }
                         }else{
+                            table.find('th:eq(0)').after('<th></th>')
                             if(team1Amount > 0){
-                                var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
                             }else{
-                                var newTd = $("<td>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
                             }
                             if(team2Amount > 0){
-                                var newTd2 = $("<td>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
                             }else{
-                                var newTd2 = $("<td>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
                             }
                             if(status){
                                 if(team3Amount > 0){
-                                    var newTd3 = $("<td>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
+                                    var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
                                 }else{
-                                    var newTd3 = $("<td>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
+                                    var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
                                 }
     
                                 table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
@@ -9152,6 +9153,7 @@ socket.on('connect', () => {
                                 table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
                                 table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
                             }
+                            
                         }
                     }
                 })
