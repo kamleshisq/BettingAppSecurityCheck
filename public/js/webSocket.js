@@ -8487,11 +8487,26 @@ socket.on('connect', () => {
           });
 
           function marketplusminus ( data ){
-            console.log(data, data.element.closest('tr'))
-            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
-            console.log(beforevalue, "beforevaluebeforevalue")
-            let newvale = (beforevalue * 1) + (data.result * 2)
-            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale)
+            console.log(data)
+            if(data.status){
+                let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                let newvale = (beforevalue * 1) - (data.result * 2)
+                data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                    let oldValue = $(this).find('td:eq(1)').find('span').text()
+                    let newvalue = (oldValue * 1) + (data.result * 1)
+                    $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                })
+            }else{
+                let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                let newvale = (beforevalue * 1) + (data.result * 2)
+                data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                    let oldValue = $(this).find('td:eq(1)').find('span').text()
+                    let newvalue = (oldValue * 1) - (data.result * 1)
+                    $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                })
+            }
           }
 
 
@@ -8746,22 +8761,30 @@ socket.on('connect', () => {
                     NewStake = 100
                 }
                 let result
+                let element = $(this)
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
                     }else{
                         result = (NewStake * Odds) / 100
                     }
+
+                    let data = {
+                        result,
+                        element,
+                        status:true
+                    }
+                    marketplusminus(data)
                 }else{
                     result = NewStake
+                    let data = {
+                        result,
+                        element,
+                        status:false
+                    }
+                    marketplusminus(data)
                 }
                 // console.log(result)
-                let element = $(this)
-                let data = {
-                    result,
-                    element
-                }
-                marketplusminus(data)
 
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
