@@ -9083,7 +9083,7 @@ socket.on('connect', () => {
                     team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
                     team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
                     team3Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[2].runner)
-                }else{
+                }else if(data.betsMarketIdWise[i].runnersData && data.betsMarketIdWise[i].runnersData.length === 2) {
                     team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
                     team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
                 }
