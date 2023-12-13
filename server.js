@@ -8925,7 +8925,7 @@ io.on('connection', (socket) => {
                         userName:data.LOGINDATA.LOGINUSER.userName
                     }
                 },
-                 {
+                {
                     $group: {
                         _id: {
                         marketId: "$marketId",
@@ -8986,8 +8986,24 @@ io.on('connection', (socket) => {
                         $sum:'$exposure'
                     }
                 },
-            },
+                },
+                {
+                    $group: {
+                        _id: "$_id.marketId",
+                        selections: {
+                            $push: {
+                                selectionName: "$_id.selectionName",
+                                totalAmount: '$totalAmount',
+                                exposure:'$exposure',
+                                matchName: "$_id.matchName",
+                                Stake: { $multiply: ["$Stake", -1] },
+                            },
+                        },
+                    },
+                },
             ])
+
+            
             console.log(betsMarketIdWise, 'betsMarketIdWisebetsMarketIdWisebetsMarketIdWise')
         }
 
