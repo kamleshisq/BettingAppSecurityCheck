@@ -28,9 +28,10 @@ async function placeBet(data){
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if((check.availableBalance - check.exposure) < data.data.stake){
         return "You do not have sufficient balance for bet"
-    }else if(check.exposureLimit === check.exposure){
-        return "Please try again later, Your exposure Limit is full"
     }
+    // else if(check.exposureLimit === check.exposure){
+    //     return "Please try again later, Your exposure Limit is full"
+    // }
     let uniqueToken = generateString(5)
     const sportData = await cricketAndOtherSport()
     let gameList
