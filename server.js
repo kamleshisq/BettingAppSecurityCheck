@@ -8916,6 +8916,80 @@ io.on('connection', (socket) => {
 
     socket.on('marketIdbookDetails', async(data) => {
         console.log(data, "DATADTADTDA")
+        if(data.LOGINDATA.LOGINUSER){
+            let betsMarketIdWise = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        eventId: data.eventId,
+                        userName:data.LOGINDATA.LOGINUSER.userName
+                    }
+                },
+                 {
+                    $group: {
+                        _id: {
+                        marketId: "$marketId",
+                        selectionName: "$selectionName",
+                        matchName: "$match",
+                    },
+                    totalAmount: {
+                            $sum: {
+                            $cond: { 
+                                if : {$eq: ['$bettype2', "BACK"]},
+                                then:{
+                                    $cond:{
+                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                        then:{
+                                            $sum: {
+                                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                            }
+                                        },
+                                        else:{
+                                            $sum: {
+                                                $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                            }
+                                        }
+                                    }
+                                },
+                                else:{
+                                    $cond:{
+                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                        then:{
+                                            $sum: {
+                                                $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                            }
+                                        },
+                                        else:{
+                                            $sum: { 
+                                                $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    Stake: {
+                         $sum: { 
+                            $cond: { 
+                                if : {$eq: ['$bettype2', "BACK"]},
+                                then : {
+                                    $sum: '$Stake' 
+                                },
+                                else : {
+                                    $multiply: ['$Stake', -1]
+                                }
+                            }
+                        }
+                    },
+                    exposure:{
+                        $sum:'$exposure'
+                    }
+                },
+            },
+            ])
+            console.log('betsMarketIdWise', betsMarketIdWisebetsMarketIdWisebetsMarketIdWise)
+        }
 
     })
 

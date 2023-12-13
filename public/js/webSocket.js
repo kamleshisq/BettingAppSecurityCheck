@@ -9047,8 +9047,8 @@ socket.on('connect', () => {
             //     marketIdbookDetails()
             //   }, 5000)
         }
+        marketIdbookDetails()
         socket.on("betDetails" , (data) => {
-            marketIdbookDetails()
             hideLoader()
             // console.log(data.result)
             // function togglePopup(idname, id){
