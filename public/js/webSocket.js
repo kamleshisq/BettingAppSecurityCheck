@@ -9029,7 +9029,23 @@ socket.on('connect', () => {
         //     link.addEventListener("click", handlePlaceBetClick);
         //   });
 
+        function marketIdbookDetails(){
+            $(document).ready(function() {
+                var ids = [];
+                var pairs = [];
+          
+                $(".market").each(function() {
+                  ids.push(this.id);
+                });
+                // console.log(ids)
+                socket.emit("marketIdbookDetails", {ids, LOGINDATA})
+              });
+            //   setTimeout(()=>{
+            //     marketIdbookDetails()
+            //   }, 5000)
+        }
         socket.on("betDetails" , (data) => {
+            marketIdbookDetails()
             hideLoader()
             // console.log(data.result)
             // function togglePopup(idname, id){
@@ -9092,7 +9108,10 @@ socket.on('connect', () => {
                 document.getElementById('tableBET1').innerHTML = html2
             }
         })
+     
         
+
+
     }
 
 
