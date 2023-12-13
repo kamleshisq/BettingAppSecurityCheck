@@ -3354,7 +3354,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("BETSFORUSERAdminSide", async(data) => {
-        // console.log(data)
+        console.log(data)
         try{
             let limit = 20
             let page = 0

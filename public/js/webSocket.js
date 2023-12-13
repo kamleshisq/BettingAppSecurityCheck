@@ -13081,6 +13081,7 @@ socket.on('connect', () => {
 
 
         $(document).on("click", ".loadMoredive", function(e){
+            console.log('WORKING')
             e.preventDefault()
             let id = search.split("=")[1]
             let page = parseInt($('.pageId').attr('data-pageid'));
