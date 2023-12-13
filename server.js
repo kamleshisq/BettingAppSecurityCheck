@@ -8915,7 +8915,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('marketIdbookDetails', async(data) => {
-        console.log(data, "DATADTADTDA")
+        // console.log(data, "DATADTADTDA")
+        
     })
 
 })
