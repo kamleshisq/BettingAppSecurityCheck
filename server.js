@@ -3383,24 +3383,10 @@ io.on('connection', (socket) => {
                 filter.status = data.filterData.type
             }
             // console.log(filter)
+            let childUserName = await User.distinct('userName', { parentUsers: data.id })
+            filter.userName = {$in:childUserName}
             if(user.roleName != "user"){
                 bets = await Bet.aggregate([
-                    {
-                        $lookup: {
-                          from: "users",
-                          localField: "userName",
-                          foreignField: "userName",
-                          as: "user"
-                        }
-                      },
-                      {
-                        $unwind: "$user"
-                      },
-                      {
-                        $match: {
-                          "user.parentUsers": { $in: [data.id] }
-                        }
-                      },
                       {
                         $match:filter
                       },
