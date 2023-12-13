@@ -8486,6 +8486,12 @@ socket.on('connect', () => {
             });
           });
 
+          function marketplusminus ( data ){
+            console.log(data)
+          }
+
+
+
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
@@ -8746,6 +8752,13 @@ socket.on('connect', () => {
                     result = NewStake
                 }
                 // console.log(result)
+                let element = $(this)
+                let data = {
+                    result,
+                    element
+                }
+                marketplusminus(data)
+
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                     $(this)
