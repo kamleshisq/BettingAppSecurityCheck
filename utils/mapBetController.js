@@ -12,7 +12,7 @@ const commitssionData = require('./createNetLoosingCommission');
 const { use } = require('../app');
 
 async function mapBet(data){
-    console.log(data, "datadatadata1234564879")
+    // console.log(data, "datadatadata1234564879")
     let childrenUsername = []
     let operatorId;
     if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
@@ -244,13 +244,13 @@ async function mapBet(data){
               if(commissionMarket.some(item => item.marketId == bets[bet].marketId)){ 
                 try{
                     let commission = await commissionModel.find({userId:user.id})
-                    console.log(commission, "commissioncommissioncommissioncommission")
+                    // console.log(commission, "commissioncommissioncommissioncommission")
                     if(commission.length > 0){
                     let commissionPer = 0
                     if (bets[bet].marketName.toLowerCase().startsWith('match') && commission[0].matchOdd.status){
                         commissionPer = commission[0].matchOdd.percentage
                     }
-                    console.log(commissionPer, "commissionPercommissionPercommissionPer")
+                    // console.log(commissionPer, "commissionPercommissionPercommissionPer")
                     let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                     if(commissionPer > 0){
                         let commissiondata = {
@@ -560,7 +560,7 @@ async function mapBet(data){
             }
 
 
-            console.log("GOT GERE ")
+            // console.log("GOT GERE ")
             try{
                 let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bets[bet].marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
                 // console.log(checkDelete.settledBet, checkDelete.length, (checkDelete.settledBet + 1) == checkDelete.length)

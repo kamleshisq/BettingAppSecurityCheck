@@ -339,7 +339,7 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     })
 });
 exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
-    console.log(req.query)
+    // console.log(req.query)
     try{
     let userAcc = []
     let page = req.query.page
@@ -679,7 +679,7 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
     if(!validateUTR(req.body.utr)){
         return next(new AppError('enter valid utr',400))
     }
-    console.log(req.files, "filesfilesfilesfiles")
+    // console.log(req.files, "filesfilesfilesfiles")
     let imagName;
     let data;
     let user = await User.findById(req.currentUser._id)
@@ -719,7 +719,7 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
                 }
                 data.date = new Date()
                 
-                console.log(data)
+                // console.log(data)
                 await paymentReportModel.create(data)
     
             }else{

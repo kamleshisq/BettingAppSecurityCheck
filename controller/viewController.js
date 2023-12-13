@@ -86,7 +86,7 @@ const colorCodeModel = require('../model/colorcodeModel');
 
 const whiteLabelcheck = (req) => {
     let hostname = req.headers.host
-    console.log(hostname,'==>hostname')
+    // console.log(hostname,'==>hostname')
     let whiteLabel = process.env.whiteLabelName
     if(!req.currentUser || req.currentUser.roleName == "DemoLogin"){
         whiteLabel = hostname
@@ -97,7 +97,7 @@ const whiteLabelcheck = (req) => {
             whiteLabel = req.currentUser.whiteLabel
         }
     }
-    console.log(whiteLabel)
+    // console.log(whiteLabel)
     return whiteLabel
 }
 
@@ -172,7 +172,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             }
         ]
     }
-    console.log(urls, req.token)
+    // console.log(urls, req.token)
     let requests = urls.map((item) => {
         return new Promise((resolve, reject) => {
           request(
@@ -187,7 +187,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
               if (error) {
                 reject(error);
               } else {
-                  console.log(body)
+                //   console.log(body)
                 resolve(JSON.parse(body));
               }
             }
@@ -196,7 +196,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     });
   
     const data = await Promise.all(requests);
-    console.log(data,'==>data')
+    // console.log(data,'==>data')
     if(data[0].status == 'Error'){
         return res.redirect('/admin/userManagement')
     }
@@ -228,8 +228,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         sum = 0
     }
     let adminBredcumArray = []
-    console.log(me, "memememememememememe")
-    console.log(currentUser, "CURR")
+    // console.log(me, "memememememememememe")
+    // console.log(currentUser, "CURR")
     if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
@@ -240,7 +240,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }else{
         for(let i = 0; i < me.parentUsers.length; i++){
             if(me.parentUsers[i] == currentUser._id.toString()){
-                console.log("WORKING")
+                // console.log("WORKING")
                 adminBredcumArray.push({
                     userName:currentUser.userName,
                     role:currentUser.roleName,
@@ -267,7 +267,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             status:false
         })
     }
-    console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
+    // console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
@@ -295,7 +295,7 @@ exports.allOperators = catchAsync(async(req, res, next)=>{
 })
 
 exports.login = catchAsync(async(req, res, next) => {
-    console.log('adminLogin PAge')
+    // console.log('adminLogin PAge')
     if(req.currentUser){
         if(req.currentUser.role_type < 5){
            return res.redirect('/admin/dashboard')
@@ -614,7 +614,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
 
-    console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
+    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         user,
@@ -1490,7 +1490,7 @@ exports.getoperationsPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
-    console.log('WORKING')
+    // console.log('WORKING')
     const me = req.currentUser
     // console.log(me)
     let settlement
@@ -1518,7 +1518,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         //     childrenUsername.push(ele.userName) 
         // })
     }
-    console.log('START')
+    // console.log('START')
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
@@ -1571,7 +1571,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             }
         }
       ]);
-      console.log('END')
+    //   console.log('END')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
         me,
@@ -2589,7 +2589,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 exports.cricketPage = catchAsync(async(req, res, next)=>{
     let user = req.currentUser
-    console.log('cricketPage')
+    // console.log('cricketPage')
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []
@@ -4801,7 +4801,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     //     childrenUsername.push(ele.userName) 
     // })
     if(req.query.market){
-        console.log(req.query.market, "req.query.marketreq.query.marketreq.query.market")
+        // console.log(req.query.market, "req.query.marketreq.query.marketreq.query.market")
         let market 
         let marketName 
         if(req.query.market.toLowerCase().startsWith('book')){
@@ -4813,7 +4813,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             market = req.query.market
             marketName = req.query.market
         }
-        console.log(market)
+        // console.log(market)
         let thatMarketData = await commissionNewModel.aggregate([
             {
                 $match: {
@@ -4864,7 +4864,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 }
             }
         ])
-        console.log(thatMarketData, "thatMarketData")
+        // console.log(thatMarketData, "thatMarketData")
         res.status(200).render('./commissionMarketWise/commissionMarketWise2/commissionMarketWise2.ejs', {
             title:"Commission Report",
             me,
@@ -5515,7 +5515,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
-    console.log(res.locals.B2C_Status, 121212212222222121)
+    // console.log(res.locals.B2C_Status, 121212212222222121)
     if(!res.locals.B2C_Status){
         return next(new AppError('You do not have permission to perform this action', 404))
     }

@@ -4163,7 +4163,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('UerBook', async(data) => {
-        console.log('START')
+        // console.log('START')
         let users = []
         let falg = false
         let Id 
@@ -4194,7 +4194,7 @@ io.on('connection', (socket) => {
                 }else{
                     childrenUsername1 = await User.distinct("userName", {parentUsers:ele._id})
                 }
-                console.log(ele.id,childrenUsername1, "ele.idele.id")
+                // console.log(ele.id,childrenUsername1, "ele.idele.id")
                 
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
@@ -5971,7 +5971,7 @@ io.on('connection', (socket) => {
                 ])
     
                 // console.log(betData, "betData")
-                console.log(betData[0].data, "betData[0].databetData[0].databetData[0].data")
+                // console.log(betData[0].data, "betData[0].databetData[0].databetData[0].data")
                 socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
             }else{
                 // console.log('WORKING123', data)
@@ -8159,7 +8159,7 @@ io.on('connection', (socket) => {
 
     socket.on('channelId', async(data) => {
 
-        console.log(data)
+        // console.log(data)
         if(data.LOGINDATA.LOGINUSER){
             let ip = data.LOGINDATA.IP.split('::ffff:')[1];
             let eventId = data.search.split('=')[1]
@@ -8172,7 +8172,7 @@ io.on('connection', (socket) => {
                 }
             }else{
                 liveStream = await liveStreameData(data.channelId, ip)
-                console.log(liveStream, "liveStreamliveStreamliveStream")
+                // console.log(liveStream, "liveStreamliveStreamliveStream")
                 const src_regex = /src='([^']+)'/;
                 let match1
                 // let src
@@ -8187,7 +8187,7 @@ io.on('connection', (socket) => {
                     }
                 }
             }
-            console.log(srs, "liveStreamliveStreamliveStream")
+            // console.log(srs, "liveStreamliveStreamliveStream")
             socket.emit("channelId", srs)
         }
     })
@@ -8327,7 +8327,7 @@ io.on('connection', (socket) => {
         if(data.LOGINUSER){
             try{
                 let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'paytmW', status:true})
-                console.log(accounts, "accountsaccounts")
+                // console.log(accounts, "accountsaccounts")
                 socket.emit('getAccountDataPaytm', {status:'sucess', data:accounts})
             }catch{
                 console.log(err)
@@ -8407,7 +8407,7 @@ io.on('connection', (socket) => {
         // console.log(data)
         try{
             let reqData = await withdowReqModel.findById(data.data.id)
-            console.log(reqData)
+            // console.log(reqData)
             if(reqData && reqData.reqStatus === "pending"){
                 // console.log(reqData, "reqDatareqDatareqData")
                 let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
@@ -8562,7 +8562,7 @@ io.on('connection', (socket) => {
                 }
 
             }else{
-                console.log('WORKING123456')
+                // console.log('WORKING123456')
                 socket.emit('editData', {status:'err', msg:'Please try again leter'})
             }
         }catch(err){
@@ -8689,7 +8689,7 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             let runners = await runnerData.findOne({marketId:data.id})
             runners = JSON.parse(runners.runners)
-            console.log(runners, "runnersrunners")
+            // console.log(runners, "runnersrunners")
             let bets = await Bet.aggregate([
                 {
                     $match:{
@@ -8840,7 +8840,7 @@ io.on('connection', (socket) => {
                     socket.emit('colorCode', {status:'err'})
                 }
             }else{
-                console.log(data.data, "jgfghfghf")
+                // console.log(data.data, "jgfghfghf")
                 data.data.whitelabel = data.LOGINDATA.LOGINUSER.whiteLabel
                 let UpdatedDATA = await colorCodeModel.create(data.data)
                 if(UpdatedDATA){

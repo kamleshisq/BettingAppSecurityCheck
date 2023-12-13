@@ -78,7 +78,7 @@ async function voidbetBeforePlace(data){
                         await AccModel.create(userAcc);
 
                         let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bets[bet].marketId, progressType:'VoideBet'}, {$inc:{settledBet:1}})
-                        console.log(checkDelete, '<======== checkDelete')
+                        // console.log(checkDelete, '<======== checkDelete')
                         if((checkDelete.settledBet + 1) == checkDelete.length){
                             await InprogressModel.findOneAndDelete({marketId : bets[bet].marketId, progressType:'VoideBet'})
                         }

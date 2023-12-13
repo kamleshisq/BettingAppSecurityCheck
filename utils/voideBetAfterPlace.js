@@ -163,7 +163,7 @@ async function voidBET(data){
                     await accountStatementModel.create(userAcc);
             }
             let checkDelete = await InprogressModel.findOneAndUpdate({marketId : allBetWithMarketId[bets].marketId, progressType:'VoideBet'}, {$inc:{settledBet:1}})
-            console.log(checkDelete, '<======== checkDelete')
+            // console.log(checkDelete, '<======== checkDelete')
             if((checkDelete.settledBet + 1) == checkDelete.length){
                 await InprogressModel.findOneAndDelete({marketId : allBetWithMarketId[bets].marketId, progressType:'VoideBet'})
             }

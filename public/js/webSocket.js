@@ -8,7 +8,7 @@ socket.on('disconnect', () => {
 });
 let c = 0
 socket.on('connect', () => {
-    console.log("websocket Connected 45454545")
+    console.log("websocket Connected")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         const {
@@ -142,7 +142,7 @@ socket.on('connect', () => {
         }
 
         let check = validateUTR($(this).val())
-        console.log(check,'check')
+        // console.log(check,'check')
         if(!check){
             $(this).siblings('span.input_err').addClass('error')
             $(this).siblings('span.input_err').text('enter valid utr(minimum 12 digit alpha numarical)')
@@ -1987,7 +1987,7 @@ socket.on('connect', () => {
 
             form.find('.deposite').removeClass('active')
             form.find('.withdraw').removeClass('active')
-            console.log(userData)
+            // console.log(userData)
             if(userData.uplinePL >= 0){
                 form.find('.deposite').addClass('active')
                 form.find('input[name = "type"]').val("deposit")
@@ -7444,7 +7444,7 @@ socket.on('connect', () => {
         $(document).on('click', ".cashout", function(e){
             let id = $(this).closest('table').attr('id')
             let eventID = search.split('=')[1]
-            console.log('Working123456987')
+            // console.log('Working123456987')
             socket.emit('cashOOut', {LOGINDATA, id, eventID})
         })
 
@@ -7476,7 +7476,7 @@ socket.on('connect', () => {
                     }
                     secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
                     numSpan.text(data.odds);
-                    console.log(thatSpan, $(thatSpan).hasClass('tbl-bg-blu-spn'))
+                    // console.log(thatSpan, $(thatSpan).hasClass('tbl-bg-blu-spn'))
                     if($(thatSpan).hasClass('tbl-bg-blu-spn')){
                         $(thatSpan).closest("tr").next().removeClass('lay-inplaymatch')
                         $(thatSpan).closest("tr").next().addClass('back-inplaymatch')
@@ -9600,7 +9600,7 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
                 filterData.type = type
-                console.log(page, filterData, "filterDatafilterDatafilterData")
+                // console.log(page, filterData, "filterDatafilterDatafilterData")
                 socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
             });
         });
@@ -11995,7 +11995,7 @@ socket.on('connect', () => {
               .then(editor => {
                 textEditorInstance = editor; // Store the new editor instance in the variable
                 textEditorInstance.setData(data.description); // Set initial data
-                console.log('ClassicEditor was initialized', editor);
+                // console.log('ClassicEditor was initialized', editor);
               })
               .catch(error => {
                 console.error('Error initializing ClassicEditor', error);
@@ -12196,7 +12196,7 @@ socket.on('connect', () => {
             $(document).ready(function() {
                 $(".dropdown .item").click(function(e) {
                     e.preventDefault();
-                    console.log('WORKING')
+                    // console.log('WORKING')
                     let value = $(this).attr("id");
                     $("#destination").text($(this).text());
                     $('.dropdown').attr('data-summary',value)
@@ -13921,7 +13921,7 @@ socket.on('connect', () => {
             }else if(data.status === "err"){
                 alert(data.msg)
             }else { 
-                console.log(data)
+                // console.log(data)
                 alert(data.message)
                 // const deleteButton = document.getElementById(data.id);
                 // const row = deleteButton.closest('tr'); 
@@ -14175,7 +14175,7 @@ socket.on('connect', () => {
         })
 
         socket.on('Settle', data => {
-            console.log(data)
+            // console.log(data)
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
@@ -15444,7 +15444,7 @@ socket.on('connect', () => {
             })
 
             socket.on('Book',async(data)=>{
-                console.log(data.Bets)
+                // console.log(data.Bets)
                 if(data.Bets.length > 0){
                     if(data.Bets[0].userName){ 
                         if(data.check){   
@@ -15814,9 +15814,9 @@ socket.on('connect', () => {
             let ubcC = 1;
             socket.on('UerBook', async(data) => {
                 if(data.Bets.length > 0){
-                    console.log(data.Bets[0].userName, "data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
+                    // console.log(data.Bets[0].userName, "data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
                     if(data.Bets[0].userName){ 
-                        console.log('working', data.check)
+                        // console.log('working', data.check)
                         if(data.check){   
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
@@ -15826,7 +15826,7 @@ socket.on('connect', () => {
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                                 let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the draw"))
-                                console.log(team1Data, team2Data, team3Data, "team3Datateam3Datateam3Datateam3Data")
+                                // console.log(team1Data, team2Data, team3Data, "team3Datateam3Datateam3Datateam3Data")
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
@@ -16143,7 +16143,7 @@ socket.on('connect', () => {
                             html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                             let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            console.log(team1Data, team2Data, "team2Datateam2Data")
+                            // console.log(team1Data, team2Data, "team2Datateam2Data")
                             if(team1Data){
                                 if (team1Data.winAmount > 0){
                                     html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
@@ -17608,7 +17608,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".UPI", function(e){
             e.preventDefault()
-            console.log("WORKING")
+            // console.log("WORKING")
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
             $('[name="' + "pmethod" + '"]').val('upi')
@@ -17624,7 +17624,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".addPaytm", function(e){
             e.preventDefault()
-            console.log("WORKING")
+            // console.log("WORKING")
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
             $('[name="' + "pmethod" + '"]').val('paytm')
@@ -17647,7 +17647,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getpaymentmethoddetailsbyid',async(data)=>{
-            console.log(data)
+            // console.log(data)
             if(data.status == 'success'){
                 let form = $('#myModal1 form')
                 $('[name="' + "id" + '"]').val(data.data._id)
@@ -17703,7 +17703,7 @@ socket.on('connect', () => {
                     newData[ele] = data[ele]
                 }
             })
-            console.log(newData)
+            // console.log(newData)
             socket.emit('editpaymentMethod',newData)
         })
 
@@ -17742,7 +17742,7 @@ socket.on('connect', () => {
         $(document).on('click','.delete',function(e){
             e.preventDefault();
             let id = $(this).attr('data-docid')
-            console.log(id)
+            // console.log(id)
             if(id){
                 if(confirm('do you want to delete this payment method')){
                     socket.emit('deletePaymentMethod',{id})
@@ -17782,13 +17782,13 @@ socket.on('connect', () => {
         $(document).on('change','#pmethod',function(e){
             e.preventDefault();
             let data = $(this).val()
-            console.log(data)
+            // console.log(data)
             socket.emit('filterpaymentmethod',{data,LOGINDATA})
         })
 
         socket.on('filterpaymentmethod',async(data)=>{
             if(data.status == 'success'){
-                console.log(data)
+                // console.log(data)
                 let paymentmethod = data.data
                 let html = "";
                 for(let i = 0;i<paymentmethod.length;i++){
@@ -17941,7 +17941,7 @@ socket.on('connect', () => {
         $('#status,#type,#fromDate,#toDate').change(function(){
             $('.pageId').attr('data-pageid','1')
 
-            console.log("working")
+            // console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
@@ -18100,7 +18100,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getpaymentapprovalreqdata',async(data)=>{
-            console.log(data)
+            // console.log(data)
             if(data.status == 'fail'){
                 alert(data.msg)
             }else{
@@ -18122,7 +18122,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getpaymentdenyreqdata',async(data)=>{
-            console.log(data)
+            // console.log(data)
             if(data.status == 'fail'){
                 alert(data.msg)
             }else{
@@ -18166,12 +18166,12 @@ socket.on('connect', () => {
             let id = form.find('input[name="id"]').val()
             let remark = form.find('input[name="remark"]').val()
             let amount = form.find('input[name="amount"]').val()
-            console.log(id,remark,amount)
+            // console.log(id,remark,amount)
             socket.emit('deniePaymentReq',{id,remark,amount})
         })
 
         socket.on('deniePaymentReq',async(data)=>{
-            console.log(data.err)
+            // console.log(data.err)
             alert(data.msg)
             if(data.status == 'success'){
                 location.reload(true)

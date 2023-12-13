@@ -6153,7 +6153,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.updateRow = void 0;
 var updateRow = function updateRow(user, rowId, currentUser) {
-  console.log(currentUser);
+  //   console.log(currentUser)
   var html = "";
   if (rowId % 2 != 0) {
     html += "<tr style=\"text-align: center;\" class=\"blue\" id=\"".concat(rowId, "\">");
@@ -6530,16 +6530,15 @@ var updateBanner = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          console.log(data, '==data');
-          _context.next = 4;
+          _context.next = 3;
           return (0, _axios.default)({
             method: 'POST',
             url: '/api/v1/banner/updateBanner',
             data: data
           });
-        case 4:
+        case 3:
           res = _context.sent;
-          console.log(res, '==>res');
+          // console.log(res,'==>res')
           if (res.data.status === 'success') {
             alert('updated successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
@@ -6548,18 +6547,18 @@ var updateBanner = /*#__PURE__*/function () {
               location.assign('/admin/cms');
             }, 200);
           }
-          _context.next = 13;
+          _context.next = 11;
           break;
-        case 9:
-          _context.prev = 9;
+        case 7:
+          _context.prev = 7;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 13:
+        case 11:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee, null, [[0, 7]]);
   }));
   return function updateBanner(_x) {
     return _ref.apply(this, arguments);
@@ -7270,7 +7269,7 @@ $(document).on("submit", ".loginFormAdmin", function (e) {
   // console.log("Working") 
   // this.
   try {
-    console.log('WORKING');
+    // console.log('WORKING')
     $(this).find('button[type="submit"]').addClass("loading");
   } catch (err) {
     console.log(err);
@@ -7770,7 +7769,7 @@ $(document).on("submit", ".form-data25", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  console.log(fd, '==>fd');
+  // console.log(fd,'==>fd')
   (0, _updateBanner.updateBanner)(fd);
 });
 $(document).on('submit', ".uploadEJS", function (e) {

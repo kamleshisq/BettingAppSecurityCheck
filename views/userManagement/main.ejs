@@ -813,7 +813,7 @@
   <script>
   
     document.getElementById('roleSelect').addEventListener('change', function () {
-      console.log("WORK")
+      // console.log("WORK")
       if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
         document.getElementById('shareVisibleActual').classList.add("hide") 
       } else {
@@ -836,7 +836,7 @@
   <script>
     $(document).on("change", ".bookmakerType", function(e){
       e.preventDefault()
-      console.log($(this).val())
+      // console.log($(this).val())
       let html=``
       if($(this).val() == "NET_LOSS"){
         html += ` <option value="0.25">0.25</option>

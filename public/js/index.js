@@ -114,7 +114,7 @@ $(document).on("submit", ".loginFormAdmin", function(e){
     // console.log("Working") 
     // this.
     try{
-        console.log('WORKING')
+        // console.log('WORKING')
         $(this).find('button[type="submit"]').addClass("loading");
     }catch(err){
         console.log(err)
@@ -620,7 +620,7 @@ $(document).on("submit", ".form-data25",function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
-    console.log(fd,'==>fd')
+    // console.log(fd,'==>fd')
     updateBanner(fd)
 })
 

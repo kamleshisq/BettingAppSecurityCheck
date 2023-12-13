@@ -145,7 +145,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
           },
         }
       );
-    console.log(response.data, "response.data")
+    // console.log(response.data, "response.data")
 
     if(response.data.success){
         let check = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -441,7 +441,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
             })
         }
     }
-    console.log('working')
+    // console.log('working')
     loginData.User = currentUser
     res.locals.loginData = loginData
     req.currentUser = currentUser
@@ -450,7 +450,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 });
 
 exports.isLogin_Admin = catchAsync( async (req, res, next) => {
-    console.log('adminLogin')
+    // console.log('adminLogin')
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -578,7 +578,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.token = token
     next()
-    console.log('WORKING2')
+    // console.log('WORKING2')
 
 });
 

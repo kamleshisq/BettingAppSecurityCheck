@@ -5,7 +5,7 @@ if(pathname === "/admin/commissionReport"){
         FdateInput.addEventListener('change', handleInputChangeCommission);
         TdateInput.addEventListener('change', handleInputChangeCommission);
         function handleInputChangeCommission() {
-            console.log("Work")
+            // console.log("Work")
             let fromDate = $('#Fdate').val()
             let toDate = $('#Tdate').val()
             let filterData = {}
@@ -35,13 +35,13 @@ if(pathname === "/admin/commissionReport"){
         //   })
 
           $(document).on('click', ".load-more", function(e){
-            console.log("working")
+            // console.log("working")
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let filterData = {};
                 let fromDate1 = $('#Fdate').val()
                 let toDate = $('#Tdate').val()
-                console.log(fromDate1)
+                // console.log(fromDate1)
                 filterData.fromDate = fromDate1,
                 filterData.toDate = toDate
                 socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
@@ -49,7 +49,7 @@ if(pathname === "/admin/commissionReport"){
 
           let count = 11
           socket.on("CommissionRReport", data => {
-            console.log(data)
+            // console.log(data)
             // if(data.CommissionData.length > 0){
                 if(data.page === 0){
                     count = 1

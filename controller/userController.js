@@ -17,7 +17,7 @@ const gamemodel = require('../model/gameModel')
 const globalSettingModel = require('../model/globalSetting')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
-    console.log(req.body)
+    // console.log(req.body)
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
     const user_type = await Role.findById(req.body.role);
     // console.log(user_type)
@@ -69,7 +69,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                 if (result) {
                     let extractedWord = result[1];
                     newurl = url.replace(extractedWord, req.body.whiteLabel);
-                    console.log(newurl,'==>newurl')
+                    // console.log(newurl,'==>newurl')
                 } else {
                     newurl = ele.url
                     console.log("No match found");
