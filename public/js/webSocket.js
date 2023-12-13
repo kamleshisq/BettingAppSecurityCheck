@@ -9153,7 +9153,9 @@ socket.on('connect', () => {
                                 table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
                                 table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
                             }
-                            
+                            table.find('tr.back-inplaymatch').each(function(){
+                                this.find('td:eq(0)').attr('colspan', 9)
+                            })
                         }
                     }
                 })
