@@ -9115,7 +9115,18 @@ socket.on('connect', () => {
                 console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                 $("table.market").each(function() { 
                     if(this.id == data[i]._id){
-                        // console.log(data[i].selections, data[i].runnersData)
+                        if(status){
+                            $(this).find("tr").each(function() {
+                                if(team1Amount > 0){
+                                    var newTd = $("<td>").html(`<span class="c-gren" >${team1Amount}</span>`);
+                                }else{
+                                    var newTd = $("<td>").html(`<span class="c-reed" >${team1Amount}</span>`);
+                                }
+                                $(this).find("td:eq(1)").after(newTd);
+                            })
+                        }else{
+
+                        }
                     }
                 })
             }
