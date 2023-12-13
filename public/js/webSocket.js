@@ -9115,6 +9115,7 @@ socket.on('connect', () => {
                 console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                 $("table.market").each(function() { 
                     if(this.id == data[i]._id){
+                        var table = $(this);
                         if(team1Amount > 0){
                             var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount}</span>`);
                         }else{
@@ -9132,9 +9133,9 @@ socket.on('connect', () => {
                                 var newTd3 = $("<td>").html(`<span class="c-reed" >-${team3Amount}</span>`);
                             }
 
-                            this.find("tr:eq(0)").find("td:eq(0)").after(newTd);
-                            this.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
-                            this.find("tr:eq(4)").find("td:eq(0)").after(newTd3);
+                            table.find("tr:eq(0)").find("td:eq(0)").after(newTd);
+                            table.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
+                            table.find("tr:eq(4)").find("td:eq(0)").after(newTd3);
                         }else{
                             // this.find("tr:eq(0)").find("td:eq(0)").after(newTd);
                             // this.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
