@@ -3456,8 +3456,10 @@ io.on('connection', (socket) => {
 
     socket.on("loadMorediveHistory", async(data) => {
         let page = data.page
+        console.log(page)
         let userDetails = await User.findById(data.id)
         let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).skip(page*20).limit(20)
+        console.log(historty, "histortyhistortyhistorty")
         socket.emit("loadMorediveHistory", historty)
     })
 
