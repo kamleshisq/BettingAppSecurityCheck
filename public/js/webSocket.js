@@ -9136,8 +9136,8 @@ socket.on('connect', () => {
                             this.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
                             this.find("tr:eq(4)").find("td:eq(0)").after(newTd3);
                         }else{
-                            this.find("tr:eq(0)").find("td:eq(0)").after(newTd);
-                            this.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
+                            // this.find("tr:eq(0)").find("td:eq(0)").after(newTd);
+                            // this.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
                         }
                     }
                 })
