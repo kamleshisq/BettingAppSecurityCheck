@@ -9103,23 +9103,46 @@ socket.on('connect', () => {
                     if(this.id == data.betsMarketIdWise[i]._id){
                         var table = $(this);
                         if(data.status){
-
-                        }else{
                             if(team1Amount > 0){
-                                var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount}</span>`);
+                                var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
                             }else{
-                                var newTd = $("<td>").html(`<span class="c-reed" >${team1Amount}</span>`);
+                                var newTd = $("<td>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
                             }
                             if(team2Amount > 0){
-                                var newTd2 = $("<td>").html(`<span class="c-gren" >+${team2Amount}</span>`);
+                                var newTd2 = $("<td>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
                             }else{
-                                var newTd2 = $("<td>").html(`<span class="c-reed" >${team2Amount}</span>`);
+                                var newTd2 = $("<td>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
                             }
                             if(status){
                                 if(team3Amount > 0){
-                                    var newTd3 = $("<td>").html(`<span class="c-gren" >+${team3Amount}</span>`);
+                                    var newTd3 = $("<td>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
                                 }else{
-                                    var newTd3 = $("<td>").html(`<span class="c-reed" >${team3Amount}</span>`);
+                                    var newTd3 = $("<td>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
+                                }
+    
+                                table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                table.find("tr:eq(5)").find("td:eq(1)").html(newTd3);
+                            }else{
+                                table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                            }
+                        }else{
+                            if(team1Amount > 0){
+                                var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
+                            }
+                            if(team2Amount > 0){
+                                var newTd2 = $("<td>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
+                            }
+                            if(status){
+                                if(team3Amount > 0){
+                                    var newTd3 = $("<td>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
+                                }else{
+                                    var newTd3 = $("<td>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
                                 }
     
                                 table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
