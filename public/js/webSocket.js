@@ -8489,6 +8489,7 @@ socket.on('connect', () => {
           function marketplusminus ( data ){
             console.log(data)
             let beforevalue  = data.element.closest('tr').find('td:eq(1)').find('span').text()
+            console.log(beforevalue, "beforevaluebeforevalue")
             let newvale = (beforevalue * 1) + (data.result * 2)
             data.element.closest('tr').find('td:eq(1)').find('span').text(newvale)
           }
