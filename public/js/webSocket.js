@@ -9119,18 +9119,18 @@ socket.on('connect', () => {
                         if(team1Amount > 0){
                             var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount}</span>`);
                         }else{
-                            var newTd = $("<td>").html(`<span class="c-reed" >-${team1Amount}</span>`);
+                            var newTd = $("<td>").html(`<span class="c-reed" >${team1Amount}</span>`);
                         }
                         if(team2Amount > 0){
                             var newTd2 = $("<td>").html(`<span class="c-gren" >+${team2Amount}</span>`);
                         }else{
-                            var newTd2 = $("<td>").html(`<span class="c-reed" >-${team2Amount}</span>`);
+                            var newTd2 = $("<td>").html(`<span class="c-reed" >${team2Amount}</span>`);
                         }
                         if(status){
                             if(team3Amount > 0){
                                 var newTd3 = $("<td>").html(`<span class="c-gren" >+${team3Amount}</span>`);
                             }else{
-                                var newTd3 = $("<td>").html(`<span class="c-reed" >-${team3Amount}</span>`);
+                                var newTd3 = $("<td>").html(`<span class="c-reed" >${team3Amount}</span>`);
                             }
 
                             table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
