@@ -9133,9 +9133,9 @@ socket.on('connect', () => {
                                 var newTd3 = $("<td>").html(`<span class="c-reed" >-${team3Amount}</span>`);
                             }
 
-                            table.find("tr:eq(0)").find("td:eq(0)").after(newTd);
-                            table.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
-                            table.find("tr:eq(4)").find("td:eq(0)").after(newTd3);
+                            table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                            table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                            table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
                         }else{
                             // this.find("tr:eq(0)").find("td:eq(0)").after(newTd);
                             // this.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
