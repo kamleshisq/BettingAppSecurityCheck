@@ -13439,8 +13439,8 @@ socket.on('connect', () => {
                     }else{
                         html += ` <td>LogOut</td></tr>`
                     }
-                    countHistory += 10
                 }
+                countHistory += 10
                 // console.log(html)
                 if(data.page == 0){
 
