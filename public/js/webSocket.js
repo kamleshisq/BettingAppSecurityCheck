@@ -9104,6 +9104,9 @@ socket.on('connect', () => {
                         var table = $(this);
                         let trLength = table.find("tr:eq(1)").find('td').length
                         console.log(trLength, "trLengthtrLengthtrLength")
+                        table.find('tr.back-inplaymatch').each(function(){
+                            $(this).find('td:eq(0)').attr('colspan', 9)
+                        })
                         if(trLength === 2 || trLength === 6){
                             if(team1Amount > 0){
                                 var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
@@ -9155,9 +9158,6 @@ socket.on('connect', () => {
                                 table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
                                 table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
                             }
-                            table.find('tr.back-inplaymatch').each(function(){
-                                $(this).find('td:eq(0)').attr('colspan', 9)
-                            })
                         }
                     }
                 })
