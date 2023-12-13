@@ -9104,7 +9104,7 @@ socket.on('connect', () => {
                         var table = $(this);
                         let trLength = table.find("tr:eq(1)").find('td').length
                         console.log(trLength, "trLengthtrLengthtrLength")
-                        if(trLength === 2 || trLength === 6){
+                        if(trLength === 3 || trLength === 7){
                             if(team1Amount > 0){
                                 var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
                             }else{
