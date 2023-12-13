@@ -4,7 +4,7 @@ socket.on('disconnect', () => {
     // console.log("WebSocket Disconnected");
     // Refresh the page when the WebSocket connection is lost
     
-    window.location.reload();
+    // window.location.reload();
 });
 let c = 0
 socket.on('connect', () => {
