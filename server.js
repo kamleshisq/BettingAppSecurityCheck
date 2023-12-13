@@ -3534,7 +3534,8 @@ io.on('connection', (socket) => {
                 $group: {
                   _id: {
                     betType: "$betType",
-                    matchName: "$match"
+                    eventId1 : "$eventId",
+                    matchName: "$match",
                   },
                   count: { $sum: 1 },
                   eventdate: { $first: "$eventDate" }, 
