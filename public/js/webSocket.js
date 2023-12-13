@@ -9029,42 +9029,28 @@ socket.on('connect', () => {
         //     link.addEventListener("click", handlePlaceBetClick);
         //   });
 
-        function marketIdbookDetails(){
-            $(document).ready(function() {
-                var ids = [];
-                var pairs = [];
-          
-                // $(".market").each(function() {
-                //     // if(!(this.id.split('-')[1].startsWith('OE') || this.id.split('-')[1].startsWith('F2'))){
-                //         ids.push(this.id);
-                //     // }
-                // });
-                // console.log(ids)
+        function marketIdbookDetails( status ){
                 let eventId = search.split('=')[1]
-                socket.emit("marketIdbookDetails", {ids, LOGINDATA, eventId})
-              });
-            //   setTimeout(()=>{
-            //     marketIdbookDetails()
-            //   }, 5000)
+                socket.emit("marketIdbookDetails", {LOGINDATA, eventId, status})
         }
-        marketIdbookDetails()
+        marketIdbookDetails( false )
 
 
         socket.on('marketIdbookDetails', data => {
-            for(let i = 0; i < data.length; i++){
-                // console.log(data[i]._id, data[i].selections, "selections")
+            for(let i = 0; i < data.betsMarketIdWise.length; i++){
+                // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
                 let team1Data
                 let team2Data
                 let team3Data
                 let status = false
-                if(data[i].runnersData && data[i].runnersData.length === 3){
+                if(data.betsMarketIdWise[i].runnersData && data.betsMarketIdWise[i].runnersData.length === 3){
                     status = true
-                    team1Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[0].runner)
-                    team2Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[1].runner)
-                    team3Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[2].runner)
+                    team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
+                    team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
+                    team3Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[2].runner)
                 }else{
-                    team1Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[0].runner)
-                    team2Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[1].runner)
+                    team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
+                    team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
                 }
                 let team1Amount
                 let team2Amount
@@ -9114,38 +9100,42 @@ socket.on('connect', () => {
                 }
                 console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                 $("table.market").each(function() { 
-                    if(this.id == data[i]._id){
+                    if(this.id == data.betsMarketIdWise[i]._id){
                         var table = $(this);
-                        if(team1Amount > 0){
-                            var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount}</span>`);
-                        }else{
-                            var newTd = $("<td>").html(`<span class="c-reed" >${team1Amount}</span>`);
-                        }
-                        if(team2Amount > 0){
-                            var newTd2 = $("<td>").html(`<span class="c-gren" >+${team2Amount}</span>`);
-                        }else{
-                            var newTd2 = $("<td>").html(`<span class="c-reed" >${team2Amount}</span>`);
-                        }
-                        if(status){
-                            if(team3Amount > 0){
-                                var newTd3 = $("<td>").html(`<span class="c-gren" >+${team3Amount}</span>`);
-                            }else{
-                                var newTd3 = $("<td>").html(`<span class="c-reed" >${team3Amount}</span>`);
-                            }
+                        if(data.status){
 
-                            table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
-                            table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
-                            table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
                         }else{
-                            table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
-                            table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                            if(team1Amount > 0){
+                                var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount}</span>`);
+                            }else{
+                                var newTd = $("<td>").html(`<span class="c-reed" >${team1Amount}</span>`);
+                            }
+                            if(team2Amount > 0){
+                                var newTd2 = $("<td>").html(`<span class="c-gren" >+${team2Amount}</span>`);
+                            }else{
+                                var newTd2 = $("<td>").html(`<span class="c-reed" >${team2Amount}</span>`);
+                            }
+                            if(status){
+                                if(team3Amount > 0){
+                                    var newTd3 = $("<td>").html(`<span class="c-gren" >+${team3Amount}</span>`);
+                                }else{
+                                    var newTd3 = $("<td>").html(`<span class="c-reed" >${team3Amount}</span>`);
+                                }
+    
+                                table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
+                            }else{
+                                table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                            }
                         }
                     }
                 })
             }
         })
         socket.on("betDetails" , (data) => {
-            marketIdbookDetails()
+            marketIdbookDetails( true )
             hideLoader()
             // console.log(data.result)
             // function togglePopup(idname, id){

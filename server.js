@@ -8915,7 +8915,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('marketIdbookDetails', async(data) => {
-        console.log(data, "DATADTADTDA")
         if(data.LOGINDATA.LOGINUSER){
             let betsMarketIdWise = await Bet.aggregate([
                 {
@@ -9012,7 +9011,7 @@ io.on('connection', (socket) => {
                     betsMarketIdWise[i].runnersData = JSON.parse(currentMarketrunnersData.runners)
                 }
             }
-            socket.emit("marketIdbookDetails" ,betsMarketIdWise)
+            socket.emit("marketIdbookDetails" ,{betsMarketIdWise, status: data.status})
         }
 
     })
