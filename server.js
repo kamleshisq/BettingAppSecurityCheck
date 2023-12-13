@@ -9003,8 +9003,9 @@ io.on('connection', (socket) => {
                 },
             ])
 
-
-            console.log(betsMarketIdWise[0].selections, 'betsMarketIdWisebetsMarketIdWisebetsMarketIdWise')
+            for(let i = 0; i < betsMarketIdWise.length; i++){
+                console.log(betsMarketIdWise[i].selections, 'betsMarketIdWisebetsMarketIdWisebetsMarketIdWise')
+            }
         }
 
     })
