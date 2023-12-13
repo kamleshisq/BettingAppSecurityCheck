@@ -9003,9 +9003,9 @@ io.on('connection', (socket) => {
                 },
             ])
 
-            for(let i = 0; i < betsMarketIdWise.length; i++){
-                console.log(betsMarketIdWise[i].selections, 'betsMarketIdWisebetsMarketIdWisebetsMarketIdWise')
-            }
+            let marketIds = await Bet.distinct('marketId', {status: "OPEN", eventId: data.eventId,})
+            let runnerData = await runnerDataModel.find({marketId:{$in:marketIds}})
+            console.log(runnerData)
         }
 
     })
