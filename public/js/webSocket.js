@@ -9053,9 +9053,23 @@ socket.on('connect', () => {
         socket.on('marketIdbookDetails', data => {
             for(let i = 0; i < data.length; i++){
                 // console.log(data[i]._id, data[i].selections, "selections")
+                let team1
+                let team2
+                let team3
+                let status = false
+                if(data[i].runnersData && data[i].runnersData.length === 3){
+                    status = true
+                    team1 = data[i].selections.find(item => item.selectionName == data[i].runnersData[0].runner)
+                    team2 = data[i].selections.find(item => item.selectionName == data[i].runnersData[1].runner)
+                    team3 = data[i].selections.find(item => item.selectionName == data[i].runnersData[2].runner)
+                }else{
+                    team1 = data[i].selections.find(item => item.selectionName == data[i].runnersData[0].runner)
+                    team2 = data[i].selections.find(item => item.selectionName == data[i].runnersData[1].runner)
+                }
+                console.log(team1, team2, team3, "jkjk")
                 $("table.market").each(function() { 
                     if(this.id == data[i]._id){
-                        console.log(data[i].selections, data[i].runnersData)
+                        // console.log(data[i].selections, data[i].runnersData)
                     }
                 })
             }
