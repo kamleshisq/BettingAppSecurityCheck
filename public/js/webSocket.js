@@ -9035,12 +9035,13 @@ socket.on('connect', () => {
                 var pairs = [];
           
                 $(".market").each(function() {
-                    if(!(this.id.split('-')[1].startsWith('OE') || this.id.split('-')[1].startsWith('F2'))){
+                    // if(!(this.id.split('-')[1].startsWith('OE') || this.id.split('-')[1].startsWith('F2'))){
                         ids.push(this.id);
-                    }
+                    // }
                 });
                 // console.log(ids)
-                socket.emit("marketIdbookDetails", {ids, LOGINDATA})
+                let eventId = search.split('=')[1]
+                socket.emit("marketIdbookDetails", {ids, LOGINDATA, eventId})
               });
             //   setTimeout(()=>{
             //     marketIdbookDetails()
