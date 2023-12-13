@@ -9115,17 +9115,29 @@ socket.on('connect', () => {
                 console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                 $("table.market").each(function() { 
                     if(this.id == data[i]._id){
-                        if(status){
-                            $(this).find("tr").each(function() {
-                                if(team1Amount > 0){
-                                    var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount}</span>`);
-                                }else{
-                                    var newTd = $("<td>").html(`<span class="c-reed" >-${team1Amount}</span>`);
-                                }
-                                $(this).find("td:eq(0)").after(newTd);
-                            })
+                        if(team1Amount > 0){
+                            var newTd = $("<td>").html(`<span class="c-gren" >+${team1Amount}</span>`);
                         }else{
+                            var newTd = $("<td>").html(`<span class="c-reed" >-${team1Amount}</span>`);
+                        }
+                        if(team2Amount > 0){
+                            var newTd2 = $("<td>").html(`<span class="c-gren" >+${team2Amount}</span>`);
+                        }else{
+                            var newTd2 = $("<td>").html(`<span class="c-reed" >-${team2Amount}</span>`);
+                        }
+                        if(status){
+                            if(team3Amount > 0){
+                                var newTd3 = $("<td>").html(`<span class="c-gren" >+${team3Amount}</span>`);
+                            }else{
+                                var newTd3 = $("<td>").html(`<span class="c-reed" >-${team3Amount}</span>`);
+                            }
 
+                            this.find("tr:eq(0)").find("td:eq(0)").after(newTd);
+                            this.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
+                            this.find("tr:eq(4)").find("td:eq(0)").after(newTd3);
+                        }else{
+                            this.find("tr:eq(0)").find("td:eq(0)").after(newTd);
+                            this.find("tr:eq(2)").find("td:eq(0)").after(newTd2);
                         }
                     }
                 })
