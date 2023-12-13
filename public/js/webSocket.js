@@ -8772,7 +8772,7 @@ socket.on('connect', () => {
                     let data = {
                         result,
                         element,
-                        status:true
+                        status:false
                     }
                     marketplusminus(data)
                 }else{
@@ -8780,7 +8780,7 @@ socket.on('connect', () => {
                     let data = {
                         result,
                         element,
-                        status:false
+                        status:true
                     }
                     marketplusminus(data)
                 }
