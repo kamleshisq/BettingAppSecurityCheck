@@ -8988,7 +8988,7 @@ io.on('connection', (socket) => {
                 },
             },
             ])
-            console.log('betsMarketIdWise', betsMarketIdWisebetsMarketIdWisebetsMarketIdWise)
+            console.log(betsMarketIdWise, 'betsMarketIdWisebetsMarketIdWisebetsMarketIdWise')
         }
 
     })
