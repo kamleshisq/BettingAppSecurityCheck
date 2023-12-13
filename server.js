@@ -9005,7 +9005,14 @@ io.on('connection', (socket) => {
 
             let marketIds = await Bet.distinct('marketId', {status: "OPEN", eventId: data.eventId,})
             let runnerData = await runnerDataModel.find({marketId:{$in:marketIds}})
-            console.log(runnerData)
+            // console.log(runnerData)
+            for(let i = 0; i < betsMarketIdWise.length; i++){
+                let currentMarketrunnersData = runnerData.find(item => item.marketId == betsMarketIdWise[i]._id)
+                if(currentMarketrunnersData){
+                    betsMarketIdWise[i].runnersData = JSON.parse(currentMarketrunnersData.runners)
+                }
+            }
+            socket.emit("marketIdbookDetails" ,betsMarketIdWise)
         }
 
     })

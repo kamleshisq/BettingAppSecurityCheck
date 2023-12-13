@@ -9048,6 +9048,13 @@ socket.on('connect', () => {
             //   }, 5000)
         }
         marketIdbookDetails()
+
+
+        socket.on('marketIdbookDetails', data => {
+            for(let i = 0; i < data.length; i++){
+                console.log(data[i]._id, data[i].selections, "selections")
+            }
+        })
         socket.on("betDetails" , (data) => {
             marketIdbookDetails()
             hideLoader()
