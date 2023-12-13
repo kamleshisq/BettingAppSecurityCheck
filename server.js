@@ -3355,7 +3355,7 @@ io.on('connection', (socket) => {
 
     socket.on("BETSFORUSERAdminSide", async(data) => {
         try{
-            let limit = 20
+            let limit = 10
             let page = 0
             if(data.page){
                 page = data.page
@@ -3456,10 +3456,10 @@ io.on('connection', (socket) => {
 
     socket.on("loadMorediveHistory", async(data) => {
         let page = data.page
-        console.log(page)
+        // console.log(page)
         let userDetails = await User.findById(data.id)
         let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).skip(page*10).limit(10)
-        console.log(historty, "histortyhistortyhistorty")
+        // console.log(historty, "histortyhistortyhistorty")
         socket.emit("loadMorediveHistory", historty)
     })
 
