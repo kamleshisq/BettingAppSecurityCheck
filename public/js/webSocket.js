@@ -9053,20 +9053,66 @@ socket.on('connect', () => {
         socket.on('marketIdbookDetails', data => {
             for(let i = 0; i < data.length; i++){
                 // console.log(data[i]._id, data[i].selections, "selections")
-                let team1
-                let team2
-                let team3
+                let team1Data
+                let team2Data
+                let team3Data
                 let status = false
                 if(data[i].runnersData && data[i].runnersData.length === 3){
                     status = true
-                    team1 = data[i].selections.find(item => item.selectionName == data[i].runnersData[0].runner)
-                    team2 = data[i].selections.find(item => item.selectionName == data[i].runnersData[1].runner)
-                    team3 = data[i].selections.find(item => item.selectionName == data[i].runnersData[2].runner)
+                    team1Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[0].runner)
+                    team2Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[1].runner)
+                    team3Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[2].runner)
                 }else{
-                    team1 = data[i].selections.find(item => item.selectionName == data[i].runnersData[0].runner)
-                    team2 = data[i].selections.find(item => item.selectionName == data[i].runnersData[1].runner)
+                    team1Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[0].runner)
+                    team2Data = data[i].selections.find(item => item.selectionName == data[i].runnersData[1].runner)
                 }
-                console.log(team1, team2, team3, "jkjk")
+                let team1Amount
+                let team2Amount
+                let team3Amount
+                if(status){
+                    if(team1Data && team2Data && team3Data){
+                        team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
+                        team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
+                        team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
+                    }else if ((team1Data && team2Data) && !team3Data){
+                        team1Amount = team1Data.totalAmount - team2Data.exposure
+                        team2Amount = team2Data.totalAmount - team1Data.exposure
+                        team3Amount = - team2Data.exposure - team1Data.exposure
+                    }else if (!team1Data && (team2Data && team3Data)){
+                        team1Amount = - team2Data.exposure - team3Data.exposure
+                        team2Amount = team2Data.totalAmount - team3Data.exposure
+                        team3Amount = team3Data.totalAmount - team2Data.exposure 
+                    }else if (team1Data && !team2Data && team3Data){
+                        team1Amount = team1Data.totalAmount - team3Data.exposure
+                        team2Amount = - team1Data.exposure - team3Data.exposure
+                        team3Amount = team3Data.totalAmount - team1Data.exposure
+                    }else if (team1Data && !team2Data && !team3Data){
+                        team1Amount = team1Data.totalAmount
+                        team2Amount = - team1Data.exposure
+                        team3Amount = - team1Data.exposure
+                    }else if (!team1Data && team2Data && !team3Data){
+                        team1Amount = - team2Data.exposure
+                        team2Amount = team2Data.totalAmount
+                        team3Amount = - team2Data.exposure 
+                    }else if (!team1Data && !team2Data && team3Data){
+                        team1Amount =  - team3Data.exposure
+                        team2Amount =  - team3Data.exposure
+                        team3Amount = team3Data.totalAmount 
+                    }
+                }else{
+                    if(team1Data && team2Data){
+                        team1Amount = team1Data.totalAmount - team2Data.exposure
+                        team2Amount = team2Data.totalAmount - team1Data.exposure
+                    }else if (!team1Data && team2Data){
+                        team1Amount = - team2Data.exposure
+                        team2Amount = team2Data.totalAmount
+                    }else if(team1Data && !team2Data){
+                        team1Amount = team1Data.totalAmount
+                        team2Amount = - team1Data.exposure
+                    }
+
+                }
+                console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                 $("table.market").each(function() { 
                     if(this.id == data[i]._id){
                         // console.log(data[i].selections, data[i].runnersData)
