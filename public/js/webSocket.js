@@ -8939,10 +8939,10 @@ socket.on('connect', () => {
                     }
                     let diff = result - oldResult
                     let data = {
-                        result:diff,
+                        result,
                         element,
                         status:false,
-                        NewStake : 100
+                        NewStake
                     }
                     marketplusminus(data)
                 }else{
@@ -8955,10 +8955,10 @@ socket.on('connect', () => {
                         plusMinus = (NewStake * Odds) / 100
                     }
                     let data = {
-                        result : diff,
+                        result ,
                         element,
                         status:true,
-                        NewStake : 100,
+                        NewStake,
                         plusMinus
                     }
                     marketplusminus(data)
