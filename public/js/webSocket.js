@@ -8574,6 +8574,94 @@ socket.on('connect', () => {
 
 
 
+          function Onlyminus ( data ){
+            console.log(data)
+            let table = data.element.closest('table')
+            if(table.hasClass("market")){
+                let trLength = table.find("tr:eq(1)").find('td').length
+                if(trLength === 4 || trLength === 8){
+                    if(data.status){
+                        console.log(data.plusMinus, "newvaluenewvaluenewvalue")
+                        let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                        let newvale = (beforevalue * 1) + (data.result * 1) + (data.plusMinus * 1)
+                        data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                        data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                            let oldValue = $(this).find('td:eq(1)').find('span').text()
+                            let newvalue = (oldValue * 1) - (data.result * 1)
+                            console.log(newvalue , "newvaluenewvaluenewvalue")
+                            $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                            if(newvalue > 0){
+                                $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                            }else{
+                                $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                            }
+                        })
+                    }else{
+                        let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                        let newvale = (beforevalue * 1) - (data.result * 1) - (data.NewStake * 1)
+                        data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                        data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                            let oldValue = $(this).find('td:eq(1)').find('span').text()
+                            let newvalue = (oldValue * 1) + (data.NewStake * 1)
+                            $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                            // console.log(newvalue)
+                            if(newvalue > 0){
+                                $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                            }else{
+                                $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                            }
+                        })
+                    }
+                }else{
+                    table.find('th:eq(0)').after('<th></th>')
+                    if(data.status){
+                        // let thathtml = ''
+                        if((data.plusMinus * -1) > 0){
+                            var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.plusMinus * -1).toFixed(2)}</span>`);
+                        }else{
+                            var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.plusMinus * -1).toFixed(2)}</span>`);
+                        }
+                        if((data.result * 1) > 0){
+                            var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                        }else{
+                            var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                        }
+                        data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                        table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
+                            var firstTd = $(this).find('td:first-child');
+                        
+                            if (firstTd.length === 1 && (firstTd.siblings().length === 7 || firstTd.siblings().length === 2)) {
+                                // console.log('Working:', firstTd);
+                                firstTd.after(newTd2.clone()); 
+                            }
+                        });
+                    }else{
+                        if((data.result * 1) > 0){
+                            var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                        }else{
+                            var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                        }
+                        if((data.NewStake * -1) > 0){
+                            var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.NewStake * -1).toFixed(2)}</span>`);
+                        }else{
+                            var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.NewStake * -1).toFixed(2)}</span>`);
+                        }
+                        data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                        table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
+                            var firstTd = $(this).find('td:first-child');
+                        
+                            if (firstTd.length === 1 && (firstTd.siblings().length === 7 || firstTd.siblings().length === 2)) {
+                                // console.log('Working:', firstTd);
+                                firstTd.after(newTd2.clone()); 
+                            }
+                        });
+                    }
+                }
+            }
+          }
+
+
+
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
@@ -8759,14 +8847,37 @@ socket.on('connect', () => {
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 let NewStake = spanId - 100;
                 let result
+                let element = $(this)
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
                     }else{
                         result = (NewStake * Odds) / 100
                     }
+                    let data = {
+                        result,
+                        element,
+                        status:false,
+                        NewStake
+                    }
+                    Onlyminus(data)
                 }else{
                     result = NewStake
+
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                        plusMinus = (NewStake * Odds) - NewStake;
+                         
+                    }else{
+                        plusMinus = (NewStake * Odds) / 100
+                    }
+                    let data = {
+                        result,
+                        element,
+                        status:true,
+                        NewStake,
+                        plusMinus
+                    }
+                    Onlyminus(data)
                     // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
                     //     result = (NewStake * 2) - NewStake;
                     // }else{
