@@ -9021,6 +9021,21 @@ io.on('connection', (socket) => {
 
     socket.on('marketIdbookDetailsFANCY', async(data) => {
         console.log(data, "datadatdadtda")
+        if(data.LOGINDATA.LOGINUSER){
+            let betDetails = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        eventId: data.eventId,
+                        userName:data.LOGINDATA.LOGINUSER.userName,
+                        "marketId": {
+                            $regex: /^(OE|F2)/
+                        }
+                    }
+                },
+            ])
+            console.log(betDetails)
+        }
     })
 
 })
