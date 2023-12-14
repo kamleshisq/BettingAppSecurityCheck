@@ -8681,6 +8681,9 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                       diffStake = parseFloat(newStake) - parseFloat(spanId) 
+                      if(diffStake === 0){
+                        diffStake = parseFloat(spanId)
+                      }
                     }
                     console.log(diffStake, "diffStakediffStakediffStake")
                     var betValue = parseFloat(
@@ -8722,6 +8725,9 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                       diffStake = parseFloat(newStake) - parseFloat(spanId)
+                      if(diffStake === 0){
+                        diffStake = parseFloat(spanId)
+                      }
                     }
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
