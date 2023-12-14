@@ -9437,7 +9437,7 @@ socket.on('connect', () => {
                             team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
                             team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
                             team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
-                            console.log(team2Data.totalAmount - team1Data.exposure - team3Data.exposure)
+                            console.log(team2Data.totalAmount - team1Data.exposure - team3Data.exposure, team2Data.totalAmount, team1Data.exposure, team3Data.exposure)
                         }else if ((team1Data && team2Data) && !team3Data){
                             team1Amount = team1Data.totalAmount - team2Data.exposure
                             team2Amount = team2Data.totalAmount - team1Data.exposure
