@@ -8510,12 +8510,14 @@ socket.on('connect', () => {
                         })
                     }else{
                         let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
-                        let newvale = (beforevalue * 1) + (data.result * 1) + (data.NewStake * 1)
+                        let newvale = (beforevalue * 1) + (data.result * 1)
                         data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
                         data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                             let oldValue = $(this).find('td:eq(1)').find('span').text()
-                            let newvalue = (oldValue * 1) - (data.NewStake * 1)
-                            $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                            let newvalue =  -(data.NewStake * 1)
+                            if(oldValue != newvale){
+                                $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                            }
                             // console.log(newvalue)
                             if(newvalue > 0){
                                 $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
