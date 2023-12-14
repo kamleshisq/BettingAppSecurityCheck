@@ -9039,6 +9039,11 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on('getFancyBookDATAuserSide', async(data) => {
+        console.log(data)
+    })
+
 })
 
 http.listen(process.env.port,()=> {
