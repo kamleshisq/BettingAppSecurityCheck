@@ -8668,7 +8668,7 @@ socket.on('connect', () => {
                                 element,
                                 status:false,
                                 NewStake : staleDiff,
-                                check : NewStake
+                                check : spanId
                             }
                             Onlyminus(data)
                         }else{
@@ -8734,7 +8734,7 @@ socket.on('connect', () => {
                                 element,
                                 status:false,
                                 NewStake : staleDiff,
-                                check : NewStake
+                                check : spanId
                             }
                             Onlyminus(data)
                         }else{
@@ -8744,7 +8744,7 @@ socket.on('connect', () => {
                                 result : diff,
                                 element,
                                 status:false,
-                                NewStake : staleDiff
+                                NewStake : spanId
                             }
                             marketplusminus(data)
                         }
@@ -8797,20 +8797,20 @@ socket.on('connect', () => {
                         if(oldValue > diffStake){
                             staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
                             resultDiff = staleDiff;
-                            plusMinus = (staleDiff * Odds) - staleDiff;
+                            plusMinus = (staleDiff * betValue) - staleDiff;
                             let data = {
                                 result:resultDiff,
                                 element,
                                 status:true,
                                 NewStake : staleDiff,
                                 plusMinus,
-                                check:NewStake
+                                check:spanId
                             }
                             Onlyminus(data)
                         }else{
                             staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
                             diff = staleDiff
-                            plusMinus = (staleDiff * Odds) - staleDiff;
+                            plusMinus = (staleDiff * betValue) - staleDiff;
                             let data = {
                                 result : diff ,
                                 element,
@@ -8872,20 +8872,20 @@ socket.on('connect', () => {
                         if(oldValue > diffStake){
                             staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
                             resultDiff = staleDiff;
-                            plusMinus = (staleDiff * Odds) / 100
+                            plusMinus = (staleDiff * betValue) / 100
                             let data = {
                                 result:resultDiff,
                                 element,
                                 status:true,
                                 NewStake : staleDiff,
                                 plusMinus,
-                                check:NewStake
+                                check:spanId
                             }
                             Onlyminus(data)
                         }else{
                             staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
                             diff = staleDiff
-                            plusMinus = (staleDiff * Odds) / 100
+                            plusMinus = (staleDiff * betValue) / 100
                             let data = {
                                 result : diff ,
                                 element,
