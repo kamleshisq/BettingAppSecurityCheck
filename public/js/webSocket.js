@@ -9724,6 +9724,9 @@ socket.on('connect', () => {
                             html += `<td class="c-gren" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
                         }
                     } 
+                    html += `</tbody>
+                    </table>`
+                    $('#FANCYBOOKDATA').html(html)
             }
         })
 
