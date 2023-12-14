@@ -9653,7 +9653,7 @@ socket.on('connect', () => {
         })
         
         $(document).on('click', '.fancy-book', function(){
-            let id = $(this).closest('td').attr(id)
+            let id = $(this).closest('td').attr('id')
             $('#FANCYBOOKDATA').html('<p>Please wait a moment</p>')
             socket.emit('getFancyBookDATAuserSide', id)
         })
