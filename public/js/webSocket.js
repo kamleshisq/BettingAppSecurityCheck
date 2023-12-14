@@ -8606,10 +8606,13 @@ socket.on('connect', () => {
                         if(data.status){
                             // console.log(data.plusMinus, "newvaluenewvaluenewvalue")
                             let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            console.log(beforevalue)
                             let newvale = (beforevalue * 1) + (data.result * 1) + (data.plusMinus * 1)
+                            console.log(newvale)
                             data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
                             data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                                 let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                console.log(oldValue)
                                 let newvalue = (oldValue * 1) - (data.result * 1)
                                 console.log(newvalue , "newvaluenewvaluenewvalue")
                                 $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
@@ -8899,11 +8902,11 @@ socket.on('connect', () => {
                             Onlyminus(data)
                         }else{
                             staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
-                            console.log(staleDiff, "staleDiffstaleDiff")
+                            // console.log(staleDiff, "staleDiffstaleDiff")
                             diff = staleDiff
 
                             plusMinus = (staleDiff * betValue) / 100
-                            console.log(plusMinus, "plusMinusplusMinusplusMinus")
+                            // console.log(plusMinus, "plusMinusplusMinusplusMinus")
                             let data = {
                                 result : diff ,
                                 element,
@@ -9410,7 +9413,7 @@ socket.on('connect', () => {
            
       })
         socket.on('marketIdbookDetails', data => {
-            console.log('WORKING', data, "datadatadatda")
+            // console.log('WORKING', data, "datadatadatda")
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
                     // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
@@ -9476,12 +9479,12 @@ socket.on('connect', () => {
                         }
     
                     }
-                    console.log(team1Amount, team2Amount, team3Amount, "jkjk")
+                    // console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                     $("table.market").each(function() { 
                         if(this.id == data.betsMarketIdWise[i]._id){
                             var table = $(this);
                             let trLength = table.find("tr:eq(1)").find('td').length
-                            console.log(trLength, "trLengthtrLengthtrLength")
+                            // console.log(trLength, "trLengthtrLengthtrLength")
                             table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
                                 $(this).find('td:eq(0)').attr('colspan', 9)
                             })
@@ -9538,11 +9541,11 @@ socket.on('connect', () => {
                                 }
                             }
                         }else{
-                            console.log('WORKING')
+                            // console.log('WORKING')
                             if(!data.betsMarketIdWise.some(item => item._id == this.id)){
                                 var table = $(this);
                                 let trLength = table.find("tr:eq(1)").find('td').length
-                                console.log(trLength)
+                                // console.log(trLength)
                                 if(trLength === 4 || trLength === 8){
                                     table.find("tr:eq(1)").find("td:eq(1)").remove();
                                     table.find("tr:eq(3)").find("td:eq(1)").remove();
