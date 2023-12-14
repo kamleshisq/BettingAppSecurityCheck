@@ -8604,17 +8604,17 @@ socket.on('connect', () => {
                     let trLength = table.find("tr:eq(1)").find('td').length
                     if(trLength === 4 || trLength === 8){
                         if(data.status){
-                            // console.log(data.plusMinus, "newvaluenewvaluenewvalue")
+                            console.log(data.plusMinus, "newvaluenewvaluenewvalue")
                             let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
-                            // console.log(beforevalue)
+                            console.log(beforevalue)
                             let newvale = (beforevalue * 1) + (data.result * 1) + (data.plusMinus * 1)
-                            // console.log(newvale)
+                            console.log(newvale)
                             data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
                             data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                                 let oldValue = $(this).find('td:eq(1)').find('span').text()
-                                // console.log(oldValue)
+                                console.log(oldValue)
                                 let newvalue = (oldValue * 1) - (data.result * 1)
-                                // console.log(newvalue , "newvaluenewvaluenewvalue")
+                                console.log(newvalue , "newvaluenewvaluenewvalue")
                                 $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
                                 if(newvalue > 0){
                                     $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
