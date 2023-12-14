@@ -9028,8 +9028,8 @@ io.on('connection', (socket) => {
                         status: "OPEN",
                         eventId: data.eventId,
                         userName:data.LOGINDATA.LOGINUSER.userName,
-                        marketId: {
-                            $regex: /^(OE|F2)/
+                        "marketId": {
+                            $regex: /^(OE|F2)$/
                         }
                     }
                 },
