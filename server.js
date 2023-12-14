@@ -9205,7 +9205,7 @@ io.on('connection', (socket) => {
                         }
                       },
                 ])
-                console.log(betDetails, "betDetailsbetDetailsbetDetails")
+                console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
                 let dataToshow = []
                 if(betDetails.length != 0){
                     betDetails = betDetails[0]
