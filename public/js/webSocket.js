@@ -9430,6 +9430,7 @@ socket.on('connect', () => {
                     let team1Amount
                     let team2Amount
                     let team3Amount
+                    console.log(team1Data, team2Data, team3Data)
                     if(status){
                         if(team1Data && team2Data && team3Data){
                             team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
