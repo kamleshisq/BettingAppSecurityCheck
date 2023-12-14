@@ -9710,6 +9710,20 @@ socket.on('connect', () => {
                      html += `</tbody>
                     </table>`
                     $('#FANCYBOOKDATA').html(html)
+            }else{
+                let html = ""
+                    html += `<table id="FANCYBOOK"
+                    <tbody>
+                    <tr class="headDetail"><th>Runner Name</th>
+                    <th>Profit/Loss</th></tr>`
+                    for(let i = 0; i < data.dataToshow.length; i++){
+                        html += `<tr><td>${data.dataToshow[i].message}</td>`
+                        if(data.dataToshow[i].sum < 0){
+                            html += `<td class="green" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<td class="red" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
+                        }
+                    } 
             }
         })
 
