@@ -9170,7 +9170,7 @@ io.on('connection', (socket) => {
                         $project:{
                             _id:0,
                             secId: "$_id.secId",
-                            runs: "$_idruns",
+                            runs: "$_id.runs",
                             totalAmount:"$totalAmount",
                             totalWinAmount:"$totalWinAmount",
                         }
