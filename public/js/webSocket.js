@@ -8589,9 +8589,12 @@ socket.on('connect', () => {
             let eventId = search.split('=')[1]
             socket.emit("marketIdbookDetails", {LOGINDATA, eventId, status})
     }
+    
     marketIdbookDetails( false )
-    fencyDetails( true )
-          function Onlyminus ( data ){
+    fencyDetails( false )
+          
+    
+    function Onlyminus ( data ){
             console.log(data)
             if(data.check == 0){
                 marketIdbookDetails( false )
