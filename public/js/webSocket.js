@@ -8931,13 +8931,14 @@ socket.on('connect', () => {
                 let plusMinus = 0
                 let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
+                    let diff = 0
                     if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
-                         
+                        diff = (100 * Odds) - 100;
                     }else{
                         result = (NewStake * Odds) / 100
+                        diff = (100 * Odds) / 100
                     }
-                    let diff = result - oldResult
                     let data = {
                         result : diff,
                         element,
@@ -8947,7 +8948,7 @@ socket.on('connect', () => {
                     marketplusminus(data)
                 }else{
                     result = NewStake
-                    let diff = result - oldResult
+                    let diff = 100
                     if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
                         plusMinus = (100 * Odds) - 100;
                          
