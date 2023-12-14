@@ -7362,10 +7362,10 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'  ){
 
-        function fencyDetails( status ){
-            let eventId = search.split('=')[1]
-            socket.emit("marketIdbookDetailsFANCY", {LOGINDATA, eventId, status})
-        }
+        // function fencyDetails( status ){
+        //     let eventId = search.split('=')[1]
+        //     socket.emit("marketIdbookDetailsFANCY", {LOGINDATA, eventId, status})
+        // }
 
 
         if(document.getElementById('myIframe')){
@@ -8591,7 +8591,7 @@ socket.on('connect', () => {
     }
     
     marketIdbookDetails( false )
-    fencyDetails( false )
+    // fencyDetails( false )
           
     
     function Onlyminus ( data ){
