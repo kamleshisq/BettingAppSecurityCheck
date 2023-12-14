@@ -8567,6 +8567,9 @@ socket.on('connect', () => {
                                 firstTd.after(newTd2.clone()); 
                             }
                         });
+                        table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function () {
+                            $(this).find('td:eq(0)').attr('colspan', 9)
+                        })
                     }
                 }
             }
