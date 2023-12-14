@@ -9391,7 +9391,7 @@ socket.on('connect', () => {
            
       })
         socket.on('marketIdbookDetails', data => {
-            console.log('WORKING')
+            console.log('WORKING', console.log(data))
             for(let i = 0; i < data.betsMarketIdWise.length; i++){
                 // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
                 let team1Data
@@ -9528,6 +9528,7 @@ socket.on('connect', () => {
                     }
                 })
             }
+            // if()
         })
         socket.on("betDetails" , (data) => {
             marketIdbookDetails( true )
