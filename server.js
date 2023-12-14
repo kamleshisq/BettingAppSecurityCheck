@@ -9020,7 +9020,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('marketIdbookDetailsFANCY', async(data) => {
-        console.log(data)
+        console.log(data, "datadatdadtda")
     })
 
 })
