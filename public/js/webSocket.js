@@ -8808,9 +8808,9 @@ socket.on('connect', () => {
                     let result = parseFloat(newStake)
                     diff = parseFloat(spanId)
                     if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                        plusMinus = (diffStake * betValue) / diffStake
+                        plusMinus = (diffStake * betValue) / 100
                     }else{
-                        plusMinus = (diffStake * betValue) / diffStake
+                        plusMinus = (diffStake * betValue) / 100
                     }
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
