@@ -8543,7 +8543,7 @@ socket.on('connect', () => {
                         console.log('', $(this).find('td').length)
                         if(($(this).find('td').length === 8) || ($(this).find('td').length === 3)){
                             console.log('working', $(this).find("td:eq(0)"))
-                            $(this).find("td:eq(0)").after(newTd2)
+                            $(this).find("td:eq(0)").after(newTd2);
                         }
                     })
                 }else{
