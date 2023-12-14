@@ -9040,7 +9040,7 @@ io.on('connection', (socket) => {
                         eventId: data.eventId,
                         userName:data.LOGINDATA.LOGINUSER.userName,
                         marketId: {
-                            $regex: /^(OE|F2)$/
+                            $regex: /(OE|F2)$/
                         }
                     }
                 },
