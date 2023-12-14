@@ -9658,6 +9658,60 @@ socket.on('connect', () => {
             socket.emit('getFancyBookDATAuserSide', {id, LOGINDATA})
         })
         
+        socket.on('getFancyBookDATAuserSide', async(data) => {
+            if(data.status === "ODD"){
+                let html = ''
+                    html += `<table id="FANCYBOOK"
+                    <tbody>
+                    <tr class="headDetail"><th>Runner Name</th>
+                    <th>Profit/Loss</th></tr>`
+                    if(data.betData[0]._id === "odd_Even_No"){
+                        if(data.betDetails[0].totalWinAmount2 < 0){
+                            html += `<tr><td>0.0 or Less</td><td class="c-reed" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<tr><td>0.0 or Less</td><td class="c-gren" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
+                        }
+
+                        if(data.betDetails[1]){
+                            if(data.betDetails[1].totalWinAmount2 < 0){
+                                html += `<tr><td>1.0 or More</td><td class="c-reed" >${(data.betDetails[1].totalWinAmount2).toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<tr><td>1.0 or More</td><td class="c-gren" >${(data.betDetails[1].totalWinAmount2).toFixed(2)}</td></tr>`
+                            }
+                        }else{
+                            if(data.betDetails[0].totalAmount < 0){
+                                html += `<tr><td>1.0 or More</td><td class="c-reed" >${(data.betDetails[0].totalAmount).toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<tr><td>1.0 or More</td><td class="c-gren" >${(data.betDetails[0].totalAmount).toFixed(2)}</td></tr>`
+                            }
+                        }
+
+                    }else if(data.betDetails[0]._id === "odd_Even_Yes") {
+                        if(data.betDetails[0].totalWinAmount2 < 0){
+                            html += `<tr><td>1.0 or More</td><td class="c-reed" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<tr><td>1.0 or More</td><td class="c-gren" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
+                        }
+
+                        if(data.betDetails[1]){
+                            if(data.betDetails[1].totalWinAmount2 < 0){
+                                html += `<tr><td>0.0 or Less</td><td class="c-reed" >${(data.betDetails[1].totalWinAmount2).toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<tr><td>0.0 or Less</td><td class="c-gren" >${(data.betDetails[1].totalWinAmount2).toFixed(2)}</td></tr>`
+                            }
+                        }else{
+                            if(data.betDetails[0].totalAmount < 0){
+                                html += `<tr><td>0.0 or Less</td><td class="c-reed" >${(data.betDetails[0].totalAmount).toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<tr><td>0.0 or Less</td><td class="c-gren" >${(data.betDetails[0].totalAmount).toFixed(2)}</td></tr>`
+                            }
+                        }
+                    }
+                     html += `</tbody>
+                    </table>`
+                    $('#FANCYBOOKDATA').html(html)
+            }
+        })
 
 
     }
