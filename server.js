@@ -9031,17 +9031,103 @@ io.on('connection', (socket) => {
     })
 
     socket.on('marketIdbookDetailsFANCY', async(data) => {
-        console.log(data, "datadatdadtda")
         if(data.LOGINDATA.LOGINUSER){
             let betDetails = await Bet.distinct('marketId', {status: "OPEN",eventId: data.eventId,userName:data.LOGINDATA.LOGINUSER.userName,marketId: {$regex: /(OE|F2)$/}})
-            // console.log(betDetails)
             socket.emit("marketIdbookDetailsFANCY", {betDetails})
         }
     })
 
 
     socket.on('getFancyBookDATAuserSide', async(data) => {
-        console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            if(data.id.slice(-2).startsWith('OE')){
+                let betDetails = await Bet.aggregate([
+                    {
+                        $match : {
+                            status: "OPEN",
+                            marketId : data.id,
+                            userName:data.LOGINDATA.LOGINUSER.userName
+                        }
+                    },
+                    {
+                        $group: { 
+                            _id: {
+                                "secId":"$secId",
+                            },
+                            totalAmount: { 
+                                $sum: '$returns'
+                            },
+                            totalWinAmount:{
+                                $sum: { 
+                                    $cond : {
+                                        if : {$eq: ["$secId", "odd_Even_Yes"]},
+                                    then:{
+                                        $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                    },
+                                    else:"$Stake"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        $group: {
+                          _id: null,
+                          data: {
+                            $push: {
+                              _id: "$_id",
+                              totalAmount: {
+                                $multiply:["$totalAmount", -1]
+                              },
+                              totalWinAmount: {
+                                $multiply:["$totalWinAmount", -1]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        $project: {
+                          _id: 0,
+                          data: {
+                            $map: {
+                              input: "$data",
+                              as: "item",
+                              in: {
+                                _id: "$$item._id",
+                                totalAmount: "$$item.totalAmount",
+                                totalWinAmount: "$$item.totalWinAmount",
+                                totalWinAmount2: {
+                                  $add: ["$$item.totalWinAmount", {
+                                    $reduce: { 
+                                        input: "$data",
+                                        initialValue: 0,
+                                        in: {
+                                            $cond: {
+                                                if: {
+                                                    $ne: ["$$this._id", "$$item._id"] 
+                                                },
+                                                then: { $add: ["$$value", "$$this.totalAmount"] },
+                                                else: {
+                                                    $add: ["$$value", 0] 
+                                                }
+                                            }
+                                        }
+                                    }
+                                  }]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                ])
+
+                console.log(betDetails, "betDetailsbetDetailsbetDetails")
+            }else{
+
+            }
+        }
     })
 
 })
