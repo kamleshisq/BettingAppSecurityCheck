@@ -9012,6 +9012,9 @@ io.on('connection', (socket) => {
                 }
             }
             socket.emit("marketIdbookDetails" ,{betsMarketIdWise, status: data.status})
+        }else{
+            betsMarketIdWise = []
+            socket.emit("marketIdbookDetails" ,{betsMarketIdWise, status: data.status})
         }
 
     })
