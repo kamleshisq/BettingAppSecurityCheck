@@ -8616,7 +8616,7 @@ socket.on('connect', () => {
                                 console.log(this,  $(this).find('td:eq(1)').find('span'))
                                 let newvalue = (oldValue * 1) - (data.result * 1)
                                 console.log(newvalue , "newvaluenewvaluenewvalue")
-                                $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                $(this).find('td:eq(1)').find('span').text(newvalue)
                                 if(newvalue > 0){
                                     $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
                                 }else{
