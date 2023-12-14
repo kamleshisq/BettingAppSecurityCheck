@@ -9515,6 +9515,7 @@ socket.on('connect', () => {
                             }
                         }
                     }else{
+                        console.log('WORKING')
                         var table = $(this);
                         let trLength = table.find("tr:eq(1)").find('td').length
                         if(trLength === 4 || trLength === 8){
