@@ -9123,10 +9123,10 @@ io.on('connection', (socket) => {
                       }
                 ])
 
-                // console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
+                console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
                 socket.emit('getFancyBookDATAuserSide', {betDetails, status:'ODD'})
             }else{
-                
+
             }
         }
     })
