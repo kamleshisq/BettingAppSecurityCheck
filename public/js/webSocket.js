@@ -8542,7 +8542,7 @@ socket.on('connect', () => {
                         table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
                             var firstTd = $(this).find('td:first-child');
                         
-                            if (firstTd.length === 1 && (firstTd.siblings().length === 7 || firstTd.siblings().length === 2)) {
+                            if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
                                 // console.log('Working:', firstTd);
                                 firstTd.after(newTd2.clone()); 
                             }
