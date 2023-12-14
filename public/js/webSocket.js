@@ -9719,9 +9719,9 @@ socket.on('connect', () => {
                     for(let i = 0; i < data.dataToshow.length; i++){
                         html += `<tr><td>${data.dataToshow[i].message}</td>`
                         if(data.dataToshow[i].sum < 0){
-                            html += `<td class="green" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
+                            html += `<td class="c-reed" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
                         }else{
-                            html += `<td class="red" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
+                            html += `<td class="c-gren" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
                         }
                     } 
             }
