@@ -9430,14 +9430,14 @@ socket.on('connect', () => {
                     let team1Amount
                     let team2Amount
                     let team3Amount
-                    console.log(team1Data, team2Data, team3Data)
+                    // console.log(team1Data, team2Data, team3Data)
                     if(status){
                         if(team1Data && team2Data && team3Data){
-                            console.log('THISIS WORKING')
+                            // console.log('THISIS WORKING')
                             team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
                             team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
                             team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
-                            console.log(team2Data.totalAmount - team1Data.exposure - team3Data.exposure, team2Data.totalAmount, team1Data.exposure, team3Data.exposure)
+                            // console.log(team2Data.totalAmount - team1Data.exposure - team3Data.exposure, team2Data.totalAmount, team1Data.exposure, team3Data.exposure)
                         }else if ((team1Data && team2Data) && !team3Data){
                             team1Amount = team1Data.totalAmount - team2Data.exposure
                             team2Amount = team2Data.totalAmount - team1Data.exposure
@@ -9539,14 +9539,16 @@ socket.on('connect', () => {
                             }
                         }else{
                             console.log('WORKING')
-                            var table = $(this);
-                            let trLength = table.find("tr:eq(1)").find('td').length
-                            console.log(trLength)
-                            if(trLength === 4 || trLength === 8){
-                                table.find("tr:eq(1)").find("td:eq(1)").remove();
-                                table.find("tr:eq(3)").find("td:eq(1)").remove();
-                                table.find("tr:eq(5)").find("td:eq(1)").remove();
-                                table.find('th:eq(1)').remove();
+                            if(!data.betsMarketIdWise.some(item => item._id == this.id)){
+                                var table = $(this);
+                                let trLength = table.find("tr:eq(1)").find('td').length
+                                console.log(trLength)
+                                if(trLength === 4 || trLength === 8){
+                                    table.find("tr:eq(1)").find("td:eq(1)").remove();
+                                    table.find("tr:eq(3)").find("td:eq(1)").remove();
+                                    table.find("tr:eq(5)").find("td:eq(1)").remove();
+                                    table.find('th:eq(1)').remove();
+                                }
                             }
                         }
                     })
