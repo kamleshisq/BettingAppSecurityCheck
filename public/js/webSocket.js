@@ -8677,14 +8677,10 @@ socket.on('connect', () => {
                   //   console.log(OldStake)
                     if(OldStake == ""){
                       newStake = parseFloat(spanId)
-                      diffStake = parseFloat(spanId)
                     }else{
-                      newStake = parseFloat(spanId) + parseFloat(OldStake)
-                      diffStake = parseFloat(newStake) - parseFloat(spanId) 
-                      if(diffStake === 0){
-                        diffStake = parseFloat(spanId)
-                      }
+                        newStake = parseFloat(spanId) + parseFloat(OldStake) 
                     }
+                    diffStake = parseFloat(spanId)
                     console.log(diffStake, "diffStakediffStakediffStake")
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
@@ -8721,14 +8717,10 @@ socket.on('connect', () => {
                   //   console.log(OldStake)
                     if(OldStake == ""){
                       newStake = parseFloat(spanId)
-                      diffStake = parseFloat(spanId)
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
-                      diffStake = parseFloat(newStake) - parseFloat(spanId)
-                      if(diffStake === 0){
-                        diffStake = parseFloat(spanId)
-                      }
                     }
+                    diffStake = parseFloat(spanId)
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
