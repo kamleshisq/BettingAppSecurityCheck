@@ -9665,7 +9665,7 @@ socket.on('connect', () => {
                     <tbody>
                     <tr class="headDetail"><th>Runner Name</th>
                     <th>Profit/Loss</th></tr>`
-                    if(data.betData[0]._id === "odd_Even_No"){
+                    if(data.betDetails[0]._id === "odd_Even_No"){
                         if(data.betDetails[0].totalWinAmount2 < 0){
                             html += `<tr><td>0.0 or Less</td><td class="c-reed" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
                         }else{
@@ -14391,7 +14391,7 @@ socket.on('connect', () => {
 
 
         socket.on('getRefresh', async(data) => {
-            if(data.getMapBetData.length > 0){
+            if(data.getMapbetDetails.length > 0){
                 var allRows = $('#mapMarket tr');
                 for (let i = 0; i < data.getMapBetData.length; i++) {
                     var targetId = data.getMapBetData[i]._id.replace(/\./g, '\\.');
