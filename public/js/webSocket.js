@@ -9432,44 +9432,44 @@ socket.on('connect', () => {
                     let team3Amount
                     if(status){
                         if(team1Data && team2Data && team3Data){
-                            team1Amount = team1Data.totalAmount - team2Data.Stake - team3Data.Stake
-                            team2Amount = team2Data.totalAmount - team1Data.Stake - team3Data.Stake
-                            team3Amount = team3Data.totalAmount - team2Data.Stake - team1Data.Stake
+                            team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
                         }else if ((team1Data && team2Data) && !team3Data){
-                            team1Amount = team1Data.totalAmount - team2Data.Stake
-                            team2Amount = team2Data.totalAmount - team1Data.Stake
-                            team3Amount = - team2Data.Stake - team1Data.Stake
+                            team1Amount = team1Data.totalAmount - team2Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure
+                            team3Amount = - team2Data.exposure - team1Data.exposure
                         }else if (!team1Data && (team2Data && team3Data)){
-                            team1Amount = - team2Data.Stake - team3Data.Stake
-                            team2Amount = team2Data.totalAmount - team3Data.Stake
-                            team3Amount = team3Data.totalAmount - team2Data.Stake 
+                            team1Amount = - team2Data.exposure - team3Data.exposure
+                            team2Amount = team2Data.totalAmount - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team2Data.exposure 
                         }else if (team1Data && !team2Data && team3Data){
-                            team1Amount = team1Data.totalAmount - team3Data.Stake
-                            team2Amount = - team1Data.Stake - team3Data.Stake
-                            team3Amount = team3Data.totalAmount - team1Data.Stake
+                            team1Amount = team1Data.totalAmount - team3Data.exposure
+                            team2Amount = - team1Data.exposure - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team1Data.exposure
                         }else if (team1Data && !team2Data && !team3Data){
                             team1Amount = team1Data.totalAmount
-                            team2Amount = - team1Data.Stake
-                            team3Amount = - team1Data.Stake
+                            team2Amount = - team1Data.exposure
+                            team3Amount = - team1Data.exposure
                         }else if (!team1Data && team2Data && !team3Data){
-                            team1Amount = - team2Data.Stake
+                            team1Amount = - team2Data.exposure
                             team2Amount = team2Data.totalAmount
-                            team3Amount = - team2Data.Stake 
+                            team3Amount = - team2Data.exposure 
                         }else if (!team1Data && !team2Data && team3Data){
-                            team1Amount =  - team3Data.Stake
-                            team2Amount =  - team3Data.Stake
+                            team1Amount =  - team3Data.exposure
+                            team2Amount =  - team3Data.exposure
                             team3Amount = team3Data.totalAmount 
                         }
                     }else{
                         if(team1Data && team2Data){
-                            team1Amount = team1Data.totalAmount - team2Data.Stake
-                            team2Amount = team2Data.totalAmount - team1Data.Stake
+                            team1Amount = team1Data.totalAmount - team2Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure
                         }else if (!team1Data && team2Data){
-                            team1Amount = - team2Data.Stake
+                            team1Amount = - team2Data.exposure
                             team2Amount = team2Data.totalAmount
                         }else if(team1Data && !team2Data){
                             team1Amount = team1Data.totalAmount
-                            team2Amount = - team1Data.Stake
+                            team2Amount = - team1Data.exposure
                         }
     
                     }
