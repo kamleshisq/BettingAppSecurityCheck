@@ -9307,6 +9307,7 @@ io.on('connection', (socket) => {
                     }
                 }
                 console.log(dataToshow, "dataToshowdataToshow")
+                socket.emit('getFancyBookDATAuserSide', {dataToshow, status:'Fancy'})
             }
         }
     })

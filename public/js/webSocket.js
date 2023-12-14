@@ -9644,7 +9644,7 @@ socket.on('connect', () => {
                 $("td.market").each(function() {
                     if(data.betDetails.some(item => item == this.id)){
                         let text = $(this).text()
-                        text += '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">book</button>'
+                        text += '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
                         $(this).html(text)
                     } 
 
