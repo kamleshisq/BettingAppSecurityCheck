@@ -9123,7 +9123,7 @@ io.on('connection', (socket) => {
                       }
                 ])
 
-                console.log(betDetails, "betDetailsbetDetailsbetDetails")
+                console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
             }else{
 
             }
