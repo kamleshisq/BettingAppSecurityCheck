@@ -9637,6 +9637,20 @@ socket.on('connect', () => {
                 document.getElementById('tableBET1').innerHTML = html2
             }
         })
+
+
+        socket.on('marketIdbookDetailsFANCY', data => {
+            if(data.betDetails && data.betDetails.length != 0){
+                $("td.market").each(function() {
+                    if(data.betDetails.some(item => item == this.id)){
+                        let text = $(this).text()
+                        text += '<button class="site-button fancy-book">book</button>'
+                        $(this).html(text)
+                    } 
+
+                })
+            }
+        })
      
         
 

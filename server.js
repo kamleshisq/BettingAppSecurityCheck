@@ -9034,7 +9034,8 @@ io.on('connection', (socket) => {
         console.log(data, "datadatdadtda")
         if(data.LOGINDATA.LOGINUSER){
             let betDetails = await Bet.distinct('marketId', {status: "OPEN",eventId: data.eventId,userName:data.LOGINDATA.LOGINUSER.userName,marketId: {$regex: /(OE|F2)$/}})
-            console.log(betDetails)
+            // console.log(betDetails)
+            socket.emit("marketIdbookDetailsFANCY", {betDetails})
         }
     })
 
