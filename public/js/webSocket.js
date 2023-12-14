@@ -8856,33 +8856,37 @@ socket.on('connect', () => {
                 let NewStake = spanId - 100;
                 let result
                 let element = $(this)
+                let staleDiff = 100
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
+                        resultDiff = (staleDiff * Odds) - staleDiff;
                     }else{
                         result = (NewStake * Odds) / 100
+                        resultDiff = (staleDiff * Odds) / 100
                     }
                     let data = {
-                        result,
+                        result : resultDiff,
                         element,
                         status:false,
-                        NewStake
+                        NewStake : staleDiff
                     }
                     Onlyminus(data)
                 }else{
                     result = NewStake
+                    let resultDiff = 100
 
                     if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
-                        plusMinus = (NewStake * Odds) - NewStake;
+                        plusMinus = (100 * Odds) - 100;
                          
                     }else{
-                        plusMinus = (NewStake * Odds) / 100
+                        plusMinus = (100 * Odds) / 100
                     }
                     let data = {
-                        result,
+                        result:resultDiff,
                         element,
                         status:true,
-                        NewStake,
+                        NewStake : 100,
                         plusMinus
                     }
                     Onlyminus(data)
