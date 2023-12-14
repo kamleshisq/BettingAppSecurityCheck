@@ -8990,7 +8990,7 @@ io.on('connection', (socket) => {
                                     $sum: '$exposure' 
                                 },
                                 else : {
-                                    $multiply: ['$Stake', 1]
+                                    $multiply: ['$Stake', -1]
                                 }
                             }
                         }
