@@ -8499,7 +8499,7 @@ socket.on('connect', () => {
                 })
             }else{
                 let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
-                let newvale = (beforevalue * 1) + (data.result * 2)
+                let newvale = (beforevalue * 1) + (data.result * 1) + (data.NewStake * 1)
                 data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
                 data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                     let oldValue = $(this).find('td:eq(1)').find('span').text()
