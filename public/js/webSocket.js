@@ -8669,6 +8669,7 @@ socket.on('connect', () => {
                 let diff
                 let element = $(this)
                 let diffStake 
+                let plusMinus
             if($(this).closest('tr').hasClass('back-inplaymatch')){
                 if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue")){
                     var spanId = $(this).attr("id");
@@ -8681,7 +8682,7 @@ socket.on('connect', () => {
                         newStake = parseFloat(spanId) + parseFloat(OldStake) 
                     }
                     diffStake = parseFloat(spanId)
-                    console.log(diffStake, "diffStakediffStakediffStake")
+                    // console.log(diffStake, "diffStakediffStakediffStake")
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
@@ -8760,10 +8761,13 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
+                    diffStake = parseFloat(spanId)
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
                     var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
+                    diff = parseFloat(spanId)
+                    plusMinus = (diff * betValue) - diff;
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
@@ -8779,6 +8783,14 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    let data = {
+                        result : diff ,
+                        element,
+                        status:true,
+                        NewStake : diffStake,
+                        plusMinus
+                    }
+                    marketplusminus(data)
                 }else{
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
