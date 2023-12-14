@@ -156,6 +156,7 @@ if(data.data.spoetId == 1){
 
 
 // FOR STAKE RANGE
+console.log(marketDetails.title.toLowerCase(), "marketDetails.title.toLowerCase()marketDetails.title.toLowerCase()")
     if(marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ').startsWith('odd')){
 
         let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
