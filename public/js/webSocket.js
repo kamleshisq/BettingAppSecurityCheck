@@ -9077,7 +9077,9 @@ socket.on('connect', () => {
                 socket.emit("marketIdbookDetails", {LOGINDATA, eventId, status})
         }
         marketIdbookDetails( false )
-
+        $(document).on('click', ".close-btn", function(){
+            marketIdbookDetails( false )
+        })
 
         socket.on('marketIdbookDetails', data => {
             for(let i = 0; i < data.betsMarketIdWise.length; i++){
