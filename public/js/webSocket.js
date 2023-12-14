@@ -8524,7 +8524,28 @@ socket.on('connect', () => {
                     })
                 }
             }else{
+                table.find('th:eq(0)').after('<th></th>')
+                if(data.status){
+                    // let thathtml = ''
+                    if((data.plusMinus * -1) > 0){
+                        var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.plusMinus * -1).toFixed(2)}</span>`);
+                    }else{
+                        var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.plusMinus * -1).toFixed(2)}</span>`);
+                    }
+                    if((data.result * 1) > 0){
+                        var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                    }else{
+                        var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                    }
+                    data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                    table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                        if(($(this).find('td').lengt === 8) || ($(this).find('td').lengt === 3)){
+                            $(this).find("td:eq(0)").after(newTd2)
+                        }
+                    })
+                }else{
 
+                }
             }
           }
 
