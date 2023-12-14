@@ -9250,6 +9250,15 @@ socket.on('connect', () => {
                                 table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
                             }
                         }
+                    }else{
+                        var table = $(this);
+                        let trLength = table.find("tr:eq(1)").find('td').length
+                        if(trLength === 4 || trLength === 8){
+                            table.find("tr:eq(1)").find("td:eq(1)").remove();
+                            table.find("tr:eq(3)").find("td:eq(1)").remove();
+                            table.find("tr:eq(5)").find("td:eq(1)").remove();
+                            table.find('th:eq(1)').remove();
+                        }
                     }
                 })
             }
