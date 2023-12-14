@@ -8885,13 +8885,15 @@ socket.on('connect', () => {
                                 plusMinus,
                                 check:spanId
                             }
-                            console.log(data)
+                            // console.log(data)
                             Onlyminus(data)
                         }else{
                             staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
-                            // console.log(staleDiff, "staleDiffstaleDiff")
+                            console.log(staleDiff, "staleDiffstaleDiff")
                             diff = staleDiff
+
                             plusMinus = (staleDiff * betValue) / 100
+                            console.log(plusMinus, "plusMinusplusMinusplusMinus")
                             let data = {
                                 result : diff ,
                                 element,
@@ -8899,7 +8901,7 @@ socket.on('connect', () => {
                                 NewStake : staleDiff,
                                 plusMinus
                             }
-                            console.log(data)
+                            // console.log(data)
                             marketplusminus(data)
                         }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
