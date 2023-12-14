@@ -9124,7 +9124,7 @@ io.on('connection', (socket) => {
                 ])
 
                 console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
-                socket.emit('getFancyBookDATAuserSide', {betDetails, status:'ODD'})
+                socket.emit('getFancyBookDATAuserSide', {betDetails:betDetails[0].data, status:'ODD'})
             }else{
 
             }
