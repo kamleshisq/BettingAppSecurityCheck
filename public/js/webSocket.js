@@ -8547,6 +8547,9 @@ socket.on('connect', () => {
                                 firstTd.after(newTd2.clone()); 
                             }
                         });
+                        table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function () {
+                            $(this).find('td:eq(0)').attr('colspan', 9)
+                        })
                     }else{
                         if((data.result * 1) > 0){
                             var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
@@ -8561,7 +8564,7 @@ socket.on('connect', () => {
                         data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
                         table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
                             var firstTd = $(this).find('td:first-child');
-                        console.log(firstTd.siblings().length, "firstTd.siblings().lengthfirstTd.siblings().lengthfirstTd.siblings().length")
+                        // console.log(firstTd.siblings().length, "firstTd.siblings().lengthfirstTd.siblings().lengthfirstTd.siblings().length")
                             if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
                                 // console.log('Working:', firstTd);
                                 firstTd.after(newTd2.clone()); 
@@ -8668,7 +8671,7 @@ socket.on('connect', () => {
                                 element,
                                 status:false,
                                 NewStake : staleDiff,
-                                check : NewStake
+                                check : spanId
                             }
                             Onlyminus(data)
                         }else{
@@ -8734,7 +8737,7 @@ socket.on('connect', () => {
                                 element,
                                 status:false,
                                 NewStake : staleDiff,
-                                check : NewStake
+                                check : spanId
                             }
                             Onlyminus(data)
                         }else{
@@ -8797,20 +8800,20 @@ socket.on('connect', () => {
                         if(oldValue > diffStake){
                             staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
                             resultDiff = staleDiff;
-                            plusMinus = (staleDiff * Odds) - staleDiff;
+                            plusMinus = (staleDiff * betValue) - staleDiff;
                             let data = {
                                 result:resultDiff,
                                 element,
                                 status:true,
                                 NewStake : staleDiff,
                                 plusMinus,
-                                check:NewStake
+                                check:spanId
                             }
                             Onlyminus(data)
                         }else{
                             staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
                             diff = staleDiff
-                            plusMinus = (staleDiff * Odds) - staleDiff;
+                            plusMinus = (staleDiff * betValue) - staleDiff;
                             let data = {
                                 result : diff ,
                                 element,
@@ -8872,20 +8875,20 @@ socket.on('connect', () => {
                         if(oldValue > diffStake){
                             staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
                             resultDiff = staleDiff;
-                            plusMinus = (staleDiff * Odds) / 100
+                            plusMinus = (staleDiff * betValue) / 100
                             let data = {
                                 result:resultDiff,
                                 element,
                                 status:true,
                                 NewStake : staleDiff,
                                 plusMinus,
-                                check:NewStake
+                                check:spanId
                             }
                             Onlyminus(data)
                         }else{
                             staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
                             diff = staleDiff
-                            plusMinus = (staleDiff * Odds) / 100
+                            plusMinus = (staleDiff * betValue) / 100
                             let data = {
                                 result : diff ,
                                 element,
