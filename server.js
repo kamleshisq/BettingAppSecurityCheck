@@ -9019,6 +9019,10 @@ io.on('connection', (socket) => {
 
     })
 
+    socket.on('marketIdbookDetailsFANCY', async(data) => {
+        console.log(data)
+    })
+
 })
 
 http.listen(process.env.port,()=> {

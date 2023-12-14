@@ -7362,6 +7362,12 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'  ){
 
+        function fencyDetails( status ){
+            let eventId = search.split('=')[1]
+            socket.emit("marketIdbookDetailsFANCY", {LOGINDATA, eventId, status})
+        }
+
+
         if(document.getElementById('myIframe')){
             let channelId = document.getElementById('myIframe').getAttribute('data-id');
             // console.log(channelId, "channelIdchannelIdchannelId")
@@ -8584,7 +8590,7 @@ socket.on('connect', () => {
             socket.emit("marketIdbookDetails", {LOGINDATA, eventId, status})
     }
     marketIdbookDetails( false )
-
+    fencyDetails( true )
           function Onlyminus ( data ){
             console.log(data)
             if(data.check == 0){
