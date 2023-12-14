@@ -8690,6 +8690,14 @@ socket.on('connect', () => {
                     diff = (parseFloat(diffStake) * betValue) - parseFloat(diffStake);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        let stakeDiff = parseFloat(oldValue) - parseFloat(spanId)
+                        if(stakeDiff > 0){
+                            diffStake = stakeDiff
+                            diff = (parseFloat(stakeDiff) * betValue) - parseFloat(stakeDiff);
+                        }else{
+
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
                       $(this)
@@ -8729,6 +8737,14 @@ socket.on('connect', () => {
                     diff = ((parseFloat(diffStake) * betValue) / 100);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        let stakeDiff = parseFloat(oldValue) - parseFloat(spanId)
+                        if(stakeDiff > 0){
+                            diffStake = stakeDiff
+                            diff = ((parseFloat(stakeDiff) * betValue) / 100);
+                        }else{
+
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = ((parseFloat(spanId) * betValue) / 100)
                       $(this)
@@ -8770,6 +8786,15 @@ socket.on('connect', () => {
                     plusMinus = (diff * betValue) - diff;
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        let stakeDiff = parseFloat(oldValue) - parseFloat(spanId)
+                        if(stakeDiff > 0){
+                            diffStake = stakeDiff
+                            diff = parseFloat(stakeDiff)
+                            plusMinus = (diff * betValue) - diff;
+                        }else{
+
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
                       $(this)
@@ -8814,6 +8839,15 @@ socket.on('connect', () => {
                     }
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        let stakeDiff = parseFloat(oldValue) - parseFloat(spanId)
+                        if(stakeDiff > 0){
+                            diffStake = stakeDiff
+                            diff = parseFloat(stakeDiff)
+                            plusMinus = (stakeDiff * betValue) / 100
+                        }else{
+
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = parseFloat(spanId)
                     //   if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
