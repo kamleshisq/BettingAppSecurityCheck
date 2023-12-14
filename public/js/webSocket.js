@@ -8581,7 +8581,7 @@ socket.on('connect', () => {
                 let trLength = table.find("tr:eq(1)").find('td').length
                 if(trLength === 4 || trLength === 8){
                     if(data.status){
-                        console.log(data.plusMinus, "newvaluenewvaluenewvalue")
+                        // console.log(data.plusMinus, "newvaluenewvaluenewvalue")
                         let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
                         let newvale = (beforevalue * 1) + (data.result * 1) + (data.plusMinus * 1)
                         data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
@@ -8939,26 +8939,26 @@ socket.on('connect', () => {
                     }
                     let diff = result - oldResult
                     let data = {
-                        result,
+                        result : 100,
                         element,
                         status:false,
-                        NewStake
+                        NewStake : 100
                     }
                     marketplusminus(data)
                 }else{
                     result = NewStake
                     let diff = result - oldResult
                     if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
-                        plusMinus = (NewStake * Odds) - NewStake;
+                        plusMinus = (100 * Odds) - 100;
                          
                     }else{
-                        plusMinus = (NewStake * Odds) / 100
+                        plusMinus = (100 * Odds) / 100
                     }
                     let data = {
-                        result ,
+                        result : 100 ,
                         element,
                         status:true,
-                        NewStake,
+                        NewStake : 100,
                         plusMinus
                     }
                     marketplusminus(data)
