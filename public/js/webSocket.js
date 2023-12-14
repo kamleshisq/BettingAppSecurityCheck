@@ -9433,6 +9433,7 @@ socket.on('connect', () => {
                     console.log(team1Data, team2Data, team3Data)
                     if(status){
                         if(team1Data && team2Data && team3Data){
+                            console.log('THISIS WORKING')
                             team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
                             team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
                             team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
