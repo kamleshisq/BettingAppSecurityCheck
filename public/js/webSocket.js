@@ -8539,8 +8539,8 @@ socket.on('connect', () => {
                     }
                     data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
                     table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
-                        console.log(this, $(this).find('td'))
-                        console.log('WORKING', $(this).find('td').length)
+                        // console.log(this, $(this).find('td'))
+                        // console.log('WORKING', $(this).find('td').length)
                         if(($(this).find('td').length === 8) || ($(this).find('td').length === 3)){
                             $(this).find("td:eq(0)").after(newTd2)
                         }
