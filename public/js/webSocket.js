@@ -8799,7 +8799,7 @@ socket.on('connect', () => {
                     marketplusminus(data)
                 }else{
                     result = NewStake
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
                         plusMinus = (NewStake * Odds) - NewStake;
                          
                     }else{
