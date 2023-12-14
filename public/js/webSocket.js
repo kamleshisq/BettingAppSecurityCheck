@@ -8887,6 +8887,7 @@ socket.on('connect', () => {
                             Onlyminus(data)
                         }else{
                             staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            console.log(staleDiff, "staleDiffstaleDiff")
                             diff = staleDiff
                             plusMinus = (staleDiff * betValue) / 100
                             let data = {
