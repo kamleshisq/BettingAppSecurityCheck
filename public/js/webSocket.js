@@ -9518,6 +9518,7 @@ socket.on('connect', () => {
                         console.log('WORKING')
                         var table = $(this);
                         let trLength = table.find("tr:eq(1)").find('td').length
+                        console.log(trLength)
                         if(trLength === 4 || trLength === 8){
                             table.find("tr:eq(1)").find("td:eq(1)").remove();
                             table.find("tr:eq(3)").find("td:eq(1)").remove();
