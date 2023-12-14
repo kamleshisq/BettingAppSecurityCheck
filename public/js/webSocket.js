@@ -9392,139 +9392,153 @@ socket.on('connect', () => {
       })
         socket.on('marketIdbookDetails', data => {
             console.log('WORKING', console.log(data, "datadatadatda"))
-            for(let i = 0; i < data.betsMarketIdWise.length; i++){
-                // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
-                let team1Data
-                let team2Data
-                let team3Data
-                let status = false
-                if(data.betsMarketIdWise[i].runnersData && data.betsMarketIdWise[i].runnersData.length === 3){
-                    status = true
-                    team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
-                    team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
-                    team3Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[2].runner)
-                }else if(data.betsMarketIdWise[i].runnersData && data.betsMarketIdWise[i].runnersData.length === 2) {
-                    team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
-                    team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
-                }
-                let team1Amount
-                let team2Amount
-                let team3Amount
-                if(status){
-                    if(team1Data && team2Data && team3Data){
-                        team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
-                        team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
-                        team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
-                    }else if ((team1Data && team2Data) && !team3Data){
-                        team1Amount = team1Data.totalAmount - team2Data.exposure
-                        team2Amount = team2Data.totalAmount - team1Data.exposure
-                        team3Amount = - team2Data.exposure - team1Data.exposure
-                    }else if (!team1Data && (team2Data && team3Data)){
-                        team1Amount = - team2Data.exposure - team3Data.exposure
-                        team2Amount = team2Data.totalAmount - team3Data.exposure
-                        team3Amount = team3Data.totalAmount - team2Data.exposure 
-                    }else if (team1Data && !team2Data && team3Data){
-                        team1Amount = team1Data.totalAmount - team3Data.exposure
-                        team2Amount = - team1Data.exposure - team3Data.exposure
-                        team3Amount = team3Data.totalAmount - team1Data.exposure
-                    }else if (team1Data && !team2Data && !team3Data){
-                        team1Amount = team1Data.totalAmount
-                        team2Amount = - team1Data.exposure
-                        team3Amount = - team1Data.exposure
-                    }else if (!team1Data && team2Data && !team3Data){
-                        team1Amount = - team2Data.exposure
-                        team2Amount = team2Data.totalAmount
-                        team3Amount = - team2Data.exposure 
-                    }else if (!team1Data && !team2Data && team3Data){
-                        team1Amount =  - team3Data.exposure
-                        team2Amount =  - team3Data.exposure
-                        team3Amount = team3Data.totalAmount 
+            if(data && data.betsMarketIdWise){
+                for(let i = 0; i < data.betsMarketIdWise.length; i++){
+                    // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
+                    let team1Data
+                    let team2Data
+                    let team3Data
+                    let status = false
+                    if(data.betsMarketIdWise[i].runnersData && data.betsMarketIdWise[i].runnersData.length === 3){
+                        status = true
+                        team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
+                        team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
+                        team3Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[2].runner)
+                    }else if(data.betsMarketIdWise[i].runnersData && data.betsMarketIdWise[i].runnersData.length === 2) {
+                        team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
+                        team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
                     }
-                }else{
-                    if(team1Data && team2Data){
-                        team1Amount = team1Data.totalAmount - team2Data.exposure
-                        team2Amount = team2Data.totalAmount - team1Data.exposure
-                    }else if (!team1Data && team2Data){
-                        team1Amount = - team2Data.exposure
-                        team2Amount = team2Data.totalAmount
-                    }else if(team1Data && !team2Data){
-                        team1Amount = team1Data.totalAmount
-                        team2Amount = - team1Data.exposure
-                    }
-
-                }
-                console.log(team1Amount, team2Amount, team3Amount, "jkjk")
-                $("table.market").each(function() { 
-                    if(this.id == data.betsMarketIdWise[i]._id){
-                        var table = $(this);
-                        let trLength = table.find("tr:eq(1)").find('td').length
-                        console.log(trLength, "trLengthtrLengthtrLength")
-                        table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
-                            $(this).find('td:eq(0)').attr('colspan', 9)
-                        })
-                        if(trLength === 4 || trLength === 8){
-                            if(team1Amount > 0){
-                                var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
-                            }else{
-                                var newTd = `<span class="c-reed" >${team1Amount.toFixed(2)}</span>`;
-                            }
-                            if(team2Amount > 0){
-                                var newTd2 = `<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`;
-                            }else{
-                                var newTd2 = `<span class="c-reed" >${team2Amount.toFixed(2)}</span>`;
-                            }
-                            if(status){
-                                if(team3Amount > 0){
-                                    var newTd3 = `<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`;
-                                }else{
-                                    var newTd3 = `<span class="c-reed" >${team3Amount.toFixed(2)}</span>`;
-                                }
-    
-                                table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
-                                table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
-                                table.find("tr:eq(5)").find("td:eq(1)").html(newTd3);
-                            }else{
-                                table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
-                                table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
-                            }
-                        }else{
-                            table.find('th:eq(0)').after('<th></th>')
-                            if(team1Amount > 0){
-                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
-                            }else{
-                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
-                            }
-                            if(team2Amount > 0){
-                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
-                            }else{
-                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
-                            }
-                            if(status){
-                                if(team3Amount > 0){
-                                    var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
-                                }else{
-                                    var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
-                                }
-    
-                                table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
-                                table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
-                                table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
-                            }else{
-                                table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
-                                table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
-                            }
+                    let team1Amount
+                    let team2Amount
+                    let team3Amount
+                    if(status){
+                        if(team1Data && team2Data && team3Data){
+                            team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
+                        }else if ((team1Data && team2Data) && !team3Data){
+                            team1Amount = team1Data.totalAmount - team2Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure
+                            team3Amount = - team2Data.exposure - team1Data.exposure
+                        }else if (!team1Data && (team2Data && team3Data)){
+                            team1Amount = - team2Data.exposure - team3Data.exposure
+                            team2Amount = team2Data.totalAmount - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team2Data.exposure 
+                        }else if (team1Data && !team2Data && team3Data){
+                            team1Amount = team1Data.totalAmount - team3Data.exposure
+                            team2Amount = - team1Data.exposure - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team1Data.exposure
+                        }else if (team1Data && !team2Data && !team3Data){
+                            team1Amount = team1Data.totalAmount
+                            team2Amount = - team1Data.exposure
+                            team3Amount = - team1Data.exposure
+                        }else if (!team1Data && team2Data && !team3Data){
+                            team1Amount = - team2Data.exposure
+                            team2Amount = team2Data.totalAmount
+                            team3Amount = - team2Data.exposure 
+                        }else if (!team1Data && !team2Data && team3Data){
+                            team1Amount =  - team3Data.exposure
+                            team2Amount =  - team3Data.exposure
+                            team3Amount = team3Data.totalAmount 
                         }
                     }else{
-                        console.log('WORKING')
-                        var table = $(this);
-                        let trLength = table.find("tr:eq(1)").find('td').length
-                        console.log(trLength)
-                        if(trLength === 4 || trLength === 8){
-                            table.find("tr:eq(1)").find("td:eq(1)").remove();
-                            table.find("tr:eq(3)").find("td:eq(1)").remove();
-                            table.find("tr:eq(5)").find("td:eq(1)").remove();
-                            table.find('th:eq(1)').remove();
+                        if(team1Data && team2Data){
+                            team1Amount = team1Data.totalAmount - team2Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure
+                        }else if (!team1Data && team2Data){
+                            team1Amount = - team2Data.exposure
+                            team2Amount = team2Data.totalAmount
+                        }else if(team1Data && !team2Data){
+                            team1Amount = team1Data.totalAmount
+                            team2Amount = - team1Data.exposure
                         }
+    
+                    }
+                    console.log(team1Amount, team2Amount, team3Amount, "jkjk")
+                    $("table.market").each(function() { 
+                        if(this.id == data.betsMarketIdWise[i]._id){
+                            var table = $(this);
+                            let trLength = table.find("tr:eq(1)").find('td').length
+                            console.log(trLength, "trLengthtrLengthtrLength")
+                            table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
+                                $(this).find('td:eq(0)').attr('colspan', 9)
+                            })
+                            if(trLength === 4 || trLength === 8){
+                                if(team1Amount > 0){
+                                    var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
+                                }else{
+                                    var newTd = `<span class="c-reed" >${team1Amount.toFixed(2)}</span>`;
+                                }
+                                if(team2Amount > 0){
+                                    var newTd2 = `<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`;
+                                }else{
+                                    var newTd2 = `<span class="c-reed" >${team2Amount.toFixed(2)}</span>`;
+                                }
+                                if(status){
+                                    if(team3Amount > 0){
+                                        var newTd3 = `<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`;
+                                    }else{
+                                        var newTd3 = `<span class="c-reed" >${team3Amount.toFixed(2)}</span>`;
+                                    }
+        
+                                    table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                    table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                    table.find("tr:eq(5)").find("td:eq(1)").html(newTd3);
+                                }else{
+                                    table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                    table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                }
+                            }else{
+                                table.find('th:eq(0)').after('<th></th>')
+                                if(team1Amount > 0){
+                                    var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
+                                }else{
+                                    var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
+                                }
+                                if(team2Amount > 0){
+                                    var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
+                                }else{
+                                    var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
+                                }
+                                if(status){
+                                    if(team3Amount > 0){
+                                        var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
+                                    }else{
+                                        var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
+                                    }
+        
+                                    table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                    table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                    table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
+                                }else{
+                                    table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                    table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                }
+                            }
+                        }else{
+                            console.log('WORKING')
+                            var table = $(this);
+                            let trLength = table.find("tr:eq(1)").find('td').length
+                            console.log(trLength)
+                            if(trLength === 4 || trLength === 8){
+                                table.find("tr:eq(1)").find("td:eq(1)").remove();
+                                table.find("tr:eq(3)").find("td:eq(1)").remove();
+                                table.find("tr:eq(5)").find("td:eq(1)").remove();
+                                table.find('th:eq(1)').remove();
+                            }
+                        }
+                    })
+                }
+            }else{
+                $("table.market").each(function() {
+                    var table = $(this);
+                    let trLength = table.find("tr:eq(1)").find('td').length
+                    console.log(trLength)
+                    if(trLength === 4 || trLength === 8){
+                        table.find("tr:eq(1)").find("td:eq(1)").remove();
+                        table.find("tr:eq(3)").find("td:eq(1)").remove();
+                        table.find("tr:eq(5)").find("td:eq(1)").remove();
+                        table.find('th:eq(1)').remove();
                     }
                 })
             }
