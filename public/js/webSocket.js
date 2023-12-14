@@ -8801,15 +8801,17 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
+                    diffStake = parseFloat(spanId)
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
                     let result = parseFloat(newStake)
-                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                    //     result = (parseFloat(newStake) * 2) - parseFloat(newStake);
-                    // }else{
-                    //     result = ((parseFloat(newStake) * betValue)/100)
-                    // }
+                    diff = parseFloat(spanId)
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                        plusMinus = (diffStake * betValue) / diffStake
+                    }else{
+                        plusMinus = (diffStake * betValue) / diffStake
+                    }
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
@@ -8830,6 +8832,14 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    let data = {
+                        result : diff ,
+                        element,
+                        status:true,
+                        NewStake : diffStake,
+                        plusMinus
+                    }
+                    marketplusminus(data)
                 }
             }
             });
