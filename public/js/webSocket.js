@@ -9434,45 +9434,45 @@ socket.on('connect', () => {
                     if(status){
                         if(team1Data && team2Data && team3Data){
                             console.log('THISIS WORKING')
-                            team1Amount = parseFloat(team1Data.totalAmount) - parseFloat(team2Data.exposure) - parseFloat(team3Data.exposure)
-                            team2Amount = parseFloat(team2Data.totalAmount) - parseFloat(team1Data.exposure) - parseFloat(team3Data.exposure)
-                            team3Amount = parseFloat(team3Data.totalAmount) - parseFloat(team2Data.exposure) - parseFloat(team1Data.exposure)
+                            team1Amount = parseFloat(team1Data.totalAmount) + parseFloat(-1 * team2Data.exposure) + parseFloat(-1 * team3Data.exposure)
+                            team2Amount = parseFloat(team2Data.totalAmount) + parseFloat(-1 * team1Data.exposure) + parseFloat(-1 * team3Data.exposure)
+                            team3Amount = parseFloat(team3Data.totalAmount) + parseFloat(-1 * team2Data.exposure) + parseFloat(-1 * team1Data.exposure)
                             console.log(team1Amount, team2Amount, team3Amount)
                         }else if ((team1Data && team2Data) && !team3Data){
-                            team1Amount = parseFloat(team1Data.totalAmount) - parseFloat(team2Data.exposure)
-                            team2Amount = parseFloat(team2Data.totalAmount) - parseFloat(team1Data.exposure)
-                            team3Amount = - parseFloat(team2Data.exposure) - parseFloat(team1Data.exposure)
+                            team1Amount = parseFloat(team1Data.totalAmount) + parseFloat(-1 * team2Data.exposure)
+                            team2Amount = parseFloat(team2Data.totalAmount) + parseFloat(-1 * team1Data.exposure)
+                            team3Amount = + parseFloat(-1 * team2Data.exposure) + parseFloat(-1 * team1Data.exposure)
                         }else if (!team1Data && (team2Data && team3Data)){
-                            team1Amount = - parseFloat(team2Data.exposure) - parseFloat(team3Data.exposure)
-                            team2Amount = parseFloat(team2Data.totalAmount) - parseFloat(team3Data.exposure)
-                            team3Amount = parseFloat(team3Data.totalAmount) - parseFloat(team2Data.exposure) 
+                            team1Amount = + parseFloat(-1 * team2Data.exposure) + parseFloat(-1 * team3Data.exposure)
+                            team2Amount = parseFloat(team2Data.totalAmount) + parseFloat(-1 * team3Data.exposure)
+                            team3Amount = parseFloat(team3Data.totalAmount) + parseFloat(-1 * team2Data.exposure) 
                         }else if (team1Data && !team2Data && team3Data){
-                            team1Amount = parseFloat(team1Data.totalAmount) - parseFloat(team3Data.exposure)
-                            team2Amount = - parseFloat(team1Data.exposure) - parseFloat(team3Data.exposure)
-                            team3Amount = parseFloat(team3Data.totalAmount) - parseFloat(team1Data.exposure)
+                            team1Amount = parseFloat(team1Data.totalAmount) + parseFloat(-1 * team3Data.exposure)
+                            team2Amount = + parseFloat(-1 * team1Data.exposure) + parseFloat(-1 * team3Data.exposure)
+                            team3Amount = parseFloat(team3Data.totalAmount) + parseFloat(-1 * team1Data.exposure)
                         }else if (team1Data && !team2Data && !team3Data){
                             team1Amount = parseFloat(team1Data.totalAmount)
-                            team2Amount = - parseFloat(team1Data.exposure)
-                            team3Amount = - parseFloat(team1Data.exposure)
+                            team2Amount = + parseFloat(-1 * team1Data.exposure)
+                            team3Amount = + parseFloat(-1 * team1Data.exposure)
                         }else if (!team1Data && team2Data && !team3Data){
-                            team1Amount = - parseFloat(team2Data.exposure)
+                            team1Amount = + parseFloat(-1 * team2Data.exposure)
                             team2Amount = parseFloat(team2Data.totalAmount)
-                            team3Amount = - parseFloat(team2Data.exposure) 
+                            team3Amount = + parseFloat(-1 * team2Data.exposure) 
                         }else if (!team1Data && !team2Data && team3Data){
-                            team1Amount =  - parseFloat(team3Data.exposure)
-                            team2Amount =  - parseFloat(team3Data.exposure)
+                            team1Amount =  + parseFloat(-1 * team3Data.exposure)
+                            team2Amount =  + parseFloat(-1 * team3Data.exposure)
                             team3Amount = parseFloat(team3Data.totalAmount) 
                         }
                     }else{
                         if(team1Data && team2Data){
-                            team1Amount = parseFloat(team1Data.totalAmount) - parseFloat(team2Data.exposure)
-                            team2Amount = parseFloat(team2Data.totalAmount) - parseFloat(team1Data.exposure)
+                            team1Amount = parseFloat(team1Data.totalAmount) + parseFloat(-1 * team2Data.exposure)
+                            team2Amount = parseFloat(team2Data.totalAmount) + parseFloat(-1 * team1Data.exposure)
                         }else if (!team1Data && team2Data){
-                            team1Amount = - parseFloat(team2Data.exposure)
+                            team1Amount = + parseFloat(-1 * team2Data.exposure)
                             team2Amount = parseFloat(team2Data.totalAmount)
                         }else if(team1Data && !team2Data){
                             team1Amount = parseFloat(team1Data.totalAmount)
-                            team2Amount = - parseFloat(team1Data.exposure)
+                            team2Amount = + parseFloat(-1 * team1Data.exposure)
                         }
     
                     }
