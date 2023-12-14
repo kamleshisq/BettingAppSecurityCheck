@@ -8872,6 +8872,7 @@ socket.on('connect', () => {
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                         statusCHECK12 = false
                         let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+
                         if(oldValue > diffStake){
                             staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
                             resultDiff = staleDiff;
@@ -8884,10 +8885,11 @@ socket.on('connect', () => {
                                 plusMinus,
                                 check:spanId
                             }
+                            console.log(data)
                             Onlyminus(data)
                         }else{
                             staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
-                            console.log(staleDiff, "staleDiffstaleDiff")
+                            // console.log(staleDiff, "staleDiffstaleDiff")
                             diff = staleDiff
                             plusMinus = (staleDiff * betValue) / 100
                             let data = {
@@ -8897,6 +8899,7 @@ socket.on('connect', () => {
                                 NewStake : staleDiff,
                                 plusMinus
                             }
+                            console.log(data)
                             marketplusminus(data)
                         }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
