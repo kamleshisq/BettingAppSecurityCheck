@@ -9075,7 +9075,7 @@ io.on('connection', (socket) => {
                           _id: null,
                           data: {
                             $push: {
-                              _id: "$_id",
+                              _id: "$_id.secId",
                               totalAmount: {
                                 $multiply:["$totalAmount", 1]
                               },
