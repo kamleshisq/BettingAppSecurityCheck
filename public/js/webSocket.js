@@ -8909,15 +8909,7 @@ socket.on('connect', () => {
           })
 
 
-          $(document).on('click','.tbl-td-with5',function(e){
-                // console.log("WORKING")
-                $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
-                $(".minus")
-                .closest("tr")
-                .find(".c-gren")
-                .text('00');
-               
-          })
+          
 
           
           $(document).ready(function(){
@@ -9258,6 +9250,16 @@ socket.on('connect', () => {
             marketIdbookDetails( false )
         })
 
+        $(document).on('click','.tbl-td-with5',function(e){
+            // console.log("WORKING")
+            marketIdbookDetails( false )
+            $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
+            $(".minus")
+            .closest("tr")
+            .find(".c-gren")
+            .text('00');
+           
+      })
         socket.on('marketIdbookDetails', data => {
             for(let i = 0; i < data.betsMarketIdWise.length; i++){
                 // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
