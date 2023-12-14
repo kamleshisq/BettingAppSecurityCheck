@@ -8595,7 +8595,7 @@ socket.on('connect', () => {
           
     
     function Onlyminus ( data ){
-            // console.log(data)
+            console.log(data)
             if(data.check == 0){
                 marketIdbookDetails( false )
             }else{
@@ -8885,7 +8885,7 @@ socket.on('connect', () => {
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                         statusCHECK12 = false
                         let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
-                        console.log(diffStake, oldValue, oldValue > diffStake)
+                        // console.log(diffStake, oldValue, oldValue > diffStake)
                         if(oldValue > diffStake){
                             staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
                             resultDiff = staleDiff;
