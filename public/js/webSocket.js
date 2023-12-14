@@ -8786,8 +8786,37 @@ socket.on('connect', () => {
                     var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
                     diff = parseFloat(spanId)
                     plusMinus = (diff * betValue) - diff;
-                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))\
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = staleDiff;
+                            plusMinus = (staleDiff * Odds) - staleDiff;
+                            let data = {
+                                result:resultDiff,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus,
+                                check:NewStake
+                            }
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            diff = staleDiff
+                            plusMinus = (staleDiff * Odds) - staleDiff;
+                            let data = {
+                                result : diff ,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus
+                            }
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
                       $(this)
@@ -8801,14 +8830,16 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
-                    let data = {
-                        result : diff ,
-                        element,
-                        status:true,
-                        NewStake : diffStake,
-                        plusMinus
+                    if(statusCHECK12){
+                        let data = {
+                            result : diff ,
+                            element,
+                            status:true,
+                            NewStake : diffStake,
+                            plusMinus
+                        }
+                        marketplusminus(data)
                     }
-                    marketplusminus(data)
                 }else{
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
@@ -8831,7 +8862,36 @@ socket.on('connect', () => {
                         plusMinus = (diffStake * betValue) / 100
                     }
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = staleDiff;
+                            plusMinus = (staleDiff * Odds) / 100
+                            let data = {
+                                result:resultDiff,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus,
+                                check:NewStake
+                            }
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            diff = staleDiff
+                            plusMinus = (staleDiff * Odds) / 100
+                            let data = {
+                                result : diff ,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus
+                            }
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = parseFloat(spanId)
                     //   if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
