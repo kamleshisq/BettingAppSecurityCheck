@@ -8503,7 +8503,7 @@ socket.on('connect', () => {
                 data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
                 data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                     let oldValue = $(this).find('td:eq(1)').find('span').text()
-                    let newvalue = (oldValue * 1) - (data.result * 1)
+                    let newvalue = (oldValue * 1) - (data.NewStake * 1)
                     $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
                 })
             }
@@ -8772,7 +8772,8 @@ socket.on('connect', () => {
                     let data = {
                         result,
                         element,
-                        status:false
+                        status:false,
+                        NewStake
                     }
                     marketplusminus(data)
                 }else{
@@ -8780,7 +8781,8 @@ socket.on('connect', () => {
                     let data = {
                         result,
                         element,
-                        status:true
+                        status:true,
+                        NewStake
                     }
                     marketplusminus(data)
                 }
