@@ -8498,6 +8498,7 @@ socket.on('connect', () => {
                     data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                         let oldValue = $(this).find('td:eq(1)').find('span').text()
                         let newvalue = (oldValue * 1) + (data.result * 1)
+                        console.log(newvalue , "newvaluenewvaluenewvalue")
                         $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
                         if(newvalue > 0){
                             $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
