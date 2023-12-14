@@ -8580,7 +8580,7 @@ socket.on('connect', () => {
 
           function Onlyminus ( data ){
             console.log(data)
-            if(data.NewStake == 0){
+            if(data.check == 0){
                 marketIdbookDetails( false )
             }else{
                 let table = data.element.closest('table')
@@ -8869,7 +8869,8 @@ socket.on('connect', () => {
                         result : resultDiff,
                         element,
                         status:false,
-                        NewStake : staleDiff
+                        NewStake : staleDiff,
+                        check : NewStake
                     }
                     Onlyminus(data)
                 }else{
@@ -8887,7 +8888,8 @@ socket.on('connect', () => {
                         element,
                         status:true,
                         NewStake : 100,
-                        plusMinus
+                        plusMinus,
+                        check:NewStake
                     }
                     Onlyminus(data)
                     // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
