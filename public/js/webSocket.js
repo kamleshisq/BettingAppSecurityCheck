@@ -8538,14 +8538,14 @@ socket.on('connect', () => {
                         var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
                     }
                     data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
-                    table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
-                        console.log(this, $(this).find('td'))
-                        console.log('', $(this).find('td').length)
-                        if(($(this).find('td').length === 8) || ($(this).find('td').length === 3)){
-                            console.log('working', $(this).find("td:eq(0)"))
-                            $(this).find("td:eq(0)").after(newTd2);
+                    table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
+                        var firstTd = $(this).find('td:first-child');
+                    
+                        if (firstTd.length === 1 && (firstTd.siblings().length === 7 || firstTd.siblings().length === 2)) {
+                            console.log('Working:', firstTd);
+                            firstTd.after(newTd2.clone()); // Assuming newTd2 is a jQuery object or DOM element
                         }
-                    })
+                    });
                 }else{
 
                 }
