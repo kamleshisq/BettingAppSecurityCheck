@@ -8491,6 +8491,7 @@ socket.on('connect', () => {
             let table = data.element.closest('table')
             if(table.hasClass("market")){
                 let trLength = table.find("tr:eq(1)").find('td').length
+                console.log(trLength, "staleDiffstaleDiffstaleDiff")
                 if(trLength === 4 || trLength === 8){
                     if(data.status){
                         console.log(data.plusMinus, "newvaluenewvaluenewvalue")
