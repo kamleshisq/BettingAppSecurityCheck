@@ -63,7 +63,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     }
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     console.log(clientIP)
-    if(clientIP == "::ffff:3.9.120.247"){
+    if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
         res.status(200).json({
             "balance": user.availableBalance,
             "status": "RS_OK"
@@ -170,7 +170,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             "transactionId":req.body.transactionId
         }
         accountStatement.create(Acc)
-        if(clientIP == "::ffff:3.9.120.247"){
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
                 "balance": user.availableBalance - req.body.debitAmount,
                 "status": "RS_OK"
@@ -192,7 +192,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let check = await userModel.findById(req.body.userId);
         if(!check){
-            if(clientIP == "::ffff:3.9.120.247"){
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                 return res.status(200).json({
                     "balance": 0,
                     "status": "RS_OK"
@@ -252,7 +252,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 debitAmountForP = parentUser2Amount
             }
             if(!user){
-                if(clientIP == "::ffff:3.9.120.247"){
+                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     res.status(200).json({
                         "balance": 0,
                         "status": "RS_OK"
@@ -280,7 +280,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
               })
         }
     
-        if(clientIP == "::ffff:3.9.120.247"){
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
                 "balance": balance,
                 "status": "RS_OK"
@@ -311,7 +311,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
         // console.log(user, "USer")
         if(!user){
-            if(clientIP == "::ffff:3.9.120.247"){
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                 res.status(200).json({
                     "status": "RS_OK",
                     "balance": 0
@@ -410,7 +410,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 }
             }
             // console.log(balance)
-            if(clientIP == "::ffff:3.9.120.247"){
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                 res.status(200).json({
                     "status": "RS_OK",
                     "balance": balance
@@ -423,7 +423,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             }
         }
     }else{
-        if(clientIP == "::ffff:3.9.120.247"){
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
                 "status": "RS_OK",
                 "balance": user1.availableBalance
