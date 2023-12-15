@@ -31,6 +31,7 @@ const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
+const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
 const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
@@ -74,6 +75,7 @@ app.use(cookieParser());
 // console.log(process.memoryUsage(), "MEMORY DATA")
 app.use(middlewares);
 crone();
+cancelCrone();
 // userCrone(); 
 // betCrone();
 // dashCrone();
