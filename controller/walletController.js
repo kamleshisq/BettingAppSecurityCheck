@@ -62,7 +62,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
         return next(new AppError("There is no user with that id", 404))
     }
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    // console.log(clientIP)
+    console.log(clientIP)
     if(clientIP == "::ffff:3.9.120.247"){
         res.status(200).json({
             "balance": user.availableBalance,
