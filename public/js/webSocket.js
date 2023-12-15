@@ -19633,6 +19633,7 @@ function attemptReconnect() {
             console.log(`Attempting to reconnect (attempt ${reconnectAttempts + 1})`);
             socket.connect();
             reconnectAttempts++;
+            attemptReconnect()
         }, delay);
     } else {
         // console.log("Max reconnect attempts reached. Please refresh the page.");
