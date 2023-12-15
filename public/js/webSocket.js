@@ -14408,7 +14408,8 @@ socket.on('connect', () => {
 
 
         socket.on('getRefresh', async(data) => {
-            if(data.getMapbetDetails.length > 0){
+            console.log(data, "datadatdatda")
+            if(data.getMapbetDetails && data.getMapbetDetails.length > 0){
                 var allRows = $('#mapMarket tr');
                 for (let i = 0; i < data.getMapBetData.length; i++) {
                     var targetId = data.getMapBetData[i]._id.replace(/\./g, '\\.');
@@ -14431,7 +14432,7 @@ socket.on('connect', () => {
                 $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
             }
 
-            if(data.settledeBetData.length > 0){
+            if( data.settledeBetData && data.settledeBetData.length > 0){
 
                 var allRowssettle = $('#settle-market-table tbody tr');
                 for (let i = 0; i < data.settledeBetData.length; i++) {
@@ -14455,7 +14456,7 @@ socket.on('connect', () => {
                 $('#settle-market-table tbody').html('<tr class="empty_table"><td>No SETTLED Markets! </td></tr>')
             }
 
-            if(data.cancelledBetData.length > 0){
+            if(data.cancelledBetData && data.cancelledBetData.length > 0){
                 var allRowsvoid = $('#void-market-table tbody tr');
                 for (let i = 0; i < data.cancelledBetData.length; i++) {
                     var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
