@@ -8499,7 +8499,7 @@ socket.on('connect', () => {
             let table = data.element.closest('table')
             let check = table.find('tr').length
             // console.log(check, "CHECK")
-            if(check < 7){
+            if(check < 8){
                 if(table.hasClass("market")){
                     let trLength = table.find("tr:eq(1)").find('td').length
                     // console.log(trLength, "staleDiffstaleDiffstaleDiff")
@@ -9491,77 +9491,81 @@ socket.on('connect', () => {
                     }
                     // console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                     $("table.market").each(function() { 
+                        let check = $(this).find('tr').length
+                        console.log(check)
                         console.log('Working', data.betsMarketIdWise[i]._id)
-                        if(this.id == data.betsMarketIdWise[i]._id){
-                            var table = $(this);
-                            let trLength = table.find("tr:eq(1)").find('td').length
-                            // console.log(trLength, "trLengthtrLengthtrLength")
-                            table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
-                                $(this).find('td:eq(0)').attr('colspan', 9)
-                            })
-                            if(trLength === 4 || trLength === 8){
-                                if(team1Amount > 0){
-                                    var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
-                                }else{
-                                    var newTd = `<span class="c-reed" >${team1Amount.toFixed(2)}</span>`;
-                                }
-                                if(team2Amount > 0){
-                                    var newTd2 = `<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`;
-                                }else{
-                                    var newTd2 = `<span class="c-reed" >${team2Amount.toFixed(2)}</span>`;
-                                }
-                                if(status){
-                                    if(team3Amount > 0){
-                                        var newTd3 = `<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`;
-                                    }else{
-                                        var newTd3 = `<span class="c-reed" >${team3Amount.toFixed(2)}</span>`;
-                                    }
-        
-                                    table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
-                                    table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
-                                    table.find("tr:eq(5)").find("td:eq(1)").html(newTd3);
-                                }else{
-                                    table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
-                                    table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
-                                }
-                            }else{
-                                table.find('th:eq(0)').after('<th></th>')
-                                if(team1Amount > 0){
-                                    var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
-                                }else{
-                                    var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
-                                }
-                                if(team2Amount > 0){
-                                    var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
-                                }else{
-                                    var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
-                                }
-                                if(status){
-                                    if(team3Amount > 0){
-                                        var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
-                                    }else{
-                                        var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
-                                    }
-        
-                                    table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
-                                    table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
-                                    table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
-                                }else{
-                                    table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
-                                    table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
-                                }
-                            }
-                        }else{
-                            // console.log('WORKING')
-                            if(!data.betsMarketIdWise.some(item => item._id == this.id)){
+                        if(check < 8){
+                            if(this.id == data.betsMarketIdWise[i]._id){
                                 var table = $(this);
                                 let trLength = table.find("tr:eq(1)").find('td').length
-                                // console.log(trLength)
+                                // console.log(trLength, "trLengthtrLengthtrLength")
+                                table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
+                                    $(this).find('td:eq(0)').attr('colspan', 9)
+                                })
                                 if(trLength === 4 || trLength === 8){
-                                    table.find("tr:eq(1)").find("td:eq(1)").remove();
-                                    table.find("tr:eq(3)").find("td:eq(1)").remove();
-                                    table.find("tr:eq(5)").find("td:eq(1)").remove();
-                                    table.find('th:eq(1)').remove();
+                                    if(team1Amount > 0){
+                                        var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
+                                    }else{
+                                        var newTd = `<span class="c-reed" >${team1Amount.toFixed(2)}</span>`;
+                                    }
+                                    if(team2Amount > 0){
+                                        var newTd2 = `<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`;
+                                    }else{
+                                        var newTd2 = `<span class="c-reed" >${team2Amount.toFixed(2)}</span>`;
+                                    }
+                                    if(status){
+                                        if(team3Amount > 0){
+                                            var newTd3 = `<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`;
+                                        }else{
+                                            var newTd3 = `<span class="c-reed" >${team3Amount.toFixed(2)}</span>`;
+                                        }
+            
+                                        table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                        table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                        table.find("tr:eq(5)").find("td:eq(1)").html(newTd3);
+                                    }else{
+                                        table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                        table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                    }
+                                }else{
+                                    table.find('th:eq(0)').after('<th></th>')
+                                    if(team1Amount > 0){
+                                        var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
+                                    }else{
+                                        var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
+                                    }
+                                    if(team2Amount > 0){
+                                        var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
+                                    }else{
+                                        var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
+                                    }
+                                    if(status){
+                                        if(team3Amount > 0){
+                                            var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
+                                        }else{
+                                            var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
+                                        }
+            
+                                        table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                        table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                        table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
+                                    }else{
+                                        table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                        table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                    }
+                                }
+                            }else{
+                                // console.log('WORKING')
+                                if(!data.betsMarketIdWise.some(item => item._id == this.id)){
+                                    var table = $(this);
+                                    let trLength = table.find("tr:eq(1)").find('td').length
+                                    // console.log(trLength)
+                                    if(trLength === 4 || trLength === 8){
+                                        table.find("tr:eq(1)").find("td:eq(1)").remove();
+                                        table.find("tr:eq(3)").find("td:eq(1)").remove();
+                                        table.find("tr:eq(5)").find("td:eq(1)").remove();
+                                        table.find('th:eq(1)').remove();
+                                    }
                                 }
                             }
                         }
