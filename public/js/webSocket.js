@@ -9423,7 +9423,7 @@ socket.on('connect', () => {
            
       })
         socket.on('marketIdbookDetails', data => {
-            // console.log('WORKING', data, "datadatadatda")
+            console.log('WORKING', data, "datadatadatda")
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
                     // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
