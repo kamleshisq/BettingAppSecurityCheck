@@ -11,7 +11,7 @@ module.exports = () => {
         let currentDate = new Date();
         let oneDayAgo = new Date(currentDate.getTime() - 24 * 60 * 60 * 1000);
         let openCasinoBets = await betModel.find({status:'OPEN', selectionName: { $exists: false },  oddvalue:{ $exists: false }, date:{$lt : oneDayAgo}})
-        // console.log(openCasinoBets)
+        console.log(openCasinoBets)
         if(openCasinoBets.length > 0){
             for(const bet in openCasinoBets){
                 let returnAmount = Math.abs(openCasinoBets[bet].returns)
@@ -31,8 +31,39 @@ module.exports = () => {
                     "transactionId":`${openCasinoBets[bet].transactionId}`
                 }
 
-                await accModel.create(userAcc);
+                let debitAmountForP = returnAmount
+                    for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                        let parentUser1 = await User.findById(user.parentUsers[i])
+                        let parentUser2 = await User.findById(user.parentUsers[i - 1])
+                        let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                        let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                        parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                        parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                        await User.findByIdAndUpdate(user.parentUsers[i], {
+                        $inc: {
+                            downlineBalance:  returnAmount,
+                            myPL: -parentUser1Amount,
+                            uplinePL: -parentUser2Amount,
+                            lifetimePL: -parentUser1Amount,
+                            pointsWL:  returnAmount
+                        }
+                    });
                 
+                    if (i === 1) {
+                        await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: returnAmount,
+                                myPL: -parentUser2Amount,
+                                lifetimePL: -parentUser2Amount,
+                                pointsWL: returnAmount
+                            }
+                        });
+                    }
+                        debitAmountForP = parentUser2Amount
+                    }
+
+                await accModel.create(userAcc);
+
             }
         }
     })
