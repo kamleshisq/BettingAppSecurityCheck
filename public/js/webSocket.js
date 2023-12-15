@@ -1,13 +1,15 @@
 
 const socket = io();
+let reconnectAttempts = 0;
 socket.on('disconnect', () => {
-    // console.log("WebSocket Disconnected");
+    console.log("WebSocket Disconnected");
     // Refresh the page when the WebSocket connection is lost
     
-    // window.location.reload();
+    attemptReconnect();
 });
 let c = 0
 socket.on('connect', () => {
+    reconnectAttempts = 0;
     console.log("websocket Connected")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
@@ -19620,3 +19622,19 @@ socket.on('connect', () => {
       });
 })
 })
+
+
+function attemptReconnect() {
+    const maxReconnectAttempts = 5; // Maximum number of reconnect attempts
+    if (reconnectAttempts < maxReconnectAttempts) {
+        const delay = Math.pow(2, reconnectAttempts) * 1000; // Exponential backoff
+        setTimeout(() => {
+            console.log(`Attempting to reconnect (attempt ${reconnectAttempts + 1})`);
+            socket.connect();
+            reconnectAttempts++;
+        }, delay);
+    } else {
+        // console.log("Max reconnect attempts reached. Please refresh the page.");
+        alert('Please refresh the page.')
+    }
+}
