@@ -19627,8 +19627,8 @@ socket.on('connect', () => {
 function attemptReconnect() {
     const maxReconnectAttempts = 5; // Maximum number of reconnect attempts
     if (reconnectAttempts < maxReconnectAttempts) {
-        const delay = Math.pow(2, reconnectAttempts) * 1000; // Exponential backoff
-        console.log(delay)
+        const delay = 1000; // Exponential backoff
+        // console.log(delay)
         setTimeout(() => {
             console.log(`Attempting to reconnect (attempt ${reconnectAttempts + 1})`);
             socket.connect();
