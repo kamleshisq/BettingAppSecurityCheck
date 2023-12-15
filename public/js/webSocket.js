@@ -8498,7 +8498,7 @@ socket.on('connect', () => {
             // console.log(data)
             let table = data.element.closest('table')
             let check = table.find('tr').length
-            console.log(check, "CHECK")
+            // console.log(check, "CHECK")
             if(check < 7){
                 if(table.hasClass("market")){
                     let trLength = table.find("tr:eq(1)").find('td').length
@@ -8589,7 +8589,8 @@ socket.on('connect', () => {
                     }
                 }
             }else{
-                console.log('WORKING')
+                // console.log('WORKING')
+
             }
           }
 
@@ -9490,6 +9491,7 @@ socket.on('connect', () => {
                     }
                     // console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                     $("table.market").each(function() { 
+                        console.log('Working', data.betsMarketIdWise[i]._id)
                         if(this.id == data.betsMarketIdWise[i]._id){
                             var table = $(this);
                             let trLength = table.find("tr:eq(1)").find('td').length
