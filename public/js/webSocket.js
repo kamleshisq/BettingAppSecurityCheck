@@ -9717,6 +9717,7 @@ socket.on('connect', () => {
                     <tr class="headDetail"><th>Runner Name</th>
                     <th>Profit/Loss</th></tr>`
                     for(let i = 0; i < data.dataToshow.length; i++){
+                        console.log(data.dataToshow[i])
                         html += `<tr><td>${data.dataToshow[i].message}</td>`
                         if(data.dataToshow[i].sum < 0){
                             html += `<td class="c-reed" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
@@ -14408,7 +14409,7 @@ socket.on('connect', () => {
 
 
         socket.on('getRefresh', async(data) => {
-            console.log(data, "datadatdatda")
+            // console.log(data, "datadatdatda")
             if(data.getMapBetData && data.getMapBetData.length > 0){
                 var allRows = $('#mapMarket tr');
                 for (let i = 0; i < data.getMapBetData.length; i++) {
