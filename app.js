@@ -75,7 +75,7 @@ app.use(cookieParser());
 // console.log(process.memoryUsage(), "MEMORY DATA")
 app.use(middlewares);
 crone();
-cancelCrone();
+// cancelCrone();
 // userCrone(); 
 // betCrone();
 // dashCrone();
