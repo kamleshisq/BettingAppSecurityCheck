@@ -14409,7 +14409,7 @@ socket.on('connect', () => {
 
         socket.on('getRefresh', async(data) => {
             console.log(data, "datadatdatda")
-            if(data.getMapbetDetails && data.getMapbetDetails.length > 0){
+            if(data.getMapBetData && data.getMapBetData.length > 0){
                 var allRows = $('#mapMarket tr');
                 for (let i = 0; i < data.getMapBetData.length; i++) {
                     var targetId = data.getMapBetData[i]._id.replace(/\./g, '\\.');
