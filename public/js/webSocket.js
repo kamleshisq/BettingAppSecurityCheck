@@ -9720,9 +9720,9 @@ socket.on('connect', () => {
                         console.log(data.dataToshow[i])
                         html += `<tr><td>${data.dataToshow[i].message}</td>`
                         if(data.dataToshow[i].sum < 0){
-                            html += `<td class="c-reed" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
+                            html += `<td class="c-reed" >${(data.dataToshow[i].sum).toFixed(2)}</td></tr>`
                         }else{
-                            html += `<td class="c-gren" >${(data.dataToshow[i].sum * -1).toFixed(2)}</td></tr>`
+                            html += `<td class="c-gren" >${(data.dataToshow[i].sum).toFixed(2)}</td></tr>`
                         }
                     } 
                     html += `</tbody>
