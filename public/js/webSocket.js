@@ -19635,6 +19635,6 @@ function attemptReconnect() {
         }, delay);
     } else {
         // console.log("Max reconnect attempts reached. Please refresh the page.");
-        alert('Please refresh the page.')
+        window.location.reload();
     }
 }
