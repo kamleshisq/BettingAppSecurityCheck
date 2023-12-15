@@ -31,6 +31,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }
     console.log("PublicKey:",publicKey)
     let result = verify(req.headers.signature, publicKey, x)
+    console.log(result)
     if(result){
         const ObjectId = mongoose.Types.ObjectId;
         let objectId = new ObjectId(req.body.userId);
