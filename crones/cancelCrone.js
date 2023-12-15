@@ -6,7 +6,7 @@ const Decimal = require('decimal.js');
 
 
 module.exports = () => { 
-    cron.schedule('*/5 * * * *', async() => { 
-        console.log('WORKING')
+    cron.schedule('*/5 * * * * *', async() => { 
+        console.log('WORKING 123456879')
     })
 }
