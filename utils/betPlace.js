@@ -350,7 +350,11 @@ if(marketDetails.title === "Winner" ||( marketDetails.title.toLowerCase().starts
     //     "stake": parseFloat(data.data.stake),
     //     "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
     // }
-    await betmodel.create(betPlaceData)
+    if(betPlaceData.oddValue !== 0){
+        await betmodel.create(betPlaceData)
+    }else{
+        return 'Please try again leter market SUSPENDED'
+    }
     // await accountStatementByUserModel.create(Acc)
 
 
