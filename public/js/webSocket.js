@@ -9631,6 +9631,10 @@ socket.on('connect', () => {
                             for (let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                 if(this.id == data.betsMarketIdWise[i]._id){
                                     console.log("got here")
+                                    for(let j = 0; j < data.betsMarketIdWise[i].runnersData; j++){
+                                        let checkRunn = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[j].runner)
+                                        console.log(checkRunn)
+                                    }
                                 }else{
                                     if(!data.betsMarketIdWise.some(item => item._id == this.id)){
                                         var table = $(this);
