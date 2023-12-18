@@ -7565,27 +7565,27 @@ io.on('connection', (socket) => {
                       }
                     }
                   },
-                //   {
-                //     $project: {
-                //       _id: 1,
-                //       data: 1
-                //     }
-                //   },
-                //   {
-                //     $unwind: "$data"
-                //   },
+                  {
+                    $project: {
+                      _id: 1,
+                      data: 1
+                    }
+                  },
+                  {
+                    $unwind: "$data"
+                  },
                 //   {
                 //     $sort: {
                 //       "data.totalLossAmount": 1
                 //     }
                 //   },
-                //   {
-                //     $group: {
-                //       _id: "$_id",
-                //       selectionName: { $first: "$data.selectionName" },
-                //       amount: { $first: "$data.totalLossAmount" }
-                //     }
-                //   },
+                  {
+                    $group: {
+                      _id: "$_id",
+                      amount: { $sum: "$data.totalLossAmount" },
+                      data: 1
+                    }
+                  },
                 //   {
                 //         $project: {
                 //         _id: 1,
@@ -7611,10 +7611,19 @@ io.on('connection', (socket) => {
 
             let exposer3Amount = 0
             console.log(exposure3[0].data, userData.userName)
-            // if(exposure3.length > 0){
-            //     exposer3Amount = exposure3[0].amount
-            //     console.log(exposer3Amount)
-            // }
+            if(exposure3.length > 0){
+                for(let i = 0; i < exposure3.length; i++){
+                    let thisAMOunt = 0
+                    let runnersData = await runnerData.find({marketId:exposure3[i]._id})
+                    if(runnerData){
+                        for(const runDATA in runnerData){
+
+                        }
+                    }
+                }
+                exposer3Amount = exposure3[0].amount
+                console.log(exposer3Amount)
+            }
         
             // console.log(exposure3, exposure2, exposure1,'==>exposures')
 
