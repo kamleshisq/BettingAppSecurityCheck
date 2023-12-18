@@ -9698,7 +9698,7 @@ socket.on('connect', () => {
                                             console.log(showData[length], showData[length] > 0,"showData[length]showData[length]showData[length]")
                                             if(showData[length] > 0){
                                                 $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
-                                            }else{
+                                            }else if(showData[length] < 0){
                                                 $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
                                             }
                                         }
