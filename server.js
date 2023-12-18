@@ -7614,12 +7614,22 @@ io.on('connection', (socket) => {
             if(exposure3.length > 0){
                 for(let i = 0; i < exposure3.length; i++){
                     let thisAMOunt = 0
+                    let status = true
                     let runnersData = await runnerData.find({marketId:exposure3[i]._id})
-                    if(runnerData){
+                    if(runnersData){
+                        runnersData = JSON.parse(runnersData.runners)
                         for(const runDATA in runnerData){
-                            
+                            let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData.runner)
+                            if(thatdata ){
+                                if(thatdata.totalLossAmount > thisAMOunt){
+                                    thisAMOunt = thatdata.totalLossAmount
+                                }
+                            }else{
+                                status = false
+                            }
                         }
                     }
+                    console.log(thisAMOunt)
                 }
                 exposer3Amount = exposure3[0].amount
                 console.log(exposer3Amount)
