@@ -9489,6 +9489,7 @@ socket.on('connect', () => {
            
       })
         socket.on('marketIdbookDetails', data => {
+            console.log(data, "DATA")
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
                     let team1Data
@@ -9550,7 +9551,6 @@ socket.on('connect', () => {
                         }
     
                     }
-                    // console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                     $("table.market").each(function() { 
                         let check = $(this).find('tr').length
                         if(check < 8){
