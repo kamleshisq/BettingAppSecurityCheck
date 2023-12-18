@@ -9489,7 +9489,6 @@ socket.on('connect', () => {
            
       })
         socket.on('marketIdbookDetails', data => {
-            console.log(data, "DATA")
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
                     let team1Data
@@ -9627,6 +9626,7 @@ socket.on('connect', () => {
                                 }
                             }
                         }else{
+                            console.log(data.betsMarketIdWise[i])
                             for (let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                 if(this.id == data.betsMarketIdWise[i]._id){
                                     console.log("got here")
