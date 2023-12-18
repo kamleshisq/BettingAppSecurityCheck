@@ -9628,7 +9628,6 @@ socket.on('connect', () => {
                             }
                         }else{
                             console.log(data.betsMarketIdWise)
-                            for (let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                 if(this.id == data.betsMarketIdWise[i]._id){
                                     console.log("got here")
                                     for(let j = 0; j < data.betsMarketIdWise[i].runnersData; j++){
@@ -9656,7 +9655,6 @@ socket.on('connect', () => {
                                         }
                                     }
                                 }
-                            }
                         }
                     })
                 }
