@@ -9642,8 +9642,8 @@ socket.on('connect', () => {
                                         let trLength = table.find("tr:eq(1)").find('td').length
                                         // console.log(trLength)
                                         if(trLength === 4 || trLength === 8){
-                                            for (var i = 1; i < check; i += 2) {
-                                                var selector = 'tr:eq(' + i + ')';
+                                            for (var t = 1; t < check; t += 2) {
+                                                var selector = 'tr:eq(' + t + ')';
                                                 
                                                 // Use your existing logic
                                                 table.find('th:eq(1)').remove();
@@ -9676,10 +9676,10 @@ socket.on('connect', () => {
                     }else{
                         let trLength = table.find("tr:eq(1)").find('td').length
                         if(trLength === 4 || trLength === 8){
-                            for (var i = 1; i < check; i += 2) {
-                                var selector = 'tr:eq(' + i + ')';
+                            for (var t = 1; t < check; t += 2) {
+                                var selector = 'tr:eq(' + t + ')';
                                 
-                                // Use your existing logic
+                                // Use your extsttng logtc
                                 table.find('th:eq(1)').remove();
                                 table.find(selector).each(function () {
                                     var firstTd = $(this).find('td:eq(1)');
