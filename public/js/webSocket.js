@@ -9635,6 +9635,31 @@ socket.on('connect', () => {
                             }
                         }else{
                             console.log(data.betsMarketIdWise[i].runnersData)
+                            for (let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
+                                if(this.id == data.betsMarketIdWise[i]._id){
+                                    console.log(data.betsMarketIdWise[i].selections, "selectionsselectionsselections")
+                                }else{
+                                    if(!data.betsMarketIdWise.some(item => item._id == this.id)){
+                                        var table = $(this);
+                                        let trLength = table.find("tr:eq(1)").find('td').length
+                                        // console.log(trLength)
+                                        if(trLength === 4 || trLength === 8){
+                                            for (var i = 1; i < check; i += 2) {
+                                                var selector = 'tr:eq(' + i + ')';
+                                                
+                                                // Use your existing logic
+                                                table.find('th:eq(1)').remove();
+                                                table.find(selector).each(function () {
+                                                    var firstTd = $(this).find('td:eq(1)');
+                                                    
+                                                    firstTd.remove()
+                                                });
+                                            }
+                                            // table.find('th:eq(1)').remove();
+                                        }
+                                    }
+                                }
+                            }
                         }
                     })
                 }
