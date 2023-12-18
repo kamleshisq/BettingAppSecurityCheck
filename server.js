@@ -7628,7 +7628,9 @@ io.on('connection', (socket) => {
                             let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData1[runDATA].runner)
                             if(thatdata ){
                                 if(thatdata.totalLossAmount > thisAMOunt){
-                                    thisAMOunt = thatdata.totalLossAmount
+                                    if(thatdata.totalLossAmount < 0){
+                                        thisAMOunt = thatdata.totalLossAmount
+                                    }
                                 }
                             }else{
                                 statusrun = false
