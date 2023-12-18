@@ -9551,6 +9551,7 @@ socket.on('connect', () => {
                         }
     
                     }
+                    console.log(team1Amount, team2Amount, "team2Amountteam2Amount")
                     $("table.market").each(function() { 
                         let check = $(this).find('tr').length
                         console.log(data.betsMarketIdWise[i])
