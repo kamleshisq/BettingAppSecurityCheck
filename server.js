@@ -9032,7 +9032,7 @@ io.on('connection', (socket) => {
                     betsMarketIdWise[i].runnersData = JSON.parse(currentMarketrunnersData.runners)
                 }
             }
-            console.log(betsMarketIdWise[i].runnersData)
+            console.log(betsMarketIdWise[0].runnersData)
             socket.emit("marketIdbookDetails" ,{betsMarketIdWise, status: data.status})
         }else{
             betsMarketIdWise = []
