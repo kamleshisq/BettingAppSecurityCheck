@@ -7508,6 +7508,9 @@ io.on('connection', (socket) => {
                                     }
                                 }
                             }
+                        },
+                        exposure:{
+                            $sum: "$exposure"
                         }
                     }
                 },
@@ -7518,6 +7521,7 @@ io.on('connection', (socket) => {
                             $push:{ 
                                 selectionName : "$_id.selectionName",
                                 totalWinAmount : "$totalWinAmount",
+                                exposure : "$exposure",
                                 totalLossAmount : {
                                     $multiply:["$totalLossAmount", -1]
                                 }
@@ -7536,6 +7540,7 @@ io.on('connection', (socket) => {
                           in: {
                             selectionName: "$$item.selectionName",
                             totalWinAmount: "$$item.totalWinAmount",
+                            exposure : "$$item.exposure",
                             totalLossAmount: {
                               $add: [
                                 "$$item.totalLossAmount",
@@ -7633,7 +7638,7 @@ io.on('connection', (socket) => {
                     if(!statusrun){
                         let thisAMOunt2 = 0
                         for(const j in exposure3[i].data){
-                            thisAMOunt2 = thisAMOunt2 + exposure3[i].data[j].totalLossAmount
+                            thisAMOunt2 = thisAMOunt2 + exposure3[i].data[j].exposure
                         }
                     console.log(thisAMOunt, thisAMOunt2)
                     }
