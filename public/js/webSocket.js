@@ -9634,7 +9634,7 @@ socket.on('connect', () => {
                                 }
                             }
                         }else{
-                            console.log('HERE123456789')
+                            console.log(data.betsMarketIdWise[i].runnersData)
                         }
                     })
                 }
