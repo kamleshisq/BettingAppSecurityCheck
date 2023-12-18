@@ -7614,7 +7614,7 @@ io.on('connection', (socket) => {
             if(exposure3.length > 0){
                 for(let i = 0; i < exposure3.length; i++){
                     let thisAMOunt = 0
-                    let status = true
+                    let statusrun = true
                     let runnersData1 = await runnerData.findOne({marketId:exposure3[i]._id})
                     if(runnersData1){
                         runnersData1 = JSON.parse(runnersData1.runners)
@@ -7626,11 +7626,16 @@ io.on('connection', (socket) => {
                                     thisAMOunt = thatdata.totalLossAmount
                                 }
                             }else{
-                                status = false
+                                statusrun = false
                             }
                         }
                     }
-                    console.log(thisAMOunt)
+                    if(!statusrun){
+                        let thisAMOunt2 = 0
+                        for(const j in exposure3[i].data){
+                            thisAMOunt2 = thisAMOunt2 + exposure3[i].data[j].totalLossAmount
+                        }
+                    console.log(thisAMOunt, thisAMOunt2)
                 }
                 // exposer3Amount = exposure3[0].amount
                 // console.log(exposer3Amount)
