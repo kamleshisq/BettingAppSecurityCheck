@@ -7687,7 +7687,7 @@ io.on('connection', (socket) => {
                         for(const j in exposure3[i].data){
                             thisAMOunt2 = thisAMOunt2 - exposure3[i].data[j].exposure
                         }
-                    console.log(thisAMOunt, thisAMOunt2)
+                    // console.log(thisAMOunt, thisAMOunt2)
                     }
                     if(thisAMOunt > thisAMOunt2){
                         exposer3Amount = exposer3Amount + thisAMOunt2
