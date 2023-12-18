@@ -9491,7 +9491,6 @@ socket.on('connect', () => {
         socket.on('marketIdbookDetails', data => {
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
-                    // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
                     let team1Data
                     let team2Data
                     let team3Data
@@ -9508,14 +9507,11 @@ socket.on('connect', () => {
                     let team1Amount
                     let team2Amount
                     let team3Amount
-                    // console.log(team1Data, team2Data, team3Data)
                     if(status){
                         if(team1Data && team2Data && team3Data){
-                            // console.log('THISIS WORKING')
                             team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
                             team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
                             team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
-                            // console.log(team2Data.totalAmount - team1Data.exposure - team3Data.exposure, team2Data.totalAmount, team1Data.exposure, team3Data.exposure)
                         }else if ((team1Data && team2Data) && !team3Data){
                             team1Amount = team1Data.totalAmount - team2Data.exposure
                             team2Amount = team2Data.totalAmount - team1Data.exposure
@@ -9557,13 +9553,10 @@ socket.on('connect', () => {
                     // console.log(team1Amount, team2Amount, team3Amount, "jkjk")
                     $("table.market").each(function() { 
                         let check = $(this).find('tr').length
-                        console.log(check)
-                        console.log('Working', data.betsMarketIdWise[i]._id)
                         if(check < 8){
                             if(this.id == data.betsMarketIdWise[i]._id){
                                 var table = $(this);
                                 let trLength = table.find("tr:eq(1)").find('td').length
-                                // console.log(trLength, "trLengthtrLengthtrLength")
                                 table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
                                     $(this).find('td:eq(0)').attr('colspan', 9)
                                 })
@@ -9634,10 +9627,9 @@ socket.on('connect', () => {
                                 }
                             }
                         }else{
-                            console.log(data.betsMarketIdWise[i])
                             for (let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                 if(this.id == data.betsMarketIdWise[i]._id){
-                                    console.log(data.betsMarketIdWise[i].selections, "selectionsselectionsselections")
+                                    console.log("got here")
                                 }else{
                                     if(!data.betsMarketIdWise.some(item => item._id == this.id)){
                                         var table = $(this);
