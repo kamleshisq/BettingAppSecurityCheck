@@ -8592,7 +8592,24 @@ socket.on('connect', () => {
                 if(table.hasClass("market")){
                     let trLength = table.find("tr:eq(1)").find('td').length
                     if(trLength === 4 || trLength === 8){ 
-
+                        if(data.status){
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) - (data.result * 1) - (data.plusMinus * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                    let newvalue = (oldValue * 1) + (data.result * 1)
+                                    $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                    if(newvalue > 0){
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                    }else{
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                    }
+                                })
+                            }
+                        }
                     }else{
                         table.find('th:eq(0)').after('<th></th>')
                         if(data.status){
@@ -9654,7 +9671,7 @@ socket.on('connect', () => {
                                     var table = $(this);
                                     let trLength = table.find("tr:eq(1)").find('td').length
                                     if(trLength === 4 || trLength === 8){
-
+                                        
                                     }else{
                                         for (var t = 1; t < check; t += 2) {
                                             var selector = 'tr:eq(' + t + ')';
