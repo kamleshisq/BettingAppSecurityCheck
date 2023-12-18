@@ -9694,13 +9694,12 @@ socket.on('connect', () => {
                                             let length = Math.floor((t + 1) / 2) - 1
                                             table.find(selector).each(function () {
                                                 $(this).find('td:eq(1)').find('span').text(showData[length].toFixed(2))
+                                                if(showData[length] > 0){
+                                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                                }else if(showData[length] < 0){
+                                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                                }
                                             })
-                                            console.log(showData[length], showData[length] > 0,"showData[length]showData[length]showData[length]")
-                                            if(showData[length] > 0){
-                                                $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
-                                            }else if(showData[length] < 0){
-                                                $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
-                                            }
                                         }
                                     }else{
                                         for (var t = 1; t < check; t += 2) {
