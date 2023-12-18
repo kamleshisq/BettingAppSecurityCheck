@@ -9633,7 +9633,7 @@ socket.on('connect', () => {
                                     console.log("got here")
                                     for(let j = 0; j < data.betsMarketIdWise[i].runnersData; j++){
                                         let checkRunn = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[j].runner)
-                                        console.log(checkRunn)
+                                        console.log(checkRunn, 123456789)
                                     }
                                 }else{
                                     if(!data.betsMarketIdWise.some(item => item._id == this.id)){
