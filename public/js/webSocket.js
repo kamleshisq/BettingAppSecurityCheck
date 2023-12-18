@@ -9638,13 +9638,13 @@ socket.on('connect', () => {
                                             amount = checkRunn.totalAmount
                                             for(const run in data.betsMarketIdWise[i].selections){
                                                 if(data.betsMarketIdWise[i].selections[run].selectionName !== checkRunn.selectionName){
-                                                    console.log(data.betsMarketIdWise[i].selections[run].selectionName.exposure)
-                                                    amount = amount - data.betsMarketIdWise[i].selections[run].selectionName.exposure
+                                                    console.log(data.betsMarketIdWise[i].selections[run].exposure)
+                                                    amount = amount - data.betsMarketIdWise[i].selections[run].exposure
                                                 }
                                             }
                                         }else{
                                             for(const run in data.betsMarketIdWise[i].selections){
-                                                amount = amount - data.betsMarketIdWise[i].selections[run].selectionName.exposure
+                                                amount = amount - data.betsMarketIdWise[i].selections[run].exposure
                                             }
                                         }
                                         console.log(amount)
