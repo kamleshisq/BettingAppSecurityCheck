@@ -7574,6 +7574,46 @@ io.on('connection', (socket) => {
                         },
                     },
                 },
+                {
+                    $project: {
+                      _id: "$_id",
+                      data: {
+                        $map: {
+                          input: "$selections",
+                          as: "item",
+                          in: {
+                            selectionName: "$$item.selectionName",
+                            totalAmount: "$$item.totalAmount",
+                            exposure : "$$item.exposure",
+                            totalLossAmount: {
+                              $add: [
+                                "$$item.totalAmount",
+                                {
+                                    $sum:{
+                                        $reduce: { 
+                                            input: "$selections",
+                                            initialValue: 0,
+                                            in: { 
+                                                $cond: { 
+                                                    if: {
+                                                        $ne: ["$$this.selectionName", "$$item.selectionName"] 
+                                                      },
+                                                      then: { $add: ["$$value", 0]  },
+                                                      else: {
+                                                          $add: ["$$value", "$$item.Stake"] 
+                                                      }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
                 //   {
                 //     $project: {
                 //       _id: 1,
@@ -7619,7 +7659,7 @@ io.on('connection', (socket) => {
             ])
 
             let exposer3Amount = 0
-            console.log(exposure3[0].selections, userData.userName)
+            console.log(exposure3[1].data, exposure3[0].data,userData.userName)
             // if(exposure3.length > 0){
             //     for(let i = 0; i < exposure3.length; i++){
             //         let thisAMOunt = 0
