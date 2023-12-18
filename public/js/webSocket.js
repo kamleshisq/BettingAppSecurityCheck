@@ -9689,7 +9689,19 @@ socket.on('connect', () => {
                                     var table = $(this);
                                     let trLength = table.find("tr:eq(1)").find('td').length
                                     if(trLength === 4 || trLength === 8){
-                                        
+                                        for (var t = 1; t < check; t += 2) {
+                                            var selector = 'tr:eq(' + t + ')';
+                                            let length = Math.floor((t + 1) / 2) - 1
+                                            table.find(selector).each(function () {
+                                                $(this).find('td:eq(1)').find('span').text(showData[length])
+                                            })
+
+                                            if(showData[length] > 0){
+                                                $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                            }else{
+                                                $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                            }
+                                        }
                                     }else{
                                         for (var t = 1; t < check; t += 2) {
                                             var selector = 'tr:eq(' + t + ')';
