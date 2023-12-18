@@ -9555,7 +9555,7 @@ socket.on('connect', () => {
                     console.log(data.betsMarketIdWise[i])
                     $("table.market").each(function() { 
                         let check = $(this).find('tr').length
-                        console.log(data)
+                        console.log(data.betsMarketIdWise)
 
                         if(check < 8){
                             console.log()
