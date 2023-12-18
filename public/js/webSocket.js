@@ -8589,7 +8589,6 @@ socket.on('connect', () => {
                     }
                 }
             }else{
-                // console.log('WORKING')
                 if(table.hasClass("market")){
                     let trLength = table.find("tr:eq(1)").find('td').length
                     if(trLength === 4 || trLength === 8){ 
@@ -8608,14 +8607,6 @@ socket.on('connect', () => {
                                 var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
                             }
                             data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
-                            // table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
-                            //     var firstTd = $(this).find('td:first-child');
-                            
-                            //     if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
-                            //         // console.log('Working:', firstTd);
-                            //         firstTd.after(newTd2.clone()); 
-                            //     }
-                            // });
                             for (var i = 1; i < check; i += 2) {
                                 var selector = 'tr:eq(' + i + ')';
                                 
@@ -8648,8 +8639,6 @@ socket.on('connect', () => {
                             data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
                             for (var i = 1; i < check; i += 2) {
                                 var selector = 'tr:eq(' + i + ')';
-                                
-                                // Use your existing logic
                                 table.find(selector).each(function () {
                                     var firstTd = $(this).find('td:first-child');
                                     
@@ -8668,8 +8657,6 @@ socket.on('connect', () => {
                         }
                     }
                 }
-
-
             }
           }
 
@@ -9653,13 +9640,36 @@ socket.on('connect', () => {
             }else{
                 $("table.market").each(function() {
                     var table = $(this);
-                    let trLength = table.find("tr:eq(1)").find('td').length
-                    console.log(trLength)
-                    if(trLength === 4 || trLength === 8){
-                        table.find("tr:eq(1)").find("td:eq(1)").remove();
-                        table.find("tr:eq(3)").find("td:eq(1)").remove();
-                        table.find("tr:eq(5)").find("td:eq(1)").remove();
-                        table.find('th:eq(1)').remove();
+                    let check = table.find('tr').length
+                    if(check < 8){
+                        let trLength = table.find("tr:eq(1)").find('td').length
+                        console.log(trLength)
+                        if(trLength === 4 || trLength === 8){
+                            table.find("tr:eq(1)").find("td:eq(1)").remove();
+                            table.find("tr:eq(3)").find("td:eq(1)").remove();
+                            table.find("tr:eq(5)").find("td:eq(1)").remove();
+                            table.find('th:eq(1)').remove();
+                        }
+                    }else{
+                        let trLength = table.find("tr:eq(1)").find('td').length
+                        if(trLength === 4 || trLength === 8){
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                
+                                // Use your existing logic
+                                table.find('th:eq(1)').remove();
+                                table.find(selector).each(function () {
+                                    var firstTd = $(this).find('td:first-child');
+                                    
+                                    firstTd.remove()
+                                });
+                            }
+
+                            // table.find("tr:eq(1)").find("td:eq(1)").remove();
+                            // table.find("tr:eq(3)").find("td:eq(1)").remove();
+                            // table.find("tr:eq(5)").find("td:eq(1)").remove();
+                            // table.find('th:eq(1)').remove();
+                        }
                     }
                 })
             }
