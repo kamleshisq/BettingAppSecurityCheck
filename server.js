@@ -7661,43 +7661,43 @@ io.on('connection', (socket) => {
 
             let exposer3Amount = 0
             console.log(exposure3[1].data, exposure3[0].data,userData.userName)
-            // if(exposure3.length > 0){
-            //     for(let i = 0; i < exposure3.length; i++){
-            //         let thisAMOunt = 0
-            //         let thisAMOunt2 = 0
-            //         let statusrun = true
-            //         let runnersData1 = await runnerData.findOne({marketId:exposure3[i]._id})
-            //         if(runnersData1){
-            //             runnersData1 = JSON.parse(runnersData1.runners)
-            //             console.log(runnersData1)
-            //             for(const runDATA in runnersData1){
-            //                 let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData1[runDATA].runner)
-            //                 if(thatdata ){
-            //                     if(thatdata.totalLossAmount < 0){
-            //                     if(thatdata.totalLossAmount < thisAMOunt){
-            //                             thisAMOunt = thatdata.totalLossAmount
-            //                         }
-            //                     }
-            //                 }else{
-            //                     statusrun = false
-            //                 }
-            //             }
-            //         }
-            //         if(!statusrun){
-            //             for(const j in exposure3[i].data){
-            //                 thisAMOunt2 = thisAMOunt2 - exposure3[i].data[j].exposure
-            //             }
-            //         console.log(thisAMOunt, thisAMOunt2)
-            //         }
-            //         if(thisAMOunt > thisAMOunt2){
-            //             exposer3Amount = exposer3Amount + thisAMOunt2
-            //         }else{
-            //             exposer3Amount = exposer3Amount + thisAMOunt
-            //         }
-            //     }
-            //     // exposer3Amount = exposure3[0].amount
-            //     // console.log(exposer3Amount)
-            // }
+            if(exposure3.length > 0){
+                for(let i = 0; i < exposure3.length; i++){
+                    let thisAMOunt = 0
+                    let thisAMOunt2 = 0
+                    let statusrun = true
+                    let runnersData1 = await runnerData.findOne({marketId:exposure3[i]._id})
+                    if(runnersData1){
+                        runnersData1 = JSON.parse(runnersData1.runners)
+                        console.log(runnersData1)
+                        for(const runDATA in runnersData1){
+                            let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData1[runDATA].runner)
+                            if(thatdata ){
+                                if(thatdata.totalLossAmount < 0){
+                                if(thatdata.totalLossAmount < thisAMOunt){
+                                        thisAMOunt = thatdata.totalLossAmount
+                                    }
+                                }
+                            }else{
+                                statusrun = false
+                            }
+                        }
+                    }
+                    if(!statusrun){
+                        for(const j in exposure3[i].data){
+                            thisAMOunt2 = thisAMOunt2 - exposure3[i].data[j].exposure
+                        }
+                    console.log(thisAMOunt, thisAMOunt2)
+                    }
+                    if(thisAMOunt > thisAMOunt2){
+                        exposer3Amount = exposer3Amount + thisAMOunt2
+                    }else{
+                        exposer3Amount = exposer3Amount + thisAMOunt
+                    }
+                }
+                // exposer3Amount = exposure3[0].amount
+                // console.log(exposer3Amount)
+            }
         
             // console.log(exposure3, exposure2, exposure1,'==>exposures')
 
