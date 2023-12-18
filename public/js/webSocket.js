@@ -9693,7 +9693,7 @@ socket.on('connect', () => {
                                             var selector = 'tr:eq(' + t + ')';
                                             let length = Math.floor((t + 1) / 2) - 1
                                             table.find(selector).each(function () {
-                                                $(this).find('td:eq(1)').find('span').text(showData[length])
+                                                $(this).find('td:eq(1)').find('span').text(showData[length].toFixed(2))
                                             })
 
                                             if(showData[length] > 0){
