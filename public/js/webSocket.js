@@ -9628,7 +9628,8 @@ socket.on('connect', () => {
                             }
                         }else{
                             if(this.id == data.betsMarketIdWise[i]._id){
-                                console.log(data.betsMarketIdWise[i])
+                                // console.log(data.betsMarketIdWise[i])
+                                let showData = []
                                 for(let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                         console.log("got here")
                                         let checkRunn = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[j].runner)
@@ -9638,7 +9639,6 @@ socket.on('connect', () => {
                                             amount = checkRunn.totalAmount
                                             for(const run in data.betsMarketIdWise[i].selections){
                                                 if(data.betsMarketIdWise[i].selections[run].selectionName !== checkRunn.selectionName){
-                                                    console.log(data.betsMarketIdWise[i].selections[run].exposure)
                                                     amount = amount - data.betsMarketIdWise[i].selections[run].exposure
                                                 }
                                             }
@@ -9647,8 +9647,10 @@ socket.on('connect', () => {
                                                 amount = amount - data.betsMarketIdWise[i].selections[run].exposure
                                             }
                                         }
-                                        console.log(amount)
+                                        // console.log(amount)
+                                        showData.push(amount)
                                     }
+                                    console.log(showData)
                                 }else{
                                     if(!data.betsMarketIdWise.some(item => item._id == this.id)){
                                         var table = $(this);
