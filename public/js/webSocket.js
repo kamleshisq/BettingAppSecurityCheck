@@ -9651,6 +9651,26 @@ socket.on('connect', () => {
                                         showData.push(amount)
                                     }
                                     console.log(showData)
+                                    var table = $(this);
+                                    let trLength = table.find("tr:eq(1)").find('td').length
+                                    if(trLength === 4 || trLength === 8){
+
+                                    }else{
+                                        for (var t = 1; t < check; t += 2) {
+                                            var selector = 'tr:eq(' + t + ')';
+                                            let html = ''
+                                            let length = (t + 1)/2
+                                            if(showData[length] > 0){
+                                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(showData[length]).toFixed(2)}</span>`);
+                                            }else{
+                                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >+${(showData[length]).toFixed(2)}</span>`);
+                                            }
+                                            var firstTd = $(this).find('td:first-child');
+                                            if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                                firstTd.after(newTd.clone());
+                                            }
+                                        }
+                                    }
                                 }else{
                                     if(!data.betsMarketIdWise.some(item => item._id == this.id)){
                                         var table = $(this);
