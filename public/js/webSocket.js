@@ -9695,7 +9695,7 @@ socket.on('connect', () => {
                                             table.find(selector).each(function () {
                                                 $(this).find('td:eq(1)').find('span').text(showData[length].toFixed(2))
                                             })
-                                            console.log(showData[length], "showData[length]showData[length]showData[length]")
+                                            console.log(showData[length], showData[length] > 0,"showData[length]showData[length]showData[length]")
                                             if(showData[length] > 0){
                                                 $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
                                             }else{
