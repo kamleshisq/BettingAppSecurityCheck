@@ -9552,11 +9552,13 @@ socket.on('connect', () => {
     
                     }
                     console.log(team1Amount, team2Amount, "team2Amountteam2Amount")
+                    console.log(data.betsMarketIdWise[i])
                     $("table.market").each(function() { 
                         let check = $(this).find('tr').length
                         console.log(data.betsMarketIdWise[i])
 
                         if(check < 8){
+                            console.log()
                             if(this.id == data.betsMarketIdWise[i]._id){
                                 var table = $(this);
                                 let trLength = table.find("tr:eq(1)").find('td').length
