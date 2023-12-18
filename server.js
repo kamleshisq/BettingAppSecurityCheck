@@ -7618,8 +7618,8 @@ io.on('connection', (socket) => {
                     let runnersData1 = await runnerData.findOne({marketId:exposure3[i]._id})
                     if(runnersData1){
                         runnersData1 = JSON.parse(runnersData1.runners)
-                        console.log(runnerData)
-                        for(const runDATA in runnerData){
+                        console.log(runnersData1)
+                        for(const runDATA in runnersData1){
                             let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData1[runDATA].runner)
                             if(thatdata ){
                                 if(thatdata.totalLossAmount > thisAMOunt){
