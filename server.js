@@ -7601,7 +7601,7 @@ io.on('connection', (socket) => {
                                                       },
                                                       then: { $add: ["$$value", 0]  },
                                                       else: {
-                                                          $add: ["$$value", "$$item.Stake"] 
+                                                          $add: ["$$value", "$$this.Stake"] 
                                                       }
                                                 }
                                             }
