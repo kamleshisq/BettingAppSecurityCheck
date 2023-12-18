@@ -9629,7 +9629,7 @@ socket.on('connect', () => {
                         }else{
                             if(this.id == data.betsMarketIdWise[i]._id){
                                 console.log(data.betsMarketIdWise[i])
-                                for(let j = 0; j < data.betsMarketIdWise[i].runnersData; j++){
+                                for(let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                         console.log("got here")
                                         let checkRunn = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[j].runner)
                                         console.log(checkRunn, 123456789)
