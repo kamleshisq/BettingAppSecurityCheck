@@ -9643,7 +9643,6 @@ socket.on('connect', () => {
                     let check = table.find('tr').length
                     if(check < 8){
                         let trLength = table.find("tr:eq(1)").find('td').length
-                        console.log(trLength)
                         if(trLength === 4 || trLength === 8){
                             table.find("tr:eq(1)").find("td:eq(1)").remove();
                             table.find("tr:eq(3)").find("td:eq(1)").remove();
@@ -9659,7 +9658,7 @@ socket.on('connect', () => {
                                 // Use your existing logic
                                 table.find('th:eq(1)').remove();
                                 table.find(selector).each(function () {
-                                    var firstTd = $(this).find('td:first-child');
+                                    var firstTd = $(this).find('td:secon-child');
                                     
                                     firstTd.remove()
                                 });
