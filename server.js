@@ -7510,7 +7510,18 @@ io.on('connection', (socket) => {
                             }
                         },
                         exposure:{
-                            $sum: "$exposure"
+                            $sum: { 
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then : {
+                                        $sum: "$exposure"
+                                    },
+                                    else: {
+                                        $multiply: ['$Stake', -1]
+                                    }
+                                }
+                            }
+                            // $sum: "$exposure"
                         }
                     }
                 },
