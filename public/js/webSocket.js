@@ -9660,16 +9660,23 @@ socket.on('connect', () => {
                                             var selector = 'tr:eq(' + t + ')';
                                             let html = ''
                                             let length = Math.floor((t + 1) / 2) - 1
-                                            console.log(length, "lengthlengthlength")
                                             if(showData[length] > 0){
                                                 var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(showData[length]).toFixed(2)}</span>`);
                                             }else{
                                                 var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >+${(showData[length]).toFixed(2)}</span>`);
                                             }
-                                            var firstTd = $(this).find('td:first-child');
-                                            if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
-                                                firstTd.after(newTd.clone());
-                                            }
+                                            table.find(selector).each(function () {
+                                                var firstTd = $(this).find('td:first-child');
+                                                
+                                                if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                                    firstTd.after(newTd.clone());
+                                                }
+                                            });
+                                            // var firstTd = $(this).find('td:first-child');
+                                            // if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                            //     firstTd.after(newTd.clone());
+                                            // }
+
                                         }
                                     }
                                 }else{
