@@ -7636,6 +7636,7 @@ io.on('connection', (socket) => {
                             thisAMOunt2 = thisAMOunt2 + exposure3[i].data[j].totalLossAmount
                         }
                     console.log(thisAMOunt, thisAMOunt2)
+                    }
                 }
                 // exposer3Amount = exposure3[0].amount
                 // console.log(exposer3Amount)
