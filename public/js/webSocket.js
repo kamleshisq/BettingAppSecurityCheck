@@ -9489,7 +9489,6 @@ socket.on('connect', () => {
            
       })
         socket.on('marketIdbookDetails', data => {
-            console.log('WORKING', data, "datadatadatda")
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
                     // console.log(data.betsMarketIdWise[i]._id, data.betsMarketIdWise[i].selections, "selections")
@@ -9663,11 +9662,6 @@ socket.on('connect', () => {
                                     firstTd.remove()
                                 });
                             }
-
-                            // table.find("tr:eq(1)").find("td:eq(1)").remove();
-                            // table.find("tr:eq(3)").find("td:eq(1)").remove();
-                            // table.find("tr:eq(5)").find("td:eq(1)").remove();
-                            // table.find('th:eq(1)').remove();
                         }
                     }
                 })
