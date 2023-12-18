@@ -7619,6 +7619,7 @@ io.on('connection', (socket) => {
             if(exposure3.length > 0){
                 for(let i = 0; i < exposure3.length; i++){
                     let thisAMOunt = 0
+                    let thisAMOunt2 = 0
                     let statusrun = true
                     let runnersData1 = await runnerData.findOne({marketId:exposure3[i]._id})
                     if(runnersData1){
@@ -7638,7 +7639,6 @@ io.on('connection', (socket) => {
                         }
                     }
                     if(!statusrun){
-                        let thisAMOunt2 = 0
                         for(const j in exposure3[i].data){
                             thisAMOunt2 = thisAMOunt2 - exposure3[i].data[j].exposure
                         }
