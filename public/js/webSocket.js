@@ -8592,8 +8592,8 @@ socket.on('connect', () => {
                 if(table.hasClass("market")){
                     let trLength = table.find("tr:eq(1)").find('td').length
                     if(trLength === 4 || trLength === 8){ 
-                        console.log('WORKING', 545455)
                         if(data.status){
+                            console.log('WORKING', 545455)
                             let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
                             let newvale = (beforevalue * 1) - (data.result * 1) - (data.plusMinus * 1)
                             data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
