@@ -7615,7 +7615,7 @@ io.on('connection', (socket) => {
                 for(let i = 0; i < exposure3.length; i++){
                     let thisAMOunt = 0
                     let status = true
-                    let runnersData = await runnerData.find({marketId:exposure3[i]._id})
+                    let runnersData = await runnerData.findOne({marketId:exposure3[i]._id})
                     if(runnersData){
                         runnersData = JSON.parse(runnersData.runners)
                         for(const runDATA in runnerData){
