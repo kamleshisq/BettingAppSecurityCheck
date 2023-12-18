@@ -7640,7 +7640,7 @@ io.on('connection', (socket) => {
                     if(!statusrun){
                         let thisAMOunt2 = 0
                         for(const j in exposure3[i].data){
-                            thisAMOunt2 = thisAMOunt2 + exposure3[i].data[j].exposure
+                            thisAMOunt2 = thisAMOunt2 - exposure3[i].data[j].exposure
                         }
                     console.log(thisAMOunt, thisAMOunt2)
                     }
