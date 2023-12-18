@@ -9658,7 +9658,7 @@ socket.on('connect', () => {
                                 // Use your existing logic
                                 table.find('th:eq(1)').remove();
                                 table.find(selector).each(function () {
-                                    var firstTd = $(this).find('td:secon-child');
+                                    var firstTd = $(this).find('td:eq(1)');
                                     
                                     firstTd.remove()
                                 });
