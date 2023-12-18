@@ -7618,6 +7618,7 @@ io.on('connection', (socket) => {
                     let runnersData = await runnerData.findOne({marketId:exposure3[i]._id})
                     if(runnersData){
                         runnersData = JSON.parse(runnersData.runners)
+                        console.log(runnerData)
                         for(const runDATA in runnerData){
                             let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData[runDATA].runner)
                             if(thatdata ){
