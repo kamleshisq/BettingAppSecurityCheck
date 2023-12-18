@@ -7565,55 +7565,56 @@ io.on('connection', (socket) => {
                       }
                     }
                   },
-                  {
-                    $project: {
-                      _id: 1,
-                      data: 1
-                    }
-                  },
-                  {
-                    $unwind: "$data"
-                  },
-                  {
-                    $sort: {
-                      "data.totalLossAmount": 1
-                    }
-                  },
-                  {
-                    $group: {
-                      _id: "$_id",
-                      selectionName: { $first: "$data.selectionName" },
-                      amount: { $first: "$data.totalLossAmount" }
-                    }
-                  },
-                  {
-                        $project: {
-                        _id: 1,
-                        marketId: "$_id",
-                        amount: 1
-                        }
-                    },
-                    // {
-                    //     $project:{
-                    //         _id:0,
-                    //         amount:{
-                    //             $sum:'$amount'
-                    //         }
-                    //     }
-                    // }
-                    {
-                        $group:{
-                            _id:null,
-                            amount:{ $sum:'$amount'}
-                        }
-                    }
+                //   {
+                //     $project: {
+                //       _id: 1,
+                //       data: 1
+                //     }
+                //   },
+                //   {
+                //     $unwind: "$data"
+                //   },
+                //   {
+                //     $sort: {
+                //       "data.totalLossAmount": 1
+                //     }
+                //   },
+                //   {
+                //     $group: {
+                //       _id: "$_id",
+                //       selectionName: { $first: "$data.selectionName" },
+                //       amount: { $first: "$data.totalLossAmount" }
+                //     }
+                //   },
+                //   {
+                //         $project: {
+                //         _id: 1,
+                //         marketId: "$_id",
+                //         amount: 1
+                //         }
+                //     },
+                //     // {
+                //     //     $project:{
+                //     //         _id:0,
+                //     //         amount:{
+                //     //             $sum:'$amount'
+                //     //         }
+                //     //     }
+                //     // }
+                //     {
+                //         $group:{
+                //             _id:null,
+                //             amount:{ $sum:'$amount'}
+                //         }
+                //     }
             ])
 
             let exposer3Amount = 0
-            if(exposure3.length > 0){
-                exposer3Amount = exposure3[0].amount
-                console.log(exposer3Amount)
-            }
+            console.log(exposure3)
+            // if(exposure3.length > 0){
+            //     exposer3Amount = exposure3[0].amount
+            //     console.log(exposer3Amount)
+            // }
         
             // console.log(exposure3, exposure2, exposure1,'==>exposures')
 
