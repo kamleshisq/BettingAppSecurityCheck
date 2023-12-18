@@ -9659,7 +9659,7 @@ socket.on('connect', () => {
                                         for (var t = 1; t < check; t += 2) {
                                             var selector = 'tr:eq(' + t + ')';
                                             let html = ''
-                                            let length = (t + 1)/2
+                                            let length = Math.floor((t + 1) / 2) - 1
                                             console.log(length, "lengthlengthlength")
                                             if(showData[length] > 0){
                                                 var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(showData[length]).toFixed(2)}</span>`);
