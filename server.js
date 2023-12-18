@@ -7565,27 +7565,27 @@ io.on('connection', (socket) => {
                       }
                     }
                   },
-                  {
-                    $project: {
-                      _id: 1,
-                      data: 1
-                    }
-                  },
-                  {
-                    $unwind: "$data"
-                  },
+                //   {
+                //     $project: {
+                //       _id: 1,
+                //       data: 1
+                //     }
+                //   },
+                //   {
+                //     $unwind: "$data"
+                //   },
                 //   {
                 //     $sort: {
                 //       "data.totalLossAmount": 1
                 //     }
                 //   },
-                  {
-                    $group: {
-                      _id: "$_id",
-                      amount: { $sum: "$data.totalLossAmount" },
-                      data: 1
-                    }
-                  },
+                //   {
+                //     $group: {
+                //       _id: "$_id",
+                //       selectionName: { $first: "$data.selectionName" },
+                //       amount: { $first: "$data.totalLossAmount" }
+                //     }
+                //   },
                 //   {
                 //         $project: {
                 //         _id: 1,
@@ -7617,7 +7617,7 @@ io.on('connection', (socket) => {
                     let runnersData = await runnerData.find({marketId:exposure3[i]._id})
                     if(runnerData){
                         for(const runDATA in runnerData){
-
+                            
                         }
                     }
                 }
