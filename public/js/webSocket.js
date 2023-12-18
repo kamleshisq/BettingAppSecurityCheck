@@ -9491,7 +9491,6 @@ socket.on('connect', () => {
         socket.on('marketIdbookDetails', data => {
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
-                    console.log(data.betsMarketIdWise[i], "ghjfdsgfhgsfgfhgggggggggg")
                     let team1Data
                     let team2Data
                     let team3Data
@@ -9551,14 +9550,10 @@ socket.on('connect', () => {
                         }
     
                     }
-                    console.log(team1Amount, team2Amount, "team2Amountteam2Amount")
-                    console.log(data.betsMarketIdWise[i])
                     $("table.market").each(function() { 
                         let check = $(this).find('tr').length
-                        console.log(data.betsMarketIdWise[i], i, "this")
 
                         if(check < 8){
-                            console.log()
                             if(this.id == data.betsMarketIdWise[i]._id){
                                 var table = $(this);
                                 let trLength = table.find("tr:eq(1)").find('td').length
@@ -9632,7 +9627,7 @@ socket.on('connect', () => {
                                 }
                             }
                         }else{
-                            console.log(data.betsMarketIdWise[i])
+                            console.log(data.betsMarketIdWise)
                             for (let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                 if(this.id == data.betsMarketIdWise[i]._id){
                                     console.log("got here")
