@@ -9636,14 +9636,14 @@ socket.on('connect', () => {
                                         let amount = 0
                                         if(checkRunn){
                                             amount = checkRunn.totalAmount
-                                            for(const run in data.betsMarketIdWise[i].runnersData){
-                                                if(data.betsMarketIdWise[i].runnersData[run].selectionName !== checkRunn.selectionName){
-                                                    amount = amount - data.betsMarketIdWise[i].runnersData[run].selectionName.exposure
+                                            for(const run in data.betsMarketIdWise[i].selections){
+                                                if(data.betsMarketIdWise[i].selections[run].selectionName !== checkRunn.selectionName){
+                                                    amount = amount - data.betsMarketIdWise[i].selections[run].selectionName.exposure
                                                 }
                                             }
                                         }else{
-                                            for(const run in data.betsMarketIdWise[i].runnersData){
-                                                amount = amount - data.betsMarketIdWise[i].runnersData[run].selectionName.exposure
+                                            for(const run in data.betsMarketIdWise[i].selections){
+                                                amount = amount - data.betsMarketIdWise[i].selections[run].selectionName.exposure
                                             }
                                         }
                                         console.log(amount)
