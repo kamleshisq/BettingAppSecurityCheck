@@ -251,7 +251,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
 }
 
 // console.log(marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
-if(marketDetails.title === "Winner" ||( marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd'))|| marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd'))|| marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
     // console.log('WORKING13546')
     let check = await runnerDataModel.findOne({marketId:marketDetails.marketId})
     if(!check){
