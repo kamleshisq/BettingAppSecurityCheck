@@ -9627,10 +9627,10 @@ socket.on('connect', () => {
                                 }
                             }
                         }else{
-                            console.log(data.betsMarketIdWise)
-                                if(this.id == data.betsMarketIdWise[i]._id){
-                                    console.log("got here")
-                                    for(let j = 0; j < data.betsMarketIdWise[i].runnersData; j++){
+                            if(this.id == data.betsMarketIdWise[i]._id){
+                                console.log(data.betsMarketIdWise[i])
+                                for(let j = 0; j < data.betsMarketIdWise[i].runnersData; j++){
+                                        console.log("got here")
                                         let checkRunn = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[j].runner)
                                         console.log(checkRunn, 123456789)
                                     }
