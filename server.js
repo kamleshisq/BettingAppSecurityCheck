@@ -7574,47 +7574,7 @@ io.on('connection', (socket) => {
                         },
                     },
                 },
-                {
-                    $project: {
-                      _id: "$_id",
-                      data: {
-                        $map: {
-                          input: "$selections",
-                          as: "item",
-                          in: {
-                            selectionName: "$$item.selectionName",
-                            totalAmount: "$$item.totalAmount",
-                            exposure : "$$item.exposure",
-                            Stake : "$$item.Stake",
-                            totalLossAmount: {
-                              $add: [
-                                "$$item.totalAmount",
-                                {
-                                    $sum:{
-                                        $reduce: { 
-                                            input: "$selections",
-                                            initialValue: 0,
-                                            in: { 
-                                                $cond: { 
-                                                    if: {
-                                                        $ne: ["$$this.selectionName", "$$item.selectionName"] 
-                                                      },
-                                                      then: { $add: ["$$value", 0]  },
-                                                      else: {
-                                                          $add: ["$$value", "$$this.Stake"] 
-                                                      }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
+                
                 //   {
                 //     $project: {
                 //       _id: 1,
