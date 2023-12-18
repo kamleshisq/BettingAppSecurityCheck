@@ -9634,7 +9634,7 @@ socket.on('connect', () => {
                                 }
                             }
                         }else{
-                            console.log(data.betsMarketIdWise[i].runnersData)
+                            console.log(data.betsMarketIdWise[i])
                             for (let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                 if(this.id == data.betsMarketIdWise[i]._id){
                                     console.log(data.betsMarketIdWise[i].selections, "selectionsselectionsselections")
