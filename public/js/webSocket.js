@@ -8610,14 +8610,6 @@ socket.on('connect', () => {
                                 var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.NewStake * -1).toFixed(2)}</span>`);
                             }
                             data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
-                            // table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
-                            //     var firstTd = $(this).find('td:first-child');
-                            // // console.log(firstTd.siblings().length, "firstTd.siblings().lengthfirstTd.siblings().lengthfirstTd.siblings().length")
-                            //     if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
-                            //         // console.log('Working:', firstTd);
-                            //         firstTd.after(newTd2.clone()); 
-                            //     }
-                            // });
                             for (var i = 1; i < check; i += 2) {
                                 var selector = 'tr:eq(' + i + ')';
                                 
@@ -8631,9 +8623,12 @@ socket.on('connect', () => {
                                 });
                             }
                             
-                            table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function () {
-                                $(this).find('td:eq(0)').attr('colspan', 9)
-                            })
+                            for (var i = 2; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    $(this).find('td:eq(0)').attr('colspan', 9);
+                                });
+                            }
                         }
                     }
                 }
