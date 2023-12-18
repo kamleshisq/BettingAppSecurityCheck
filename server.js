@@ -7619,7 +7619,7 @@ io.on('connection', (socket) => {
                     if(runnersData){
                         runnersData = JSON.parse(runnersData.runners)
                         for(const runDATA in runnerData){
-                            let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData.runner)
+                            let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData[runDATA].runner)
                             if(thatdata ){
                                 if(thatdata.totalLossAmount > thisAMOunt){
                                     thisAMOunt = thatdata.totalLossAmount
