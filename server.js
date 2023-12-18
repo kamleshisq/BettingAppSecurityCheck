@@ -7481,106 +7481,99 @@ io.on('connection', (socket) => {
                     $group:{
                         _id: {
                             selectionName: "$selectionName",
-                            marketId : "$marketId"
+                            marketId : "$marketId",
+                            matchName: "$match"
                         },
-                        totalWinAmount:{
-                            $sum: { 
-                                $cond: { 
-                                    if : {$eq: ['$bettype2', "BACK"]},
-                                    then : {
-                                        $sum: "$WinAmount"
-                                    },
-                                    else:{ 
-                                        $sum: "$exposure"
+                        totalAmount: {
+                            $sum: {
+                            $cond: { 
+                                if : {$eq: ['$bettype2', "BACK"]},
+                                then:{
+                                    $cond:{
+                                        if: {
+                                                $or: [
+                                                    { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                ]
+                                            },
+                                        then:{
+                                            $sum: {
+                                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                            }
+                                        },
+                                        else:{
+                                            $sum: {
+                                                $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                            }
+                                        }
                                     }
-                                }
-                            }
-                        },
-                        totalLossAmount:{
-                            $sum: { 
-                                $cond: { 
-                                    if : {$eq: ['$bettype2', "BACK"]},
-                                    then : {
-                                        $sum: "$exposure"
-                                    },
-                                    else:{ 
-                                        $sum: "$WinAmount"
-                                    }
-                                }
-                            }
-                        },
-                        exposure:{
-                            $sum: { 
-                                $cond: { 
-                                    if : {$eq: ['$bettype2', "BACK"]},
-                                    then : {
-                                        $sum: "$exposure"
-                                    },
-                                    else: {
-                                        $multiply: ['$Stake', -1]
-                                    }
-                                }
-                            }
-                            // $sum: "$exposure"
-                        }
-                    }
-                },
-                {
-                    $group:{
-                        _id:"$_id.marketId",
-                        data:{ 
-                            $push:{ 
-                                selectionName : "$_id.selectionName",
-                                totalWinAmount : "$totalWinAmount",
-                                exposure : "$exposure",
-                                totalLossAmount : {
-                                    $multiply:["$totalLossAmount", -1]
-                                }
-                            }
-                        }
-
-                    }
-                },
-                {
-                    $project: {
-                      _id: "$_id",
-                      data: {
-                        $map: {
-                          input: "$data",
-                          as: "item",
-                          in: {
-                            selectionName: "$$item.selectionName",
-                            totalWinAmount: "$$item.totalWinAmount",
-                            exposure : "$$item.exposure",
-                            totalLossAmount: {
-                              $add: [
-                                "$$item.totalLossAmount",
-                                {
-                                    $sum:{
-                                        $reduce: { 
-                                            input: "$data",
-                                            initialValue: 0,
-                                            in: { 
-                                                $cond: { 
-                                                    if: {
-                                                        $ne: ["$$this.selectionName", "$$item.selectionName"] 
-                                                      },
-                                                      then: { $add: ["$$value", "$$this.totalWinAmount"] },
-                                                      else: {
-                                                          $add: ["$$value", 0] 
-                                                      }
-                                                }
+                                },
+                                else:{
+                                    $cond:{
+                                        if: {
+                                                $or: [
+                                                    { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                ]
+                                            },
+                                        then:{
+                                            $sum: {
+                                                $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                            }
+                                        },
+                                        else:{
+                                            $sum: { 
+                                                $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
                                             }
                                         }
                                     }
                                 }
-                              ]
                             }
-                          }
                         }
-                      }
+                    },
+                    Stake: {
+                        $sum: { 
+                           $cond: { 
+                               if : {$eq: ['$bettype2', "BACK"]},
+                               then : {
+                                   $sum: '$Stake' 
+                               },
+                               else : {
+                                   $multiply: ['$Stake', -1]
+                               }
+                           }
+                       }
+                   },
+                   exposure:{
+                    // $sum:'$exposure'
+                    $sum: { 
+                        $cond: { 
+                            if : {$eq: ['$bettype2', "BACK"]},
+                            then : {
+                                $sum: '$exposure' 
+                            },
+                            else : {
+                                $multiply: ['$Stake', -1]
+                            }
+                        }
                     }
-                  },
+                }
+                }
+                },
+                {
+                    $group: {
+                        _id: "$_id.marketId",
+                        selections: {
+                            $push: {
+                                selectionName: "$_id.selectionName",
+                                totalAmount: '$totalAmount',
+                                exposure:'$exposure',
+                                matchName: "$_id.matchName",
+                                Stake: { $multiply: ["$Stake", -1] },
+                            },
+                        },
+                    },
+                },
                 //   {
                 //     $project: {
                 //       _id: 1,
@@ -7626,44 +7619,44 @@ io.on('connection', (socket) => {
             ])
 
             let exposer3Amount = 0
-            console.log(exposure3[1].data, userData.userName)
-            if(exposure3.length > 0){
-                for(let i = 0; i < exposure3.length; i++){
-                    let thisAMOunt = 0
-                    let thisAMOunt2 = 0
-                    let statusrun = true
-                    let runnersData1 = await runnerData.findOne({marketId:exposure3[i]._id})
-                    if(runnersData1){
-                        runnersData1 = JSON.parse(runnersData1.runners)
-                        console.log(runnersData1)
-                        for(const runDATA in runnersData1){
-                            let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData1[runDATA].runner)
-                            if(thatdata ){
-                                if(thatdata.totalLossAmount < 0){
-                                if(thatdata.totalLossAmount < thisAMOunt){
-                                        thisAMOunt = thatdata.totalLossAmount
-                                    }
-                                }
-                            }else{
-                                statusrun = false
-                            }
-                        }
-                    }
-                    if(!statusrun){
-                        for(const j in exposure3[i].data){
-                            thisAMOunt2 = thisAMOunt2 - exposure3[i].data[j].exposure
-                        }
-                    console.log(thisAMOunt, thisAMOunt2)
-                    }
-                    if(thisAMOunt > thisAMOunt2){
-                        exposer3Amount = exposer3Amount + thisAMOunt2
-                    }else{
-                        exposer3Amount = exposer3Amount + thisAMOunt
-                    }
-                }
-                // exposer3Amount = exposure3[0].amount
-                // console.log(exposer3Amount)
-            }
+            console.log(exposure3[0].data, userData.userName)
+            // if(exposure3.length > 0){
+            //     for(let i = 0; i < exposure3.length; i++){
+            //         let thisAMOunt = 0
+            //         let thisAMOunt2 = 0
+            //         let statusrun = true
+            //         let runnersData1 = await runnerData.findOne({marketId:exposure3[i]._id})
+            //         if(runnersData1){
+            //             runnersData1 = JSON.parse(runnersData1.runners)
+            //             console.log(runnersData1)
+            //             for(const runDATA in runnersData1){
+            //                 let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData1[runDATA].runner)
+            //                 if(thatdata ){
+            //                     if(thatdata.totalLossAmount < 0){
+            //                     if(thatdata.totalLossAmount < thisAMOunt){
+            //                             thisAMOunt = thatdata.totalLossAmount
+            //                         }
+            //                     }
+            //                 }else{
+            //                     statusrun = false
+            //                 }
+            //             }
+            //         }
+            //         if(!statusrun){
+            //             for(const j in exposure3[i].data){
+            //                 thisAMOunt2 = thisAMOunt2 - exposure3[i].data[j].exposure
+            //             }
+            //         console.log(thisAMOunt, thisAMOunt2)
+            //         }
+            //         if(thisAMOunt > thisAMOunt2){
+            //             exposer3Amount = exposer3Amount + thisAMOunt2
+            //         }else{
+            //             exposer3Amount = exposer3Amount + thisAMOunt
+            //         }
+            //     }
+            //     // exposer3Amount = exposure3[0].amount
+            //     // console.log(exposer3Amount)
+            // }
         
             // console.log(exposure3, exposure2, exposure1,'==>exposures')
 
