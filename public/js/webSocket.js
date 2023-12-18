@@ -8597,7 +8597,43 @@ socket.on('connect', () => {
                     }else{
                         table.find('th:eq(0)').after('<th></th>')
                         if(data.status){
-
+                            if((data.plusMinus * -1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }
+                            if((data.result * 1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            // table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
+                            //     var firstTd = $(this).find('td:first-child');
+                            
+                            //     if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                            //         // console.log('Working:', firstTd);
+                            //         firstTd.after(newTd2.clone()); 
+                            //     }
+                            // });
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                
+                                // Use your existing logic
+                                table.find(selector).each(function () {
+                                    var firstTd = $(this).find('td:first-child');
+                                    
+                                    if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                        firstTd.after(newTd2.clone());
+                                    }
+                                });
+                            }
+                            for (var i = 2; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    $(this).find('td:eq(0)').attr('colspan', 9);
+                                });
+                            }
                         }else{
                             if((data.result * 1) > 0){
                                 var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
