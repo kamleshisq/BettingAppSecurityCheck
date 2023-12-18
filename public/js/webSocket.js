@@ -9672,11 +9672,12 @@ socket.on('connect', () => {
                                                     firstTd.after(newTd.clone());
                                                 }
                                             });
-                                            // var firstTd = $(this).find('td:first-child');
-                                            // if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
-                                            //     firstTd.after(newTd.clone());
-                                            // }
-
+                                        }
+                                        for (var t = 2; t < check; t += 2) {
+                                            var selector = 'tr:eq(' + t + ')';
+                                            table.find(selector).each(function () {
+                                                $(this).find('td:eq(0)').attr('colspan', 9);
+                                            });
                                         }
                                     }
                                 }else{
