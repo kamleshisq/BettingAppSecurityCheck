@@ -7610,7 +7610,7 @@ io.on('connection', (socket) => {
             ])
 
             let exposer3Amount = 0
-            console.log(exposure3[0].data)
+            console.log(exposure3[0].data, userData.userName)
             // if(exposure3.length > 0){
             //     exposer3Amount = exposure3[0].amount
             //     console.log(exposer3Amount)
