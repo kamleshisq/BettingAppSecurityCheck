@@ -7585,6 +7585,7 @@ io.on('connection', (socket) => {
                             selectionName: "$$item.selectionName",
                             totalAmount: "$$item.totalAmount",
                             exposure : "$$item.exposure",
+                            Stake : "$$item.Stake",
                             totalLossAmount: {
                               $add: [
                                 "$$item.totalAmount",
