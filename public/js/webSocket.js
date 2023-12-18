@@ -9632,7 +9632,21 @@ socket.on('connect', () => {
                                 for(let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
                                         console.log("got here")
                                         let checkRunn = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[j].runner)
-                                        console.log(checkRunn, 123456789)
+                                        // console.log(checkRunn, 123456789)
+                                        let amount = 0
+                                        if(checkRunn){
+                                            amount = checkRunn.totalAmount
+                                            for(const run in data.betsMarketIdWise[i].runnersData){
+                                                if(data.betsMarketIdWise[i].runnersData[run].selectionName !== checkRunn.selectionName){
+                                                    amount = amount - data.betsMarketIdWise[i].runnersData[run].selectionName.exposure
+                                                }
+                                            }
+                                        }else{
+                                            for(const run in data.betsMarketIdWise[i].runnersData){
+                                                amount = amount - data.betsMarketIdWise[i].runnersData[run].selectionName.exposure
+                                            }
+                                        }
+                                        console.log(amount)
                                     }
                                 }else{
                                     if(!data.betsMarketIdWise.some(item => item._id == this.id)){
