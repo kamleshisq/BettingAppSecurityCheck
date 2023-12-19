@@ -598,9 +598,9 @@ socket.on('connect', () => {
         let html = `<div class="bet-blns-nav-wrp-amount-num">
         <span class=""><i class="fa-solid fa-wallet"></i> Bal : ${data.userData.availableBalance.toFixed(2)} <span> &nbsp; Exp : ${data.totalExposure.toFixed(2)}</span></span>
       </div>`
-      if(document.getElementById('userBalance')){
-          document.getElementById('userBalance').innerHTML = html
-      }
+      $('.userBalance').each(function(index, element) {
+        $(this).html(html)
+    });
     })
 
     function stakeLableForm(){
