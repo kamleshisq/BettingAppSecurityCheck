@@ -2454,19 +2454,19 @@ io.on('connection', (socket) => {
         }
     }else if (data.filterData.type === "deposit"){
         filter.stake = undefined
-        filter.ParentAccStatement = undefined
+        filter.accStype = undefined
         filter.creditDebitamount = {
             $gt: 0
         }
     }else if(data.filterData.type === "withdraw"){
         filter.stake = undefined
-        filter.ParentAccStatement = undefined
+        filter.accStype = undefined
         filter.creditDebitamount = {
             $lt: 0
         }
     }else if (data.filterData.type === "sdeposit"){
         filter.stake = undefined
-        filter.ParentAccStatement = {
+        filter.accStype = {
             $ne:undefined
         }
         filter.creditDebitamount = {
@@ -2474,7 +2474,7 @@ io.on('connection', (socket) => {
         }
     }else if(data.filterData.type === "swithdraw"){
         filter.stake = undefined
-        filter.ParentAccStatement = {
+        filter.accStype = {
             $ne:undefined
         }
         filter.creditDebitamount = {
