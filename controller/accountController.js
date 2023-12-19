@@ -279,6 +279,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     childAccStatement.userName = childUser.userName
     childAccStatement.role_type = childUser.role_type
     childAccStatement.Remark = req.body.remark
+    childAccStatement.accStype = "Settle"
 
     const accStatementChild = await accountStatement.create(childAccStatement)
     if(!accStatementChild){
@@ -296,6 +297,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     ParentAccStatement.userName = parentUser.userName;
     ParentAccStatement.role_type = parentUser.role_type
     ParentAccStatement.Remark = req.body.remark
+    ParentAccStatement.accStype = "Settle"
 
     // // console.log(ParentAccStatement)
     const accStatementparent = await accountStatement.create(ParentAccStatement)

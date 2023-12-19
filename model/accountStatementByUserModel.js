@@ -49,6 +49,9 @@ const accountStatementByUser = mongoose.Schema({
     },
     type:{
         type:String
+    },
+    accStype:{
+        type:String
     }
 })
 

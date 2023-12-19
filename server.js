@@ -2452,8 +2452,34 @@ io.on('connection', (socket) => {
         filter.stake = {
             $ne:undefined
         }
-    }else if (data.filterData.type === "1"){
+    }else if (data.filterData.type === "deposit"){
         filter.stake = undefined
+        filter.ParentAccStatement = undefined
+        filter.creditDebitamount = {
+            $gt: 0
+        }
+    }else if(data.filterData.type === "withdraw"){
+        filter.stake = undefined
+        filter.ParentAccStatement = undefined
+        filter.creditDebitamount = {
+            $lt: 0
+        }
+    }else if (data.filterData.type === "sdeposit"){
+        filter.stake = undefined
+        filter.ParentAccStatement = {
+            $ne:undefined
+        }
+        filter.creditDebitamount = {
+            $gt: 0
+        }
+    }else if(data.filterData.type === "swithdraw"){
+        filter.stake = undefined
+        filter.ParentAccStatement = {
+            $ne:undefined
+        }
+        filter.creditDebitamount = {
+            $lt: 0
+        }
     }
     // console.log(filter)
     let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
