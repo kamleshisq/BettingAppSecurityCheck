@@ -2216,12 +2216,11 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
             },
         body:body 
     })
-    .then(res =>res.text())
+    .then(res =>res.json())
     .then(result => {
-        console.log(result)
-        // res.status(200).json({
-        //     result
-        // })
+        res.status(200).json({
+            result
+        })
     })
 });
 
