@@ -596,7 +596,7 @@ socket.on('connect', () => {
     socket.on('userLoginBalance', async(data) => {
         // console.log(data, "USERDATA")
         let html = `<div class="bet-blns-nav-wrp-amount-num">
-        <span class="">Bal : <span> &nbsp; ${data.userData.availableBalance.toFixed(2)} Exp : <span> &nbsp; ${data.totalExposure.toFixed(2)}</span></span></span>
+        <span class="">Bal : ${data.userData.availableBalance.toFixed(2)} <span> &nbsp; Exp : ${data.totalExposure.toFixed(2)}</span></span>
       </div>`
       if(document.getElementById('userBalance')){
           document.getElementById('userBalance').innerHTML = html
