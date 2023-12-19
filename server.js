@@ -2483,7 +2483,7 @@ io.on('connection', (socket) => {
     }
     // console.log(filter)
     let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
-    console.log(userAcc)
+    console.log(userAcc, page)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
     })
 
