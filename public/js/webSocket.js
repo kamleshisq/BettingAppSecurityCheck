@@ -10430,7 +10430,10 @@ socket.on('connect', () => {
         }else{
             // console.log("working")
                 // $('.loadMoredive').html("")
-                // if()
+                if(data.page === 0){
+                    html = ''
+                    $('.acount-stat-tbl-body').html(html)  
+                }
         }
         })
     }
