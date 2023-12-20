@@ -52,7 +52,8 @@
 
                         <tbody class="acount-stat-tbl-body">
                             <%for(let i = 0; i < data.length; i++){%>
-                                <tr class="acount-stat-tbl-body-tr">
+                              <% let encodedEventName = encodeURIComponent(data[i]._id); %>
+                                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/MyPlStatement/?eventname=<%=encodedEventName%>'>
                                     <td title="Game"><%=data[i]._id%></td>
                                     <td title="Lost"><%=data[i].losses%></td>
                                     <td title="Won"><%=data[i].wins%></td>
