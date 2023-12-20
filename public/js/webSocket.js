@@ -7032,9 +7032,16 @@ socket.on('connect', () => {
         socket.on("aggreat", async(data) => {
             console.log(data)
             data.forEach(item => {
-                    if(document.getElementById(`${item.secId}`)){
-                        document.getElementById(`${item.secId}`).innerText = item.totalStake
-                        document.getElementById(`${item.secId}B`).innerText = item.count
+                    // if(document.getElementById(`${item.secId}`)){
+                    //     document.getElementById(`${item.secId}`).innerText = item.totalStake
+                    //     document.getElementById(`${item.secId}B`).innerText = item.count
+                    // }
+                    if ($('#' + item.secId).length) {
+                        let id = $(this).closest('section').attr('id')
+                        if(id == item.eventId){
+                            $('#' + item.secId).text(item.totalStake);
+                            $('#' + item.secId + 'B').text(item.count);
+                        }
                     }
             })
         })
