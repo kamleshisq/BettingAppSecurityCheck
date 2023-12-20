@@ -11611,8 +11611,10 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    section = item.odds.find(odd => odd.selectionId == id);
-                    return section !== undefined;
+                    if(item.odds){
+                        section = item.odds.find(odd => odd.selectionId == id);
+                        return section !== undefined;
+                    }
                 });
                 let marketId = this.closest('table').id
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
