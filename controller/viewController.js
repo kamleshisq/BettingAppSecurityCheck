@@ -2897,7 +2897,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 user:req.currentUser,
                 verticalMenus,
                 data,
-                check:"My game",
+                check:"plStatemenet",
                 games,
                 userLog,
                 result,
