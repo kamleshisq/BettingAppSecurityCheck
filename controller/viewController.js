@@ -2943,9 +2943,20 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     }
                 }
             ])
-            console.log(commisionDetails, betsofthatMatch, dates)
-            res.status(200).json({
-                message:'Page under cuntruction '
+            // console.log(commisionDetails, betsofthatMatch, dates)
+            res.status(200).render("./userSideEjs/frofitlossevent2/main",{
+                title:'P/L Reports',
+                user:req.currentUser,
+                verticalMenus,
+                commisionDetails,
+                betsofthatMatch,
+                dates,
+                check:"plStatemenet",
+                userLog,
+                notifications:req.notifications,
+                basicDetails,
+                colorCode,
+                matchName:req.query.matchname
             })
         }
     }
