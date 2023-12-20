@@ -7037,8 +7037,8 @@ socket.on('connect', () => {
                     //     document.getElementById(`${item.secId}B`).innerText = item.count
                     // }
                     if ($('#' + item.secId).length) {
-                        let id = $(this).closest('section').attr('id')
-                        console.log(id,  $(this).closest('section'))
+                        let id =  $('#' + item.secId).closest('section').attr('id')
+                        console.log(id,   $('#' + item.secId).closest('section'))
                         if(id == item.eventId){
                             $('#' + item.secId).text(item.totalStake);
                             $('#' + item.secId + 'B').text(item.count);
