@@ -301,6 +301,14 @@
       });
     </script>
     
+    <script>
+      jQuery(document).ready(function($) {
+          $(".tbl-data-href").click(function() {
+              window.location = $(this).data("href");
+          });
+      });
+    </script>
+    
     <!-- <script>
       $(document).ready(function(){
         $("#botommainmnubtnn").click(function(){
