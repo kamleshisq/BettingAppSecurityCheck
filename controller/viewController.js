@@ -2898,7 +2898,6 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 verticalMenus,
                 data,
                 check:"plStatemenet",
-                games,
                 userLog,
                 result,
                 notifications:req.notifications,
