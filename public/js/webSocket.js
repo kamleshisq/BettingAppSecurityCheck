@@ -7030,7 +7030,7 @@ socket.on('connect', () => {
         
 
         socket.on("aggreat", async(data) => {
-            console.log(data)
+            // console.log(data)
             $('section').each(function(){
                 let id = this.id
                 let alldataWiththatID = data.filter(item => item.eventId == id)
