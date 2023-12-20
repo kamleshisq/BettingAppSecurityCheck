@@ -2802,10 +2802,11 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
+    console.log(req.query)
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
 
     let data = await betModel.aggregate([
         {
