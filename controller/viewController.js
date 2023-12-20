@@ -2893,7 +2893,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                   }
               ]);
               res.status(200).render("./userSideEjs/frofitlossevent/main",{
-                title:'Game Reports',
+                title:'P/L Reports',
                 user:req.currentUser,
                 verticalMenus,
                 data,
