@@ -2810,7 +2810,10 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     let data = await betModel.aggregate([
         {
             $match:{
-                userId:req.currentUser.id
+                userId:req.currentUser.id,
+                status:{
+                    $ne:'OPEN'
+                }
             }
         },
         {
