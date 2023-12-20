@@ -34,20 +34,20 @@
                         </thead>
 
                         <tbody class="acount-stat-tbl-body">
-                            <%for(let i = 0; i < result.length; i++){%>
-                                <% let encodedEventName = encodeURIComponent(result[i].match); %>
-                                <% let encodedEventName2 = encodeURIComponent(result[i].event); %>
+                            <%for(let i = 0; i < data.length; i++){%>
+                                <% let encodedEventName = encodeURIComponent(data[i].match); %>
+                                <% let encodedEventName2 = encodeURIComponent(data[i].event); %>
                                 <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/gameReport/match?matchName=<%=encodedEventName%>&eventName=<%=encodedEventName2%>'>
-                                    <td title="Match" ><%=result[i].match%></td>
-                                    <td title="Bets" ><%=result[i].totalData%></td>
-                                    <td title="Win" ><%=result[i].win%></td>
-                                    <td title="Lost" ><%=result[i].loss%></td>
-                                    <td title="Void" ><%=result[i].cancel%></td>
-                                    <td title="Open" ><%=result[i].open%></td>
-                                    <%if(result[i].totalSumOfReturns > 0){%>
-                                        <td class="c-gren" title="Profit/Loss" ><%=result[i].totalSumOfReturns%></td>
+                                    <td title="Match" ><%=data[i].match%></td>
+                                    <td title="Bets" ><%=data[i].totalData%></td>
+                                    <td title="Win" ><%=data[i].win%></td>
+                                    <td title="Lost" ><%=data[i].loss%></td>
+                                    <td title="Void" ><%=data[i].cancel%></td>
+                                    <td title="Open" ><%=data[i].open%></td>
+                                    <%if(data[i].totalSumOfReturns > 0){%>
+                                        <td class="c-gren" title="Profit/Loss" ><%=data[i].totalSumOfReturns%></td>
                                     <%}else{%>
-                                        <td class="c-reed" title="Profit/Loss" ><%=result[i].totalSumOfReturns%></td>
+                                        <td class="c-reed" title="Profit/Loss" ><%=data[i].totalSumOfReturns%></td>
                                     <%}%>
                                 </tr>
                             <%}%>
