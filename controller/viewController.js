@@ -2899,7 +2899,6 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 data,
                 check:"plStatemenet",
                 userLog,
-                result,
                 notifications:req.notifications,
                 basicDetails,
                 colorCode
