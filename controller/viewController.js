@@ -2850,8 +2850,8 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
             colorCode
         })
     }else{
-        console.log(req.query.eventname && !req.query.matchName)
-        if(req.query.eventname && !req.query.matchName){
+        console.log(req.query.eventname && !req.query.matchname)
+        if(req.query.eventname && !req.query.matchname){
             let data = await betModel.aggregate([
                 {
                     $match:{
