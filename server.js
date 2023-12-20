@@ -7739,7 +7739,7 @@ io.on('connection', (socket) => {
                     }
                 }
                 // exposer3Amount = exposure3[0].amount
-                console.log(exposer3Amount)
+                // console.log(exposer3Amount)
             }
         
             // console.log(exposure3, exposure2, exposure1,'==>exposures')
