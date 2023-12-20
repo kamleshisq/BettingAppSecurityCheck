@@ -7031,20 +7031,30 @@ socket.on('connect', () => {
 
         socket.on("aggreat", async(data) => {
             console.log(data)
-            data.forEach(item => {
-                    // if(document.getElementById(`${item.secId}`)){
-                    //     document.getElementById(`${item.secId}`).innerText = item.totalStake
-                    //     document.getElementById(`${item.secId}B`).innerText = item.count
-                    // }
-                    if ($('#' + item.secId).length) {
-                        let id =  $('#' + item.secId).closest('section').attr('id')
-                        console.log(id,   $('#' + item.secId).closest('section'))
-                        if(id == item.eventId){
-                            $('#' + item.secId).text(item.totalStake);
-                            $('#' + item.secId + 'B').text(item.count);
-                        }
+            $('section').each(function(){
+                let id = this.id
+                let alldataWiththatID = data.filter(item => item.eventId == id)
+                alldataWiththatID.forEach(item => {
+                    if($(this).find('#' + item.secId).length){
+                        $(this).find('#' + item.secId).text(item.totalStake);
+                        $(this).find('#' + item.secId + 'B').text(item.count);
                     }
+                })
             })
+            // data.forEach(item => {
+            //         // if(document.getElementById(`${item.secId}`)){
+            //         //     document.getElementById(`${item.secId}`).innerText = item.totalStake
+            //         //     document.getElementById(`${item.secId}B`).innerText = item.count
+            //         // }
+            //         if ($('#' + item.secId).length) {
+            //             let id =  $('#' + item.secId).closest('section').attr('id')
+            //             console.log(id,   $('#' + item.secId).closest('section'))
+            //             if(id == item.eventId){
+            //                 $('#' + item.secId).text(item.totalStake);
+            //                 $('#' + item.secId + 'B').text(item.count);
+            //             }
+            //         }
+            // })
         })
     }
 
