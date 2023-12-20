@@ -2947,7 +2947,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     }
                 }
             ])
-            // console.log(commisionDetails, betsofthatMatch, dates)
+            console.log(betsofthatMatch)
             res.status(200).render("./userSideEjs/frofitlossevent2/main",{
                 title:'P/L Reports',
                 user:req.currentUser,
