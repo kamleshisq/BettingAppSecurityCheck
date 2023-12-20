@@ -2850,7 +2850,6 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
             colorCode
         })
     }else{
-        console.log(req.query.eventname && !req.query.matchname)
         if(req.query.eventname && !req.query.matchname){
             let data = await betModel.aggregate([
                 {
@@ -2905,6 +2904,8 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 colorCode
             })
         }else if(req.query.eventname && req.query.matchname){
+            let marketIds = await betModel.distinct('marketId', {userId:req.currentUser.id, event : req.query.eventname, match:req.query.matchname})
+            console.log(marketIds)
             res.status(200).json({
                 message:'Page under cuntruction '
             })
