@@ -2892,7 +2892,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     $limit: 20 
                   }
               ]);
-              res.status(200).render("./userSideEjs/gameReportEvent/main",{
+              res.status(200).render("./userSideEjs/frofitlossevent/main",{
                 title:'Game Reports',
                 user:req.currentUser,
                 verticalMenus,
