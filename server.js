@@ -7729,9 +7729,13 @@ io.on('connection', (socket) => {
                     // console.log(thisAMOunt, thisAMOunt2)
                     }
                     if(thisAMOunt > thisAMOunt2){
-                        exposer3Amount = exposer3Amount + thisAMOunt2
+                        if(thisAMOunt2 < 0){
+                            exposer3Amount = exposer3Amount + thisAMOunt2
+                        }
                     }else{
-                        exposer3Amount = exposer3Amount + thisAMOunt
+                        if(thisAMOunt < 0){
+                            exposer3Amount = exposer3Amount + thisAMOunt
+                        }
                     }
                 }
                 // exposer3Amount = exposure3[0].amount
