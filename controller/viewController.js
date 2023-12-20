@@ -2850,7 +2850,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
             colorCode
         })
     }else{
-        if(req.query.eventname){
+        if(req.query.eventname && !req.query.matchName){
             let data = await betModel.aggregate([
                 {
                     $match:{
@@ -2903,7 +2903,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 basicDetails,
                 colorCode
             })
-        }else{
+        }else if(req.query.eventname && req.query.matchName){
             res.status(200).json({
                 message:'Page under cuntruction '
             })
