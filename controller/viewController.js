@@ -2915,9 +2915,13 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     }
                 },
                 {
+                    $sort:{date:-1}
+                },
+                {
                     $group: {
                       _id: '$marketId',
                       marketName:{ $first: "$marketName" },
+                      date:{$first:"date"},
                       totalData: { $sum: 1 },
                       win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
                       loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
