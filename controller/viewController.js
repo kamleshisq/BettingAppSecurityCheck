@@ -2905,7 +2905,45 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
             })
         }else if(req.query.eventname && req.query.matchname){
             let marketIds = await betModel.distinct('marketId', {userId:req.currentUser.id, event : req.query.eventname, match:req.query.matchname})
-            console.log(marketIds)
+            let dates = await settlementHisory.find({marketID:{$in:marketIds}})
+            let betsofthatMatch = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        event : req.query.eventname, 
+                        match:req.query.matchname
+                    }
+                },
+                {
+                    $group: {
+                      _id: '$marketId',
+                      marketName:{ $first: "$marketName" },
+                      totalData: { $sum: 1 },
+                      win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+                      loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+                      cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+                      open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+                      totalSumOfReturns: { $sum: '$returns' }
+                    }
+                },
+            ])
+            let commisionDetails = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        marketId:{
+                            $in:marketIds
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: '$marketId',
+                        totalCommission:{ sum: '$commission'}
+                    }
+                }
+            ])
+            console.log(commisionDetails, betsofthatMatch, dates)
             res.status(200).json({
                 message:'Page under cuntruction '
             })
