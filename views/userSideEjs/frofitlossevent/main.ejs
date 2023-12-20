@@ -37,7 +37,7 @@
                             <%for(let i = 0; i < data.length; i++){%>
                                 <% let encodedEventName = encodeURIComponent(data[i].match); %>
                                 <% let encodedEventName2 = encodeURIComponent(data[i].event); %>
-                                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/gameReport/match?matchName=<%=encodedEventName%>&eventName=<%=encodedEventName2%>'>
+                                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/MyPlStatement?matchName=<%=encodedEventName%>&eventName=<%=encodedEventName2%>'>
                                     <td title="Match" ><%=data[i].match%></td>
                                     <td title="Bets" ><%=data[i].totalData%></td>
                                     <td title="Win" ><%=data[i].win%></td>
