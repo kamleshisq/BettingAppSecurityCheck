@@ -2803,51 +2803,57 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
     console.log(req.query)
-    let whiteLabel = whiteLabelcheck(req)
-    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-
-    let data = await betModel.aggregate([
-        {
-            $match:{
-                userId:req.currentUser.id,
-                status: {
-                    $in: ['WON', 'LOSS']
+    if(Object.keys(req.query).length === 0){
+        let whiteLabel = whiteLabelcheck(req)
+        let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+        let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+        let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    
+        let data = await betModel.aggregate([
+            {
+                $match:{
+                    userId:req.currentUser.id,
+                    status: {
+                        $in: ['WON', 'LOSS']
+                    }
+                }
+            },
+            {
+                $group: {
+                  _id: "$event",
+                  wins: {
+                    $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
+                  },
+                  losses: {
+                    $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
+                  },
+                  profit: {
+                    $sum: "$returns"
+                  }
                 }
             }
-        },
-        {
-            $group: {
-              _id: "$event",
-              wins: {
-                $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
-              },
-              losses: {
-                $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
-              },
-              profit: {
-                $sum: "$returns"
-              }
-            }
+        ])
+        let userLog
+        if(req.currentUser){
+            userLog = await loginLogs.find({user_id:req.currentUser.id})
         }
-    ])
-    let userLog
-    if(req.currentUser){
-        userLog = await loginLogs.find({user_id:req.currentUser.id})
+        // console.log(data)
+        res.status(200).render("./userSideEjs/plStatemenet/main",{
+            title:'P/L Reports',
+            user: req.currentUser,
+            data,
+            verticalMenus,
+            check:"plStatemenet",
+            userLog,
+            notifications:req.notifications,
+            basicDetails,
+            colorCode
+        })
+    }else{
+        res.status(200).json({
+            message:'Page under cuntruction '
+        })
     }
-    // console.log(data)
-    res.status(200).render("./userSideEjs/plStatemenet/main",{
-        title:'P/L Reports',
-        user: req.currentUser,
-        data,
-        verticalMenus,
-        check:"plStatemenet",
-        userLog,
-        notifications:req.notifications,
-        basicDetails,
-        colorCode
-    })
 });
 
 
