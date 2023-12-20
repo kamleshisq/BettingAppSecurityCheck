@@ -2107,10 +2107,22 @@ io.on('connection', (socket) => {
               },
               {
                   $group:{
-                      _id: '$secId',
+                      _id: {
+                        secId:'$secId',
+                        eventId : '$eventId'
+                      },
                       totalStake: { $sum: '$Stake' },
                       count: { $sum: 1 }
                   }
+              },
+              {
+                $project:{
+                    _id : 0,
+                    secId : '$_id.secId',
+                    eventId : '$_id.eventId',
+                    totalStake:'$totalStake',
+                    count:'$count'
+                }
               }
         ])
         // console.log(userIds, "userIdsuserIdsuserIds")

@@ -7033,9 +7033,9 @@ socket.on('connect', () => {
             let stake1 = 0;
             let stake2 = 0;
             data.forEach(item => {
-                    if(document.getElementById(`${item._id}`)){
-                        document.getElementById(`${item._id}`).innerText = item.totalStake
-                        document.getElementById(`${item._id}B`).innerText = item.count
+                    if(document.getElementById(`${item.secId}`)){
+                        document.getElementById(`${item.secId}`).innerText = item.totalStake
+                        document.getElementById(`${item.secId}B`).innerText = item.count
                     }
             })
         })
