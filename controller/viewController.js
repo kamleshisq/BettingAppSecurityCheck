@@ -2939,7 +2939,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 {
                     $group: {
                         _id: '$marketId',
-                        totalCommission:{ sum: '$commission'}
+                        totalCommission : { sum: '$commission'}
                     }
                 }
             ])
