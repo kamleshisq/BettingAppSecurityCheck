@@ -11534,9 +11534,10 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    console.log(item)
-                    section = item.odds.find(odd => odd.selectionId == id);
-                    return section !== undefined;
+                    if(item.odds){
+                        section = item.odds.find(odd => odd.selectionId == id);
+                        return section !== undefined;
+                    }
                 });
                 if(this.id == `${section.selectionId}1` ){
                     if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
