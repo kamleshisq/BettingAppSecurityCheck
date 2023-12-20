@@ -2803,11 +2803,15 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
     console.log(req.query)
+    let whiteLabel = whiteLabelcheck(req)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser.id})
+    }
     if(Object.keys(req.query).length === 0){
-        let whiteLabel = whiteLabelcheck(req)
-        let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-        let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-        let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     
         let data = await betModel.aggregate([
             {
@@ -2833,10 +2837,6 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 }
             }
         ])
-        let userLog
-        if(req.currentUser){
-            userLog = await loginLogs.find({user_id:req.currentUser.id})
-        }
         // console.log(data)
         res.status(200).render("./userSideEjs/plStatemenet/main",{
             title:'P/L Reports',
@@ -2850,9 +2850,66 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
             colorCode
         })
     }else{
-        res.status(200).json({
-            message:'Page under cuntruction '
-        })
+        if(req.query.eventname){
+            let data = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        event : req.query.eventname,
+                    }
+                },
+                {
+                    $group: {
+                      _id: {
+                        match: '$match',
+                        event: '$event'
+                      },
+                      totalData: { $sum: 1 },
+                      win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+                      loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+                      cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+                      open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+                      totalSumOfReturns: { $sum: '$returns' }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 0,
+                      match: '$_id.match',
+                      event: '$_id.event',
+                      totalData: 1,
+                      win: 1,
+                      loss: 1,
+                      cancel: 1,
+                      open: 1,
+                      totalSumOfReturns: 1
+                    }
+                  },
+                {
+                    $sort: { totalData: -1 , _id: 1}
+                  },
+                  {
+                    $limit: 20 
+                  }
+              ]);
+              res.status(200).render("./userSideEjs/gameReportEvent/main",{
+                title:'Game Reports',
+                user:req.currentUser,
+                verticalMenus,
+                data,
+                check:"My game",
+                games,
+                userLog,
+                result,
+                notifications:req.notifications,
+                basicDetails,
+                colorCode
+            })
+        }else{
+            res.status(200).json({
+                message:'Page under cuntruction '
+            })
+        }
     }
 });
 
