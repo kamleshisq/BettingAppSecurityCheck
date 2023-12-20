@@ -2960,7 +2960,8 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 notifications:req.notifications,
                 basicDetails,
                 colorCode,
-                matchName:req.query.matchname
+                matchName:req.query.matchname,
+                eventname:req.query.eventname
             })
         }
     }
