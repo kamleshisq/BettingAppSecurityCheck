@@ -2812,7 +2812,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             $match:{
                 userId:req.currentUser.id,
                 status: {
-                    $nin: ['OPEN', 'CANCEL']
+                    $in: ['WON', 'LOSS']
                 }
             }
         },
