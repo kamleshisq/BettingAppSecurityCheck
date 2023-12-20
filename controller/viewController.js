@@ -2903,7 +2903,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 basicDetails,
                 colorCode
             })
-        }else if(req.query.eventname && req.query.matchName){
+        }else if(req.query.eventname && req.query.matchname){
             res.status(200).json({
                 message:'Page under cuntruction '
             })
