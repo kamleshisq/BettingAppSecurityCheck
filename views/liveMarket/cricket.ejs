@@ -4,7 +4,7 @@
   <%for(let i = 0; i < runners.length; i++){%>
     <%if(runners[i].sport === "Cricket" && bets.some(item => item == runners[i].marketId)){%>
       <%checkC = true%>
-      <section>
+      <section id="<%=runners[i].eventId%>">
         <div class="container-fluid">
           <div class="new-head">
             <% let runnersData = JSON.parse(runners[i].runners) %>

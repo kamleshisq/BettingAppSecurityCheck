@@ -7031,8 +7031,6 @@ socket.on('connect', () => {
 
         socket.on("aggreat", async(data) => {
             console.log(data)
-            let stake1 = 0;
-            let stake2 = 0;
             data.forEach(item => {
                     if(document.getElementById(`${item.secId}`)){
                         document.getElementById(`${item.secId}`).innerText = item.totalStake
