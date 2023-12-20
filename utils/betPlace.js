@@ -262,7 +262,8 @@ if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.titl
                 eventId:marketDetails.eid,
                 marketId:marketDetails.marketId,
                 sport:sportName,
-                marketTitle:marketDetails.title.toLowerCase()
+                marketTitle:marketDetails.title.toLowerCase(),
+                matchTitle : data.data.title
             }
             await runnerDataModel.create(data)
         }

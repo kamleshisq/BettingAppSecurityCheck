@@ -18,6 +18,9 @@ const runnerSchema = mongoose.Schema({
     },
     marketTitle:{
         type:String
+    },
+    matchTitle:{
+        type:String
     }
 })
 
