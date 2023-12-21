@@ -7945,6 +7945,7 @@ socket.on('connect', () => {
                 });
                 let marketId = this.closest('table').id
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
+                console.log(check, "checkcheckcheckcheck")
                 let parentElement = this.parentNode
                 if(this.id == `${section.selectionId}4` ){
                     if(!data.status){
