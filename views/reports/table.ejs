@@ -1,10 +1,8 @@
 <table id="table12">
   <thead>
     <tr>
-      <th>S.No</th>
       <th>User Name</th>
       <th>Date</th>
-      <th>Time</th>
       <th>Sport</th>
       <th>Match</th>
       <th>Market</th>
@@ -21,15 +19,24 @@
     <%if(bets.length !== 0){%>
     <% for(let i = 0; i < bets.length; i++){%>
     <% let date = new Date(bets[i].date)%>
+    <%
+      var options = { 
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true
+      };
+      var formattedTime = Startdate.toLocaleString('en-US', options);
+    %>
     <%if(bets[i].bettype2 === 'BACK'){%>
       <tr class="back">
     <%}else{%>
       <tr class="lay">
     <%}%>
-        <td><%=i + 1%></td>
         <td><%=bets[i].userName%></td>
-        <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-        <td class="date-time"><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+        <td class="date-time"><%=formattedTime%></td>
         <%if(bets[i].match){%>
         <td>-</td>
         <td class="text-nowrap"><%=bets[i].match%></td>
