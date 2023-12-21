@@ -16712,9 +16712,9 @@ socket.on('connect', () => {
             let ubcC = 1;
             socket.on('UerBook', async(data) => {
                 if(data.Bets.length > 0){
-                    console.log(data.runn, "data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
+                    console.log(data.runn, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
                     if(data.runn && data.runn.length > 2){
-                        
+
                     }else{
                     if(data.Bets[0].userName){ 
                         // console.log('working', data.check)
