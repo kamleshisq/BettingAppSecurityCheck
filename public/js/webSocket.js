@@ -19876,8 +19876,8 @@ socket.on('connect', () => {
             $('.loadMoredive').html('')
         }
         })
-        $(".tbl-data-href").click(function() {
-            console.log('WORKING')
+        $(document).on("click", ".tbl-data-href", function() {
+            console.log('WORKING');
             window.location = $(this).data("href");
         });
     }
