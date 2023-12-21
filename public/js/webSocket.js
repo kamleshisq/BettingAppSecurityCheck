@@ -16344,34 +16344,250 @@ socket.on('connect', () => {
             socket.on('Book',async(data)=>{
                 // console.log(data.Bets)
                 if(data.Bets.length > 0){
-                    console.log(data.runn, "runnrunnrunn")
-                    if(data.Bets[0].userName){ 
-                        if(data.check){   
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                            // let team3 = 
-                            let html = ''
+                    // console.log(data.runn, "runnrunnrunn")
+                    if(data.runn && data.runn.length > 3){
+                        if(data.Bets[0].userName){
+
+                        }else{
+                            let html = `<tr class="headDetail"><th>User name</th>`
                             for(let i = 0; i < data.Bets.length; i++){
-                                let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
-                                let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the draw"))
+                                for (let j = 0; j < data.runn.length; j++) {
+                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner.toLowerCase()));
+                                    let winAmountForThatRUn = 0
+                                    if (currentTeamData) { 
+                                        winAmountForThatRUn = currentTeamData.winAmount
+                                    }else{
+                                        let amount = 0
+                                        for(const select in data.Bets[i].Bets[0].selections){
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                                        }
+                                        winAmountForThatRUn = amount
+                                    }
+                                    data.runn[j].showAmount = winAmountForThatRUn
+                                    html += `<th>${data.runn[j].runner}</th>`
+                                }
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                                    if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount) 
-                                        team1Data.lossAmount = (team1Data.lossAmount) 
-                                    }
-                                    if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount) 
-                                        team2Data.lossAmount = (team2Data.lossAmount) 
-                                    }
-                                    if(team3Data){
-                                        team3Data.winAmount = (team3Data.winAmount) 
-                                        team3Data.lossAmount = (team3Data.lossAmount) 
+                                }
+                                for(let j = 0; j < data.runn.length; j++) {
+                                    if(data.runn[j].showAmount < 0){
+                                        html += `<td class="red">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="green">${data.runn[j].showAmount.toFixed(2)}</td>`
                                     }
                                 }
+                                html += '</tr>'
+                            }
+                            document.getElementById('match_odd').innerHTML = html
+                        }
+                    }else{
+                        if(data.Bets[0].userName){ 
+                            if(data.check){   
+                                let team1 = data.matchName.split(' v ')[0].toLowerCase()
+                                let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                                // let team3 = 
+                                let html = ''
+                                for(let i = 0; i < data.Bets.length; i++){
+                                    let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                                    let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                                    let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the draw"))
+                                    if(data.Bets[i].User.roleName == 'user'){
+                                        html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                    }else{
+                                        html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                        if(team1Data){
+                                            team1Data.winAmount = (team1Data.winAmount) 
+                                            team1Data.lossAmount = (team1Data.lossAmount) 
+                                        }
+                                        if(team2Data){
+                                            team2Data.winAmount = (team2Data.winAmount) 
+                                            team2Data.lossAmount = (team2Data.lossAmount) 
+                                        }
+                                        if(team3Data){
+                                            team3Data.winAmount = (team3Data.winAmount) 
+                                            team3Data.lossAmount = (team3Data.lossAmount) 
+                                        }
+                                    }
+                                    if(team1Data && team2Data && team3Data){
+                                        if (team1Data.winAmount > 0){
+                                            html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if (team2Data.winAmount > 0){
+                                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if (team3Data.winAmount > 0){
+                                            html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if ((team1Data && team2Data) && !team3Data){
+                                        if (team1Data.winAmount > 0){
+                                            html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if (team2Data.winAmount > 0){
+                                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if ((-team1Data.exposure - team2Data.exposure) > 0){
+                                            html += `<td class="green">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        }
+                                    }else if (!team1Data && (team2Data && team3Data)){
+                                        if ((-team3Data.exposure - team2Data.exposure) > 0){
+                                            html += `<td class="green">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        }
+                                        if (team2Data.winAmount > 0){
+                                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if (team3Data.winAmount > 0){
+                                            html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if (team1Data && !team2Data && team3Data){
+                                        if (team1Data.winAmount > 0){
+                                            html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if ((-team1Data.exposure - team1Data.exposure) > 0){
+                                            html += `<td class="green">${(-team1Data.exposure - team1Data.exposure).toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${(-team1Data.exposure - team1Data.exposure).toFixed(2)}</td>`
+                                        }
+                                        if (team3Data.winAmount > 0){
+                                            html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if (team1Data && !team2Data && !team3Data){
+                                        if (team1Data.winAmount > 0){
+                                            html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if(team1Data.lossAmount > 0){
+                                             html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                                             html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
+                                            html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if (!team1Data && team2Data && !team3Data){
+                                        if (team2Data.winAmount > 0){
+                                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if(team2Data.lossAmount > 0){
+                                             html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                             html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                                            html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if (!team1Data && !team2Data && team3Data){
+                                        if (team3Data.winAmount > 0){
+                                            html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if(team3Data.lossAmount > 0){
+                                             html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
+                                             html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
+                                            html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
+                                        }
+                                    }
+                                    html += '</tr>'
+        
+                                }
+                                let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                                $('#match_odd_Book').find(string).after(html)
+                            }else{
+                                let team1 = data.matchName.split(' v ')[0].toLowerCase()
+                                let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                                let html = '';
+                                for(let i = 0; i < data.Bets.length; i++){
+                                    // console.log(data.Bets[i].Bets[0])
+                                    let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                                    let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                                    if(data.Bets[i].User.roleName == 'user'){
+                                        html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                    }else{
+                                        html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                        if(team1Data){
+                                            team1Data.winAmount = (team1Data.winAmount) 
+                                            team1Data.lossAmount = (team1Data.lossAmount) 
+                                        }
+                                        if(team2Data){
+                                            team2Data.winAmount = (team2Data.winAmount) 
+                                            team2Data.lossAmount = (team2Data.lossAmount) 
+                                        }
+                                    }
+                                    // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                if(team1Data){
+                                    if (team1Data.winAmount > 0){
+                                        html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                    }
+                                }else{
+                                    if (team2Data.lossAmount > 0){
+                                        html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                                    }
+                                }
+        
+                                if(team2Data){
+                                    if (team2Data.winAmount > 0){
+                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                    }else{
+                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                    }
+                            }else{
+                                if (team1Data.lossAmount > 0){
+                                    html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                                    }else{
+                                    html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
+                                    }
+                            }
+                            html += '</tr>'
+                                }
+        
+                                let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                                $('#match_odd_Book').find(string).after(html)
+                            }
+                        }else{
+                           if(data.check){
+        
+                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
+                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let html = `<tr class="headDetail"><th>User name</th>
+                            <th>${team1}</th>
+                            <th>${team2}</th>
+                            <th>The draw</th></tr>`
+                            for(let i = 0; i < data.Bets.length; i++){
+                                html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                                let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('the draw'))
                                 if(team1Data && team2Data && team3Data){
                                     if (team1Data.winAmount > 0){
                                         html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
@@ -16426,10 +16642,10 @@ socket.on('connect', () => {
                                     }else{
                                         html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if ((-team1Data.exposure - team1Data.exposure) > 0){
-                                        html += `<td class="green">${(-team1Data.exposure - team1Data.exposure).toFixed(2)}</td>`
+                                    if ((-team1Data.exposure - team3Data.exposure) > 0){
+                                        html += `<td class="green">${(-team1Data.exposure - team3Data.exposure).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(-team1Data.exposure - team1Data.exposure).toFixed(2)}</td>`
+                                        html += `<td class="red">${(-team1Data.exposure - team3Data.exposure).toFixed(2)}</td>`
                                     }
                                     if (team3Data.winAmount > 0){
                                         html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
@@ -16476,234 +16692,57 @@ socket.on('connect', () => {
                                         html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
                                     }
                                 }
-                                html += '</tr>'
-    
+                                
+        
+                                
+                            html += '</tr>'
+                            
                             }
-                            let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
-                            $('#match_odd_Book').find(string).after(html)
-                        }else{
+                            document.getElementById('match_odd_Book').innerHTML = html
+                           }else{
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                            let html = '';
+                            let html = `<tr class="headDetail"><th>User name</th>
+                            <th>${team1}</th>
+                            <th>${team2}</th></tr>`
+                            
                             for(let i = 0; i < data.Bets.length; i++){
-                                // console.log(data.Bets[i].Bets[0])
+                                html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                if(data.Bets[i].User.roleName == 'user'){
-                                    html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                                }else{
-                                    html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                                    if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount) 
-                                        team1Data.lossAmount = (team1Data.lossAmount) 
+                                if(team1Data){
+                                    if (team1Data.winAmount > 0){
+                                        html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount) 
-                                        team2Data.lossAmount = (team2Data.lossAmount) 
+                                }else{
+                                    if (team2Data.lossAmount > 0){
+                                        html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
                                     }
                                 }
-                                // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                            if(team1Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
+        
+                                if(team2Data){
+                                    if (team2Data.winAmount > 0){
+                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                    }else{
+                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                    }
                             }else{
-                                if (team2Data.lossAmount > 0){
-                                    html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }
-                            }
-    
-                            if(team2Data){
-                                if (team2Data.winAmount > 0){
-                                html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                        }else{
-                            if (team1Data.lossAmount > 0){
-                                html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }
-                        }
-                        html += '</tr>'
-                            }
-    
-                            let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
-                            $('#match_odd_Book').find(string).after(html)
-                        }
-                    }else{
-                       if(data.check){
-    
-                        let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                        let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                        let html = `<tr class="headDetail"><th>User name</th>
-                        <th>${team1}</th>
-                        <th>${team2}</th>
-                        <th>The draw</th></tr>`
-                        for(let i = 0; i < data.Bets.length; i++){
-                            html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                            let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
-                            let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('the draw'))
-                            if(team1Data && team2Data && team3Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if (team2Data.winAmount > 0){
-                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if (team3Data.winAmount > 0){
-                                    html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
-                                }
-                            }else if ((team1Data && team2Data) && !team3Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if (team2Data.winAmount > 0){
-                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if ((-team1Data.exposure - team2Data.exposure) > 0){
-                                    html += `<td class="green">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
-                                }
-                            }else if (!team1Data && (team2Data && team3Data)){
-                                if ((-team3Data.exposure - team2Data.exposure) > 0){
-                                    html += `<td class="green">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
-                                }
-                                if (team2Data.winAmount > 0){
-                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if (team3Data.winAmount > 0){
-                                    html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
-                                }
-                            }else if (team1Data && !team2Data && team3Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if ((-team1Data.exposure - team3Data.exposure) > 0){
-                                    html += `<td class="green">${(-team1Data.exposure - team3Data.exposure).toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${(-team1Data.exposure - team3Data.exposure).toFixed(2)}</td>`
-                                }
-                                if (team3Data.winAmount > 0){
-                                    html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
-                                }
-                            }else if (team1Data && !team2Data && !team3Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if(team1Data.lossAmount > 0){
-                                     html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                                     html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }else{
+                                if (team1Data.lossAmount > 0){
+                                    html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                                    }else{
                                     html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                                    html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }
-                            }else if (!team1Data && team2Data && !team3Data){
-                                if (team2Data.winAmount > 0){
-                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if(team2Data.lossAmount > 0){
-                                     html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
-                                     html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
-                                    html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }
-                            }else if (!team1Data && !team2Data && team3Data){
-                                if (team3Data.winAmount > 0){
-                                    html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if(team3Data.lossAmount > 0){
-                                     html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
-                                     html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
-                                    html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
-                                }
+                                    }
                             }
+                            html += '</tr>'
                             
-    
-                            
-                        html += '</tr>'
-                        
-                        }
-                        document.getElementById('match_odd_Book').innerHTML = html
-                       }else{
-                        let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                        let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                        let html = `<tr class="headDetail"><th>User name</th>
-                        <th>${team1}</th>
-                        <th>${team2}</th></tr>`
-                        
-                        for(let i = 0; i < data.Bets.length; i++){
-                            html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                            let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
-                            let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            if(team1Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                            }else{
-                                if (team2Data.lossAmount > 0){
-                                    html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }
                             }
-    
-                            if(team2Data){
-                                if (team2Data.winAmount > 0){
-                                html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                        }else{
-                            if (team1Data.lossAmount > 0){
-                                html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }
+                            document.getElementById('match_odd_Book').innerHTML = html
+                           }
                         }
-                        html += '</tr>'
-                        
-                        }
-                        document.getElementById('match_odd_Book').innerHTML = html
-                       }
                     }
                 }else{
                     document.getElementById('match_odd_Book').innerHTML = '<tr class="empty_table"><td>No record found</td></tr>'
