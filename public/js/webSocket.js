@@ -19913,7 +19913,7 @@ socket.on('connect', () => {
                             html += `<td class="c-reed" title="Profit/Loss" >${data.sendData[i].totalSumOfReturns}</td>`
                         }
                     }
-                    if(page === 0){
+                    if(data.page === 0){
                         $('tbody').html(html)
                     }else{
                         $('tbody').append(html)
