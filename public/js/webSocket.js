@@ -19845,9 +19845,14 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/MyPlStatement"){
-        console.log('Working')
         $(document).on('click', ".loadMoredive" ,function(){
-            console.log('WORKING12121')
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            socket.emit('MyPlStatementPagination', {LOGINDATA, page})
+        })
+
+        socket.on('MyPlStatementPagination', data => {
+        console.log(data)
         })
     }
 

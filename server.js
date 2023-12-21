@@ -9451,6 +9451,56 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on('MyPlStatementPagination', async(data) => {
+        console.log(data, "DTADTDA")
+        if(data.LOGINDATA.LOGINUSER){
+            let page = data.page
+            if(!page){
+                page = 0
+            }
+            let data = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:data.LOGINDATA.LOGINUSER.id,
+                        status: {
+                            $in: ['WON', 'LOSS']
+                        }
+                    }
+                },
+                {
+                    $group: {
+                      _id: "$event",
+                      wins: {
+                        $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
+                      },
+                      losses: {
+                        $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
+                      },
+                      profit: {
+                        $sum: "$returns"
+                      }
+                    }
+                },
+                {
+                    $sort:{
+                        _id : 1,
+                        profit : 1
+                    }
+                },
+                {
+                    $skip:(page * 20)
+                },
+                {
+                    $limit:20
+                }
+            ])
+
+
+            socket.emit('MyPlStatementPagination', {data, page})
+        }
+    })
+
 })
 
 http.listen(process.env.port,()=> {
