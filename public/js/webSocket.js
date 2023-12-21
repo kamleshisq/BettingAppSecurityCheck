@@ -16714,16 +16714,22 @@ socket.on('connect', () => {
                 if(data.Bets.length > 0){
                     console.log(data, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
                     if(data.runn && data.runn.length > 3){
-                        // for (let i = 0; i < data.Bets.length; i++) { 
-                        //     let teamData = [];
-                        //     for (let j = 0; j < data.runn.length; j++) {
-                        //         let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner));
-                        //         let dataToPush = {}
-                        //         if (currentTeamData) { 
-                        //             dataToPush.winAmount = currentTeamData.winAmount
-                        //         }
-                        //     }
-                        // }
+                        for (let i = 0; i < data.Bets.length; i++) { 
+                            for (let j = 0; j < data.runn.length; j++) {
+                                let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner));
+                                let winAmountForThatRUn = 0
+                                if (currentTeamData) { 
+                                    winAmountForThatRUn = currentTeamData.winAmount
+                                }else{
+                                    let amount = 0
+                                    for(const select in data.Bets[i].Bets[0].selections){
+                                        amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                                    }
+                                    winAmountForThatRUn = amount
+                                }
+                                data.runn[j].showAmount = winAmountForThatRUn
+                            }
+                        }
                     }else{
                     if(data.Bets[0].userName){ 
                         // console.log('working', data.check)
