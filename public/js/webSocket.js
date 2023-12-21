@@ -4436,7 +4436,7 @@ socket.on('connect', () => {
                 <td>${bets[i].userName}</td>
                 <td>${formattedTime}</td>`
                 if(bets[i].match){
-                    html += `<td>-</td>
+                    html += `<td>${bets[i].betType}</td>
                     <td>${bets[i].match}</td>
                     <td>${bets[i].marketName}</td>
                     <td>${bets[i].selectionName}</td>
