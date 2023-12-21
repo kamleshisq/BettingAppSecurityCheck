@@ -19844,7 +19844,7 @@ socket.on('connect', () => {
         })
     }
 
-    if(pathname === "/MyPlStatement"){
+    if(pathname === "/MyPlStatement" || pathname === "/MyPlStatement/"){
 
 
         var urlParams = new URLSearchParams(window.location.search);
