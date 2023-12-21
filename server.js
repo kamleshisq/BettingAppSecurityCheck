@@ -9462,7 +9462,7 @@ io.on('connection', (socket) => {
             let senddata = await Bet.aggregate([
                 {
                     $match:{
-                        userId:data.LOGINDATA.LOGINUSER.id,
+                        userId:data.LOGINDATA.LOGINUSER._id,
                         status: {
                             $in: ['WON', 'LOSS']
                         }
