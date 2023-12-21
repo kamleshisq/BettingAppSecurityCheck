@@ -257,7 +257,7 @@ if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.titl
     if(!check){
         if(marketDetails.runners){
 
-            let data = {
+            let runnerData = {
                 runners:marketDetails.runners,
                 eventId:marketDetails.eid,
                 marketId:marketDetails.marketId,
@@ -265,7 +265,7 @@ if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.titl
                 marketTitle:marketDetails.title.toLowerCase(),
                 matchTitle : data.data.title
             }
-            await runnerDataModel.create(data)
+            await runnerDataModel.create(runnerData)
         }
 }
 }
