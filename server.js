@@ -9501,6 +9501,63 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on('MyPlStatementPagination2', async(data) => {
+        console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            let page = data.page
+            if(!page){
+                page = 0
+            }
+            let sendData = await Bet.aggregate([
+                {
+                    $match:{
+                        userId:data.LOGINDATA.LOGINUSER._id,
+                        event : data.param1Value,
+                    }
+                },
+                {
+                    $group: {
+                      _id: {
+                        match: '$match',
+                        event: '$event'
+                      },
+                      totalData: { $sum: 1 },
+                      win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+                      loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+                      cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+                      open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+                      totalSumOfReturns: { $sum: '$returns' }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 0,
+                      match: '$_id.match',
+                      event: '$_id.event',
+                      totalData: 1,
+                      win: 1,
+                      loss: 1,
+                      cancel: 1,
+                      open: 1,
+                      totalSumOfReturns: 1
+                    }
+                  },
+                {
+                    $sort: { totalSumOfReturns: -1 , match: 1}
+                },
+                {
+                    $skip:(page*5)
+                },
+                  {
+                    $limit: 5 
+                  }
+              ]);
+
+              socket.emit('MyPlStatementPagination2', {sendData, page})
+        }
+    })
+
 })
 
 http.listen(process.env.port,()=> {

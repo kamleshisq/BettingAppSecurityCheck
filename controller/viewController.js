@@ -2898,7 +2898,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     $sort: { totalSumOfReturns: -1 , match: 1}
                   },
                   {
-                    $limit: 20 
+                    $limit: 5 
                   }
               ]);
               res.status(200).render("./userSideEjs/frofitlossevent/main",{
