@@ -9489,10 +9489,10 @@ io.on('connection', (socket) => {
                     }
                 },
                 {
-                    $skip:(page * 5)
+                    $skip:(page * 20)
                 },
                 {
-                    $limit:5
+                    $limit:20
                 }
             ])
 
@@ -9547,10 +9547,10 @@ io.on('connection', (socket) => {
                     $sort: { totalSumOfReturns: -1 , match: 1}
                 },
                 {
-                    $skip:(page*2)
+                    $skip:(page*20)
                 },
                   {
-                    $limit: 2 
+                    $limit: 20 
                   }
               ]);
 

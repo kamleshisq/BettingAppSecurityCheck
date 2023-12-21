@@ -2843,7 +2843,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 }
             },
             {
-                $limit:5
+                $limit:20
             }
         ])
         // console.log(data)
@@ -2898,7 +2898,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     $sort: { totalSumOfReturns: -1 , match: 1}
                   },
                   {
-                    $limit: 2 
+                    $limit: 20 
                   }
               ]);
               res.status(200).render("./userSideEjs/frofitlossevent/main",{
