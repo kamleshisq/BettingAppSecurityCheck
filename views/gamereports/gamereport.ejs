@@ -47,7 +47,6 @@
           <table id="table12">
             <thead>
               <tr>
-                <th>S.No</th>
                 <th>User Name</th>
                 <th>Game Count</th>
                 <th>Bets</th>
@@ -65,7 +64,6 @@
                 <%}else{%>
                 <tr>
                   <%}%>
-                  <td><%=i + 1%></td>
                   <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
                   <td><%=games[i].gameCount%></td>
                   <td><%=games[i].betCount%></td>

@@ -5504,7 +5504,7 @@ socket.on('connect', () => {
                 }else{
                   html += `<tr style="text-align: center;" class="blue">`
                 }
-                  html += `<td>${count + i}</td>
+                  html += ` 
                   <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
