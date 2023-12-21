@@ -2859,6 +2859,9 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     }
                 },
                 {
+                    $sort:{date:-1}
+                },
+                {
                     $group: {
                       _id: {
                         match: '$match',
