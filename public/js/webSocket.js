@@ -16712,9 +16712,18 @@ socket.on('connect', () => {
             let ubcC = 1;
             socket.on('UerBook', async(data) => {
                 if(data.Bets.length > 0){
-                    console.log(data.runn, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
+                    console.log(data, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
                     if(data.runn && data.runn.length > 3){
-
+                        // for (let i = 0; i < data.Bets.length; i++) { 
+                        //     let teamData = [];
+                        //     for (let j = 0; j < data.runn.length; j++) {
+                        //         let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner));
+                        //         let dataToPush = {}
+                        //         if (currentTeamData) { 
+                        //             dataToPush.winAmount = currentTeamData.winAmount
+                        //         }
+                        //     }
+                        // }
                     }else{
                     if(data.Bets[0].userName){ 
                         // console.log('working', data.check)
