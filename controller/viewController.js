@@ -2843,7 +2843,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 }
             },
             {
-                $limit:20
+                $limit:5
             }
         ])
         // console.log(data)

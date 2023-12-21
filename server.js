@@ -9453,7 +9453,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('MyPlStatementPagination', async(data) => {
-        console.log(data, "DTADTDA")
+        // console.log(data, "DTADTDA")
         if(data.LOGINDATA.LOGINUSER){
             let page = data.page
             if(!page){
@@ -9489,10 +9489,10 @@ io.on('connection', (socket) => {
                     }
                 },
                 {
-                    $skip:(page * 20)
+                    $skip:(page * 5)
                 },
                 {
-                    $limit:20
+                    $limit:5
                 }
             ])
 
