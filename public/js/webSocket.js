@@ -16720,7 +16720,7 @@ socket.on('connect', () => {
                             let html = `<tr class="headDetail"><th>User name</th>`
                             for (let i = 0; i < data.Bets.length; i++) { 
                                 for (let j = 0; j < data.runn.length; j++) {
-                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner));
+                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner.toLowerCase()));
                                     let winAmountForThatRUn = 0
                                     if (currentTeamData) { 
                                         winAmountForThatRUn = currentTeamData.winAmount
