@@ -19844,6 +19844,13 @@ socket.on('connect', () => {
         })
     }
 
+    if(pathname === "/MyPlStatement"){
+        console.log('Working')
+        $(document).on('click', ".loadMoredive" ,function(){
+            console.log('WORKING12121')
+        })
+    }
+
     $(document).ready(function() {
         setTimeout(function() {
           $(".main-loader").addClass("hide");
