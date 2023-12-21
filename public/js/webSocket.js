@@ -4423,10 +4423,18 @@ socket.on('connect', () => {
                 }else{
                     html += `<tr class="lay">`
                 }
-                html += `<td>${i + count}</td>
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                html += `
                 <td>${bets[i].userName}</td>
-                <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}</td>
-                <td>${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>`
+                <td>${formattedTime}</td>`
                 if(bets[i].match){
                     html += `<td>-</td>
                     <td>${bets[i].match}</td>
