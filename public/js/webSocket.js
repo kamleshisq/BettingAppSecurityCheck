@@ -16713,6 +16713,9 @@ socket.on('connect', () => {
             socket.on('UerBook', async(data) => {
                 if(data.Bets.length > 0){
                     console.log(data.runn, "data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
+                    if(data.runn && data.runn.length > 2){
+                        
+                    }else{
                     if(data.Bets[0].userName){ 
                         // console.log('working', data.check)
                         if(data.check){   
@@ -17074,7 +17077,7 @@ socket.on('connect', () => {
                         }
                         document.getElementById('match_odd').innerHTML = html
                        }
-                    }
+                    }}
                 }else{
                     // document.getElementById('match_odd').innerHTML = ''
                     document.getElementById('match_odd').innerHTML = '<tr class="empty_table"><td>No record found</td></tr>'
