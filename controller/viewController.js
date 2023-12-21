@@ -2835,6 +2835,15 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     $sum: "$returns"
                   }
                 }
+            },
+            {
+                $sort:{
+                    _id : 1,
+                    profit : 1
+                }
+            },
+            {
+                $limit:20
             }
         ])
         // console.log(data)
