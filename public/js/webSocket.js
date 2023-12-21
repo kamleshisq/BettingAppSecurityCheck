@@ -19895,6 +19895,32 @@ socket.on('connect', () => {
 
             socket.on('MyPlStatementPagination2', data => {
                 console.log(data, "WORKING")
+                if(data.sendData.length > 0){
+                    let html = ''
+                    for(let i = 0; i < data.sendData.length; i++){
+                        let encodedEventName = encodeURIComponent(data.sendData[i].match);
+                        let encodedEventName2 = encodeURIComponent(data.sendData[i].event);
+                        html += `<tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/MyPlStatement?matchname=${encodedEventName}&eventname=${encodedEventName2}'>
+                        <td title="Match" >${data.sendData[i].match}</td>
+                        <td title="Bets" >${data.sendData[i].totalData}</td>
+                        <td title="Win" >${data.sendData[i].win}</td>
+                        <td title="Lost" >${data.sendData[i].loss}</td>
+                        <td title="Void" >${data.sendData[i].cancel}</td>
+                        <td title="Open" >${data.sendData[i].open}</td>`
+                        if(data.sendData[i].totalSumOfReturns > 0){
+                            html += `<td class="c-gren" title="Profit/Loss" >${data.sendData[i].totalSumOfReturns}</td>`
+                        }else{
+                            html += `<td class="c-reed" title="Profit/Loss" >${data.sendData[i].totalSumOfReturns}</td>`
+                        }
+                    }
+                    if(page === 0){
+                        $('tbody').html(html)
+                    }else{
+                        $('tbody').append(html)
+                    }
+                }else{
+                    $('.loadMoredive').html('')
+                }
             })
         }
     }
