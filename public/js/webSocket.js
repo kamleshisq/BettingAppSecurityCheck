@@ -16347,7 +16347,38 @@ socket.on('connect', () => {
                     // console.log(data.runn, "runnrunnrunn")
                     if(data.runn && data.runn.length > 3){
                         if(data.Bets[0].userName){
-
+                            let html = ''
+                            for (let i = 0; i < data.Bets.length; i++) { 
+                                for (let j = 0; j < data.runn.length; j++) {
+                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner.toLowerCase()));
+                                    let winAmountForThatRUn = 0
+                                    if (currentTeamData) { 
+                                        winAmountForThatRUn = currentTeamData.winAmount
+                                    }else{
+                                        let amount = 0
+                                        for(const select in data.Bets[i].Bets[0].selections){
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                                        }
+                                        winAmountForThatRUn = amount
+                                    }
+                                    data.runn[j].showAmount = winAmountForThatRUn
+                                }
+                                if(data.Bets[i].User.roleName == 'user'){
+                                    html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }else{
+                                    html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }
+                                for(let j = 0; j < data.runn.length; j++) {
+                                    if(data.runn[j].showAmount < 0){
+                                        html += `<td class="red">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="green">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }
+                                }
+                                html += '</tr>'
+                            }
+                            let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                            $('#match_odd_Book').find(string).after(html)
                         }else{
                             let html = `<tr class="headDetail"><th>User name</th>`
                             let status = true
