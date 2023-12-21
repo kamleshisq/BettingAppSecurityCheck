@@ -19872,6 +19872,8 @@ socket.on('connect', () => {
             }else{
                 $('tbody').html(html)
             }
+        }else{
+            $('.loadMoredive').html('')
         }
         })
     }
