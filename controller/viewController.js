@@ -2802,7 +2802,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
-    console.log(req.query)
+    // console.log(req.query)
     let whiteLabel = whiteLabelcheck(req)
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
