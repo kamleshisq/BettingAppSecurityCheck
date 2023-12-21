@@ -38,7 +38,7 @@
         <td><%=bets[i].userName%></td>
         <td class="date-time"><%=formattedTime%></td>
         <%if(bets[i].match){%>
-        <td>-</td>
+        <td><%=bets[i].betType%></td>
         <td class="text-nowrap"><%=bets[i].match%></td>
         <td><%=bets[i].marketName%></td>
         <td><%=bets[i].selectionName%></td>
