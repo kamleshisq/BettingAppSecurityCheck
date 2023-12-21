@@ -16380,7 +16380,7 @@ socket.on('connect', () => {
                                 }
                                 html += '</tr>'
                             }
-                            document.getElementById('match_odd').innerHTML = html
+                            document.getElementById('match_odd_Book').innerHTML = html
                         }
                     }else{
                         if(data.Bets[0].userName){ 
