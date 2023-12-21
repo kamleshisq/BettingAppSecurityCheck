@@ -16714,21 +16714,41 @@ socket.on('connect', () => {
                 if(data.Bets.length > 0){
                     console.log(data, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
                     if(data.runn && data.runn.length > 3){
-                        for (let i = 0; i < data.Bets.length; i++) { 
-                            for (let j = 0; j < data.runn.length; j++) {
-                                let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner));
-                                let winAmountForThatRUn = 0
-                                if (currentTeamData) { 
-                                    winAmountForThatRUn = currentTeamData.winAmount
-                                }else{
-                                    let amount = 0
-                                    for(const select in data.Bets[i].Bets[0].selections){
-                                        amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                        if(data.Bets[0].userName){ 
+                            
+                        }else{
+                            let html = `<tr class="headDetail"><th>User name</th>`
+                            for (let i = 0; i < data.Bets.length; i++) { 
+                                for (let j = 0; j < data.runn.length; j++) {
+                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner));
+                                    let winAmountForThatRUn = 0
+                                    if (currentTeamData) { 
+                                        winAmountForThatRUn = currentTeamData.winAmount
+                                    }else{
+                                        let amount = 0
+                                        for(const select in data.Bets[i].Bets[0].selections){
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                                        }
+                                        winAmountForThatRUn = amount
                                     }
-                                    winAmountForThatRUn = amount
+                                    data.runn[j].showAmount = winAmountForThatRUn
+                                    html += `<th>${data.runn[j].runner}</th>`
                                 }
-                                data.runn[j].showAmount = winAmountForThatRUn
+                                if(data.Bets[i].User.roleName == 'user'){
+                                    html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }else{
+                                    html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }
+                                for(let j = 0; j < data.runn.length; j++) {
+                                    if(data.runn[j].showAmount < 0){
+                                        html += `<td class="red">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="green">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }
+                                }
+                                html += '</tr>'
                             }
+                            document.getElementById('match_odd').innerHTML = html
                         }
                     }else{
                     if(data.Bets[0].userName){ 
