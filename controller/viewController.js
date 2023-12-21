@@ -2859,13 +2859,6 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     }
                 },
                 {
-                    $sort:{
-                        date:-1,
-                        event : 1,
-                        match : 1
-                    }
-                },
-                {
                     $group: {
                       _id: {
                         match: '$match',
@@ -2893,7 +2886,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     }
                   },
                 {
-                    $sort: { totalData: -1 , _id: 1}
+                    $sort: { totalSumOfReturns: -1 , match: 1}
                   },
                   {
                     $limit: 20 
