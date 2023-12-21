@@ -9459,7 +9459,7 @@ io.on('connection', (socket) => {
             if(!page){
                 page = 0
             }
-            let senddata = await betModel.aggregate([
+            let senddata = await Bet.aggregate([
                 {
                     $match:{
                         userId:data.LOGINDATA.LOGINUSER.id,
