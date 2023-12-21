@@ -16713,7 +16713,7 @@ socket.on('connect', () => {
             socket.on('UerBook', async(data) => {
                 if(data.Bets.length > 0){
                     console.log(data.runn, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
-                    if(data.runn && data.runn.length > 2){
+                    if(data.runn && data.runn.length > 3){
 
                     }else{
                     if(data.Bets[0].userName){ 
