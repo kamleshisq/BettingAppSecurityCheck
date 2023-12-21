@@ -9459,7 +9459,7 @@ io.on('connection', (socket) => {
             if(!page){
                 page = 0
             }
-            let data = await betModel.aggregate([
+            let senddata = await betModel.aggregate([
                 {
                     $match:{
                         userId:data.LOGINDATA.LOGINUSER.id,
@@ -9497,7 +9497,7 @@ io.on('connection', (socket) => {
             ])
 
 
-            socket.emit('MyPlStatementPagination', {data, page})
+            socket.emit('MyPlStatementPagination', {senddata, page})
         }
     })
 
