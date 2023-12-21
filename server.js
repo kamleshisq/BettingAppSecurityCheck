@@ -4874,7 +4874,7 @@ io.on('connection', (socket) => {
                     check = true
                 }
             }
-            console.log(result, "resultresultresult")
+            console.log(result[0].Bets, "resultresultresult")
            socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport, check});
         }catch(err){
             console.log(err)
