@@ -19852,7 +19852,27 @@ socket.on('connect', () => {
         })
 
         socket.on('MyPlStatementPagination', data => {
-        console.log(data)
+        // console.log(data)
+        if(data.senddata.length > 0){
+            let html = ''
+            for(let i = 0; i < data.senddata.length; i++){
+                let encodedEventName = encodeURIComponent(data.senddata[i]._id);
+                html += `<tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/MyPlStatement/?eventname=${encodedEventName}'>
+                <td title="Game">${data.senddata[i]._id}</td>
+                <td title="Lost">${data.senddata[i].losses}</td>
+                <td title="Won">${data.senddata[i].wins}</td>`
+                if(data.senddata[i].profit < 0){
+                    html += `<td class="c-reed" title="Profit/Loss">${data.senddata[i].profit}</td>`
+                }else{
+                    html += `<td class="c-gren" title="Profit/Loss">${data.senddata[i].profit}</td>`
+                }
+            }
+            if(data.page != 0){
+                $('tbody').append(html)
+            }else{
+                $('tbody').html(html)
+            }
+        }
         })
     }
 
