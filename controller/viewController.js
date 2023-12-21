@@ -2861,7 +2861,8 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 {
                     $sort:{
                         date:-1,
-                        event : 1
+                        event : 1,
+                        match : 1
                     }
                 },
                 {
