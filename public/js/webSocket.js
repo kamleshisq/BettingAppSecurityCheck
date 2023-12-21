@@ -19877,6 +19877,7 @@ socket.on('connect', () => {
         }
         })
         $(".tbl-data-href").click(function() {
+            console.log('WORKING')
             window.location = $(this).data("href");
         });
     }
