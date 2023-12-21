@@ -16344,6 +16344,7 @@ socket.on('connect', () => {
             socket.on('Book',async(data)=>{
                 // console.log(data.Bets)
                 if(data.Bets.length > 0){
+                    console.log(data.runn, "runnrunnrunn")
                     if(data.Bets[0].userName){ 
                         if(data.check){   
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
