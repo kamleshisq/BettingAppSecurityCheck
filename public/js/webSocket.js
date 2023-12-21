@@ -19845,6 +19845,10 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/MyPlStatement"){
+
+
+        var urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams.size, ".size.size.size")
         $(document).on('click', ".loadMoredive" ,function(){
             let page = parseInt($('.pageId').attr('data-pageid'));
             $('.pageId').attr('data-pageid',page + 1)
