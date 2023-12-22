@@ -2055,7 +2055,8 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
-            // console.log(id, "IDIDID")
+            let modleName = "#myModaL"
+            $(modleName).find('.form-data').attr('id',dataId )
             socket.emit('changeExpLimit', {id, LOGINDATA, dataId})
         })
 
