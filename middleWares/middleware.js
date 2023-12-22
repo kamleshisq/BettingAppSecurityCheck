@@ -39,11 +39,11 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             })
         }
         const userLog = await loginLogs.find({user_id:id._id})
-        if(id.role.role_level != 1){
+        // if(id.role.role_level != 1){
 
-            // console.log(userLog,"==> Middleware userLogin")
-            await loginLogs.updateMany({user_id:id._id},{isOnline:false})
-        }
+        //     // console.log(userLog,"==> Middleware userLogin")
+        //     await loginLogs.updateMany({user_id:id._id},{isOnline:false})
+        // }
         global._count = userLog.length
         req._count = userLog.length
         global._admin = true
