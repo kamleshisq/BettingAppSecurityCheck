@@ -3014,7 +3014,7 @@ socket.on('connect', () => {
             socket.emit( "AccountScroll", data)
         })
 
-        $('#Fdate,#Tdate.#transaction_type').change(function(){
+        $('#Fdate,#Tdate,#transaction_type').change(function(){
             let page = 0;
             $('.pageLink').attr('data-page',1)           
             Fdate = document.getElementById("Fdate").value
