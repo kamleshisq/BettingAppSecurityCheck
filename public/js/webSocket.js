@@ -5432,7 +5432,7 @@ socket.on('connect', () => {
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
             let url;
-            if(!$(this).hasClass('.getajaxdataclick')){
+            if(!$(this).hasClass('getajaxdataclick')){
                 url = $(this).siblings('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
             }else{
                 url = $(this).attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`

@@ -39,13 +39,25 @@
             </thead>
             <tbody class="new-body">
               <%for(let i = 0;i<games.length;i++){%>
+                <% let date = new Date(games[i].date)%>
+                <%
+                  var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                  };
+                  var formattedTime = date.toLocaleString('en-US', options);
+                %>
               <%if(i % 2 == 0){%>
               <tr>
                 <%}else{%>
                 <tr>
                   <%}%>
                   <td><%=i + 1%></td>
-                  <td><%=games[i].date%></td>
+                  <td><%=formattedTime%></td>
                   <td><%=games[i].selectionName%></td>
                   <td><%=games[i].oddValue%></td>
                   <td><%=games[i].Stake%></td>
