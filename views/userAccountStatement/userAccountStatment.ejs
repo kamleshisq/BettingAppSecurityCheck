@@ -22,16 +22,30 @@
           <!-- <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button> -->
         </form>
       </div>
-      <%- include("../loginUserAdminsideDetails") %>
+     <div class="welcome-info-btn">
     </div>
   </section>
-
   <section>
     <div class="container-fluid">
       <div class="table-data-section">
         <div class="table-heading">
           <div class="table-heading-btn">
             <form class="game-analysis-heading-from">
+              <div class="input-group">
+                <label>Transaction</label>
+                <select name="transaction_type" id="transaction_type">
+                  <option value="All" selected>All</option>
+                  <option value="Deposit">Deposit</option>
+                  <option value="Withdraw">Withdraw</option>
+                  <option value="Settlement_Deposit">Settlement Deposit</option>
+                  <option value="Settlement_Withdraw">Settlement Withdraw</option>
+                  <option value="Bet_Settlement">Bet Settlement</option>
+                  <option value="Rollback">Rollback</option>
+                  <option value="Voided">Voided</option>
+                  <option value="Incentive_Transfer">Incentive Transfer</option>
+                  <option value="Claim_Incentive">Claim Incentive</option>
+                </select>
+              </div>
               <div class="input-group">
                 <label>From Date</label>
                 <input type = "date" id="Fdate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
