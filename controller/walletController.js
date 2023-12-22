@@ -82,7 +82,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     console.log(req.body, "REQ.body")
     try{
         const check = await userModel.findById(req.body.userId)
-        let exposureCheck  = await exposurecheckfunction(user)
+        let exposureCheck  = await exposurecheckfunction(check)
         if(check.availableBalance - req.body.debitAmount - exposureCheck < 0){
             return "Error: Insufficient balance"
         }
