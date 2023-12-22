@@ -4985,7 +4985,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 }
             }
         ])
-        console.log(thatMarketData, "thatMarketData")
+        // console.log(thatMarketData, "thatMarketData")
         res.status(200).render('./commissionMarketWise/commissionMarketWise2/commissionMarketWise2.ejs', {
             title:"Commission Report",
             me,
@@ -5013,7 +5013,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 }
             }
         ])
-        console.log(marketWiseData, "marketWiseDatamarketWiseData")
+        // console.log(marketWiseData, "marketWiseDatamarketWiseData")
         res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
             title:"Commission Report",
             me,
