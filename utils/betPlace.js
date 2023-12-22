@@ -10,6 +10,7 @@ const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 const newCommissionModel =  require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
 const runnerDataModel = require('../model/runnersData');
+const exposurecheck = require('./checkExpoOfThatUSer');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -26,6 +27,8 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 async function placeBet(data){
     // console.log(data, "data1")
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
+    let exposure = await exposurecheck(check)
+    console.log(exposure, "exposureexposureexposureexposureexposureexposureexposure")
     // if((check.availableBalance - check.exposure) < data.data.stake){
     //     return "You do not have sufficient balance for bet"
     // }
