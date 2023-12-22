@@ -12,6 +12,7 @@ const alert = require("../server");
 const Decimal = require("decimal.js")
 const loginLogs = require('../model/loginLogs')
 const mongoose = require('mongoose');
+const exposurecheckfunction = require('../utils/checkExpoOfThatUSer');
 // const Decimal = require("decima")
 // const { use } = require('../app');
 function readPem (filename) {
@@ -61,16 +62,18 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     if(!user){
         return next(new AppError("There is no user with that id", 404))
     }
+    let exposureCheck  = await exposurecheckfunction(user)
+    console.log(exposureCheck, "exposureCheckexposureCheckexposureCheckexposureCheck")
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    console.log(clientIP)
+    let balanceSend = user.availableBalance - exposureCheck
     if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
         res.status(200).json({
-            "balance": user.availableBalance,
+            "balance": balanceSend,
             "status": "RS_OK"
         })
     }else{
         res.status(200).json({
-            "balance": user.availableBalance,
+            "balance": balanceSend,
             "status": "OP_SUCCESS"
         })
     }
