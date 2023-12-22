@@ -2057,6 +2057,7 @@ socket.on('connect', () => {
             var dataId = row.getAttribute("data-id");
             let modleName = "#myModaL"
             $(modleName).find('.form-data').attr('id',dataId )
+            $(modleName).find('.form-data').find('input[name = "NewEXP"]').val(data.exposureLimit)
             socket.emit('changeExpLimit', {id, LOGINDATA, dataId})
         })
 

@@ -9575,10 +9575,10 @@ io.on('connection', (socket) => {
 
 
     socket.on('changeExp', async(data) => {
-        console.log(data, "WORKING123456789")
+        // console.log(data, "WORKING123456789")
             try{
                 let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-                console.log(loginUser, "loginUserloginUserloginUser")
+                // console.log(loginUser, "loginUserloginUserloginUser")
                 if(loginUser && (await loginUser.correctPassword(data.data.Password, loginUser.password))){
                     let user = await User.findByIdAndUpdate(data.data.id, {exposureLimit:data.data.NewEXP})
                     if(user){
