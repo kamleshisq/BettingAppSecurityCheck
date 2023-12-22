@@ -28,7 +28,10 @@ async function placeBet(data){
     // console.log(data, "data1")
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     let exposure = await exposurecheck(check)
-    console.log(exposure, "exposureexposureexposureexposureexposureexposureexposure")
+    // console.log(exposure, "exposureexposureexposureexposureexposureexposureexposure")
+    if((exposure + data.data.stake) > check.exposureLimit){
+        return "Please try again later, Your exposure Limit is full"
+    }
     // if((check.availableBalance - check.exposure) < data.data.stake){
     //     return "You do not have sufficient balance for bet"
     // }
