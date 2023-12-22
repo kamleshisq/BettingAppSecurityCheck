@@ -3168,13 +3168,13 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     if(data.json.userAcc.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
-                        $('#load-more').hide()
+                        // $('#load-more').hide()
                     }
                     $('tbody').html(html)
 
                 }else {
                     if(data.json.userAcc.length == 0){
-                        $('#load-more').hide()
+                        // $('#load-more').hide()
                     }
                     $('tbody').append(html)
 
