@@ -2064,6 +2064,15 @@ socket.on('connect', () => {
             let form = $(modleName).find('.form-data')
             form.find('input[name = "OldEXP"]').val(data.exposureLimit)
         })
+
+
+        $(document).on('submit', '.Exposure', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            console.log(data, "datadatadata")
+        })
         // socket.on('getOwnChild',(data) => {
             // console.log(data)
             // let response = data.response;
