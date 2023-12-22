@@ -5033,9 +5033,9 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
         let eventData = await commissionNewModel.aggregate([
             {
                 $match:{
-                    eventDate: {
-                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                    },
+                    // eventDate: {
+                    //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    // },
                     userName:user,
                     eventName:req.query.event
                 }
@@ -5054,9 +5054,9 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
         let Userdata = await commissionNewModel.aggregate([
                 {
                     $match: {
-                    eventDate: {
-                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                    },
+                    // eventDate: {
+                    //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    // },
                     userName:user
                     }
                 },
