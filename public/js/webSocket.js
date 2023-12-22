@@ -3483,7 +3483,13 @@ socket.on('connect', () => {
                       <h5>Downline Balance</h5>
                         <h6> ${data.user.downlineBalance.toFixed(2)}</h6>
                     </div>`
-                      html1 += `<h5>Lifetime P/L</h5>
+                    if(data.user.lifetimePL >= 0){
+                        html1 += `<div class="skin-data green">`
+                    }else{
+                        html1 += `<div class="skin-data red">`
+                    }
+                      html1 += `
+                      <h5>Lifetime P/L</h5>
                         <h6> ${data.user.lifetimePL.toFixed(2)}</h6>
                     </div>
                   `
