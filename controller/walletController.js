@@ -216,6 +216,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 
         const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let check = await userModel.findById(req.body.userId);
+        let exposureCheck  = await exposurecheckfunction(check)
         if(!check){
             if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                 return res.status(200).json({
@@ -304,15 +305,15 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 "transactionId":`${bet.transactionId}`
               })
         }
-    
+        let sendBalance = balance - exposureCheck
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
-                "balance": balance,
+                "balance": sendBalance,
                 "status": "RS_OK"
             })
         }else{
             res.status(200).json({
-                "balance": balance,
+                "balance": sendBalance,
                 "status": "OP_SUCCESS"
             })
         }
