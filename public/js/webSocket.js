@@ -5426,8 +5426,8 @@ socket.on('connect', () => {
          $(document).on('click','td',function(e){
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
-            console.log($(this).closest('.getajaxdataclick'))
-            let url = $(this).closest('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            console.log($(this).siblings('.getajaxdataclick'))
+            let url = $(this).siblings('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
             // location.href = url
          })
         $(document).on("click", ".searchList", function(){
