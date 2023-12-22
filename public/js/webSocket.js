@@ -3496,13 +3496,20 @@ socket.on('connect', () => {
                 }
                 for(let i = 0; i < data.json.userAcc.length; i++){
                     let date = new Date(data.json.userAcc[i].date);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
                     // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
                     // console.log(abc)
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].transactionId){
                             if(data.json.userAcc[i].betDetails.length != 0){
 
@@ -3542,9 +3549,7 @@ socket.on('connect', () => {
                         }
                     }else{
                         html += `<tr style="text-align: center;" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].transactionId){
                             if(data.json.userAcc[i].betDetails.length != 0){
 
