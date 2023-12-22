@@ -522,7 +522,7 @@ io.on('connection', (socket) => {
             operatorId = data.LOGINDATA.LOGINUSER._id
         }
         let json
-        if(refreshStatus){
+        if(data.refreshStatus){
             if(data.id){
     
                 // console.log()
@@ -538,6 +538,58 @@ io.on('connection', (socket) => {
             .then(json =>{ 
                 socket.emit('Acc', {json,page:data.page})
             });
+        }else{
+            let filter = {}
+            filter.user_id = data.LOGINDATA.LOGINUSER._id
+            if(data.Fdate != "" && data.Tdate == ""){
+                filter.date = {
+                    $gt : new Date(data.Fdate)
+                }
+            }else if(data.Fdate == "" && data.Tdate != ""){
+                filter.date = {
+                    $lt : new Date(data.Tdate)
+                }
+            }else if (data.Fdate != "" && data.Tdate != ""){
+                filter.date = {
+                    $gte : new Date(data.Fdate),
+                    $lt : new Date(data.Tdate)
+                }
+            }
+            if (data.filterData.type === "Deposit"){
+                filter.stake = undefined
+                filter.accStype = undefined
+                filter.creditDebitamount = {
+                    $gt: 0
+                }
+            }else if(data.filterData.type === "Withdraw"){
+                filter.stake = undefined
+                filter.accStype = undefined
+                filter.creditDebitamount = {
+                    $lt: 0
+                }
+            }else if (data.filterData.type === "Settlement_Deposit"){
+                filter.stake = undefined
+                filter.accStype = {
+                    $ne:undefined
+                }
+                filter.creditDebitamount = {
+                    $gt: 0
+                }
+            }else if(data.filterData.type === "Settlement_Withdraw"){
+                filter.stake = undefined
+                filter.accStype = {
+                    $ne:undefined
+                }
+                filter.creditDebitamount = {
+                    $lt: 0
+                }
+            }
+            page = 0
+            if(data.page){
+                page = data.page
+            }
+            json = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
+            socket.emit('Acc', {json,page})
         }
     })
 
