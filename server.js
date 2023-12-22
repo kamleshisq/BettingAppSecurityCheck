@@ -601,7 +601,39 @@ io.on('connection', (socket) => {
             filter.date = {$lte:new Date(data.Tdate)}
         }
         filter.user_id = new mongoose.Types.ObjectId(data.id)
-
+        if(data.Transaction_type === "Bet_Settlement"){
+            filter.stake = {
+                $ne:undefined
+            }
+        }else if (data.Transaction_type === "Deposit"){
+            filter.stake = undefined
+            filter.accStype = undefined
+            filter.creditDebitamount = {
+                $gt: 0
+            }
+        }else if(data.Transaction_type === "Withdraw"){
+            filter.stake = undefined
+            filter.accStype = undefined
+            filter.creditDebitamount = {
+                $lt: 0
+            }
+        }else if (data.Transaction_type === "Settlement_Deposit"){
+            filter.stake = undefined
+            filter.accStype = {
+                $ne:undefined
+            }
+            filter.creditDebitamount = {
+                $gt: 0
+            }
+        }else if(data.Transaction_type === "Settlement_Withdraw"){
+            filter.stake = undefined
+            filter.accStype = {
+                $ne:undefined
+            }
+            filter.creditDebitamount = {
+                $lt: 0
+            }
+        }
         if(data.id){
             // console.log()
             let Logs = await AccModel.aggregate([
