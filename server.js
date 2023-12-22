@@ -9576,22 +9576,20 @@ io.on('connection', (socket) => {
 
     socket.on('changeExp', async(data) => {
         console.log(data, "WORKING123456789")
-        socket.on('UpdateBetLimit', async(data) => {
             try{
                 let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
                 if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
-                    
+                    let user = await User.findByIdAndUpdate(data.data.id, {exposureLimit:data.data.NewEXP})
+                    if(user){
+                        socket.emit('changeExp', {message:'Updated!', status:'success'})
+                    }
                 }else{
-                    socket.emit('UpdateBetLimit', {message:"Please provide a valid password", status:"err"})
+                    socket.emit('changeExp', {message:"Please provide a valid password", status:"err"})
                 }   
-    
-    
-    
             }catch(err){
                 console.log(err)
-                socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
+                socket.emit('changeExp', {message:"Please try again leter", status:"err"})
             }
-        })
     })
 
 })

@@ -2076,6 +2076,14 @@ socket.on('connect', () => {
             data.id = id
             socket.emit('changeExp', {data, LOGINDATA})
         })
+
+        socket.on('changeExp', data => {
+            if(data.message){
+                alert(data.message)
+            }else{
+                alert('Please try again leter')
+            }
+        })
         // socket.on('getOwnChild',(data) => {
             // console.log(data)
             // let response = data.response;
