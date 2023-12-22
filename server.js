@@ -1287,10 +1287,10 @@ io.on('connection', (socket) => {
         if(data.filterData.betType === 'All'){
             delete data.filterData['betType']
         }
-
-        if(data.filterData.status == 'All'){
-            data.filterData.status = {$ne: "OPEN"}
-        }
+        console.log(data.filterData)
+        // if(data.filterData.status == 'All'){
+        //     data.filterData.status = {$ne: "OPEN"}
+        // }
         // console.log(data.filterData)
 
         let childrenUsername = []
