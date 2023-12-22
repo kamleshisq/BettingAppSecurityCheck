@@ -9578,6 +9578,7 @@ io.on('connection', (socket) => {
         console.log(data, "WORKING123456789")
             try{
                 let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+                console.log(loginUser, "loginUserloginUserloginUser")
                 if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
                     let user = await User.findByIdAndUpdate(data.data.id, {exposureLimit:data.data.NewEXP})
                     if(user){
