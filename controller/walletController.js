@@ -181,6 +181,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             }
             amount = parentUser2Amount
         }
+        console.log(betDATA, "betDATAbetDATAbetDATAbetDATA")
         await betModel.create(betDATA);
         let Acc = {
             "user_id":req.body.userId,
