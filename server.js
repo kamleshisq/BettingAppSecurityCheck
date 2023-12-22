@@ -521,31 +521,76 @@ io.on('connection', (socket) => {
         }else{
             operatorId = data.LOGINDATA.LOGINUSER._id
         }
-        if(data.id){
-            // console.log()
-            fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
+        let json
+        if(data.refreshStatus){
+            if(data.id){
+    
+                // console.log()
+                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
+            }else{
+                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
+    
+            }
+            fetch(fullUrl, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ` + loginData.Token },
+            }).then(res => res.json())
+            .then(json =>{ 
+                socket.emit('Acc', {json,page:data.page})
+            });
         }else{
-            fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
-
+            let filter = {}
+            filter.user_id = data.LOGINDATA.LOGINUSER._id
+            if(data.Fdate != "" && data.Tdate == ""){
+                filter.date = {
+                    $gt : new Date(data.Fdate)
+                }
+            }else if(data.Fdate == "" && data.Tdate != ""){
+                filter.date = {
+                    $lt : new Date(data.Tdate)
+                }
+            }else if (data.Fdate != "" && data.Tdate != ""){
+                filter.date = {
+                    $gte : new Date(data.Fdate),
+                    $lt : new Date(data.Tdate)
+                }
+            }
+            if (data.filterData.type === "Deposit"){
+                filter.stake = undefined
+                filter.accStype = undefined
+                filter.creditDebitamount = {
+                    $gt: 0
+                }
+            }else if(data.filterData.type === "Withdraw"){
+                filter.stake = undefined
+                filter.accStype = undefined
+                filter.creditDebitamount = {
+                    $lt: 0
+                }
+            }else if (data.filterData.type === "Settlement_Deposit"){
+                filter.stake = undefined
+                filter.accStype = {
+                    $ne:undefined
+                }
+                filter.creditDebitamount = {
+                    $gt: 0
+                }
+            }else if(data.filterData.type === "Settlement_Withdraw"){
+                filter.stake = undefined
+                filter.accStype = {
+                    $ne:undefined
+                }
+                filter.creditDebitamount = {
+                    $lt: 0
+                }
+            }
+            page = 0
+            if(data.page){
+                page = data.page
+            }
+            json = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
+            socket.emit('Acc', {json,page})
         }
-
-        //urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}&search = ${data.search}`,'GET', data.LOGINDATA.LOGINTOKEN)
-
-
-        // console.log(fullUrl)
-        fetch(fullUrl, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ` + loginData.Token },
-        }).then(res => res.json())
-        .then(json =>{ 
-            // console.log(json)
-            socket.emit('Acc', {json,page:data.page})
-            // const data = json.userAcc
-            // res.status(200).render('./userAccountStatement/useracount',{
-            // title:"UserAccountStatement",
-            // me:currentUser,
-            // data})
-        });
     })
 
     socket.on("AccountScroll1", async(data)=>{
