@@ -5423,7 +5423,7 @@ socket.on('connect', () => {
             socket.emit('gameReport',data)
          }); 
 
-         $(document).on('click','.getajaxdataclick',function(e){
+         $(document).on('click','tr',function(e){
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
             let url = $(this).closest('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`

@@ -60,9 +60,9 @@
               <%if(games.length > 0){%>
               <%for(let i = 0;i<games.length;i++){%>
               <%if(i % 2 == 0){%>
-              <tr>
+              <tr style="cursor:pointer">
                 <%}else{%>
-                <tr>
+                <tr style="cursor:pointer">
                   <%}%>
                   <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
                   <td><%=games[i].gameCount%></td>
