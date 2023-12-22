@@ -588,7 +588,11 @@ io.on('connection', (socket) => {
             if(data.page){
                 page = data.page
             }
-            json = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
+            let userAcc = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
+            json = {
+                status : 'success',
+                userAcc
+            }
             socket.emit('Acc', {json,page})
         }
     })
