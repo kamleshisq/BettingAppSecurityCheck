@@ -1187,11 +1187,11 @@ exports.myaccount = catchAsync(async(req, res, next) => {
     }else{
         operatorId = req.currentUser._id
     }
-    let accountStatement = await accountStatement.find({user_id:operatorId}).sort({date:-1}).limit(10)
+    let accountStatementdata = await accountStatement.find({user_id:operatorId}).sort({date:-1}).limit(10)
     res.status(200).render('./userAccountStatement/useracount', {
         title:"My Account Statement",
         me:currentUser,
-        data:accountStatement,
+        data:accountStatementdata,
         currentUser
     })
 //     var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + operatorId 
