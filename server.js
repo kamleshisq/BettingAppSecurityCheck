@@ -635,7 +635,7 @@ io.on('connection', (socket) => {
             }
         }
         if(data.id){
-            console.log(filter, "filterfilterfilterfilter")
+            // console.log(filter, "filterfilterfilterfilter")
             let Logs = await AccModel.aggregate([
                 {
                     $match:filter
