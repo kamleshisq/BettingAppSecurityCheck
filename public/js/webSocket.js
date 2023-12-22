@@ -2054,9 +2054,9 @@ socket.on('connect', () => {
         $(document).on('click', ".ExposureLimit", function(){
             var row = this.closest("tr");
             var id = row.id;
-            // var dataId = row.getAttribute("data-id");
+            var dataId = row.getAttribute("data-id");
             console.log(id, "IDIDID")
-            socket.emit('changeExpLimit', {id, LOGINDATA})
+            socket.emit('changeExpLimit', {id, LOGINDATA, dataId})
         })
         // socket.on('getOwnChild',(data) => {
             // console.log(data)
