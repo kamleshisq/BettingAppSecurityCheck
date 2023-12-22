@@ -513,7 +513,7 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("AccountScroll", async(data)=>{
-        console.log(data)
+        console.log(data, "DATA")
         let fullUrl
         let operatorId;
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
@@ -585,7 +585,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("AccountScroll2", async(data)=>{
-        // console.log(data)
+        console.log(data)
         const user = await User.findById(data.id)
         let fullUrl
         let account;
