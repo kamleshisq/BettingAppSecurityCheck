@@ -65,15 +65,15 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     let exposureCheck  = await exposurecheckfunction(user)
     console.log(exposureCheck, "exposureCheckexposureCheckexposureCheckexposureCheck")
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    console.log(clientIP)
+    let balanceSend = user.availableBalance - exposureCheck
     if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
         res.status(200).json({
-            "balance": user.availableBalance,
+            "balance": balanceSend,
             "status": "RS_OK"
         })
     }else{
         res.status(200).json({
-            "balance": user.availableBalance,
+            "balance": balanceSend,
             "status": "OP_SUCCESS"
         })
     }
