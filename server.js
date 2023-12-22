@@ -9564,6 +9564,12 @@ io.on('connection', (socket) => {
 
     socket.on('changeExpLimit', async(data) => {
         console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            let thatUser = await User.findById(data.dataId)
+            if(thatUser){
+                socket.emit('changeExpLimit', thatUser)
+            }
+        }
     })
 
 })

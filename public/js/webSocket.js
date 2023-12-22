@@ -2055,8 +2055,14 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
-            console.log(id, "IDIDID")
+            // console.log(id, "IDIDID")
             socket.emit('changeExpLimit', {id, LOGINDATA, dataId})
+        })
+
+        socket.on('changeExpLimit', data => {
+            let modleName = "#myModaL"
+            let form = $(modleName).find('.form-data')
+            form.find('input[name = "OldEXP"]').val(data.exposureLimit)
         })
         // socket.on('getOwnChild',(data) => {
             // console.log(data)
