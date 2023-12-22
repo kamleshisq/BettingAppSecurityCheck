@@ -2051,6 +2051,13 @@ socket.on('connect', () => {
             }
         })
         
+        $(document).on('click', ".ExposureLimit", function(){
+            var row = this.closest("tr");
+            var id = row.id;
+            // var dataId = row.getAttribute("data-id");
+            console.log(id, "IDIDID")
+            socket.emit('changeExpLimit', {id, LOGINDATA})
+        })
         // socket.on('getOwnChild',(data) => {
             // console.log(data)
             // let response = data.response;
@@ -2274,7 +2281,7 @@ socket.on('connect', () => {
                             // if(data.currentUser.role.authorization.includes('userStatus')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>`
                                 if(response[i].roleName === 'user'){
-                                    html += `<button data-bs-toggle="modal" data-bs-target="#myModaL" class="Exposure Limit" title="Exposure Limit">L</button>`
+                                    html += `<button data-bs-toggle="modal" data-bs-target="#myModaL" class="ExposureLimit" title="Exposure Limit">L</button>`
                                 }
                             // }
                             // if(data.currentUser.role.authorization.includes('userName')){
