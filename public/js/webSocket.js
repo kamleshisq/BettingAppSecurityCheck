@@ -2987,108 +2987,67 @@ socket.on('connect', () => {
                 document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
         })
+        let  data = {}
 
         let searchU 
         let SUSER
-       
+        let Fdate = document.getElementById("Fdate").value
+        let Tdate = document.getElementById("Tdate").value
+        Transaction_type = $('#transaction_type').val()
+        data.Transaction_type = Transaction_type
+        data.Fdate = Fdate;
+        if(Tdate != ''){
+            data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+        }else{
+            data.Tdate = Tdate
+        }      
+        data.LOGINDATA = LOGINDATA
+
         $(document).on("click", ".searchList", function(){
-            // console.log("working")
-            // console.log(this.textContent)
             document.getElementById("searchUser").value = this.textContent
             searchU = true
-                let  data = {}
-                let Fdate = document.getElementById("Fdate").value
-                let Tdate = document.getElementById("Tdate").value
-               
-                
-                data.Fdate = Fdate;
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                data.id = this.id
-                SUSER = this.id
-                data.page = 0
-                data.LOGINDATA = LOGINDATA
-                $('.pageLink').attr('data-page',1)
-                $('.wrapper').hide()
-                // console.log(data, 456)
-                // console.log(data)
-                socket.emit( "AccountScroll", data)
+            data.id = this.id
+            SUSER = this.id
+            data.page = 0
+            $('.pageLink').attr('data-page',1)
+            $('.wrapper').hide()
+            socket.emit( "AccountScroll", data)
         })
 
-        $('#Fdate,#Tdate').change(function(){
-            
+        $('#Fdate,#Tdate.#transaction_type').change(function(){
             let page = 0;
             $('.pageLink').attr('data-page',1)           
             Fdate = document.getElementById("Fdate").value
             Tdate = document.getElementById("Tdate").value
-            let data = {}
+            Transaction_type = $('#transaction_type').val()
             if(searchU){
                  data.id = SUSER
-                 data.page = page
-                 data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                data.LOGINDATA = LOGINDATA
-            }{
-                 data.page = page
-                 data.Fdate = Fdate
-                 if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                
-                data.LOGINDATA = LOGINDATA
             }
+            if(Tdate != ''){
+                data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+            }else{
+                data.Tdate = Tdate
+            }  
+            data.Fdate = Fdate
+            data.page = page
+            data.Transaction_type = Transaction_type
             socket.emit('AccountScroll',data)        
         })
 
         $('#load-more').click(function(e){
             let page = parseInt($('.pageLink').attr('data-page'));
-            // console.log(page)
-            Fdate = document.getElementById("Fdate").value
-            Tdate = document.getElementById("Tdate").value
             $('.pageLink').attr('data-page',page + 1)
-            let data = {}
+            data.page = page
            if(searchU){
                 data.id = SUSER
-                data.page = page
-                data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }
-                data.LOGINDATA = LOGINDATA
-           }{
-                data.page = page
-                data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                
-                data.LOGINDATA = LOGINDATA
            }
-        //    console.log(data)
-            
             socket.emit('AccountScroll',data)
         })
-
-
-    
 
          let count1 = 11
          socket.on("Acc", async(data) => {
             // console.log(data)
             if(data.json.status == "success"){
-
                 if(data.page == 0){
                     count1 = 1;
                 }

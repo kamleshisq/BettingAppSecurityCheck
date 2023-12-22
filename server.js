@@ -513,7 +513,7 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("AccountScroll", async(data)=>{
-        // console.log(data)
+        console.log(data)
         let fullUrl
         let operatorId;
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
