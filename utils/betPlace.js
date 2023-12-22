@@ -29,7 +29,7 @@ async function placeBet(data){
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     let exposureCHECk = await exposurecheck(check)
     console.log(exposureCHECk, exposureCHECk + data.data.stake,check.exposureLimit,"exposureexposureexposureexposureexposureexposureexposure")
-    if((exposureCHECk + data.data.stake) > check.exposureLimit){
+    if((exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full"
     }
     // if((check.availableBalance - check.exposure) < data.data.stake){
