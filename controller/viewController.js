@@ -755,7 +755,7 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     let bets = await betModel.aggregate([
         {
             $match: {
-              status: {$ne:"OPEN"},
+            //   status: {$ne:"OPEN"},
               userName:{$in:childrenUsername}
             }
         },
