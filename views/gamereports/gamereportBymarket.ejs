@@ -40,13 +40,25 @@
             </thead>
             <tbody class="new-body">
               <%for(let i = 0;i<games.length;i++){%>
+                <% let date = new Date(games[i].date)%>
+                <%
+                  var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                  };
+                  var formattedTime = date.toLocaleString('en-US', options);
+                %>
               <%if(i % 2 == 0){%>
-              <tr>
+              <tr style="cursor: pointer;">
                 <%}else{%>
-                <tr>
+                <tr style="cursor: pointer;">
                   <%}%>
                   <td><%=i + 1%></td>
-                  <td><%=games[i].date%></td>
+                  <td><%=formattedTime%></td>
                   <td class="clickableelement getajaxdataclick" data-href="<%=url%>&market=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
                   <td><%=games[i].gameCount%></td>
                   <td><%=games[i].won%></td>

@@ -5230,10 +5230,13 @@ socket.on('connect', () => {
          })
     }
     else if(pathname.startsWith('/admin/gamereport/match/market')){
-        $(document).on('click','.getajaxdataclick',function(e){
-        
-            let url = $(this).attr('data-href')
-            // console.log(url)
+        $(document).on('click','td',function(e){
+            let url;
+            if(!$(this).hasClass('getajaxdataclick')){
+                url = $(this).siblings('.getajaxdataclick').attr('data-href')
+            }else{
+                url = $(this).attr('data-href')
+            }
             location.href = url
          })
          $('#load-more').click(function(e){
@@ -5282,9 +5285,9 @@ socket.on('connect', () => {
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
                 if(i % 2 == 0){
-                  html += `<tr style="text-align: center;">`
+                  html += `<tr style="text-align: center;"style="cursor: pointer;">`
                 }else{
-                  html += `<tr style="text-align: center;" class="blue">`
+                  html += `<tr style="text-align: center;" class="blue"style="cursor: pointer;">`
                 }
                   html += `<td>${count + i}</td>
                   <td>${formattedTime}</td>
@@ -5431,9 +5434,13 @@ socket.on('connect', () => {
          $(document).on('click','td',function(e){
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
-            console.log($(this).siblings('.getajaxdataclick'))
-            let url = $(this).siblings('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
-            // location.href = url
+            let url;
+            if(!$(this).hasClass('getajaxdataclick')){
+                url = $(this).siblings('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            }else{
+                url = $(this).attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            }
+            location.href = url
          })
         $(document).on("click", ".searchList", function(){
             document.getElementById("searchUser").value = this.textContent
@@ -5518,8 +5525,14 @@ socket.on('connect', () => {
         })
     }
     else if(pathname.startsWith('/admin/gamereport/match')){
-        $(document).on('click','.getajaxdataclick',function(e){
-            let url = $(this).attr('data-href')
+        $(document).on('click','td',function(e){
+            let url;
+            if(!$(this).hasClass('getajaxdataclick')){
+                url = $(this).siblings('.getajaxdataclick').attr('data-href')
+            }else{
+                url = $(this).attr('data-href')
+            }
+            location.href = url
             // console.log(url)
             location.href = url
         })
@@ -5568,9 +5581,9 @@ socket.on('connect', () => {
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
                 if(i % 2 == 0){
-                  html += `<tr style="text-align: center;">`
+                  html += `<tr style="text-align: center;" style="cursor: pointer;" >`
                 }else{
-                  html += `<tr style="text-align: center;" class="blue">`
+                  html += `<tr style="text-align: center;" class="blue" style="cursor: pointer;">`
                 }
                   html += `<td>${count + i}</td>
                   <td>${formattedTime}</td>
