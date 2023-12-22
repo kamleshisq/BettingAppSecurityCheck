@@ -64,7 +64,6 @@
           <table id="table12">
             <thead>
               <tr>
-                <th>S.No</th>
                 <th>Date</th>
                 <th>Time</th>
                 <th>From / To</th>
@@ -78,11 +77,20 @@
               <%if(data.length !== 0){%>
               <%for(let i = 0; i < data.length; i++){%>
               <% let date = new Date(data[i].date)%>
+              <%
+                  var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+              %>
               <%if((i%2 == 0)){%>
               <tr>
-                <td><%= i + 1%></td>
-                <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-                <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                <td class="text-nowrap" ><%=formattedTime%></td>
                 <%if(data[i].creditDebitamount > 0){%>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
@@ -131,9 +139,7 @@
               </tr>
               <%}else{%>
               <tr>
-                <td><%= i + 1%></td>
-                <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-                <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                <td class="text-nowrap" ><%=formattedTime%></td>
                 <%if(data[i].creditDebitamount > 0){%>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
