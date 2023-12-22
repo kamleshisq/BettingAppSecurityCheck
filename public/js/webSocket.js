@@ -3182,6 +3182,20 @@ socket.on('connect', () => {
      
     }
     if(pathname == "/admin/useraccount"){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        $('#Fdate').val(tomorrowFormatted)
+        $('#Tdate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
 
 
         function generatePDF(table) {
@@ -3390,9 +3404,21 @@ socket.on('connect', () => {
             }
         })
 
+        let  data = {}
+
         let searchU 
         let SUSER
-        let match = false
+        let Fdate = document.getElementById("Fdate").value
+        let Tdate = document.getElementById("Tdate").value
+        Transaction_type = $('#transaction_type').val()
+        data.Transaction_type = Transaction_type
+        data.Fdate = Fdate;
+        if(Tdate != ''){
+            data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+        }else{
+            data.Tdate = Tdate
+        }      
+        data.LOGINDATA = LOGINDATA
        
 
         $(document).on("click", ".searchList", function(){
@@ -3400,90 +3426,41 @@ socket.on('connect', () => {
             // console.log(this.textContent)
             document.getElementById("searchUser").value = this.textContent
             searchU = true
-                let  data = {}
-                let Fdate = document.getElementById("Fdate").value
-                let Tdate = document.getElementById("Tdate").value
-               
-                
-                data.Fdate = Fdate;
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }  
-                data.id = this.id
-                SUSER = this.id
-                data.page = 0
-                data.LOGINDATA = LOGINDATA
-                $('.pageLink').attr('data-page',1)
-                $('.wrapper').hide()
-                // console.log(data, 456)
-                // console.log(data)
-                socket.emit( "AccountScroll2", data)
+            data.id = this.id
+            SUSER = this.id
+            data.page = 0
+            $('.pageLink').attr('data-page',1)
+            $('.wrapper').hide()
+            socket.emit( "AccountScroll2", data)
         })
 
-        $('#Fdate,#Tdate').change(function(){
-            
+        $('#Fdate,#Tdate,#transaction_type').change(function(){
             let page = 0;
             $('.pageLink').attr('data-page',1)           
             Fdate = document.getElementById("Fdate").value
             Tdate = document.getElementById("Tdate").value
-            let data = {}
+            Transaction_type = $('#transaction_type').val()
             if(searchU){
                  data.id = SUSER
-                 data.page = page
-                 data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                data.LOGINDATA = LOGINDATA
-            }{
-                 data.page = page
-                 data.Fdate = Fdate
-                 if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                
-                data.LOGINDATA = LOGINDATA
             }
-
-            // console.log(data)
+            if(Tdate != ''){
+                data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+            }else{
+                data.Tdate = Tdate
+            }  
+            data.Fdate = Fdate
+            data.page = page
+            data.Transaction_type = Transaction_type
             socket.emit('AccountScroll2',data)        
         })
 
         $('#load-more').click(function(e){
             let page = parseInt($('.pageLink').attr('data-page'));
-            // console.log(page)
-            Fdate = document.getElementById("Fdate").value
-            Tdate = document.getElementById("Tdate").value
             $('.pageLink').attr('data-page',page + 1)
-            let data = {}
+            data.page = page
            if(searchU){
                 data.id = SUSER
-                data.page = page
-                data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }
-                data.LOGINDATA = LOGINDATA
-           }{
-                data.page = page
-                data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                
-                data.LOGINDATA = LOGINDATA
            }
-        //    console.log(data)
-            
             socket.emit('AccountScroll2',data)
         })
     
