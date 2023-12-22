@@ -5426,9 +5426,13 @@ socket.on('connect', () => {
          $(document).on('click','td',function(e){
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
-            console.log($(this).siblings('.getajaxdataclick'))
-            let url = $(this).siblings('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
-            // location.href = url
+            let url;
+            if(!$(this).hasClass('.getajaxdataclick')){
+                url = $(this).siblings('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            }else{
+                url = $(this).attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            }
+            location.href = url
          })
         $(document).on("click", ".searchList", function(){
             document.getElementById("searchUser").value = this.textContent
