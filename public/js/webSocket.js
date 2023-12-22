@@ -3046,7 +3046,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc", async(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.json.status == "success"){
                 if(data.page == 0){
                     count1 = 1;
