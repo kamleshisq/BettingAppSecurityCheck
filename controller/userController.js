@@ -55,7 +55,8 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let newgamerules = []
             let newgames = []
 
-            let newglobalsetting = {logo1:globalsetting.logo1,
+            let newglobalsetting = {
+                logo1:globalsetting.logo1,
                 logo2:globalsetting.logo2,
                 contactNumber:globalsetting.contactNumber,
                 email:globalsetting.email,
