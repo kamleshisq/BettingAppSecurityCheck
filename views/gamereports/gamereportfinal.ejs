@@ -52,9 +52,9 @@
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
               <%if(i % 2 == 0){%>
-              <tr>
+              <tr style="cursor: pointer;">
                 <%}else{%>
-                <tr>
+                <tr style="cursor: pointer;">
                   <%}%>
                   <td><%=i + 1%></td>
                   <td><%=formattedTime%></td>
