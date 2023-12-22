@@ -5013,6 +5013,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 }
             }
         ])
+        console.log(marketWiseData, "marketWiseDatamarketWiseData")
         res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
             title:"Commission Report",
             me,
