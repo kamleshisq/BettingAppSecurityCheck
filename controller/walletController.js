@@ -197,12 +197,12 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         accountStatement.create(Acc)
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
-                "balance": user.availableBalance - req.body.debitAmount,
+                "balance": user.availableBalance - req.body.debitAmount - exposureCheck,
                 "status": "RS_OK"
             })
         }else{
             res.status(200).json({
-                "balance": user.availableBalance - req.body.debitAmount,
+                "balance": user.availableBalance - req.body.debitAmount - exposureCheck,
                 "status": "OP_SUCCESS"
             })
         }
