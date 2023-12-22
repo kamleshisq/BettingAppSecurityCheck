@@ -23,8 +23,23 @@
         <button class="tablinks" onclick="openCity(event, 'Greyhound')"><img src="../images/gray.png" alt=""> &nbsp; Greyhound</button>
       </div>
 
-      <%- include("./cricket") %>
+      <!-- <div id="Cricket" class="tabcontent">
+        <div class="row"> -->
+          <%- include("./cricket") %>
+        <!-- </div>
+      </div> -->
             
+      <!-- <div id="FOOTBALL" class="tabcontent">
+        <div class="row"> -->
+          <%- include("./football") %>
+        <!-- </div>
+      </div> -->
+
+      <!-- <div id="TENNIS" class="tabcontent">
+        <div class="row"> -->
+          <%- include("./tennis") %>
+        <!-- </div>
+      </div> -->
 
 
       <div id="BASEBALL" class="tabcontent">
@@ -68,14 +83,18 @@
         function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
+    // console.log(tabcontent, "tabcontenttabcontenttabcontent")
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
     tablinks = document.getElementsByClassName("tablinks");
+    // console.log(tablinks, "tablinkstablinkstablinks")
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
+    let div = document.getElementById(cityName).style.display 
     document.getElementById(cityName).style.display = "block";
+    // console.log(div, "divdivdivdiv")
     evt.currentTarget.className += " active";
     
   }

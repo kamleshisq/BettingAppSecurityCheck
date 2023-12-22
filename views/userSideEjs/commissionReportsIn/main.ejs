@@ -68,7 +68,7 @@
                       <tr class="acount-stat-tbl-body-tr tbl-data-href"  data-href = '/myCommissionReportsInEvent?id=<%=data[i]._id%>'>
                         <td title="SR No." ><%=i+1%></td>
                         <td title="Competition" ><%=data[i]._id%></td>
-                        <td title="Commission" ><%=data[i].totalCommissionPoints%></td>
+                        <td title="Commission" ><%=data[i].totalCommissionPoints.toFixed(3)%></td>
                       </tr>
                     <%}%>
                 </tbody>

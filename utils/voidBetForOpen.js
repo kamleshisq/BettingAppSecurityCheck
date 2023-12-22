@@ -3,7 +3,8 @@ const User = require('../model/userModel');
 const AccModel = require('../model/accountStatementByUserModel');
 const settlementHistoryModel = require('../model/settelementHistory');
 const InprogressModel = require('../model/InprogressModel');
-const Decimal =  require('decimal.js')
+const Decimal =  require('decimal.js');
+const commissionNewModel = require('../model/commissioNNModel');
 
 
 
@@ -17,6 +18,7 @@ async function voidbetBeforePlace(data){
     try{
 
         let bets = await Bet.find({marketId:data.id, status : {$in: ['OPEN', 'MAP']}})
+        await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
         let inprogressData = await InprogressModel.findOne({marketId:data.id, progressType:'VoideBet'})
         if(inprogressData === null){
             try{
@@ -76,7 +78,7 @@ async function voidbetBeforePlace(data){
                         await AccModel.create(userAcc);
 
                         let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bets[bet].marketId, progressType:'VoideBet'}, {$inc:{settledBet:1}})
-                        console.log(checkDelete, '<======== checkDelete')
+                        // console.log(checkDelete, '<======== checkDelete')
                         if((checkDelete.settledBet + 1) == checkDelete.length){
                             await InprogressModel.findOneAndDelete({marketId : bets[bet].marketId, progressType:'VoideBet'})
                         }

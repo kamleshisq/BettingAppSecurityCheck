@@ -86,7 +86,7 @@ const colorCodeModel = require('../model/colorcodeModel');
 
 const whiteLabelcheck = (req) => {
     let hostname = req.headers.host
-    console.log(hostname,'==>hostname')
+    // console.log(hostname,'==>hostname')
     let whiteLabel = process.env.whiteLabelName
     if(!req.currentUser || req.currentUser.roleName == "DemoLogin"){
         whiteLabel = hostname
@@ -97,7 +97,7 @@ const whiteLabelcheck = (req) => {
             whiteLabel = req.currentUser.whiteLabel
         }
     }
-    console.log(whiteLabel)
+    // console.log(whiteLabel)
     return whiteLabel
 }
 
@@ -172,7 +172,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             }
         ]
     }
-    console.log(urls, req.token)
+    // console.log(urls, req.token)
     let requests = urls.map((item) => {
         return new Promise((resolve, reject) => {
           request(
@@ -187,7 +187,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
               if (error) {
                 reject(error);
               } else {
-                  console.log(body)
+                //   console.log(body)
                 resolve(JSON.parse(body));
               }
             }
@@ -196,7 +196,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     });
   
     const data = await Promise.all(requests);
-    console.log(data,'==>data')
+    // console.log(data,'==>data')
     if(data[0].status == 'Error'){
         return res.redirect('/admin/userManagement')
     }
@@ -228,8 +228,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         sum = 0
     }
     let adminBredcumArray = []
-    console.log(me, "memememememememememe")
-    console.log(currentUser, "CURR")
+    // console.log(me, "memememememememememe")
+    // console.log(currentUser, "CURR")
     if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
@@ -240,7 +240,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }else{
         for(let i = 0; i < me.parentUsers.length; i++){
             if(me.parentUsers[i] == currentUser._id.toString()){
-                console.log("WORKING")
+                // console.log("WORKING")
                 adminBredcumArray.push({
                     userName:currentUser.userName,
                     role:currentUser.roleName,
@@ -249,12 +249,15 @@ exports.userTable = catchAsync(async(req, res, next) => {
                 })
             }else{
                 let thatUser = await User.findById(me.parentUsers[i])
-                adminBredcumArray.push({
-                    userName:thatUser.userName,
-                    role:thatUser.roleName,
-                    id : thatUser._id.toString(),
-                    status:false
-                })
+                if(thatUser.role_type > currentUser.role_type){
+                    adminBredcumArray.push({
+                        userName:thatUser.userName,
+                        role:thatUser.roleName,
+                        id : thatUser._id.toString(),
+                        status:false
+                    })
+
+                }
             }
         }
         adminBredcumArray.push({
@@ -264,7 +267,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             status:false
         })
     }
-    console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
+    // console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
@@ -292,6 +295,7 @@ exports.allOperators = catchAsync(async(req, res, next)=>{
 })
 
 exports.login = catchAsync(async(req, res, next) => {
+    // console.log('adminLogin PAge')
     if(req.currentUser){
         if(req.currentUser.role_type < 5){
            return res.redirect('/admin/dashboard')
@@ -610,7 +614,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
 
-    console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
+    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         user,
@@ -829,16 +833,8 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -1494,13 +1490,13 @@ exports.getoperationsPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
-    console.log('WORKING')
+    // console.log('WORKING')
     const me = req.currentUser
     // console.log(me)
     let settlement
-    settlement = await sattlementModel.findOne({userId:me.id})
+    settlement = await sattlementModel.findOne({userName:me.userName})
     if(settlement === null){
-        settlement = await sattlementModel.create({userId:me.id})
+        settlement = await sattlementModel.create({userId:me.id, userName:me.userName})
     }
     const currentDate = new Date(); // Current date
     const fiveDaysAgo = new Date(currentDate);
@@ -1522,7 +1518,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         //     childrenUsername.push(ele.userName) 
         // })
     }
-    console.log('START')
+    // console.log('START')
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
@@ -1575,7 +1571,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             }
         }
       ]);
-      console.log('END')
+    //   console.log('END')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
         me,
@@ -2180,19 +2176,19 @@ exports.getSportList = catchAsync(async(req, res, next) => {
 });
 
 
-exports.getCricketData = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
-    fetch(fullUrl, {
-        method: 'GET'
-    })
-    .then(res =>res.json())
-    .then(result => {
-        // console.log(result)
-        res.status(200).json({
-            result
-        })
-    })
-});
+// exports.getCricketData = catchAsync(async(req, res, next) => {
+//     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
+//     fetch(fullUrl, {
+//         method: 'GET'
+//     })
+//     .then(res =>res.json())
+//     .then(result => {
+//         // console.log(result)
+//         res.status(200).json({
+//             result
+//         })
+//     })
+// });
 
 // exports.getFootballData = catchAsync(async(req, res, next) => {
 //     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-footballdata';
@@ -2209,7 +2205,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["1.220577046", "1.220570501", "1.220566377"]);
+    let body = JSON.stringify(["1.222218327", "4.1702114932195-BM", "4.1702288166905-F2", "4.1702115752278-OE"]);
     // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
@@ -2231,12 +2227,17 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
 
 exports.getLiveTv = catchAsync(async(req, res, next) => {
     let body = {
-        ipv4 : "46.101.225.192",
-        channel : "9002"
+        ipv4 : "172.105.58.243",
+        channel : "1029"
     }
     var fullUrl = 'https://score-session.dbm9.com/api/tv-stream-2';
     fetch(fullUrl, {
         method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'accept': 'application/json' ,
+            "Origin":"http://ollscores.com/",
+            "Referer":"http://ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -2249,7 +2250,7 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
 
 
 exports.getMarketResult = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify([ "4.1697461669317-F2"]);
+    let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
     // console.log(body)
     let fullUrl = "https://admin-api.dreamexch9.com/api/dream/markets/result";
     fetch(fullUrl, {
@@ -2353,9 +2354,12 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const runners = await runnerData.find()
     let currentUser =  req.currentUser
+    let childrenUsername = await User.distinct('userName', { parentUsers : req.currentUser.id, role_type: 5 });
+    let bets = await betModel.distinct('marketId', {userName : {$in:childrenUsername}, status: 'OPEN'})
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         runners,
+        bets,
         currentUser,
         me: currentUser
     })
@@ -2585,7 +2589,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 exports.cricketPage = catchAsync(async(req, res, next)=>{
     let user = req.currentUser
-    console.log('cricketPage')
+    // console.log('cricketPage')
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []
@@ -2798,48 +2802,178 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
+    // console.log(req.query)
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-
-    let data = await betModel.aggregate([
-        {
-            $match:{
-                userId:req.currentUser.id
-            }
-        },
-        {
-            $group: {
-              _id: "$event",
-              wins: {
-                $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
-              },
-              losses: {
-                $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
-              },
-              profit: {
-                $sum: "$returns"
-              }
-            }
-        }
-    ])
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser.id})
     }
-    // console.log(data)
-    res.status(200).render("./userSideEjs/plStatemenet/main",{
-        title:'P/L Reports',
-        user: req.currentUser,
-        data,
-        verticalMenus,
-        check:"plStatemenet",
-        userLog,
-        notifications:req.notifications,
-        basicDetails,
-        colorCode
-    })
+    if(Object.keys(req.query).length === 0){
+    
+        let data = await betModel.aggregate([
+            {
+                $match:{
+                    userId:req.currentUser.id,
+                    status: {
+                        $in: ['WON', 'LOSS']
+                    }
+                }
+            },
+            {
+                $group: {
+                  _id: "$event",
+                  wins: {
+                    $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
+                  },
+                  losses: {
+                    $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
+                  },
+                  profit: {
+                    $sum: "$returns"
+                  }
+                }
+            },
+            {
+                $sort:{
+                    _id : 1,
+                    profit : 1
+                }
+            },
+            {
+                $limit:20
+            }
+        ])
+        // console.log(data)
+        res.status(200).render("./userSideEjs/plStatemenet/main",{
+            title:'P/L Reports',
+            user: req.currentUser,
+            data,
+            verticalMenus,
+            check:"plStatemenet",
+            userLog,
+            notifications:req.notifications,
+            basicDetails,
+            colorCode
+        })
+    }else{
+        if(req.query.eventname && !req.query.matchname){
+            let data = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        event : req.query.eventname,
+                    }
+                },
+                {
+                    $group: {
+                      _id: {
+                        match: '$match',
+                        event: '$event'
+                      },
+                      totalData: { $sum: 1 },
+                      win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+                      loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+                      cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+                      open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+                      totalSumOfReturns: { $sum: '$returns' }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 0,
+                      match: '$_id.match',
+                      event: '$_id.event',
+                      totalData: 1,
+                      win: 1,
+                      loss: 1,
+                      cancel: 1,
+                      open: 1,
+                      totalSumOfReturns: 1
+                    }
+                  },
+                {
+                    $sort: { totalSumOfReturns: -1 , match: 1}
+                  },
+                  {
+                    $limit: 20 
+                  }
+              ]);
+              res.status(200).render("./userSideEjs/frofitlossevent/main",{
+                title:'P/L Reports',
+                user:req.currentUser,
+                verticalMenus,
+                data,
+                check:"plStatemenet",
+                userLog,
+                notifications:req.notifications,
+                basicDetails,
+                colorCode
+            })
+        }else if(req.query.eventname && req.query.matchname){
+            let marketIds = await betModel.distinct('marketId', {userId:req.currentUser.id, event : req.query.eventname, match:req.query.matchname})
+            let dates = await settlementHisory.find({marketID:{$in:marketIds}})
+            let betsofthatMatch = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        event : req.query.eventname, 
+                        match:req.query.matchname
+                    }
+                },
+                {
+                    $sort:{date:-1}
+                },
+                {
+                    $group: {
+                      _id: '$marketId',
+                      marketName:{ $first: "$marketName" },
+                      date:{$first:"$date"},
+                      totalData: { $sum: 1 },
+                      win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+                      loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+                      cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+                      open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+                      totalSumOfReturns: { $sum: '$returns' }
+                    }
+                },
+            ])
+            let commisionDetails = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        marketId:{
+                            $in:marketIds
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: '$marketId',
+                        totalCommission2 : { $sum: '$commission'}
+                    }
+                }
+            ])
+            console.log(betsofthatMatch)
+            res.status(200).render("./userSideEjs/frofitlossevent2/main",{
+                title:'P/L Reports',
+                user:req.currentUser,
+                verticalMenus,
+                commisionDetails,
+                betsofthatMatch,
+                dates,
+                check:"plStatemenet",
+                userLog,
+                notifications:req.notifications,
+                basicDetails,
+                colorCode,
+                matchName:req.query.matchname,
+                eventname:req.query.eventname
+            })
+        }
+    }
 });
 
 
@@ -2902,7 +3036,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let stakeLabledata
         let userMultimarkets
         let betsOnthisMatch = []
-        let rules = await gamrRuleModel.find()
+        let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:req.currentUser._id})
             userMultimarkets = await multimarkets.findOne({userId:req.currentUser._id})
@@ -3018,13 +3152,13 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.multimarkets = catchAsync(async(req, res, next) => {
     
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     
     const betLimit = await betLimitModel.find()
-    // let rules = await gamrRuleModel.find()
+    // let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
     //     let date = new Date(item.updated_on);
@@ -3045,7 +3179,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     let multimarket 
     let stakeLabledata
     let betsOnthisMatch = []
-    let rules = await gamrRuleModel.find()
+    let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
@@ -3109,7 +3243,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         urldata,
         userLog,
         notifications:req.notifications,
-        basicDetails
+        basicDetails,
+        colorCode
     })
 })
 
@@ -3123,8 +3258,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         partnerId: "SHPID01",
         platformId: "DESKTOP",
         userId: user._id,
-        username: user.userName,
-        colorCode
+        username: user.userName
     }
     function readPem (filename) {
         return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
@@ -3405,8 +3539,8 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
@@ -3607,16 +3741,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     let betsEventWiseOpen = await betModel.aggregate([
         {
@@ -3646,7 +3772,6 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(betsEventWiseOpen, 456465465465456456456)
     let betsEventWiseMap = await betModel.aggregate([
         {
             $match: {
@@ -3677,7 +3802,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-
+    // console.log(betsEventWiseMap, "betsEventWiseMapbetsEventWiseMapbetsEventWiseMapbetsEventWiseMap")
     let betsEventWiseCancel = await betModel.aggregate([
         {
             $match: {
@@ -3739,6 +3864,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     ])
 
     let data = await betModel.findOne({eventId:req.query.id})
+    let openBetsMarketIds = await betModel.distinct('marketId', {status:"OPEN", eventId:req.query.id, userName:{$in:childrenUsername}})
+    let runnersData = await runnerData.find({marketId:{$in:openBetsMarketIds}})
     res.status(200).render("./sattlementInPage/main",{
         title:"Settlements",
         me,
@@ -3748,7 +3875,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
         betsEventWiseMap,
         betsEventWiseCancel,
         betsEventWiseSettel,
-        inprogressData
+        inprogressData,
+        runnersData
     })
 } )
 
@@ -4084,11 +4212,11 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                     //     name:item.eventData.name,
                     //     type:"event"
                     // })
-                    count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
                     seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
                     
                 }else{
-                    count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
                     seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
 
                 }
@@ -4116,7 +4244,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
-    console.log('START')
+    // console.log('START')
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     let cricketEvents;
@@ -4127,14 +4255,14 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let data = {};
 
     let cricketList = sportListData[0].gameList[0]
-    // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
-    // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
 
     let newcricketEvents = cricketList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
-         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
             item.eventData.status = true
          }else{
@@ -4154,63 +4282,63 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
         return item
     })
-    // let newfootballEvents =  footballList.eventList.map(async(item) => {
-    //      let status = await catalogController.findOne({Id:item.eventData.eventId})
-    //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-    //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+    let newfootballEvents =  footballList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
 
-    //      count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-    //      if(!status){
-    //         item.eventData.status = true
-    //      }else{
-    //         item.eventData.status = false
-    //     }
-    //     if(!featureStatus){
-    //         item.eventData.featureStatus = false
-    //     }else{
-    //         item.eventData.featureStatus = true
-    //     }
-    //     if(!inPlayStatus){
-    //         item.eventData.inPlayStatus = false
-    //     }else{
-    //         item.eventData.inPlayStatus = true
-    //     }
-    //     item.eventData.count = count
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
 
-    //     return item
-    // })
-    // let newtennisEvents = tennisList.eventList.map(async(item) => {
-    //      let status = await catalogController.findOne({Id:item.eventData.eventId})
-    //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-    //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+        return item
+    })
+    let newtennisEvents = tennisList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
-    //      count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-    //      if(!status){
-    //         item.eventData.status = true
-    //      }else{
-    //         item.eventData.status = false
-    //     }
-    //     if(!featureStatus){
-    //         item.eventData.featureStatus = false
-    //     }else{
-    //         item.eventData.featureStatus = true
-    //     }
-    //     if(!inPlayStatus){
-    //         item.eventData.inPlayStatus = false
-    //     }else{
-    //         item.eventData.inPlayStatus = true
-    //     }
-    //     item.eventData.count = count
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
 
-    //     return item
-    // })
+        return item
+    })
 
     cricketEvents = await Promise.all(newcricketEvents);
-    // footballEvents = await Promise.all(newfootballEvents);
-    // tennisEvents = await Promise.all(newtennisEvents);
+    footballEvents = await Promise.all(newfootballEvents);
+    tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
-    // console.log(data, "fhdhhfdhfd")
+    // console.log(data.footballEvents, "fhdhhfdhfd")
     // data = {}
 
     return res.status(200).render("./eventController/eventController", {
@@ -4256,7 +4384,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
-                userId: req.currentUser.id
+                userId: req.currentUser.id,
+                commissionStatus: { $ne : 'cancel'}
             }
         },
         {
@@ -4337,7 +4466,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId: req.currentUser.id,
-                sportId:sportId
+                sportId:sportId,
+                commissionStatus: { $ne : 'cancel'}
             }
         },
         {
@@ -4402,6 +4532,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
           $match: {
             userId: req.currentUser.id,
             seriesName: sportId,
+            commissionStatus: { $ne : 'cancel'}
           },
         },
         {
@@ -4449,7 +4580,8 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId: req.currentUser.id,
-                eventName:sportId
+                eventName:sportId,
+                commissionStatus: { $ne : 'cancel'}
             }
         }
     ])
@@ -4601,7 +4733,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let stakeLabledata
         let userMultimarkets
         let Bets = []
-        let rules = await gamrRuleModel.find()
+        let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:mainId})
             userMultimarkets = await multimarkets.findOne({userId:mainId})
@@ -4633,7 +4765,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let check = await resumeSuspendModel.aggregate([
             {
                 $match:{
-                    status:false
+                    status:false,
+                    whiteLabel:req.currentUser.whiteLabel
                 }
             }
         ])
@@ -4798,6 +4931,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     //     childrenUsername.push(ele.userName) 
     // })
     if(req.query.market){
+        // console.log(req.query.market, "req.query.marketreq.query.marketreq.query.market")
         let market 
         let marketName 
         if(req.query.market.toLowerCase().startsWith('book')){
@@ -5511,14 +5645,12 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
+    // console.log(res.locals.B2C_Status, 121212212222222121)
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     newChilds = await User.distinct('userName', {parentUsers:req.currentUser._id});
-
-    // let chils = await User.find({parentUsers:req.currentUser._id})
-    // let newChilds = chils.map(ele => {
-    //     return ele.userName
-    // })
     let paymentreq = await paymentReportModel.find({username:{$in:newChilds}}).sort({date:-1}).limit(10)
-    // console.log(paymentreq)
     res.render('./PaymentApproval/PaymentApproval',{
         title:'Payment Approval',
         currentUser:req.currentUser,
@@ -5527,6 +5659,9 @@ exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     let paymentmethod = await PaymentMethodModel.find({userName:req.currentUser.userName});
     res.render('./PaymentMethod/paymentMethod',{
         title:'Payment Method',
@@ -5539,6 +5674,9 @@ exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
 
 exports.getManagementAccount = catchAsync(async(req, res, next) => {
     let userLog
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
@@ -5564,6 +5702,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 
 exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName, reqStatus:'pending'}).sort({reqDate:-1}).limit(10)
     res.render('./withrowalReqAdmin/main',{
         title:'Withdrawal request',
@@ -5577,14 +5718,17 @@ exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
 
 exports.myWithrowReq = catchAsync(async(req, res, next) => {
     let userLog
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    let withrowReqData = await withdrawalRequestModel.find().sort({reqDate:-1}).limit(10)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let withrowReqData = await withdrawalRequestModel.find({userName:req.currentUser.userName}).sort({reqDate:-1}).limit(10)
     res.status(200).render("./userSideEjs/withrowReqPage/main", {
         title:"withdrawal request.",
         user:req.currentUser,

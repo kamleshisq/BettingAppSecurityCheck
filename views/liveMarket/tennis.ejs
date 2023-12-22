@@ -2,7 +2,7 @@
   <div class="row">
     <%let checkT = false %> 
     <%for(let i = 0; i < runners.length; i++){%>
-      <%if(runners[i].sport === "Tennis"){%>
+      <%if(runners[i].sport === "Tennis" && bets.some(item => item == runners[i].marketId)){%>
         <%checkT = true%>
         <section>
           <div class="container-fluid">

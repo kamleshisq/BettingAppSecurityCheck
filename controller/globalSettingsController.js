@@ -5,7 +5,7 @@ const whiteLabel = require('../model/whitelableModel');
 const colorCodeModel = require('../model/colorcodeModel');
 
 exports.createData = catchAsync(async(req, res, next) => {
-    console.log('i am here')
+    // console.log('i am here')
     const whiteLabels = await whiteLabel.find()
     if(whiteLabels.length > 0){
         
@@ -78,5 +78,5 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
 
 
 exports.updateColorCode = catchAsync(async(req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
 })

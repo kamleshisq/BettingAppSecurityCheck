@@ -1,0 +1,68 @@
+body: {
+  operatorId: 'sheldon',
+  token: 'acf0a5e5-4ace-4dd5-b512-97cacd28b208',
+  userId: '656ee8df0140ca5f563deb2f',
+  reqId: '67c290e2-4612-48e3-a2c0-ec9f6874c218',
+  transactionId: '191341a5-1719-4290-ba84-dd0b9f459485',
+  betType: 'BACK',
+  oddValue: 1.35,
+  eventId: 'sr:match:46164049',
+  marketId: '340',
+  debitAmount: 100,
+  sportId: 'sr:sport:21',
+  competitionId: 'sr:tournament:30104',
+  competitionName: 'U19 Asia Cup',
+  eventName: 'India vs. Bangladesh',
+  marketName: 'Winner (incl. super over)',
+  selectionId: '4', // CRICKET
+  selectionName: 'India',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}
+
+
+body: {
+  operatorId: 'sheldon',
+  token: 'acf0a5e5-4ace-4dd5-b512-97cacd28b208',
+  userId: '656ee8df0140ca5f563deb2f',
+  reqId: 'fd799444-d0d0-4a0a-bf76-e980e60288bc',
+  transactionId: '30f56142-0635-4c47-88ce-117f80a580ce',
+  betType: 'BACK',
+  oddValue: 2.75,
+  eventId: 'sr:match:43255191',
+  marketId: '1',
+  debitAmount: 100,
+  sportId: 'sr:sport:1',
+  competitionId: 'sr:tournament:136',
+  competitionName: 'A-League',
+  eventName: 'Western United FC vs. Brisbane Roar FC',
+  marketName: '1x2',
+  selectionId: '1', // FOOTBALL
+  selectionName: 'Western United FC',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}
+
+
+body: {
+  operatorId: 'sheldon',
+  token: 'acf0a5e5-4ace-4dd5-b512-97cacd28b208',
+  userId: '656ee8df0140ca5f563deb2f',
+  reqId: '599b8655-f440-4273-abbb-8748b08f6953',
+  transactionId: '5d12a839-88c6-4813-bf9b-7c2389d2457a',
+  betType: 'BACK',
+  oddValue: 8.2,
+  eventId: 'sr:match:45526256',
+  marketId: '251',
+  debitAmount: 100,
+  sportId: 'sr:sport:3',
+  competitionId: 'sr:tournament:14602',
+  competitionName: 'ABL',
+  eventName: 'Canberra Cavalry vs. Adelaide Giants',
+  marketName: 'Winner (incl. extra innings)',
+  selectionId: '4',
+  selectionName: 'Canberra Cavalry',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}
+

@@ -8,6 +8,8 @@ const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
 const paymentReportModel = require('../model/paymentreport')
 const userWithReq = require('../model/withdrowReqModel');
+const whiteLabelMOdel = require('../model/whitelableModel');
+const axios = require('axios')
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -65,7 +67,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
     global._loggedInToken.push({token:token,time:time})
     
     // let childrenArr = await User.distinct('userName', { parentUsers: user._id, role_type: 5 });
-    // let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
+    // let paymentreqcount = await paymentReportModel.countDocuments({username:{$in:childrenArr},status:'pending'})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
     res.status(200).json({
@@ -128,45 +130,69 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
 
 
 exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
-    console.log(req.body, 12345689)
-    let parentUser = await User.findOne({whiteLabel:'withDrowTesting'})
-    console.log(parentUser)
-    if(parentUser){
-        if(req.body.password !== req.body.passwordConfirm){
-            return next(new AppError('Passwords are not matching', 404))
-        }else{
-            let parentArray = parentUser.parentUsers
-            parentArray.push(parentUser.id)
-            console.log(parentArray)
-            let userData = {
-                userName : req.body.userName.toLowerCase(),
-                name : req.body.name,
-                roleName : 'user',
-                whiteLabel:'withDrowTesting',
-                parent_id : parentUser.id,
-                role : '6492fe4fd09db28e00761694',
-                role_type:5,
-                password:req.body.password,
-                passwordConfirm:req.body.passwordConfirm,
-                parentUsers:parentArray,
-                contact:req.body.contectNumber,
-                email:req.body.email
-            }
+    // console.log(req.body, "body")
+    const { recaptchaToken } = req.body;
+    // console.log(recaptchaToken, "recaptchaTokenrecaptchaTokenrecaptchaToken")
+    const response = await axios.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        {
+          secret: '6LcFdCEpAAAAAImXcw73zbjF0Epdpus_4HvxhPCP',
+          response: req.body['g-recaptcha-response'],
+        },
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
+    // console.log(response.data, "response.data")
 
-            let new_USer = await User.create(userData)
-            if(!new_USer){
-                return next(new AppError('Please try again later', 404))
+    if(response.data.success){
+        let check = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+        if(check && check.B2C_Status){
+
+            let parentUser = await User.findOne({whiteLabel:process.env.whiteLabelName, roleName: 'Super-Duper-Admin'})
+            if(parentUser){
+                if(req.body.password !== req.body.passwordConfirm){
+                    return next(new AppError('Passwords are not matching', 404))
+                }else{
+                    let parentArray = parentUser.parentUsers
+                    parentArray.push(parentUser.id)
+                    let userData = {
+                        userName : req.body.userName.toLowerCase(),
+                        name : req.body.name,
+                        roleName : 'user',
+                        whiteLabel:process.env.whiteLabelName,
+                        parent_id : parentUser.id,
+                        role : '6492fe4fd09db28e00761694',
+                        role_type:5,
+                        password:req.body.password,
+                        passwordConfirm:req.body.passwordConfirm,
+                        parentUsers:parentArray,
+                        contact:req.body.contectNumber,
+                        email:req.body.email
+                    }
+        
+                    let new_USer = await User.create(userData)
+                    if(!new_USer){
+                        return next(new AppError('Please try again later', 404))
+                    }else{
+                        // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
+                        // createSendToken(new_USer, 200, res, req);
+                        res.status(200).json({
+                            status:'success'
+                        })
+                    }
+        
+                }
             }else{
-                // await User.findOneAndUpdate({_id:new_USer._id}, {is_Online:true});
-                // createSendToken(new_USer, 200, res, req);
-                res.status(200).json({
-                    status:'success'
-                })
+                return next(new AppError('Please try again later', 404))
             }
-
+        }else{
+            return next(new AppError('Please try again later', 404))
         }
     }else{
-        return next(new AppError('Please try again later', 404))
+        return next(new AppError('Please verify captcha', 404))
     }
 }))
 
@@ -236,7 +262,7 @@ exports.checkPass = catchAsync(async(req, res, next) => {
     if(!req.body.Password){
        return res.status(404).json({
             status:'error',
-            message:"Please provide password"
+            message:"Please provide valid password"
         })
     }
     const passcheck = await user.correctPassword(req.body.Password, user.password)
@@ -252,7 +278,13 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-    console.log('isProtectedisProtectedisProtectedisProtected')
+    let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+    if(whiteLabelData){
+        res.locals.B2C_Status = whiteLabelData.B2C_Status
+    }else{
+        res.locals.B2C_Status = false
+    }
+    // console.log('isProtectedisProtectedisProtectedisProtected')
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
@@ -275,12 +307,12 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         
     }
     if(!token){
-        console.log('WORKING1')
+        // console.log('WORKING1')
         return res.redirect('/adminlogin')
     }
     const tokenId = await loginLogs.findOne({session_id:token})
-    if(!tokenId.isOnline){
-        console.log('working12121')
+    if( tokenId &&!tokenId.isOnline){
+        // console.log('working12121')
         return res.redirect('/adminlogin')
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
@@ -297,12 +329,13 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     let WithdrawReqCount = 0
     if(currentUser.role.roleName === "Super-Duper-Admin"){
         childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
-        paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
-        WithdrawReqCount = await userWithReq.count({username:currentUser.userName, reqStatus:'pending'})
+        // console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
+        paymentreqcount = await paymentReportModel.countDocuments({username:{$in:childrenArr},status:'pending'})
+        WithdrawReqCount = await userWithReq.countDocuments({username:currentUser.userName, reqStatus:'pending'})
     }
     if(currentUser.roleName != "DemoLogin"){
-        console.log(currentUser.whiteLabel, whiteLabel, currentUser.role_type,"whiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabel")
-        console.log(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1)
+        // console.log(currentUser.whiteLabel, whiteLabel, currentUser.role_type,"whiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabel")
+        // console.log(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1)
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             return res.status(404).json({
                 status:"err",
@@ -340,6 +373,13 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
+    res.locals.whiteLabel = process.env.whiteLabelName
+    let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+    if(whiteLabelData){
+        res.locals.B2C_Status = whiteLabelData.B2C_Status
+    }else{
+        res.locals.B2C_Status = false
+    }
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
@@ -401,6 +441,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
             })
         }
     }
+    // console.log('working')
     loginData.User = currentUser
     res.locals.loginData = loginData
     req.currentUser = currentUser
@@ -409,8 +450,15 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 });
 
 exports.isLogin_Admin = catchAsync( async (req, res, next) => {
+    // console.log('adminLogin')
     let token 
     res.locals.loginData = undefined
+    let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+    if(whiteLabelData){
+        res.locals.B2C_Status = whiteLabelData.B2C_Status
+    }else{
+        res.locals.B2C_Status = false
+    }
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
@@ -469,10 +517,17 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     next()
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
-    console.log('WORKING')
-    console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+    // console.log('WORKING')
+    // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     let token 
     res.locals.loginData = undefined
+    let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+    if(whiteLabelData){
+        res.locals.B2C_Status = whiteLabelData.B2C_Status
+    }else{
+        res.locals.B2C_Status = false
+    }
+    res.locals.whiteLabel = process.env.whiteLabelName
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
@@ -523,7 +578,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.token = token
     next()
-    console.log('WORKING2')
+    // console.log('WORKING2')
 
 });
 

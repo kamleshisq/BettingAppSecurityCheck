@@ -1,0 +1,21 @@
+{
+    commissionStatus: false,
+    _id: new ObjectId("650d6adf9842e03203df7a3a"),
+    operatorId: 'sheldon',
+    token: '87e3eaf5-a631-49d5-a992-367654d25dba',
+    userId: '650d5bac9842e03203df697e',
+    userName: 'user11',
+    transactionId: 'd9c0f667-234b-471b-abc5-de27aecf7198',
+    gameId: '900001',
+    roundId: '1695378132.2732594',
+    betType: 'Casino',
+    date: 2023-09-22T10:22:23.682Z,
+    event: '7 Up Down',
+    Stake: 500,
+    status: 'WON',
+    returns: 990,
+    role_type: 5,
+    __v: 0,
+    commisssionStatus: false,
+    parentArray: []
+  }

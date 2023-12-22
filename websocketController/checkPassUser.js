@@ -5,12 +5,12 @@ exports.checkPass = (data , pass) => {
     return new Promise(async (resolve, reject) => {
         try{
             const user = await userModel.findOne({userName:data.userName}).select('+password');
-                    console.log(user)
+                    // console.log(user)
                     if(!user || !(await user.correctPassword(pass, user.password))){
-                        console.log("WRONG")
+                        // console.log("WRONG")
                         resolve(false);
                     }else{
-                        console.log("RIght")
+                        // console.log("RIght")
                         resolve(true);
                     }
         }catch(err){

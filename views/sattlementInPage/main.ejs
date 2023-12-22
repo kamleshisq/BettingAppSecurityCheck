@@ -78,18 +78,29 @@
                   let option = betsEventWiseOpen[i].match.split(" v ")
                   let option1 = option[0]
                   let option2 = option[1]
+                  let thatMarket = runnersData.find(item => item.marketId == betsEventWiseOpen[i].marketId)
+                  let runnersData1
+                  if(thatMarket){
+                    runnersData1 = JSON.parse(thatMarket.runners)
+                  }
                   %>
                   <td>
                     <select class="selectOption">
                       <option value="" selected></option>
-                      <option value="<%=option1 %>"><%=option1 %></option>
-                      <option value="<%=option2 %>"><%=option2 %></option>
+                      <%if(runnersData1){%>
+                        <%for(let j = 0; j < runnersData1.length; j++){%>
+                          <option value="<%=runnersData1[j].runner %>"><%=runnersData1[j].runner %></option>
+                        <%}%>
+                      <%}else{%>
+                        <option value="<%=option1 %>"><%=option1 %></option>
+                        <option value="<%=option2 %>"><%=option2 %></option>
+                      <%}%>
                     </select>
                   </td>
                   <%}%>
                   <td>
                     <div class="btn-group">
-                      <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="<%=betsEventWiseOpen[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWiseOpen[i].marketId%>"> MAP</button>
+                      <button class="result" data-bs-toggle="modal" data-bs-target="#myModalre" id="<%=betsEventWiseOpen[i].marketId%>"> Result</button><button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="<%=betsEventWiseOpen[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWiseOpen[i].marketId%>"> MAP</button>
                     </div>
                   </td>
                 </tr>
@@ -147,19 +158,21 @@
                   <tr>
                     <th>Market Name</th>
                     <th>Result</th>
+                    <th>Count</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody class="new-body" id="mapMarket">
                   <%for(let i = 0; i < betsEventWiseMap.length; i++){ %>
-                  <tr>
+                  <tr id="<%=betsEventWiseMap[i].marketId%>">
                     <td><%= betsEventWiseMap[i].marketName%></td>
                     <td class="Result" ><%= betsEventWiseMap[i].result%></td>
+                    <td class="count" ><%= betsEventWiseMap[i].count%></td>
                     <td>
                       <div class="btn-group">
-                        <button class="Unmap" id="<%=betsEventWiseMap[i].marketId%>"> Unmap</button>
-                        <button class="Settle" id="<%=betsEventWiseMap[i].marketId%>"> Settle</button>
-                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE"  id="<%=betsEventWiseMap[i].marketId%>"> VOID</button>
+                        <button class="Unmap" > Unmap</button>
+                        <button class="Settle"> Settle</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" > VOID</button>
                       </div>
                     </td>
                   </tr>
@@ -190,14 +203,14 @@
                 </thead>
                 <tbody class="new-body">
                   <%for(let i = 0; i < betsEventWiseSettel.length; i++){ %>
-                  <tr>
+                  <tr id="<%=betsEventWiseSettel[i].marketId%>">
                     <td><%= betsEventWiseSettel[i].marketName%></td>
                     <td><%= betsEventWiseSettel[i].result%></td>
                     <td><%= betsEventWiseSettel[i].count%></td>
                     <td>
                       <div class="btn-group">
-                        <button class="ROLLBACK" data-bs-toggle="modal" data-bs-target="#myModalSE2" id="<%=betsEventWiseSettel[i].marketId%>"> ROLLBACK</button>
-                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1" id="<%=betsEventWiseSettel[i].marketId%>"> VOID</button>
+                        <button class="ROLLBACK" data-bs-toggle="modal" data-bs-target="#myModalSE2" > ROLLBACK</button>
+                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1" > VOID</button>
                       </div>
                     </td>
                   </tr>
@@ -227,7 +240,7 @@
                 </thead>
                 <tbody class="new-body" id="voidMarket">
                   <%for(let i = 0; i < betsEventWiseCancel.length; i++){ %>
-                  <tr>
+                  <tr id="<%= betsEventWiseCancel[i].marketId%>">
                     <td><%= betsEventWiseCancel[i].marketName%></td>
                     <td><%= betsEventWiseCancel[i].count%></td>
                   </tr>
@@ -343,6 +356,28 @@
             <button type="click" class="btn-cancel mt-3 btn btn-default" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" class="btn-submit mt-3">Yes, Confirm</button>
           </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="myModalre" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Result</h4>
+      </div>
+      <div class="modal-body" id="AccountData">
+        <div class="payment-method-data">
+          <div class="title">wait for the moment</div>
+        </div>
       </div>
     </div>
   </div>

@@ -22,7 +22,7 @@ async function commisiion(data){
     //       return ele.userId
     //   })
     
-    console.log(newfilterUser,'newfilterUser')
+    // console.log(newfilterUser,'newfilterUser')
       let netLossingCommission = await betModel.aggregate([
         {
           $match:{
@@ -51,7 +51,7 @@ async function commisiion(data){
       ]);
      
    
-        console.log(netLossingCommission,'netlossingcommission test')
+        // console.log(netLossingCommission,'netlossingcommission test')
                        
         for(let i = 0;i<netLossingCommission.length;i++) {
           let user = await userModel.findById(netLossingCommission[i].userId)

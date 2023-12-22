@@ -5,5 +5,5 @@ const houseFundModel = require("../model/houseFundmodel");
 
 
 exports.addfund = catchasynch(async(req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
 })

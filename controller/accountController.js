@@ -210,6 +210,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     childAccStatement.userName = childUser.userName
     childAccStatement.role_type = childUser.role_type
     childAccStatement.Remark = req.body.remark
+    childAccStatement.accStype = "Settle"
 
     const accStatementChild = await accountStatement.create(childAccStatement)
     if(!accStatementChild){
@@ -227,6 +228,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     ParentAccStatement.userName = parentUser.userName;
     ParentAccStatement.role_type = parentUser.role_type
     ParentAccStatement.Remark = req.body.remark
+    ParentAccStatement.accStype = "Settle"
 
     // // console.log(ParentAccStatement)
     const accStatementparent = await accountStatement.create(ParentAccStatement)
@@ -279,6 +281,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     childAccStatement.userName = childUser.userName
     childAccStatement.role_type = childUser.role_type
     childAccStatement.Remark = req.body.remark
+    childAccStatement.accStype = "Settle"
 
     const accStatementChild = await accountStatement.create(childAccStatement)
     if(!accStatementChild){
@@ -296,6 +299,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     ParentAccStatement.userName = parentUser.userName;
     ParentAccStatement.role_type = parentUser.role_type
     ParentAccStatement.Remark = req.body.remark
+    ParentAccStatement.accStype = "Settle"
 
     // // console.log(ParentAccStatement)
     const accStatementparent = await accountStatement.create(ParentAccStatement)
@@ -339,7 +343,7 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     })
 });
 exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
-    console.log(req.query)
+    // console.log(req.query)
     try{
     let userAcc = []
     let page = req.query.page
@@ -672,61 +676,62 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
 });
 
 exports.paymentDeposite = catchAsync(async(req, res, next)=>{
-    // console.log(req.body,'==>paymentDeposite body')
     function validateUTR(utr) {
-        // Define your UTR validation criteria here
-        var utrPattern = /^[A-Za-z0-9]{12,}$/; // Minimum 12 alphanumeric characters
-
-        // Check if the UTR matches the pattern
+        var utrPattern = /^[A-Za-z0-9]{12,}$/; 
         return utrPattern.test(utr);
     }
     if(!validateUTR(req.body.utr)){
         return next(new AppError('enter valid utr',400))
     }
-    console.log(req.files)
+    // console.log(req.files, "filesfilesfilesfiles")
     let imagName;
     let data;
     let user = await User.findById(req.currentUser._id)
     let sdmId = user.parentUsers[1]
     let sdmUser = await User.findById(sdmId)
     if(req.files){
-        if(req.files.file.mimetype.startsWith('image')){
-            imagName = `${req.currentUser.userName}${Date.now()}`
-            const image = req.files.file
-            // console.log(logo)
-            let STRING = `public/paymentimg/${imagName}.png`
-            console.log(STRING, "STRINGSTRINGSTRING")
-            try{
-                image.mv(STRING, (err)=>{
-                    console.log(err)
-                    if(err) return next(new AppError("Something went wrong please try again later", 400))
-                })
-            }catch(err){
-                console.log(err, "THIS IS ERRRRRR")
+        try{
+            if(req.files.file.mimetype.startsWith('image')){
+                imagName = `${req.currentUser.userName}${Date.now()}`
+                const image = req.files.file
+                // console.log(logo)
+                let STRING = `public/paymentimg/${imagName}.png`
+                // console.log(STRING, "STRINGSTRINGSTRING")
+                try{
+                    image.mv(STRING, (err)=>{
+                        console.log(err)
+                        if(err) return next(new AppError("Something went wrong please try again later", 400))
+                    })
+                }catch(err){
+                    // console.log(err, "THIS IS ERRRRRR")
+                }
+                data = {... req.body}
+                let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod,accountholdername:req.body.accountholdername})
+                // console.log(paymentMethoDetail)
+                data.username = req.currentUser.userName
+                data.status = 'pending'
+                data.image = imagName
+                if(req.body.pmethod == 'banktransfer'){
+    
+                    data.accountnumber = paymentMethoDetail.accountnumber
+                }else if(req.body.pmethod == 'upi'){
+    
+                    data.upiid = paymentMethoDetail.upiid
+                }else if(req.body.pmethod == 'paytm'){
+    
+                    data.phonenumber = paymentMethoDetail.phonenumber
+                }
+                data.date = new Date()
+                
+                // console.log(data)
+                await paymentReportModel.create(data)
+    
+            }else{
+                return next(new AppError("Please Provide Image", 400))
             }
-            data = {... req.body}
-            let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod,accountholdername:req.body.accountholdername})
-            // console.log(paymentMethoDetail)
-            data.username = req.currentUser.userName
-            data.status = 'pending'
-            data.image = imagName
-            if(req.body.pmethod == 'banktransfer'){
 
-                data.accountnumber = paymentMethoDetail.accountnumber
-            }else if(req.body.pmethod == 'upi'){
-
-                data.upiid = paymentMethoDetail.upiid
-            }else if(req.body.pmethod == 'paytm'){
-
-                data.phonenumber = paymentMethoDetail.phonenumber
-            }
-            data.date = new Date()
-            
-            console.log(data)
-            await paymentReportModel.create(data)
-
-        }else{
-            return next(new AppError("Please Provide Image", 400))
+        }catch(err){
+            console.log(err, "ERRR")
         }
     }
 

@@ -106,6 +106,7 @@
       <%}else{%>
     <body >
   <%}%>
+  <div class="main-loader"><div class="loader"></div></div>
     <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <div class="popup" id="popup-1">
       <div class="overlay"></div>
@@ -136,7 +137,7 @@
               </div>
               <div class="logo-col-dv">
                 <a class="navbar-brand my-navbrand" href="/">
-                  <%console.log( basicDetails.length > 0, "basicDetails.lengthbasicDetails.lengthbasicDetails.lengthbasicDetails.length", basicDetails.length)%>
+                  
                   <%if(basicDetails.length > 0){%>
                     <img
                       class="my-nav-logo"
@@ -166,17 +167,15 @@
   
               <div class="mbl-login-reg-btnn-dv">
                 <div class="nav-login-regstr-btn-dv dropup-center">
-                  <div class="bet-blns-nav-wrp">
-                    <!-- <i class="fa-solid fa-wallet"></i> -->
+                  <div class="bet-blns-nav-wrp userBalance">
                     <div class="bet-blns-nav-wrp-amount-num">
-                      <span> <i class="fa-solid fa-wallet text-white"></i>  Bal : <%=user.availableBalance%></span>
-                    </div>
-                    <div class="bet-blns-nav-wrp-txt">
-                      <span class="">Bal : <span> &nbsp; <%=user.availableBalance%></span></span>
-                      <span class="">Exp : <span> &nbsp; <%=user.exposure%></span></span>
+                      
+                      <span class="">
+                        <i class="fa-solid fa-wallet"></i>
+                        Bal : <%=user.availableBalance%> <span> &nbsp;</span></span>
                     </div>
                   </div>
-                  <div class="nav-login-regstr-btn-anim">
+                  <!-- <div class="nav-login-regstr-btn-anim">
                     <span id="setingnavbtnn" class="nav-login-regstr-btn">
                       <i class="fa-solid fa-magnifying-glass SEarCh"></i>
                     </span>
@@ -191,22 +190,15 @@
                           </div>
                         </div>
                         <ul id="demonames1">
-                          <!-- <li><a class="demoname" href="#">Adele</a></li>
-                          <li><a class="demoname" href="#">Agnes</a></li>
-                        
-                          <li><a class="demoname" href="#">Billy</a></li>
-                          <li><a class="demoname" href="#">Bob</a></li>
-                        
-                          <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> -->
                         </ul>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="dropdown dropup-center">
                       <button class="btn my-nav-profiel-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <img class="nav-profile-img" src="../../assets/img/exchange/user.png" alt="">
+                          <div class="btn-header-username"><%=user.userName%></div>
+                          <svg class="MuiSvgIcon__root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>
                          
                       </button>
   
@@ -256,12 +248,14 @@
                                         <%}else{%>
                                         <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
                                       <%}%>
+                                      <%if(B2C_Status){%>
                                       <li class="profile-bord-botm">
                                         <a href="" title="" data-bs-toggle="modal" class="paymentDepositeMenu" data-bs-target="#navmod3"> Deposit</a>
                                       </li>
                                       <li class="profile-bord-botm">
                                         <a href="" title="" data-bs-toggle="modal" class="WithrowReqMenu" data-bs-target="#navmod4"> withdraw</a>
                                       </li>
+                                      <%}%>
                                       <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
                                   </ul>
                                   <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
@@ -298,17 +292,13 @@
               </ul>
   
                 <div class="nav-login-regstr-btn-dv dropup-center">
-                  <div class="bet-blns-nav-wrp" id="userBalance">
-                    <!-- <i class="fa-solid fa-wallet"></i> -->
+                  <div class="bet-blns-nav-wrp userBalance">
+                    
                     <div class="bet-blns-nav-wrp-amount-num">
-                      <span> <i class="fa-solid fa-wallet text-white"></i>  Bal : <%=user.availableBalance%></span>
-                    </div>
-                    <div class="bet-blns-nav-wrp-txt">
-                      <span class="">Bal : <span> &nbsp; <%=user.availableBalance%></span></span>
-                      <span class="">Exp : <span> &nbsp; <%=user.exposure%></span></span>
+                      <span class=""><i class="fa-solid fa-wallet"></i> Bal : <%=user.availableBalance%> <span> &nbsp; </span></span>
                     </div>
                   </div>
-                  <div class="nav-login-regstr-btn-anim">
+                  <!-- <div class="nav-login-regstr-btn-anim">
                     <span id="setingnavbtnn2" class="nav-login-regstr-btn">
                       <i class="fa-solid fa-magnifying-glass SEarCh"></i>
                     </span>
@@ -323,28 +313,15 @@
                           </div>
                         </div>
                         <ul id="demonames">
-                          <!-- <li><a class="demoname" href="#">Adele</a></li>
-                          <li><a class="demoname" href="#">Agnes</a></li>
-                        
-                          <li><a class="demoname" href="#">Billy</a></li>
-                          <li><a class="demoname" href="#">Bob</a></li>
-                        
-                          <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> -->
                         </ul>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="dropdown  dropup-center">
                       <button class="btn my-nav-profiel-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <img class="nav-profile-img" src="../../assets/img/exchange/user.png" alt="">
+                          <div class="btn-header-username"><%=user.userName%></div>
+                          <svg class="MuiSvgIcon__root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>
                          
                       </button>
   
@@ -394,12 +371,14 @@
                                         <%}else{%>
                                         <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
                                       <%}%>
+                                      <%if(B2C_Status){%>
                                       <li class="profile-bord-botm">
                                         <a href="" title="" data-bs-toggle="modal" class="paymentDepositeMenu" data-bs-target="#navmod3"> Deposit</a>
                                       </li>
                                       <li class="profile-bord-botm">
                                         <a href="" title="" data-bs-toggle="modal" class="WithrowReqMenu" data-bs-target="#navmod4"> withdraw</a>
                                       </li>
+                                      <%}%>
                                       <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
                                   </ul>
                                   <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
@@ -484,7 +463,7 @@
   
                 <div class="nav-login-regstr-btn-dv d-flex-gap">
                   <a class="nav-login-regstr-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#">SIGN IN </a>
-                  <div class="nav-login-regstr-btn-anim">
+                  <!-- <div class="nav-login-regstr-btn-anim">
                     <span id="setingnavbtnn2" class="nav-login-regstr-btn">
                       <i class="fa-solid fa-magnifying-glass SEarCh"></i>
                     </span>
@@ -503,7 +482,7 @@
                         </ul>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 export const updateRow = (user,rowId,currentUser) => {
-  console.log(currentUser)
+//   console.log(currentUser)
     let html = "";
     if((rowId) % 2 != 0){
 

@@ -185,7 +185,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     const userTotalAmount = result1.length > 0?result1.length : 0;
     const adminTotalAmount = result2.length > 0?result2.length : 0;
 
-    betCount = await betModel.count({userName: {$in:childrenUsername}})
+    betCount = await betModel.countDocuments({userName: {$in:childrenUsername}})
     alertBet = []
     alertBet = await betModel.aggregate([
         {

@@ -1,4 +1,4 @@
-console.log(data)
+// console.log(data)
 if(data.Bets.length > 0){
     if(data.Bets[0].userName){
         let team1 = data.matchName.split(' v ')[0].toLowerCase()

@@ -10,6 +10,7 @@
         </tr>
     </thead>
     <tbody class="new-body">
+        <%if(Logs.length > 0){%>
         <%for(let i = 0; i < Logs.length; i++){%>
             <% let date = new Date(Logs[i].login_time)%>
             <%if((i%2) == 0){%>
@@ -28,6 +29,8 @@
             <%}%>
             </tr>
         <%}%>
-     
+        <%}else{%>
+            <tr class="empty_table"><td>No record found</td></tr>
+        <%}%>
     </tbody>
   </table>

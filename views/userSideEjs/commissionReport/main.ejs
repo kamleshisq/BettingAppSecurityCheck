@@ -60,7 +60,7 @@
                         <%}else if(commissionData[i]._id == 2){%>
                             <td title="Sport" >Tennis</td>
                         <%}%>
-                        <td title="Commission" ><%=commissionData[i].totalCommissionPoints%></td>
+                        <td title="Commission" ><%=commissionData[i].totalCommissionPoints.toFixed(3)%></td>
                     </tr>
                     <%} %>
                 </tbody>

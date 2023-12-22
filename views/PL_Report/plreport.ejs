@@ -56,6 +56,7 @@
               </tr>
             </thead>
             <tbody class="new-body">
+              <%if(games.length > 0){%>
               <%for(let i = 0;i<games.length;i++){%>
               <%if(i % 2 == 0){%>
               <tr>
@@ -75,6 +76,9 @@
                 </tr>
                 <%}%>
               </tr>
+              <%}else{%>
+                <tr class="empty_table"><td>No record found</td></tr>
+                <%}%>
             </tbody>
           </table>
         </div>

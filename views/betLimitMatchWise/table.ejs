@@ -25,7 +25,6 @@
             <!-- CRICKET -->
             <%for(let i = 0; i < seriesMatch.length; i++){%>
               <%
-                <!-- console.log(seriesMatch[i].eventData.name) -->
                 let limitData = betLimit.find(item => item.type == seriesMatch[i].eventData.name)
                 var timestamp = `${seriesMatch[i].eventData.time}` * 1000; 
                   var date = new Date(timestamp);
