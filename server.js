@@ -522,21 +522,23 @@ io.on('connection', (socket) => {
             operatorId = data.LOGINDATA.LOGINUSER._id
         }
         let json
-        if(data.id){
-            
-            // console.log()
-            fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
-        }else{
-            fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
-
+        if(refreshStatus){
+            if(data.id){
+    
+                // console.log()
+                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
+            }else{
+                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
+    
+            }
+            fetch(fullUrl, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ` + loginData.Token },
+            }).then(res => res.json())
+            .then(json =>{ 
+                socket.emit('Acc', {json,page:data.page})
+            });
         }
-        fetch(fullUrl, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ` + loginData.Token },
-        }).then(res => res.json())
-        .then(json =>{ 
-            socket.emit('Acc', {json,page:data.page})
-        });
     })
 
     socket.on("AccountScroll1", async(data)=>{
