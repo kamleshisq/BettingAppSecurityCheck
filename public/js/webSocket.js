@@ -2272,8 +2272,10 @@ socket.on('connect', () => {
                             //     } 
                             // }
                             // if(data.currentUser.role.authorization.includes('userStatus')){
-                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>
-                                `
+                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>`
+                                if(response[i].roleName === 'user'){
+                                    html += `<button data-bs-toggle="modal" data-bs-target="#myModaL" class="Exposure Limit" title="Exposure Limit">L</button>`
+                                }
                             // }
                             // if(data.currentUser.role.authorization.includes('userName')){
                                 html += `<button class="UserDetails" title="View details"><i class="fa-solid fa-database"></i></button>`
