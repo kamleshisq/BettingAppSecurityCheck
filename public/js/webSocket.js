@@ -3475,7 +3475,6 @@ socket.on('connect', () => {
                     count1 = 1;
                     html1 += `
                     <div class="skin-data green">
-                        
                         <h5>Credit Reference</h5>
                         <h6> ${data.user.creditReference.toFixed(2)}</h6>
                     </div>
@@ -3483,7 +3482,7 @@ socket.on('connect', () => {
                       <h5>Downline Balance</h5>
                         <h6> ${data.user.downlineBalance.toFixed(2)}</h6>
                     </div>`
-                    if(data.user.lifetimePL >= 0){
+                    if(data.user.lifetimePL > 0){
                         html1 += `<div class="skin-data green">`
                     }else{
                         html1 += `<div class="skin-data red">`
@@ -5171,13 +5170,23 @@ socket.on('connect', () => {
                 count = 1
             }
             for(let i = 0;i<games.length;i++){
+                let date = new Date(games[i].date)
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
                 if(i % 2 == 0){
                   html += `<tr style="text-align: center;">`
                 }else{
                   html += `<tr style="text-align: center;" class="blue">`
                 }
                   html += `<td>${count + i}</td>
-                  <td>${games[i].date}</td>
+                  <td>${formattedTime}</td>
                   <td>${games[i].selectionName}</td>
                   <td>${games[i].oddValue}</td>
                   <td>${games[i].Stake}</td>`
@@ -5257,13 +5266,23 @@ socket.on('connect', () => {
                 count = 1
             }
             for(let i = 0;i<games.length;i++){
+                let date = new Date(games[i].date)
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
                 if(i % 2 == 0){
                   html += `<tr style="text-align: center;">`
                 }else{
                   html += `<tr style="text-align: center;" class="blue">`
                 }
                   html += `<td>${count + i}</td>
-                  <td>${games[i].date}</td>
+                  <td>${formattedTime}</td>
                   <td class="clickableelement getajaxdataclick" data-href="${data.url}&market=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].won}</td>
@@ -5407,7 +5426,7 @@ socket.on('connect', () => {
          $(document).on('click','.getajaxdataclick',function(e){
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
-            let url = $(this).attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            let url = $(this).closest('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
             location.href = url
          })
         $(document).on("click", ".searchList", function(){
@@ -5454,9 +5473,9 @@ socket.on('connect', () => {
             }
             for(let i = 0;i<games.length;i++){
                 if(i % 2 == 0){
-                  html += `<tr style="text-align: center;">`
+                  html += `<tr style="text-align: center;" style="cursor: pointer;">`
                 }else{
-                  html += `<tr style="text-align: center;" class="blue">`
+                  html += `<tr style="text-align: center;" class="blue"  style="cursor: pointer;">`
                 }
                   html += ` 
                   <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
@@ -5532,13 +5551,23 @@ socket.on('connect', () => {
                 count = 1
             }
             for(let i = 0;i<games.length;i++){
+                let date = new Date(games[i].eventDate)
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
                 if(i % 2 == 0){
                   html += `<tr style="text-align: center;">`
                 }else{
                   html += `<tr style="text-align: center;" class="blue">`
                 }
                   html += `<td>${count + i}</td>
-                  <td>${games[i].eventDate}</td>
+                  <td>${formattedTime}</td>
                   <td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>

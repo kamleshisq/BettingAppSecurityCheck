@@ -84,6 +84,10 @@ $(document).ready(function(){
             $("a[href='"+'/admin/betlimit'+"'").addClass('active')
             $("a[href='"+'/admin/betlimit'+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+'/admin/betlimit'+"'").parent().parent().addClass('open')
+        }else if(pathname.startsWith('/admin/gamereport/match') || pathname.startsWith('/admin/gamereport/match/market') || pathname.startsWith('/admin/gamereport/match/market/report')){
+            $("a[href='"+'/admin/gamereport'+"'").addClass('active')
+            $("a[href='"+'/admin/gamereport'+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+'/admin/gamereport'+"'").parent().parent().addClass('open')
         }
         }
 	}

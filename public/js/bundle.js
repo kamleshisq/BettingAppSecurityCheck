@@ -7245,6 +7245,10 @@ $(document).ready(function () {
         $("a[href='" + '/admin/betlimit' + "'").addClass('active');
         $("a[href='" + '/admin/betlimit' + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + '/admin/betlimit' + "'").parent().parent().addClass('open');
+      } else if (pathname.startsWith('/admin/gamereport/match') || pathname.startsWith('/admin/gamereport/match/market') || pathname.startsWith('/admin/gamereport/match/market/report')) {
+        $("a[href='" + '/admin/gamereport' + "'").addClass('active');
+        $("a[href='" + '/admin/gamereport' + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/gamereport' + "'").parent().parent().addClass('open');
       }
     }
   }
@@ -7901,7 +7905,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50169" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51277" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
