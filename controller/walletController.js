@@ -80,113 +80,135 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 
 exports.betrequest = catchAsync(async(req, res, next) => {
     console.log(req.body, "REQ.body")
-    // try{
-
-    //     const check = await userModel.findById(req.body.userId)
-    //     if(check.availableBalance < 0){
-    //         return "Error: Insufficient balance"
-    //     }
-    //     let betLimit
-    //     if(req.body.sportId){
-    //         betLimit = await betLimitModel.findOne({type:"Sport"})
-    //     }else{
-    //         betLimit = await betLimitModel.findOne({type:"Casino"})
-    //     }
-    //     if(check.exposureLimit === check.exposure){
-    //         await alert.alert("Please try again later, Your exposure Limit is full")
-    //         res.status(404).json({
-    //             "status":"RS_ERRORbalance"
-    //         })
-    //     }
-    //     let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
-    //     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    //     let date = Date.now()
-    //     let game
-    //     let description
-    //     let description2
-    //     if(req.body.gameId){
-    //         let game1 = await gameModel.findOne({game_id:(req.body.gameId)*1})
-    //         // console.log(game1)
-    //         game = game1.game_name
-    //         description = `Bet for game ${game}/amount ${req.body.debitAmount}`
-    //         description2 = `Bet for game ${game}/amount ${req.body.debitAmount}/user = ${user.userName}`
-    //     }else{
-    //         game = req.body.competitionName
-    //         description = `Bet for game ${req.body.eventName}/amount ${req.body.debitAmount}`
-    //         description2 = `Bet for game ${req.body.eventName}/amount ${req.body.debitAmount}/user = ${user.userName}`
-    //     }
-    //     if(!user){
-    //         return next(new AppError("There is no user with that id", 404))
-    //     }
-    //     let amount = req.body.debitAmount
-    //     for(let i = user.parentUsers.length - 1; i >= 1; i--){
-    //         let parentUser1 = await userModel.findById(user.parentUsers[i])
-    //         let parentUser2 = await userModel.findById(user.parentUsers[i-1])
-    //         let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
-    //         let parentUser2Amount = new Decimal(parentUser1.Share).times(amount).dividedBy(100);
-    //         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-    //         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-    //         await userModel.findByIdAndUpdate(user.parentUsers[i], {
-    //             $inc: {
-    //                 downlineBalance: -req.body.debitAmount,
-    //                 myPL: parentUser1Amount,
-    //                 uplinePL: parentUser2Amount,
-    //                 lifetimePL: parentUser1Amount,
-    //                 pointsWL: -req.body.debitAmount
-    //             }
-    //         });
+    try{
+        const check = await userModel.findById(req.body.userId)
+        let exposureCheck  = await exposurecheckfunction(user)
+        if(check.availableBalance - req.body.debitAmount - exposureCheck < 0){
+            return "Error: Insufficient balance"
+        }
+        let betLimit
+        if(req.body.sportId){
+            betLimit = await betLimitModel.findOne({type:"Sport"})
+        }else{
+            betLimit = await betLimitModel.findOne({type:"Casino"})
+        }
+        let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
+        const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        let date = Date.now()
+        let game
+        let description
+        let description2
+        let betType2
+        let betDATA
+        if(req.body.gameId){
+            let game1 = await gameModel.findOne({game_id:(req.body.gameId)*1})
+            // console.log(game1)
+            game = game1.game_name
+            description = `Bet for game ${game}/amount ${req.body.debitAmount}`
+            description2 = `Bet for game ${game}/amount ${req.body.debitAmount}/user = ${user.userName}`
+            betDATA = {
+                userId : req.body.userId,
+                userName : user.userName,
+                transactionId : req.body.transactionId,
+                Stake : req.body.debitAmount,
+                date : date,
+                status : "OPEN",
+                returns : -req.body.debitAmount,
+                role_type:user.role_type,
+                event : game,
+                betType : 'Casino',
+                operatorId : req.body.operatorId,
+                token : req.body.token,
+                gameId : req.body.gameId,
+                roundId : req.body.roundId,
+            }
+        }else{
+            game = req.body.competitionName
+            description = `Bet for game ${req.body.eventName}/amount ${req.body.debitAmount}`
+            description2 = `Bet for game ${req.body.eventName}/amount ${req.body.debitAmount}/user = ${user.userName}`
+            betType2 = 'SportBook'
+            betDATA = {
+                operatorId : req.body.operatorId,
+                token : req.body.token,
+                userId : req.body.userId,
+                userName : user.userName,
+                transactionId : req.body.transactionId,
+                betType : 'SportBook',
+                date : date,
+                event : game,
+                selectionName:req.body.selectionName,
+                oddValue : req.body.oddValue,
+                Stake : req.body.debitAmount,
+                status : "OPEN",
+                returns : -req.body.debitAmount,
+                role_type:user.role_type,
+                match:req.body.eventName,
+                marketName:req.body.marketName,
+                eventId:req.body.eventId,
+                bettype2:req.body.betType,
+            }
+        }
+        if(!user){
+            return next(new AppError("There is no user with that id", 404))
+        }
+        let amount = req.body.debitAmount
+        for(let i = user.parentUsers.length - 1; i >= 1; i--){
+            let parentUser1 = await userModel.findById(user.parentUsers[i])
+            let parentUser2 = await userModel.findById(user.parentUsers[i-1])
+            let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
+            let parentUser2Amount = new Decimal(parentUser1.Share).times(amount).dividedBy(100);
+            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                $inc: {
+                    downlineBalance: -req.body.debitAmount,
+                    myPL: parentUser1Amount,
+                    uplinePL: parentUser2Amount,
+                    lifetimePL: parentUser1Amount,
+                    pointsWL: -req.body.debitAmount
+                }
+            });
         
-    //         if (i === 1) {
-    //             await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
-    //                 $inc: {
-    //                     downlineBalance: -req.body.debitAmount,
-    //                     myPL: parentUser2Amount,
-    //                     lifetimePL: parentUser2Amount,
-    //                     pointsWL: -req.body.debitAmount
-    //                 }
-    //             });
-    //         }
-    //         amount = parentUser2Amount
-    //     }
-    //     let bet = {
-    //         ...req.body,
-    //         match   : req.body.eventName,
-    //         date : date,
-    //         event : game,
-    //         status : "OPEN",
-    //         returns : -req.body.debitAmount,
-    //         Stake : req.body.debitAmount,
-    //         userName : user.userName,
-    //         role_type:user.role_type
-    //     }
-    //     await betModel.create(bet);
-    //     let Acc = {
-    //         "user_id":req.body.userId,
-    //         "description": description,
-    //         "creditDebitamount" : -req.body.debitAmount,
-    //         "balance" : user.availableBalance - req.body.debitAmount,
-    //         "date" : Date.now(),
-    //         "userName" : user.userName,
-    //         "role_type" : user.role_type,
-    //         "Remark":"-",
-    //         "stake": req.body.debitAmount,
-    //         "transactionId":req.body.transactionId
-    //     }
-    //     accountStatement.create(Acc)
-    //     if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-    //         res.status(200).json({
-    //             "balance": user.availableBalance - req.body.debitAmount,
-    //             "status": "RS_OK"
-    //         })
-    //     }else{
-    //         res.status(200).json({
-    //             "balance": user.availableBalance - req.body.debitAmount,
-    //             "status": "OP_SUCCESS"
-    //         })
-    //     }
-    // }catch(err){
-    //     console.log(err)
-    // }
+            if (i === 1) {
+                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                    $inc: {
+                        downlineBalance: -req.body.debitAmount,
+                        myPL: parentUser2Amount,
+                        lifetimePL: parentUser2Amount,
+                        pointsWL: -req.body.debitAmount
+                    }
+                });
+            }
+            amount = parentUser2Amount
+        }
+        await betModel.create(betDATA);
+        let Acc = {
+            "user_id":req.body.userId,
+            "description": description,
+            "creditDebitamount" : -req.body.debitAmount,
+            "balance" : user.availableBalance - req.body.debitAmount,
+            "date" : Date.now(),
+            "userName" : user.userName,
+            "role_type" : user.role_type,
+            "Remark":"-",
+            "stake": req.body.debitAmount,
+            "transactionId":req.body.transactionId
+        }
+        accountStatement.create(Acc)
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            res.status(200).json({
+                "balance": user.availableBalance - req.body.debitAmount,
+                "status": "RS_OK"
+            })
+        }else{
+            res.status(200).json({
+                "balance": user.availableBalance - req.body.debitAmount,
+                "status": "OP_SUCCESS"
+            })
+        }
+    }catch(err){
+        console.log(err)
+    }
 });
 
 exports.betResult = catchAsync(async(req, res, next) =>{
