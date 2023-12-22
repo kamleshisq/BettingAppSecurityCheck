@@ -555,19 +555,19 @@ io.on('connection', (socket) => {
                     $lt : new Date(data.Tdate)
                 }
             }
-            if (data.filterData.type === "Deposit"){
+            if (data.Transaction_type === "Deposit"){
                 filter.stake = undefined
                 filter.accStype = undefined
                 filter.creditDebitamount = {
                     $gt: 0
                 }
-            }else if(data.filterData.type === "Withdraw"){
+            }else if(data.Transaction_type === "Withdraw"){
                 filter.stake = undefined
                 filter.accStype = undefined
                 filter.creditDebitamount = {
                     $lt: 0
                 }
-            }else if (data.filterData.type === "Settlement_Deposit"){
+            }else if (data.Transaction_type === "Settlement_Deposit"){
                 filter.stake = undefined
                 filter.accStype = {
                     $ne:undefined
@@ -575,7 +575,7 @@ io.on('connection', (socket) => {
                 filter.creditDebitamount = {
                     $gt: 0
                 }
-            }else if(data.filterData.type === "Settlement_Withdraw"){
+            }else if(data.Transaction_type === "Settlement_Withdraw"){
                 filter.stake = undefined
                 filter.accStype = {
                     $ne:undefined
@@ -2540,7 +2540,7 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
-    if(data.filterData.type === "2"){
+    if(data.Transaction_type === "2"){
         filter.stake = {
             $ne:undefined
         }
