@@ -82,7 +82,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     console.log(req.body, "REQ.body")
     try{
         const check = await userModel.findById(req.body.userId)
-        let exposureCheck  = await exposurecheckfunction(user)
+        let exposureCheck  = await exposurecheckfunction(check)
         if(check.availableBalance - req.body.debitAmount - exposureCheck < 0){
             return "Error: Insufficient balance"
         }
@@ -197,12 +197,12 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         accountStatement.create(Acc)
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
-                "balance": user.availableBalance - req.body.debitAmount,
+                "balance": user.availableBalance - req.body.debitAmount - exposureCheck,
                 "status": "RS_OK"
             })
         }else{
             res.status(200).json({
-                "balance": user.availableBalance - req.body.debitAmount,
+                "balance": user.availableBalance - req.body.debitAmount - exposureCheck,
                 "status": "OP_SUCCESS"
             })
         }
