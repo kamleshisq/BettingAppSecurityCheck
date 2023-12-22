@@ -3467,7 +3467,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
-            // console.log(data)
+            console.log(data)
             if(data.json.status == "success"){
                 let html = "";
                 let html1 = "";
