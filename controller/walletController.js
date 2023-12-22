@@ -39,7 +39,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         let objectId = new ObjectId(req.body.userId);
         let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
         // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
-        if(loginData[0].gameToken){
+        if(loginData[0] && loginData[0].gameToken){
             if(loginData[0].gameToken == req.body.token){
                 next()
             }else{
@@ -181,6 +181,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             }
             amount = parentUser2Amount
         }
+        // console.log(betDATA, "betDATAbetDATAbetDATAbetDATA")
         await betModel.create(betDATA);
         let Acc = {
             "user_id":req.body.userId,
@@ -216,6 +217,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 
         const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let check = await userModel.findById(req.body.userId);
+        let exposureCheck  = await exposurecheckfunction(check)
         if(!check){
             if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                 return res.status(200).json({
@@ -304,15 +306,15 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 "transactionId":`${bet.transactionId}`
               })
         }
-    
+        let sendBalance = balance - exposureCheck
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
-                "balance": balance,
+                "balance": sendBalance,
                 "status": "RS_OK"
             })
         }else{
             res.status(200).json({
-                "balance": balance,
+                "balance": sendBalance,
                 "status": "OP_SUCCESS"
             })
         }

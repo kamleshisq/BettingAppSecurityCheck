@@ -1287,9 +1287,10 @@ io.on('connection', (socket) => {
         if(data.filterData.betType === 'All'){
             delete data.filterData['betType']
         }
-
+        // console.log(data.filterData)
         if(data.filterData.status == 'All'){
-            data.filterData.status = {$ne: "OPEN"}
+            // data.filterData.status = {$ne: "OPEN"}
+            delete data.filterData['status']
         }
         // console.log(data.filterData)
 
@@ -1311,6 +1312,7 @@ io.on('connection', (socket) => {
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             data.filterData.userName = {$in:childrenUsername}
         }
+        // console.log(skip, limit, data.filterData)
         let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
 
 
