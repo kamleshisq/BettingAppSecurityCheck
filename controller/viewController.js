@@ -4938,9 +4938,9 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
         let thatMarketData = await commissionNewModel.aggregate([
             {
                 $match: {
-                eventDate: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                },
+                // eventDate: {
+                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                // },
                 userName:{$in:childrenUsername},
                 eventName:match,
                 marketName:market,
