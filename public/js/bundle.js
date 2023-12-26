@@ -7292,15 +7292,16 @@ $(document).on('click', ".logOut", function (e) {
   (0, _logOut.logout)();
 });
 var sentinterval1 = setInterval(function () {
-  console.log(Date.now());
-  console.log(Date.now() - parseInt(sessionStorage.getItem('logintime')));
-  if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 10) {
-    if (pathname.startsWith('/admin')) {
-      (0, _logOut.logout)();
-    } else {
-      (0, _logOutUser.logoutUser)();
+  if (sessionStorage.getItem('logintime')) {
+    if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 10) {
+      if (pathname.startsWith('/admin')) {
+        (0, _logOut.logout)();
+      } else {
+        (0, _logOutUser.logoutUser)();
+      }
+      clearInterval(sentinterval1);
+      sessionStorage.removeItem('logintime');
     }
-    clearInterval(sentinterval1);
   }
 }, 1000);
 $(document).on('click', ".logOutUser", function (e) {
@@ -7920,7 +7921,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49926" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59889" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
