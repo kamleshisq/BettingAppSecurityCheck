@@ -7294,7 +7294,7 @@ $(document).on('click', ".logOut", function (e) {
 var sentinterval1 = setInterval(function () {
   console.log(Date.now());
   console.log(Date.now() - parseInt(sessionStorage.getItem('logintime')));
-  if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 60 * 30) {
+  if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 60) {
     if (pathname.startsWith('/admin')) {
       (0, _logOut.logout)();
     } else {
