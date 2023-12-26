@@ -1513,7 +1513,19 @@ io.on('connection', (socket) => {
                 }
             ])
         }
-        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+        // let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+        let ubDetails = await Bet.aggregate([
+            {
+                $match:data.filterData
+            },
+            {
+                $sort:{'date':-1}
+            },{
+                $skip : skip
+            },{
+                $limit:limit
+            }
+        ])
         socket.emit('betMoniter',{ubDetails,page,events,refreshStatus:data.refreshStatus})
 
     })
