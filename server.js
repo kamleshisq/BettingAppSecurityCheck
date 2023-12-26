@@ -1524,6 +1524,14 @@ io.on('connection', (socket) => {
                 $skip : skip
             },{
                 $limit:limit
+            },
+            {
+                $lookup: {
+                  from: 'users', // Assuming the name of the Whitelabel collection
+                  localField: 'userName',
+                  foreignField: 'userName',
+                  as: 'whitelabelData'
+                }
             }
         ])
         socket.emit('betMoniter',{ubDetails,page,events,refreshStatus:data.refreshStatus})
