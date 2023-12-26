@@ -192,8 +192,8 @@
   const eyeIcons = document.querySelectorAll('.input-group-text');
 
   eyeIcons.forEach((eyeIcon, index) => {
-    console.log(index, "indexindexindex")
     eyeIcon.addEventListener("click", function () {
+      console.log(index, "indexindexindex")
       const passwordInput = passwordInputs[index - 2];
       console.log(passwordInput, "passwordInputpasswordInputpasswordInputpasswordInput")
       const isVisible = passwordInput.getAttribute("type") === "text";
