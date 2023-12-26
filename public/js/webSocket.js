@@ -14143,7 +14143,6 @@ socket.on('connect', () => {
                             <td>-</td>`
                     }
                     html += `<td>${bets[i].Stake}</td>
-                    <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
                     <td>${bets[i].returns}</td>
                     </tr>`
