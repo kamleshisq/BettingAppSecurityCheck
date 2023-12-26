@@ -1913,7 +1913,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         },
     ])
 
-    console.log(betResult, "betResultbetResultbetResult")
+    console.log(betResult[0].whitelabelData, "betResultbetResultbetResult")
     // let whiteLabelAndUSer = await User.find({ userName: { $in: childrenUsername }}, 'userName whiteLabel -role')
     // console.log(whiteLabelAndUSer, "whiteLabelAndUSer")
 
@@ -1941,7 +1941,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         currentUser:me,
         events,
         whiteLabels,
-        whiteLabelAndUSer
+        // whiteLabelAndUSer
     })
            
 })
