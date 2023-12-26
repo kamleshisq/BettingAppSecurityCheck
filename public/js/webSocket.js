@@ -15445,6 +15445,7 @@ socket.on('connect', () => {
                     if(Array.isArray(market)){
                         if(market.length !== 0){
                             for(let j = 0; j < market.length; j++){
+                                if(market[j].title.toLowerCase().startsWith('match')){
                                 html += `
                                 <tr id='${market[j].marketId}'>
                                 <td>${i + j }</td>
@@ -15466,6 +15467,7 @@ socket.on('connect', () => {
                                 </div></td>
                                   </tr>`
                                 }
+                            }
                             }
                         }else{
                             html += `<tr class="empty_table"><td>No record found</td></tr>`
