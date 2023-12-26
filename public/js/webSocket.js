@@ -15472,7 +15472,9 @@ socket.on('connect', () => {
                         }
                        
                     }else{
-                        html += `
+                        if(market.title.toLowerCase().startsWith('match')){
+
+                            html += `
                             <tr id='${market.marketId}'>  
                             <td>${i}</td>
                             <td>${market.title}</td>`
@@ -15493,8 +15495,9 @@ socket.on('connect', () => {
                             </div></td>
                               </tr>`
                             }
+                        }
                     }
-                  }
+                }
                 }
               }
             //   console.log(html)

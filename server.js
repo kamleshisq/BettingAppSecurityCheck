@@ -4098,11 +4098,11 @@ io.on('connection', (socket) => {
         // console.log(data.id)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
-        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
-        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
-        footBall = footBall.eventList
-        Tennis = Tennis.eventList
-        const resultSearch = cricket.concat(footBall, Tennis);
+        // let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        // let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        // footBall = footBall.eventList
+        // Tennis = Tennis.eventList
+        const resultSearch = cricket
         // console.log(resultSearch)
         let result = resultSearch.find(item => item.eventData.eventId == data.id)
         let data1 = await commissionMarketModel.find()
