@@ -866,6 +866,12 @@ socket.on('connect', () => {
   
     if(data.status === "success"){
       togglePopupMain('popup-1', "redPopUP", "password updated")
+      $(function () {
+        $('#navmod1').modal('show');
+        setTimeout(function () {
+            $('#navmod1').modal('hide');
+        }, 1000);
+    });
     }else{
       togglePopupMain('popup-2', "redPopUP2", data.message.toUpperCase())
     }
