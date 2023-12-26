@@ -198,15 +198,15 @@
       const isVisible = passwordInput.attr("type") === "text";
 
       if (isVisible) {
-        passwordInput.setAttribute("type", "password");
+         passwordInput.attr("type", "password");
         eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
       } else {
-        passwordInput.setAttribute("type", "text");
+        passwordInput.attr("type", "text");
         eyeIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
 
         // Hide the password after 3 seconds
         setTimeout(function () {
-          passwordInput.setAttribute("type", "password");
+           passwordInput.attr("type", "password");
           eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
         }, 3000);
       }
