@@ -20243,7 +20243,9 @@ socket.on('connect', () => {
 
     if(pathname == "/myCommissionReportsMatch"){
         $(document).on('click', '.commission-details', function(e){
-            
+            let type = this.id
+            let marketId = $(this).closest('tr').attr('id')
+            console.log(type, marketId, search)
         })
     }
 
