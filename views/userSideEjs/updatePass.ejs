@@ -196,6 +196,7 @@
       const passwordInput = $(this).closest('div').find('input');
       console.log(passwordInput, "passwordInputpasswordInputpasswordInput")
       const isVisible = passwordInput.attr("type") === "text";
+      console.log(isVisible, "isVisibleisVisibleisVisible")
 
       if (isVisible) {
          passwordInput.attr("type", "password");
