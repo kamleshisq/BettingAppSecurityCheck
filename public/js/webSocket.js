@@ -6080,24 +6080,42 @@ socket.on('connect', () => {
             }
             for(let i = 0; i < bets.length; i++){
                 let date = new Date(bets[i].date)
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
                 if(bets[i].bettype2 === 'BACK'){
                     html += `<tr class="back">`
                 }else{
                     html += `<tr class="lay">`
                 }
                 html += `<td>${i + count}</td>
-                <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                <td class="date-time">${formattedTime}</td>
                 <td>${bets[i].userName}</td>
                 `
                 if(bets[i].match){
-                    html += `
-                    <td class="text-nowrap">${bets[i].match}</td>
-                    <td class="text-nowrap">${bets[i].marketName}</td>
-                    <td>${bets[i].oddValue}</td>
-                    <td>${bets[i].selectionName}</td>`
+                    if(bets[i].selectionName.includes('@')){
+                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                        let selectionName = bets[i].selectionName.split('@')[0]
+                        let oddValue2 = bets[i].oddValue
+                        html += `
+                        <td class="text-nowrap">${bets[i].match}</td>
+                        <td class="text-nowrap">${bets[i].marketName}-${oddValue2}</td>
+                        <td>${oddValue1}</td>`
+                    }else{
+                        html += `
+                        <td class="text-nowrap">${bets[i].match}</td>
+                        <td class="text-nowrap">${bets[i].marketName}-${bets[i].selectionName}</td>
+                        <td>${bets[i].oddValue}</td>`
+                    }
                 }else{
                     html += `
-                    <td>-</td><td>-</td><td>-</td><td>-</td>`
+                    <td>-</td><td>-</td><td>-</td>`
                 }
                 html += `
                 <td>${bets[i].Stake}</td>
