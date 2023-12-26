@@ -4399,11 +4399,22 @@ socket.on('connect', () => {
                 <td>${bets[i].userName}</td>
                 <td>${formattedTime}</td>`
                 if(bets[i].match){
-                    html += `<td>${bets[i].betType}</td>
-                    <td>${bets[i].match}</td>
-                    <td>${bets[i].marketName}</td>
-                    <td>${bets[i].selectionName}</td>
-                    <td>${bets[i].oddValue}</td>`
+                    if(bets[i].selectionName.includes('@')){
+                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                        let selectionName = bets[i].selectionName.split('@')[0]
+                        let oddValue2 = bets[i].oddValue
+                        html += `<td>${bets[i].betType}</td>
+                        <td>${bets[i].match}</td>
+                        <td>${bets[i].marketName}</td>
+                        <td>${selectionName}@${oddValue2}</td>
+                        <td>${oddValue1}</td>`
+                    }else{
+                        html += `<td>${bets[i].betType}</td>
+                        <td>${bets[i].match}</td>
+                        <td>${bets[i].marketName}</td>
+                        <td>${bets[i].selectionName}</td>
+                        <td>${bets[i].oddValue}</td>`
+                    }
                 }else{
                     html += `<td>-</td>
                     <td>-</td>
