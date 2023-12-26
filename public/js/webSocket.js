@@ -20241,6 +20241,12 @@ socket.on('connect', () => {
         }
     }
 
+    if(pathname == "/myCommissionReportsMatch"){
+        $(document).on('click', '.commission-details', function(e){
+            
+        })
+    }
+
     $(document).ready(function() {
         setTimeout(function() {
           $(".main-loader").addClass("hide");

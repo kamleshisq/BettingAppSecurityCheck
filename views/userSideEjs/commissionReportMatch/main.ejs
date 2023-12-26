@@ -69,12 +69,12 @@
                 </thead>
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
-                        <tr>
+                        <tr id="<%=data[i].marketId%>" >
                             <td title="SR No." ><%=i+1%></td>
                             <td title="Market" ><%=data[i].marketName%></td>
                             <td title="Commission Type" ><%=data[i].commissionType%></td>
                             <td title="Commission Points"><%=data[i].commission.toFixed(3)%></td>
-                            <td><button class="site-button fancy-book commission-details" data-bs-toggle="modal" data-bs-target="#DetailsPOP">Details</button></td>
+                            <td><button class="site-button fancy-book commission-details" id="<%=data[i].commissionType%>" data-bs-toggle="modal" data-bs-target="#DetailsPOP">Details</button></td>
                         </tr>
                     <%}%>
                 </tbody>
