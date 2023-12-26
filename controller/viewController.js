@@ -1902,8 +1902,20 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
                 date:-1
             }
         },
-        { $limit : limit }
+        { $limit : limit },
+        {
+            $lookup: {
+              from: 'users', // Assuming the name of the Whitelabel collection
+              localField: 'userName',
+              foreignField: 'userName',
+              as: 'whitelabelData'
+            }
+        },
     ])
+
+    console.log(betResult[0].whitelabelData, "betResultbetResultbetResult")
+    // let whiteLabelAndUSer = await User.find({ userName: { $in: childrenUsername }}, 'userName whiteLabel -role')
+    // console.log(whiteLabelAndUSer, "whiteLabelAndUSer")
 
     let events = await betModel.aggregate([
         {
@@ -1928,7 +1940,8 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         me,
         currentUser:me,
         events,
-        whiteLabels
+        whiteLabels,
+        // whiteLabelAndUSer
     })
            
 })

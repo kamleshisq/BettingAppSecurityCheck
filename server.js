@@ -1513,7 +1513,27 @@ io.on('connection', (socket) => {
                 }
             ])
         }
-        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+        // let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+        let ubDetails = await Bet.aggregate([
+            {
+                $match:data.filterData
+            },
+            {
+                $sort:{'date':-1}
+            },{
+                $skip : skip
+            },{
+                $limit:limit
+            },
+            {
+                $lookup: {
+                  from: 'users', // Assuming the name of the Whitelabel collection
+                  localField: 'userName',
+                  foreignField: 'userName',
+                  as: 'whitelabelData'
+                }
+            }
+        ])
         socket.emit('betMoniter',{ubDetails,page,events,refreshStatus:data.refreshStatus})
 
     })
