@@ -31,7 +31,7 @@
       <td><%=bets[i].userName%></td>
       <td class="text-nowrap" ><%=bets[i].match%></td>
       <%if(bets[i].match){%>
-        <%if((bets[i].selectionName.includes('@')){%>
+        <%if(bets[i].selectionName.includes('@')){%>
         <%}else{%>
           <td  class="text-nowrap"><%=bets[i].marketName%> - <%=bets[i].selectionName%> </td>
           <td><%=bets[i].oddValue%></td>
