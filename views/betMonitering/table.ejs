@@ -27,7 +27,20 @@
           <tr class="lay">
       <%}%>
       <td><%=i + 1%></td>
-      <td class="date-time" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+      <%
+      let date = new Date(bets[i].date)
+      var options = { 
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    };
+    var formattedTime = date.toLocaleString('en-US', options);
+
+      %>
+      <td class="date-time" ><%=formattedTime%></td>
       <td><%=bets[i].userName%></td>
       <td class="text-nowrap" ><%=bets[i].match%></td>
       <%if(bets[i].match){%>
