@@ -7,11 +7,12 @@
         <th>Event</th>
         <th>Market </th>
         <th>Odds</th>
-        <th>Bet On</th>
+        <!-- <th>Bet On</th> -->
         <th>Stake</th>
-        <th>Txn ID </th>
         <th>Status</th>
-        <th>P/L</th>
+        <th>Result</th>
+        <th>Profit</th>
+        <th>Loss</th>
         <th>IP</th>
         <th>Actions</th>                      
       </tr>
@@ -32,19 +33,32 @@
       <%if(bets[i].match){%>
         <td  class="text-nowrap"><%=bets[i].marketName%></td>
         <td><%=bets[i].oddValue%></td>
-        <td><%=bets[i].selectionName%></td>
       <%}else{%>
-          <td>-</td>
           <td>-</td>
           <td>-</td>
       <%}%>
       <td><%=bets[i].Stake%></td>
-      <td><%=bets[i].transactionId%></td>
       <td><%=bets[i].status%></td>
-      <%if(bets[i].status == 'OPEN' || bets[i].status == 'MAP'){%>
+      <%if(bets[i].result){%>
+        <td><%=bets[i].result%></td>
+      <%}else{%>
+        <td>-</td>
+      <%}%>
+      <!-- <%if(bets[i].status == 'OPEN' || bets[i].status == 'MAP'){%>
         <td><%=0%></td>
       <%}else{%>
         <td><%=bets[i].returns%></td>
+      <%}%> -->
+      <%if(bet[i].WinAmount){%>
+        <td><%=bet[i].WinAmount%></td>
+      <%}else{%>
+        <td>-</td>
+      <%}%>
+
+      <%if(bet[i].exposure){%>
+        <td><%=bet[i].exposure%></td>
+        <%}else{%>
+          <td>-</td>
       <%}%>
       <%if(bets[i].ip){%>
         <td><%=bets[i].ip%></td>
