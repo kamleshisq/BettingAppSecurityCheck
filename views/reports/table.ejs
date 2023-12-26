@@ -11,7 +11,6 @@
       <th>Status</th>
       <th>Stake</th>
       <th>Returns</th>
-      <th>Txn ID</th>
       <th>Game/Round</th>
     </tr>
   </thead>
@@ -38,11 +37,24 @@
         <td><%=bets[i].userName%></td>
         <td class="date-time"><%=formattedTime%></td>
         <%if(bets[i].match){%>
-        <td><%=bets[i].betType%></td>
-        <td class="text-nowrap"><%=bets[i].match%></td>
-        <td><%=bets[i].marketName%></td>
-        <td><%=bets[i].selectionName%></td>
-        <td><%=bets[i].oddValue%></td>
+          <%if(bets[i].selectionName.includes('@')){%>
+            <%
+            let oddValue1 = bets[i].selectionName.split('@')[1]
+            let selectionName = bets[i].selectionName.split('@')[0]
+            let oddValue2 = bets[i].oddValue
+            %>
+            <td><%=bets[i].betType%></td>
+            <td class="text-nowrap"><%=bets[i].match%></td>
+            <td><%=bets[i].marketName%></td>
+            <td><%=selectionName%>@<%=oddValue2%></td>
+            <td><%=oddValue1%></td>
+          <%}else{%>
+            <td><%=bets[i].betType%></td>
+            <td class="text-nowrap"><%=bets[i].match%></td>
+            <td><%=bets[i].marketName%></td>
+            <td><%=bets[i].selectionName%></td>
+            <td><%=bets[i].oddValue%></td>
+          <%}%>
         <%}else{%>
         <td>-</td>
         <td>-</td>
