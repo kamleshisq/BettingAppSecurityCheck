@@ -9910,10 +9910,20 @@ socket.on('connect', () => {
                     }else{
                         html2 += `<tr class="lay-inplaymatch">`
                     }
-                    html2 += `<td>${ data.openBet[i].selectionName}</td>
-                    <td>${ data.openBet[i].oddValue }</td>
-                    <td>${ data.openBet[i].Stake }</td>
-                  </tr>`
+                    if(data.openBet[i].selectionName.includes('@')){
+                        let oddValue1 = data.openBet[i].selectionName.split('@')[1]
+                        let selectionName = data.openBet[i].selectionName.split('@')[0]
+                        let oddValue2 = data.openBet[i].oddValue
+                        html2 += `<td>${selectionName}@${oddValue2}</td>
+                        <td>${ oddValue1 }</td>
+                        <td>${ data.openBet[i].Stake }</td>
+                      </tr>`
+                    }else{
+                        html2 += `<td>${ data.openBet[i].selectionName}</td>
+                        <td>${ data.openBet[i].oddValue }</td>
+                        <td>${ data.openBet[i].Stake }</td>
+                      </tr>`
+                    }
                 }
                 // console.log(html2, "tableBETtableBET")
                 document.getElementById('tableBET').innerHTML = html2
