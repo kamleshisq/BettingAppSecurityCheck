@@ -4426,7 +4426,6 @@ socket.on('connect', () => {
                 <td>${bets[i].status}</td>
                 <td>${bets[i].Stake}</td>
                 <td>${bets[i].returns}</td>
-                <td>${bets[i].transactionId}</td>
                 <td>${bets[i].event}</td></tr>`
             }
             count += bets.length
