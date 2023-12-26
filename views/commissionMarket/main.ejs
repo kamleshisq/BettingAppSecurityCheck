@@ -102,7 +102,19 @@
   //   $('#search').addClass('hide')
   //  })
 </script>
-
+<script>
+  $(document).ready(function () {
+    $('#searchUser').on('input', function () {
+      const searchTerm = $(this).val().toLowerCase(); 
+      const $listItems = $('.matchName');
+      $listItems.each(function () {
+        const text = $(this).text().toLowerCase();
+        const isMatch = text.includes(searchTerm);
+        $(this).toggle(isMatch);
+      });
+    });
+  });
+</script>
 <script>
   function openCity(evt, cityName) {
 var i, tabcontent, tablinks;
