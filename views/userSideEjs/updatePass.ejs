@@ -193,10 +193,8 @@
 
   eyeIcons.forEach((eyeIcon, index) => {
     eyeIcon.addEventListener("click", function () {
-      console.log(index, "indexindexindex")
-      console.log(passwordInputs)
       const passwordInput = $(this).closest('div').find('input[type="password"]')
-      console.log(passwordInput, "passwordInputpasswordInputpasswordInputpasswordInput")
+      console.log(passwordInput, "passwordInputpasswordInputpasswordInput")
       const isVisible = passwordInput.getAttribute("type") === "text";
 
       if (isVisible) {
