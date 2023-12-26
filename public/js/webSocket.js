@@ -43,6 +43,7 @@ socket.on('connect', () => {
         //     }
         //   });
         // console.log('WORKING45654', data)
+
         let loginData
         if(pathname.startsWith('/admin')){
             if($('body header').attr('data-logindata')){
@@ -104,6 +105,7 @@ socket.on('connect', () => {
     // console.log(LOGINDATA,"==>cookie")
 
 
+ 
     
     let popupTimeout; 
 

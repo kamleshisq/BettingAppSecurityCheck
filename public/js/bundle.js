@@ -5487,6 +5487,7 @@ var login = /*#__PURE__*/function () {
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
             sessionStorage.setItem('token', JSON.stringify(res.data.token));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
+            sessionStorage.setItem('logintime', Date.now());
             sessionStorage.setItem('notiCount', JSON.stringify(res.data.data.paymentreqcount));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
@@ -6873,6 +6874,8 @@ var userLogin = /*#__PURE__*/function () {
             });
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
+            sessionStorage.setItem('logintime', Date.now());
+
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
             // if(res.data.count){
@@ -7288,6 +7291,18 @@ $(document).on('click', ".logOut", function (e) {
   // console.log(this)
   (0, _logOut.logout)();
 });
+var sentinterval1 = setInterval(function () {
+  console.log(Date.now());
+  console.log(Date.now() - parseInt(sessionStorage.getItem('logintime')));
+  if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 10) {
+    if (pathname.startsWith('/admin')) {
+      (0, _logOut.logout)();
+    } else {
+      (0, _logOutUser.logoutUser)();
+    }
+    clearInterval(sentinterval1);
+  }
+}, 1000);
 $(document).on('click', ".logOutUser", function (e) {
   e.preventDefault();
   // console.log('Working')
@@ -7905,7 +7920,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49926" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59889" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -133,6 +133,21 @@ $(document).on('click', ".logOut", function(e){
     // console.log(this)
     logout()
 })
+
+let sentinterval1 = setInterval(()=>{
+    console.log(Date.now())
+    console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
+    if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000*10){
+        if(pathname.startsWith('/admin')){
+            logout()
+        }else{
+            logoutUser()
+        }
+        clearInterval(sentinterval1)
+    }
+},1000)
+
+
 $(document).on('click', ".logOutUser", function(e){
     e.preventDefault()
     // console.log('Working')
