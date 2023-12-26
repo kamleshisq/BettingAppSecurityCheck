@@ -1905,7 +1905,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         { $limit : limit }
     ])
 
-    let whiteLabelAndUSer = await User.find({ userName: { $in: childrenUsername }}, 'id whiteLabel')
+    let whiteLabelAndUSer = await User.find({ userName: { $in: childrenUsername }}, 'userName whiteLabel -role')
     console.log(whiteLabelAndUSer, "whiteLabelAndUSer")
 
     let events = await betModel.aggregate([
