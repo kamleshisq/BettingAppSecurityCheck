@@ -2167,19 +2167,19 @@ exports.getSportList = catchAsync(async(req, res, next) => {
 });
 
 
-// exports.getCricketData = catchAsync(async(req, res, next) => {
-//     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
-//     fetch(fullUrl, {
-//         method: 'GET'
-//     })
-//     .then(res =>res.json())
-//     .then(result => {
-//         // console.log(result)
-//         res.status(200).json({
-//             result
-//         })
-//     })
-// });
+exports.getCricketData = catchAsync(async(req, res, next) => {
+    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
+    fetch(fullUrl, {
+        method: 'GET'
+    })
+    .then(res =>res.json())
+    .then(result => {
+        // console.log(result)
+        res.status(200).json({
+            result
+        })
+    })
+});
 
 // exports.getFootballData = catchAsync(async(req, res, next) => {
 //     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-footballdata';
@@ -2227,8 +2227,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://ollscores.com/",
-            "Referer":"http://ollscores.com/"},
+            "Origin":"http://dev.ollscores.com/",
+            "Referer":"http://dev.ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -4342,12 +4342,15 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
 
 exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
-    
+    let cricketData = await getCrkAndAllData()
+    const cricket = cricketData[0].gameList[0].eventList
+    // console.log(cricket, "cricketcricketcricket")
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
         title:"Commission Markets",
         me,
-        currentUser:me
+        currentUser:me,
+        cricket
     })
 });
 
@@ -4938,9 +4941,9 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
         let thatMarketData = await commissionNewModel.aggregate([
             {
                 $match: {
-                eventDate: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                },
+                // eventDate: {
+                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                // },
                 userName:{$in:childrenUsername},
                 eventName:match,
                 marketName:market,
@@ -4998,9 +5001,9 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
         let marketWiseData = await commissionNewModel.aggregate([
             {
                 $match: {
-                eventDate: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                },
+                // eventDate: {
+                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                // },
                 userName:{$in:childrenUsername},
                 eventName:match
                 }
@@ -5013,6 +5016,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 }
             }
         ])
+        // console.log(marketWiseData, "marketWiseDatamarketWiseData")
         res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
             title:"Commission Report",
             me,
@@ -5032,9 +5036,9 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
         let eventData = await commissionNewModel.aggregate([
             {
                 $match:{
-                    eventDate: {
-                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                    },
+                    // eventDate: {
+                    //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    // },
                     userName:user,
                     eventName:req.query.event
                 }
@@ -5053,9 +5057,9 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
         let Userdata = await commissionNewModel.aggregate([
                 {
                     $match: {
-                    eventDate: {
-                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                    },
+                    // eventDate: {
+                    //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    // },
                     userName:user
                     }
                 },

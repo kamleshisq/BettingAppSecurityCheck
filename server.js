@@ -555,19 +555,19 @@ io.on('connection', (socket) => {
                     $lt : new Date(data.Tdate)
                 }
             }
-            if (data.filterData.type === "Deposit"){
+            if (data.Transaction_type === "Deposit"){
                 filter.stake = undefined
                 filter.accStype = undefined
                 filter.creditDebitamount = {
                     $gt: 0
                 }
-            }else if(data.filterData.type === "Withdraw"){
+            }else if(data.Transaction_type === "Withdraw"){
                 filter.stake = undefined
                 filter.accStype = undefined
                 filter.creditDebitamount = {
                     $lt: 0
                 }
-            }else if (data.filterData.type === "Settlement_Deposit"){
+            }else if (data.Transaction_type === "Settlement_Deposit"){
                 filter.stake = undefined
                 filter.accStype = {
                     $ne:undefined
@@ -575,7 +575,7 @@ io.on('connection', (socket) => {
                 filter.creditDebitamount = {
                     $gt: 0
                 }
-            }else if(data.filterData.type === "Settlement_Withdraw"){
+            }else if(data.Transaction_type === "Settlement_Withdraw"){
                 filter.stake = undefined
                 filter.accStype = {
                     $ne:undefined
@@ -588,7 +588,11 @@ io.on('connection', (socket) => {
             if(data.page){
                 page = data.page
             }
-            json = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
+            let userAcc = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
+            json = {
+                status : 'success',
+                userAcc
+            }
             socket.emit('Acc', {json,page})
         }
     })
@@ -2205,51 +2209,7 @@ io.on('connection', (socket) => {
                 }
               }
         ])
-        // console.log(userIds, "userIdsuserIdsuserIds")
         socket.emit("aggreat", bets)
-        // User.aggregate([
-        //     {
-        //       $match: {
-        //         parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }
-        //       }
-        //     },
-        //     {
-        //       $group: {
-        //         _id: null,
-        //         userIds: { $push: '$_id' } 
-        //       }
-        //     }
-        //   ])
-        //     .then((userResult) => {
-        //         // console.log(userResult, "userResultuserResultuserResultuserResult")
-        //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-        //     //   console.log(userIds, "aggreataggreataggreataggreataggreataggreat")
-        //       Bet.aggregate([
-        //         {
-        //           $match: {
-        //             userId: { $in: userIds },
-        //             status: 'OPEN'
-        //           }
-        //         },
-        //         {
-        //             $group:{
-        //                 _id: '$secId',
-        //                 totalStake: { $sum: '$Stake' },
-        //                 count: { $sum: 1 }
-        //             }
-        //         }
-        //       ])
-        //         .then((betResult) => {
-        //           socket.emit("aggreat", betResult)
-        //         })
-        //         .catch((error) => {
-        //           console.error(error);
-        //         });
-        //     })
-        //     .catch((error) => {
-        //       console.error(error);
-        //     });
-
     })
 
 
@@ -2540,7 +2500,7 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
-    if(data.filterData.type === "2"){
+    if(data.Transaction_type === "2"){
         filter.stake = {
             $ne:undefined
         }
@@ -3560,8 +3520,34 @@ io.on('connection', (socket) => {
             filter.stake = {
                 $ne:undefined
             }
-        }else if (data.filterData.type === "1"){
+        }else if (data.filterData.type === "Deposit"){
             filter.stake = undefined
+            filter.accStype = undefined
+            filter.creditDebitamount = {
+                $gt: 0
+            }
+        }else if(data.filterData.type === "Withdraw"){
+            filter.stake = undefined
+            filter.accStype = undefined
+            filter.creditDebitamount = {
+                $lt: 0
+            }
+        }else if (data.filterData.type === "SDeposit"){
+            filter.stake = undefined
+            filter.accStype = {
+                $ne:undefined
+            }
+            filter.creditDebitamount = {
+                $gt: 0
+            }
+        }else if(data.filterData.type === "SWithdraw"){
+            filter.stake = undefined
+            filter.accStype = {
+                $ne:undefined
+            }
+            filter.creditDebitamount = {
+                $lt: 0
+            }
         }
         // console.log(filter)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
@@ -4112,11 +4098,11 @@ io.on('connection', (socket) => {
         // console.log(data.id)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
-        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
-        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
-        footBall = footBall.eventList
-        Tennis = Tennis.eventList
-        const resultSearch = cricket.concat(footBall, Tennis);
+        // let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        // let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        // footBall = footBall.eventList
+        // Tennis = Tennis.eventList
+        const resultSearch = cricket
         // console.log(resultSearch)
         let result = resultSearch.find(item => item.eventData.eventId == data.id)
         let data1 = await commissionMarketModel.find()

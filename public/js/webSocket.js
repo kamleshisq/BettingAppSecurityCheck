@@ -704,6 +704,7 @@ socket.on('connect', () => {
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
+    // console.log(data)
     socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
@@ -866,19 +867,14 @@ socket.on('connect', () => {
   socket.on('UserUpdatePass', async(data)=>{
   
     if(data.status === "success"){
-    //   function togglePopup(idname, id){
-    //     document.getElementById(idname).classList.toggle("active");
-    //     document.getElementById(id).innerText  = "password updated".toUpperCase()
-    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-    //   }
       togglePopupMain('popup-1', "redPopUP", "password updated")
-        // alert("password updated")
+      $(function () {
+        $('#navmod1').modal('show');
+        setTimeout(function () {
+            $('#navmod1').modal('hide');
+        }, 1000);
+    });
     }else{
-    //   function togglePopup1(idname, id){
-    //     document.getElementById(idname).classList.toggle("active");
-    //     document.getElementById(id).innerText  = data.message.toUpperCase()
-    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-    //   }
       togglePopupMain('popup-2', "redPopUP2", data.message.toUpperCase())
     }
    })
@@ -3056,13 +3052,18 @@ socket.on('connect', () => {
                 let html = "";
                 for(let i = 0; i < data.json.userAcc.length; i++){
                     let date = new Date(data.json.userAcc[i].date);
-                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
-                    // console.log(abc)
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
@@ -3112,9 +3113,7 @@ socket.on('connect', () => {
                         }
                     }else{
                         html += `<tr style="text-align: center;" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                            
                             if(data.json.userAcc[i].parent_id){
@@ -3167,13 +3166,17 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     if(data.json.userAcc.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
-                        $('#load-more').hide()
+                        $('#load-more').html('')
+                    }else{
+                        $('#load-more').html('<button class="load-more">Load More</button>')
                     }
                     $('tbody').html(html)
 
                 }else {
                     if(data.json.userAcc.length == 0){
-                        $('#load-more').hide()
+                        $('#load-more').html('')
+                    }else{
+                        $('#load-more').html('<button class="load-more">Load More</button>')
                     }
                     $('tbody').append(html)
 
@@ -9851,6 +9854,9 @@ socket.on('connect', () => {
             //   }
             if(data.result === "Bet placed successfully"){
                 togglePopupMain('popup-1', "redPopUP", data.result.toUpperCase())
+                $('.my-exc-inn-colaps-txt-dv').each(function(){
+                    $(this).removeClass('open')
+                })
             }else{
                 togglePopupMain('popup-2', "redPopUP2", data.result.toUpperCase())
             }
@@ -9879,12 +9885,24 @@ socket.on('connect', () => {
                 }else{
                     html2 += `<tr class="lay-inplaymatch">`
                 }
-                  html2 += `<td>${ data.openBet[0].selectionName}</td>
-                    <td>${ data.openBet[0].oddValue }</td>
-                    <td>${ data.openBet[0].Stake }</td>
-                  </tr>
-                </tbody>
-              </table>`
+                if(data.openBet[0].selectionName.includes('@')){
+                    let oddValue1 = data.openBet[0].selectionName.split('@')[1]
+                    let selectionName = data.openBet[0].selectionName.split('@')[0]
+                    let oddValue2 = data.openBet[0].oddValue
+                    html2 += `<td>${selectionName}@${oddValue2}</td>
+                      <td>${ oddValue1 }</td>
+                      <td>${ data.openBet[0].Stake }</td>
+                    </tr>
+                  </tbody>
+                </table>`
+                }else{
+                    html2 += `<td>${ data.openBet[0].selectionName}</td>
+                      <td>${ data.openBet[0].oddValue }</td>
+                      <td>${ data.openBet[0].Stake }</td>
+                    </tr>
+                  </tbody>
+                </table>`
+                }
               document.getElementById('length1').innerHTML = html2
               document.getElementById('length2').innerHTML = html2
             }else{
@@ -9894,10 +9912,20 @@ socket.on('connect', () => {
                     }else{
                         html2 += `<tr class="lay-inplaymatch">`
                     }
-                    html2 += `<td>${ data.openBet[i].selectionName}</td>
-                    <td>${ data.openBet[i].oddValue }</td>
-                    <td>${ data.openBet[i].Stake }</td>
-                  </tr>`
+                    if(data.openBet[i].selectionName.includes('@')){
+                        let oddValue1 = data.openBet[i].selectionName.split('@')[1]
+                        let selectionName = data.openBet[i].selectionName.split('@')[0]
+                        let oddValue2 = data.openBet[i].oddValue
+                        html2 += `<td>${selectionName}@${oddValue2}</td>
+                        <td>${ oddValue1 }</td>
+                        <td>${ data.openBet[i].Stake }</td>
+                      </tr>`
+                    }else{
+                        html2 += `<td>${ data.openBet[i].selectionName}</td>
+                        <td>${ data.openBet[i].oddValue }</td>
+                        <td>${ data.openBet[i].Stake }</td>
+                      </tr>`
+                    }
                 }
                 // console.log(html2, "tableBETtableBET")
                 document.getElementById('tableBET').innerHTML = html2
@@ -15382,16 +15410,16 @@ socket.on('connect', () => {
         //     });
         //   });
 
-          $('.searchUser').keyup(function(){
-            if($(this).hasClass("searchUser")){
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    socket.emit("MarketMatch", {inputValue:x, LOGINDATA})
-                }else{
-                    document.getElementById('search').innerHTML = ``
-                }
-            }
-        })
+        //   $('.searchUser').keyup(function(){
+        //     if($(this).hasClass("searchUser")){
+        //         if($(this).val().length >= 3 ){
+        //             let x = $(this).val(); 
+        //             socket.emit("MarketMatch", {inputValue:x, LOGINDATA})
+        //         }else{
+        //             document.getElementById('search').innerHTML = ``
+        //         }
+        //     }
+        // })
 
         //   socket.on("MarketMatch", async(data) => {
         //     console.log(data)
@@ -15423,7 +15451,7 @@ socket.on('connect', () => {
             e.preventDefault()
             // console.log($(this).attr('id'))
             let id = $(this).attr('id')
-            $('.wrapper').hide()
+            // $('.wrapper').hide()
             socket.emit("eventIdForMarketList", {LOGINDATA, id})
           })
 
@@ -15441,6 +15469,7 @@ socket.on('connect', () => {
                     if(Array.isArray(market)){
                         if(market.length !== 0){
                             for(let j = 0; j < market.length; j++){
+                                if( market[j].title && (market[j].title.toLowerCase().startsWith('book') || market[j].title.toLowerCase().startsWith('toss'))){
                                 html += `
                                 <tr id='${market[j].marketId}'>
                                 <td>${i + j }</td>
@@ -15462,13 +15491,41 @@ socket.on('connect', () => {
                                 </div></td>
                                   </tr>`
                                 }
+                            }else{
+                                // console.log(market[j], marketKey)
+                                if(marketKey === 'session' && market[j].title && market[j].status == 1 && market[j].bet_allowed == 1 && market[j].game_over == 0 && !market[j].title.startsWith("Only") && market[j].title.includes("Over")){
+                                    html += `
+                                <tr id='${market[j].marketId}'>
+                                <td>${i + j }</td>
+                                <td>${market[j].title}</td>`
+                                if(data.data1.some(item => item.marketId == market[j].marketId)){
+                                    html += `<td width="120px"> <div class="on-off-btn-section">
+                                    <span class="on-off">OFF &nbsp; <label class="switch on">
+                                    <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                                    <span class="slider round"></span>
+                                    </label>&nbsp; ON</span>
+                                </div></td>
+                                  </tr>`
+                                }else{
+                                    html += `<td width="120px"> <div class="on-off-btn-section">
+                                    <span class="on-off">OFF &nbsp; <label class="switch">
+                                    <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                                    <span class="slider round"></span>
+                                    </label>&nbsp; ON</span>
+                                </div></td>
+                                  </tr>`
+                                }
+                                }
+                            }
                             }
                         }else{
                             html += `<tr class="empty_table"><td>No record found</td></tr>`
                         }
                        
                     }else{
-                        html += `
+                        if(market.title.toLowerCase().startsWith('match')){
+
+                            html += `
                             <tr id='${market.marketId}'>  
                             <td>${i}</td>
                             <td>${market.title}</td>`
@@ -15489,8 +15546,11 @@ socket.on('connect', () => {
                             </div></td>
                               </tr>`
                             }
+                        }else{
+                            console.log(market, marketKey)
+                        }
                     }
-                  }
+                }
                 }
               }
             //   console.log(html)
