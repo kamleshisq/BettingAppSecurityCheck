@@ -4590,6 +4590,15 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
                 eventName:sportId,
                 commissionStatus: { $ne : 'cancel'}
             }
+        },
+        {
+            $group:{
+                _id:{
+                    marketId : '$marketId',
+                    commissionType : '$commissionType'
+                },
+                commission:{$sum:'$commission'}
+            }
         }
     ])
     
