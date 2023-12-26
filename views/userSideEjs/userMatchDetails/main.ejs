@@ -506,8 +506,8 @@
                                 let oddValue1 = betsOnthisMatch[i].selectionName.split('@')[1]
                                 let selectionName = betsOnthisMatch[i].selectionName.split('@')[0]
                                 let oddValue2 = betsOnthisMatch[i].oddValue%>
-                                <td><%= selectionName %>@<%=oddValue1%></td>
-                                <td><%= oddValue2 %></td>
+                                <td><%= selectionName %>@<%=oddValue2%></td>
+                                <td><%= oddValue1 %></td>
                                 <td><%= betsOnthisMatch[i].Stake %></td>
                               <%}else{%>
                                 <td><%= betsOnthisMatch[i].selectionName%></td>
