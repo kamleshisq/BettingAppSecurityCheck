@@ -2209,7 +2209,7 @@ io.on('connection', (socket) => {
                 }
               }
         ])
-        // console.log(userIds, "userIdsuserIdsuserIds")
+        console.log(bets, "userIdsuserIdsuserIds")
         socket.emit("aggreat", bets)
         // User.aggregate([
         //     {
