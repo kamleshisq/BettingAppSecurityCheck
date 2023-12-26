@@ -6137,6 +6137,12 @@ socket.on('connect', () => {
                    html +=  `<td>-</td>`
                 }
 
+                if(bets[i].exposure){
+                    html += `<td>${bets[i].exposure}</td>`
+                }else{
+                   html +=  `<td>-</td>`
+                }
+
                 if(bets[i].ip){
                     html += `<td>${bets[i].ip}</td>`
                 }else{
