@@ -15468,7 +15468,7 @@ socket.on('connect', () => {
                                   </tr>`
                                 }
                             }else{
-                                console.log(market[j])
+                                console.log(market[j], marketKey)
                             }
                             }
                         }else{
