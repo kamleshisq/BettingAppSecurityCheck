@@ -15427,7 +15427,7 @@ socket.on('connect', () => {
             e.preventDefault()
             // console.log($(this).attr('id'))
             let id = $(this).attr('id')
-            $('.wrapper').hide()
+            // $('.wrapper').hide()
             socket.emit("eventIdForMarketList", {LOGINDATA, id})
           })
 
