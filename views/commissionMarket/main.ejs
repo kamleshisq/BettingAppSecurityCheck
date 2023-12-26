@@ -15,7 +15,19 @@
               <div class="wrapper">
                 <ul id="search" class="users">
                   <%for(let i = 0; i < cricket.length; i++){%>
-                    <li id="<%=cricket[i].eventData.eventId%>" class="matchName"><%=cricket[i].eventData.name%></li>
+                    <% 
+                    let date = new Date((cricket[i].eventData.time * 1000))
+                    var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                  };
+                  var formattedTime = date.toLocaleString('en-US', options);
+                    %>
+                    <li id="<%=cricket[i].eventData.eventId%>" class="matchName"><%=cricket[i].eventData.name%>  <%=formattedTime%></li>
                   <%}%>
                 </ul>
               </div>
