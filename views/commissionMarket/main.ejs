@@ -95,9 +95,11 @@
 <script type="text/javascript" src="../js/bundle.js"></script>
 <script>
   $(document).on('click', "#searchUser", function(e){
-    // e.pre()
     $('#search').removeClass('hide')
   })
+  $('body').click(function(){
+  $(".wrapper #search:not(.hide)").addClass("hide");
+  });
   // $(document).on('click', 'body', function () { 
   //   $('#search').addClass('hide')
   //  })
