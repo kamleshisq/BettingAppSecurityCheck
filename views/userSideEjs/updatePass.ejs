@@ -195,18 +195,18 @@
     eyeIcon.addEventListener("click", function () {
       const passwordInput = $(this).closest('div').find('input');
       // console.log(passwordInput, "passwordInputpasswordInputpasswordInput")
-      const isVisible = passwordInput[0].getAttribute("type") === "text";
+      const isVisible = passwordInput.getAttribute("type") === "text";
 
       if (isVisible) {
-        passwordInput[0].setAttribute("type", "password");
+        passwordInput.setAttribute("type", "password");
         eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
       } else {
-        passwordInput[0].setAttribute("type", "text");
+        passwordInput.setAttribute("type", "text");
         eyeIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
 
         // Hide the password after 3 seconds
         setTimeout(function () {
-          passwordInput[0].setAttribute("type", "password");
+          passwordInput.setAttribute("type", "password");
           eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
         }, 3000);
       }
