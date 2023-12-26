@@ -13,7 +13,7 @@
               </div>
               <input type="text" id="searchUser" list="text_editors" class="form-control searchUser" placeholder="Event Name" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               <div class="wrapper">
-                <ul id="search" class="users">
+                <ul id="search" class="users hide">
                   <%for(let i = 0; i < cricket.length; i++){%>
                     <% 
                     let date = new Date((cricket[i].eventData.time * 1000))
