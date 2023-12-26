@@ -501,11 +501,10 @@
                               <%}else{%>
                                 <tr class="lay-inplaymatch" >
                               <%}%>
+                              condole.log(betsOnthisMatch[i], "betsOnthisMatch[i]betsOnthisMatch[i]betsOnthisMatch[i]")
                               <%if(betsOnthisMatch[i].selectionName.includes('@')){
-                                console.log(betsOnthisMatch[i].selectionName.split('@')[1],betsOnthisMatch[i].selectionName.split('@')[0] )
                                 let oddValue1 = betsOnthisMatch[i].selectionName.split('@')[1]
                                 let selectionName = betsOnthisMatch[i].selectionName.split('@')[0]
-                                console.log(oddValue1, selectionName, "JKJKJKKJ")
                                 let oddValue2 = betsOnthisMatch[i].oddValue%>
                                 <td><%= selectionName %>@<%=oddValue1%></td>
                                 <td><%= oddValue2 %></td>
