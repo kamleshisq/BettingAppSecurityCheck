@@ -15445,7 +15445,7 @@ socket.on('connect', () => {
                     if(Array.isArray(market)){
                         if(market.length !== 0){
                             for(let j = 0; j < market.length; j++){
-                                if(market[j].title.toLowerCase().startsWith('match')){
+                                if(market[j].title.toLowerCase().startsWith('book') || market[j].title.toLowerCase().startsWith('toss')){
                                 html += `
                                 <tr id='${market[j].marketId}'>
                                 <td>${i + j }</td>
