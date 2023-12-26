@@ -187,34 +187,30 @@
   </div>
 
   <script>
-   document.addEventListener("DOMContentLoaded", function () {
-  const passwordInputs = document.querySelectorAll('input[type="password"]');
-  const eyeIcons = document.querySelectorAll('.input-group-text');
-
-  eyeIcons.forEach((eyeIcon, index) => {
-    eyeIcon.addEventListener("click", function () {
-      const passwordInput = $(this).closest('div').find('input');
-      // console.log(passwordInput, "passwordInputpasswordInputpasswordInput")
-      const isVisible = passwordInput.getAttribute("type") === "text";
-
-      if (isVisible) {
-        passwordInput.setAttribute("type", "password");
-        eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
-      } else {
-        passwordInput.setAttribute("type", "text");
-        eyeIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
-
-        // Hide the password after 3 seconds
-        setTimeout(function () {
-          passwordInput.setAttribute("type", "password");
-          eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
-        }, 3000);
-      }
+    $(document).ready(function () {
+      const eyeIcons = $('.input-group-text');
+  
+      eyeIcons.each(function (index) {
+        $(this).on("click", function () {
+          const passwordInput = $(this).closest('div').find('input');
+          const isVisible = passwordInput.attr("type") === "text";
+  
+          if (isVisible) {
+            passwordInput.attr("type", "password");
+            $(this).html('<i class="fa-solid fa-eye-slash"></i>');
+          } else {
+            passwordInput.attr("type", "text");
+            $(this).html('<i class="fa-solid fa-eye"></i>');
+  
+            // Hide the password after 3 seconds
+            setTimeout(function () {
+              passwordInput.attr("type", "password");
+              $(this).html('<i class="fa-solid fa-eye-slash"></i>');
+            }.bind(this), 3000);
+          }
+        });
+      });
     });
-  });
-});
-
-
   </script>
   <% if (userLog && userLog.length === 1) { %>
     <%if(userLog[0].logs.length === 0){%>
