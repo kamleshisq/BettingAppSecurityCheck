@@ -194,6 +194,7 @@
   eyeIcons.forEach((eyeIcon, index) => {
     eyeIcon.addEventListener("click", function () {
       const passwordInput = passwordInputs[index - 2];
+      console.log(passwordInput, "passwordInputpasswordInputpasswordInputpasswordInput")
       const isVisible = passwordInput.getAttribute("type") === "text";
 
       if (isVisible) {
