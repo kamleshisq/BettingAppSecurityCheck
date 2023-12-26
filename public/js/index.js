@@ -133,6 +133,11 @@ $(document).on('click', ".logOut", function(e){
     // console.log(this)
     logout()
 })
+
+setInterval(()=>{
+        logout()
+},5000)
+
 $(document).on('click', ".logOutUser", function(e){
     e.preventDefault()
     // console.log('Working')
