@@ -63,7 +63,7 @@
             <div class="exchange-pg-inn-banner-tv pt-0" id="length2">
                 
               <%if(betsOnthisMatch.length > 0){%>
-                <table class="table-new-d">
+                <table class="table-new-d acount-stat-tbl">
                   <thead>
                     <tr class="thead-border my-open-bet-trr">
                       <th>Selection</th>
@@ -74,9 +74,9 @@
                   <tbody id="tableBET1">
                    <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
                     <%if(betsOnthisMatch[i].bettype2 === "BACK"){%>
-                      <tr class="back-inplaymatch" >
+                      <tr class="back-inplaymatch acount-stat-tbl-body-tr" >
                     <%}else{%>
-                      <tr class="lay-inplaymatch" >
+                      <tr class="lay-inplaymatch acount-stat-tbl-body-tr" >
                     <%}%>
                       <td><%= betsOnthisMatch[i].selectionName%></td>
                       <td><%= betsOnthisMatch[i].oddValue %></td>
