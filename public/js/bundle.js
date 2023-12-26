@@ -6874,6 +6874,8 @@ var userLogin = /*#__PURE__*/function () {
             });
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
+            sessionStorage.setItem('logintime', Date.now());
+
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
             // if(res.data.count){
@@ -7293,7 +7295,11 @@ var sentinterval1 = setInterval(function () {
   console.log(Date.now());
   console.log(Date.now() - parseInt(sessionStorage.getItem('logintime')));
   if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 60 * 30) {
-    (0, _logOut.logout)();
+    if (pathname.startsWith('/admin')) {
+      (0, _logOut.logout)();
+    } else {
+      (0, _logOutUser.logoutUser)();
+    }
   }
 }, 1000);
 clearInterval(sentinterval1);

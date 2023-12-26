@@ -138,7 +138,11 @@ let sentinterval1 = setInterval(()=>{
     console.log(Date.now())
     console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
     if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000*60*30){
-        logout()
+        if(pathname.startsWith('/admin')){
+            logout()
+        }else{
+            logoutUser()
+        }
     }
 },1000)
 
