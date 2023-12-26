@@ -6128,13 +6128,13 @@ socket.on('connect', () => {
                 if(bets[i].result){
                     html += `<td>${bets[i].result}</td>`
                 }else{
-                    `<td>-</td>`
+                    html += `<td>-</td>`
                 }
 
                 if(bets[i].WinAmount){
                     html += `<td>${bets[i].WinAmount}</td>`
                 }else{
-                    `<td>-</td>`
+                   html +=  `<td>-</td>`
                 }
 
                 if(bets[i].ip){
