@@ -4343,7 +4343,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
 exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
     let cricketData = await getCrkAndAllData()
-    const cricket = sportData[0].gameList[0].eventList
+    const cricket = cricketData[0].gameList[0].eventList
     console.log(cricket, "cricketcricketcricket")
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
