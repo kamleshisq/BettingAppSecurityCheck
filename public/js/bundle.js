@@ -7293,7 +7293,7 @@ $(document).on('click', ".logOut", function (e) {
 });
 var sentinterval1 = setInterval(function () {
   if (sessionStorage.getItem('logintime')) {
-    if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 10) {
+    if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 10 * 30) {
       if (pathname.startsWith('/admin')) {
         (0, _logOut.logout)();
       } else {
