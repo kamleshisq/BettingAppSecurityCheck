@@ -4606,12 +4606,20 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
 
             }
         },
-        // {
-        //     $project:{
-        //         _id:0,
+        {
+            $project:{
+                _id:0,
+                marketId:'$_id.marketId',
+                commissionType:'$_id.commissionType',
+                commission:'$commission',
+                eventName:"$eventName",
+                seriesName:'$seriesName',
+                sportId:'$sportId',
+                eventId:'$eventId',
+                marketName:'$marketName'
 
-        //     }
-        // }
+            }
+        }
     ])
     
     console.log(data, "datadata")
