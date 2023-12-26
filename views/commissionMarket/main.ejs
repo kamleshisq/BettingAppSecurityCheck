@@ -27,7 +27,7 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                     %>
-                    <li id="<%=cricket[i].eventData.eventId%>" class="matchName"><%=cricket[i].eventData.name%>  <%=formattedTime%></li>
+                    <li id="<%=cricket[i].eventData.eventId%>" class="matchName"><%=cricket[i].eventData.name%>  (<%=formattedTime%>)</li>
                   <%}%>
                 </ul>
               </div>
