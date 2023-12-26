@@ -137,7 +137,7 @@ $(document).on('click', ".logOut", function(e){
 setInterval(()=>{
     console.log(Date.now())
     console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
-    if(Date.now()-parseInt(sessionStorage.getItem('logintime')) == 1000*5){
+    if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000*5){
         logout()
     }
 },1000)
