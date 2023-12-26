@@ -9846,6 +9846,9 @@ socket.on('connect', () => {
             //   }
             if(data.result === "Bet placed successfully"){
                 togglePopupMain('popup-1', "redPopUP", data.result.toUpperCase())
+                $('.my-exc-inn-colaps-txt-dv').each(function(){
+                    $(this).removeClass('open')
+                })
             }else{
                 togglePopupMain('popup-2', "redPopUP2", data.result.toUpperCase())
             }
