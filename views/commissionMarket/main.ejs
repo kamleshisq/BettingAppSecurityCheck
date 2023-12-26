@@ -14,7 +14,9 @@
               <input type="text" id="searchUser" list="text_editors" class="form-control searchUser" placeholder="Event Name" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               <div class="wrapper">
                 <ul id="search" class="users">
-              
+                  <%for(let i = 0; i < cricket.length; i++){%>
+                    <li id="<%=cricket[i].eventData.eventId%>" class="matchName"><%=cricket[i].eventData.name%></li>
+                  <%}%>
                 </ul>
               </div>
               

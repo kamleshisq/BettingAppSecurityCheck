@@ -15386,16 +15386,16 @@ socket.on('connect', () => {
         //     });
         //   });
 
-          $('.searchUser').keyup(function(){
-            if($(this).hasClass("searchUser")){
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    socket.emit("MarketMatch", {inputValue:x, LOGINDATA})
-                }else{
-                    document.getElementById('search').innerHTML = ``
-                }
-            }
-        })
+        //   $('.searchUser').keyup(function(){
+        //     if($(this).hasClass("searchUser")){
+        //         if($(this).val().length >= 3 ){
+        //             let x = $(this).val(); 
+        //             socket.emit("MarketMatch", {inputValue:x, LOGINDATA})
+        //         }else{
+        //             document.getElementById('search').innerHTML = ``
+        //         }
+        //     }
+        // })
 
         //   socket.on("MarketMatch", async(data) => {
         //     console.log(data)
