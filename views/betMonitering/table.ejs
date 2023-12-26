@@ -3,6 +3,7 @@
       <tr>
         <th>S.No</th>
         <th>Date</th>
+        <th>White Label</th>
         <th>User Name</th>
         <th>Event</th>
         <th>Market </th>
@@ -39,6 +40,7 @@
       var formattedTime = date.toLocaleString('en-US', options);
       %>
       <td class="date-time" ><%=formattedTime%></td>
+      <td><%=bets[i].whitelabelData.whiteLabel%></td>
       <td><%=bets[i].userName%></td>
       <%if(bets[i].match){%>
         <td class="text-nowrap" ><%=bets[i].match%></td>
