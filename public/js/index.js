@@ -134,13 +134,15 @@ $(document).on('click', ".logOut", function(e){
     logout()
 })
 
-setInterval(()=>{
+let sentinterval1 = setInterval(()=>{
     console.log(Date.now())
     console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
     if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000*60*30){
         logout()
     }
 },1000)
+
+clearInterval(sentinterval1)
 
 $(document).on('click', ".logOutUser", function(e){
     e.preventDefault()
