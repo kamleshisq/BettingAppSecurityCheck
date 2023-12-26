@@ -6096,8 +6096,8 @@ socket.on('connect', () => {
                 }
                 html += `<td>${i + count}</td>
                 <td class="date-time">${formattedTime}</td>
-                <td>${bets[i].userName}</td>
                 <td>${bets[i].whitelabelData[0].whiteLabel}
+                <td>${bets[i].userName}</td>
                 `
                 if(bets[i].match){
                     if(bets[i].selectionName.includes('@')){
