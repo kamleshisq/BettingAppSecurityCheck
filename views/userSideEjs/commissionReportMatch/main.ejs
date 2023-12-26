@@ -63,10 +63,7 @@
                         <th class="bod-red-lft">SR No.</th>
                         <th>Market</th>
                         <th>Commission Type</th>
-                        <th>Percentage</th>
-                        <th>Commission Points</th>
-                        <!-- <th></th> -->
-                        <th class="bod-red-rit">Status</th>
+                        <th class="bod-red-rit">Commission Points</th>
                     </tr>
                 </thead>
                 <tbody class="acount-stat-tbl-body">
@@ -75,9 +72,7 @@
                             <td title="SR No." ><%=i+1%></td>
                             <td title="Market" ><%=data[i].marketName%></td>
                             <td title="Commission Type" ><%=data[i].commissionType%></td>
-                            <td title="Percentage" ><%=data[i].commissionPercentage%></td>
-                            <td title="Commission Points" ><%=data[i].commission%></td>
-                            <td title="Status" ><%=data[i].commissionStatus%></td>
+                            <td title="Commission Points" ><%=data[i].commission.toFixed(2)%></td>
                         </tr>
                     <%}%>
                 </tbody>

@@ -4622,7 +4622,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         }
     ])
     
-    console.log(data, "datadata")
+    // console.log(data, "datadata")
 
     let sumData = await commissionNewModel.aggregate([
         {
