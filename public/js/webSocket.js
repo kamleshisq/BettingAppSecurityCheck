@@ -9883,12 +9883,24 @@ socket.on('connect', () => {
                 }else{
                     html2 += `<tr class="lay-inplaymatch">`
                 }
-                  html2 += `<td>${ data.openBet[0].selectionName}</td>
-                    <td>${ data.openBet[0].oddValue }</td>
-                    <td>${ data.openBet[0].Stake }</td>
-                  </tr>
-                </tbody>
-              </table>`
+                if(data.openBet[0].selectionName.includes('@')){
+                    let oddValue1 = data.openBet[0].selectionName.split('@')[1]
+                    let selectionName = data.openBet[0].selectionName.split('@')[0]
+                    let oddValue2 = data.openBet[0].oddValue
+                    html2 += `<td>${selectionName}@${oddValue2}</td>
+                      <td>${ oddValue1 }</td>
+                      <td>${ data.openBet[0].Stake }</td>
+                    </tr>
+                  </tbody>
+                </table>`
+                }else{
+                    html2 += `<td>${ data.openBet[0].selectionName}</td>
+                      <td>${ data.openBet[0].oddValue }</td>
+                      <td>${ data.openBet[0].Stake }</td>
+                    </tr>
+                  </tbody>
+                </table>`
+                }
               document.getElementById('length1').innerHTML = html2
               document.getElementById('length2').innerHTML = html2
             }else{
