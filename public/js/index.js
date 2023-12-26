@@ -143,10 +143,10 @@ let sentinterval1 = setInterval(()=>{
         }else{
             logoutUser()
         }
+        clearInterval(sentinterval1)
     }
 },1000)
 
-clearInterval(sentinterval1)
 
 $(document).on('click', ".logOutUser", function(e){
     e.preventDefault()

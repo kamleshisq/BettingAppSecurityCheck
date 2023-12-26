@@ -7300,9 +7300,9 @@ var sentinterval1 = setInterval(function () {
     } else {
       (0, _logOutUser.logoutUser)();
     }
+    clearInterval(sentinterval1);
   }
 }, 1000);
-clearInterval(sentinterval1);
 $(document).on('click', ".logOutUser", function (e) {
   e.preventDefault();
   // console.log('Working')
