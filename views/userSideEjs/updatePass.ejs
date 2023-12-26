@@ -195,7 +195,7 @@
     eyeIcon.addEventListener("click", function () {
       console.log(index, "indexindexindex")
       console.log(passwordInputs)
-      const passwordInput = passwordInputs[index - 2];
+      const passwordInput = $(this).closest('div').find('input[type="password"]')
       console.log(passwordInput, "passwordInputpasswordInputpasswordInputpasswordInput")
       const isVisible = passwordInput.getAttribute("type") === "text";
 
