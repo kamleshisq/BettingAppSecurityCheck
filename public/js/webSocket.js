@@ -702,8 +702,8 @@ socket.on('connect', () => {
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
-    console.log(data)
-    // socket.emit('UserUpdatePass', {data, LOGINDATA});
+    // console.log(data)
+    socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
    const multiMarketTd = document.querySelectorAll('.multi_market');
@@ -865,19 +865,8 @@ socket.on('connect', () => {
   socket.on('UserUpdatePass', async(data)=>{
   
     if(data.status === "success"){
-    //   function togglePopup(idname, id){
-    //     document.getElementById(idname).classList.toggle("active");
-    //     document.getElementById(id).innerText  = "password updated".toUpperCase()
-    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-    //   }
       togglePopupMain('popup-1', "redPopUP", "password updated")
-        // alert("password updated")
     }else{
-    //   function togglePopup1(idname, id){
-    //     document.getElementById(idname).classList.toggle("active");
-    //     document.getElementById(id).innerText  = data.message.toUpperCase()
-    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-    //   }
       togglePopupMain('popup-2', "redPopUP2", data.message.toUpperCase())
     }
    })

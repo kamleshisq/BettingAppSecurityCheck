@@ -5547,7 +5547,7 @@ var logout = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            location.href = '/';
+            location.href = '/adminlogin';
           }
           _context.next = 11;
           break;
