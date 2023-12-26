@@ -135,8 +135,11 @@ $(document).on('click', ".logOut", function(e){
 })
 
 setInterval(()=>{
+    console.log(parseInt(sessionStorage.getItem('logintime')))
+    if(Date.now()-parseInt(sessionStorage.getItem('logintime')) == 1000*5){
         logout()
-},5000)
+    }
+},1000)
 
 $(document).on('click', ".logOutUser", function(e){
     e.preventDefault()

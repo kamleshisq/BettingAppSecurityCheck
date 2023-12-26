@@ -7290,8 +7290,11 @@ $(document).on('click', ".logOut", function (e) {
   (0, _logOut.logout)();
 });
 setInterval(function () {
-  (0, _logOut.logout)();
-}, 5000);
+  console.log(parseInt(sessionStorage.getItem('logintime')));
+  if (Date.now() - parseInt(sessionStorage.getItem('logintime')) == 1000 * 5) {
+    (0, _logOut.logout)();
+  }
+}, 1000);
 $(document).on('click', ".logOutUser", function (e) {
   e.preventDefault();
   // console.log('Working')
