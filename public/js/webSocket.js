@@ -10661,9 +10661,18 @@ socket.on('connect', () => {
                         html += "<td title='Market'>-</td>"
                 }
                 if(bets[i].selectionName){
+                    if(bets[i].selectionName.includes('@')){
+                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                        let selectionName = bets[i].selectionName.split('@')[0]
+                        let oddValue2 = bets[i].oddValue
+                        html +=    `<td title='Bet On'>${selectionName}@${oddValue2}</td>
+                        <td title="Bet Type" >${bets[i].bettype2}</td>
+                            <td title='Odds'>${oddValue1}</td>`
+                    }else{
                         html +=    `<td title='Bet On'>${bets[i].selectionName}</td>
                         <td title="Bet Type" >${bets[i].bettype2}</td>
                             <td title='Odds'>${bets[i].oddValue}</td>`
+                    }
                 }else{
                         html +=    "<td title='Bet On'>-</td><td title='Bet Type' >-</td><td title='Odds'>-</td>"
                 }
