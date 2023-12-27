@@ -70,6 +70,7 @@ const withdowReqModel = require('./model/withdrowReqModel');
 const runnerData = require('./model/runnersData');
 const globalSettingModel = require('./model/globalSetting');
 const colorCodeModel = require('./model/colorcodeModel');
+const { ObjectId } = require('mongodb');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
@@ -9677,6 +9678,20 @@ io.on('connection', (socket) => {
                 console.log(err)
                 socket.emit('changeExp', {message:"Please try again leter", status:"err"})
             }
+    })
+
+
+
+    socket.on('getDetailsCommision', async(data) => {
+        let bets = await Bet.aggregate({
+            $match:{
+                marketId:data.marketId,
+                userName:data.LOGINDATA.LOGINUSER.userName,
+            }
+        })
+
+        let thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName})
+
     })
 
 })
