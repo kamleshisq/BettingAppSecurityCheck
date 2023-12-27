@@ -1249,7 +1249,7 @@ socket.on('connect', () => {
     $(document).on('click','.updateBetLimit',function(e){
         let data = {}
        let firstTr = $(this).closest("tr")
-       let type = firstTr.find('#id"]').attr('id');
+       let type = firstTr.find('#id"').attr('id');
        let min_stake = firstTr.find('input["name=min_stake"]').val();
        let max_stake = firstTr.find('input["name=max_stake"]').val();
        let max_profit = firstTr.find('input["name=max_profit"]').val();
