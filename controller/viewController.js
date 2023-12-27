@@ -5051,14 +5051,18 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 // },
                 userName:{$in:childrenUsername},
-                eventName:match
+                eventId:match
                 }
             },
             {
                 $group: {
-                _id: "$marketName",
+                _id: {
+                    marketName : '$marketName',
+                    id:'$marketName'
+                },
                 totalCommission: { $sum: "$commission" },
-                eventDate: { $first: "$eventDate" }
+                eventDate: { $first: "$eventDate" },
+                eventName:{ $first: "$eventName" }
                 }
             }
         ])
