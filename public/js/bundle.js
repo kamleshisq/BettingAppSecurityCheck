@@ -5488,7 +5488,7 @@ var login = /*#__PURE__*/function () {
             sessionStorage.setItem('token', JSON.stringify(res.data.token));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             sessionStorage.setItem('logintime', Date.now());
-            localStorage.setItem('logintime', Date.now());
+            // localStorage.setItem('logintime', Date.now());
             sessionStorage.setItem('notiCount', JSON.stringify(res.data.data.paymentreqcount));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
@@ -6876,7 +6876,7 @@ var userLogin = /*#__PURE__*/function () {
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             sessionStorage.setItem('logintime', Date.now());
-            localStorage.setItem('logintime', Date.now());
+            // localStorage.setItem('logintime', Date.now());
 
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
@@ -7294,16 +7294,16 @@ $(document).on('click', ".logOut", function (e) {
   (0, _logOut.logout)();
 });
 var sentinterval1 = setInterval(function () {
-  if (localStorage.getItem('logintime')) {
-    console.log(Date.now() - parseInt(localStorage.getItem('logintime')));
-    if (Date.now() - parseInt(localStorage.getItem('logintime')) >= 1000 * 60 * 30) {
+  if (sessionStorage.getItem('logintime')) {
+    console.log(Date.now() - parseInt(sessionStorage.getItem('logintime')));
+    if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 60 * 30) {
       if (pathname.startsWith('/admin')) {
         (0, _logOut.logout)();
       } else {
         (0, _logOutUser.logoutUser)();
       }
       clearInterval(sentinterval1);
-      localStorage.removeItem('logintime');
+      sessionStorage.removeItem('logintime');
     }
   }
 }, 1000);

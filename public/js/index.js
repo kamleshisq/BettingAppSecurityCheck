@@ -135,16 +135,16 @@ $(document).on('click', ".logOut", function(e){
 })
 
 let sentinterval1 = setInterval(()=>{
-    if(localStorage.getItem('logintime')){
-        console.log(Date.now()-parseInt(localStorage.getItem('logintime')))
-        if(Date.now()-parseInt(localStorage.getItem('logintime')) >= 1000 * 60 * 30){
+    if(sessionStorage.getItem('logintime')){
+        console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
+        if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000 * 60 * 30){
             if(pathname.startsWith('/admin')){
                 logout()
             }else{
                 logoutUser()
             }
             clearInterval(sentinterval1)
-            localStorage.removeItem('logintime')
+            sessionStorage.removeItem('logintime')
         }
     }
 },1000)
