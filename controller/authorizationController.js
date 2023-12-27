@@ -13,7 +13,7 @@ const axios = require('axios')
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
-        expiresIn:process.env.JWT_EXPIRES
+        expiresIn:Math.floor(Date.now() / 1000) + 0.5 * 60
     })
 }
 
@@ -42,8 +42,9 @@ const createSendToken = async (user, statuscode, res, req)=>{
     // req.session.userId = user._id;
     // req.token = token
     const cookieOption = {
-        expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN)),
+        expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000)),
         httpOnly: true,
+        // secure: true
         }
     if(process.env.NODE_ENV === "production"){
         cookieOption.secure = true
@@ -99,7 +100,6 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     if(process.env.NODE_ENV === "production"){
         cookieOption.secure = true
         }
-        console.log("Cookie will expire at:", cookieOption.expires);
     res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
