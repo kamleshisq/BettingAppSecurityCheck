@@ -139,6 +139,7 @@ exports.getAuthROle = catchAsync(async(req, res, next) => {
     }
     const roles = await Role.find({role_level:{$in:operationUser.role.userAuthorization}}).sort({role_level:1});
     let roles1 = await Role.find().sort({role_level:1});
+    console.log(roles1)
     let dataToSEnd = []
     if(roles1){
         for(let i = 0; i < roles1.length; i++){
@@ -150,7 +151,7 @@ exports.getAuthROle = catchAsync(async(req, res, next) => {
         }
     }
 
-    // console.log(roles)
+    console.log(dataToSEnd, "dataToSEnddataToSEnddataToSEnd")
 
     res.status(200).json({
         status:'success',
