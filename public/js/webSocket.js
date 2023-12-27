@@ -13,6 +13,7 @@ socket.on('connect', () => {
     console.log("websocket Connected")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
+        console.log(data, "datadatadata")
         const {
             host, hostname, href, origin, pathname, port, protocol, search
         } = window.location
