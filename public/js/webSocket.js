@@ -20248,7 +20248,7 @@ socket.on('connect', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const idValue = urlParams.get('id');
             console.log(type, marketId, idValue)
-            socket.emit('getDetails', )
+            // socket.emit('getDetails', )
         })
     }
 
