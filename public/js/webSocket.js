@@ -1262,6 +1262,11 @@ socket.on('connect', () => {
             form.find('input[name = "delay"]').val(0)
             form.find('input[name = "max_bet"]').val(0)
             form.find('input[name = "type"]').val(data.type)
+            let form1 = $('.form-betLimit')[0];
+            let fd = new FormData(form1);
+            let data = Object.fromEntries(fd.entries());
+            // console.log(data, "BETLIMIT")
+            socket.emit('UpdateBetLimit', {data, LOGINDATA})
         }else if(data.status == "err"){
             alert(data.message)
         }else{
@@ -1274,18 +1279,23 @@ socket.on('connect', () => {
             form.find('input[name = "delay"]').val(data.details.delay)
             form.find('input[name = "max_bet"]').val(data.details.max_bet)
             form.find('input[name = "type"]').val(data.type)
+            let form1 = $('.form-betLimit')[0];
+            let fd = new FormData(form1);
+            let data = Object.fromEntries(fd.entries());
+            // console.log(data, "BETLIMIT")
+            socket.emit('UpdateBetLimit', {data, LOGINDATA})
         }
     })
 
 
-    $(document).on('submit', ".form-betLimit", function(e){
-        e.preventDefault()
-        let form = $(this)[0];
-        let fd = new FormData(form);
-        let data = Object.fromEntries(fd.entries());
-        // console.log(data, "BETLIMIT")
-        socket.emit('UpdateBetLimit', {data, LOGINDATA})
-    })
+    // $(document).on('submit', ".form-betLimit", function(e){
+    //     e.preventDefault()
+    //     let form = $(this)[0];
+    //     let fd = new FormData(form);
+    //     let data = Object.fromEntries(fd.entries());
+    //     // console.log(data, "BETLIMIT")
+    //     socket.emit('UpdateBetLimit', {data, LOGINDATA})
+    // })
 
 
     socket.on('UpdateBetLimit', data => {
