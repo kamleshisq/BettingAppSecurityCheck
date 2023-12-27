@@ -45,17 +45,22 @@ socket.on('connect', () => {
         //   });
         // console.log('WORKING45654', data)
 
-        let loginData = {}
-        if(pathname.startsWith('/admin')){
-            if($('body header').attr('data-logindata')){
-                loginData = JSON.parse($('body header').attr('data-logindata'))
-            }
-        }else{
-            if($('body').attr('data-logindata')){
-
-                loginData = JSON.parse($('body').attr('data-logindata')) 
-            }
+        let loginData = {
+            User : data.loginData,
+            Token : data.socket
         }
+        // if(data.data)
+
+        // if(pathname.startsWith('/admin')){
+        //     if($('body header').attr('data-logindata')){
+        //         loginData = JSON.parse($('body header').attr('data-logindata'))
+        //     }
+        // }else{
+        //     if($('body').attr('data-logindata')){
+
+        //         loginData = JSON.parse($('body').attr('data-logindata')) 
+        //     }
+        // }
         // console.log('loginData',loginData)
         // if(!loginData){
         // location.reload(true)
