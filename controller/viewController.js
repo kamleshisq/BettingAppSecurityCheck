@@ -4983,6 +4983,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             market = req.query.market
             marketName = req.query.market
         }
+        let thatEvent = await commissionNewModel.findOne({eventId:match})
         // console.log(market)
         let thatMarketData = await commissionNewModel.aggregate([
             {
@@ -5040,7 +5041,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             me,
             currentUser:me,
             thatMarketData,
-            match,
+            match:thatEvent.eventName,
             marketName
         })
     }else{
