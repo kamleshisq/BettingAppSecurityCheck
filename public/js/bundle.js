@@ -56396,18 +56396,20 @@ var sentinterval1 = setInterval(function () {
   if (pathname.startsWith('/admin')) {
     if (localStorage.getItem('logintimeAdmin')) {
       console.log(Date.now() - parseInt(localStorage.getItem('logintimeAdmin')));
-      var time = Date.now() - parseInt(localStorage.getItem('logintimeAdmin'));
-      if (time >= 1000 * 19 || time <= 1000 * 20) {
+      if (Date.now() - parseInt(localStorage.getItem('logintimeAdmin')) >= 1000 * 60 * 30) {
         clearInterval(sentinterval1);
         localStorage.removeItem('logintimeAdmin');
         (0, _logOut.logout)();
+      }
+    } else {
+      if ($('body header').attr('data-logindata')) {
+        location.reload(true);
       }
     }
   } else {
     if (localStorage.getItem('logintimeUser')) {
       console.log(Date.now() - parseInt(localStorage.getItem('logintimeUser')));
-      var _time = Date.now() - parseInt(localStorage.getItem('logintimeUser'));
-      if (_time >= 1000 * 19 || _time <= 1000 * 20) {
+      if (Date.now() - parseInt(localStorage.getItem('logintimeUser')) >= 1000 * 60 * 30) {
         // if(pathname.startsWith('/admin')){
         //     logout()
         // }else{
@@ -56415,6 +56417,10 @@ var sentinterval1 = setInterval(function () {
         clearInterval(sentinterval1);
         localStorage.removeItem('logintimeUser');
         (0, _logOutUser.logoutUser)();
+      }
+    } else {
+      if ($('body').attr('data-logindata')) {
+        window.location.reload(true);
       }
     }
   }
