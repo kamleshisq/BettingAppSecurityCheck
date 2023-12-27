@@ -1251,9 +1251,9 @@ socket.on('connect', () => {
     })
 
 
-    socket.on('BetLimitDetails', data => {
-        // console.log(data)
-        if(data.status == "notFound"){
+    socket.on('BetLimitDetails', data1 => {
+        // console.log(data1)
+        if(data1.status == "notFound"){
             let form = $('#myModal2').find('.form-data')
             form.find('input[name = "min_stake"]').val(0)
             form.find('input[name = "max_stake"]').val(0)
@@ -1261,24 +1261,24 @@ socket.on('connect', () => {
             form.find('input[name = "max_odd"]').val(0)
             form.find('input[name = "delay"]').val(0)
             form.find('input[name = "max_bet"]').val(0)
-            form.find('input[name = "type"]').val(data.type)
+            form.find('input[name = "type"]').val(data1.type)
             let form1 = $('.form-betLimit')[0];
             let fd = new FormData(form1);
             let data = Object.fromEntries(fd.entries());
             // console.log(data, "BETLIMIT")
             socket.emit('UpdateBetLimit', {data, LOGINDATA})
-        }else if(data.status == "err"){
-            alert(data.message)
+        }else if(data1.status == "err"){
+            alert(data1.message)
         }else{
             // console.log(data)
             let form = $('#myModal2').find('.form-data')
-            form.find('input[name = "min_stake"]').val(data.details.min_stake)
-            form.find('input[name = "max_stake"]').val(data.details.max_stake)
-            form.find('input[name = "max_profit"]').val(data.details.max_profit)
-            form.find('input[name = "max_odd"]').val(data.details.max_odd)
-            form.find('input[name = "delay"]').val(data.details.delay)
-            form.find('input[name = "max_bet"]').val(data.details.max_bet)
-            form.find('input[name = "type"]').val(data.type)
+            form.find('input[name = "min_stake"]').val(data1.details.min_stake)
+            form.find('input[name = "max_stake"]').val(data1.details.max_stake)
+            form.find('input[name = "max_profit"]').val(data1.details.max_profit)
+            form.find('input[name = "max_odd"]').val(data1.details.max_odd)
+            form.find('input[name = "delay"]').val(data1.details.delay)
+            form.find('input[name = "max_bet"]').val(data1.details.max_bet)
+            form.find('input[name = "type"]').val(data1.type)
             let form1 = $('.form-betLimit')[0];
             let fd = new FormData(form1);
             let data = Object.fromEntries(fd.entries());
