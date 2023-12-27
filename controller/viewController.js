@@ -267,6 +267,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             status:false
         })
     }
+    console.log(roles)
     // console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
