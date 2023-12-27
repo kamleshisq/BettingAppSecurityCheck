@@ -1267,8 +1267,18 @@ socket.on('connect', () => {
        data.max_odd = max_odd
        data.delay = delay
        data.max_bet = max_bet
-       console.log(data,'==>data')
-       socket.emit('UpdateBetLimit', {data, LOGINDATA})
+       Object.keys(data).map(ele => {
+        if(data.ele == '0'){
+            check = false
+        }
+    })
+    if(check){
+        console.log(data,'==>data')
+        socket.emit('UpdateBetLimit', {data, LOGINDATA})
+    }else{
+        alert('not a singal value is 0')
+    }
+       
     })
 
 
@@ -18672,8 +18682,17 @@ socket.on('connect', () => {
             data.max_odd = max_odd
             data.delay = delay
             data.max_bet = max_bet
-            console.log(data,'==>data')
-            socket.emit('UpdateBetLimit', {data, LOGINDATA})
+            let check = true
+            Object.keys(data).map(ele => {
+                if(data.ele == '0'){
+                    check = false
+                }
+            })
+            if(check){
+                socket.emit('UpdateBetLimit', {data, LOGINDATA})
+            }else{
+                alert('not a singal value is 0')
+            }
          })
 
    
