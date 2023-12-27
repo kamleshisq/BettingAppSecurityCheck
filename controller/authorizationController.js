@@ -405,7 +405,8 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     if(!token){
         req.app.set('token', null);
         req.app.set('User', null);
-        return next(new AppError('Please log in to access', 404))
+        return res.redirect('/')
+        // return next(new AppError('Please log in to access', 404))
     }
 
     const tokenId = await loginLogs.findOne({session_id:token})
