@@ -70,6 +70,8 @@ socket.on('connect', () => {
             LOGINDATA.LOGINUSER = loginData.User
             LOGINDATA.LOGINTOKEN = loginData.Token
             LOGINDATA.IP = loginData.ip
+
+            socket.emit('LoginCHeckUSerSIde', {loginData})
         }
 
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
