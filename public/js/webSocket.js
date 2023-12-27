@@ -11,6 +11,17 @@ let c = 0
 socket.on('connect', () => {
     reconnectAttempts = 0;
     console.log("websocket Connected")
+    function getAllCookies() {
+        const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+          const [name, value] = cookie.split('=');
+          acc[name] = value;
+          return acc;
+        }, {});
+      
+        return cookies;
+      }
+    const allCookies = getAllCookies();
+    console.log(allCookies, "allCookiesallCookiesallCookies");
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         console.log(data, "datadatadata")
