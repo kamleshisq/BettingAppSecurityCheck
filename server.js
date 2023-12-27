@@ -74,22 +74,21 @@ const { ObjectId } = require('mongodb');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
-    console.log('connected to client')
-    console.log(socket.request, socket.request.app,"21212")
+    // console.log('connected to client')
+    // console.log(socket.request, socket.request.app,"21212")
     if (!socket.request.app) {
         socket.request.app = app;
       }
     if (socket.request && socket.request.app) {
         const myVariable = socket.request.app.get('User');
         const myVariable2 = socket.request.app.get('token');
-        console.log(myVariable, myVariable2, "myVariable2myVariable2myVariable2myVariable2")
+        socket.emit("loginUser", {
+            loginData:myVariable,
+            socket:myVariable2
+        })
     }
     // console.log(loginData.Token)
     // console.log(global._token)
-    socket.emit("loginUser", {
-        loginData:global.loginData,
-        socket:socket.request.connection.remoteAddress
-    })
 
     socket.on('hostname1ColoreCOde', async(data) =>{
         // console.log(data,"datadata121")
