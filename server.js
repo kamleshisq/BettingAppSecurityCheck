@@ -9721,9 +9721,9 @@ io.on('connection', (socket) => {
                 let bets = await Bet.aggregate([
                     {
                         $match:{
-                            eventId:data.eventId,
+                            eventId:data.event,
                             userName:data.userName,
-                            marketName:data.marketName
+                            marketName:data.market
                         }
                     }
                 ])
