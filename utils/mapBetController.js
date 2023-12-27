@@ -70,7 +70,7 @@ async function mapBet(data){
 
       try{ 
         for(const bet in bets){ 
-            console.log(bets[bet])
+            console.log(bets[bet].id,bets[bet]._id , "ABDCDCDC")
             // FOR ENTRY WISE COMMISSION
 
             try{
