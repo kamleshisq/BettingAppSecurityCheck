@@ -76,6 +76,9 @@ const { ObjectId } = require('mongodb');
 io.on('connection', (socket) => {
     console.log('connected to client')
     console.log(socket.request, socket.request.app,"21212")
+    if (!socket.request.app) {
+        socket.request.app = app;
+      }
     if (socket.request && socket.request.app) {
         const myVariable = socket.request.app.get('User');
         const myVariable2 = socket.request.app.get('token');
