@@ -138,6 +138,18 @@ exports.getAuthROle = catchAsync(async(req, res, next) => {
 
     }
     const roles = await Role.find({role_level:{$in:operationUser.role.userAuthorization}}).sort({role_level:1});
+    let roles1 = await Role.find().sort({role_level:1});
+    let dataToSEnd = []
+    if(roles1){
+        for(let i = 0; i < roles1.length; i++){
+            if(roles1[i].role_level === '5'){
+                dataToSEnd.push(roles1[i])
+            }else if(roles1[i].role_level > operationUser.role.role_level){
+                dataToSEnd.push(roles1[i])
+            }
+        }
+    }
+
     // console.log(roles)
 
     res.status(200).json({
