@@ -136,10 +136,10 @@ $(document).on('click', ".logOut", function(e){
 })
 
 let sentinterval1 = setInterval(()=>{
-    console.log('WORKING', localStorage.getItem('logintime'))
+    // console.log('WORKING', localStorage.getItem('logintime'))
     if(pathname.startsWith('/admin')){
         if(localStorage.getItem('logintimeAdmin')){
-            console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
+            // console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
             if(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')) >= 1000  * 60 * 30){
                 clearInterval(sentinterval1)
                 localStorage.removeItem('logintimeAdmin')
@@ -154,7 +154,7 @@ let sentinterval1 = setInterval(()=>{
         }
     }else{
         if(localStorage.getItem('logintimeUser')){
-            console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
+            // console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
             if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 60 * 30){
                 // if(pathname.startsWith('/admin')){
                 //     logout()
