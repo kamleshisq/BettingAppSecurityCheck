@@ -20320,9 +20320,63 @@ socket.on('connect', () => {
         if(market && event){
             $(document).on('click', '.viewDetailsButton', function(){
                 let userName = this.id
-                console.log(userName, market, event)
+                // console.log(userName, market, event)
+                socket.emit('getCommisionEVentDAta', {LOGINDATA, userName, market, event})
             })
         }
+
+        socket.on('getDetailsCommision', async(data) => {
+            let html = ''
+            if(data.length > 0){
+                html += `<table id="FANCYBOOK" <tbody="">
+                <tbody><tr class="headDetail"><th>Date</th>
+                <th>Event</th><th>Market</th><th>Bet On</th><th>Odds</th><th>Stake</th><th>Status</th><th>Returns</th></tr>`
+
+                for(let i = 0; i < data.length; i++){
+                    let date = new Date(data[i].date)
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                    if(data[i].bettype2 === 'BACK'){
+                        html += `<tr class='back'>`
+                    }else{
+                        html += `<tr class='lay'>`
+                    }
+                    html += `
+                    <td>${formattedTime}</td>
+                    <td>${data[i].match}</td>
+                    <td>${data[i].marketName}</td>
+                    `
+                    if(data[i].selectionName.includes('@')){
+                        let oddValue1 = data[i].selectionName.split('@')[1]
+                        let selectionName = data[i].selectionName.split('@')[0]
+                        let oddValue2 = data[i].oddValue
+                        html += `<td>${selectionName}@${oddValue2}</td>
+                            <td>@${oddValue1}</td>`
+                    }else{
+                        html += `<td>${data[i].selectionName}</td>
+                        <td>@${data[i].oddValue}</td>`
+                    }
+                    html += `<td>${data[i].Stake}</td><td>${data[i].status}</td><td>${data[i].returns}</td></tr>`
+                }
+                html += `</tbody>
+                </table>`
+            }else{
+                html = `<table>
+                <tbody>
+                  <tr class="empty_table"><td>No record found</td></tr>
+                </tbody>
+              </table>`
+            }
+
+            $('#tableDTA').html(html)
+        })
     }
 
     $(document).ready(function() {

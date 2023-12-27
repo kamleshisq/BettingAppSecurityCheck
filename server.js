@@ -9712,6 +9712,34 @@ io.on('connection', (socket) => {
 
     })
 
+
+
+    socket.on('getCommisionEVentDAta', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+
+            let bets = await Bet.aggregate([
+                {
+                    $match:{
+                        eventId:data.eventId,
+                        userName:data.userName,
+                        marketName:data.marketName
+                    }
+                }
+            ])
+    
+            // let thatCommissions
+            // if(data.type != 'Net Losing Commission'){
+            //     // thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}}, 'betId')
+            //     thatCommissions = await newCommissionModel.distinct('betId', {commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}})
+            //     bets = bets.filter(item => thatCommissions.includes(item._id.toString()))
+            // }else{
+            //     thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName})
+            // }
+            // // console.log(thatCommissions, bets, "betsbetsbetsbets")
+            socket.emit('getDetailsCommision', bets)
+        }
+    })
+
 })
 
 http.listen(process.env.port,()=> {
