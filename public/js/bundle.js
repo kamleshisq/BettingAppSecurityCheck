@@ -56396,14 +56396,18 @@ $(document).on('click', ".logOut", function (e) {
 //     console.log('WORKING', sessionStorage.getItem('logintime'))
 //     if(sessionStorage.getItem('logintime')){
 //         console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
-//         if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 10){
+//         if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 20){
+//             clearInterval(sentinterval1)
+//             sessionStorage.removeItem('logintime')
 //             if(pathname.startsWith('/admin')){
 //                 logout()
 //             }else{
 //                 logoutUser()
 //             }
-//             clearInterval(sentinterval1)
-//             sessionStorage.removeItem('logintime')
+
+//         }
+//     }else{
+//         if($('body').attr('data-logindata')){
 //             location.reload(true)
 //         }
 //     }
