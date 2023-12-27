@@ -56405,7 +56405,7 @@ var sentinterval1 = setInterval(function () {
   } else {
     if (localStorage.getItem('logintimeUser')) {
       console.log(Date.now() - parseInt(localStorage.getItem('logintimeUser')));
-      if (Date.now() - parseInt(localStorage.getItem('logintimeUser')) >= 1000 * 30) {
+      if (Date.now() - parseInt(localStorage.getItem('logintimeUser')) >= 1000 * 20) {
         // if(pathname.startsWith('/admin')){
         //     logout()
         // }else{
