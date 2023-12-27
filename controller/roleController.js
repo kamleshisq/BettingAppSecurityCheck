@@ -143,7 +143,7 @@ exports.getAuthROle = catchAsync(async(req, res, next) => {
     let dataToSEnd = []
     if(roles1){
         for(let i = 0; i < roles1.length; i++){
-            if(roles1[i].role_level === '5'){
+            if(roles1[i].role_level === 5){
                 dataToSEnd.push(roles1[i])
             }else if(roles1[i].role_level > operationUser.role.role_level){
                 dataToSEnd.push(roles1[i])
