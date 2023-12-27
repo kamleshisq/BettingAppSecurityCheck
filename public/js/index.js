@@ -135,34 +135,35 @@ $(document).on('click', ".logOut", function(e){
     logout()
 })
 
-let sentinterval1 = setInterval(()=>{
-    console.log('WORKING', sessionStorage.getItem('logintime'))
-    if(sessionStorage.getItem('logintime')){
-        console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
-        if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 10){
-            // if(pathname.startsWith('/admin')){
-            //     logout()
-            // }else{
-            // }
-            logoutUser()
-            clearInterval(sentinterval1)
-            sessionStorage.removeItem('logintime')
-        }
-    }
+// let sentinterval1 = setInterval(()=>{
+//     console.log('WORKING', sessionStorage.getItem('logintime'))
+//     if(sessionStorage.getItem('logintime')){
+//         console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
+//         if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 10){
+//             if(pathname.startsWith('/admin')){
+//                 logout()
+//             }else{
+//                 logoutUser()
+//             }
+//             clearInterval(sentinterval1)
+//             sessionStorage.removeItem('logintime')
+//             location.reload(true)
+//         }
+//     }
     
-    // if(sessionStorage.getItem('logintime')){
-    //     console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
-    //     if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 30){
-    //         // if(pathname.startsWith('/admin')){
-    //         //     logout()
-    //         // }else{
-    //         // }
-    //         logout()
-    //         clearInterval(sentinterval1)
-    //         sessionStorage.removeItem('logintime')
-    //     }
-    // }
-},1000)
+//     // if(sessionStorage.getItem('logintime')){
+//     //     console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
+//     //     if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 30){
+//     //         // if(pathname.startsWith('/admin')){
+//     //         //     logout()
+//     //         // }else{
+//     //         // }
+//     //         logout()
+//     //         clearInterval(sentinterval1)
+//     //         sessionStorage.removeItem('logintime')
+//     //     }
+//     // }
+// },1000)
 
 
 $(document).on('click', ".logOutUser", function(e){
