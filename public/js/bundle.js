@@ -5488,6 +5488,7 @@ var login = /*#__PURE__*/function () {
             sessionStorage.setItem('token', JSON.stringify(res.data.token));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             sessionStorage.setItem('logintime', Date.now());
+            localStorage.setItem('logintime', Date.now());
             sessionStorage.setItem('notiCount', JSON.stringify(res.data.data.paymentreqcount));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
@@ -6875,6 +6876,7 @@ var userLogin = /*#__PURE__*/function () {
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             sessionStorage.setItem('logintime', Date.now());
+            localStorage.setItem('logintime', Date.now());
 
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
