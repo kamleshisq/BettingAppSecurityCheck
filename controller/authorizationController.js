@@ -308,16 +308,22 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     }
     if(!token){
         // console.log('WORKING1')
+        req.app.set('token', null);
+        req.app.set('User', null);
         return res.redirect('/adminlogin')
     }
     const tokenId = await loginLogs.findOne({session_id:token})
     if( tokenId &&!tokenId.isOnline){
         // console.log('working12121')
+        req.app.set('token', null);
+        req.app.set('User', null);
         return res.redirect('/adminlogin')
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return res.status(404).json({
             status:"success",
             message:'the user belonging to this token does no longer available'
@@ -337,21 +343,29 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         // console.log(currentUser.whiteLabel, whiteLabel, currentUser.role_type,"whiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabelwhiteLabel")
         // console.log(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1)
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"err",
                 message:'not a valid user isprotected'
             })
         }else if(!currentUser){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:'the user belonging to this token does no longer available'
             })
         }else if(!currentUser.isActive){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:'the user belonging to this token does no longer available'
             })
         }else if(!currentUser.is_Online){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:"Please login to get access"
@@ -404,16 +418,22 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
        
     }
     if(!token){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next(new AppError('Please log in to access', 404))
     }
 
     const tokenId = await loginLogs.findOne({session_id:token})
     if(!tokenId.isOnline){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return res.redirect('/')
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return res.status(404).json({
             status:"success",
             message:'the user belonging to this token does no longer available'
@@ -422,21 +442,29 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 
     if(currentUser.roleName != "DemoLogin"){
         if(currentUser.whiteLabel !== process.env.whiteLabelName && currentUser.role_type !== 1){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"succes21212s",
                 message:'not a valid user isprotectedUser'
             })
         }else  if(!currentUser){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:'the user belonging to this token does no longer available'
             })
         }else if(!currentUser.isActive){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:'the user belonging to this token does no longer available'
             })
         }else if(!currentUser.is_Online){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:"Please login to get access"
@@ -471,24 +499,34 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     }
     // console.log(token, "TOKEN")
     if(!token){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next()
     }
     if(token == "loggedout"){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next()
     }
     
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "TOKENID")
     if(!tokenId){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next()
     }
     if(!tokenId.isOnline){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next()
     }
     // console.log(token)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return res.status(404).json({
             status:"success",
             message:'the user belonging to this token does no longer available'
@@ -497,16 +535,22 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:'the user belonging to this token does no longer available'
             })
         }else if(!currentUser.isActive){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:'the user belonging to this token does no longer available'
             })
         }else if(!currentUser.is_Online){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return next()
         }
     }
@@ -540,22 +584,32 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         token = parseCookies(req.headers.cookie).JWT;
     }
     if(!token){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next()
     }
     if(token == "loggedout"){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next()
     }
     
     const tokenId = await loginLogs.findOne({session_id:token})
     if(!tokenId){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next()
     }
     if(!tokenId.isOnline){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return next()
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
+        req.app.set('token', null);
+        req.app.set('User', null);
         return res.status(404).json({
             status:"success",
             message:'the user belonging to this token does no longer available'
@@ -563,16 +617,22 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:'the user belonging to this token does no longer available'
             })
         }else if(!currentUser.isActive){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return res.status(404).json({
                 status:"success",
                 message:'the user belonging to this token does no longer available'
             })
         }else if(!currentUser.is_Online){
+            req.app.set('token', null);
+        req.app.set('User', null);
             return next()
         }
     }

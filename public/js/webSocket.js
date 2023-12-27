@@ -45,7 +45,7 @@ socket.on('connect', () => {
         //   });
         // console.log('WORKING45654', data)
 
-        let loginData
+        let loginData = {}
         if(pathname.startsWith('/admin')){
             if($('body header').attr('data-logindata')){
                 loginData = JSON.parse($('body header').attr('data-logindata'))
