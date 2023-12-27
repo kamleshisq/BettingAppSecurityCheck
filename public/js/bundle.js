@@ -56396,7 +56396,7 @@ var sentinterval1 = setInterval(function () {
   if (pathname.startsWith('/admin')) {
     if (localStorage.getItem('logintimeAdmin')) {
       console.log(Date.now() - parseInt(localStorage.getItem('logintimeAdmin')));
-      if (Date.now() - parseInt(localStorage.getItem('logintimeAdmin')) >= 1000 * 20) {
+      if (Date.now() - parseInt(localStorage.getItem('logintimeAdmin')) >= 1000 * 60 * 30) {
         clearInterval(sentinterval1);
         localStorage.removeItem('logintimeAdmin');
         (0, _logOut.logout)();
@@ -56409,7 +56409,7 @@ var sentinterval1 = setInterval(function () {
   } else {
     if (localStorage.getItem('logintimeUser')) {
       console.log(Date.now() - parseInt(localStorage.getItem('logintimeUser')));
-      if (Date.now() - parseInt(localStorage.getItem('logintimeUser')) >= 1000 * 30) {
+      if (Date.now() - parseInt(localStorage.getItem('logintimeUser')) >= 1000 * 60 * 30) {
         // if(pathname.startsWith('/admin')){
         //     logout()
         // }else{
