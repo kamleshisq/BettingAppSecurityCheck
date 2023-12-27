@@ -75,7 +75,7 @@ const { ObjectId } = require('mongodb');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
-    console.log(socket.req, socket.request, "21212")
+    console.log(socket.request, socket.request.app,"21212")
     if (socket.request && socket.request.app) {
         const myVariable = socket.request.app.get('User');
         const myVariable2 = socket.request.app.get('token');
