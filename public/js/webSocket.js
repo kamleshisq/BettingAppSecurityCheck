@@ -20313,6 +20313,18 @@ socket.on('connect', () => {
         })
     }
 
+    if(pathname == "/admin/commissionReportEvent"){
+        const urlParams = new URLSearchParams(window.location.search);
+        const event = urlParams.get('event');
+        const market = urlParams.get('market');
+        if(market && event){
+            $(document).on('click', '.viewDetailsButton', function(){
+                let userName = this.id
+                console.log(userName, market, event)
+            })
+        }
+    }
+
     $(document).ready(function() {
         setTimeout(function() {
           $(".main-loader").addClass("hide");

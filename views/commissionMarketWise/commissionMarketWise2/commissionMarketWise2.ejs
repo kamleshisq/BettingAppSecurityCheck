@@ -40,7 +40,7 @@
                     <td><%=thatMarketData[i]._id%></td>
                     <td><%=thatMarketData[i].totalCommission.toFixed(3)%></td>
                     <td><%=thatMarketData[i].netupline.toFixed(3)%></td>
-                    <td><button  id="<%=thatMarketData[i]._id%>" data-bs-toggle="modal" data-bs-target="#CommisionDetailsEVENTLAST">View Details</button></td>
+                    <td><button class="viewDetailsButton" id="<%=thatMarketData[i]._id%>" data-bs-toggle="modal" data-bs-target="#CommisionDetailsEVENTLAST">View Details</button></td>
                 </tr>
             <%}%>
         </tbody>
