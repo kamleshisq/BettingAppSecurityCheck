@@ -9694,7 +9694,7 @@ io.on('connection', (socket) => {
 
         let thatCommissions
         if(data.type != 'Net Losing Commission'){
-            thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}}, 'betId')
+            thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName}, 'betId')
 
         }else{
             thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName})
