@@ -3984,7 +3984,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
               $group: {
                   _id: {
                     eventName:'$eventName',
-                    id:'$_id'
+                    id:'$eventId'
                   },
               totalCommission: { $sum: "$commission" },
               eventDate: { $first: "$eventDate" }
