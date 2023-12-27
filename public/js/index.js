@@ -135,39 +135,34 @@ $(document).on('click', ".logOut", function(e){
     logout()
 })
 
-// let sentinterval1 = setInterval(()=>{
-//     console.log('WORKING', sessionStorage.getItem('logintime'))
-//     if(sessionStorage.getItem('logintime')){
-//         console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
-//         if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 20){
-//             clearInterval(sentinterval1)
-//             sessionStorage.removeItem('logintime')
-//             if(pathname.startsWith('/admin')){
-//                 logout()
-//             }else{
-//                 logoutUser()
-//             }
-            
-//         }
-//     }else{
-//         if($('body').attr('data-logindata')){
-//             location.reload(true)
-//         }
-//     }
-    
-//     // if(sessionStorage.getItem('logintime')){
-//     //     console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
-//     //     if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 30){
-//     //         // if(pathname.startsWith('/admin')){
-//     //         //     logout()
-//     //         // }else{
-//     //         // }
-//     //         logout()
-//     //         clearInterval(sentinterval1)
-//     //         sessionStorage.removeItem('logintime')
-//     //     }
-//     // }
-// },1000)
+let sentinterval1 = setInterval(()=>{
+    console.log('WORKING', localStorage.getItem('logintime'))
+    if(pathname.startsWith('/admin')){
+        if(localStorage.getItem('logintimeAdmin')){
+            console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
+            if(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')) >= 1000  * 20){
+                clearInterval(sentinterval1)
+                localStorage.removeItem('logintimeAdmin')
+                logout()
+                
+                
+            }
+        }
+    }else{
+        if(localStorage.getItem('logintimeUser')){
+            console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
+            if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 30){
+                // if(pathname.startsWith('/admin')){
+                //     logout()
+                // }else{
+                // }
+                clearInterval(sentinterval1)
+                localStorage.removeItem('logintimeUser')
+                logoutUser()
+            }
+        }
+    }
+},1000)
 
 
 $(document).on('click', ".logOutUser", function(e){
