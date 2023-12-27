@@ -20275,7 +20275,7 @@ socket.on('connect', () => {
                         html += `<tr class='lay'>`
                     }
                     html += `
-                    <td>${data[i].formattedTime}</td>
+                    <td>${formattedTime}</td>
                     <td>${data[i].match}</td>
                     <td>${data[i].marketName}</td>
                     `
