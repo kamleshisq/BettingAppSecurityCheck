@@ -34,15 +34,15 @@
 
   <tr class="hide-row">
     <td id="Sport"><a href="/admin/betlimit/sport">Sports</a></td>
-    <td><input type="text" class="form-datas" value="<%=sportData.min_stake%>" readonly=""></td>
-    <td><input type="text" class="form-datas" value="<%=sportData.max_stake%>" readonly=""></td>
-    <td><input type="text" class="form-datas" value="<%=sportData.max_profit%>" readonly=""></td>
-    <td><input type="text" class="form-datas" value="<%=sportData.max_odd%>" readonly=""></td>
-    <td><input type="text" class="form-datas" value="<%=homeData.delay%>" readonly=""></td>
-    <td><input type="text" class="form-datas" value="<%=homeData.max_bet%>" readonly=""></td>
+    <td><input type="text" class="form-datas" name="min_stake" value="<%=sportData.min_stake%>"></td>
+    <td><input type="text" class="form-datas" name="max_stake" value="<%=sportData.max_stake%>"></td>
+    <td><input type="text" class="form-datas" name="max_profit" value="<%=sportData.max_profit%>"></td>
+    <td><input type="text" class="form-datas" name="max_odd" value="<%=sportData.max_odd%>"></td>
+    <td><input type="text" class="form-datas" name="delay" value="<%=homeData.delay%>"></td>
+    <td><input type="text" class="form-datas" name="max_bet" value="<%=homeData.max_bet%>"></td>
     <td>
       <div class="btn-group">
-        <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+        <button type="button" class="btn update updateBetLimit">Update</button>
       </div>
     </td>
   </tr>
