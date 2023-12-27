@@ -78,8 +78,12 @@ socket.on('connect', () => {
                   }, 1000)
             }
             checkLogin()
-            
         }
+
+        socket.on('LoginCHeckUSerSIde', data => {
+            window.location.reload
+        })
+
 
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();

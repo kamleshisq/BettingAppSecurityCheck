@@ -9739,8 +9739,11 @@ io.on('connection', (socket) => {
 
     socket.on('LoginCHeckUSerSIde', async(data) => {
         // console.log(data, "LoginCHeckUSerSIdeLoginCHeckUSerSIdeLoginCHeckUSerSIde")
-        let lgoginData = await loginLogs.find({session_id:data.loginData.Token, userName:data.loginData.User.userName})
-        console.log(lgoginData, "lgoginDatalgoginData")
+        let lgoginData = await loginLogs.findOne({session_id:data.loginData.Token, userName:data.loginData.User.userName})
+        // console.log(lgoginData, "lgoginDatalgoginData")
+        if(lgoginData.isOnline){
+            socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
+        }
     })
 
 })
