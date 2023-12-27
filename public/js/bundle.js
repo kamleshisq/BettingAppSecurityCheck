@@ -7292,16 +7292,16 @@ $(document).on('click', ".logOut", function (e) {
   (0, _logOut.logout)();
 });
 var sentinterval1 = setInterval(function () {
-  if (sessionStorage.getItem('logintime')) {
-    console.log(Date.now() - parseInt(sessionStorage.getItem('logintime')));
-    if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 60 * 30) {
+  if (localStorage.getItem('logintime')) {
+    console.log(Date.now() - parseInt(localStorage.getItem('logintime')));
+    if (Date.now() - parseInt(localStorage.getItem('logintime')) >= 1000 * 60 * 30) {
       if (pathname.startsWith('/admin')) {
         (0, _logOut.logout)();
       } else {
         (0, _logOutUser.logoutUser)();
       }
       clearInterval(sentinterval1);
-      sessionStorage.removeItem('logintime');
+      localStorage.removeItem('logintime');
     }
   }
 }, 1000);
