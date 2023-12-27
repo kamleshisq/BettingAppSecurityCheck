@@ -100,6 +100,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     if(process.env.NODE_ENV === "production"){
         cookieOption.secure = true
         }
+        console.log("Cookie will expire at:", cookieOption.expires);
     res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
