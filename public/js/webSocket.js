@@ -13363,9 +13363,9 @@ socket.on('connect', () => {
               };
               var formattedTime = date.toLocaleString('en-US', options);
 
-              html += `<tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=${data.eventData[i]._id}">
+              html += `<tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=${data.eventData[i]._id.id}">
               <td>${formattedTime}</td>
-              <td>${data.eventData[i]._id}</td>
+              <td>${data.eventData[i]._id.eventName}</td>
               <td>${data.eventData[i].totalCommission}</td>
                 </tr>`
             }

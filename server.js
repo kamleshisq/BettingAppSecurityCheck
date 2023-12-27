@@ -7142,7 +7142,10 @@ io.on('connection', (socket) => {
                   },
                   {
                       $group: {
-                          _id: "$eventName",
+                          _id:{
+                            eventName:'$eventName',
+                            id:'$eventId'
+                          },
                       totalCommission: { $sum: "$commission" },
                       eventDate: { $first: "$eventDate" }
                     }
