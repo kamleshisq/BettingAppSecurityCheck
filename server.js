@@ -7142,7 +7142,10 @@ io.on('connection', (socket) => {
                   },
                   {
                       $group: {
-                          _id: "$eventName",
+                          _id:{
+                            eventName:'$eventName',
+                            id:'$eventId'
+                          },
                       totalCommission: { $sum: "$commission" },
                       eventDate: { $first: "$eventDate" }
                     }
@@ -9707,6 +9710,30 @@ io.on('connection', (socket) => {
         }
 
 
+    })
+
+
+
+    socket.on('getCommisionEVentDAta', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            let thatUSer = await User.findOne({userName:data.userName})
+            if(thatUSer.roleName === 'user'){
+                let bets = await Bet.aggregate([
+                    {
+                        $match:{
+                            eventId:data.event,
+                            userName:data.userName,
+                            marketName:data.market
+                        }
+                    }
+                ])
+                console.log(bets)
+                socket.emit('getDetailsCommision', bets)
+            }else{
+                let thatUSersChild = await User.distinct('usename', { parentUsers: thatUSer.id })
+
+            }
+        }
     })
 
 })

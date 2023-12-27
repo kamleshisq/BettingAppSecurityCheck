@@ -3982,7 +3982,10 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
           },
           {
               $group: {
-                  _id: "$eventName",
+                  _id: {
+                    eventName:'$eventName',
+                    id:'$eventId'
+                  },
               totalCommission: { $sum: "$commission" },
               eventDate: { $first: "$eventDate" }
             }
@@ -4980,6 +4983,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             market = req.query.market
             marketName = req.query.market
         }
+        let thatEvent = await commissionNewModel.findOne({eventId:match})
         // console.log(market)
         let thatMarketData = await commissionNewModel.aggregate([
             {
@@ -4988,7 +4992,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 // },
                 userName:{$in:childrenUsername},
-                eventName:match,
+                eventId:match,
                 marketName:market,
                 loginUserId:{$exists:true},
                 parentIdArray:{$exists:true}
@@ -5037,7 +5041,8 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             me,
             currentUser:me,
             thatMarketData,
-            match,
+            match:thatEvent.eventName,
+            eventId:match,
             marketName
         })
     }else{
@@ -5048,14 +5053,18 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 // },
                 userName:{$in:childrenUsername},
-                eventName:match
+                eventId:match
                 }
             },
             {
                 $group: {
-                _id: "$marketName",
+                _id: {
+                    marketName : '$marketName',
+                    id:'$marketName'
+                },
                 totalCommission: { $sum: "$commission" },
-                eventDate: { $first: "$eventDate" }
+                eventDate: { $first: "$eventDate" },
+                eventName:{ $first: "$eventName" }
                 }
             }
         ])
