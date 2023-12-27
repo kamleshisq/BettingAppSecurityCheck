@@ -8522,7 +8522,7 @@ socket.on('connect', () => {
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
-                let secondPTag = $(this).closest("tr").next().find(".beton");
+                let secondPTag = $(this).closest("tr").next().find(".selection-name");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 let secId2;
@@ -8583,7 +8583,7 @@ socket.on('connect', () => {
             }else{
                 let odds = $(this).children("span").eq(1).text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
-                let secondPTag = $(this).closest("tr").next().find(".beton");
+                let secondPTag = $(this).closest("tr").next().find(".selection-name");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
