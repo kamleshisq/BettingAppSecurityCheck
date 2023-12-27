@@ -324,10 +324,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     if(!currentUser){
         req.app.set('token', null);
         req.app.set('User', null);
-        return res.status(404).json({
-            status:"success",
-            message:'the user belonging to this token does no longer available'
-        })
+        return res.redirect('/adminlogin')
     }
     let whiteLabel = process.env.whiteLabelName
     let childrenArr = []
@@ -345,31 +342,19 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             req.app.set('token', null);
         req.app.set('User', null);
-            return res.status(404).json({
-                status:"err",
-                message:'not a valid user isprotected'
-            })
+        return res.redirect('/adminlogin')
         }else if(!currentUser){
             req.app.set('token', null);
         req.app.set('User', null);
-            return res.status(404).json({
-                status:"success",
-                message:'the user belonging to this token does no longer available'
-            })
+        return res.redirect('/adminlogin')
         }else if(!currentUser.isActive){
             req.app.set('token', null);
         req.app.set('User', null);
-            return res.status(404).json({
-                status:"success",
-                message:'the user belonging to this token does no longer available'
-            })
+        return res.redirect('/adminlogin')
         }else if(!currentUser.is_Online){
             req.app.set('token', null);
         req.app.set('User', null);
-            return res.status(404).json({
-                status:"success",
-                message:"Please login to get access"
-            })
+        return res.redirect('/adminlogin')
         }
     }
 
@@ -420,7 +405,8 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     if(!token){
         req.app.set('token', null);
         req.app.set('User', null);
-        return next(new AppError('Please log in to access', 404))
+        return res.redirect('/')
+        // return next(new AppError('Please log in to access', 404))
     }
 
     const tokenId = await loginLogs.findOne({session_id:token})
@@ -434,41 +420,26 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     if(!currentUser){
         req.app.set('token', null);
         req.app.set('User', null);
-        return res.status(404).json({
-            status:"success",
-            message:'the user belonging to this token does no longer available'
-        })
+        return res.redirect('/')
     }
 
     if(currentUser.roleName != "DemoLogin"){
         if(currentUser.whiteLabel !== process.env.whiteLabelName && currentUser.role_type !== 1){
             req.app.set('token', null);
         req.app.set('User', null);
-            return res.status(404).json({
-                status:"succes21212s",
-                message:'not a valid user isprotectedUser'
-            })
+        return res.redirect('/')
         }else  if(!currentUser){
             req.app.set('token', null);
         req.app.set('User', null);
-            return res.status(404).json({
-                status:"success",
-                message:'the user belonging to this token does no longer available'
-            })
+        return res.redirect('/')
         }else if(!currentUser.isActive){
             req.app.set('token', null);
         req.app.set('User', null);
-            return res.status(404).json({
-                status:"success",
-                message:'the user belonging to this token does no longer available'
-            })
+        return res.redirect('/')
         }else if(!currentUser.is_Online){
             req.app.set('token', null);
         req.app.set('User', null);
-            return res.status(404).json({
-                status:"success",
-                message:"Please login to get access"
-            })
+        return res.redirect('/')
         }
     }
     // console.log('working')

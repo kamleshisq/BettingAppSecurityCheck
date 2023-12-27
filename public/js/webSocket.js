@@ -47,7 +47,8 @@ socket.on('connect', () => {
 
         let loginData = {
             User : data.loginData,
-            Token : data.socket
+            Token : data.socket,
+            ip:data.Ip
         }
         // if(data.data)
 
@@ -68,7 +69,7 @@ socket.on('connect', () => {
         if(loginData){
             LOGINDATA.LOGINUSER = loginData.User
             LOGINDATA.LOGINTOKEN = loginData.Token
-            LOGINDATA.IP = data.socket
+            LOGINDATA.IP = loginData.ip
         }
 
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
