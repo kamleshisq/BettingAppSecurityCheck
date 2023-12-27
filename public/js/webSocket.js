@@ -20326,6 +20326,7 @@ socket.on('connect', () => {
         }
 
         socket.on('getDetailsCommision', async(data) => {
+            console.log(data)
             let html = ''
             if(data.length > 0){
                 html += `<table id="FANCYBOOK" <tbody="">
