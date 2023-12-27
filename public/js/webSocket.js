@@ -1249,13 +1249,13 @@ socket.on('connect', () => {
     $(document).on('click','.updateBetLimit',function(e){
         let data = {}
        let firstTr = $(this).closest("tr")
-       let type = firstTr.find("td:nth-child(0)").attr('id');
-       let min_stake = firstTr.find("td:nth-child(1)").val();
-       let max_stake = firstTr.find("td:nth-child(2)").val();
-       let max_profit = firstTr.find("td:nth-child(3)").val();
-       let max_odd = firstTr.find("td:nth-child(4)").val();
-       let delay = firstTr.find("td:nth-child(5)").val();
-       let max_bet = firstTr.find("td:nth-child(6)").val();
+       let type = firstTr.find('#id"]').attr('id');
+       let min_stake = firstTr.find('input["name=min_stake"]').val();
+       let max_stake = firstTr.find('input["name=max_stake"]').val();
+       let max_profit = firstTr.find('input["name=max_profit"]').val();
+       let max_odd = firstTr.find('input["name=max_odd"]').val();
+       let delay = firstTr.find('input["name=delay"]').val();
+       let max_bet = firstTr.find('input["name=max_bet"]').val();
        data.type = type
        data.min_stake = min_stake
        data.max_stake = max_stake
