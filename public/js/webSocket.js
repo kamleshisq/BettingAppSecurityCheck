@@ -1256,48 +1256,61 @@ socket.on('connect', () => {
     // }
 
     $(document).on('click','.updateBetLimit',function(e){
-       let firstTd = $(this).closest("tr").find("td:first");
-       var innerText = firstTd.attr('id');
-    //    console.log(innerText)
-       socket.emit('BetLimitDetails', innerText)
+        let data = {}
+       let firstTr = $(this).closest("tr")
+       let type = firstTr.find("td:nth-child(0)").attr('id');
+       let min_stake = firstTr.find("td:nth-child(1)");
+       let max_stake = firstTr.find("td:nth-child(2)");
+       let max_profit = firstTr.find("td:nth-child(3)");
+       let max_odd = firstTr.find("td:nth-child(4)");
+       let delay = firstTr.find("td:nth-child(5)");
+       let max_bet = firstTr.find("td:nth-child(6)");
+       data.type = type
+       data.min_stake = min_stake
+       data.max_stake = max_stake
+       data.max_profit = max_profit
+       data.max_odd = max_odd
+       data.delay = delay
+       data.max_bet = max_bet
+       et.emit('UpdateBetLimit', {data, LOGINDATA})
     })
 
 
-    socket.on('BetLimitDetails', data1 => {
-        // console.log(data1)
-        if(data1.status == "notFound"){
-            let form = $('#myModal2').find('.form-data')
-            form.find('input[name = "min_stake"]').val(0)
-            form.find('input[name = "max_stake"]').val(0)
-            form.find('input[name = "max_profit"]').val(0)
-            form.find('input[name = "max_odd"]').val(0)
-            form.find('input[name = "delay"]').val(0)
-            form.find('input[name = "max_bet"]').val(0)
-            form.find('input[name = "type"]').val(data1.type)
-            let form1 = $('.form-betLimit')[0];
-            let fd = new FormData(form1);
-            let data = Object.fromEntries(fd.entries());
-            // console.log(data, "BETLIMIT")
-            socket.emit('UpdateBetLimit', {data, LOGINDATA})
-        }else if(data1.status == "err"){
-            alert(data1.message)
-        }else{
-            // console.log(data)
-            let form = $('#myModal2').find('.form-data')
-            form.find('input[name = "min_stake"]').val(data1.details.min_stake)
-            form.find('input[name = "max_stake"]').val(data1.details.max_stake)
-            form.find('input[name = "max_profit"]').val(data1.details.max_profit)
-            form.find('input[name = "max_odd"]').val(data1.details.max_odd)
-            form.find('input[name = "delay"]').val(data1.details.delay)
-            form.find('input[name = "max_bet"]').val(data1.details.max_bet)
-            form.find('input[name = "type"]').val(data1.type)
-            let form1 = $('.form-betLimit')[0];
-            let fd = new FormData(form1);
-            let data = Object.fromEntries(fd.entries());
-            // console.log(data, "BETLIMIT")
-            socket.emit('UpdateBetLimit', {data, LOGINDATA})
-        }
-    })
+    // socket.on('BetLimitDetails', data1 => {
+    //     // console.log(data1)
+    //     if(data1.status == "notFound"){
+    //         let form = $('#myModal2').find('.form-data')
+    //         form.find('input[name = "min_stake"]').val(0)
+    //         form.find('input[name = "max_stake"]').val(0)
+    //         form.find('input[name = "max_profit"]').val(0)
+    //         form.find('input[name = "max_odd"]').val(0)
+    //         form.find('input[name = "delay"]').val(0)
+    //         form.find('input[name = "max_bet"]').val(0)
+    //         form.find('input[name = "type"]').val(data1.type)
+    //         let form1 = $('.form-betLimit')[0];
+    //         let fd = new FormData(form1);
+    //         let data = Object.fromEntries(fd.entries());
+    //         // console.log(data, "BETLIMIT")
+    //         socket.emit('UpdateBetLimit', {data, LOGINDATA})
+    //     }else if(data1.status == "err"){
+    //         alert(data1.message)
+    //     }else{
+    //         // console.log(data)
+    //         let form = $('#myModal2').find('.form-data')
+    //         form.find('input[name = "min_stake"]').val(data1.details.min_stake)
+    //         form.find('input[name = "max_stake"]').val(data1.details.max_stake)
+    //         form.find('input[name = "max_profit"]').val(data1.details.max_profit)
+    //         form.find('input[name = "max_odd"]').val(data1.details.max_odd)
+    //         form.find('input[name = "delay"]').val(data1.details.delay)
+    //         form.find('input[name = "max_bet"]').val(data1.details.max_bet)
+    //         form.find('input[name = "type"]').val(data1.type)
+    //         let form1 = $('.form-betLimit')[0];
+    //         let fd = new FormData(form1);
+    //         let data = Object.fromEntries(fd.entries());
+    //         // console.log(data, "BETLIMIT")
+    //         socket.emit('UpdateBetLimit', {data, LOGINDATA})
+    //     }
+    // })
 
 
     // $(document).on('submit', ".form-betLimit", function(e){
