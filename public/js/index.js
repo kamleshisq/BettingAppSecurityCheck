@@ -33,6 +33,7 @@ import { KYC } from "./kyc";
 import { paymentDeposite } from "./paymentDeposite";
 import { notificationsss } from "./notificationsss";
 import { updateBasicDetails } from "./updateBasicDetails";
+import session from "express-session";
 // import { func } from "joi";
 
 
@@ -135,32 +136,32 @@ $(document).on('click', ".logOut", function(e){
 })
 
 let sentinterval1 = setInterval(()=>{
-    console.log('WORKING', localStorage.getItem('logintimeUser'))
-    if(localStorage.getItem('logintimeUser')){
-        console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
-        if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 30){
+    console.log('WORKING', sessionStorage.getItem('logintime'))
+    if(sessionStorage.getItem('logintime')){
+        console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
+        if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 10){
             // if(pathname.startsWith('/admin')){
             //     logout()
             // }else{
             // }
             logoutUser()
             clearInterval(sentinterval1)
-            localStorage.removeItem('logintimeUser')
+            sessionStorage.removeItem('logintime')
         }
     }
     
-    if(localStorage.getItem('logintimeAdmin')){
-        console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
-        if(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')) >= 1000  * 30){
-            // if(pathname.startsWith('/admin')){
-            //     logout()
-            // }else{
-            // }
-            logout()
-            clearInterval(sentinterval1)
-            localStorage.removeItem('logintimeAdmin')
-        }
-    }
+    // if(sessionStorage.getItem('logintime')){
+    //     console.log(Date.now()-parseInt(sessionStorage.getItem('logintime')))
+    //     if(Date.now()-parseInt(sessionStorage.getItem('logintime')) >= 1000  * 30){
+    //         // if(pathname.startsWith('/admin')){
+    //         //     logout()
+    //         // }else{
+    //         // }
+    //         logout()
+    //         clearInterval(sentinterval1)
+    //         sessionStorage.removeItem('logintime')
+    //     }
+    // }
 },1000)
 
 
