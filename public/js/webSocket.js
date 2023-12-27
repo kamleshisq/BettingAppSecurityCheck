@@ -1250,12 +1250,12 @@ socket.on('connect', () => {
         let data = {}
        let firstTr = $(this).closest("tr")
        let type = firstTr.find("td:nth-child(0)").attr('id');
-       let min_stake = firstTr.find("td:nth-child(1)");
-       let max_stake = firstTr.find("td:nth-child(2)");
-       let max_profit = firstTr.find("td:nth-child(3)");
-       let max_odd = firstTr.find("td:nth-child(4)");
-       let delay = firstTr.find("td:nth-child(5)");
-       let max_bet = firstTr.find("td:nth-child(6)");
+       let min_stake = firstTr.find("td:nth-child(1)").val();
+       let max_stake = firstTr.find("td:nth-child(2)").val();
+       let max_profit = firstTr.find("td:nth-child(3)").val();
+       let max_odd = firstTr.find("td:nth-child(4)").val();
+       let delay = firstTr.find("td:nth-child(5)").val();
+       let max_bet = firstTr.find("td:nth-child(6)").val();
        data.type = type
        data.min_stake = min_stake
        data.max_stake = max_stake
@@ -1263,6 +1263,7 @@ socket.on('connect', () => {
        data.max_odd = max_odd
        data.delay = delay
        data.max_bet = max_bet
+       console.log(data,'==>data')
        et.emit('UpdateBetLimit', {data, LOGINDATA})
     })
 
