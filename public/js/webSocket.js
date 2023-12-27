@@ -8522,7 +8522,7 @@ socket.on('connect', () => {
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
-                let secondPTag = $(this).closest("tr").next().find(".selection-name");
+                let secondPTag = $(this).closest("tr").next().find(".beton");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 let secId2;
@@ -8545,7 +8545,7 @@ socket.on('connect', () => {
             }else if(this.classList.contains('bookmaker_blue') || this.classList.contains('bookmaker_red')){
                 let odds = $(this).children("span:first-child").text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
-                let secondPTag = $(this).closest("tr").next().find(".selection-name");
+                let secondPTag = $(this).closest("tr").next().find(".beton");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
@@ -8561,7 +8561,7 @@ socket.on('connect', () => {
             }else if(this.classList.contains('winner_Blue') || this.classList.contains('winner_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
-                let secondPTag = $(this).closest("tr").next().find(".selection-name");
+                let secondPTag = $(this).closest("tr").next().find(".beton");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 let secId2;
@@ -8582,11 +8582,12 @@ socket.on('connect', () => {
                 }
             }else{
                 let odds = $(this).children("span").eq(1).text();
+                let textToshow = $(this).children("span").eq(0).text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
-                let secondPTag = $(this).closest("tr").next().find(".selection-name");
+                let secondPTag = $(this).closest("tr").next().find(".beton");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
-                secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
+                secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);
                 numSpan.text(odds);
 
                 if($(this).hasClass('tbl-bg-blu-spn')){
