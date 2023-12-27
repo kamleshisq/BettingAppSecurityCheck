@@ -140,7 +140,8 @@ let sentinterval1 = setInterval(()=>{
     if(pathname.startsWith('/admin')){
         if(localStorage.getItem('logintimeAdmin')){
             console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
-            if(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')) >= 1000  * 20){
+            let time = Date.now()-parseInt(localStorage.getItem('logintimeAdmin'))
+            if(time >= 1000  * 19 || time <= 1000 * 20) {
                 clearInterval(sentinterval1)
                 localStorage.removeItem('logintimeAdmin')
                 logout()
@@ -151,7 +152,8 @@ let sentinterval1 = setInterval(()=>{
     }else{
         if(localStorage.getItem('logintimeUser')){
             console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
-            if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 20){
+            let time = Date.now()-parseInt(localStorage.getItem('logintimeUser'))
+            if(time >= 1000  * 19 || time <= 1000 * 20) {
                 // if(pathname.startsWith('/admin')){
                 //     logout()
                 // }else{
