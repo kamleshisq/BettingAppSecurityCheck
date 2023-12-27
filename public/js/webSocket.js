@@ -20250,6 +20250,19 @@ socket.on('connect', () => {
             console.log(type, marketId, idValue)
             socket.emit('getDetailsCommision',{LOGINDATA, type, marketId, idValue} )
         })
+
+        socket.on('getDetailsCommision', data => {
+            let html = ""
+            if(data.length > 0){
+                html += ``
+            }else{
+                html = `<table>
+                <tbody>
+                  <tr class="empty_table"><td>No record found</td></tr>
+                </tbody>
+              </table>`
+            }
+        })
     }
 
     $(document).ready(function() {

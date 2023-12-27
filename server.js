@@ -9683,24 +9683,28 @@ io.on('connection', (socket) => {
 
 
     socket.on('getDetailsCommision', async(data) => {
-        let bets = await Bet.aggregate([
-            {
-                $match:{
-                    marketId:data.marketId,
-                    userName:data.LOGINDATA.LOGINUSER.userName,
-                }
-            }
-        ])
+        if(data.LOGINDATA.LOGINUSER){
 
-        let thatCommissions
-        if(data.type != 'Net Losing Commission'){
-            // thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}}, 'betId')
-            thatCommissions = await newCommissionModel.distinct('betId', {commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}})
-            bets = bets.filter(item => thatCommissions.includes(item._id.toString()))
-        }else{
-            thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName})
+            let bets = await Bet.aggregate([
+                {
+                    $match:{
+                        marketId:data.marketId,
+                        userName:data.LOGINDATA.LOGINUSER.userName,
+                    }
+                }
+            ])
+    
+            let thatCommissions
+            if(data.type != 'Net Losing Commission'){
+                // thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}}, 'betId')
+                thatCommissions = await newCommissionModel.distinct('betId', {commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}})
+                bets = bets.filter(item => thatCommissions.includes(item._id.toString()))
+            }else{
+                thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName})
+            }
+            // console.log(thatCommissions, bets, "betsbetsbetsbets")
+            socket.emit('getDetailsCommision', bets)
         }
-        console.log(thatCommissions, bets, "betsbetsbetsbets")
 
 
     })
