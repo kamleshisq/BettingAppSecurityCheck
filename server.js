@@ -74,8 +74,8 @@ const { ObjectId } = require('mongodb');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
-    console.log('connected to client')
-    console.log(socket.request, socket.request.app,"21212")
+    // console.log('connected to client')
+    // console.log(socket.request, socket.request.app,"21212")
     if (!socket.request.app) {
         socket.request.app = app;
       }
