@@ -56393,9 +56393,9 @@ $(document).on('click', ".logOut", function (e) {
 });
 var sentinterval1 = setInterval(function () {
   console.log('WORKING', sessionStorage.getItem('logintime'));
-  if (sessionStorage.getItem('logintime') || $('body').attr('data-logindata')) {
+  if (sessionStorage.getItem('logintime')) {
     console.log(Date.now() - parseInt(sessionStorage.getItem('logintime')));
-    if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 20) {
+    if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 20 || $('body').attr('data-logindata')) {
       clearInterval(sentinterval1);
       sessionStorage.removeItem('logintime');
       if (pathname.startsWith('/admin')) {
