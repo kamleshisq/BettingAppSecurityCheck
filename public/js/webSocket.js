@@ -1250,12 +1250,12 @@ socket.on('connect', () => {
         let data = {}
        let firstTr = $(this).closest("tr")
        let type = firstTr.find('#id').attr('id');
-       let min_stake = firstTr.find('input["name=min_stake"]').val();
-       let max_stake = firstTr.find('input["name=max_stake"]').val();
-       let max_profit = firstTr.find('input["name=max_profit"]').val();
-       let max_odd = firstTr.find('input["name=max_odd"]').val();
-       let delay = firstTr.find('input["name=delay"]').val();
-       let max_bet = firstTr.find('input["name=max_bet"]').val();
+       let min_stake = firstTr.find('input[name="min_stake"]').val();
+       let max_stake = firstTr.find('input[name="max_stake"]').val();
+       let max_profit = firstTr.find('input[name="max_profit"]').val();
+       let max_odd = firstTr.find('input[name="max_odd"]').val();
+       let delay = firstTr.find('input[name="delay"]').val();
+       let max_bet = firstTr.find('input[name="max_bet"]').val();
        data.type = type
        data.min_stake = min_stake
        data.max_stake = max_stake
