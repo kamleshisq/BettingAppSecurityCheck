@@ -135,6 +135,7 @@ $(document).on('click', ".logOut", function(e){
 })
 
 let sentinterval1 = setInterval(()=>{
+    console.log('WORKING')
     if(localStorage.getItem('logintimeUser')){
         console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
         if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 30){
