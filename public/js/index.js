@@ -147,6 +147,10 @@ let sentinterval1 = setInterval(()=>{
                 
                 
             }
+        }else{
+            if($('body header').attr('data-logindata')){
+                location.reload(true)
+            }
         }
     }else{
         if(localStorage.getItem('logintimeUser')){

@@ -56401,6 +56401,10 @@ var sentinterval1 = setInterval(function () {
         localStorage.removeItem('logintimeAdmin');
         (0, _logOut.logout)();
       }
+    } else {
+      if ($('body header').attr('data-logindata')) {
+        location.reload(true);
+      }
     }
   } else {
     if (localStorage.getItem('logintimeUser')) {
