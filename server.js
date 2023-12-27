@@ -9692,8 +9692,15 @@ io.on('connection', (socket) => {
             }
         ])
 
-        let thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName}, 'betId')
+        let thatCommissions
+        if(data.type != 'Net Losing Commission'){
+            thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}}, 'betId')
+
+        }else{
+            thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName})
+        }
         console.log(thatCommissions, bets, "betsbetsbetsbets")
+
 
     })
 
