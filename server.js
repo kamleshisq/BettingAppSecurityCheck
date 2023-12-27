@@ -9727,6 +9727,7 @@ io.on('connection', (socket) => {
                         }
                     }
                 ])
+                console.log(bets)
                 socket.emit('getDetailsCommision', bets)
             }else{
                 let thatUSersChild = await User.distinct('usename', { parentUsers: thatUSer.id })
