@@ -71,7 +71,14 @@ socket.on('connect', () => {
             LOGINDATA.LOGINTOKEN = loginData.Token
             LOGINDATA.IP = loginData.ip
 
-            socket.emit('LoginCHeckUSerSIde', {loginData})
+            function checkLogin(){
+                socket.emit('LoginCHeckUSerSIde', {loginData})
+                setTimeout(()=>{
+                    checkLogin()
+                  }, 1000)
+            }
+            checkLogin()
+            
         }
 
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
