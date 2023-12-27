@@ -56393,7 +56393,7 @@ $(document).on('click', ".logOut", function (e) {
 });
 var sentinterval1 = setInterval(function () {
   console.log('WORKING', sessionStorage.getItem('logintime'));
-  if (sessionStorage.getItem('logintime')) {
+  if (sessionStorage.getItem('logintime') || $('body').attr('data-logindata')) {
     console.log(Date.now() - parseInt(sessionStorage.getItem('logintime')));
     if (Date.now() - parseInt(sessionStorage.getItem('logintime')) >= 1000 * 20) {
       clearInterval(sentinterval1);
