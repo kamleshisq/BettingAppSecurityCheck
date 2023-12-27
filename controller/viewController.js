@@ -4590,9 +4590,39 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
                 eventName:sportId,
                 commissionStatus: { $ne : 'cancel'}
             }
+        },
+        {
+            $group:{
+                _id:{
+                    marketId : '$marketId',
+                    commissionType : '$commissionType'
+                },
+                commission:{$sum:'$commission'},
+                eventName:{$first:'$eventName'},
+                seriesName:{$first:'$seriesName'},
+                sportId:{$first:'$sportId'},
+                eventId:{$first:'$eventId'},
+                marketName:{$first:'$marketName'}
+
+            }
+        },
+        {
+            $project:{
+                _id:0,
+                marketId:'$_id.marketId',
+                commissionType:'$_id.commissionType',
+                commission:'$commission',
+                eventName:"$eventName",
+                seriesName:'$seriesName',
+                sportId:'$sportId',
+                eventId:'$eventId',
+                marketName:'$marketName'
+
+            }
         }
     ])
     
+    // console.log(data, "datadata")
 
     let sumData = await commissionNewModel.aggregate([
         {

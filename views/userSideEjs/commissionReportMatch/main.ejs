@@ -63,21 +63,18 @@
                         <th class="bod-red-lft">SR No.</th>
                         <th>Market</th>
                         <th>Commission Type</th>
-                        <th>Percentage</th>
                         <th>Commission Points</th>
-                        <!-- <th></th> -->
-                        <th class="bod-red-rit">Status</th>
+                        <th class="bod-red-rit"></th>
                     </tr>
                 </thead>
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
-                        <tr>
+                        <tr id="<%=data[i].marketId%>" >
                             <td title="SR No." ><%=i+1%></td>
                             <td title="Market" ><%=data[i].marketName%></td>
                             <td title="Commission Type" ><%=data[i].commissionType%></td>
-                            <td title="Percentage" ><%=data[i].commissionPercentage%></td>
-                            <td title="Commission Points" ><%=data[i].commission%></td>
-                            <td title="Status" ><%=data[i].commissionStatus%></td>
+                            <td title="Commission Points"><%=data[i].commission.toFixed(3)%></td>
+                            <td><button class="site-button fancy-book commission-details" id="<%=data[i].commissionType%>" data-bs-toggle="modal" data-bs-target="#DetailsPOP">Details</button></td>
                         </tr>
                     <%}%>
                 </tbody>
@@ -116,7 +113,28 @@
 <!-- Modal -->
 
 <!-- ----=MODEL2 SET STAKE =-----   -->
-
+<div class="modal fade my-model-regestermodl" id="DetailsPOP" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content regestermodl-content">
+      <div class="modal-body regestermodl-body">
+        <div class="gam-rul-pop-data-wrp">
+          <div class="gam-rul-pop-data-wrp-titl">
+            <h6>Fancy Book</h6>
+          </div>
+          <div class="gam-rul-pop-data-acc-sv">
+            <div class="accordion accordion-flush gam-rul-pop-data-btnnh2-item" id="FANCYBOOKDATA"><table id="FANCYBOOK" <tbody="">
+                  <tbody><tr class="headDetail"><th>Runner Name</th>
+                  <th>Profit/Loss</th></tr><tr><td>7 or less</td><td class="c-reed">-100.00</td></tr><tr><td>8 or more</td><td class="c-gren">100.00</td></tr></tbody>
+                  </table></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer regestermodl-fotr">
+        <button type="button" class="myloginmodl-fotr-closbtn" data-bs-dismiss="modal" aria-label="Close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 </main>
 
 <!-- JQUERY  -->

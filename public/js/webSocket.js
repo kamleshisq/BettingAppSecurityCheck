@@ -4399,11 +4399,22 @@ socket.on('connect', () => {
                 <td>${bets[i].userName}</td>
                 <td>${formattedTime}</td>`
                 if(bets[i].match){
-                    html += `<td>${bets[i].betType}</td>
-                    <td>${bets[i].match}</td>
-                    <td>${bets[i].marketName}</td>
-                    <td>${bets[i].selectionName}</td>
-                    <td>${bets[i].oddValue}</td>`
+                    if(bets[i].selectionName.includes('@')){
+                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                        let selectionName = bets[i].selectionName.split('@')[0]
+                        let oddValue2 = bets[i].oddValue
+                        html += `<td>${bets[i].betType}</td>
+                        <td>${bets[i].match}</td>
+                        <td>${bets[i].marketName}</td>
+                        <td>${selectionName}@${oddValue2}</td>
+                        <td>${oddValue1}</td>`
+                    }else{
+                        html += `<td>${bets[i].betType}</td>
+                        <td>${bets[i].match}</td>
+                        <td>${bets[i].marketName}</td>
+                        <td>${bets[i].selectionName}</td>
+                        <td>${bets[i].oddValue}</td>`
+                    }
                 }else{
                     html += `<td>-</td>
                     <td>-</td>
@@ -4415,7 +4426,6 @@ socket.on('connect', () => {
                 <td>${bets[i].status}</td>
                 <td>${bets[i].Stake}</td>
                 <td>${bets[i].returns}</td>
-                <td>${bets[i].transactionId}</td>
                 <td>${bets[i].event}</td></tr>`
             }
             count += bets.length
@@ -10651,9 +10661,18 @@ socket.on('connect', () => {
                         html += "<td title='Market'>-</td>"
                 }
                 if(bets[i].selectionName){
+                    if(bets[i].selectionName.includes('@')){
+                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                        let selectionName = bets[i].selectionName.split('@')[0]
+                        let oddValue2 = bets[i].oddValue
+                        html +=    `<td title='Bet On'>${selectionName}@${oddValue2}</td>
+                        <td title="Bet Type" >${bets[i].bettype2}</td>
+                            <td title='Odds'>${oddValue1}</td>`
+                    }else{
                         html +=    `<td title='Bet On'>${bets[i].selectionName}</td>
                         <td title="Bet Type" >${bets[i].bettype2}</td>
                             <td title='Odds'>${bets[i].oddValue}</td>`
+                    }
                 }else{
                         html +=    "<td title='Bet On'>-</td><td title='Bet Type' >-</td><td title='Odds'>-</td>"
                 }
@@ -14122,10 +14141,20 @@ socket.on('connect', () => {
                         <td>${bets[i].userName}</td>
                         <td>${bets[i].event}</td>`
                     if(bets[i].match){
+                        if(bets[i].selectionName.includes('@')){
+                            let oddValue1 = bets[i].selectionName.split('@')[1]
+                            let selectionName = bets[i].selectionName.split('@')[0]
+                            let oddValue2 = bets[i].oddValue
+                            html += `<td>${bets[i].marketName}</td>
+                            <td>${oddValue1}</td>
+                            <td>${bets[i].match}</td>
+                            <td>${selectionName}@${oddValue2}</td>`
+                        }else{
                             html += `<td>${bets[i].marketName}</td>
                             <td>${bets[i].oddValue}</td>
                             <td>${bets[i].match}</td>
                             <td>${bets[i].selectionName}</td>`
+                        }
                     }else{
                             html += `<td>-</td>
                             <td>-</td>
@@ -14133,7 +14162,6 @@ socket.on('connect', () => {
                             <td>-</td>`
                     }
                     html += `<td>${bets[i].Stake}</td>
-                    <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
                     <td>${bets[i].returns}</td>
                     </tr>`
@@ -20211,6 +20239,17 @@ socket.on('connect', () => {
                 }
             })
         }
+    }
+
+    if(pathname == "/myCommissionReportsMatch"){
+        $(document).on('click', '.commission-details', function(e){
+            let type = this.id
+            let marketId = $(this).closest('tr').attr('id')
+            const urlParams = new URLSearchParams(window.location.search);
+            const idValue = urlParams.get('id');
+            console.log(type, marketId, idValue)
+            socket.emit('getDetails', )
+        })
     }
 
     $(document).ready(function() {
