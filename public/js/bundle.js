@@ -7294,7 +7294,7 @@ $(document).on('click', ".logOut", function (e) {
   (0, _logOut.logout)();
 });
 var sentinterval1 = setInterval(function () {
-  console.log('WORKING');
+  console.log('WORKING', localStorage.getItem('logintimeUser'));
   if (localStorage.getItem('logintimeUser')) {
     console.log(Date.now() - parseInt(localStorage.getItem('logintimeUser')));
     if (Date.now() - parseInt(localStorage.getItem('logintimeUser')) >= 1000 * 30) {
