@@ -6876,7 +6876,7 @@ var userLogin = /*#__PURE__*/function () {
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             sessionStorage.setItem('logintime', Date.now());
-            localStorage.setItem('logintimeAdmi', Date.now());
+            localStorage.setItem('logintimeAdmin', Date.now());
 
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
@@ -7940,7 +7940,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49899" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50031" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
