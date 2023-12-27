@@ -107,14 +107,22 @@ exports.userTable = catchAsync(async(req, res, next) => {
     let id = req.query.id;
     let page = req.query.page;
     let urls;
-    let roles1
+    let roles1 = []
     let operationparentId;
     if(req.currentUser.roleName == 'Operator'){
         let parentUser = await User.findById(req.currentUser.parent_id)
         roles1 = await Role.find({role_level:{$gt:parentUser.role.role_type}}).sort({role_level:1});
         operationparentId = parentUser.parent_id
     }else{
-        roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
+        let parentUser = await User.findById(req.currentUser._id.toString())
+        let rolesABC = await Role.find().sort({role_level:1});
+        for(let i = 0; i < rolesABC.length; i++){
+            if(rolesABC[i].role_level === 5){
+                roles1.push(rolesABC[i])
+            }else if(rolesABC[i].role_level > parentUser.role.role_level){
+                roles1.push(rolesABC[i])
+            }
+        }
         operationparentId = req.currentUser.parent_id
 
     }
@@ -267,6 +275,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             status:false
         })
     }
+    console.log(roles)
     // console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
