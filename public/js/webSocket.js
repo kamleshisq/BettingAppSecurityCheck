@@ -20245,7 +20245,10 @@ socket.on('connect', () => {
         $(document).on('click', '.commission-details', function(e){
             let type = this.id
             let marketId = $(this).closest('tr').attr('id')
-            console.log(type, marketId, search)
+            const urlParams = new URLSearchParams(window.location.search);
+            const idValue = urlParams.get('id');
+            console.log(type, marketId, idValue)
+            socket.emit('getDetails', )
         })
     }
 
