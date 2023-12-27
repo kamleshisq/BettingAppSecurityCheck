@@ -75,7 +75,9 @@ const { ObjectId } = require('mongodb');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
-   
+    const myVariable = socket.request.app.get('User');
+    const myVariable2 = socket.request.app.get('token');
+    console.log(myVariable, myVariable2, "myVariable2myVariable2myVariable2myVariable2")
     // console.log(loginData.Token)
     // console.log(global._token)
     socket.emit("loginUser", {
