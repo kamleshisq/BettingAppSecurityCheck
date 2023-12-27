@@ -156,7 +156,7 @@ let sentinterval1 = setInterval(()=>{
             //     logout()
             // }else{
             // }
-            logoutUser()
+            logout()
             clearInterval(sentinterval1)
             localStorage.removeItem('logintimeAdmin')
         }
