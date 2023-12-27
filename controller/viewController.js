@@ -5042,6 +5042,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             currentUser:me,
             thatMarketData,
             match:thatEvent.eventName,
+            eventId:match,
             marketName
         })
     }else{
