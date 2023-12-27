@@ -27,6 +27,9 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 async function placeBet(data){
     // console.log(data, "data1")
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
+    if(check.availableBalance < parseFloat(data.data.stake)){
+        return "You do not have sufficient balance for bet"
+    }
     let exposureCHECk = await exposurecheck(check)
     if((exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full"
