@@ -9683,12 +9683,14 @@ io.on('connection', (socket) => {
 
 
     socket.on('getDetailsCommision', async(data) => {
-        let bets = await Bet.aggregate({
-            $match:{
-                marketId:data.marketId,
-                userName:data.LOGINDATA.LOGINUSER.userName,
+        let bets = await Bet.aggregate([
+            {
+                $match:{
+                    marketId:data.marketId,
+                    userName:data.LOGINDATA.LOGINUSER.userName,
+                }
             }
-        })
+        ])
 
         let thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName}, 'betId')
         console.log(thatCommissions, bets, "betsbetsbetsbets")
