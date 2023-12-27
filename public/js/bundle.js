@@ -56405,7 +56405,7 @@ var sentinterval1 = setInterval(function () {
       }
     }
   } else {
-    location.reload(true);
+    // location.reload(true)
   }
 
   // if(sessionStorage.getItem('logintime')){

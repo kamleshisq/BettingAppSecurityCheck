@@ -150,7 +150,7 @@ let sentinterval1 = setInterval(()=>{
             
         }
     }else{
-        location.reload(true)
+        // location.reload(true)
     }
     
     // if(sessionStorage.getItem('logintime')){
