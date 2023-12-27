@@ -72,6 +72,8 @@ async function mapBet(data){
         for(const bet in bets){ 
             console.log(bets[bet].id,bets[bet]._id , "ABDCDCDC")
             // FOR ENTRY WISE COMMISSION
+            bets[bet].id = bets[bet]._id.toString();
+            console.log(bets[bet].id,bets[bet]._id , "ABDCDCDC")
 
             try{
                 // console.log("COMMISSION MARKET")
