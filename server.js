@@ -9738,7 +9738,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('LoginCHeckUSerSIde', async(data) => {
-        console.log(data, "LoginCHeckUSerSIdeLoginCHeckUSerSIdeLoginCHeckUSerSIde")
+        // console.log(data, "LoginCHeckUSerSIdeLoginCHeckUSerSIdeLoginCHeckUSerSIde")
+        let lgoginData = await loginLogs.find({session_id:data.loginData.Token, userName:data.loginData.User.userName})
+        console.log(lgoginData, "lgoginDatalgoginData")
     })
 
 })
