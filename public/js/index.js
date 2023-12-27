@@ -150,7 +150,9 @@ let sentinterval1 = setInterval(()=>{
             
         }
     }else{
-        // location.reload(true)
+        if($('body').attr('data-logindata')){
+            location.reload(true)
+        }
     }
     
     // if(sessionStorage.getItem('logintime')){

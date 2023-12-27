@@ -56405,7 +56405,9 @@ var sentinterval1 = setInterval(function () {
       }
     }
   } else {
-    // location.reload(true)
+    if ($('body').attr('data-logindata')) {
+      location.reload(true);
+    }
   }
 
   // if(sessionStorage.getItem('logintime')){
