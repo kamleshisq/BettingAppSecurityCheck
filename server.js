@@ -6908,25 +6908,16 @@ io.on('connection', (socket) => {
     socket.on('UpdateBetLimit', async(data) => {
         // console.log(data, "LimitData")
         try{
-            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            // console.log(loginUser, "loginUser")
-            if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
-                let check = await betLimit.findOne({type:data.data.type})
-                // console.log(check)
-                if(check){
-                    // console.log('WORKING')
-                    await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
-                    socket.emit('UpdateBetLimit', {status:'success'})
-                }else{
-                    await betLimit.create(data.data)
-                    socket.emit('UpdateBetLimit', {status:'success'})
-                }
+            let check = await betLimit.findOne({type:data.data.type})
+            // console.log(check)
+            if(check){
+                // console.log('WORKING')
+                await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
+                socket.emit('UpdateBetLimit', {status:'success'})
             }else{
-                socket.emit('UpdateBetLimit', {message:"Please provide a valid password", status:"err"})
-            }   
-
-
-
+                await betLimit.create(data.data)
+                socket.emit('UpdateBetLimit', {status:'success'})
+            }
         }catch(err){
             console.log(err)
             socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
