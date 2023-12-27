@@ -365,6 +365,8 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     res.locals.WithdrawReqCount = WithdrawReqCount
     req.currentUser = currentUser
     req.token = token
+    req.app.set('token', token);
+    req.app.set('User', currentUser);
     next()
 });
 
@@ -446,6 +448,8 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     req.currentUser = currentUser
     req.token = token
+    req.app.set('token', token);
+    req.app.set('User', currentUser);
     next()
 });
 
@@ -513,6 +517,8 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
         Token : token,
         User : currentUser
     }
+    req.app.set('token', token);
+    req.app.set('User', currentUser);
     res.locals.loginData = loginData
     next()
 });
@@ -577,6 +583,8 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     req.currentUser = currentUser
     res.locals.loginData = loginData
     req.token = token
+    req.app.set('token', token);
+    req.app.set('User', currentUser);
     next()
     // console.log('WORKING2')
 

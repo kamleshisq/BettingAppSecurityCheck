@@ -11,8 +11,6 @@ let c = 0
 socket.on('connect', () => {
     reconnectAttempts = 0;
     console.log("websocket Connected")
-    let allCookies = document.cookie
-    console.log(allCookies, "allCookiesallCookiesallCookies");
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         console.log(data, "datadatadata")
