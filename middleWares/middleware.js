@@ -18,7 +18,8 @@ function parseCookies(cookieString) {
 
 
 const LoginLogs = catchAsync(async(req, res, next) => { 
-    console.log(req.ip)
+    // console.log(req.ip)
+    req.app.set('Ip', req.ip);
     console.log("WORKING MIDDLEWARE")
     // console.log(req.headers.cookie, 456)
     // if(req.headers.cookie){
