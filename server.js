@@ -9690,7 +9690,8 @@ io.on('connection', (socket) => {
             }
         })
 
-        let thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName})
+        let thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName}, 'betId')
+        console.log(thatCommissions, bets, "betsbetsbetsbets")
 
     })
 
