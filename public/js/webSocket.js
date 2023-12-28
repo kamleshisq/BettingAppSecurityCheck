@@ -10137,7 +10137,21 @@ socket.on('connect', () => {
             }
         })
 
-
+        function OddsCheck(){
+            $(document).ready(function(){
+                var ids = [];
+          
+                $(".market").each(function() {
+                  ids.push(this.id);
+                });
+                let eventId = search.split('=')[1]
+                console.log(ids, eventId)
+                setTimeout(()=>{
+                    OddsCheck()
+                  }, 5000)
+            })
+        }
+        OddsCheck()
     }
 
 
