@@ -9751,7 +9751,7 @@ io.on('connection', (socket) => {
 
     socket.on('getsportwisedownlinecommitssion',async(data)=>{
         try{
-
+            console.log(data)
             let sportwisedownlinecomm = await newCommissionModel.aggregate([
                 {
                     $match:{
