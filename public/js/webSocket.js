@@ -20511,12 +20511,32 @@ socket.on('connect', () => {
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
-            console.log(data)
             socket.emit('getsportwisedownlinecommitssion',{data})
         })
 
         socket.on('getsportwisedownlinecommitssion',async(data)=>{
-            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let html = `<thead>
+                <tr>
+                  <th>Sport</th>
+                  <th>Commission</th>
+                </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer"><td class="sport&username" data-sport&username="JSON.stringify({userName:${result.userName},sportId:${result.sportname}})">${result.sportname}</td>
+                      <td>${result.commission}</td></tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+
+
+                html += `</tbody>`
+
+                $('table').html(html)
+            }
         })
     }
 

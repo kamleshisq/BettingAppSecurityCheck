@@ -9772,16 +9772,17 @@ io.on('connection', (socket) => {
             console.log(sportwisedownlinecomm,'==>sportwisedownlinecomm')
              let result = sportwisedownlinecomm.map(ele=>{
                 if(ele['_id'] == '4'){
-                    ele['_id'] = 'Cricket'
+                    ele['sportname'] = 'Cricket'
                 }else if(ele['_id' == '1']){
-                    ele['_id'] = 'Football'
+                    ele['sportname'] = 'Football'
                 }else if(ele['_id' == '2']){
-                    ele['_id'] = 'Tennis'
+                    ele['sportname'] = 'Tennis'
                 }else if(ele['_id' == '10']){
-                    ele['_id'] = 'Basketball'
+                    ele['sportname'] = 'Basketball'
                 }else if(ele['_id' == '30']){
-                    ele['_id'] = 'Baseball'
+                    ele['sportname'] = 'Baseball'
                 }
+                ele['userName'] = data.data.userName
                 return ele
             })
     
