@@ -20525,8 +20525,8 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer"><td class="sport&username" data-sport&username="JSON.stringify({userName:${result.userName},sportId:${result.sportname}})">${result.sportname}</td>
-                      <td>${result.commission}</td></tr>`
+                      html += `<tr style="cursor:pointer"><td class="sport&username" data-sport&username="JSON.stringify({userName:${result[i].userName},sportId:${result[i].sportname}})">${result[i].sportname}</td>
+                      <td>${result[i].commission}</td></tr>`
                   }
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
