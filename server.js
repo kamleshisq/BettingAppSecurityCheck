@@ -9789,12 +9789,39 @@ io.on('connection', (socket) => {
             socket.emit('getgamewisedownlinecommitssion',{status:'success',result})
         }catch(err){
             socket.emit('getgamewisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
-            console.log(err,'==>getsportwiselinecommErr')
+            console.log(err,'==>getgamewisedownlinecommitssion')
         }
     })
 
     socket.on('getsportwisedownlinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportId
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$eventName',
+                        commission:{$sum:'$commission'},
+                    }
+                }
+            ])
 
+         
+    
+            socket.emit('getsportwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
+                sportId:data.data.sportId}})
+        }catch(err){
+            socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getsportwisedownlinecommitssion')
+        }
     })
 
 

@@ -20537,7 +20537,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username='${JSON.stringify({userName:result[i].userName,sportId:result[i].sportname,sportname:result[i].sportname})}'>${result[i].sportname}</td>
+                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username='${JSON.stringify({userName:result[i].userName,sportId:result[i]._id,sportname:result[i].sportname})}'>${result[i].sportname}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
@@ -20559,16 +20559,44 @@ socket.on('connect', () => {
             console.log(parentdetail)
             let userName = parentdetail.userName
             let sportId = parentdetail.sportId
-            let sportname = parentdetail.sportname
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
             let bredcum =  [userName,sportId]
+            data.sportId = sportId
             data.userName = userName;
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
             console.log(data)
-            socket.emit('getsportwisedownlinecommitssion',data)
+            socket.emit('getsportwisedownlinecommitssion',{data})
+        })
+
+        socket.on('getsportwisedownlinecommitssion',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let parentdata = data.parentdata
+                let html = `<thead>
+                <tr>
+                  <th>Competition</th>
+                  <th>Commission</th>
+                </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,eventName:result[i]._id})}'>${result[i]._id}</td>
+                      <td>${result[i].commission}</td></tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+
+
+                html += `</tbody>`
+
+                $('table').html(html)
+            }
+
         })
     }
 
