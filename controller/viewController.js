@@ -5174,7 +5174,7 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
                 // },
                 loginUserId:{$exists:true},
                 // $and:[{'parentIdArray':{$exists:true}},{'parentIdArray':req.currentUser._id}],
-                parentIdArray:{$in:toString(req.currentUser._id)}
+                parentIdArray:{$in:[toString(req.currentUser._id)]}
 
             }
         },
