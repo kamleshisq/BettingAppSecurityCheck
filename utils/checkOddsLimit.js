@@ -1,4 +1,5 @@
 const cricketAndOtherSport = require('../utils/getSportAndCricketList');
+const betLimitModel = require('../model/betLimitModel');
 
 
 
@@ -23,7 +24,21 @@ async function checkLimit(data){
                 sport_name = "Tennis"
             }
         
-            console.log("GOtHERE",sport_name,IDS)
+            let betLimit = await betLimitModel.findOne({type:liveBetGame.eventData.name})
+            if(!betLimit){
+                betLimit = await betLimitModel.findOne({type:liveBetGame.eventData.league})
+                if(!betLimit){
+                    betLimit = await betLimitModel.findOne({type:sport_name})
+                    if(!betLimit){
+                        betLimit = await betLimitModel.findOne({type:'Sport'})
+                        if(!betLimit){
+                            betLimit = await betLimitModel.findOne({type:'Home'})
+                        }
+                    }
+                }
+            }
+
+            console.log(betLimit, "gotHERE")
 
         }else{
             return 'ERR'
