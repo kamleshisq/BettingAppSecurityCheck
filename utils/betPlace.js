@@ -27,6 +27,9 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 
 async function placeBet(data){
     // console.log(data, "data1")
+    if(!data.LOGINDATA.LOGINUSER){
+        return "Stake out of range"
+    }
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < parseFloat(data.data.stake)){
         return "You do not have sufficient balance for bet"
