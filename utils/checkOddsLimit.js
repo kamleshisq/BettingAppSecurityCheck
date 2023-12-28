@@ -24,9 +24,9 @@ async function checkLimit(data){
                 sport_name = "Tennis"
             }
         
-            let betLimit = await betLimitModel.findOne({type:liveBetGame.eventData.name})
+            let betLimit = await betLimitModel.findOne({type:thatMatch.eventData.name})
             if(!betLimit){
-                betLimit = await betLimitModel.findOne({type:liveBetGame.eventData.league})
+                betLimit = await betLimitModel.findOne({type:thatMatch.eventData.league})
                 if(!betLimit){
                     betLimit = await betLimitModel.findOne({type:sport_name})
                     if(!betLimit){
