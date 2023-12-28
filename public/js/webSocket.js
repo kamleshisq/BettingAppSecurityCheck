@@ -20487,7 +20487,7 @@ socket.on('connect', () => {
         })
     }
 
-    if(pathname='/admin/uplinecommissionReport'){
+    if(pathname =='/admin/uplinecommissionReport'){
         $(document).on('click','tr',function(e){
             let data = {}
             let userName = $(this).children('td.username').attr('data-username')
