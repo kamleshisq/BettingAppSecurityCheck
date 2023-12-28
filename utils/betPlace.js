@@ -11,6 +11,7 @@ const newCommissionModel =  require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
 const runnerDataModel = require('../model/runnersData');
 const exposurecheck = require('./checkExpoOfThatUSer');
+const checkLimit = require('./checkOddsLimit');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -152,6 +153,7 @@ if(data.data.spoetId == 1){
 
 //FOR PERTICULAR MARKETS
     let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
+    let limitData = await checkLimit()
     if(thatMarketLimit){
         if(thatMarketLimit.min_stake > parseFloat(data.data.stake) ){
             return `Stake out of range`
