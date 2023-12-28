@@ -23,7 +23,7 @@
                 <%if(Array.isArray(seriesMatch[0].marketList[key])){%>
                   <%for(let i = 0; i< seriesMatch[0].marketList[key].length; i++){%>
                     <%
-                    console.log(seriesMatch[0].marketList[key])
+                    console.log(seriesMatch[0].marketList[key][i].title)
                       let data = betLimit.find(item => item.type == seriesMatch[0].marketList[key][i].marketId)
                       if(data){
                     %>
