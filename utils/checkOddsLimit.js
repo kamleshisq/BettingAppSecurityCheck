@@ -49,14 +49,14 @@ async function checkLimit(data){
                     pushData.marketId = marketsDetails.data.items[i].market_id
                     let thatMarketLimit = await betLimitModel.findOne({type:marketsDetails.data.items[i].market_id})
                     if(!thatMarketLimit){
-                        if(item.title && !item.title.toLowerCase().startsWith('book') && !item.title.toLowerCase().startsWith('toss') && !item.title.toLowerCase().startsWith('winn')){
-                            if(!item.title.startsWith("Only") && item.title.includes("Over")){
+                        if(marketsDetails.data.items[i].title && !marketsDetails.data.items[i].title.toLowerCase().startsWith('book') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('toss') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('winn')){
+                            if(!marketsDetails.data.items[i].title.startsWith("Only") && marketsDetails.data.items[i].title.includes("Over")){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_session`})
-                            }else if (item.title.startsWith("Only")){
+                            }else if (marketsDetails.data.items[i].title.startsWith("Only")){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_onlyOver`})
-                            }else if (!item.title.includes("Over")){
+                            }else if (!marketsDetails.data.items[i].title.includes("Over")){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_w_p_market`})
-                            }else if (item.market_id.endsWith('OE')){
+                            }else if (marketsDetails.data.items[i].market_id.endsWith('OE')){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_odd_even`})
                             }else{
                                 thatMarketLimit = betLimit
