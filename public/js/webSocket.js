@@ -20504,9 +20504,8 @@ socket.on('connect', () => {
         $(document).on('click','tr',function(e){
             let data = {}
             let userName = $(this).children('td.username').attr('data-username')
-            let fromdate = $('#fromDate')
-            let todate = $('#toDate')
-            console.log(userName)
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
             let bredcum =  [userName]
             data.userName = userName;
             data.fromdate = fromdate;
