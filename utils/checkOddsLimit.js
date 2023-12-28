@@ -61,9 +61,14 @@ async function checkLimit(data){
                             }else{
                                 thatMarketLimit = betLimit
                             }
+                            if(!thatMarketLimit){
+                                thatMarketLimit = betLimit
+                            }
                         }else{
                             thatMarketLimit = betLimit
                         }
+                    }else{
+                        thatMarketLimit = betLimit
                     }
                     pushData.Limits = thatMarketLimit
                     sendData.push(pushData)
