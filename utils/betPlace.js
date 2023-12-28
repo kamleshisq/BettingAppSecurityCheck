@@ -212,12 +212,12 @@ if(data.data.spoetId == 1){
 // FOR ODDS LIMIT
 if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
     if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.oldOdds * 1) + (0.1) 
+        let OddChake = (data.data.oldOdds * 1) + (0.10) 
         if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
             return 'Odds out of range back'
         }
     }else{
-        let OddChake = (data.data.oldOdds * 1) - (0.1)  
+        let OddChake = (data.data.oldOdds * 1) - (0.10)  
         if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
             return 'Odds out of range'
         }
