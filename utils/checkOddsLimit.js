@@ -45,6 +45,7 @@ async function checkLimit(data){
             let sendData = []
             if(marketsDetails.data && marketsDetails.data.items){
                 for(let i = 0; i < marketsDetails.data.items.length; i++){
+                    console.log(marketsDetails.data.items[i].market_id.endsWith('OE'))
                     let pushData = {}
                     pushData.marketId = marketsDetails.data.items[i].market_id
                     let thatMarketLimit = await betLimitModel.findOne({type:marketsDetails.data.items[i].market_id})
