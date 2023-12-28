@@ -20501,7 +20501,7 @@ socket.on('connect', () => {
             var day = date.getDate().toString().padStart(2, '0');
             return year + "-" + month + "-" + day;
         }
-        $(document).on('click','usernametr',function(e){
+        $(document).on('click','.usernametr',function(e){
             let data = {}
             let userName = $(this).children('td.usernametd').attr('data-username')
             let fromdate = $('#fromDate').val()
@@ -20539,7 +20539,7 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('click','sport_usernametr',function(e){
+        $(document).on('click','.sport_usernametr',function(e){
             let data = {}
             let parentdetail = JSON.parse($(this).children('td.sport_usernametd').attr('data-sport_username'))
             console.log(parentdetail)
