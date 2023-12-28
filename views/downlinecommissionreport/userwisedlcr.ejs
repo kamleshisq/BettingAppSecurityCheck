@@ -22,7 +22,6 @@
           </div>
         </form> -->
       </div>
-    <!-- <%- include("../loginUserAdminsideDetails") %> -->
   </section>
 
   <section>
@@ -60,7 +59,7 @@
                 <%}else{%>
                 <tr style="cursor:pointer">
                   <%}%>
-                  <td ><%=sportdownlinecomm[i]._id%></td>
+                  <td class="username" data-username="<%=sportdownlinecomm[i]._id%>"><%=sportdownlinecomm[i]._id%></td>
                   <td><%=sportdownlinecomm[i].commissionClaim%></td>
                   <td><%=sportdownlinecomm[i].commissionUnclaim%></td>
                 </tr>

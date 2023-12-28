@@ -9748,6 +9748,48 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getsportwisedownlinecommitssion',async(data)=>{
+        try{
+
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.fromdate),$lte:new Date(new Date(data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:ture}
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$sportId',
+                        commission:{$sum:'$commission'}
+                    }
+                }
+            ])
+    
+             let result = sportwisedownlinecomm.map(ele=>{
+                if(ele['_id'] == '4'){
+                    ele['_id'] = 'Cricket'
+                }else if(ele['_id' == '1']){
+                    ele['_id'] = 'Football'
+                }else if(ele['_id' == '2']){
+                    ele['_id'] = 'Tennis'
+                }else if(ele['_id' == '10']){
+                    ele['_id'] = 'Basketball'
+                }else if(ele['_id' == '30']){
+                    ele['_id'] = 'Baseball'
+                }
+                return ele
+            })
+    
+            socket.emit('getsportwisedownlinecommitssion',{status:'success',result})
+        }catch(err){
+            socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+        }
+    })
+
 })
 
 http.listen(process.env.port,()=> {

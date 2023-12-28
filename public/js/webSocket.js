@@ -20472,6 +20472,26 @@ socket.on('connect', () => {
         })
     }
 
+    if(pathname='/admin/uplinecommissionReport'){
+        $(document).on('click','tr',function(e){
+            let data = {}
+            let userName = $(this).children('td.username').attr('data-username')
+            let fromdate = $('#fromDate')
+            let todate = $('#toDate')
+            console.log(userName)
+            let bredcum =  [userName]
+            data.userName = userName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            socket.emit('getsportwisedownlinecommitssion',{data})
+        })
+
+        socket.on('getsportwisedownlinecommitssion',async(data)=>{
+            console.log(data)
+        })
+    }
+
     $(document).ready(function() {
         setTimeout(function() {
           $(".main-loader").addClass("hide");
