@@ -9646,7 +9646,7 @@ socket.on('connect', () => {
                     if(data.odds != '\n                        \n                      '){
                         // alert('132456')
                         showLoader();
-                        console.log(checkTime)
+                        console.log(checkTime ,Date.now() )
                         if(checkTime){
                             console.log(Date(checkTime) > Date.now())
                             if(Date(checkTime) > Date.now()){
