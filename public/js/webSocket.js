@@ -20512,6 +20512,7 @@ socket.on('connect', () => {
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
+            console.log(data)
             socket.emit('getsportwisedownlinecommitssion',{data})
         })
 
