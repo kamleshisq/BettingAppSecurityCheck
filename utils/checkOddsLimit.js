@@ -41,7 +41,7 @@ async function checkLimit(data){
 
             // console.log(betLimit, "gotHERE")
             let marketsDetails = await getmarketDetails(IDS)
-            console.log(marketsDetails)
+            console.log(marketsDetails.data.items)
 
         }else{
             return 'ERR'
