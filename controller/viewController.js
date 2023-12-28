@@ -5165,16 +5165,15 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
 
 exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
     let loginuserid1 = req.currentUser._id
-    console.log(loginuserid1)
+    console.log(loginuserid1.toString())
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
-                // date: {
-                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                // },
-                // loginUserId:{$exists:true},
-                // $and:[{'parentIdArray':{$exists:true}},{'parentIdArray':req.currentUser._id}],
-                // parentIdArray:toString(req.currentUser._id)
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                loginUserId:{$exists:true},
+                parentIdArray:{$in:[loginuserid1.toString()]}
 
             }
         },
@@ -5182,10 +5181,10 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
             $group:{
                 _id:"$userName",
                 commissionClaim:{$sum:{
-                    $cond: [ { $eq: [ "$commissionStatus:", 'Claimed' ] }, '$commission', 0 ]
+                    $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
                   }},
                 commissionUnclaim:{$sum:{
-                    $cond: [ { $eq: [ "$commissionStatus:", 'Unclaimed' ] }, '$commission', 0 ]
+                    $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
                   }}
             }
         }
@@ -5208,10 +5207,11 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
 
     console.log(sportdownlinecomm,"==>sportdownlinecomm")
 
-    // res.status(200).json({
-    //     title:'Upline Commission Report',
-    //     sportuplinecomm
-    // })
+    res.status(200).render('./downlinecommissionreport/userwisedlcr',{
+        title:'Upline Commission Report',
+        sportdownlinecomm,
+        currentUser:req.currentUser
+    })
 })
 
 

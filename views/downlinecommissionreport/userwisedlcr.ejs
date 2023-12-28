@@ -1,0 +1,90 @@
+<%- include("../header") %>
+  <!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+        <h3>Downline Commission Report</h3>
+        <!-- <form action="">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+            </div>
+            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+            <div class="wrapper">
+              <ul id="search" class="users">
+
+              </ul>
+              <ul id="button" class="button">
+
+              </ul>
+            </div>
+          </div>
+        </form> -->
+      </div>
+    <!-- <%- include("../loginUserAdminsideDetails") %> -->
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading">
+          <div class="table-heading-btn">
+            <form action="" class="betlist-heading-from">
+              <div class="input-group">
+                <label>From Date</label>
+                <input type="date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="fromDate"> 
+              </div>
+              <div class="input-group">
+                <label>To Date</label>
+                <input type="date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
+              </div>
+            </form>
+            <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Download CSV</button>
+          </div>
+        </div>
+        <div class="data-table">
+          <table id="table12">
+            <thead>
+              <tr>
+                <th>User Name</th>
+                <th>Commission</th>
+                <th>Unclaimed Commission</th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+              <%if(sportdownlinecomm.length > 0){%>
+              <%for(let i = 0;i<sportdownlinecomm.length;i++){%>
+              <%if(i % 2 == 0){%>
+              <tr style="cursor:pointer">
+                <%}else{%>
+                <tr style="cursor:pointer">
+                  <%}%>
+                  <td ><%=sportdownlinecomm[i]._id%></td>
+                  <td><%=sportdownlinecomm[i].commissionClaim%></td>
+                  <td><%=sportdownlinecomm[i].commissionUnclaim%></td>
+                </tr>
+                <%}%>
+              </tr>
+              <%}else{%>
+                <tr class="empty_table"><td>No record found</td></tr>
+              <%}%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+
+
+</body>
+    </html> 
