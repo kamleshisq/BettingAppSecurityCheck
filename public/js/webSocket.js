@@ -20604,7 +20604,7 @@ socket.on('connect', () => {
 
         $(document).on('click','.series_sport_usernametr',function(e){
             let data = {}
-            let parentdetail = JSON.parse($(this).children('td.sport_usernametd').attr('data-series_sport_username'))
+            let parentdetail = JSON.parse($(this).children('td.series_sport_usernametd').attr('data-series_sport_username'))
             console.log(parentdetail)
             let userName = parentdetail.userName
             let sportId = parentdetail.sportId
