@@ -9755,8 +9755,8 @@ io.on('connection', (socket) => {
                     $match:{
                         // date:{$lte:new Date(data.fromdate),$gte:new Date(new Date(data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         userName:data.userName,
-                        loginUserId:{$exists:true},
-                        parentIdArray:{$exists:true}
+                        // loginUserId:{$exists:true},
+                        // parentIdArray:{$exists:true}
                     }
                     
                 },
