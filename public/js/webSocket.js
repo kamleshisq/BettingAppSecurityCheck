@@ -619,7 +619,7 @@ socket.on('connect', () => {
     socket.on('userLoginBalance', async(data) => {
         // console.log(data, "USERDATA")
         let html = `<div class="bet-blns-nav-wrp-amount-num">
-        <a href="/mybets"> <span class=""><i class="fa-solid fa-wallet"></i> Bal : ${data.userData.availableBalance.toFixed(2)} <span> &nbsp; Exp : ${data.totalExposure.toFixed(2)}</span> </span></a>
+        <span class=""><i class="fa-solid fa-wallet"></i> Bal : ${data.userData.availableBalance.toFixed(2)} <a href="/mybets"><span> &nbsp; Exp : ${data.totalExposure.toFixed(2)}</span></a> </span>
       </div>`
       $('.userBalance').each(function(index, element) {
         $(this).html(html)
