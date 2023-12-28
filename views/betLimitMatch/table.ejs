@@ -124,7 +124,7 @@
             </tr>
             <%}
             for(let i = 0; i < Session.length; i++){
-              let data = betLimit.find(item => item.type == `${seriesMatch[0].eventData.eventId}_session`)
+              let data = betLimit.find(item => item.type == Session[i].marketId)
             if(data){
             %>  
             <tr>
