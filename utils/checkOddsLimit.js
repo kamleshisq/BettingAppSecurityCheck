@@ -58,6 +58,7 @@ async function checkLimit(data){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_w_p_market`})
                             }else if (marketsDetails.data.items[i].market_id.endsWith('OE')){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_odd_even`})
+                                console.log(thatMarketLimit, "thatMarketLimitthatMarketLimitthatMarketLimit")
                             }else{
                                 thatMarketLimit = betLimit
                             }
