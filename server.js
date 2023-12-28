@@ -9756,7 +9756,7 @@ io.on('connection', (socket) => {
                         date:{$gte:new Date(data.fromdate),$lte:new Date(new Date(data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         userName:data.userName,
                         loginUserId:{$exists:true},
-                        parentIdArray:{$exists:ture}
+                        parentIdArray:{$exists:true}
                     }
                     
                 },
@@ -9786,6 +9786,7 @@ io.on('connection', (socket) => {
             socket.emit('getsportwisedownlinecommitssion',{status:'success',result})
         }catch(err){
             socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getsportwiselinecommErr')
         }
     })
 
