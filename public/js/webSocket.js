@@ -9598,11 +9598,8 @@ socket.on('connect', () => {
         // })
         let checkTime
           socket.on('checkDelay', data => {
-            console.log(data, clickTime)
             if(data.delay && data.delay != 0){
-                console.log(clickTime, "123654")
                 checkTime = clickTime + data.delay * 1000
-                console.log(checkTime, Date.now(),"jkjkkj")
             }
 
           })
@@ -9648,16 +9645,16 @@ socket.on('connect', () => {
                     if(data.odds != '\n                        \n                      '){
                         // alert('132456')
                         showLoader();
-                        console.log(checkTime ,Date.now() )
                         if(checkTime){
-                            console.log(checkTime < Date.now())
                             if(checkTime < Date.now()){
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                             }else{
-                                socket.emit("betDetails", {data, LOGINDATA})
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
-                            socket.emit("betDetails", {data, LOGINDATA})
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                         }
                         // console.log(data)
                     }else{
@@ -9674,15 +9671,16 @@ socket.on('connect', () => {
                     }else{
                         if(data.odds != '\n                        \n                      '){
                             // alert('132456')
-                            showLoader();
                             if(checkTime){
                                 if(checkTime < Date.now()){
                                     togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                                 }else{
+                                    showLoader();
                                     socket.emit("betDetails", {data, LOGINDATA})
                                 }
                             }else{
-                                socket.emit("betDetails", {data, LOGINDATA})
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
