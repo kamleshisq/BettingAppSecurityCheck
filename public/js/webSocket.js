@@ -9644,7 +9644,6 @@ socket.on('connect', () => {
                 }else{
                     if(data.odds != '\n                        \n                      '){
                         // alert('132456')
-                        showLoader();
                         if(checkTime){
                             if(checkTime < Date.now()){
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
