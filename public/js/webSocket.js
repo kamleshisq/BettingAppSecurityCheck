@@ -20511,10 +20511,12 @@ socket.on('connect', () => {
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
+            console.log(data)
             socket.emit('getgamewisedownlinecommitssion',{data})
         })
 
         socket.on('getgamewisedownlinecommitssion',async(data)=>{
+            console.log(data)
             if(data.status == 'success'){
                 let result = data.result
                 let html = `<thead>
