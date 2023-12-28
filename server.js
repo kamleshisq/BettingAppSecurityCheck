@@ -9749,7 +9749,7 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('getsportwisedownlinecommitssion',async(data)=>{
+    socket.on('getgamewisedownlinecommitssion',async(data)=>{
         try{
             let sportwisedownlinecomm = await newCommissionModel.aggregate([
                 {
@@ -9794,7 +9794,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('getsportwisedownlinecommitssion',async(data)=>{
-        
+
     })
 
 
