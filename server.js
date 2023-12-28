@@ -349,7 +349,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('loginuserbalance',async(data)=>{
-        if(data.LOGINUSER){
+        if(data.LOGINUSER && data.LOGINUSER._id){
             let id = data.LOGINUSER._id
             if(data.LOGINUSER.role.roleName == 'Operator'){
                 let parentUser = await User.findById(data.LOGINUSER.parent_id)
