@@ -9650,8 +9650,8 @@ socket.on('connect', () => {
                         showLoader();
                         console.log(checkTime ,Date.now() )
                         if(checkTime){
-                            console.log(Date(checkTime) < Date.now())
-                            if(Date(checkTime) < Date.now()){
+                            console.log(checkTime < Date.now())
+                            if(checkTime < Date.now()){
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                             }else{
                                 socket.emit("betDetails", {data, LOGINDATA})
@@ -9676,7 +9676,7 @@ socket.on('connect', () => {
                             // alert('132456')
                             showLoader();
                             if(checkTime){
-                                if(Date(checkTime) < Date.now()){
+                                if(checkTime < Date.now()){
                                     togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                                 }else{
                                     socket.emit("betDetails", {data, LOGINDATA})
