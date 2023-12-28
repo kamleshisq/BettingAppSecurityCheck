@@ -5169,11 +5169,10 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
-                // date: {
-                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                // },
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
                 loginUserId:{$exists:true},
-                // $and:[{'parentIdArray':{$exists:true}},{'parentIdArray':req.currentUser._id}],
                 parentIdArray:{$in:[loginuserid1.toString()]}
 
             }
@@ -5208,10 +5207,10 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
 
     console.log(sportdownlinecomm,"==>sportdownlinecomm")
 
-    // res.status(200).json({
-    //     title:'Upline Commission Report',
-    //     sportuplinecomm
-    // })
+    res.status(200).render('./downlinecommissionreport/userwisedlcr',{
+        title:'Upline Commission Report',
+        sportdownlinecomm
+    })
 })
 
 
