@@ -217,6 +217,10 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
         if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
             return 'Odds out of range back'
         }
+
+        if(data.data.odds > limitData.max_odd){
+            return 'Odds out of range'
+        }
     }else{
         let OddChake = (data.data.oldOdds * 1) - (0.10)  
         if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
