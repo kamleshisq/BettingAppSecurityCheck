@@ -20501,23 +20501,23 @@ socket.on('connect', () => {
             var day = date.getDate().toString().padStart(2, '0');
             return year + "-" + month + "-" + day;
         }
-        $(document).on('click','tr',function(e){
-            let data = {}
-            let userName = $(this).children('td.username').attr('data-username')
-            let fromdate = $('#fromDate').val()
-            let todate = $('#toDate').val()
-            let bredcum =  [userName]
-            data.userName = userName;
-            data.fromdate = fromdate;
-            data.todate = todate;
-            data.bredcum = bredcum;
-            console.log(data)
-            socket.emit('getsportwisedownlinecommitssion',{data})
-        })
+        // $(document).on('click','tr',function(e){
+        //     let data = {}
+        //     let userName = $(this).children('td.username').attr('data-username')
+        //     let fromdate = $('#fromDate').val()
+        //     let todate = $('#toDate').val()
+        //     let bredcum =  [userName]
+        //     data.userName = userName;
+        //     data.fromdate = fromdate;
+        //     data.todate = todate;
+        //     data.bredcum = bredcum;
+        //     console.log(data)
+        //     socket.emit('getsportwisedownlinecommitssion',{data})
+        // })
 
-        socket.on('getsportwisedownlinecommitssion',async(data)=>{
-            console.log(data)
-        })
+        // socket.on('getsportwisedownlinecommitssion',async(data)=>{
+        //     console.log(data)
+        // })
     }
 
     $(document).ready(function() {
