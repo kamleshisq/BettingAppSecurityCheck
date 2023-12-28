@@ -10153,6 +10153,17 @@ socket.on('connect', () => {
             })
         }
         OddsCheck()
+
+        socket.on('OddsCheck', data => {
+            $('.market-limit').each(function(){
+                let id = this.id
+                let thisMarketLimit = data.find(item => item.marketId == id)
+                if(thisMarketLimit){
+                    let html = `<b>Min : ${thisMarketLimit.min_stake}, Max : ${thisMarketLimit.max_stake}</b>` 
+                    $(this).html(html)
+                }
+            })
+        })
     }
 
 
