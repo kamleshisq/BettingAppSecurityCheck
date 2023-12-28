@@ -9810,15 +9810,14 @@ io.on('connection', (socket) => {
                     $group:{
                         _id:'$eventName',
                         commission:{$sum:'$commission'},
-                        userName:data.data.userName,
-                        sportId:data.data.sportId
                     }
                 }
             ])
 
          
     
-            socket.emit('getsportwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm})
+            socket.emit('getsportwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
+                sportId:data.data.sportId}})
         }catch(err){
             socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getsportwisedownlinecommitssion')

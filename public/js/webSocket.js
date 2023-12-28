@@ -20575,6 +20575,7 @@ socket.on('connect', () => {
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result
+                let parentdata = data.parentdata
                 let html = `<thead>
                 <tr>
                   <th>Competition</th>
@@ -20583,7 +20584,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username='${JSON.stringify({userName:result[i].userName,sportId:result[i]._id,eventName:result[i]._id})}'>${result[i]._id}</td>
+                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,eventName:result[i]._id})}'>${result[i]._id}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
