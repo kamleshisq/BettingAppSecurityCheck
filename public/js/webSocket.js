@@ -8586,7 +8586,7 @@ socket.on('connect', () => {
                     marketId = $(this).closest("tr").prev().find('.market').attr('id')
                 }
                 let eventId = urlParams.get('id');
-                console.log(eventId, marketId)
+                socket.emit('checkDelay', {eventId, marketId})
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
