@@ -8610,7 +8610,7 @@ socket.on('connect', () => {
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
-                secondPTag2.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
+                secondPTag2.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
                 numSpan.text(odds);
 
                 if($(this).hasClass('tbl-bg-blu-spn')){
