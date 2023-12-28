@@ -9600,9 +9600,9 @@ socket.on('connect', () => {
           socket.on('checkDelay', data => {
             console.log(data, clickTime)
             if(data.delay && data.delay != 0){
-                console.log(checkTime)
+                console.log(checkTime, "123654")
                 checkTime = clickTime + data.delay * 1000
-                console.log(checkTime)
+                console.log(checkTime, "jkjkkj")
             }
 
           })
