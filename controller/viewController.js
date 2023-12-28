@@ -5165,39 +5165,46 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
 })
 
 exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
-    let sportuplinecomm = await commissionNewModel.aggregate([
+    let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
                 date: {
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 },
                 loginUserId:{$exists:true},
-                parentIdArray:{$exists:true}
+                parentIdArray:{$and:[{$exists:true},req.currentUser._id]},
+
             }
         },
         {
             $group:{
-                _id:"$sportId",
-                commission:{$sum:"$commission"}
+                _id:"$userName",
+                commissionClaim:{$sum:{
+                    $cond: [ { $eq: [ "$commissionStatus:", 'Claimed' ] }, '$commission', 0 ]
+                  }},
+                commissionUnclaim:{$sum:{
+                    $cond: [ { $eq: [ "$commissionStatus:", 'Unclaimed' ] }, '$commission', 0 ]
+                  }}
             }
         }
     ])
 
-    let result = sportuplinecomm.map(ele=>{
-        if(ele['_id'] == '4'){
-            ele['_id'] = 'Cricket'
-        }else if(ele['_id' == '1']){
-            ele['_id'] = 'Football'
-        }else if(ele['_id' == '2']){
-            ele['_id'] = 'Tennis'
-        }else if(ele['_id' == '10']){
-            ele['_id'] = 'Basketball'
-        }else if(ele['_id' == '30']){
-            ele['_id'] = 'Baseball'
-        }
-    })
+    // let result = sportuplinecomm.map(ele=>{
+    //     if(ele['_id'] == '4'){
+    //         ele['_id'] = 'Cricket'
+    //     }else if(ele['_id' == '1']){
+    //         ele['_id'] = 'Football'
+    //     }else if(ele['_id' == '2']){
+    //         ele['_id'] = 'Tennis'
+    //     }else if(ele['_id' == '10']){
+    //         ele['_id'] = 'Basketball'
+    //     }else if(ele['_id' == '30']){
+    //         ele['_id'] = 'Baseball'
+    //     }
+    //     return ele
+    // })
 
-    console.log(result,"==>sportuplinecomm")
+    console.log(sportdownlinecomm,"==>sportdownlinecomm")
 
     // res.status(200).json({
     //     title:'Upline Commission Report',
