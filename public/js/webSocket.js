@@ -20501,9 +20501,9 @@ socket.on('connect', () => {
             var day = date.getDate().toString().padStart(2, '0');
             return year + "-" + month + "-" + day;
         }
-        $(document).on('click','tr>.username',function(e){
+        $(document).on('click','usernametr',function(e){
             let data = {}
-            let userName = $(this).children('td.username').attr('data-username')
+            let userName = $(this).children('td.usernametd').attr('data-username')
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
             let bredcum =  [userName]
@@ -20525,7 +20525,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="sport_username"><td class="sport_username" data-sport_username="JSON.stringify({userName:${result[i].userName},sportId:${result[i].sportname},sportname:${result[i].sportname}})">${result[i].sportname}</td>
+                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username="JSON.stringify({userName:${result[i].userName},sportId:${result[i].sportname},sportname:${result[i].sportname}})">${result[i].sportname}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
@@ -20539,9 +20539,9 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('click','tr.sport_username',function(e){
+        $(document).on('click','sport_usernametr',function(e){
             let data = {}
-            let parentdetail = JSON.parse($(this).children('td.sport_username').attr('data-sport_username'))
+            let parentdetail = JSON.parse($(this).children('td.sport_usernametd').attr('data-sport_username'))
             console.log(parentdetail)
             let userName = parentdetail.userName
             let sportId = parentdetail.sportId
