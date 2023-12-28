@@ -9768,7 +9768,7 @@ io.on('connection', (socket) => {
                 }
             ])
 
-            
+            console.log(sportwisedownlinecomm,'==>sportwisedownlinecomm')
              let result = sportwisedownlinecomm.map(ele=>{
                 if(ele['_id'] == '4'){
                     ele['_id'] = 'Cricket'
