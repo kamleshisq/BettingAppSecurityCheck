@@ -4953,8 +4953,9 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let allData = cricketList.concat(footballList, tennisList)
     let series = req.query.match
     let seriesMatch = allData.filter(item => item.eventData.name == series)
+    let marketList = seriesMatch[0].marketList
     let betLimitMatchWise = await betLimitMatchWisemodel.findOne({matchTitle:series})
-    
+    console.log(marketList)
     // console.log(seriesMatch)
     res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
