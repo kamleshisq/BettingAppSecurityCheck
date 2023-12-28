@@ -5182,7 +5182,7 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
         }
     ])
 
-    console.lod(sportuplinecomm,"==>sportuplinecomm")
+    console.log(sportuplinecomm,"==>sportuplinecomm")
 
     // res.status(200).json({
     //     title:'Upline Commission Report',
