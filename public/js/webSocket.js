@@ -10160,7 +10160,7 @@ socket.on('connect', () => {
                 let thisMarketLimit = data.find(item => item.marketId == id)
                 console.log(thisMarketLimit)
                 if(thisMarketLimit){
-                    let html = `<b>Min : ${thisMarketLimit.min_stake}, Max : ${thisMarketLimit.max_stake}</b>` 
+                    let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
                     $(this).html(html)
                 }
             })
