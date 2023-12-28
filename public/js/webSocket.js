@@ -2465,7 +2465,9 @@ socket.on('connect', () => {
         let refreshStatus = true;
         socket.emit("search", {filterData,page,id, LOGINDATA ,refreshStatus})
         let data = {LOGINUSER:JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))}
-        socket.emit('loginuserbalance', data)
+        if(data.LOGINUSER && data.LOGINUSER._id){
+            socket.emit('loginuserbalance', data)
+        }
 
     },1000 * 5)
     
