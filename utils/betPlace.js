@@ -153,7 +153,8 @@ if(data.data.spoetId == 1){
 
 //FOR PERTICULAR MARKETS
     let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
-    let limitData = await checkLimit()
+    let limitData = await checkLimit({eventId:data.data.eventId, ids:[data.data.market]})
+    console.log(limitData)
     if(thatMarketLimit){
         if(thatMarketLimit.min_stake > parseFloat(data.data.stake) ){
             return `Stake out of range`
