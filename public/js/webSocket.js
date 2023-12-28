@@ -20543,7 +20543,7 @@ socket.on('connect', () => {
 
         $(document).on('click','.sport_usernametr',function(e){
             let data = {}
-            let parentdetail = JSON.parse($(this).children('td.sport_usernametd').attr('data-sport_username'))
+            let parentdetail = $(this).children('td.sport_usernametd').attr('data-sport_username')
             console.log(parentdetail)
             let userName = parentdetail.userName
             let sportId = parentdetail.sportId
