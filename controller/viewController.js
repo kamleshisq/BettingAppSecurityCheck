@@ -5209,7 +5209,8 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
 
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Upline Commission Report',
-        sportdownlinecomm
+        sportdownlinecomm,
+        currentUser:req.currentUser
     })
 })
 
