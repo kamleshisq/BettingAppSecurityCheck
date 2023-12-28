@@ -5190,20 +5190,7 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
         }
     ])
 
-    // let result = sportuplinecomm.map(ele=>{
-    //     if(ele['_id'] == '4'){
-    //         ele['_id'] = 'Cricket'
-    //     }else if(ele['_id' == '1']){
-    //         ele['_id'] = 'Football'
-    //     }else if(ele['_id' == '2']){
-    //         ele['_id'] = 'Tennis'
-    //     }else if(ele['_id' == '10']){
-    //         ele['_id'] = 'Basketball'
-    //     }else if(ele['_id' == '30']){
-    //         ele['_id'] = 'Baseball'
-    //     }
-    //     return ele
-    // })
+   
 
     console.log(sportdownlinecomm,"==>sportdownlinecomm")
 
