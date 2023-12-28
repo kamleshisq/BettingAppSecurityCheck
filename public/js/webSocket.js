@@ -20487,7 +20487,20 @@ socket.on('connect', () => {
         })
     }
 
-    if(pathname='/admin/uplinecommissionReport'){
+    if(pathname =='/admin/uplinecommissionReport'){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        $('#fromDate').val(tomorrowFormatted)
+        $('#toDate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
         $(document).on('click','tr',function(e){
             let data = {}
             let userName = $(this).children('td.username').attr('data-username')
