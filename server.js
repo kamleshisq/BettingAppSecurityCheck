@@ -9753,7 +9753,7 @@ io.on('connection', (socket) => {
             let sportwisedownlinecomm = await newCommissionModel.aggregate([
                 {
                     $match:{
-                        date:{$lte:new Date(data.fromdate),$gte:new Date(new Date(data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        // date:{$lte:new Date(data.fromdate),$gte:new Date(new Date(data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         userName:data.userName,
                         loginUserId:{$exists:true},
                         parentIdArray:{$exists:true}
