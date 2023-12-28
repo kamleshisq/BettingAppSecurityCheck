@@ -4972,6 +4972,7 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     if(marketList.bookmaker !== null){
         bookMaker = marketList.bookmaker
     }
+    // console.log(bookMaker)
     res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
         betLimit,
