@@ -124,11 +124,11 @@
             </tr>
             <%}
             for(let i = 0; i < Session.length; i++){
-              let data = betLimit.find(item => item.type == `${seriesMatch[0].eventData.eventId}_session`)
+              let data = betLimit.find(item => item.type == Session[i].marketId)
             if(data){
             %>  
             <tr>
-              <td id="<%=Session.marketId%>" class="btn-filter"><%=Session.title%></td>
+              <td id="<%=Session[i].marketId%>" class="btn-filter"><%=Session[i].title%></td>
               <td><input type="text" class="form-datas" name="min_stake" value="<%=data.min_stake%>" ></td>
               <td><input type="text" class="form-datas" name="max_stake" value="<%=data.max_stake%>" ></td>
               <td><input type="text" class="form-datas" name="max_profit" value="<%=data.max_profit%>" ></td>
@@ -142,7 +142,7 @@
             </tr>
             <%}else{%>
             <tr> 
-              <td id="<%=Session.marketId%>" class="btn-filter"><%=Session.title%></td>
+              <td id="<%=Session[i].marketId%>" class="btn-filter"><%=Session[i].title%></td>
               <td><input type="text" class="form-datas" name="min_stake" value="0" ></td>
               <td><input type="text" class="form-datas" name="max_stake" value="0" ></td>
               <td><input type="text" class="form-datas" name="max_profit" value="0" ></td>
