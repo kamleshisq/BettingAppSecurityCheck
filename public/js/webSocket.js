@@ -10146,6 +10146,7 @@ socket.on('connect', () => {
                 });
                 let eventId = search.split('=')[1]
                 console.log(ids, eventId)
+                socket.emit('OddsCheck', {ids, eventId})
                 setTimeout(()=>{
                     OddsCheck()
                   }, 5000)

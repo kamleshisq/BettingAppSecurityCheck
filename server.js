@@ -70,8 +70,7 @@ const withdowReqModel = require('./model/withdrowReqModel');
 const runnerData = require('./model/runnersData');
 const globalSettingModel = require('./model/globalSetting');
 const colorCodeModel = require('./model/colorcodeModel');
-const { ObjectId } = require('mongodb');
-const { cookie } = require('request');
+const oddsLimitCHeck = require('./utils/checkOddsLimit');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
@@ -9746,6 +9745,11 @@ io.on('connection', (socket) => {
                 socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
             }
         }
+    })
+
+
+    socket.on('OddsCheck', async(data) => {
+        let response = await oddsLimitCHeck(data)
     })
 
 })
