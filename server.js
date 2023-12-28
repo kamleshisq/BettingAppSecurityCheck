@@ -70,8 +70,7 @@ const withdowReqModel = require('./model/withdrowReqModel');
 const runnerData = require('./model/runnersData');
 const globalSettingModel = require('./model/globalSetting');
 const colorCodeModel = require('./model/colorcodeModel');
-const { ObjectId } = require('mongodb');
-const { cookie } = require('request');
+const oddsLimitCHeck = require('./utils/checkOddsLimit');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
@@ -9748,6 +9747,7 @@ io.on('connection', (socket) => {
         }
     })
 
+<<<<<<< HEAD
     socket.on('getsportwisedownlinecommitssion',async(data)=>{
         try{
 
@@ -9788,6 +9788,13 @@ io.on('connection', (socket) => {
         }catch(err){
             socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
         }
+=======
+
+    socket.on('OddsCheck', async(data) => {
+        let response = await oddsLimitCHeck(data)
+        // console.log(response)
+        socket.emit('OddsCheck', response)
+>>>>>>> 4017714def38295db654ecb918c38676ff1793ae
     })
 
 })

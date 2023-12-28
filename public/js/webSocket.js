@@ -2465,7 +2465,9 @@ socket.on('connect', () => {
         let refreshStatus = true;
         socket.emit("search", {filterData,page,id, LOGINDATA ,refreshStatus})
         let data = {LOGINUSER:JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))}
-        socket.emit('loginuserbalance', data)
+        if(data.LOGINUSER && data.LOGINUSER._id){
+            socket.emit('loginuserbalance', data)
+        }
 
     },1000 * 5)
     
@@ -8608,7 +8610,7 @@ socket.on('connect', () => {
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
-                secondPTag2.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
+                secondPTag2.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
                 numSpan.text(odds);
 
                 if($(this).hasClass('tbl-bg-blu-spn')){
@@ -10146,12 +10148,25 @@ socket.on('connect', () => {
                 });
                 let eventId = search.split('=')[1]
                 console.log(ids, eventId)
+                socket.emit('OddsCheck', {ids, eventId})
                 setTimeout(()=>{
                     OddsCheck()
                   }, 5000)
             })
         }
         OddsCheck()
+
+        socket.on('OddsCheck', data => {
+            $('.market-limit').each(function(){
+                let id = this.id
+                let thisMarketLimit = data.find(item => item.marketId == id)
+                console.log(thisMarketLimit)
+                if(thisMarketLimit){
+                    let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
+                    $(this).html(html)
+                }
+            })
+        })
     }
 
 
