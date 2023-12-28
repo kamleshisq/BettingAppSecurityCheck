@@ -5166,16 +5166,16 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
 
 exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
     let loginuserid1 = req.currentUser._id
-    console.log(loginuserid1)
+    console.log(toString(loginuserid1))
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
                 // date: {
                 //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 // },
-                // loginUserId:{$exists:true},
+                loginUserId:{$exists:true},
                 // $and:[{'parentIdArray':{$exists:true}},{'parentIdArray':req.currentUser._id}],
-                // parentIdArray:toString(req.currentUser._id)
+                parentIdArray:{$in:toString(req.currentUser._id)}
 
             }
         },
@@ -5183,10 +5183,10 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
             $group:{
                 _id:"$userName",
                 commissionClaim:{$sum:{
-                    $cond: [ { $eq: [ "$commissionStatus:", 'Claimed' ] }, '$commission', 0 ]
+                    $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
                   }},
                 commissionUnclaim:{$sum:{
-                    $cond: [ { $eq: [ "$commissionStatus:", 'Unclaimed' ] }, '$commission', 0 ]
+                    $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
                   }}
             }
         }
