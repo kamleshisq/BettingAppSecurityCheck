@@ -27,6 +27,9 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 
 async function placeBet(data){
     // console.log(data, "data1")
+    if(!data.LOGINDATA.LOGINUSER){
+        return "Stake out of range"
+    }
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < parseFloat(data.data.stake)){
         return "You do not have sufficient balance for bet"
@@ -154,9 +157,9 @@ if(data.data.spoetId == 1){
 //FOR PERTICULAR MARKETS
     let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
     let limitData = await checkLimit({eventId:data.data.eventId, ids:[data.data.market]})
-    // console.log(limitData)
-    limitData = limitData[0]
+    limitData = limitData[0].Limits
     if(limitData){
+        console.log(limitData,  parseFloat(data.data.stake),"123456789")
         if(limitData.min_stake > parseFloat(data.data.stake) ){
             return `Stake out of range`
         }else if(limitData.max_stake < parseFloat(data.data.stake)){
