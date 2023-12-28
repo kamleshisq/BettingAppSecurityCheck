@@ -41,7 +41,35 @@ async function checkLimit(data){
 
             // console.log(betLimit, "gotHERE")
             let marketsDetails = await getmarketDetails(IDS)
-            console.log(marketsDetails.data.items)
+            // console.log(marketsDetails.data.items)
+            let sendData = []
+            if(marketsDetails.data && marketsDetails.data.items){
+                for(let i = 0; i < marketsDetails.data.items.length; i++){
+                    let pushData = {}
+                    pushData.marketId = marketsDetails.data.items[i].market_id
+                    let thatMarketLimit = await betLimitModel.findOne({type:marketsDetails.data.items[i].market_id})
+                    if(!thatMarketLimit){
+                        if(item.title && !item.title.toLowerCase().startsWith('book') && !item.title.toLowerCase().startsWith('toss') && !item.title.toLowerCase().startsWith('winn')){
+                            if(!item.title.startsWith("Only") && item.title.includes("Over")){
+                                thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_session`})
+                            }else if (item.title.startsWith("Only")){
+                                thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_onlyOver`})
+                            }else if (!item.title.includes("Over")){
+                                thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_w_p_market`})
+                            }else if (item.market_id.endsWith('OE')){
+                                thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_odd_even`})
+                            }else{
+                                thatMarketLimit = betLimit
+                            }
+                        }else{
+                            thatMarketLimit = betLimit
+                        }
+                    }
+                    pushData.Limits = thatMarketLimit
+                    sendData.push(pushData)
+                }
+                console.log(sendData, "hghg")
+            }
 
         }else{
             return 'ERR'
