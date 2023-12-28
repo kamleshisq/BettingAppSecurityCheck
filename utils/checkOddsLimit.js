@@ -45,12 +45,12 @@ async function checkLimit(data){
             let sendData = []
             if(marketsDetails.data && marketsDetails.data.items){
                 for(let i = 0; i < marketsDetails.data.items.length; i++){
-                    console.log(marketsDetails.data.items[i].market_id.endsWith('OE'))
                     let pushData = {}
                     pushData.marketId = marketsDetails.data.items[i].market_id
                     let thatMarketLimit = await betLimitModel.findOne({type:marketsDetails.data.items[i].market_id})
                     if(!thatMarketLimit){
                         if(marketsDetails.data.items[i].title && !marketsDetails.data.items[i].title.toLowerCase().startsWith('book') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('toss') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('winn')){
+                            console.log(marketsDetails.data.items[i].market_id.endsWith('OE'))
                             if(!marketsDetails.data.items[i].title.startsWith("Only") && marketsDetails.data.items[i].title.includes("Over")){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_session`})
                             }else if (marketsDetails.data.items[i].title.startsWith("Only")){
@@ -69,8 +69,6 @@ async function checkLimit(data){
                         }else{
                             thatMarketLimit = betLimit
                         }
-                    }else{
-                        thatMarketLimit = betLimit
                     }
                     pushData.Limits = thatMarketLimit
                     sendData.push(pushData)
