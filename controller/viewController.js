@@ -4962,9 +4962,9 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let odd_even
     let bookMaker
     if(marketList.session !== null){
-        Session = marketList.session.filter(item => !item.title.startsWith("Only") && item.title.includes("Over"))
-        onlyOver = marketList.session.filter(item => item.title.startsWith("Only"))
-        w_p_market = marketList.session.filter(item => !item.title.includes("Over"))
+        Session = marketList.session.filter(item => item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.startsWith("Only") && item.title.includes("Over"))
+        onlyOver = marketList.session.filter(item => item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && item.title.startsWith("Only"))
+        w_p_market = marketList.session.filter(item => item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.includes("Over"))
     }
     if(marketList.odd_even !== null){
         odd_even = marketList.odd_even
