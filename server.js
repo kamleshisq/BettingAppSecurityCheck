@@ -9751,14 +9751,13 @@ io.on('connection', (socket) => {
 
     socket.on('getsportwisedownlinecommitssion',async(data)=>{
         try{
-            console.log(data)
             let sportwisedownlinecomm = await newCommissionModel.aggregate([
                 {
                     $match:{
-                        // date:{$lte:new Date(data.fromdate),$gte:new Date(new Date(data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
-                        userName:data.userName,
-                        // loginUserId:{$exists:true},
-                        // parentIdArray:{$exists:true}
+                        date:{$lte:new Date(data.data.fromdate),$gte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true}
                     }
                     
                 },
