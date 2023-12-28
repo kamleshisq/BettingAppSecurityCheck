@@ -349,15 +349,17 @@ io.on('connection', (socket) => {
     })
 
     socket.on('loginuserbalance',async(data)=>{
-        let id = data.LOGINUSER._id
-        if(data.LOGINUSER.role.roleName == 'Operator'){
-            let parentUser = await User.findById(data.LOGINUSER.parent_id)
-            data.LOGINUSER = parentUser
-            id = parentUser._id.toString()
+        if(data.LOGINUSER){
+            let id = data.LOGINUSER._id
+            if(data.LOGINUSER.role.roleName == 'Operator'){
+                let parentUser = await User.findById(data.LOGINUSER.parent_id)
+                data.LOGINUSER = parentUser
+                id = parentUser._id.toString()
+            }
+            const user = await User.findById(id)
+            // console.log(user, "CONSOLEUSER")
+            socket.emit('loginuserbalance',user)
         }
-        const user = await User.findById(id)
-        // console.log(user, "CONSOLEUSER")
-        socket.emit('loginuserbalance',user)
     })
 
     socket.on('userHistory',async(data)=>{
