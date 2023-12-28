@@ -3,7 +3,7 @@ const cricketAndOtherSport = require('../utils/getSportAndCricketList');
 
 
 async function checkLimit(data){
-    let Sports = cricketAndOtherSport()
+    let Sports = await cricketAndOtherSport()
     let cricketList = Sports[0].gameList[0].eventList
     let footballList = Sports[1].gameList.find(item => item.sportId == 1)
     footballList = footballList.eventList
