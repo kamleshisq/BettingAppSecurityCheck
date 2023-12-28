@@ -10135,7 +10135,7 @@ socket.on('connect', () => {
                     <tr class="headDetail"><th>Runner Name</th>
                     <th>Profit/Loss</th></tr>`
                     for(let i = 0; i < data.dataToshow.length; i++){
-                        console.log(data.dataToshow[i])
+                        // console.log(data.dataToshow[i])
                         html += `<tr><td>${data.dataToshow[i].message}</td>`
                         if(data.dataToshow[i].sum < 0){
                             html += `<td class="c-reed" >${(data.dataToshow[i].sum).toFixed(2)}</td></tr>`
@@ -10157,7 +10157,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 let eventId = search.split('=')[1]
-                console.log(ids, eventId)
+                // console.log(ids, eventId)
                 socket.emit('OddsCheck', {ids, eventId})
                 setTimeout(()=>{
                     OddsCheck()
@@ -10170,7 +10170,7 @@ socket.on('connect', () => {
             $('.market-limit').each(function(){
                 let id = this.id
                 let thisMarketLimit = data.find(item => item.marketId == id)
-                console.log(thisMarketLimit)
+                // console.log(thisMarketLimit)
                 if(thisMarketLimit){
                     let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
                     $(this).html(html)
