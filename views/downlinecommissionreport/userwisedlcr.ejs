@@ -54,12 +54,8 @@
             <tbody class="new-body">
               <%if(sportdownlinecomm.length > 0){%>
               <%for(let i = 0;i<sportdownlinecomm.length;i++){%>
-              <%if(i % 2 == 0){%>
-              <tr style="cursor:pointer">
-                <%}else{%>
-                <tr style="cursor:pointer">
-                  <%}%>
-                  <td class="username" data-username="<%=sportdownlinecomm[i]._id%>"><%=sportdownlinecomm[i]._id%></td>
+              <tr style="cursor:pointer" class="usernametr">
+                  <td class="usernametd" data-username="<%=sportdownlinecomm[i]._id%>"><%=sportdownlinecomm[i]._id%></td>
                   <td><%=sportdownlinecomm[i].commissionClaim%></td>
                   <td><%=sportdownlinecomm[i].commissionUnclaim%></td>
                 </tr>

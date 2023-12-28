@@ -20501,9 +20501,9 @@ socket.on('connect', () => {
             var day = date.getDate().toString().padStart(2, '0');
             return year + "-" + month + "-" + day;
         }
-        $(document).on('click','tr',function(e){
+        $(document).on('click','.usernametr',function(e){
             let data = {}
-            let userName = $(this).children('td.username').attr('data-username')
+            let userName = $(this).children('td.usernametd').attr('data-username')
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
             let bredcum =  [userName]
@@ -20512,11 +20512,51 @@ socket.on('connect', () => {
             data.todate = todate;
             data.bredcum = bredcum;
             console.log(data)
-            socket.emit('getsportwisedownlinecommitssion',{data})
+            socket.emit('getgamewisedownlinecommitssion',{data})
         })
 
-        socket.on('getsportwisedownlinecommitssion',async(data)=>{
+        socket.on('getgamewisedownlinecommitssion',async(data)=>{
             console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let html = `<thead>
+                <tr>
+                  <th>Sport</th>
+                  <th>Commission</th>
+                </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username="JSON.stringify({userName:${result[i].userName},sportId:${result[i].sportname},sportname:${result[i].sportname}})">${result[i].sportname}</td>
+                      <td>${result[i].commission}</td></tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+
+
+                html += `</tbody>`
+
+                $('table').html(html)
+            }
+        })
+
+        $(document).on('click','.sport_usernametr',function(e){
+            let data = {}
+            let parentdetail = $(this).children('td.sport_usernametd').attr('data-sport_username')
+            console.log(parentdetail)
+            let userName = parentdetail.userName
+            let sportId = parentdetail.sportId
+            let sportname = parentdetail.sportname
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let bredcum =  [userName,sportId]
+            data.userName = userName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            console.log(data)
+            socket.emit('getsportwisedownlinecommitssion',data)
         })
     }
 

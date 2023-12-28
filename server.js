@@ -9749,16 +9749,15 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('getsportwisedownlinecommitssion',async(data)=>{
+    socket.on('getgamewisedownlinecommitssion',async(data)=>{
         try{
-            console.log(data)
             let sportwisedownlinecomm = await newCommissionModel.aggregate([
                 {
                     $match:{
-                        // date:{$lte:new Date(data.fromdate),$gte:new Date(new Date(data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
-                        userName:data.userName,
-                        // loginUserId:{$exists:true},
-                        // parentIdArray:{$exists:true}
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true}
                     }
                     
                 },
@@ -9773,25 +9772,31 @@ io.on('connection', (socket) => {
             console.log(sportwisedownlinecomm,'==>sportwisedownlinecomm')
              let result = sportwisedownlinecomm.map(ele=>{
                 if(ele['_id'] == '4'){
-                    ele['_id'] = 'Cricket'
+                    ele['sportname'] = 'Cricket'
                 }else if(ele['_id' == '1']){
-                    ele['_id'] = 'Football'
+                    ele['sportname'] = 'Football'
                 }else if(ele['_id' == '2']){
-                    ele['_id'] = 'Tennis'
+                    ele['sportname'] = 'Tennis'
                 }else if(ele['_id' == '10']){
-                    ele['_id'] = 'Basketball'
+                    ele['sportname'] = 'Basketball'
                 }else if(ele['_id' == '30']){
-                    ele['_id'] = 'Baseball'
+                    ele['sportname'] = 'Baseball'
                 }
+                ele['userName'] = data.data.userName
                 return ele
             })
     
-            socket.emit('getsportwisedownlinecommitssion',{status:'success',result})
+            socket.emit('getgamewisedownlinecommitssion',{status:'success',result})
         }catch(err){
-            socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            socket.emit('getgamewisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getsportwiselinecommErr')
         }
     })
+
+    socket.on('getsportwisedownlinecommitssion',async(data)=>{
+
+    })
+
 
     socket.on('OddsCheck', async(data) => {
         let response = await oddsLimitCHeck(data)
