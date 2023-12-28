@@ -4953,9 +4953,25 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let allData = cricketList.concat(footballList, tennisList)
     let series = req.query.match
     let seriesMatch = allData.filter(item => item.eventData.name == series)
+    let marketList = seriesMatch[0].marketList
     let betLimitMatchWise = await betLimitMatchWisemodel.findOne({matchTitle:series})
-    
-    // console.log(seriesMatch)
+    // console.log(marketList)
+    let Session
+    let onlyOver
+    let w_p_market
+    let odd_even
+    let bookMaker
+    if(marketList.session !== null){
+        Session = marketList.session.filter(item => !item.title.startsWith("Only") && item.title.includes("Over"))
+        onlyOver = marketList.session.filter(item => item.title.startsWith("Only"))
+        w_p_market = marketList.session.filter(item => !item.title.includes("Over"))
+    }
+    if(marketList.odd_even !== null){
+        odd_even = marketList.odd_even
+    }
+    if(marketList.bookmaker !== null){
+        bookMaker = marketList.bookmaker
+    }
     res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
         betLimit,
@@ -4963,7 +4979,12 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
         currentUser:me,
         seriesMatch,
         series,
-        betLimitMatchWise
+        betLimitMatchWise,
+        Session,
+        onlyOver,
+        w_p_market,
+        odd_even,
+        bookMaker
     })
 });
 

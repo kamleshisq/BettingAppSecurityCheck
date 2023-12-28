@@ -18,80 +18,44 @@
               </tr>
       </thead>
       <tbody class="new-body">
-          <%for (var key in seriesMatch[0].marketList) {%>
-              <%if (seriesMatch[0].marketList.hasOwnProperty(key) && seriesMatch[0].marketList[key] != null ) {%>
-                <%if(Array.isArray(seriesMatch[0].marketList[key])){%>
-                  <%for(let i = 0; i< seriesMatch[0].marketList[key].length; i++){%>
-                    <%
-                    console.log(seriesMatch[0].marketList[key])
-                      let data = betLimit.find(item => item.type == seriesMatch[0].marketList[key][i].marketId)
-                      if(data){
-                    %>
-                    <tr>
-                      <td id="<%=seriesMatch[0].marketList[key][i].marketId%>" class="btn-filter"><%=seriesMatch[0].marketList[key][i].title%></td>
-                      <td><input type="text" class="form-datas" name="min_stake" value="<%=data.min_stake%>" ></td>
-                      <td><input type="text" class="form-datas" name="max_stake" value="<%=data.max_stake%>" ></td>
-                      <td><input type="text" class="form-datas" name="max_profit" value="<%=data.max_profit%>" ></td>
-                      <td><input type="text" class="form-datas" name="max_odd" value="<%=data.max_odd%>" ></td>
-                      <td><input type="text" class="form-datas" name="delay" value="<%=data.delay%>" ></td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn update updateBetLimitMATCH">Update</button>
-                        </div>
-                      </td>
-                    </tr>
-                    <%}else{%>
-                    <tr> 
-                      <td id="<%=seriesMatch[0].marketList[key][i].marketId%>" class="btn-filter"><%=seriesMatch[0].marketList[key][i].title%></td>
-                      <td><input type="text" class="form-datas" name="min_stake" value="0" ></td>
-                      <td><input type="text" class="form-datas" name="max_stake" value="0" ></td>
-                      <td><input type="text" class="form-datas" name="max_profit" value="0" ></td>
-                      <td><input type="text" class="form-datas" name="max_odd" value="0" ></td>
-                      <td><input type="text" class="form-datas" name="delay" value="0" ></td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn update updateBetLimitMATCH">Update</button>
-                        </div>
-                      </td>
-                    </tr>
-                    <%}%>
-                  <%}%>
-                <%}else{%>
-                  <%
-                  let data = betLimit.find(item => item.type == seriesMatch[0].marketList[key].marketId)
-                  if(data){
-                  %>
-                  <tr>
-                    <td id="<%=seriesMatch[0].marketList[key].marketId%>" class="btn-filter"><%=key%></td>
-                    <td><input type="text" class="form-datas" name="min_stake" value="<%=data.min_stake%>" ></td>
-                    <td><input type="text" class="form-datas" name="max_stake" value="<%=data.max_stake%>" ></td>
-                    <td><input type="text" class="form-datas" name="max_profit" value="<%=data.max_profit%>" ></td>
-                    <td><input type="text" class="form-datas" name="max_odd" value="<%=data.max_odd%>" ></td>
-                    <td><input type="text" class="form-datas" name="delay" value="<%=data.delay%>" ></td>
-                    <td>
-                      <div class="btn-group">
-                        <button type="button" class="btn update updateBetLimitMATCH">Update</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <%}else{%>
-                  <tr>
-                      <td id="<%=seriesMatch[0].marketList[key].marketId%>" class="btn-filter"><%=key%></td>
-                      <td><input type="text" class="form-datas" name="min_stake" value="0" ></td>
-                      <td><input type="text" class="form-datas" name="max_stake" value="0" ></td>
-                      <td><input type="text" class="form-datas" name="max_profit" value="0" ></td>
-                      <td><input type="text" class="form-datas" name="max_odd" value="0" ></td>
-                      <td><input type="text" class="form-datas" name="delay" value="0" ></td>
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn update updateBetLimitMATCH">Update</button>
-                        </div>
-                      </td>
-                    </tr>
-                    <%}%>
+        <%for (var key in seriesMatch[0].marketList) {%>
+          <%if (seriesMatch[0].marketList.hasOwnProperty(key) && seriesMatch[0].marketList[key] != null ) {%>
+            <%if(!Array.isArray(seriesMatch[0].marketList[key])){%>
+              <%
+              let data = betLimit.find(item => item.type == seriesMatch[0].marketList[key].marketId)
+              if(data){
+              %>
+              <tr>
+                <td id="<%=seriesMatch[0].marketList[key].marketId%>" class="btn-filter"><%=key%></td>
+                <td><input type="text" class="form-datas" name="min_stake" value="<%=data.min_stake%>" ></td>
+                <td><input type="text" class="form-datas" name="max_stake" value="<%=data.max_stake%>" ></td>
+                <td><input type="text" class="form-datas" name="max_profit" value="<%=data.max_profit%>" ></td>
+                <td><input type="text" class="form-datas" name="max_odd" value="<%=data.max_odd%>" ></td>
+                <td><input type="text" class="form-datas" name="delay" value="<%=data.delay%>" ></td>
+                <td>
+                  <div class="btn-group">
+                    <button type="button" class="btn update updateBetLimitMATCH">Update</button>
+                  </div>
+                </td>
+              </tr>
+              <%}else{%>
+              <tr>
+                  <td id="<%=seriesMatch[0].marketList[key].marketId%>" class="btn-filter"><%=key%></td>
+                  <td><input type="text" class="form-datas" name="min_stake" value="0" ></td>
+                  <td><input type="text" class="form-datas" name="max_stake" value="0" ></td>
+                  <td><input type="text" class="form-datas" name="max_profit" value="0" ></td>
+                  <td><input type="text" class="form-datas" name="max_odd" value="0" ></td>
+                  <td><input type="text" class="form-datas" name="delay" value="0" ></td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn update updateBetLimitMATCH">Update</button>
+                    </div>
+                  </td>
+                </tr>
                 <%}%>
-              <%}%>
+            <%}%>
           <%}%>
+        <%}%>
       </tbody>
   <%}else{%>
       <tr class="empty_table"><td>No <%=gameName%> Series! </td></tr>
