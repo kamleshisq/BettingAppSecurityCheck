@@ -9808,7 +9808,7 @@ io.on('connection', (socket) => {
                 },
                 {
                     $group:{
-                        _id:'$eventName',
+                        _id:'$seriesName',
                         commission:{$sum:'$commission'},
                     }
                 }
@@ -9821,6 +9821,75 @@ io.on('connection', (socket) => {
         }catch(err){
             socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getsportwisedownlinecommitssion')
+        }
+    })
+
+    socket.on('getserieswisedownlinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportId,
+                        seriesName:data.data.seriesName
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$eventName',
+                        commission:{$sum:'$commission'},
+                    }
+                }
+            ])
+
+         
+    
+            socket.emit('getserieswisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
+                sportId:data.data.sportId,seriesName:data.data.eventName}})
+        }catch(err){
+            socket.emit('getserieswisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getserieswisedownlinecommitssion')
+        }
+    })
+
+    socket.on('geteventwisedownlinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportId,
+                        seriesName:data.data.seriesName,
+                        eventName:data.data.eventName
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$marketName',
+                        commission:{$sum:'$commission'},
+                        commissionType:{$first:'$commissionType'},
+                        commissionStatus:{$first:'$commissionStatus'},
+                        commissionPercentage:{$first:'$commissionPercentage'}
+
+                    }
+                }
+            ])
+
+         
+    
+            socket.emit('geteventwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
+                sportId:data.data.sportId,seriesName:data.data.seriesName,eventName:data.data.eventName}})
+        }catch(err){
+            socket.emit('geteventwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>geteventwisedownlinecommitssion')
         }
     })
 
