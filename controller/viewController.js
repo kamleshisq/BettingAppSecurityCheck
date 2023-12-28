@@ -5163,6 +5163,47 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
     }
 })
 
+exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
+    let sportuplinecomm = await commissionNewModel.aggregate([
+        {
+            $match:{
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                loginUserId:{$exists:true},
+                parentIdArray:{$exists:true}
+            }
+        },
+        {
+            $group:{
+                _id:"$sportId",
+                commission:{$sum:"$commission"}
+            }
+        }
+    ])
+
+    let result = sportuplinecomm.map(ele=>{
+        if(ele['_id'] == '4'){
+            ele['_id'] = 'Cricket'
+        }else if(ele['_id' == '1']){
+            ele['_id'] = 'Football'
+        }else if(ele['_id' == '2']){
+            ele['_id'] = 'Tennis'
+        }else if(ele['_id' == '10']){
+            ele['_id'] = 'Basketball'
+        }else if(ele['_id' == '30']){
+            ele['_id'] = 'Baseball'
+        }
+    })
+
+    console.log(result,"==>sportuplinecomm")
+
+    // res.status(200).json({
+    //     title:'Upline Commission Report',
+    //     sportuplinecomm
+    // })
+})
+
 
 
 exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
