@@ -5182,7 +5182,21 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
         }
     ])
 
-    console.log(sportuplinecomm,"==>sportuplinecomm")
+    let result = sportuplinecomm.map(ele=>{
+        if(ele['_id'] == '4'){
+            ele['_id'] = 'Cricket'
+        }else if(ele['_id' == '1']){
+            ele['_id'] = 'Football'
+        }else if(ele['_id' == '2']){
+            ele['_id'] = 'Tennis'
+        }else if(ele['_id' == '10']){
+            ele['_id'] = 'Basketball'
+        }else if(ele['_id' == '30']){
+            ele['_id'] = 'Baseball'
+        }
+    })
+
+    console.log(result,"==>sportuplinecomm")
 
     // res.status(200).json({
     //     title:'Upline Commission Report',
