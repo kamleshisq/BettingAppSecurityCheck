@@ -9750,6 +9750,7 @@ io.on('connection', (socket) => {
 
     socket.on('OddsCheck', async(data) => {
         let response = await oddsLimitCHeck(data)
+        console.log(response)
     })
 
 })

@@ -77,7 +77,10 @@ async function checkLimit(data){
                     pushData.Limits = thatMarketLimit
                     sendData.push(pushData)
                 }
-                console.log(sendData, "hghg")
+                // console.log(sendData, "hghg")
+                return sendData
+            }else{
+                return 'ERR'
             }
 
         }else{
