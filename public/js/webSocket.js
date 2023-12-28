@@ -8586,7 +8586,7 @@ socket.on('connect', () => {
                     marketId = $(this).closest("tr").prev().find('.market').attr('id')
                 }
                 let eventId = urlParams.get('id');
-                console.log(eventId, marketId)
+                socket.emit('checkDelay', {eventId, marketId})
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
@@ -9596,7 +9596,10 @@ socket.on('connect', () => {
         //     // console.log(data)
         //     socket.emit("betDetails", {data, LOGINDATA})
         // })
+          socket.on('checkDelay', data => {
+            console.log(data, clickTime)
 
+          })
         $(document).ready(function () {
             $(".eventId").click(function () {
                 // console.log("working")
@@ -10135,7 +10138,7 @@ socket.on('connect', () => {
                     <tr class="headDetail"><th>Runner Name</th>
                     <th>Profit/Loss</th></tr>`
                     for(let i = 0; i < data.dataToshow.length; i++){
-                        console.log(data.dataToshow[i])
+                        // console.log(data.dataToshow[i])
                         html += `<tr><td>${data.dataToshow[i].message}</td>`
                         if(data.dataToshow[i].sum < 0){
                             html += `<td class="c-reed" >${(data.dataToshow[i].sum).toFixed(2)}</td></tr>`
@@ -10157,7 +10160,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 let eventId = search.split('=')[1]
-                console.log(ids, eventId)
+                // console.log(ids, eventId)
                 socket.emit('OddsCheck', {ids, eventId})
                 setTimeout(()=>{
                     OddsCheck()
@@ -10170,7 +10173,7 @@ socket.on('connect', () => {
             $('.market-limit').each(function(){
                 let id = this.id
                 let thisMarketLimit = data.find(item => item.marketId == id)
-                console.log(thisMarketLimit)
+                // console.log(thisMarketLimit)
                 if(thisMarketLimit){
                     let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
                     $(this).html(html)
