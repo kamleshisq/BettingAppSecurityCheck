@@ -5165,7 +5165,7 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
 
 exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
     let loginuserid1 = req.currentUser._id
-    console.log(toString(loginuserid1))
+    console.log(loginuserid1.toString())
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
@@ -5174,7 +5174,7 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
                 // },
                 loginUserId:{$exists:true},
                 // $and:[{'parentIdArray':{$exists:true}},{'parentIdArray':req.currentUser._id}],
-                parentIdArray:{$in:[toString(req.currentUser._id)]}
+                parentIdArray:{$in:[loginuserid1.toString()]}
 
             }
         },
