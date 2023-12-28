@@ -9602,7 +9602,7 @@ socket.on('connect', () => {
             if(data.delay && data.delay != 0){
                 console.log(clickTime, "123654")
                 checkTime = clickTime + data.delay * 1000
-                console.log(checkTime, "jkjkkj")
+                console.log(checkTime, Date.now(),"jkjkkj")
             }
 
           })
