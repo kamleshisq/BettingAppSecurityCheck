@@ -58,12 +58,13 @@ async function checkLimit(data){
                             }else if (!marketsDetails.data.items[i].title.includes("Over")){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_w_p_market`})
                             }else if (marketsDetails.data.items[i].market_id.endsWith('OE')){
-                                console.log('WORKING')
+                                // console.log('WORKING')
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_odd_even`})
-                                console.log(thatMarketLimit, "thatMarketLimitthatMarketLimitthatMarketLimit")
+                                // console.log(thatMarketLimit, "thatMarketLimitthatMarketLimitthatMarketLimit")
                             }else{
                                 thatMarketLimit = betLimit
                             }
+                            console.log(thatMarketLimit)
                             if(!thatMarketLimit){
                                 thatMarketLimit = betLimit
                             }
