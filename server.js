@@ -9786,12 +9786,17 @@ io.on('connection', (socket) => {
                 return ele
             })
     
-            socket.emit('getsportwisedownlinecommitssion',{status:'success',result})
+            socket.emit('getgamewisedownlinecommitssion',{status:'success',result})
         }catch(err){
-            socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            socket.emit('getgamewisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getsportwiselinecommErr')
         }
     })
+
+    socket.on('getsportwisedownlinecommitssion',async(data)=>{
+        
+    })
+
 
     socket.on('OddsCheck', async(data) => {
         let response = await oddsLimitCHeck(data)
