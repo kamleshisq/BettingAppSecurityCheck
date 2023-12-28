@@ -51,13 +51,13 @@ async function checkLimit(data){
                     if(!thatMarketLimit){
                         if(marketsDetails.data.items[i].title && !marketsDetails.data.items[i].title.toLowerCase().startsWith('book') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('toss') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('winn')){
                             console.log(marketsDetails.data.items[i].market_id.endsWith('OE'))
-                            if(!marketsDetails.data.items[i].title.startsWith("Only") && marketsDetails.data.items[i].title.includes("Over")){
+                            if(!marketsDetails.data.items[i].title.startsWith("Only") && marketsDetails.data.items[i].title.includes("Over") && !marketsDetails.data.items[i].market_id.endsWith('OE')){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_session`})
                                 console.log('WORKING3')
-                            }else if (marketsDetails.data.items[i].title.startsWith("Only")){
+                            }else if (marketsDetails.data.items[i].title.startsWith("Only") && !marketsDetails.data.items[i].market_id.endsWith('OE')){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_onlyOver`})
                                 console.log('WORKING2')
-                            }else if (!marketsDetails.data.items[i].title.includes("Over")){
+                            }else if (!marketsDetails.data.items[i].title.includes("Over") && !marketsDetails.data.items[i].market_id.endsWith('OE')){
                                 thatMarketLimit = await betLimitModel.findOne({type:`${thatMatch.eventData.eventId}_w_p_market`})
                                 console.log('WORKING1')
                             }else if (marketsDetails.data.items[i].market_id.endsWith('OE')){
