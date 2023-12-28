@@ -293,6 +293,73 @@
             </tr>
               <%}}%>
         <%}%>
+
+
+        <%if(odd_even){
+          let data = betLimit.find(item => item.type == `${seriesMatch[0].eventData.eventId}_odd_even`)
+          if(data){%>
+
+            <tr>
+              <td id="<%=seriesMatch[0].eventData.eventId%>_odd_even" class="btn-filter"><strong>odd_even</strong></td>
+              <td><input type="text" class="form-datas" name="min_stake" value="<%=data.min_stake%>" ></td>
+              <td><input type="text" class="form-datas" name="max_stake" value="<%=data.max_stake%>" ></td>
+              <td><input type="text" class="form-datas" name="max_profit" value="<%=data.max_profit%>" ></td>
+              <td><input type="text" class="form-datas" name="max_odd" value="<%=data.max_odd%>" ></td>
+              <td><input type="text" class="form-datas" name="delay" value="<%=data.delay%>" ></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn update updateBetLimitMATCH">Update</button>
+                </div>
+              </td>
+            </tr>
+            <%}else{%>
+            <tr> 
+              <td id="<%=seriesMatch[0].eventData.eventId%>_odd_even" class="btn-filter"><strong>odd_even</strong></td>
+              <td><input type="text" class="form-datas" name="min_stake" value="0" ></td>
+              <td><input type="text" class="form-datas" name="max_stake" value="0" ></td>
+              <td><input type="text" class="form-datas" name="max_profit" value="0" ></td>
+              <td><input type="text" class="form-datas" name="max_odd" value="0" ></td>
+              <td><input type="text" class="form-datas" name="delay" value="0" ></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn update updateBetLimitMATCH">Update</button>
+                </div>
+              </td>
+            </tr>
+            <%}
+            for(let i = 0; i < odd_even.length; i++){
+              let data = betLimit.find(item => item.type == odd_even[i].marketId)
+            if(data){
+            %>  
+            <tr>
+              <td id="<%=odd_even[i].marketId%>" class="btn-filter"><%=odd_even[i].title%></td>
+              <td><input type="text" class="form-datas" name="min_stake" value="<%=data.min_stake%>" ></td>
+              <td><input type="text" class="form-datas" name="max_stake" value="<%=data.max_stake%>" ></td>
+              <td><input type="text" class="form-datas" name="max_profit" value="<%=data.max_profit%>" ></td>
+              <td><input type="text" class="form-datas" name="max_odd" value="<%=data.max_odd%>" ></td>
+              <td><input type="text" class="form-datas" name="delay" value="<%=data.delay%>" ></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn update updateBetLimitMATCH">Update</button>
+                </div>
+              </td>
+            </tr>
+            <%}else{%>
+            <tr> 
+              <td id="<%=odd_even[i].marketId%>" class="btn-filter"><%=odd_even[i].title%></td>
+              <td><input type="text" class="form-datas" name="min_stake" value="0" ></td>
+              <td><input type="text" class="form-datas" name="max_stake" value="0" ></td>
+              <td><input type="text" class="form-datas" name="max_profit" value="0" ></td>
+              <td><input type="text" class="form-datas" name="max_odd" value="0" ></td>
+              <td><input type="text" class="form-datas" name="delay" value="0" ></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn update updateBetLimitMATCH">Update</button>
+                </div>
+              </td>
+            </tr>
+              <%}}%>
+        <%}%>
       </tbody>
   <%}else{%>
       <tr class="empty_table"><td>No <%=gameName%> Series! </td></tr>
