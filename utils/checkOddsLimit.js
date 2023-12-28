@@ -1,5 +1,6 @@
 const cricketAndOtherSport = require('../utils/getSportAndCricketList');
 const betLimitModel = require('../model/betLimitModel');
+const getmarketDetails = require('../utils/getmarketsbymarketId');
 
 
 
@@ -38,7 +39,9 @@ async function checkLimit(data){
                 }
             }
 
-            console.log(betLimit, "gotHERE")
+            // console.log(betLimit, "gotHERE")
+            let marketsDetails = await getmarketDetails(IDS)
+            console.log(marketsDetails)
 
         }else{
             return 'ERR'
