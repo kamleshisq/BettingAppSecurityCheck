@@ -8575,8 +8575,18 @@ socket.on('connect', () => {
         // });
       
         // jQuery approach
+        let clickTime
         $(document).ready(function () {
             $(".button").click(function () {
+                clickTime = Date.now()
+                const urlParams = new URLSearchParams(window.location.search);
+
+                let marketId = $(this).closest("table").attr("id");
+                if(!marketId){
+                    marketId = $(this).closest("tr").prev().find('.market').attr('id')
+                }
+                let eventId = urlParams.get('id');
+                console.log(eventId, marketId)
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
