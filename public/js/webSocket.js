@@ -9596,7 +9596,10 @@ socket.on('connect', () => {
         //     // console.log(data)
         //     socket.emit("betDetails", {data, LOGINDATA})
         // })
+          socket.on('checkDelay', data => {
+            console.log(data, clickTime)
 
+          })
         $(document).ready(function () {
             $(".eventId").click(function () {
                 // console.log("working")

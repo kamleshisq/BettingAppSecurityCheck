@@ -9829,7 +9829,9 @@ io.on('connection', (socket) => {
         if(data.eventId && data.marketId){
             let response = await oddsLimitCHeck({eventId:data.eventId, ids:[data.marketId]})
             if(response[0]){
-                console.log(response[0], "response[0]response[0]response[0]")
+                // console.log(response[0], "response[0]response[0]response[0]")
+                let sendData = response[0].Limits
+                socket.emit('checkDelay', sendData)
             }
         }
     })
