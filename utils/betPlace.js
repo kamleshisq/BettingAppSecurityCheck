@@ -159,7 +159,7 @@ if(data.data.spoetId == 1){
     let limitData = await checkLimit({eventId:data.data.eventId, ids:[data.data.market]})
     limitData = limitData[0].Limits
     if(limitData){
-        console.log(limitData,  parseFloat(data.data.stake),"123456789")
+        // console.log(limitData,  parseFloat(data.data.stake),"123456789")
         if(limitData.min_stake > parseFloat(data.data.stake) ){
             return `Stake out of range`
         }else if(limitData.max_stake < parseFloat(data.data.stake)){
@@ -210,14 +210,28 @@ if(data.data.spoetId == 1){
 
 // console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 // FOR ODDS LIMIT
-if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('winne')){
+if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
     if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.oldOdds * 1) + (limitData.max_odd * 1) 
+        let OddChake = (data.data.oldOdds * 1) + (0.1) 
         if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
             return 'Odds out of range back'
         }
     }else{
-        let OddChake = (data.data.oldOdds * 1) - (limitData.max_odd * 1)  
+        let OddChake = (data.data.oldOdds * 1) - (0.1)  
+        if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
+            return 'Odds out of range'
+        }
+    }
+}
+
+if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+    if(data.data.bettype2 === 'BACK'){
+        let OddChake = (data.data.oldOdds * 1) + (10) 
+        if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
+            return 'Odds out of range back'
+        }
+    }else{
+        let OddChake = (data.data.oldOdds * 1) - (10)  
         if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
             return 'Odds out of range'
         }
