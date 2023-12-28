@@ -20501,7 +20501,7 @@ socket.on('connect', () => {
             var day = date.getDate().toString().padStart(2, '0');
             return year + "-" + month + "-" + day;
         }
-        $(document).on('click','tr.username',function(e){
+        $(document).on('click','tr>.username',function(e){
             let data = {}
             let userName = $(this).children('td.username').attr('data-username')
             let fromdate = $('#fromDate').val()
