@@ -154,11 +154,12 @@ if(data.data.spoetId == 1){
 //FOR PERTICULAR MARKETS
     let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
     let limitData = await checkLimit({eventId:data.data.eventId, ids:[data.data.market]})
-    console.log(limitData)
-    if(thatMarketLimit){
-        if(thatMarketLimit.min_stake > parseFloat(data.data.stake) ){
+    // console.log(limitData)
+    limitData = limitData[0]
+    if(limitData){
+        if(limitData.min_stake > parseFloat(data.data.stake) ){
             return `Stake out of range`
-        }else if(thatMarketLimit.max_stake < parseFloat(data.data.stake)){
+        }else if(limitData.max_stake < parseFloat(data.data.stake)){
             return `Stake out of range`
         }
     }
@@ -167,53 +168,53 @@ if(data.data.spoetId == 1){
 
 
 // FOR STAKE RANGE
-console.log(marketDetails.title.toLowerCase(), marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd'), "marketDetails.title.toLowerCase()marketDetails.title.toLowerCase()")
-    if(marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')){
+// console.log(marketDetails.title.toLowerCase(), marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd'), "marketDetails.title.toLowerCase()marketDetails.title.toLowerCase()")
+//     if(marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')){
 
-        let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
-        if(MATCHODDDATA){
-            minMatchOdds = MATCHODDDATA.min_stake
-            maxMatchOdds = MATCHODDDATA.max_stake
-        }
-        if(minMatchOdds > parseFloat(data.data.stake) ){
-            return `Stake out of range`
-        }else if(maxMatchOdds < parseFloat(data.data.stake)){
-            return `Stake out of range`
-        }
-    }else if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-        let BOOKMAKER = await betLimitModel.findOne({type:`${sportName}/bookMaker`})
-        if(BOOKMAKER){
-            minBookMaker = BOOKMAKER.min_stake
-            maxBookMaker = BOOKMAKER.max_stake
-        }
-        if(minBookMaker > parseFloat(data.data.stake) ){
-            return `Stake out of range`
-        }else if(maxBookMaker < parseFloat(data.data.stake)){
-            return `Stake out of range`
-        }
-    }else {
-        let FENCY = await betLimitModel.findOne({type:`${sportName}/fency`})
-        if(FENCY){
-            minFancy = FENCY.min_stake
-            maxFancy = FENCY.max_stake
-        }
-        if(minFancy > parseFloat(data.data.stake) ){
-            return `Stake out of range`
-        }else if(maxFancy < parseFloat(data.data.stake)){
-            return `Stake out of range`
-        }
-    }
+//         let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
+//         if(MATCHODDDATA){
+//             minMatchOdds = MATCHODDDATA.min_stake
+//             maxMatchOdds = MATCHODDDATA.max_stake
+//         }
+//         if(minMatchOdds > parseFloat(data.data.stake) ){
+//             return `Stake out of range`
+//         }else if(maxMatchOdds < parseFloat(data.data.stake)){
+//             return `Stake out of range`
+//         }
+//     }else if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+//         let BOOKMAKER = await betLimitModel.findOne({type:`${sportName}/bookMaker`})
+//         if(BOOKMAKER){
+//             minBookMaker = BOOKMAKER.min_stake
+//             maxBookMaker = BOOKMAKER.max_stake
+//         }
+//         if(minBookMaker > parseFloat(data.data.stake) ){
+//             return `Stake out of range`
+//         }else if(maxBookMaker < parseFloat(data.data.stake)){
+//             return `Stake out of range`
+//         }
+//     }else {
+//         let FENCY = await betLimitModel.findOne({type:`${sportName}/fency`})
+//         if(FENCY){
+//             minFancy = FENCY.min_stake
+//             maxFancy = FENCY.max_stake
+//         }
+//         if(minFancy > parseFloat(data.data.stake) ){
+//             return `Stake out of range`
+//         }else if(maxFancy < parseFloat(data.data.stake)){
+//             return `Stake out of range`
+//         }
+//     }
 
 // console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 // FOR ODDS LIMIT
 if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('winne')){
     if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.oldOdds * 1) + (betLimit.max_odd * 1) 
+        let OddChake = (data.data.oldOdds * 1) + (limitData.max_odd * 1) 
         if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
             return 'Odds out of range back'
         }
     }else{
-        let OddChake = (data.data.oldOdds * 1) - (betLimit.max_odd * 1)  
+        let OddChake = (data.data.oldOdds * 1) - (limitData.max_odd * 1)  
         if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
             return 'Odds out of range'
         }
@@ -246,6 +247,10 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
         WinAmount = (parseFloat(data.data.stake)).toFixed(2)
+    }
+
+    if(WinAmount > limitData.max_profit){
+        return 'Win Amount out of range'
     }
 
     // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
