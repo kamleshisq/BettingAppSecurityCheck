@@ -9782,11 +9782,10 @@ io.on('connection', (socket) => {
                 }else if(ele['_id' == '30']){
                     ele['sportname'] = 'Baseball'
                 }
-                ele['userName'] = data.data.userName
                 return ele
             })
     
-            socket.emit('getgamewisedownlinecommitssion',{status:'success',result})
+            socket.emit('getgamewisedownlinecommitssion',{status:'success',result,breadcum:data.data.breadcum,parentdata:{userName:data.data.userName}})
         }catch(err){
             socket.emit('getgamewisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getgamewisedownlinecommitssion')
