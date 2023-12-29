@@ -21147,7 +21147,7 @@ socket.on('connect', () => {
                   </thead><tbody class="new-body">`
                   if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="market_event_commis_sporttr"><td class="market_event_commis_sporttd" data-market_event_commis_sport='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'><button> data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>
+                      html += `<tr style="cursor:pointer" class="market_event_commis_sporttr"><td class="market_event_commis_sporttd" data-market_event_commis_sport='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'><button data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>
                       <td>${result[i].commissionType}</td>
                       <td>${result[i].commissionPercentage}</td>
                       <td>${result[i].commission}</td>
