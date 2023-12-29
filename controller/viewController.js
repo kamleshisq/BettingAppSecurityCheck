@@ -2290,7 +2290,6 @@ exports.liveAllMarkets = catchAsync(async(req, res, next) => {
         method: 'GET',
         headers: { 
             'Content-Type': 'application/json',
-            'Signature': hashedOutput ,
             'accept': 'application/json'
             },
         // body:body 
