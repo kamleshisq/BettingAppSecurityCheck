@@ -9818,7 +9818,7 @@ io.on('connection', (socket) => {
          
     
             socket.emit('getsportwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
-                sportId:data.data.sportId},breadcum:data.data.breadcum})
+                sportId:data.data.sportId},bredcum:data.data.bredcum})
         }catch(err){
             socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getsportwisedownlinecommitssion')
