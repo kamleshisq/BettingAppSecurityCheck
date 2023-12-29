@@ -10240,7 +10240,6 @@ io.on('connection', (socket) => {
                         date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         loginUserId:{$exists:true},
                         userId:loginuserid1.toString()
-        
                     }
                 },
                 {
@@ -10255,7 +10254,6 @@ io.on('connection', (socket) => {
                     $sort:{_id:1}
                 }
             ])
-        
             let result = sporttwisecommittion.map(ele=>{
                 if(ele['_id'] == '4'){
                     ele['sportname'] = 'Cricket'

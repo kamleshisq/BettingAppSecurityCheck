@@ -21365,6 +21365,7 @@ socket.on('connect', () => {
 
 
         socket.on('userwiseuplinecommittion',async(data)=>{
+            console.log(data)
             if(data.status == 'success'){
                 let result = data.result
                 let html = `<thead>
@@ -21377,7 +21378,7 @@ socket.on('connect', () => {
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
                       html += `<tr>
-                      <td class="usernametd" data-username="${result[i]._id}>">${result[i]._id}></td>
+                      <td class="usernametd" data-username="${result[i]._id}>">${result[i].sportname}></td>
                     <td>${result[i].commissionClaim}></td>
                       </tr>`
                   }
