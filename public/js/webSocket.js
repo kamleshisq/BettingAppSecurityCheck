@@ -20959,7 +20959,7 @@ socket.on('connect', () => {
             let todate = $('#toDate').val()
             data.fromdate = fromdate
             data.todate = todate
-            if(!$('.bredcum-container li')){
+            if($('.bredcum-container li').length == 0){
                 data.LOGINUSER = LOGINDATA.LOGINUSER
                 socket.emit('userwisedownlinecommittion',{data})
             }else{
@@ -21397,8 +21397,7 @@ socket.on('connect', () => {
             data.fromdate = fromdate
             data.todate = todate
             data.LOGINUSER = LOGINDATA.LOGINUSER
-            console.log(!$('.bredcum-container li'))
-            if(!$('.bredcum-container li')){
+            if($('.bredcum-container li').length == 0){
                 console.log(data,'==data1')
                 socket.emit('userwiseuplinecommittion',{data})
             }else{
