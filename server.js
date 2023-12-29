@@ -10157,6 +10157,37 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getmarketwiseuplinecommission',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await Bet.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.LOGINUSER.userName,
+                        gameId:data.data.sportId,
+                        event:data.data.seriesName,
+                        match:data.data.eventName,
+                        marketName:data.data.marketName
+                    }
+                    
+                },
+                {
+                    $sort:{
+                        date:-1
+                    }
+                }
+            ])
+
+         
+    
+            socket.emit('getmarketwiseuplinecommission',{status:'success',result:sportwisedownlinecomm})
+        }catch(err){
+            socket.emit('getmarketwiseuplinecommission',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getmarketwiseuplinecommission')
+        }
+    })
+
+
 
     socket.on('checkDelay', async(data)=>{
         if(data.eventId && data.marketId){
