@@ -8906,9 +8906,7 @@ socket.on('connect', () => {
                             data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                                 let oldValue = $(this).find('td:eq(1)').find('span').text()
                                 // console.log(oldValue)
-                                console.log(this,  $(this).find('td:eq(1)').find('span'))
                                 let newvalue = (oldValue * 1) - (data.result * 1)
-                                console.log(newvalue , "newvaluenewvaluenewvalue")
                                 $(this).find('td:eq(1)').find('span').text(newvalue)
                                 if(newvalue > 0){
                                     $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
@@ -9026,9 +9024,16 @@ socket.on('connect', () => {
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
                     diffStake = parseFloat(spanId)
-                    var betValue = parseFloat(
-                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                    );
+                    var betValue
+                    if(IdButton.hasClass('odd_even_blue')){
+                        betValue =  parseFloat(
+                            $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                          );
+                    }else{
+                        betValue = parseFloat(
+                          $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                        );
+                    }
                     var result = ((parseFloat(newStake) * betValue) / 100);
                     diff = ((parseFloat(diffStake) * betValue) / 100);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
@@ -9164,9 +9169,19 @@ socket.on('connect', () => {
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
                     diffStake = parseFloat(spanId)
-                    var betValue = parseFloat(
-                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                    );
+                    // var betValue = parseFloat(
+                    //   $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                    // );
+                    var betValue
+                    if(IdButton.hasClass('odd_even_blue')){
+                        betValue =  parseFloat(
+                            $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                          );
+                    }else{
+                        betValue = parseFloat(
+                          $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                        );
+                    }
                     let result = parseFloat(newStake)
                     diff = parseFloat(spanId)
                     if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
