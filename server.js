@@ -9743,7 +9743,11 @@ io.on('connection', (socket) => {
             // console.log(data, "LoginCHeckUSerSIdeLoginCHeckUSerSIdeLoginCHeckUSerSIde")
             let lgoginData = await loginLogs.findOne({session_id:data.loginData.Token, userName:data.loginData.User.userName})
             // console.log(lgoginData, "lgoginDatalgoginData")
-            if(!lgoginData.isOnline){
+            if(lgoginData){
+                if(!lgoginData.isOnline){
+                    socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
+                }
+            }else{
                 socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
             }
         }
