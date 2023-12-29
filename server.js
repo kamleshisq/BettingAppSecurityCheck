@@ -9740,7 +9740,7 @@ io.on('connection', (socket) => {
 
     socket.on('LoginCHeckUSerSIde', async(data) => {
         if(data.loginData.User){
-            // console.log(data, "LoginCHeckUSerSIdeLoginCHeckUSerSIdeLoginCHeckUSerSIde")
+            console.log(data, "LoginCHeckUSerSIdeLoginCHeckUSerSIdeLoginCHeckUSerSIde")
             let lgoginData = await loginLogs.findOne({session_id:data.loginData.Token, userName:data.loginData.User.userName})
             console.log(lgoginData, "lgoginDatalgoginData")
             if(lgoginData){
