@@ -9766,7 +9766,9 @@ io.on('connection', (socket) => {
                 {
                     $group:{
                         _id:'$sportId',
-                        commission:{$sum:'$commission'}
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
                     }
                 },
                 {
@@ -9815,7 +9817,9 @@ io.on('connection', (socket) => {
                 {
                     $group:{
                         _id:'$seriesName',
-                        commission:{$sum:'$commission'},
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
                     }
                 },
                 {
@@ -9862,7 +9866,9 @@ io.on('connection', (socket) => {
                 {
                     $group:{
                         _id:'$eventName',
-                        commission:{$sum:'$commission'},
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
                     }
                 },
                 {
@@ -9900,7 +9906,9 @@ io.on('connection', (socket) => {
                 {
                     $group:{
                         _id:'$marketName',
-                        commission:{$sum:'$commission'},
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
                         commissionType:{$first:'$commissionType'},
                         commissionStatus:{$first:'$commissionStatus'},
                         commissionPercentage:{$first:'$commissionPercentage'}
