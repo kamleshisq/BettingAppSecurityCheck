@@ -10025,7 +10025,7 @@ io.on('connection', (socket) => {
                         loginUserId:{$exists:true},
                         parentIdArray:{$exists:true},
                         sportId:data.data.sportname,
-                        userName:data.data.LOGINUSER.userName
+                        userName:data.data.LOGINUSER._id.toString()
                     }
                 },
                 {

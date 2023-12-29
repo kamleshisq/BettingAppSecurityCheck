@@ -21121,6 +21121,7 @@ socket.on('connect', () => {
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
+            data.LOGINUSER = LOGINDATA.LOGINUSER
             socket.emit('geteventwiseuplinecommitssion',{data})
         })
 
