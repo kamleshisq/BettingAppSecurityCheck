@@ -10011,8 +10011,9 @@ io.on('connection', (socket) => {
                 if(data.data.betId){
                     filter.betId = data.data.betId
                 }else{
-
+                    filter.betId = {$exists:true}
                 }
+                
             }
             console.log(usernameArr,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
@@ -10202,7 +10203,7 @@ io.on('connection', (socket) => {
                 if(data.data.betId){
                     filter.betId = data.data.betId
                 }else{
-
+                    filter.betId = {$exists:true}
                 }
             }
             console.log(usernameArr,'==>usernameArr')

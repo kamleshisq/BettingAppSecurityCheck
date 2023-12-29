@@ -20767,7 +20767,16 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>
+                    if(result[i].commissionType == 'Net Losing Commission'){
+                        html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                    }else{
+                        if(result[i].betId){
+                            html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType,betId:result[i].betId})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                        }else{
+                            html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                        }
+                    }
+                     html += `
                       <td>${result[i].commissionType}</td>
                       <td>${result[i].commissionPercentage}</td>
                       <td>${result[i].commission}</td>
@@ -20782,8 +20791,7 @@ socket.on('connect', () => {
                 let html2 = ""
 
                 html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li> <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
-                // ${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}
-                // ${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType})}
+               
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
@@ -20799,12 +20807,16 @@ socket.on('connect', () => {
             let seriesName = parentdetail.seriesName
             let eventName = parentdetail.eventName
             let marketName = parentdetail.marketName
+            let commissionType = parentdetail.commissionType
+            let bettype = parentdetail.bettype            
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
             data.marketName = marketName
             data.eventName = eventName
             data.seriesName = seriesName
             data.sportId = sportId
+            data.commissionType = commissionType
+            data.bettype = bettype
             data.userName = userName;
             data.fromdate = fromdate;
             data.todate = todate;
