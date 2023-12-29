@@ -21403,7 +21403,7 @@ socket.on('connect', () => {
             }else{
                 if($('.bredcum-container li:last').hasClass('eventcompitisionsportwise')){
                     let data = {}
-                    let parentdetail = JSON.parse($(this).attr('data-eventcompitisionsportwise'))
+                    let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-eventcompitisionsportwise'))
                     let sportId = parentdetail.sportId
                     let seriesName = parentdetail.seriesName
                     let eventName = parentdetail.eventName
@@ -21424,7 +21424,7 @@ socket.on('connect', () => {
                     data.LOGINUSER = LOGINDATA.LOGINUSER
                     socket.emit('getcommiwiseuplinecommitssion',{data})
                 }else if($('.bredcum-container li:last').hasClass('sportwise')){
-                    let sportname = $(this).attr('sportwise')
+                    let sportname = $('.bredcum-container li:last').attr('sportwise')
                     let bredcum =  [sportname]
                     data.sportname = sportname;
                     data.bredcum = bredcum;
