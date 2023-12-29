@@ -20557,7 +20557,7 @@ socket.on('connect', () => {
         })
     }
 
-    if(pathname =='admin/downlinecommissionReort'){
+    if(pathname =='/admin/downlinecommissionReort'){
         var today = new Date();
         var todayFormatted = formatDate(today);
         var tomorrow = new Date();
