@@ -5163,7 +5163,7 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
     }
 })
 
-exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
+exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let loginuserid1 = req.currentUser._id
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
@@ -5186,6 +5186,9 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
                     $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
                   }}
             }
+        },
+        {
+            $sort:{_id:1}
         }
     ])
 
@@ -5194,8 +5197,46 @@ exports.getSportuplineCommission = catchAsync(async(req, res, next)=>{
     console.log(sportdownlinecomm,"==>sportdownlinecomm")
 
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
-        title:'Upline Commission Report',
+        title:'Downline Commission Report',
         sportdownlinecomm,
+        currentUser:req.currentUser,
+        me:req.currentUser
+    })
+})
+
+exports.getSportwiseuplinecommreport = catchAsync(async(req, res, next)=>{
+    let loginuserid1 = req.currentUser._id
+    let sporttwisecommittion = await commissionNewModel.aggregate([
+        {
+            $match:{
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                loginUserId:{$exists:true},
+                userId:loginuserid1.toString()
+
+            }
+        },
+        {
+            $group:{
+                _id:"$userName",
+                commissionClaim:{$sum:{
+                    $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                  }},
+            }
+        },
+        {
+            $sort:{_id:1}
+        }
+    ])
+
+   
+
+    console.log(sporttwisecommittion,"==>sporttwisecommittion")
+
+    res.status(200).render('./uplinecommissionreport/uplinecommissionreport',{
+        title:'Upline Commission Report',
+        sporttwisecommittion,
         currentUser:req.currentUser,
         me:req.currentUser
     })
