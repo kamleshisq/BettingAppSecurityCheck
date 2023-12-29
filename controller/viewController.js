@@ -2288,6 +2288,11 @@ exports.liveAllMarkets = catchAsync(async(req, res, next) => {
     console.log('fullUrl :', fullUrl)
     fetch(fullUrl, {
         method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Signature': hashedOutput ,
+            'accept': 'application/json'
+            },
         // body:body 
     })
     .then(res =>res.json())
