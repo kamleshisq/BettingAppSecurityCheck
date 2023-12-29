@@ -56317,7 +56317,7 @@ var _window$location = window.location,
 $(document).ready(function () {
   var linkColor = document.querySelectorAll('.nav_link');
   var operationPathnameArr = ['/admin/houseManagement', '/admin/streammanagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
-  var reportsPathnameArr = ['/admin/gamereport', '/admin/myaccount', '/admin/adminaccount', '/admin/useraccount', '/admin/settlementHistory', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport', '/admin/commissionReport'];
+  var reportsPathnameArr = ['/admin/gamereport', '/admin/myaccount', '/admin/adminaccount', '/admin/useraccount', '/admin/settlementHistory', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport', '/admin/commissionReport', '/admin/uplinecommissionReport', '/admin/downlinecommissionReort'];
   var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules', '/admin/promotion', '/admin/globalSettings'];
   var patmentArr = ['/admin/paymentapproval', '/admin/paymentmethods', '/admin/withdrawalRequest'];
   function colorLink() {
@@ -57042,7 +57042,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63895" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50586" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -21422,10 +21422,12 @@ socket.on('connect', () => {
                     data.bredcum = bredcum;
                     socket.emit('getcommiwiseuplinecommitssion',{data})
                 }else if($('.bredcum-container li:last').hasClass('sportwise')){
-                    let sportname = $('.bredcum-container li:last').attr('sportwise')
+                    let sportname = $('.bredcum-container li:last').attr('data-sportwise')
                     let bredcum =  [sportname]
                     data.sportname = sportname;
                     data.bredcum = bredcum;
+                    data.LOGINUSER = LOGINDATA.LOGINUSER    
+                    console.log(data)
                     socket.emit('getsportwiseuplinecommission',{data})
                 }
             }
