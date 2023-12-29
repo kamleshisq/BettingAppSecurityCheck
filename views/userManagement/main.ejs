@@ -565,11 +565,17 @@
                   <%}else if (B2C_Status){%>
                     <option value="6492fe4fd09db28e00761694">user</option>
                   <%}else{%>
+                    <%let userROLE%>
                     <%for(let i = 0;i<roles.length; i++){%>
                       <%if(roles[i]._id != '650bccdbb3fdc8c922c34bbe'){%>
-                      <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                        <%if(roles[i].roleName != "user"){%>
+                        <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                        <%}else{
+                          userROLE22 = roles[i]
+                        }%>
                       <%}%>
                     <%}%>
+                    <option value="<%=userROLE22._id%>"><%=userROLE22.roleName%></option>
                   <%}%>
                 </select>
               </div>
