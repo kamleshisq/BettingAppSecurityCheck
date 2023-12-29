@@ -21336,7 +21336,7 @@ socket.on('connect', () => {
             }else if($(this).hasClass('compititionsportwise')){
                 let data = {}
                 let parentdetail = JSON.parse($(this).attr('data-compititionsportwise'))
-                let sportId = parentdetail.sportname
+                let sportId = parentdetail.sportId
                 let seriesName = parentdetail.seriesName
                 let fromdate = $('#fromDate').val()
                 let todate = $('#toDate').val()
