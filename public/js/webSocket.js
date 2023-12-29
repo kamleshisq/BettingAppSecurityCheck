@@ -21402,7 +21402,6 @@ socket.on('connect', () => {
                 socket.emit('userwiseuplinecommittion',{data})
             }else{
                 if($('.bredcum-container li:last').hasClass('eventcompitisionsportwise')){
-                    let data = {}
                     let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-eventcompitisionsportwise'))
                     let sportId = parentdetail.sportId
                     let seriesName = parentdetail.seriesName
@@ -21415,13 +21414,12 @@ socket.on('connect', () => {
                     socket.emit('geteventwiseuplinecommitssion',{data})
                 }else if($('.bredcum-container li:last').hasClass('compititionsportwise')){
                     let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-compititionsportwise'))
-                    let sportId = parentdetail.sportname
+                    let sportId = parentdetail.sportId
                     let seriesName = parentdetail.seriesName
                     let bredcum =  [sportId,seriesName]
                     data.sportname = sportId;
                     data.seriesName = seriesName
                     data.bredcum = bredcum;
-                    data.LOGINUSER = LOGINDATA.LOGINUSER
                     socket.emit('getcommiwiseuplinecommitssion',{data})
                 }else if($('.bredcum-container li:last').hasClass('sportwise')){
                     let sportname = $('.bredcum-container li:last').attr('sportwise')
