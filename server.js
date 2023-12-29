@@ -9991,7 +9991,7 @@ io.on('connection', (socket) => {
     })
     socket.on('getmarketwisedownlinecommission',async(data)=>{
         try{
-            let user = await User.findOne({userName:data.data.LOGINUSER.userName})
+            let user = await User.findOne({userName:data.data.userName})
             let usernameArr = [];
             let netlosing = false;
             if(user.roleName == 'user'){
@@ -10228,6 +10228,54 @@ io.on('connection', (socket) => {
         }catch(err){
             socket.emit('getmarketwiseuplinecommission',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getmarketwiseuplinecommission')
+        }
+    })
+
+    socket.on('userwiseuplinecommittion',async(data)=>{
+        try{
+            let loginuserid1 = data.data.LOGINUSER_id
+            let sporttwisecommittion = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        userId:loginuserid1.toString()
+        
+                    }
+                },
+                {
+                    $group:{
+                        _id:"$sportId",
+                        commissionClaim:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
+                    }
+                },
+                {
+                    $sort:{_id:1}
+                }
+            ])
+        
+            let result = sporttwisecommittion.map(ele=>{
+                if(ele['_id'] == '4'){
+                    ele['sportname'] = 'Cricket'
+                }else if(ele['_id'] == '1'){
+                    ele['sportname'] = 'Football'
+                }else if(ele['_id'] == '2'){
+                    ele['sportname'] = 'Tennis'
+                }else if(ele['_id'] == '10'){
+                    ele['sportname'] = 'Basketball'
+                }else if(ele['_id'] == '30'){
+                    ele['sportname'] = 'Baseball'
+                }
+                return ele
+            })
+        
+           
+        
+            console.log(sporttwisecommittion,"==>sporttwisecommittion")
+        }catch(err){
+
         }
     })
 
