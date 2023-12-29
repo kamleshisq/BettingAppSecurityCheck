@@ -71,6 +71,8 @@ const runnerData = require('./model/runnersData');
 const globalSettingModel = require('./model/globalSetting');
 const colorCodeModel = require('./model/colorcodeModel');
 const oddsLimitCHeck = require('./utils/checkOddsLimit');
+const { ObjectId } = require('mongodb');
+
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
@@ -10203,7 +10205,7 @@ io.on('connection', (socket) => {
                 netlosing = true
             }else{  
                 if(data.data.betId){
-                    // filter._id = data.data.betId
+                    filter._id = new ObjectId(data.data.betId)
                 }else{
                     
                 }
