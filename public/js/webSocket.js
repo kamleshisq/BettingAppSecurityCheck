@@ -21044,7 +21044,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="comp_sporttr"><td class="comp_sporttd" data-comp_sport='${JSON.stringify({sportname:parentdata.sportId})}'>${result[i]._id}</td>
+                      html += `<tr style="cursor:pointer" class="comp_sporttr"><td class="comp_sporttd" data-comp_sport='${JSON.stringify({sportname:parentdata.sportId,seriesName:result[i]._id})}'>${result[i]._id}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
@@ -21055,87 +21055,31 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({sportname:parentdata.sportId})}'>${data.bredcum[0]}</li>`
+                html2 += `  <li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
             }
         })
 
-        $(document).on('click','.sport_usernametr',function(e){
+        $(document).on('click','.comp_sporttr',function(e){
             let data = {}
-            console.log($(this).children('td.sport_usernametd'))
-            console.log($(this).children('td.sport_usernametd').attr('data-sport_username'))
-            let parentdetail = JSON.parse($(this).children('td.sport_usernametd').attr('data-sport_username'))
-            console.log(parentdetail)
-            let userName = parentdetail.userName
-            let sportId = parentdetail.sportId
-            let fromdate = $('#fromDate').val()
-            let todate = $('#toDate').val()
-            let bredcum =  [userName,sportId]
-            data.sportId = sportId
-            data.userName = userName;
-            data.fromdate = fromdate;
-            data.todate = todate;
-            data.bredcum = bredcum;
-            console.log(data)
-            socket.emit('getsportwisedownlinecommitssion',{data})
-        })
-
-        socket.on('getsportwisedownlinecommitssion',async(data)=>{
-            console.log(data)
-            if(data.status == 'success'){
-                let result = data.result
-                let parentdata = data.parentdata
-                let html = `<thead>
-                <tr>
-                  <th>Competition</th>
-                  <th>Commission</th>
-                </tr>
-              </thead><tbody class="new-body">`
-              if(result.length > 0){
-                  for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="series_sport_usernametr"><td class="series_sport_usernametd" data-series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:result[i]._id})}'>${result[i]._id}</td>
-                      <td>${result[i].commission}</td></tr>`
-                  }
-              }else{
-                html += `<tr class="empty_table"><td>No record found</td></tr>`
-              }
-
-
-                html += `</tbody>`
-
-                let html2 = ""
-
-                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li>`
-
-                $('#table12').html(html)
-                $('.bredcum-container ul').html(html2)
-            }
-
-        })
-
-        $(document).on('click','.series_sport_usernametr',function(e){
-            let data = {}
-            let parentdetail = JSON.parse($(this).children('td.series_sport_usernametd').attr('data-series_sport_username'))
-            console.log(parentdetail)
-            let userName = parentdetail.userName
-            let sportId = parentdetail.sportId
+            let parentdetail = JSON.parse($(this).children('td.comp_sporttd').attr('data-comp_sport'))
+            let sportId = parentdetail.sportname
             let seriesName = parentdetail.seriesName
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
-            let bredcum =  [userName,sportId,seriesName]
+            let bredcum =  [sportId,seriesName]
+            data.sportname = sportId;
             data.seriesName = seriesName
-            data.sportId = sportId
-            data.userName = userName;
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
-            console.log(data)
-            socket.emit('getserieswisedownlinecommitssion',{data})
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            socket.emit('getcommiwiseuplinecommitssion',{data})
         })
 
-        socket.on('getserieswisedownlinecommitssion',async(data)=>{
+        socket.on('getcommiwiseuplinecommitssion',async(data)=>{
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result
@@ -21148,7 +21092,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="event_series_sport_usernametr"><td class="event_series_sport_usernametd" data-event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:result[i]._id})}'>${result[i]._id}</td>
+                      html += `<tr style="cursor:pointer" class="event_compi_sporttr"><td class="event_compi_sporttd" data-event_compi_sport='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:result[i]._id})}'>${result[i]._id}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
@@ -21158,40 +21102,36 @@ socket.on('connect', () => {
 
                 html += `</tbody>`
 
-                
                 let html2 = ""
 
-                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li>`
+                html2 += ` <li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
-
             }
 
         })
 
-        $(document).on('click','.event_series_sport_usernametr',function(e){
+        $(document).on('click','.event_compi_sporttr',function(e){
             let data = {}
-            let parentdetail = JSON.parse($(this).children('td.event_series_sport_usernametd').attr('data-event_series_sport_username'))
-            let userName = parentdetail.userName
+            let parentdetail = JSON.parse($(this).children('td.event_compi_sporttd').attr('data-event_compi_sport'))
             let sportId = parentdetail.sportId
             let seriesName = parentdetail.seriesName
             let eventName = parentdetail.eventName
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
-            let bredcum =  [userName,sportId,seriesName,eventName]
-            data.eventName = parentdetail.eventName
+            let bredcum =  [sportId,seriesName,eventName]
             data.seriesName = seriesName
-            data.sportId = sportId
-            data.userName = userName;
+            data.sportname = sportId
+            data.eventName = eventName;
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
-            console.log(data)
-            socket.emit('geteventwisedownlinecommitssion',{data})
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            socket.emit('geteventwiseuplinecommitssion',{data})
         })
 
-        socket.on('geteventwisedownlinecommitssion',async(data)=>{
+        socket.on('geteventwiseuplinecommitssion',async(data)=>{
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result
@@ -21202,12 +21142,12 @@ socket.on('connect', () => {
                   <th>Commission Type</th>
                   <th>Percentage</th>
                   <th>Commission Points</th>
-                  <th>Status</th>
+                  <th>	Status</th>
                   </tr>
-              </thead><tbody class="new-body">`
-              if(result.length > 0){
+                  </thead><tbody class="new-body">`
+                  if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'><button data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>
+                      html += `<tr style="cursor:pointer" class="market_event_commis_sporttr"><td class="market_event_commis_sporttd" data-market_event_commis_sport='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'>button data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>
                       <td>${result[i].commissionType}</td>
                       <td>${result[i].commissionPercentage}</td>
                       <td>${result[i].commission}</td>
@@ -21217,22 +21157,84 @@ socket.on('connect', () => {
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
+
+
                 html += `</tbody>`
+
                 
                 let html2 = ""
 
-                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li> <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
+                html2 += `<li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportwise" data-eventcompitisionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
+
             }
 
         })
 
-        $(document).on('click','.market_event_series_sport_usernametr',function(e){
+        // $(document).on('click','.market_event_commis_sporttr',function(e){
+        //     let data = {}
+        //     let parentdetail = JSON.parse($(this).children('td.market_event_commis_sporttd').attr('data-market_event_commis_sport'))
+        //     let userName = parentdetail.userName
+        //     let sportId = parentdetail.sportId
+        //     let seriesName = parentdetail.seriesName
+        //     let eventName = parentdetail.eventName
+        //     let fromdate = $('#fromDate').val()
+        //     let todate = $('#toDate').val()
+        //     let bredcum =  [userName,sportId,seriesName,eventName]
+        //     data.eventName = parentdetail.eventName
+        //     data.seriesName = seriesName
+        //     data.sportId = sportId
+        //     data.userName = userName;
+        //     data.fromdate = fromdate;
+        //     data.todate = todate;
+        //     data.bredcum = bredcum;
+        //     console.log(data)
+        //     socket.emit('geteventwisedownlinecommitssion',{data})
+        // })
+
+        // socket.on('geteventwisedownlinecommitssion',async(data)=>{
+        //     console.log(data)
+        //     if(data.status == 'success'){
+        //         let result = data.result
+        //         let parentdata = data.parentdata
+        //         let html = `<thead>
+        //         <tr>
+        //           <th>Market</th>
+        //           <th>Commission Type</th>
+        //           <th>Percentage</th>
+        //           <th>Commission Points</th>
+        //           <th>Status</th>
+        //           </tr>
+        //       </thead><tbody class="new-body">`
+        //       if(result.length > 0){
+        //           for(let i = 0;i<result.length;i++){
+        //               html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'><button data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>
+        //               <td>${result[i].commissionType}</td>
+        //               <td>${result[i].commissionPercentage}</td>
+        //               <td>${result[i].commission}</td>
+        //               <td>${result[i].commissionStatus}</td>
+        //               </tr>`
+        //           }
+        //       }else{
+        //         html += `<tr class="empty_table"><td>No record found</td></tr>`
+        //       }
+        //         html += `</tbody>`
+                
+        //         let html2 = ""
+
+        //         html2 += ` <li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportwise" data-eventcompitisionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li> <li class="active marketeventcompitisionsportwise" data-marketeventcompitisionsportwise='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
+
+        //         $('#table12').html(html)
+        //         $('.bredcum-container ul').html(html2)
+        //     }
+
+        // })
+
+        $(document).on('click','.market_event_commis_sporttr',function(e){
             let data = {}
-            let parentdetail = JSON.parse($(this).children('td.market_event_series_sport_usernametd').attr('data-market_event_series_sport_username'))
-            let userName = parentdetail.userName
+            let parentdetail = JSON.parse($(this).children('td.market_event_commis_sporttd').attr('data-market_event_commis_sport'))
             let sportId = parentdetail.sportId
             let seriesName = parentdetail.seriesName
             let eventName = parentdetail.eventName
@@ -21243,14 +21245,13 @@ socket.on('connect', () => {
             data.eventName = eventName
             data.seriesName = seriesName
             data.sportId = sportId
-            data.userName = userName;
             data.fromdate = fromdate;
             data.todate = todate;
-            console.log(data)
-            socket.emit('getmarketwisedownlinecommission',{data})
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            socket.emit('getmarketwiseuplinecommission',{data})
         })
 
-        socket.on('getmarketwisedownlinecommission',async(data)=>{
+        socket.on('getmarketwiseuplinecommission',async(data)=>{
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result

@@ -10025,10 +10025,8 @@ io.on('connection', (socket) => {
                         loginUserId:{$exists:true},
                         parentIdArray:{$exists:true},
                         sportId:data.data.sportname,
-                        userId:data.data.LOGINUSER._id.toString()
-
+                        userName:data.data.LOGINUSER._id.toString()
                     }
-                    
                 },
                 {
                     $group:{
@@ -10044,8 +10042,6 @@ io.on('connection', (socket) => {
                     }
                 }
             ])
-
-         
             if(data.data.sportname == '4'){
                 data.data.bredcum[0] = 'Cricket'
             }else if(data.data.sportname == '1'){
@@ -10064,6 +10060,133 @@ io.on('connection', (socket) => {
             console.log(err,'==>getsportwiseuplinecommission')
         }
     })
+
+    socket.on('getcommiwiseuplinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportname,
+                        userId:data.data.LOGINUSER._id.toString(),
+                        seriesName:data.data.seriesName
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$eventName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }}
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+            if(data.data.sportname == '4'){
+                data.data.bredcum[0] = 'Cricket'
+            }else if(data.data.sportname == '1'){
+                data.data.bredcum[0] = 'Football'
+            }else if(data.data.sportname == '2'){
+                data.data.bredcum[0] = 'Tennis'
+            }else if(data.data.sportname == '10'){
+                data.data.bredcum[0] = 'Basketball'
+            }else if(data.data.sportname == '30'){
+                data.data.bredcum[0] = 'Baseball'
+            }
+            socket.emit('getcommiwiseuplinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{
+                sportId:data.data.sportname,seriesName:data.data.seriesName},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('getcommiwiseuplinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getcommiwiseuplinecommitssion')
+        }
+    })
+
+    socket.on('geteventwiseuplinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportname,
+                        userId:data.data.LOGINUSER._id.toString(),
+                        seriesName:data.data.seriesName,
+                        eventName:data.data.eventName
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$marketName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                        }},
+                        commissionType:{$first:'$commissionType'},
+                        commissionPercentage:{$first:'$commissionPercentage'},
+                        commissionStatus:{$first:'$commissionStatus'}
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+            if(data.data.sportname == '4'){
+                data.data.bredcum[0] = 'Cricket'
+            }else if(data.data.sportname == '1'){
+                data.data.bredcum[0] = 'Football'
+            }else if(data.data.sportname == '2'){
+                data.data.bredcum[0] = 'Tennis'
+            }else if(data.data.sportname == '10'){
+                data.data.bredcum[0] = 'Basketball'
+            }else if(data.data.sportname == '30'){
+                data.data.bredcum[0] = 'Baseball'
+            }
+            socket.emit('geteventwiseuplinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{
+                sportId:data.data.sportname,seriesName:data.data.seriesName,eventName:data.data.eventName},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('geteventwiseuplinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>geteventwiseuplinecommitssion')
+        }
+    })
+
+    socket.on('getmarketwiseuplinecommission',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await Bet.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.LOGINUSER.userName,
+                        gameId:data.data.sportId,
+                        event:data.data.seriesName,
+                        match:data.data.eventName,
+                        marketName:data.data.marketName
+                    }
+                    
+                },
+                {
+                    $sort:{
+                        date:-1
+                    }
+                }
+            ])
+
+         
+    
+            socket.emit('getmarketwiseuplinecommission',{status:'success',result:sportwisedownlinecomm})
+        }catch(err){
+            socket.emit('getmarketwiseuplinecommission',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getmarketwiseuplinecommission')
+        }
+    })
+
 
 
     socket.on('checkDelay', async(data)=>{
