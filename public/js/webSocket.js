@@ -21123,7 +21123,7 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += ` <li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
+                html2 += ` <li class="active sportwise" data-sportwise='${parentdata.sportId}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
@@ -21192,7 +21192,7 @@ socket.on('connect', () => {
                 
                 let html2 = ""
 
-                html2 += `<li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportwise" data-eventcompitisionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li>`
+                html2 += `<li class="active sportwise" data-sportwise='${parentdata.sportId}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportwise" data-eventcompitisionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
@@ -21350,7 +21350,7 @@ socket.on('connect', () => {
                 socket.emit('getcommiwiseuplinecommitssion',{data})
             }else if($(this).hasClass('sportwise')){
                 let data = {}
-                let sportname = JSON.parse($(this).attr('data-sportwise'))
+                let sportname = $(this).attr('data-sportwise')
                 let fromdate = $('#fromDate').val()
                 let todate = $('#toDate').val()
                 let bredcum =  [sportname]
