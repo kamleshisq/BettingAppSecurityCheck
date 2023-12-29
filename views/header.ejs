@@ -264,7 +264,9 @@
                           <div class="menu-item"><a class="nav_link" href="/admin/plreport">P/L report</a></div>
                           <div class="menu-item"><a class="nav_link" href="/admin/commissionReport">Commission Report </a></div>
                           <div class="menu-item"><a class="nav_link" href="/admin/downlinecommissionReort">Downline Commission Report </a></div>
-                          <div class="menu-item"><a class="nav_link" href="/admin/uplinecommissionReport">Upline Commission Report </a></div>
+                          <%if(!currentUser.role_type == 1){%>
+                            <div class="menu-item"><a class="nav_link" href="/admin/uplinecommissionReport">Upline Commission Report </a></div>
+                          <%}%>
                           <!-- <div class="menu-item"><a class="nav_link" href="/admin/commissionReport">Commission History </a></div>
                           <div class="menu-item"><a class="nav_link" href="/admin/gameanalysis">Game  Analysis</a></div>
                           <div class="menu-item"><a class="nav_link" href="/admin/streammanagement">Stream Managements</a></div>
