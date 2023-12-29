@@ -76,7 +76,7 @@
                                         <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.balance%>" value="<%=userDetails.balance%>">
                                       </div>
                                     </div>
-                                    <%if(userDetails.)%>
+                                    <%if(userDetails.roleName != 'user'){%>
                                     <div class="row">
                                       <div class="col form-group">
                                         <label for="myShare">My Share</label>
@@ -87,11 +87,8 @@
                                           <input type="number" id="Share" name="Share" placeholder="<%=userDetails.Share%>" value="<%=userDetails.Share%>">
                                       </div>
                                     </div>
-                                  <div class="row">
-                                      <div class="col form-group">
-                                          <button type="submit">Submit</button>
-                                      </div>
-                                  </div>
+                                    <%}%>
+                                  
                               </form>
                             </div>
                           </div>
