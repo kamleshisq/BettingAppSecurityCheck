@@ -10203,7 +10203,7 @@ io.on('connection', (socket) => {
                 netlosing = true
             }else{  
                 if(data.data.betId){
-                    filter._id = data.data.betId
+                    // filter._id = data.data.betId
                 }else{
                     
                 }
