@@ -8941,6 +8941,7 @@ socket.on('connect', () => {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
+                console.log(IdButton, "IdButtonIdButtonIdButton")
                 let diff
                 let element = $(this)
                 let diffStake 
@@ -9025,6 +9026,7 @@ socket.on('connect', () => {
                     }
                     diffStake = parseFloat(spanId)
                     console.log(IdButton, buttonId)
+                    if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue'))
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
