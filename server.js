@@ -243,7 +243,7 @@ io.on('connection', (socket) => {
         }else{
             operationUser = me
             operationId = operationUser._id
-            roles = await Role.find({role_level: {$gt:operationUser.role.role_level}});
+            roles = await Role.find();
         }
         
         if(Object.keys(data.filterData).length !== 0){
@@ -291,6 +291,7 @@ io.on('connection', (socket) => {
                 }            
             }else{
                 if(data.filterData.role_type){
+                    console.log(role_type)
                     if(role_type.includes((data.filterData.role_type) * 1)){
                         // console.log('here')
                         user = await User.find(data.filterData).skip(skip).limit(limit)
