@@ -9789,7 +9789,7 @@ io.on('connection', (socket) => {
                 return ele
             })
     
-            socket.emit('getgamewisedownlinecommitssion',{status:'success',result,breadcum:data.data.breadcum,parentdata:{userName:data.data.userName}})
+            socket.emit('getgamewisedownlinecommitssion',{status:'success',result,bredcum:data.data.bredcum,parentdata:{userName:data.data.userName}})
         }catch(err){
             socket.emit('getgamewisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getgamewisedownlinecommitssion')
