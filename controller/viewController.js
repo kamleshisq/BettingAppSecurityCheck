@@ -5186,9 +5186,6 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
                     $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
                   }}
             }
-        },
-        {
-            $sort:{_id:1}
         }
     ])
 
@@ -5219,7 +5216,7 @@ exports.getSportwiseuplinecommreport = catchAsync(async(req, res, next)=>{
         },
         {
             $group:{
-                _id:"$userName",
+                _id:"$sportId",
                 commissionClaim:{$sum:{
                     $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
                   }},
@@ -5230,11 +5227,28 @@ exports.getSportwiseuplinecommreport = catchAsync(async(req, res, next)=>{
         }
     ])
 
+    let result = sporttwisecommittion.map(ele=>{
+        if(ele['_id'] == '4'){
+            ele['sportname'] = 'Cricket'
+        }else if(ele['_id'] == '1'){
+            ele['sportname'] = 'Football'
+        }else if(ele['_id'] == '2'){
+            ele['sportname'] = 'Tennis'
+        }else if(ele['_id'] == '10'){
+            ele['sportname'] = 'Basketball'
+        }else if(ele['_id'] == '30'){
+            ele['sportname'] = 'Baseball'
+        }
+        return ele
+    })
+
+   
+
     console.log(sporttwisecommittion,"==>sporttwisecommittion")
 
     res.status(200).render('./uplinecommissionreport/uplinecommissionreport',{
         title:'Upline Commission Report',
-        sporttwisecommittion,
+        sporttwisecommittion:result,
         currentUser:req.currentUser,
         me:req.currentUser
     })
