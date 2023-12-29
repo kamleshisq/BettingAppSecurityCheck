@@ -10233,7 +10233,7 @@ io.on('connection', (socket) => {
 
     socket.on('userwiseuplinecommittion',async(data)=>{
         try{
-            let loginuserid1 = data.data.LOGINUSER_id
+            let loginuserid1 = data.data.LOGINUSER._id
             let sporttwisecommittion = await newCommissionModel.aggregate([
                 {
                     $match:{
