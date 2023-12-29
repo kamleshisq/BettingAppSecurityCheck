@@ -21350,7 +21350,7 @@ socket.on('connect', () => {
                 socket.emit('getcommiwiseuplinecommitssion',{data})
             }else if($(this).hasClass('sportwise')){
                 let data = {}
-                let sportname = JSON.parse($(this).attr('data-sportwise'))
+                let sportname = $(this).attr('data-sportwise')
                 let fromdate = $('#fromDate').val()
                 let todate = $('#toDate').val()
                 let bredcum =  [sportname]
