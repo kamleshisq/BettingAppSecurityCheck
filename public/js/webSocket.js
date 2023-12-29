@@ -21049,7 +21049,7 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({sportname:parentdata.sportId})}'>${data.bredcum[0]}</li>`
+                html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
@@ -21080,13 +21080,13 @@ socket.on('connect', () => {
                 let parentdata = data.parentdata
                 let html = `<thead>
                 <tr>
-                  <th>Competition</th>
+                  <th>Event</th>
                   <th>Commission</th>
                 </tr>
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="series_sport_usernametr"><td class="series_sport_usernametd" data-series_sport_username='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${result[i]._id}</td>
+                      html += `<tr style="cursor:pointer" class="series_sport_usernametr"><td class="series_sport_usernametd" data-series_sport_username='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:result[i]._id})}'>${result[i]._id}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
@@ -21098,7 +21098,7 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({sportname:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({sportname:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
+                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
@@ -21106,41 +21106,46 @@ socket.on('connect', () => {
 
         })
 
-        $(document).on('click','.series_sport_usernametr',function(e){
+        $(document).on('click','.event_compi_sporttr',function(e){
             let data = {}
-            let parentdetail = JSON.parse($(this).children('td.series_sport_usernametd').attr('data-series_sport_username'))
-            console.log(parentdetail)
-            let userName = parentdetail.userName
+            let parentdetail = JSON.parse($(this).children('td.event_compi_sporttd').attr('data-event_compi_sport'))
             let sportId = parentdetail.sportId
             let seriesName = parentdetail.seriesName
+            let eventName = parentdetail.eventName
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
-            let bredcum =  [userName,sportId,seriesName]
+            let bredcum =  [sportId,seriesName,eventName]
             data.seriesName = seriesName
-            data.sportId = sportId
-            data.userName = userName;
+            data.sportname = sportId
+            data.eventName = eventName;
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
-            console.log(data)
-            socket.emit('getserieswisedownlinecommitssion',{data})
+            socket.emit('geteventwiseuplinecommitssion',{data})
         })
 
-        socket.on('getserieswisedownlinecommitssion',async(data)=>{
+        socket.on('geteventwiseuplinecommitssion',async(data)=>{
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result
                 let parentdata = data.parentdata
                 let html = `<thead>
                 <tr>
-                  <th>Event</th>
-                  <th>Commission</th>
-                </tr>
-              </thead><tbody class="new-body">`
-              if(result.length > 0){
+                  <th>Market</th>
+                  <th>Commission Type</th>
+                  <th>Percentage</th>
+                  <th>Commission Points</th>
+                  <th>	Status</th>
+                  </tr>
+                  </thead><tbody class="new-body">`
+                  if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="event_series_sport_usernametr"><td class="event_series_sport_usernametd" data-event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:result[i]._id})}'>${result[i]._id}</td>
-                      <td>${result[i].commission}</td></tr>`
+                      html += `<tr style="cursor:pointer" class="market_event_commis_sporttr"><td class="market_event_commis_sporttd" data-market_event_commis_sport='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'>${result[i]._id}</td>
+                      <td>${result[i].commissionType}</td>
+                      <td>${result[i].commissionPercentage}</td>
+                      <td>${result[i].commission}</td>
+                      <td>${result[i].commissionStatus}</td>
+                      </tr>`
                   }
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
@@ -21152,7 +21157,7 @@ socket.on('connect', () => {
                 
                 let html2 = ""
 
-                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li>`
+                html2 += `<li class="active sportusername" data-sportusername='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
