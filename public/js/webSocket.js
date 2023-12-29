@@ -20770,38 +20770,26 @@ socket.on('connect', () => {
 
         socket.on('getmarketwisedownlinecommission',async(data)=>{
             console.log(data)
-            // if(data.status == 'success'){
-            //     let result = data.result
-            //     let html = `<thead>
-            //     <tr>
-            //       <th>Market</th>
-            //       <th>Commission Type</th>
-            //       <th>Percentage</th>
-            //       <th>Commission Points</th>
-            //       <th>Status</th>
-            //       </tr>
-            //   </thead><tbody class="new-body">`
-            //   if(result.length > 0){
-            //       for(let i = 0;i<result.length;i++){
-            //           html += `<tr><td></td>
-            //           <td>${result[i].commissionType}</td>
-            //           <td>${result[i].commissionPercentage}</td>
-            //           <td>${result[i].commission}</td>
-            //           <td>${result[i].commissionStatus}</td>
-            //           </tr>`
-            //       }
-            //   }else{
-            //     html += `<tr class="empty_table"><td>No record found</td></tr>`
-            //   }
-            //     html += `</tbody>`
-                
-            //     let html2 = ""
-
-            //     html2 += `  <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
-
-            //     $('table').html(html)
-            //     $('.bredcum-container ul').append(html2)
-            // }
+            if(data.status == 'success'){
+                let result = data.result
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr><td></td>
+                      <td>${result[i].date}</td>
+                      <td>${result[i].userName}</td>
+                      <td>${result[i].selectionName}</td>
+                      <td>${result[i].oddValue}</td>
+                      <td>${result[i].Stake}</td>
+                      <td>${result[i].returns}</td>
+                      <td>${result[i].status}</td>
+                      </tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+                html += `</tbody>`
+                $('#myModaladduser .modal-tbody').html(html)
+            }
 
         })
 

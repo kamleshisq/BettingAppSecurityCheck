@@ -9925,16 +9925,14 @@ io.on('connection', (socket) => {
     })
     socket.on('getmarketwisedownlinecommission',async(data)=>{
         try{
-            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+            let sportwisedownlinecomm = await Bet.aggregate([
                 {
                     $match:{
                         date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         userName:data.data.userName,
-                        loginUserId:{$exists:true},
-                        parentIdArray:{$exists:true},
-                        sportId:data.data.sportId,
-                        seriesName:data.data.seriesName,
-                        eventName:data.data.eventName,
+                        gameId:data.data.sportId,
+                        event:data.data.seriesName,
+                        match:data.data.eventName,
                         marketName:data.data.marketName
                     }
                     
