@@ -20746,6 +20746,52 @@ socket.on('connect', () => {
 
         })
 
+        $(document).on('click','.market_event_series_sport_usernametr',function(e){
+            let data = {}
+            let parentdetail = JSON.parse($(this).children('td.market_event_series_sport_usernametd').attr('data-market_event_series_sport_username'))
+            let userName = parentdetail.userName
+            let sportId = parentdetail.sportId
+            let seriesName = parentdetail.seriesName
+            let eventName = parentdetail.eventName
+            let marketName = parentdetail.marketName
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            data.marketName = marketName
+            data.eventName = eventName
+            data.seriesName = seriesName
+            data.sportId = sportId
+            data.userName = userName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            console.log(data)
+            socket.emit('getmarketwisedownlinecommission',{data})
+        })
+
+        socket.on('getmarketwisedownlinecommission',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr><td></td>
+                      <td>${result[i].date}</td>
+                      <td>${result[i].userName}</td>
+                      <td>${result[i].selectionName}</td>
+                      <td>${result[i].oddValue}</td>
+                      <td>${result[i].Stake}</td>
+                      <td>${result[i].returns}</td>
+                      <td>${result[i].status}</td>
+                      </tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+                html += `</tbody>`
+                $('#myModaladduser .modal-tbody').html(html)
+            }
+
+        })
+
 
 
 
