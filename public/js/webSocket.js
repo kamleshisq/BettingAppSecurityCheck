@@ -20853,9 +20853,9 @@ socket.on('connect', () => {
 
 
         $(document).on('click','.bredcum-container li',function(e){
-            if($(this).hasClass('marketeventcompitisionsportusername')){
+            if($(this).hasClass('eventcompitisionsportwise')){
                 let data = {}
-                let parentdetail = JSON.parse($(this).attr('data-marketeventcompitisionsportusername'))
+                let parentdetail = JSON.parse($(this).attr('data-eventcompitisionsportwise'))
                 let userName = parentdetail.userName
                 let sportId = parentdetail.sportId
                 let seriesName = parentdetail.seriesName
@@ -20872,9 +20872,9 @@ socket.on('connect', () => {
                 data.bredcum = bredcum;
                 console.log(data)
                 socket.emit('geteventwisedownlinecommitssion',{data})
-            }else if($(this).hasClass('eventcompitisionsportusername')){
+            }else if($(this).hasClass('compititionsportwise')){
                 let data = {}
-                let parentdetail = JSON.parse($(this).attr('data-eventcompitisionsportusername'))
+                let parentdetail = JSON.parse($(this).attr('data-compititionsportwise'))
                 let userName = parentdetail.userName
                 let sportId = parentdetail.sportId
                 let seriesName = parentdetail.seriesName
@@ -20889,9 +20889,9 @@ socket.on('connect', () => {
                 data.bredcum = bredcum;
                 console.log(data)
                 socket.emit('getserieswisedownlinecommitssion',{data})
-            }else if($(this).hasClass('compitisionsportusername')){
+            }else if($(this).hasClass('sportwise')){
                 let data = {}
-                let parentdetail = JSON.parse($(this).attr('data-compitisionsportusername'))
+                let parentdetail = JSON.parse($(this).attr('data-sportwise'))
                 let userName = parentdetail.userName
                 let sportId = parentdetail.sportId
                 let fromdate = $('#fromDate').val()
@@ -20904,19 +20904,6 @@ socket.on('connect', () => {
                 data.bredcum = bredcum;
                 console.log(data)
                 socket.emit('getsportwisedownlinecommitssion',{data})
-            }else if($(this).hasClass('sportusername')){
-                let data = {}
-                let parentdetail = JSON.parse($(this).attr('data-sportusername'))
-                let fromdate = $('#fromDate').val()
-                let todate = $('#toDate').val()
-                let userName = parentdetail.userName
-                let bredcum =  [userName]
-                data.userName = userName;
-                data.fromdate = fromdate;
-                data.todate = todate;
-                data.bredcum = bredcum;
-                console.log(data)
-                socket.emit('getgamewisedownlinecommitssion',{data})
             }
         })
 
