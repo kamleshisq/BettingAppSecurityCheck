@@ -10044,15 +10044,15 @@ io.on('connection', (socket) => {
             ])
 
          
-            if(data.data.sportId == '4'){
+            if(data.data.sportname == '4'){
                 data.data.bredcum[1] = 'Cricket'
-            }else if(data.data.sportId == '1'){
+            }else if(data.data.sportname == '1'){
                 data.data.bredcum[1] = 'Football'
-            }else if(data.data.sportId == '2'){
+            }else if(data.data.sportname == '2'){
                 data.data.bredcum[1] = 'Tennis'
-            }else if(data.data.sportId == '10'){
+            }else if(data.data.sportname == '10'){
                 data.data.bredcum[1] = 'Basketball'
-            }else if(data.data.sportId == '30'){
+            }else if(data.data.sportname == '30'){
                 data.data.bredcum[1] = 'Baseball'
             }
             socket.emit('getsportwiseuplinecommission',{status:'success',result:sportwisedownlinecomm,parentdata:{
