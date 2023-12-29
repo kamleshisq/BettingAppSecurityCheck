@@ -21365,6 +21365,7 @@ socket.on('connect', () => {
 
 
         socket.on('userwiseuplinecommittion',async(data)=>{
+            console.log(data)
             if(data.status == 'success'){
                 let result = data.result
                 let html = `<thead>
@@ -21377,7 +21378,7 @@ socket.on('connect', () => {
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
                       html += `<tr>
-                      <td class="usernametd" data-username="${result[i]._id}>">${result[i]._id}></td>
+                      <td class="usernametd" data-username="${result[i]._id}>">${result[i].sportname}></td>
                     <td>${result[i].commissionClaim}></td>
                       </tr>`
                   }
@@ -21397,11 +21398,11 @@ socket.on('connect', () => {
             data.todate = todate
             data.LOGINUSER = LOGINDATA.LOGINUSER
             if(!$('.bredcum-container li')){
+                console.log(data,'==data1')
                 socket.emit('userwiseuplinecommittion',{data})
             }else{
                 if($('.bredcum-container li:last').hasClass('eventcompitisionsportwise')){
-                    let data = {}
-                    let parentdetail = JSON.parse($(this).attr('data-eventcompitisionsportwise'))
+                    let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-eventcompitisionsportwise'))
                     let sportId = parentdetail.sportId
                     let seriesName = parentdetail.seriesName
                     let eventName = parentdetail.eventName
@@ -21413,16 +21414,15 @@ socket.on('connect', () => {
                     socket.emit('geteventwiseuplinecommitssion',{data})
                 }else if($('.bredcum-container li:last').hasClass('compititionsportwise')){
                     let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-compititionsportwise'))
-                    let sportId = parentdetail.sportname
+                    let sportId = parentdetail.sportId
                     let seriesName = parentdetail.seriesName
                     let bredcum =  [sportId,seriesName]
                     data.sportname = sportId;
                     data.seriesName = seriesName
                     data.bredcum = bredcum;
-                    data.LOGINUSER = LOGINDATA.LOGINUSER
                     socket.emit('getcommiwiseuplinecommitssion',{data})
                 }else if($('.bredcum-container li:last').hasClass('sportwise')){
-                    let sportname = $(this).attr('sportwise')
+                    let sportname = $('.bredcum-container li:last').attr('sportwise')
                     let bredcum =  [sportname]
                     data.sportname = sportname;
                     data.bredcum = bredcum;
