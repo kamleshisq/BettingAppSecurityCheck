@@ -21049,7 +21049,7 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li>`
+                html2 += `  <li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
@@ -21086,7 +21086,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="series_sport_usernametr"><td class="series_sport_usernametd" data-series_sport_username='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:result[i]._id})}'>${result[i]._id}</td>
+                      html += `<tr style="cursor:pointer" class="event_compi_sporttr"><td class="event_compi_sporttd" data-event_compi_sport='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:result[i]._id})}'>${result[i]._id}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
@@ -21098,7 +21098,7 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
+                html2 += ` <li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
@@ -21157,7 +21157,7 @@ socket.on('connect', () => {
                 
                 let html2 = ""
 
-                html2 += `<li class="active sportusername" data-sportusername='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li>`
+                html2 += `<li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportwise" data-eventcompitisionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
@@ -21217,7 +21217,7 @@ socket.on('connect', () => {
                 
                 let html2 = ""
 
-                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li> <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
+                html2 += ` <li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportwise" data-eventcompitisionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li> <li class="active marketeventcompitisionsportwise" data-marketeventcompitisionsportwise='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
