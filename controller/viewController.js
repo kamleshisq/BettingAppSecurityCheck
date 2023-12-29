@@ -2302,6 +2302,28 @@ exports.liveAllMarkets = catchAsync(async(req, res, next) => {
     })
 })
 
+
+exports.liveAllMarkets2 = catchAsync(async(req, res, next) => {
+    // let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
+    // console.log(body)
+    let fullUrl = "https://fbot.1cricket.co/api/Admin/getmarkets";
+    console.log('fullUrl :', fullUrl)
+    fetch(fullUrl, {
+        method: 'get',
+        headers: { 
+            'Accept': 'application/json'
+            },
+        // body:body 
+    })
+    .then(res =>res.json())
+    .then(result => {
+        console.log('result:', result)
+        res.status(200).json({
+            result
+        })
+    })
+})
+
 exports.getExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
