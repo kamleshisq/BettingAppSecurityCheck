@@ -20649,7 +20649,7 @@ socket.on('connect', () => {
                 let parentdata = data.parentdata
                 let html = `<thead>
                 <tr>
-                  <th>Competition</th>
+                  <th>Event</th>
                   <th>Commission</th>
                 </tr>
               </thead><tbody class="new-body">`
