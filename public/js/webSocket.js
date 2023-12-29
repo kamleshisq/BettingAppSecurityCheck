@@ -9629,16 +9629,22 @@ socket.on('connect', () => {
           })
         $(document).ready(function () {
             $(".eventId").click(function () {
-                let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
-                let IdButton = $(`#${buttonId}`)
-                console.log(IdButton)
+                // console.log("working")
             let data = {}
             let secforFency 
             data.title = $(this).closest("tr").find(".name").text()
             data.eventId = $(this).attr("id");
             data.odds = $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
             let secId = $(this).closest("tr").find(".beton").attr('id')
+            // console.log(secId, "secIdsecIdsecIdsecId")
             data.secId = secId.slice(0,-1)
+            var escapedId =  data.secId.replace(/\./g, '\\.');
+            let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+            if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                data.odds = parseFloat(
+                    $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                    );
+            }
             data.market = $(this).closest("table").attr("id");
             data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
@@ -9674,14 +9680,14 @@ socket.on('connect', () => {
                             if(checkTime < Date.now()){
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                             }else{
-                                console.log(data)
-                                    // showLoader();
-                                    // socket.emit("betDetails", {data, LOGINDATA})
+                                // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
-                            console.log(data)
-                                    // showLoader();
-                                    // socket.emit("betDetails", {data, LOGINDATA})
+                            // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                         }
                         // console.log(data)
                     }else{
@@ -9702,14 +9708,14 @@ socket.on('connect', () => {
                                 if(checkTime < Date.now()){
                                     togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                                 }else{
-                                    console.log(data)
-                                    // showLoader();
-                                    // socket.emit("betDetails", {data, LOGINDATA})
+                                    // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                                 }
                             }else{
-                                console.log(data)
-                                    // showLoader();
-                                    // socket.emit("betDetails", {data, LOGINDATA})
+                                // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
