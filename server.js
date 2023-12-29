@@ -9768,6 +9768,11 @@ io.on('connection', (socket) => {
                         _id:'$sportId',
                         commission:{$sum:'$commission'}
                     }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
                 }
             ])
 
@@ -9812,6 +9817,11 @@ io.on('connection', (socket) => {
                         _id:'$seriesName',
                         commission:{$sum:'$commission'},
                     }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
                 }
             ])
 
@@ -9854,6 +9864,11 @@ io.on('connection', (socket) => {
                         _id:'$eventName',
                         commission:{$sum:'$commission'},
                     }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
                 }
             ])
 
@@ -9891,6 +9906,11 @@ io.on('connection', (socket) => {
                         commissionPercentage:{$first:'$commissionPercentage'}
 
                     }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
                 }
             ])
 
@@ -9903,6 +9923,39 @@ io.on('connection', (socket) => {
             console.log(err,'==>geteventwisedownlinecommitssion')
         }
     })
+    socket.on('getmarketwisedownlinecommission',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportId,
+                        seriesName:data.data.seriesName,
+                        eventName:data.data.eventName,
+                        marketName:data.data.marketName
+                    }
+                    
+                },
+                {
+                    $sort:{
+                        date:-1
+                    }
+                }
+            ])
+
+         
+    
+            socket.emit('getmarketwisedownlinecommission',{status:'success',result:sportwisedownlinecomm})
+        }catch(err){
+            socket.emit('getmarketwisedownlinecommission',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getmarketwisedownlinecommission')
+        }
+    })
+
+    
 
 
     socket.on('checkDelay', async(data)=>{
