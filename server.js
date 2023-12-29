@@ -9751,6 +9751,40 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('userwisedownlinecommittion',async(date)=>{
+        try{
+            let loginuserid1 = data.data.LOGINUSER._id
+            let sportdownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$in:[loginuserid1.toString()]}
+    
+                    }
+                },
+                {
+                    $group:{
+                        _id:"$userName",
+                        commissionClaim:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                        }},
+                        commissionUnclaim:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
+                        }}
+                    }
+                }
+            ])
+
+            socket.emit('userwisedownlinecommittion',{status:'success',result:sportdownlinecomm})
+        }catch(err){
+            socket.emit('userwisedownlinecommittion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>userwisedownlinecommittion')
+        }
+       
+
+    })
+
     socket.on('getgamewisedownlinecommitssion',async(data)=>{
         try{
             let sportwisedownlinecomm = await newCommissionModel.aggregate([
