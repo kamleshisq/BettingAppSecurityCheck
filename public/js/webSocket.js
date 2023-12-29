@@ -20771,6 +20771,7 @@ socket.on('connect', () => {
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result
+                let html = ""
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
                       html += `<tr><td></td>
