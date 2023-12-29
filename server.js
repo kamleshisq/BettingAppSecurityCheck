@@ -10010,11 +10010,10 @@ io.on('connection', (socket) => {
                 netlosing = true
             }else{  
                 if(data.data.betId){
-                    filter.betId = data.data.betId
+                    filter._id = data.data.betId
                 }else{
-                    filter.betId = {$exists:true}
+                    
                 }
-                
             }
             console.log(usernameArr,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
@@ -10204,9 +10203,9 @@ io.on('connection', (socket) => {
                 netlosing = true
             }else{  
                 if(data.data.betId){
-                    filter.betId = data.data.betId
+                    filter._id = data.data.betId
                 }else{
-                    filter.betId = {$exists:true}
+                    
                 }
             }
             console.log(usernameArr,'==>usernameArr')
