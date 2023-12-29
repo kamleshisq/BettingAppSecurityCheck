@@ -20553,6 +20553,7 @@ socket.on('connect', () => {
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result
+                let parentdata = data.parentdata
                 let html = `<thead>
                 <tr>
                   <th>Sport</th>
@@ -20561,17 +20562,21 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username='${JSON.stringify({userName:result[i].userName,sportId:result[i]._id,sportname:result[i].sportname})}'>${result[i].sportname}</td>
+                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username='${JSON.stringify({userName:parentdata.userName,sportId:result[i]._id,sportname:result[i].sportname})}'>${result[i].sportname}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
-
-
                 html += `</tbody>`
 
+
+                let html2 = ""
+
+                html2 += `  <li class="active sportusername" data-sportusername='${JSON.parse({userName:parentdata.userName})}'>${data.bredcum[0]}</li>`
+
                 $('table').html(html)
+                $('.bredcum-container ul').html(html2)
             }
         })
 
@@ -20650,7 +20655,7 @@ socket.on('connect', () => {
                 let parentdata = data.parentdata
                 let html = `<thead>
                 <tr>
-                  <th>Competition</th>
+                  <th>Event</th>
                   <th>Commission</th>
                 </tr>
               </thead><tbody class="new-body">`
