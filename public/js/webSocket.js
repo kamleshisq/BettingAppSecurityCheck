@@ -9629,7 +9629,9 @@ socket.on('connect', () => {
           })
         $(document).ready(function () {
             $(".eventId").click(function () {
-                // console.log("working")
+                let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                let IdButton = $(`#${buttonId}`)
+                console.log(IdButton)
             let data = {}
             let secforFency 
             data.title = $(this).closest("tr").find(".name").text()
