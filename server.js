@@ -9956,7 +9956,8 @@ io.on('connection', (socket) => {
                           }},
                         commissionType:{$first:'$commissionType'},
                         commissionStatus:{$first:'$commissionStatus'},
-                        commissionPercentage:{$first:'$commissionPercentage'}
+                        commissionPercentage:{$first:'$commissionPercentage'},
+                        betId:{$first:'$betId'}
 
                     }
                 },
@@ -10149,7 +10150,9 @@ io.on('connection', (socket) => {
                         }},
                         commissionType:{$first:'$commissionType'},
                         commissionPercentage:{$first:'$commissionPercentage'},
-                        commissionStatus:{$first:'$commissionStatus'}
+                        commissionStatus:{$first:'$commissionStatus'},
+                        betId:{$first:'$betId'}
+                        
                     }
                 },
                 {
