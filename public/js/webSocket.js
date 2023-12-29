@@ -23,7 +23,7 @@ socket.on('connect', () => {
         //     for (let i = 0; i < styleSheets.length; i++) {
         //       const styleSheet = styleSheets[i];
         //       if (styleSheet.href) {
-        //         if(styleSheet.href == "http://dev.ollscores.com/assets/css/style.css" || styleSheet.href == "http://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://dev.ollscores.com/assets/css/media.css"){
+        //         if(styleSheet.href == "http://ollscores.com/assets/css/style.css" || styleSheet.href == "http://ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://ollscores.com/assets/css/media.css"){
 
         //             // console.log('Processing stylesheet:', styleSheet.href, data);
         //             try {
@@ -92,7 +92,7 @@ socket.on('connect', () => {
         // }
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //dev.ollscores.com dev.ollscores.com http://dev.ollscores.com/admin/userManagement http://dev.ollscores.com  http: 
+        //dev.ollscores.com dev.ollscores.com http://ollscores.com/admin/userManagement http://ollscores.com  http: 
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
@@ -613,7 +613,7 @@ socket.on('connect', () => {
         socket.emit('userLoginBalance', LOGINDATA)
         setTimeout(()=>{
             balance()
-          }, 5000 )
+          }, 5000)
     }
     balance()
     socket.on('userLoginBalance', async(data) => {
@@ -9598,7 +9598,6 @@ socket.on('connect', () => {
         // })
         let checkTime
           socket.on('checkDelay', data => {
-            console.log(data, clickTime)
             if(data.delay && data.delay != 0){
                 checkTime = clickTime + data.delay * 1000
             }
@@ -9645,15 +9644,16 @@ socket.on('connect', () => {
                 }else{
                     if(data.odds != '\n                        \n                      '){
                         // alert('132456')
-                        showLoader();
                         if(checkTime){
-                            if(Date(checkTime) > Date.now()){
+                            if(checkTime < Date.now()){
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                             }else{
-                                socket.emit("betDetails", {data, LOGINDATA})
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
-                            socket.emit("betDetails", {data, LOGINDATA})
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                         }
                         // console.log(data)
                     }else{
@@ -9670,15 +9670,16 @@ socket.on('connect', () => {
                     }else{
                         if(data.odds != '\n                        \n                      '){
                             // alert('132456')
-                            showLoader();
                             if(checkTime){
-                                if(Date(checkTime) > Date.now()){
+                                if(checkTime < Date.now()){
                                     togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                                 }else{
+                                    showLoader();
                                     socket.emit("betDetails", {data, LOGINDATA})
                                 }
                             }else{
-                                socket.emit("betDetails", {data, LOGINDATA})
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")

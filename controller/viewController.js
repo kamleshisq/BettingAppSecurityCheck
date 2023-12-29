@@ -2249,8 +2249,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://dev.ollscores.com/",
-            "Referer":"http://dev.ollscores.com/"},
+            "Origin":"http://ollscores.com/",
+            "Referer":"http://ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -3454,7 +3454,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     // console.log(user._id)
     let userLog = await loginLogs.find({user_id:user.id})
-    let bets = await betModel.find({userId:user._id}).sort({date:-1}).limit(20)
+    let bets = await betModel.find({userId:user._id, status:'OPEN'}).sort({date:-1}).limit(20)
     let betsDetails = await betModel.aggregate([
         {
             $match:{
