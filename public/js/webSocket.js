@@ -20808,25 +20808,24 @@ socket.on('connect', () => {
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result
-                let html = `<thead>
-                <tr>
-                  <th>User Name</th>
-                  <th>Commission</th>
-                  <th>Unclaimed Commission</th>
-                  </tr>
-              </thead><tbody class="new-body">`
+                let html = ""
               if(result.length > 0){
-                  for(let i = 0;i<result.length;i++){
-                      html += `<tr>
-                      <td class="usernametd" data-username="${result._id}">${result._id}</td>
-                      <td>${result[i].commissionClaim}</td>
-                      <td>${result[i].commissionUnclaim}</td>
-                      </tr>`
-                  }
+                for(let i = 0;i<result.length;i++){
+                    html += `<tr>
+                    <td>${result[i].date}</td>
+                    <td>${result[i].userName}</td>
+                    <td>${result[i].selectionName}</td>
+                    <td>${result[i].oddValue}</td>
+                    <td>${result[i].Stake}</td>
+                    <td>${result[i].returns}</td>
+                    <td>${result[i].status}</td>
+                    </tr>`
+                }
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
-              $('#table12').html(html)
+              $('#myModaladduser .modal-title').text(`${result[0].marketName}`)
+              $('#myModaladduser .modal-tbody').html(html)
             }
 
         })
@@ -20905,25 +20904,26 @@ socket.on('connect', () => {
         socket.on('userwisedownlinecommittion',async(data)=>{
             if(data.status == 'success'){
                 let result = data.result
-                let html = ""
+                let html = `<thead>
+                <tr>
+                  <th>
+                  User Name</th>
+                  <th>Commission</th>
+                  <th>Unclaimed Commission</th>
+                  </tr>
+              </thead><tbody class="new-body">`
               if(result.length > 0){
-
                   for(let i = 0;i<result.length;i++){
                       html += `<tr>
-                      <td>${result[i].date}</td>
-                      <td>${result[i].userName}</td>
-                      <td>${result[i].selectionName}</td>
-                      <td>${result[i].oddValue}</td>
-                      <td>${result[i].Stake}</td>
-                      <td>${result[i].returns}</td>
-                      <td>${result[i].status}</td>
+                      <td class="usernametd" data-username="${result[i]._id}>">${result[i]._id}></td>
+                    <td>${result[i].commissionClaim}></td>
+                    <td>${result[i].commissionUnclaim}></td>
                       </tr>`
                   }
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
-              $('#myModaladduser .modal-title').text(`${result[0].marketName}`)
-                $('#myModaladduser .modal-tbody').html(html)
+                $('#table12').html(html)
             }
 
         })
