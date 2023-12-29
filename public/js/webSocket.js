@@ -9680,14 +9680,14 @@ socket.on('connect', () => {
                             if(checkTime < Date.now()){
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                             }else{
-                                console.log(data)
-                                    // showLoader();
-                                    // socket.emit("betDetails", {data, LOGINDATA})
+                                // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
-                            console.log(data)
-                                    // showLoader();
-                                    // socket.emit("betDetails", {data, LOGINDATA})
+                            // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                         }
                         // console.log(data)
                     }else{
@@ -9708,14 +9708,14 @@ socket.on('connect', () => {
                                 if(checkTime < Date.now()){
                                     togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                                 }else{
-                                    console.log(data)
-                                    // showLoader();
-                                    // socket.emit("betDetails", {data, LOGINDATA})
+                                    // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                                 }
                             }else{
-                                console.log(data)
-                                    // showLoader();
-                                    // socket.emit("betDetails", {data, LOGINDATA})
+                                // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
