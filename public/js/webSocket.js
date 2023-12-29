@@ -21371,7 +21371,7 @@ socket.on('connect', () => {
                 let html = `<thead>
                 <tr>
                   <th>
-                  User Sport</th>
+                  Sport</th>
                   <th>Commission</th>
                   </tr>
               </thead><tbody class="new-body">`
