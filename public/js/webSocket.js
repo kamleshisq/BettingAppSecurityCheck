@@ -8906,9 +8906,7 @@ socket.on('connect', () => {
                             data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
                                 let oldValue = $(this).find('td:eq(1)').find('span').text()
                                 // console.log(oldValue)
-                                console.log(this,  $(this).find('td:eq(1)').find('span'))
                                 let newvalue = (oldValue * 1) - (data.result * 1)
-                                console.log(newvalue , "newvaluenewvaluenewvalue")
                                 $(this).find('td:eq(1)').find('span').text(newvalue)
                                 if(newvalue > 0){
                                     $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
@@ -20725,7 +20723,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'> <button class="btn-filter marketwisebets" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>
+                      html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_usernametr='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'>${result[i]._id}</td>
                       <td>${result[i].commissionType}</td>
                       <td>${result[i].commissionPercentage}</td>
                       <td>${result[i].commission}</td>
