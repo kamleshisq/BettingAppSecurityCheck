@@ -20798,6 +20798,7 @@ socket.on('connect', () => {
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
+              $('#myModaladduser .modal-title').text(`${result[0].marketName}`)
                 $('#myModaladduser .modal-tbody').html(html)
             }
 
