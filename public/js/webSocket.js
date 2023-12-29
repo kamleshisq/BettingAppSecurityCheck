@@ -8941,7 +8941,7 @@ socket.on('connect', () => {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
-                console.log(IdButton, "IdButtonIdButtonIdButton")
+                // console.log(IdButton, "IdButtonIdButtonIdButton")
                 let diff
                 let element = $(this)
                 let diffStake 
@@ -9025,11 +9025,19 @@ socket.on('connect', () => {
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
                     diffStake = parseFloat(spanId)
+                    let IdButton = $(this).closest("tr").find(`#${buttonId}`)
                     console.log(IdButton, buttonId)
-                    if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue'))
-                    var betValue = parseFloat(
-                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                    );
+                    var betValue
+                    if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                        betValue = parseFloat(
+                            $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                          );
+                    }else{
+                         betValue = parseFloat(
+                          $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                        );
+                    }
+                    console.log(betValue)
                     var result = ((parseFloat(newStake) * betValue) / 100);
                     diff = ((parseFloat(diffStake) * betValue) / 100);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
