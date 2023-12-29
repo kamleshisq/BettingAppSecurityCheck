@@ -20827,7 +20827,7 @@ socket.on('connect', () => {
                 socket.emit('geteventwisedownlinecommitssion',{data})
             }else if($(this).hasClass('eventcompitisionsportusername')){
                 let data = {}
-                let parentdetail = JSON.parse($(this).attr('eventcompitisionsportusername'))
+                let parentdetail = JSON.parse($(this).attr('data-eventcompitisionsportusername'))
                 let userName = parentdetail.userName
                 let sportId = parentdetail.sportId
                 let seriesName = parentdetail.seriesName
@@ -20846,7 +20846,7 @@ socket.on('connect', () => {
                 socket.emit('geteventwisedownlinecommitssion',{data})
             }else if($(this).hasClass('compitisionsportusername')){
                 let data = {}
-                let parentdetail = JSON.parse($(this).attr('compitisionsportusername'))
+                let parentdetail = JSON.parse($(this).attr('data-compitisionsportusername'))
                 console.log(parentdetail)
                 let userName = parentdetail.userName
                 let sportId = parentdetail.sportId
@@ -20865,7 +20865,7 @@ socket.on('connect', () => {
             }else if($(this).hasClass('sportusername')){
 
                 let data = {}
-                let parentdetail = JSON.parse($(this).attr('sportusername'))
+                let parentdetail = JSON.parse($(this).attr('data-sportusername'))
                 console.log(parentdetail)
                 let userName = parentdetail.userName
                 let sportId = parentdetail.sportId
