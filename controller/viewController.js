@@ -2287,7 +2287,11 @@ exports.liveAllMarkets = catchAsync(async(req, res, next) => {
     let fullUrl = "https://fbot.1cricket.co/api/Admin/getmarkets";
     console.log('fullUrl :', fullUrl)
     fetch(fullUrl, {
-        method: 'GET',
+        method: 'get',
+        headers: { 
+            'Content-Type': 'application/json',
+            'accept': 'application/json'
+            },
         // body:body 
     })
     .then(res =>res.json())
