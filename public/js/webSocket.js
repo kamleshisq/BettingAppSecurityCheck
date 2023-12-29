@@ -21038,7 +21038,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="comp_sporttr"><td class="comp_sporttd" data-comp_sport='${JSON.stringify({sportname:parentdata.sportId})}'>${result[i]._id}</td>
+                      html += `<tr style="cursor:pointer" class="comp_sporttr"><td class="comp_sporttd" data-comp_sport='${JSON.stringify({sportname:parentdata.sportId,seriesName:result[i]._id})}'>${result[i]._id}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
@@ -21056,27 +21056,24 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('click','.sport_usernametr',function(e){
+        $(document).on('click','.comp_sporttr',function(e){
             let data = {}
-            console.log($(this).children('td.sport_usernametd'))
-            console.log($(this).children('td.sport_usernametd').attr('data-sport_username'))
-            let parentdetail = JSON.parse($(this).children('td.sport_usernametd').attr('data-sport_username'))
-            console.log(parentdetail)
-            let userName = parentdetail.userName
-            let sportId = parentdetail.sportId
+            let parentdetail = JSON.parse($(this).children('td.comp_sporttd').attr('data-comp_sport'))
+            let sportId = parentdetail.sportname
+            let seriesName = parentdetail.seriesName
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
-            let bredcum =  [userName,sportId]
-            data.sportId = sportId
-            data.userName = userName;
+            let bredcum =  [sportId,seriesName]
+            data.sportname = sportId;
+            data.seriesName = seriesName
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
-            console.log(data)
-            socket.emit('getsportwisedownlinecommitssion',{data})
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            socket.emit('getcommiwiseuplinecommitssion',{data})
         })
 
-        socket.on('getsportwisedownlinecommitssion',async(data)=>{
+        socket.on('getcommiwiseuplinecommitssion',async(data)=>{
             console.log(data)
             if(data.status == 'success'){
                 let result = data.result
@@ -21089,7 +21086,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="series_sport_usernametr"><td class="series_sport_usernametd" data-series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:result[i]._id})}'>${result[i]._id}</td>
+                      html += `<tr style="cursor:pointer" class="series_sport_usernametr"><td class="series_sport_usernametd" data-series_sport_username='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${result[i]._id}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{
@@ -21101,7 +21098,7 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li>`
+                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({sportname:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({sportname:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
 
                 $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
