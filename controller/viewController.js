@@ -2291,7 +2291,7 @@ exports.liveAllMarkets = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        // console.log(result)
+        console.log(result)
         res.status(200).json({
             result
         })
