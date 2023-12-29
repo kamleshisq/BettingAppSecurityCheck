@@ -151,6 +151,12 @@ socket.on('connect', () => {
         } 
     });
 
+    $('input[type="date"]').on('change', function() {
+        if(!$(this).hasClass('select-date')){
+            $(this).addClass('select-date');
+        }
+    })
+
     $(document).on('click', ".close-btn", function() {
         const grandParent = $(this).closest('.popup');
         grandParent.removeClass("active");
