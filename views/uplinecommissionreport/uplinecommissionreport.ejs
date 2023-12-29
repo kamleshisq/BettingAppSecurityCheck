@@ -4,7 +4,7 @@
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
       <div class="new-head"> 
-        <h3>Downline Commission Report</h3>
+        <h3>Upline Commission Report</h3>
         <!-- <form action="">
           <div class="input-group">
             <div class="input-group-prepend">
@@ -51,18 +51,16 @@
           <table id="table12">
             <thead>
               <tr>
-                <th>User Name</th>
+                <th>Sport</th>
                 <th>Commission</th>
-                <th>Unclaimed Commission</th>
               </tr>
             </thead>
             <tbody class="new-body">
-              <%if(sportdownlinecomm.length > 0){%>
-              <%for(let i = 0;i<sportdownlinecomm.length;i++){%>
+              <%if(sporttwisecommittion.length > 0){%>
+              <%for(let i = 0;i<sporttwisecommittion.length;i++){%>
               <tr style="cursor:pointer" class="usernametr">
-                  <td class="usernametd" data-username="<%=sportdownlinecomm[i]._id%>"><%=sportdownlinecomm[i]._id%></td>
-                  <td><%=sportdownlinecomm[i].commissionClaim%></td>
-                  <td><%=sportdownlinecomm[i].commissionUnclaim%></td>
+                  <td class="usernametd" data-username="<%=sporttwisecommittion[i]._id%>"><%=sporttwisecommittion[i]._id%></td>
+                  <td><%=sporttwisecommittion[i].commissionClaim%></td>
                 </tr>
                 <%}%>
               </tr>
