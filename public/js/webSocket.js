@@ -21248,6 +21248,7 @@ socket.on('connect', () => {
             data.fromdate = fromdate;
             data.todate = todate;
             data.LOGINUSER = LOGINDATA.LOGINUSER
+            console.log(data)
             socket.emit('getmarketwiseuplinecommission',{data})
         })
 

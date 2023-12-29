@@ -10163,13 +10163,12 @@ io.on('connection', (socket) => {
                 {
                     $match:{
                         date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
-                        userName:data.data.LOGINUSER.userName,
+                        userId:data.data.LOGINUSER._id.toString(),
                         gameId:data.data.sportId,
                         event:data.data.seriesName,
                         match:data.data.eventName,
                         marketName:data.data.marketName
                     }
-                    
                 },
                 {
                     $sort:{
