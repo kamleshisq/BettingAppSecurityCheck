@@ -23,6 +23,7 @@ router.get("/getLiveTv", viewController.getLiveTv);
 router.get("/getMarketResult", viewController.getMarketResult);
 router.get("/htmlDATA", viewController.getHTMLSCOREIFRm);
 router.get('/liveMarkets', viewController.liveAllMarkets)
+router.get('/liveAllMarkets2', viewController.liveAllMarkets2)
 router.post('/getFancyBookDATA', viewController.getFancyBookDATA)
 
 // Admin Panal 
