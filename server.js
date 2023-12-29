@@ -9775,13 +9775,13 @@ io.on('connection', (socket) => {
              let result = sportwisedownlinecomm.map(ele=>{
                 if(ele['_id'] == '4'){
                     ele['sportname'] = 'Cricket'
-                }else if(ele['_id' == '1']){
+                }else if(ele['_id'] == '1'){
                     ele['sportname'] = 'Football'
-                }else if(ele['_id' == '2']){
+                }else if(ele['_id'] == '2'){
                     ele['sportname'] = 'Tennis'
-                }else if(ele['_id' == '10']){
+                }else if(ele['_id'] == '10'){
                     ele['sportname'] = 'Basketball'
-                }else if(ele['_id' == '30']){
+                }else if(ele['_id'] == '30'){
                     ele['sportname'] = 'Baseball'
                 }
                 return ele
@@ -9815,7 +9815,17 @@ io.on('connection', (socket) => {
                 }
             ])
 
-         
+            if(data.data.sportId == '4'){
+                data.data.bredcum[1] = 'Cricket'
+            }else if(data.data.sportId == '1'){
+                data.data.bredcum[1] = 'Football'
+            }else if(data.data.sportId == '2'){
+                data.data.bredcum[1] = 'Tennis'
+            }else if(data.data.sportId == '10'){
+                data.data.bredcum[1] = 'Basketball'
+            }else if(data.data.sportId == '30'){
+                data.data.bredcum[1] = 'Baseball'
+            }
     
             socket.emit('getsportwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
                 sportId:data.data.sportId},bredcum:data.data.bredcum})
@@ -9850,7 +9860,7 @@ io.on('connection', (socket) => {
          
     
             socket.emit('getserieswisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
-                sportId:data.data.sportId,seriesName:data.data.seriesName}})
+                sportId:data.data.sportId,seriesName:data.data.seriesName},bredcum:data.data.bredcum})
         }catch(err){
             socket.emit('getserieswisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>getserieswisedownlinecommitssion')
@@ -9887,7 +9897,7 @@ io.on('connection', (socket) => {
          
     
             socket.emit('geteventwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
-                sportId:data.data.sportId,seriesName:data.data.seriesName,eventName:data.data.eventName}})
+                sportId:data.data.sportId,seriesName:data.data.seriesName,eventName:data.data.eventName},bredcum:data.data.bredcum})
         }catch(err){
             socket.emit('geteventwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>geteventwisedownlinecommitssion')
