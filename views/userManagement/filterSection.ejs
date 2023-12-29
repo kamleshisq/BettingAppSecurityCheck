@@ -18,7 +18,7 @@
         <%let userROLE%>
         <%for(let i = 0 ; i < roles.length; i++){%>
           <%if(roles[i].roleName != "Operator"){%>
-            <%if(!roles[i].roleName != "user"){%>
+            <%if(roles[i].roleName != "user"){%>
             <option value="<%=roles[i].role_type%>"><%=roles[i].roleName%></option>
             <%}else{
               console.log(roles[i])
