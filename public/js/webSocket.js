@@ -20941,8 +20941,8 @@ socket.on('connect', () => {
                   for(let i = 0;i<result.length;i++){
                       html += `<tr style="cursor:pointer"  class="usernametr">
                       <td class="usernametd" data-username="${result[i]._id}">${result[i]._id}</td>
-                    <td>${result[i].commissionClaim}></td>
-                    <td>${result[i].commissionUnclaim}></td>
+                    <td>${result[i].commissionClaim}</td>
+                    <td>${result[i].commissionUnclaim}</td>
                       </tr>`
                   }
               }else{
@@ -21378,7 +21378,7 @@ socket.on('connect', () => {
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
                       html += `<tr style="cursor:pointer"  class="sportnametr">
-                      <td class="sportnametd" data-sportnametr="${result[i]._id}">${result[i].sportname}</td>
+                      <td class="sportnametd" data-sportname="${result[i]._id}">${result[i].sportname}</td>
                     <td>${result[i].commissionClaim}</td>
                       </tr>`
                   }
