@@ -10239,7 +10239,7 @@ io.on('connection', (socket) => {
                     $match:{
                         date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         loginUserId:{$exists:true},
-                        userId:loginuserid1.toString()
+                        userId:loginuserid1
                     }
                 },
                 {

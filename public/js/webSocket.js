@@ -21398,6 +21398,7 @@ socket.on('connect', () => {
             data.todate = todate
             data.LOGINUSER = LOGINDATA.LOGINUSER
             if(!$('.bredcum-container li')){
+                console.log(data,'==data1')
                 socket.emit('userwiseuplinecommittion',{data})
             }else{
                 if($('.bredcum-container li:last').hasClass('eventcompitisionsportwise')){
