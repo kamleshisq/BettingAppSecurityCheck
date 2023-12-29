@@ -571,11 +571,11 @@
                         <%if(roles[i].roleName != "user"){%>
                         <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
                         <%}else{%>
-                          <%console.log(roles[i], "tydytyttdttdttdttdttdttdt")%>
                           userROLE = roles[i]
                         <%}%>
                       <%}%>
                     <%}%>
+                    <option value="<%=userROLE._id%>"><%=userROLE.roleName%></option>
                   <%}%>
                 </select>
               </div>
