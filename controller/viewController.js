@@ -2289,8 +2289,7 @@ exports.liveAllMarkets = catchAsync(async(req, res, next) => {
     fetch(fullUrl, {
         method: 'get',
         headers: { 
-            'Content-Type': 'application/json',
-            'accept': 'application/json'
+            'Accept': 'application/json'
             },
         // body:body 
     })
