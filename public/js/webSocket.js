@@ -20804,6 +20804,19 @@ socket.on('connect', () => {
         })
 
 
+        $(document).on('click','.bredcum-container li',function(e){
+            if($(this).hasClass('marketeventcompitisionsportusername')){
+                console.log(marketeventcompitisionsportusername)
+            }else if($(this).hasClass('eventcompitisionsportusername')){
+                console.log(eventcompitisionsportusername)
+            }else if($(this).hasClass('compitisionsportusername')){
+
+            }else if($(this).hasClass('sportusername')){
+
+            }
+        })
+
+
 
 
     }
