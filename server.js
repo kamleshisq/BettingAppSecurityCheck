@@ -10016,7 +10016,52 @@ io.on('connection', (socket) => {
         }
     })
 
-    
+    socket.on('getsportwiseuplinecommission',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportname
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$seriesName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }}
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+
+         
+            if(data.data.sportId == '4'){
+                data.data.bredcum[1] = 'Cricket'
+            }else if(data.data.sportId == '1'){
+                data.data.bredcum[1] = 'Football'
+            }else if(data.data.sportId == '2'){
+                data.data.bredcum[1] = 'Tennis'
+            }else if(data.data.sportId == '10'){
+                data.data.bredcum[1] = 'Basketball'
+            }else if(data.data.sportId == '30'){
+                data.data.bredcum[1] = 'Baseball'
+            }
+            socket.emit('getsportwiseuplinecommission',{status:'success',result:sportwisedownlinecomm,parentdata:{
+                sportId:data.data.sportname},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('getsportwiseuplinecommission',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getsportwiseuplinecommission')
+        }
+    })
 
 
     socket.on('checkDelay', async(data)=>{

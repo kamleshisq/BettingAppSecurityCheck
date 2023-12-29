@@ -58,8 +58,8 @@
             <tbody class="new-body">
               <%if(sporttwisecommittion.length > 0){%>
               <%for(let i = 0;i<sporttwisecommittion.length;i++){%>
-              <tr style="cursor:pointer" class="usernametr">
-                  <td class="usernametd" data-username="<%=sporttwisecommittion[i]._id%>"><%=sporttwisecommittion[i]._id%></td>
+              <tr style="cursor:pointer" class="sportnametr">
+                  <td class="sportnametd" data-sportname="<%=sporttwisecommittion[i]._id%>"><%=sporttwisecommittion[i].sportname%></td>
                   <td><%=sporttwisecommittion[i].commissionClaim%></td>
                 </tr>
                 <%}%>
