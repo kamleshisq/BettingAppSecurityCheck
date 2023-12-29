@@ -20574,7 +20574,7 @@ socket.on('connect', () => {
 
                 html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li>`
 
-                $('table').html(html)
+                $('#table12').html(html)
                 $('.bredcum-container ul').html(html2)
             }
         })
@@ -20626,7 +20626,7 @@ socket.on('connect', () => {
 
                 html2 += `  <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li>`
 
-                $('table').html(html)
+                $('#table12').html(html)
                 $('.bredcum-container ul').append(html2)
             }
 
@@ -20680,7 +20680,7 @@ socket.on('connect', () => {
 
                 html2 += `  <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li>`
 
-                $('table').html(html)
+                $('#table12').html(html)
                 $('.bredcum-container ul').append(html2)
 
             }
@@ -20740,7 +20740,7 @@ socket.on('connect', () => {
 
                 html2 += `  <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
 
-                $('table').html(html)
+                $('#table12').html(html)
                 $('.bredcum-container ul').append(html2)
             }
 
@@ -20774,7 +20774,7 @@ socket.on('connect', () => {
                 let html = ""
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr><td></td>
+                      html += `<tr>
                       <td>${result[i].date}</td>
                       <td>${result[i].userName}</td>
                       <td>${result[i].selectionName}</td>
@@ -20787,7 +20787,6 @@ socket.on('connect', () => {
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
-                html += `</tbody>`
                 $('#myModaladduser .modal-tbody').html(html)
             }
 
