@@ -20723,7 +20723,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_usernametr='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'>${result[i]._id}</td>
+                      html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'>${result[i]._id}</td>
                       <td>${result[i].commissionType}</td>
                       <td>${result[i].commissionPercentage}</td>
                       <td>${result[i].commission}</td>
