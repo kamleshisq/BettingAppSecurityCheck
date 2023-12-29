@@ -21020,6 +21020,7 @@ socket.on('connect', () => {
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
+            data.LOGINUSER = LOGINDATA.LOGINUSER    
             console.log(data)
             socket.emit('getsportwiseuplinecommission',{data})
         })
@@ -21037,7 +21038,7 @@ socket.on('connect', () => {
               </thead><tbody class="new-body">`
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
-                      html += `<tr style="cursor:pointer" class="comp_sporttr"><td class="comp_sporttd" data-comp_sport='${JSON.stringify({sportname:parentdata.sportId})}'>${result[i].seriesName}</td>
+                      html += `<tr style="cursor:pointer" class="comp_sporttr"><td class="comp_sporttd" data-comp_sport='${JSON.stringify({sportname:parentdata.sportId})}'>${result[i]._id}</td>
                       <td>${result[i].commission}</td></tr>`
                   }
               }else{

@@ -10024,7 +10024,9 @@ io.on('connection', (socket) => {
                         date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         loginUserId:{$exists:true},
                         parentIdArray:{$exists:true},
-                        sportId:data.data.sportname
+                        sportId:data.data.sportname,
+                        userId:data.data.LOGINUSER._id.toString()
+
                     }
                     
                 },
@@ -10045,15 +10047,15 @@ io.on('connection', (socket) => {
 
          
             if(data.data.sportname == '4'){
-                data.data.bredcum[1] = 'Cricket'
+                data.data.bredcum[0] = 'Cricket'
             }else if(data.data.sportname == '1'){
-                data.data.bredcum[1] = 'Football'
+                data.data.bredcum[0] = 'Football'
             }else if(data.data.sportname == '2'){
-                data.data.bredcum[1] = 'Tennis'
+                data.data.bredcum[0] = 'Tennis'
             }else if(data.data.sportname == '10'){
-                data.data.bredcum[1] = 'Basketball'
+                data.data.bredcum[0] = 'Basketball'
             }else if(data.data.sportname == '30'){
-                data.data.bredcum[1] = 'Baseball'
+                data.data.bredcum[0] = 'Baseball'
             }
             socket.emit('getsportwiseuplinecommission',{status:'success',result:sportwisedownlinecomm,parentdata:{
                 sportId:data.data.sportname},bredcum:data.data.bredcum})
