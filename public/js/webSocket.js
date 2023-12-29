@@ -20623,7 +20623,12 @@ socket.on('connect', () => {
 
                 html += `</tbody>`
 
+                let html2 = ""
+
+                html2 += `  <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li>`
+
                 $('table').html(html)
+                $('.bredcum-container ul').append(html2)
             }
 
         })
@@ -20671,7 +20676,14 @@ socket.on('connect', () => {
 
                 html += `</tbody>`
 
+                
+                let html2 = ""
+
+                html2 += `  <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li>`
+
                 $('table').html(html)
+                $('.bredcum-container ul').append(html2)
+
             }
 
         })
@@ -20685,7 +20697,7 @@ socket.on('connect', () => {
             let eventName = parentdetail.eventName
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
-            let bredcum =  [userName,sportId,seriesName]
+            let bredcum =  [userName,sportId,seriesName,eventName]
             data.eventName = parentdetail.eventName
             data.seriesName = seriesName
             data.sportId = sportId
@@ -20724,8 +20736,13 @@ socket.on('connect', () => {
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
                 html += `</tbody>`
+                
+                let html2 = ""
+
+                html2 += `  <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
 
                 $('table').html(html)
+                $('.bredcum-container ul').append(html2)
             }
 
         })
