@@ -2284,13 +2284,12 @@ exports.getMarketResult = catchAsync(async(req, res, next) => {
 exports.liveAllMarkets = catchAsync(async(req, res, next) => {
     // let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
     // console.log(body)
-    let fullUrl = "https://fbot.1cricket.co/api/Admin/getmarkets";
+    let fullUrl = "https://fbot.1cricket.co/api/Admin/getmarketsbysid/?sid=4";
     console.log('fullUrl :', fullUrl)
     fetch(fullUrl, {
         method: 'get',
         headers: { 
-            'Content-Type': 'application/json',
-            'accept': 'application/json'
+            'Accept': 'application/json'
             },
         // body:body 
     })
