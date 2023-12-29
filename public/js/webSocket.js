@@ -20649,10 +20649,10 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += `  <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li>`
+                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li>`
 
                 $('#table12').html(html)
-                $('.bredcum-container ul').append(html2)
+                $('.bredcum-container ul').html(html2)
             }
 
         })
@@ -20703,10 +20703,10 @@ socket.on('connect', () => {
                 
                 let html2 = ""
 
-                html2 += `  <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li>`
+                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li>`
 
                 $('#table12').html(html)
-                $('.bredcum-container ul').append(html2)
+                $('.bredcum-container ul').html(html2)
 
             }
 
@@ -20763,10 +20763,10 @@ socket.on('connect', () => {
                 
                 let html2 = ""
 
-                html2 += `  <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
+                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li> <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
 
                 $('#table12').html(html)
-                $('.bredcum-container ul').append(html2)
+                $('.bredcum-container ul').html(html2)
             }
 
         })
@@ -20816,6 +20816,85 @@ socket.on('connect', () => {
                 $('#myModaladduser .modal-tbody').html(html)
             }
 
+        })
+
+
+        $(document).on('click','.bredcum-container li',function(e){
+            if($(this).hasClass('marketeventcompitisionsportusername')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-marketeventcompitisionsportusername'))
+                let userName = parentdetail.userName
+                let sportId = parentdetail.sportId
+                let seriesName = parentdetail.seriesName
+                let eventName = parentdetail.eventName
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [userName,sportId,seriesName,eventName]
+                data.eventName = parentdetail.eventName
+                data.seriesName = seriesName
+                data.sportId = sportId
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                console.log(data)
+                socket.emit('geteventwisedownlinecommitssion',{data})
+            }else if($(this).hasClass('eventcompitisionsportusername')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-eventcompitisionsportusername'))
+                let userName = parentdetail.userName
+                let sportId = parentdetail.sportId
+                let seriesName = parentdetail.seriesName
+                let eventName = parentdetail.eventName
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [userName,sportId,seriesName,eventName]
+                data.eventName = parentdetail.eventName
+                data.seriesName = seriesName
+                data.sportId = sportId
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                console.log(data)
+                socket.emit('geteventwisedownlinecommitssion',{data})
+            }else if($(this).hasClass('compitisionsportusername')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-compitisionsportusername'))
+                console.log(parentdetail)
+                let userName = parentdetail.userName
+                let sportId = parentdetail.sportId
+                let seriesName = parentdetail.seriesName
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [userName,sportId,seriesName]
+                data.seriesName = seriesName
+                data.sportId = sportId
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                console.log(data)
+                socket.emit('getserieswisedownlinecommitssion',{data})
+            }else if($(this).hasClass('sportusername')){
+
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-sportusername'))
+                console.log(parentdetail)
+                let userName = parentdetail.userName
+                let sportId = parentdetail.sportId
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [userName,sportId]
+                data.sportId = sportId
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                console.log(data)
+                socket.emit('getsportwisedownlinecommitssion',{data})
+
+            }
         })
 
 
