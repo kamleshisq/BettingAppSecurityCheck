@@ -9629,15 +9629,14 @@ socket.on('connect', () => {
           })
         $(document).ready(function () {
             $(".eventId").click(function () {
-                let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
-                let IdButton = $(`#${buttonId}`)
-                console.log(IdButton)
+                // console.log("working")
             let data = {}
             let secforFency 
             data.title = $(this).closest("tr").find(".name").text()
             data.eventId = $(this).attr("id");
             data.odds = $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
             let secId = $(this).closest("tr").find(".beton").attr('id')
+            console.log(secId, "secIdsecIdsecIdsecId")
             data.secId = secId.slice(0,-1)
             data.market = $(this).closest("table").attr("id");
             data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
