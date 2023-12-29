@@ -9988,25 +9988,36 @@ io.on('connection', (socket) => {
     })
     socket.on('getmarketwisedownlinecommission',async(data)=>{
         try{
-            let user = await User.findOne({userName:data.data.userName})
+            let user = await User.findOne({userName:data.data.LOGINUSER.userName})
             let usernameArr = [];
+            let netlosing = false;
             if(user.roleName == 'user'){
                 usernameArr = [user.userName]
             }else{
                 usernameArr = await User.distinct("userName",{parentUsers:user._id})
             }
+            let filter = {
+                date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                userName:{$in:usernameArr},
+                gameId:data.data.sportId,
+                event:data.data.seriesName,
+                match:data.data.eventName,
+                marketName:data.data.marketName
+            }
+
+            if(data.data.bettype == 'Net Losing Commission'){
+                netlosing = true
+            }else{  
+                if(data.data.betId){
+                    filter.betId = data.data.betId
+                }else{
+
+                }
+            }
             console.log(usernameArr,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
                 {
-                    $match:{
-                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
-                        userName:{$in:usernameArr},
-                        gameId:data.data.sportId,
-                        event:data.data.seriesName,
-                        match:data.data.eventName,
-                        marketName:data.data.marketName
-                    }
-                    
+                    $match:filter
                 },
                 {
                     $sort:{
@@ -10167,24 +10178,37 @@ io.on('connection', (socket) => {
 
     socket.on('getmarketwiseuplinecommission',async(data)=>{
         try{
+           
             let user = await User.findOne({userName:data.data.LOGINUSER.userName})
             let usernameArr = [];
+            let netlosing = false;
             if(user.roleName == 'user'){
                 usernameArr = [user.userName]
             }else{
                 usernameArr = await User.distinct("userName",{parentUsers:user._id})
             }
+            let filter = {
+                date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                userName:{$in:usernameArr},
+                gameId:data.data.sportId,
+                event:data.data.seriesName,
+                match:data.data.eventName,
+                marketName:data.data.marketName
+            }
+
+            if(data.data.bettype == 'Net Losing Commission'){
+                netlosing = true
+            }else{  
+                if(data.data.betId){
+                    filter.betId = data.data.betId
+                }else{
+
+                }
+            }
             console.log(usernameArr,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
                 {
-                    $match:{
-                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
-                        userName:{$in:usernameArr},
-                        gameId:data.data.sportId,
-                        event:data.data.seriesName,
-                        match:data.data.eventName,
-                        marketName:data.data.marketName
-                    }
+                    $match:filter
                 },
                 {
                     $sort:{
