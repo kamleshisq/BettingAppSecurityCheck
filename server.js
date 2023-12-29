@@ -243,7 +243,7 @@ io.on('connection', (socket) => {
         }else{
             operationUser = me
             operationId = operationUser._id
-            roles = await Role.find({role_level: {$gt:operationUser.role.role_level}});
+            roles = await Role.find();
         }
         
         if(Object.keys(data.filterData).length !== 0){
