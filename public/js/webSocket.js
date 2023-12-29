@@ -20573,7 +20573,7 @@ socket.on('connect', () => {
 
                 let html2 = ""
 
-                html2 += `  <li class="active sportusername" data-sportusername='${JSON.parse({userName:parentdata.userName})}'>${data.bredcum[0]}</li>`
+                html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li>`
 
                 $('table').html(html)
                 $('.bredcum-container ul').html(html2)
