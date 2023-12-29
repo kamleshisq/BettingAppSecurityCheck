@@ -9027,7 +9027,7 @@ socket.on('connect', () => {
                     diffStake = parseFloat(spanId)
                     var escapedId = buttonId.replace(/\./g, '\\.');
                     let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
-                    console.log(IdButton, escapedId)
+                    // console.log(IdButton, escapedId)
                     var betValue
                     if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
                         betValue = parseFloat(
@@ -9038,7 +9038,7 @@ socket.on('connect', () => {
                           $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                         );
                     }
-                    console.log(betValue)
+                    // console.log(betValue)
                     var result = ((parseFloat(newStake) * betValue) / 100);
                     diff = ((parseFloat(diffStake) * betValue) / 100);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
@@ -9305,6 +9305,13 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) - NewStake;
                         resultDiff = (staleDiff * Odds) - staleDiff;
                     }else{
+                        var escapedId = buttonId.replace(/\./g, '\\.');
+                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                            Odds = parseFloat(
+                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                              );
+                        }
                         result = (NewStake * Odds) / 100
                         resultDiff = (staleDiff * Odds) / 100
                     }
@@ -9393,6 +9400,13 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) - NewStake;
                         diff = (100 * Odds) - 100;
                     }else{
+                        var escapedId = buttonId.replace(/\./g, '\\.');
+                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                            Odds = parseFloat(
+                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                              );
+                        }
                         result = (NewStake * Odds) / 100
                         diff = (100 * Odds) / 100
                     }
@@ -9615,7 +9629,9 @@ socket.on('connect', () => {
           })
         $(document).ready(function () {
             $(".eventId").click(function () {
-                // console.log("working")
+                let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                let IdButton = $(`#${buttonId}`)
+                console.log(IdButton)
             let data = {}
             let secforFency 
             data.title = $(this).closest("tr").find(".name").text()
@@ -9658,12 +9674,14 @@ socket.on('connect', () => {
                             if(checkTime < Date.now()){
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                             }else{
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
+                                console.log(data)
+                                    // showLoader();
+                                    // socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
+                            console.log(data)
+                                    // showLoader();
+                                    // socket.emit("betDetails", {data, LOGINDATA})
                         }
                         // console.log(data)
                     }else{
@@ -9684,12 +9702,14 @@ socket.on('connect', () => {
                                 if(checkTime < Date.now()){
                                     togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                                 }else{
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
+                                    console.log(data)
+                                    // showLoader();
+                                    // socket.emit("betDetails", {data, LOGINDATA})
                                 }
                             }else{
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
+                                console.log(data)
+                                    // showLoader();
+                                    // socket.emit("betDetails", {data, LOGINDATA})
                             }
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
