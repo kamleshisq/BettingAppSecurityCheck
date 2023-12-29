@@ -21397,6 +21397,7 @@ socket.on('connect', () => {
             data.fromdate = fromdate
             data.todate = todate
             data.LOGINUSER = LOGINDATA.LOGINUSER
+            console.log(!$('.bredcum-container li'))
             if(!$('.bredcum-container li')){
                 console.log(data,'==data1')
                 socket.emit('userwiseuplinecommittion',{data})
