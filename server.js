@@ -9760,7 +9760,7 @@ io.on('connection', (socket) => {
             let sportdownlinecomm = await newCommissionModel.aggregate([
                 {
                     $match:{
-                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        // date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         loginUserId:{$exists:true},
                         parentIdArray:{$in:[loginuserid1.toString()]}
     
@@ -10237,7 +10237,7 @@ io.on('connection', (socket) => {
             let sporttwisecommittion = await newCommissionModel.aggregate([
                 {
                     $match:{
-                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date((new Date(data.data.todate).getTime()) + ((24 * 60 * 60 * 1000) -1))},
                         loginUserId:{$exists:true},
                         userId:loginuserid1.toString()
                     }

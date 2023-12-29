@@ -21378,8 +21378,8 @@ socket.on('connect', () => {
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
                       html += `<tr>
-                      <td class="usernametd" data-username="${result[i]._id}>">${result[i].sportname}></td>
-                    <td>${result[i].commissionClaim}></td>
+                      <td class="usernametd" data-username="${result[i]._id}">${result[i].sportname}</td>
+                    <td>${result[i].commissionClaim}</td>
                       </tr>`
                   }
               }else{
