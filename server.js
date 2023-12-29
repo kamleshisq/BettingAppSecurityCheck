@@ -9754,7 +9754,7 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('userwisedownlinecommittion',async(date)=>{
+    socket.on('userwisedownlinecommittion',async(data)=>{
         try{
             let loginuserid1 = data.data.LOGINUSER._id
             let sportdownlinecomm = await newCommissionModel.aggregate([
@@ -10233,13 +10233,13 @@ io.on('connection', (socket) => {
 
     socket.on('userwiseuplinecommittion',async(data)=>{
         try{
-            let loginuserid1 = data.data.LOGINUSER_id
+            let loginuserid1 = data.data.LOGINUSER._id
             let sporttwisecommittion = await newCommissionModel.aggregate([
                 {
                     $match:{
-                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date((new Date(data.data.todate).getTime()) + ((24 * 60 * 60 * 1000) -1))},
                         loginUserId:{$exists:true},
-                        userId:loginuserid1
+                        userId:loginuserid1.toString()
                     }
                 },
                 {
