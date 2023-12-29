@@ -9024,7 +9024,7 @@ socket.on('connect', () => {
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
                     diffStake = parseFloat(spanId)
-                    console.log(IdButton.hasClass('only_over_blue'))
+                    console.log(IdButton, buttonId)
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
