@@ -20807,15 +20807,17 @@ socket.on('connect', () => {
             let seriesName = parentdetail.seriesName
             let eventName = parentdetail.eventName
             let marketName = parentdetail.marketName
-            let commissionType = parentdetail.commissionType
-            let bettype = parentdetail.bettype            
+            let bettype = parentdetail.bettype              
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
+            if(parentdetail.betId){
+                betId = parentdetail.betId
+                data.betId = betId
+            }
             data.marketName = marketName
             data.eventName = eventName
             data.seriesName = seriesName
             data.sportId = sportId
-            data.commissionType = commissionType
             data.bettype = bettype
             data.userName = userName;
             data.fromdate = fromdate;
