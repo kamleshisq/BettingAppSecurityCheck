@@ -10272,11 +10272,12 @@ io.on('connection', (socket) => {
             })
         
            
-        
-            console.log(sporttwisecommittion,"==>sporttwisecommittion")
+            socket.emit('userwiseuplinecommittion',{status:'success',result})
         }catch(err){
-
+            socket.emit('userwiseuplinecommittion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>userwiseuplinecommittion')
         }
+       
     })
 
 
