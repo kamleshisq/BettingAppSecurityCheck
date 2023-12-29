@@ -9026,7 +9026,7 @@ socket.on('connect', () => {
                     }
                     diffStake = parseFloat(spanId)
                     var escapedId = buttonId.replace(/\./g, '\\.');
-                    let IdButton = $(this).closest("tr").find(`#${escapedId}`)
+                    let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
                     console.log(IdButton, escapedId)
                     var betValue
                     if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
