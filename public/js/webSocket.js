@@ -20757,14 +20757,13 @@ socket.on('connect', () => {
             let marketName = parentdetail.marketName
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
-            data.market = parentdetail.marketName
-            data.eventName = parentdetail.eventName
+            data.marketName = marketName
+            data.eventName = eventName
             data.seriesName = seriesName
             data.sportId = sportId
             data.userName = userName;
             data.fromdate = fromdate;
             data.todate = todate;
-            data.bredcum = bredcum;
             console.log(data)
             socket.emit('getmarketwisedownlinecommission',{data})
         })
