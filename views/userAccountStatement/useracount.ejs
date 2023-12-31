@@ -19,7 +19,6 @@
               </ul>
             </div>
           </div>
-          <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
         </form> -->
       </div>
       <%- include("../loginUserAdminsideDetails") %>
@@ -31,6 +30,21 @@
         <div class="table-heading">
           <div class="table-heading-btn">
             <form class="game-analysis-heading-from">
+              <div class="input-group">
+                <label>Transaction</label>
+                <select name="transaction_type" id="transaction_type">
+                  <option value="All" selected>All</option>
+                  <option value="Deposit">Deposit</option>
+                  <option value="Withdraw">Withdraw</option>
+                  <option value="Settlement_Deposit">Settlement Deposit</option>
+                  <option value="Settlement_Withdraw">Settlement Withdraw</option>
+                  <!-- <option value="Bet_Settlement">Bet Settlement</option>
+                  <option value="Rollback">Rollback</option>
+                  <option value="Voided">Voided</option>
+                  <option value="Incentive_Transfer">Incentive Transfer</option>
+                  <option value="Claim_Incentive">Claim Incentive</option> -->
+                </select>
+              </div>
               <div class="input-group">
                 <label>From Date</label>
                 <input type = "date" id="Fdate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
@@ -49,9 +63,7 @@
           <table id="table12">
             <thead>
               <tr>
-                <th>S.No</th>
                 <th>Date</th>
-                <th>Time</th>
                 <th>From / To</th>
                 <th>Opening Balance</th>
                 <th>Amount</th>
@@ -63,11 +75,20 @@
               <%if(data.length !== 0){%>
               <%for(let i = 0; i < data.length; i++){%>
               <% let date = new Date(data[i].date)%>
+              <%
+                  var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+              %>
               <%if((i%2 == 0)){%>
               <tr>
-                <td><%= i + 1%></td>
-                <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-                <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                <td class="text-nowrap" ><%=formattedTime%></td>
                 <%if(data[i].creditDebitamount > 0){%>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
@@ -116,9 +137,7 @@
               </tr>
               <%}else{%>
               <tr>
-                <td><%= i + 1%></td>
-                <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-                <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                <td class="text-nowrap" ><%=formattedTime%></td>
                 <%if(data[i].creditDebitamount > 0){%>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>

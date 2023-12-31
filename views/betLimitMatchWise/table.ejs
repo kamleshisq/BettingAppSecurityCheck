@@ -25,7 +25,6 @@
             <!-- CRICKET -->
             <%for(let i = 0; i < seriesMatch.length; i++){%>
               <%
-                <!-- console.log(seriesMatch[i].eventData.name) -->
                 let limitData = betLimit.find(item => item.type == seriesMatch[i].eventData.name)
                 var timestamp = `${seriesMatch[i].eventData.time}` * 1000; 
                   var date = new Date(timestamp);
@@ -43,15 +42,14 @@
                     <tr id="<%=i + 1%>">
                       <!-- <td></td> -->
                       <td id="<%=seriesMatch[i].eventData.name%>" class="btn-filter"><div class="date-match-wrap" >  <span class="date-span"><%=formattedTime%></span> <a href="/admin/betlimit/sports/match?match=<%=seriesMatch[i].eventData.name%>">  <%=seriesMatch[i].eventData.name%></a></div></td>
-                      <td><input type="text" class="form-datas" value="<%=limitData.min_stake%>" readonly=""></td>
-                      <td><input type="text" class="form-datas" value="<%=limitData.max_stake%>" readonly=""></td>
-                      <td><input type="text" class="form-datas" value="<%=limitData.max_profit%>" readonly=""></td>
-                      <td><input type="text" class="form-datas" value="<%=limitData.max_odd%>" readonly=""></td>
-                      <td><input type="text" class="form-datas" value="<%=limitData.delay%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" name="min_stake"  value="<%=limitData.min_stake%>" ></td>
+                      <td><input type="text" class="form-datas" name="max_stake" value="<%=limitData.max_stake%>" ></td>
+                      <td><input type="text" class="form-datas" name="max_profit" value="<%=limitData.max_profit%>" ></td>
+                      <td><input type="text" class="form-datas" name="max_odd" value="<%=limitData.max_odd%>" ></td>
+                      <td><input type="text" class="form-datas" name="delay" value="<%=limitData.delay%>" ></td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" id="<%=seriesMatch[i].eventData.eventId%>" data-bs-toggle="modal" data-bs-target="#myModaNotification" class="btn update event-notification">Notification</button>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimit">Update</button>
+                            <button type="button" class="btn update updateBetLimit">Update</button>
                         </div>
                       </td>
                     </tr>
@@ -59,15 +57,15 @@
                     <tr id="<%=i + 1%>">
                       <!-- <td><%=formattedTime%></td> -->
                       <td id="<%=seriesMatch[i].eventData.name%>" class="btn-filter"><div class="date-match-wrap" >  <span class="date-span" ><%=formattedTime%></span> <a href="/admin/betlimit/sports/match?match=<%=seriesMatch[i].eventData.name%>"> <%=seriesMatch[i].eventData.name%></a></div></td>
-                        <td><input type="text" class="form-datas" value="0" readonly=""></td>
-                        <td><input type="text" class="form-datas" value="0" readonly=""></td>
-                        <td><input type="text" class="form-datas" value="0" readonly=""></td>
-                        <td><input type="text" class="form-datas" value="0" readonly=""></td>
-                        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                        <td><input type="text"  class="form-datas" name="min_stake"  value="0" ></td>
+                        <td><input type="text" class="form-datas" name="max_stake" value="0" ></td>
+                        <td><input type="text" class="form-datas" name="max_profit" value="0" ></td>
+                        <td><input type="text" class="form-datas" name="max_odd" value="0" ></td>
+                        <td><input type="text" class="form-datas" name="delay" value="0" ></td>
                         <td>
                           <div class="btn-group">
-                            <button type="button"  id="<%=seriesMatch[i].eventData.eventId%>" data-bs-toggle="modal" data-bs-target="#myModaNotification" class="btn update event-notification">Notification</button>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimit">Update</button>
+                          
+                            <button type="button" class="btn update updateBetLimit">Update</button>
                           </div>
                         </td>
                       </tr>

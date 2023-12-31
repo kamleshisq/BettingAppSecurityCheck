@@ -13,9 +13,11 @@ const PageModel = require('../model/pageModel')
 const sliderModel = require('../model/sliderModel')
 const verticalMenuModel = require("../model/verticalMenuModel");
 const gamerulesModel = require('../model/gamesRulesModel')
+const gamemodel = require('../model/gameModel')
+const globalSettingModel = require('../model/globalSetting')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
-    console.log(req.body)
+    // console.log(req.body)
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
     const user_type = await Role.findById(req.body.role);
     // console.log(user_type)
@@ -35,12 +37,15 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             await whiteLabel.create(data)
         }else{
             await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
+        }
             let banners = await Benners.find({whiteLabelName:"1"})
             let promosions = await Promossion.find({whiteLabelName:"1"})
             let pages = await PageModel.find({whiteLabelName:"1"})
             let sliders = await sliderModel.find({whiteLabelName:"1"})
             let verticalMenus = await verticalMenuModel.find({whiteLabelName:"1"})
             let gamerules = await gamerulesModel.find({whiteLabelName:"1"})
+            let games = await gamemodel.find({whiteLabelName:"1"})
+            let globalsetting = await globalSettingModel.findOne({whiteLabel:"1"})
             // let promossions = await Pro
             let newbanners = []
             let newpromosions = []
@@ -48,10 +53,31 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let newsliders = []
             let newverticalMenus = []
             let newgamerules = []
+            let newgames = []
+
+            let newglobalsetting = {
+                logo1:globalsetting.logo1,
+                logo2:globalsetting.logo2,
+                contactNumber:globalsetting.contactNumber,
+                email:globalsetting.email,
+                whiteLabel:req.body.whiteLabel
+            }
+
             banners.map(ele => {
+                let newurl;
+                let url = ele.url;
+                let result = url.match(/\/\/([^/]+)/);
+                if (result) {
+                    let extractedWord = result[1];
+                    newurl = url.replace(extractedWord, req.body.whiteLabel);
+                    // console.log(newurl,'==>newurl')
+                } else {
+                    newurl = ele.url
+                    console.log("No match found");
+                }
                 newbanners.push({
                     bannerName:ele.bannerName,
-                    url:ele.url,
+                    url:newurl,
                     banner:ele.banner,
                     status:ele.status,
                     whiteLabelName:req.body.whiteLabel
@@ -104,16 +130,32 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                     whiteLabelName:req.body.whiteLabel
                 })
             })
-            console.log(newbanners,'==>newbanners')
+            games.map(ele => {
+                newgames.push({
+                    game_name:ele.game_name,
+                    provider_name:ele.provider_name,
+                    sub_provider_name:ele.sub_provider_name,
+                    category:ele.category,
+                    status:true,
+                    game_id:ele.game_id,
+                    game_code:ele.game_code,
+                    url_thumb:ele.url_thumb,
+                    whiteLabelName:req.body.whiteLabel
+                })
+            })
+
+           
+            // console.log(newbanners,'==>newbanners')
             await Benners.insertMany(newbanners)
             await Promossion.insertMany(newpromosions)
             await PageModel.insertMany(newpages)
             await sliderModel.insertMany(newsliders)
             await verticalMenuModel.insertMany(newverticalMenus)
             await gamerulesModel.insertMany(newgamerules)
-        }
+            await gamemodel.insertMany(newgames)
+            await globalSettingModel.create(newglobalsetting)
     }
-    if(user_type.role_level < req.currentUser.role.role_level){
+    if((user_type.role_level < req.currentUser.role.role_level) && (user_type.role_level !== 5)){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
     // if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
@@ -125,7 +167,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     req.body.role_type = user_type.role_type
     req.body.roleName = user_type.roleName
     req.body.parent_id = req.currentUser.id
-    req.body.parent_user_type_id = req.currentUser.user_type_id
+    // req.body.parent_user_type_id = req.currentUser.user_type_id
     req.body.userName = req.body.userName.toLowerCase();
     req.body.parentUsers = []
     if(req.currentUser.parentUsers){
@@ -143,10 +185,11 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         req.body.myShare = req.body.Visible
     }
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
+    // console.log(req.body, 'req.bodyreq.bodyreq.body')
     const newUser = await User.create(req.body);
-    if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
-       await settlementModel.create({userId:newUser.id})
-    }
+    // if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
+    //    await settlementModel.create({userId:newUser.id})
+    // }
     if(req.body.Credit != ''){
         if(req.currentUser.availableBalance < req.body.Credit){
             return next(new AppError("Insufficient Credit Limit !"))
@@ -215,7 +258,7 @@ exports.deletUser = catchAsync(async(req, res, next) =>{
     }
     // console.log(user.role.role_type)
     // console.log(req.currentUser.role.role_type)
-    if(req.currentUser.role.role_type > user.role.role_type){
+    if((req.currentUser.role.role_type > user.role.role_type) && (user.role.role_type !== 5)){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
     const deleteuser = await User.findByIdAndDelete(req.body.id)
@@ -246,7 +289,7 @@ exports.updateUserStatusCodeInactive = catchAsync(async(req, res, next) => {
     
     // console.log(user.role.role_type)
     // console.log(req.currentUser.role.role_type)
-    if(req.currentUser.role.role_type > user.role.role_type){
+    if((req.currentUser.role.role_type > user.role.role_type) && (user.role.role_type !== 5)){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
     if(!user.isActive){
@@ -351,7 +394,7 @@ exports.updateUserStatusBattingLock = catchAsync(async(req, res, next) => {
     if(!user1){
         return next(new AppError("User not found", 404))
     }
-    if(req.currentUser.role.role_type > user1.role.role_type){
+    if((req.currentUser.role.role_type > user1.role.role_type)  && (user1.role.role_type !== 5)){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
     if(user1.betLock){
@@ -383,7 +426,7 @@ exports.updateUserStatusBattingUnlock = catchAsync(async(req, res, next) => {
     if(!user1){
         return next(new AppError("User not found", 404))
     }
-    if(req.currentUser.role.role_type > user1.role.role_type){
+    if((req.currentUser.role.role_type > user1.role.role_type)  && (user1.role.role_type !== 5)){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
     if(!user1.betLock){
@@ -412,7 +455,7 @@ exports.changePassword = catchAsync(async(req, res, next) => {
     if(!user){
         return next(new AppError("User not found", 404))
     }
-    if(req.currentUser.role.role_type > user.role.role_type){
+    if((req.currentUser.role.role_type > user.role.role_type) && (user.role.role_type !== 5)){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
     
@@ -491,11 +534,11 @@ exports.searchUser = catchAsync(async (req, res, next) => {
 //         return next(new AppError('You do not have permission to perform this action',400))
 //     }
 //     if(req.query.id){
-//         Rows = await User.count({parent_id: req.query.id,isActive:true})
+//         Rows = await User.countDocuments({parent_id: req.query.id,isActive:true})
 //         child = await User.find({parent_id: req.query.id,isActive:true}).skip(0 * 100).limit(100);
 //         me = await User.findById(req.query.id)
 //     }else{
-//         Rows = await User.count({parent_id: req.currentUser._id,isActive:true})
+//         Rows = await User.countDocuments({parent_id: req.currentUser._id,isActive:true})
 //         child = await User.find({parent_id: req.currentUser._id,isActive:true}).skip(0 * 100).limit(100);
 //         me = await User.findById(req.currentUser._id)
 //     }
@@ -665,10 +708,10 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
             // if(me.role.role_level < req.currentUser.role.role_level){
             //     return next(new AppError('You do not have permission to perform this action',400))
             // }
-            Rows = await User.count({parent_id: req.query.id})
+            Rows = await User.countDocuments({parent_id: req.query.id})
             child = await User.find({parent_id: req.query.id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
         }else{
-            Rows = await User.count({parent_id: operationId})
+            Rows = await User.countDocuments({parent_id: operationId})
             child = await User.find({parent_id: operationId,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
             me = await User.findById(req.currentUser._id)
         }

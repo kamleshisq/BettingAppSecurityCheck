@@ -15,12 +15,18 @@
       <div class="input-group">
       <select name="ROLEselect" id="ROLEselect" class="ROLEselect">
         <option value="" selected >Select Role</option>
+        <%let userROLE%>
         <%for(let i = 0 ; i < roles.length; i++){%>
           <%if(roles[i].roleName != "Operator"){%>
+            <%if(roles[i].roleName != "user"){%>
             <option value="<%=roles[i].role_type%>"><%=roles[i].roleName%></option>
+            <%}else{
+              userROLE = roles[i]
+            }%>
           <%}%>
         <%}%>
-      </select>
+            <option value="<%=userROLE.role_type%>"><%=userROLE.roleName%></option>
+        </select>
     </div>
 
     <div class="input-group">
@@ -41,7 +47,7 @@
           </select>
         </div>
       <%}%>
-      <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Super-Duper-Admin"){%>
+      <%if(currentUser.roleName === "Admin" ){%>
         <div class="input-group">
           <a href="/admin/allOperators" class="btn user-mng-btn">All Operators</a>
         </div>

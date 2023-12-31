@@ -31,6 +31,12 @@
                 <%}else{%>
                   <li><span class="bredcum-span-tag">DM</span><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
                 <%}%>
+              <%}else if(adminBredcumArray[i].role === "AGENT"){%>
+                  <%if(adminBredcumArray[i].status){%>
+                    <li><span class="bredcum-span-tag">AGENT</span><a href="/admin/userManagement">  <%=adminBredcumArray[i].userName%></a></li>
+                  <%}else{%>
+                    <li><span class="bredcum-span-tag">AGENT</span><a href="/admin/userManagement?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+                  <%}%>
               <%}%>
             <%}%>
               <!-- <li> <a href="/admin/commissionReportEvent?event=Pakistan v Bangladesh"> Pakistan v Bangladesh</a></li> -->
@@ -486,6 +492,44 @@
     </div>
   </div>
    
+  <div class="modal fade" id="myModaL" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <h4 class="modal-title" >Max Exposure Limit</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data Exposure">
+            <div class="row">
+              <div class="col">
+                <label for="">Old Exposure Limit</label>
+                <input type="OldEXP" class="form-control ml0" name="OldEXP" required>
+              </div>
+              <div class="col">
+                <label for="">New Exposure Limit</label>
+                <input type="NewEXP" class="form-control ml0" name="NewEXP" required>
+              </div>
+            </div>
+
+            
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Enter Your Password</label>
+                <input type="password" class="form-control ml0" placeholder="******" name="Password" required>
+              </div>
+            </div>
+          <button type="submit" class="btn-submit mt-3">Confirm</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade align-top-popup" id="myModaladduser" role="dialog">
     <div class="modal-dialog">
@@ -518,10 +562,20 @@
                   <%if(currentUser.roleName === "Admin"){%>
                     <option value="6492fe4fd09db28e00761695">Super-Duper-Admin</option>
                     <option value="650bccdbb3fdc8c922c34bbe">Operator</option>
+                  <%}else if (B2C_Status){%>
+                    <option value="6492fe4fd09db28e00761694">user</option>
                   <%}else{%>
+                    <%let userROLE%>
                     <%for(let i = 0;i<roles.length; i++){%>
-                      <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                      <%if(roles[i]._id != '650bccdbb3fdc8c922c34bbe'){%>
+                        <%if(roles[i].roleName != "user"){%>
+                        <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                        <%}else{
+                          userROLE22 = roles[i]
+                        }%>
+                      <%}%>
                     <%}%>
+                    <option value="<%=userROLE22._id%>"><%=userROLE22.roleName%></option>
                   <%}%>
                 </select>
               </div>
@@ -649,11 +703,11 @@
             <div class="row mt-2">
               <div class="col">
                 <label for="">Email ID</label>
-                <input type="email" class="form-control ml0" placeholder="Abitest" name="email" required>
+                <input type="email" class="form-control ml0" placeholder="Abitest" name="email">
               </div>
               <div class="col">
                 <label for="">Contact No.</label>
-                <input type="number" class="form-control ml0" placeholder="Abitest" name="contact" required>
+                <input type="number" class="form-control ml0" placeholder="Abitest" name="contact">
               </div>
             </div>
             <div class="row mt-2">
@@ -809,7 +863,7 @@
   <script>
   
     document.getElementById('roleSelect').addEventListener('change', function () {
-      console.log("WORK")
+      // console.log("WORK")
       if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
         document.getElementById('shareVisibleActual').classList.add("hide") 
       } else {
@@ -832,7 +886,7 @@
   <script>
     $(document).on("change", ".bookmakerType", function(e){
       e.preventDefault()
-      console.log($(this).val())
+      // console.log($(this).val())
       let html=``
       if($(this).val() == "NET_LOSS"){
         html += ` <option value="0.25">0.25</option>

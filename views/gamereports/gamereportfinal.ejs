@@ -14,7 +14,6 @@
         </div>
        
       </div>
-    <%- include("../loginUserAdminsideDetails") %>
   </section>
 
   <section>
@@ -39,13 +38,25 @@
             </thead>
             <tbody class="new-body">
               <%for(let i = 0;i<games.length;i++){%>
+                <% let date = new Date(games[i].date)%>
+                <%
+                  var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                  };
+                  var formattedTime = date.toLocaleString('en-US', options);
+                %>
               <%if(i % 2 == 0){%>
               <tr>
                 <%}else{%>
                 <tr>
                   <%}%>
                   <td><%=i + 1%></td>
-                  <td><%=games[i].date%></td>
+                  <td><%=formattedTime%></td>
                   <td><%=games[i].selectionName%></td>
                   <td><%=games[i].oddValue%></td>
                   <td><%=games[i].Stake%></td>
@@ -97,7 +108,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
-<script type="text/javascript" src="../js/bundle.js"></script>
+<script type="text/javascript" src="../../../../js/bundle.js"></script>
 
 
 </body>

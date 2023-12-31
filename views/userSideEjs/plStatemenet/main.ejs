@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-
+            <div class="pageId" data-pageid="1"></div>
             <div class="acount-stat-ro2">
                 <div class="acount-stat-tbl-txt-wrp userSide-Table">
                     <table class="acount-stat-tbl">
@@ -52,7 +52,8 @@
 
                         <tbody class="acount-stat-tbl-body">
                             <%for(let i = 0; i < data.length; i++){%>
-                                <tr class="acount-stat-tbl-body-tr">
+                              <% let encodedEventName = encodeURIComponent(data[i]._id); %>
+                                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/MyPlStatement/?eventname=<%=encodedEventName%>'>
                                     <td title="Game"><%=data[i]._id%></td>
                                     <td title="Lost"><%=data[i].losses%></td>
                                     <td title="Won"><%=data[i].wins%></td>
@@ -66,6 +67,9 @@
                         </tbody>
 
                     </table>
+                    <div class="loadMoredive">
+                      <a id="loadMore">Load More</a>
+                    </div>
                 </div>
             </div>
 
@@ -297,6 +301,14 @@
         $("#offsertmnuclosbtn").click(function(){
           $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
         });
+      });
+    </script>
+    
+    <script>
+      jQuery(document).ready(function($) {
+          $(".tbl-data-href").click(function() {
+              window.location = $(this).data("href");
+          });
       });
     </script>
     

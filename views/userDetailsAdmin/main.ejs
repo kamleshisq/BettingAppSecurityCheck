@@ -72,25 +72,27 @@
                                           <input type="text" readonly id="userRole" name="userRole" placeholder="<%=userDetails.roleName%>" value="<%=userDetails.roleName%>">
                                       </div>
                                       <div class="col form-group">
+                                        <label for="creditReference">Credit Reference</label>
+                                        <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.balance%>" value="<%=userDetails.balance%>">
+                                      </div>
+                                    </div>
+                                    <%if(userDetails.roleName != 'user'){%>
+                                    <div class="row">
+                                      <div class="col form-group">
+                                        <label for="myShare">My Share</label>
+                                        <input type="number" readonly id="myShare" name="myShare" placeholder="<%=userDetails.myShare%>" value="<%=userDetails.myShare%>">
+                                      </div>
+                                      <div class="col form-group">
                                           <label for="Share">Share</label>
-                                          <input type="number" id="Share" name="Share" placeholder="<%=userDetails.Share%>" value="<%=userDetails.Share%>">
+                                          <input type="number" readonly id="Share" name="Share" placeholder="<%=userDetails.Share%>" value="<%=userDetails.Share%>">
                                       </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="col form-group">
-                                          <label for="myShare">My Share</label>
-                                          <input type="number" id="myShare" name="myShare" placeholder="<%=userDetails.myShare%>" value="<%=userDetails.myShare%>">
-                                      </div>
-                                      <div class="col form-group">
-                                          <label for="creditReference">Credit Reference</label>
-                                          <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.creditReference%>" value="<%=userDetails.creditReference%>">
-                                      </div>
-                                  </div>
-                                  <div class="row">
+                                    </div>
+                                    <%}%>
+                                  <!-- <div class="row">
                                       <div class="col form-group">
                                           <button type="submit">Submit</button>
                                       </div>
-                                  </div>
+                                  </div> -->
                               </form>
                             </div>
                           </div>
@@ -162,7 +164,7 @@
                                   </div>
                                   <div class="col form-group">
                                       <label for="creditReference">Credit Reference</label>
-                                      <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.creditReference%>" value="<%=userDetails.creditReference%>">
+                                      <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.balance%>" value="<%=userDetails.balance%>">
                                   </div>
                                   <div class="col form-group">
                                       <label for="exposure">Net Exposure</label>
@@ -242,7 +244,6 @@
                                       <th>Match</th>
                                       <th>Bet On</th>
                                       <th>Stake</th>
-                                      <th>Txn ID </th>
                                       <th>Status</th>
                                       <th>P/L</th>
                                     </tr>
@@ -250,21 +251,44 @@
                                 <tbody class="new-body">
                                   <%if(bets.length !== 0){%>
                                   <% for(let i = 0; i < bets.length; i++){%>
-                                    <% let date = new Date(bets[i].date)%>
+                                    <% let date = new Date(bets[i].date)
+                                    var options = { 
+                                      year: 'numeric',
+                                      month: 'long',
+                                      day: 'numeric',
+                                      hour: 'numeric',
+                                      minute: 'numeric',
+                                      hour12: true
+                                  };
+                                  var formattedTime = date.toLocaleString('en-US', options);
+                                    %>
                                     <%if((i%2)==0){%>
                                         <tr>
                                     <%}else{%>
                                         <tr>
                                     <%}%>
                                     <td><%=i + 1%></td>
-                                    <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+
+                                    <td><%=formattedTime%></td>
                                     <td><%=bets[i].userName%></td>
                                     <td><%=bets[i].event%></td>
                                     <%if(bets[i].match){%>
-                                      <td><%=bets[i].marketName%></td>
-                                      <td><%=bets[i].oddValue%></td>
-                                      <td><%=bets[i].match%></td>
-                                      <td><%=bets[i].selectionName%></td>
+                                      <%if(bets[i].selectionName.includes('@')){%>
+                                        <%
+                                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                                        let selectionName = bets[i].selectionName.split('@')[0]
+                                        let oddValue2 = bets[i].oddValue
+                                        %>
+                                        <td><%=bets[i].marketName%></td>
+                                        <td><%=oddValue1%></td>
+                                        <td><%=bets[i].match%></td>
+                                        <td><%=selectionName%>@<%=oddValue2%></td>
+                                      <%}else{%>
+                                        <td><%=bets[i].marketName%></td>
+                                        <td><%=bets[i].oddValue%></td>
+                                        <td><%=bets[i].match%></td>
+                                        <td><%=bets[i].selectionName%></td>
+                                      <%}%>
                                     <%}else{%>
                                         <td>-</td>
                                         <td>-</td>
@@ -272,7 +296,6 @@
                                         <td>-</td>
                                     <%}%>
                                     <td><%=bets[i].Stake%></td>
-                                    <td><%=bets[i].transactionId%></td>
                                     <td><%=bets[i].status%></td>
                                     <td><%=bets[i].returns%></td>
                                 </tr>
@@ -305,7 +328,10 @@
                         <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateACC">
                         <select id="selectACC" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
                           <option selected>All Reports</option>
-                          <option value="1">Deposit/Withdraw Reports</option>
+                          <option value="Deposit">Deposit</option>
+                          <option value="Withdraw">Withdraw</option>
+                          <option value="SDeposit">Settlement Deposit</option>
+                          <option value="SWithdraw">Settlement Withdraw</option>
                           <option value="2">Game Reports</option>
                       </select>
                     </div>

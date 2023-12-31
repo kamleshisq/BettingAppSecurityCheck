@@ -210,6 +210,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     childAccStatement.userName = childUser.userName
     childAccStatement.role_type = childUser.role_type
     childAccStatement.Remark = req.body.remark
+    childAccStatement.accStype = "Settle"
 
     const accStatementChild = await accountStatement.create(childAccStatement)
     if(!accStatementChild){
@@ -227,6 +228,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     ParentAccStatement.userName = parentUser.userName;
     ParentAccStatement.role_type = parentUser.role_type
     ParentAccStatement.Remark = req.body.remark
+    ParentAccStatement.accStype = "Settle"
 
     // // console.log(ParentAccStatement)
     const accStatementparent = await accountStatement.create(ParentAccStatement)
@@ -279,6 +281,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     childAccStatement.userName = childUser.userName
     childAccStatement.role_type = childUser.role_type
     childAccStatement.Remark = req.body.remark
+    childAccStatement.accStype = "Settle"
 
     const accStatementChild = await accountStatement.create(childAccStatement)
     if(!accStatementChild){
@@ -296,6 +299,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     ParentAccStatement.userName = parentUser.userName;
     ParentAccStatement.role_type = parentUser.role_type
     ParentAccStatement.Remark = req.body.remark
+    ParentAccStatement.accStype = "Settle"
 
     // // console.log(ParentAccStatement)
     const accStatementparent = await accountStatement.create(ParentAccStatement)
@@ -312,7 +316,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
 
 
 exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
-    // console.log(req.query)
+    console.log(req.query)
     let userAcc
     let page = req.query.page
     let filter = {}
@@ -332,14 +336,14 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
 
         }
     }
-    // console.log(userAcc.length)
+    console.log(userAcc)
     res.status(200).json({
         status:"success",
         userAcc
     })
 });
 exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
-    console.log(req.query)
+    // console.log(req.query)
     try{
     let userAcc = []
     let page = req.query.page
@@ -652,7 +656,18 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
     // if(req.currentUser.role.role_level > user.role.role_level){
     //     return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     // }
-    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).limit(20)
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} }).sort({date: -1}).limit(20)
     // if(req.body.from && req.body.to){
     //     userAcc = await accountStatement.find({$or:[{to_user_id:req.body.id},{from_user_id:req.body.id}],date:{$gte:req.body.from,$lte:req.body.to}})
     // }else{
@@ -672,61 +687,62 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
 });
 
 exports.paymentDeposite = catchAsync(async(req, res, next)=>{
-    // console.log(req.body,'==>paymentDeposite body')
     function validateUTR(utr) {
-        // Define your UTR validation criteria here
-        var utrPattern = /^[A-Za-z0-9]{12,}$/; // Minimum 12 alphanumeric characters
-
-        // Check if the UTR matches the pattern
+        var utrPattern = /^[A-Za-z0-9]{12,}$/; 
         return utrPattern.test(utr);
     }
     if(!validateUTR(req.body.utr)){
         return next(new AppError('enter valid utr',400))
     }
-    console.log(req.files)
+    // console.log(req.files, "filesfilesfilesfiles")
     let imagName;
     let data;
     let user = await User.findById(req.currentUser._id)
     let sdmId = user.parentUsers[1]
     let sdmUser = await User.findById(sdmId)
     if(req.files){
-        if(req.files.file.mimetype.startsWith('image')){
-            imagName = `${req.currentUser.userName}${Date.now()}`
-            const image = req.files.file
-            // console.log(logo)
-            let STRING = `public/paymentimg/${imagName}.png`
-            console.log(STRING, "STRINGSTRINGSTRING")
-            try{
-                image.mv(STRING, (err)=>{
-                    console.log(err)
-                    if(err) return next(new AppError("Something went wrong please try again later", 400))
-                })
-            }catch(err){
-                console.log(err, "THIS IS ERRRRRR")
+        try{
+            if(req.files.file.mimetype.startsWith('image')){
+                imagName = `${req.currentUser.userName}${Date.now()}`
+                const image = req.files.file
+                // console.log(logo)
+                let STRING = `public/paymentimg/${imagName}.png`
+                // console.log(STRING, "STRINGSTRINGSTRING")
+                try{
+                    image.mv(STRING, (err)=>{
+                        console.log(err)
+                        if(err) return next(new AppError("Something went wrong please try again later", 400))
+                    })
+                }catch(err){
+                    // console.log(err, "THIS IS ERRRRRR")
+                }
+                data = {... req.body}
+                let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod,accountholdername:req.body.accountholdername})
+                // console.log(paymentMethoDetail)
+                data.username = req.currentUser.userName
+                data.status = 'pending'
+                data.image = imagName
+                if(req.body.pmethod == 'banktransfer'){
+    
+                    data.accountnumber = paymentMethoDetail.accountnumber
+                }else if(req.body.pmethod == 'upi'){
+    
+                    data.upiid = paymentMethoDetail.upiid
+                }else if(req.body.pmethod == 'paytm'){
+    
+                    data.phonenumber = paymentMethoDetail.phonenumber
+                }
+                data.date = new Date()
+                
+                // console.log(data)
+                await paymentReportModel.create(data)
+    
+            }else{
+                return next(new AppError("Please Provide Image", 400))
             }
-            data = {... req.body}
-            let paymentMethoDetail = await PaymentMethodModel.findOne({userName:sdmUser.userName,pmethod:req.body.pmethod,accountholdername:req.body.accountholdername})
-            // console.log(paymentMethoDetail)
-            data.username = req.currentUser.userName
-            data.status = 'pending'
-            data.image = imagName
-            if(req.body.pmethod == 'banktransfer'){
 
-                data.accountnumber = paymentMethoDetail.accountnumber
-            }else if(req.body.pmethod == 'upi'){
-
-                data.upiid = paymentMethoDetail.upiid
-            }else if(req.body.pmethod == 'paytm'){
-
-                data.phonenumber = paymentMethoDetail.phonenumber
-            }
-            data.date = new Date()
-            
-            console.log(data)
-            await paymentReportModel.create(data)
-
-        }else{
-            return next(new AppError("Please Provide Image", 400))
+        }catch(err){
+            console.log(err, "ERRR")
         }
     }
 

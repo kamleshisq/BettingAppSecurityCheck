@@ -38,15 +38,15 @@
                             </div>
 
                             <div class="">
-                                <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="Fdate">
+                                <input type="date" placeholder="dd-mm-yyyy" class=" form-control form-control-sm acount-stat-ro-form-input" id="Fdate">
                             </div>
                             <div class="">
-                                <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="Tdate">
+                                <input type="date" placeholder="dd-mm-yyyy"   class=" form-control form-control-sm acount-stat-ro-form-input" id="Tdate">
                             </div>
                             <div class="">
                                 <select id="select" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
-                                    <option selected>All Bets</option>
-                                    <option value="OPEN">Open</option>
+                                    <option >All Bets</option>
+                                    <option selected value="OPEN">Open</option>
                                     <option value="CANCEL">Void</option>
                                     <option value="WON">Won</option>
                                     <option value="LOSS">Loss</option>
@@ -119,9 +119,20 @@
                                             <td title="Market" >-</td>
                                         <%}%>
                                         <%if(bets[i].selectionName){%>
+                                          <%if(bets[i].selectionName.includes('@')){%>
+                                            <%
+                                            let oddValue1 = bets[i].selectionName.split('@')[1]
+                                            let selectionName = bets[i].selectionName.split('@')[0]
+                                            let oddValue2 = bets[i].oddValue
+                                            %>
+                                            <td title="Bet On" ><%=selectionName%>@<%=oddValue2%></td>
+                                            <td title="Bet Type" ><%=bets[i].bettype2%></td>
+                                            <td title="Odds" ><%=oddValue1%></td>
+                                          <%}else{%>
                                             <td title="Bet On" ><%=bets[i].selectionName%></td>
                                             <td title="Bet Type" ><%=bets[i].bettype2%></td>
                                             <td title="Odds" ><%=bets[i].oddValue%></td>
+                                          <%}%>
                                         <%}else{%>
                                             <td title="Bet On" >-</td>
                                             <td title="Bet Type" >-</td>

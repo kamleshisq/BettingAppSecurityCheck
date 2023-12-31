@@ -7,7 +7,7 @@ export const logout = async() => {
             url:'/api/v1/auth/admin_logOut'
         });
         if(res.data.status === 'success'){
-                location.href = '/'
+                location.href = '/adminlogin'
         }
     }catch(err){
         console.log(err);

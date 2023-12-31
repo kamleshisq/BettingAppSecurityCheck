@@ -12,6 +12,9 @@ const resumeSuspend = mongoose.Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    whiteLabel : {
+        type:String
     }
 })
 

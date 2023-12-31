@@ -12,9 +12,9 @@
       <div class="table-heading-btn">
         <button class="btn-filter COMMISSIONADMIN"><i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=unclaimCommission%>)</button>
         <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+        <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i
+        class="fa-solid fa-plus"></i> &nbsp; Add User</button>
         <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
-              <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i
-              class="fa-solid fa-plus"></i> &nbsp; Add User</button>
         <%}%>
       </div>
     </div>
@@ -121,6 +121,9 @@
                       <button  data-bs-toggle="modal" data-bs-target="#myModalSE " class="Settlement" title="Settlement">S</button>
                         <button data-bs-toggle="modal" data-bs-target="#myModal4"
                           class="StatusChange" title="Change Status">CS</button>
+                          <%if(users[i].roleName ==='user' ){%>
+                            <button data-bs-toggle="modal" data-bs-target="#myModaL" class="ExposureLimit" title="Exposure Limit">L</button>
+                          <%}%>
                         <button class="UserDetails" title="View details"><i class="fa-solid fa-database"></i></button>
                     </div>
                   </td>

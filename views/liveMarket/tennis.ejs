@@ -2,9 +2,9 @@
   <div class="row">
     <%let checkT = false %> 
     <%for(let i = 0; i < runners.length; i++){%>
-      <%if(runners[i].sport === "Tennis"){%>
+      <%if(runners[i].sport === "Tennis" && bets.some(item => item == runners[i].marketId)){%>
         <%checkT = true%>
-        <section>
+        <section id="<%=runners[i].eventId%>">
           <div class="container-fluid">
             <div class="new-head">
               <% let runnersData = JSON.parse(runners[i].runners) %>

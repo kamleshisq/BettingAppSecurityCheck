@@ -5,7 +5,11 @@
 
           <div class="footer-sec--logo-ro">
             <a href="/">
-              <img class="footer-logo" src="assets/img/Royal77701.png" alt="logo">
+              <%if(basicDetails.length > 0){%>
+                <img class="footer-logo" src="logo/<%=basicDetails[0].logo2%>.png" alt="logo">
+              <%}else{%>
+                <img class="footer-logo" src="logo/Royal77701.png" alt="logo">
+              <%}%>
             </a>
           </div>
 
@@ -46,7 +50,11 @@
               <h6 class="">CONTACT US</h6>
             </div>
             <div class="footer-sec--contact-col2">
-              <a >+91 00000 00000</a>  <span>|</span>  <a >info@royal777.com</a>
+              <%if(basicDetails.length > 0){%>
+                <a >+91 <%=basicDetails[0].contactNumber%></a>  <span>|</span>  <a ><%=basicDetails[0].email%></a>
+                <%}else{%>
+                <a >+91 00000 00000</a>  <span>|</span>  <a >info@royal777.com</a>
+              <%}%>
             </div>
           </div>
 

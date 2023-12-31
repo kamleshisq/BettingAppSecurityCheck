@@ -51,6 +51,9 @@ const paymentReportModel = require('../model/paymentreport');
 const runnerData = require('../model/runnersData');
 const manageAccountUser = require('../model/paymentMethodUserSide');
 const withdrawalRequestModel = require('../model/withdrowReqModel');
+const globalSettingModel = require('../model/globalSetting');
+const colorCodeModel = require('../model/colorcodeModel');
+
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -83,19 +86,18 @@ const withdrawalRequestModel = require('../model/withdrowReqModel');
 
 const whiteLabelcheck = (req) => {
     let hostname = req.headers.host
-    console.log(hostname,'==>hostname')
+    // console.log(hostname,'==>hostname')
     let whiteLabel = process.env.whiteLabelName
-    if(!req.currentUser){
+    if(!req.currentUser || req.currentUser.roleName == "DemoLogin"){
         whiteLabel = hostname
     }else{
         if(req.currentUser.role_type == 1){
             whiteLabel = "1"
         }else{
-            whiteLabel = "1"
+            whiteLabel = req.currentUser.whiteLabel
         }
     }
-    whiteLabel = "1"
-    console.log(whiteLabel)
+    // console.log(whiteLabel)
     return whiteLabel
 }
 
@@ -105,17 +107,42 @@ exports.userTable = catchAsync(async(req, res, next) => {
     let id = req.query.id;
     let page = req.query.page;
     let urls;
-    let roles1
+    let roles1 = []
     let operationparentId;
     if(req.currentUser.roleName == 'Operator'){
         let parentUser = await User.findById(req.currentUser.parent_id)
         roles1 = await Role.find({role_level:{$gt:parentUser.role.role_type}}).sort({role_level:1});
         operationparentId = parentUser.parent_id
     }else{
-        roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
+        let parentUser = await User.findById(req.currentUser._id.toString())
+        let rolesABC = await Role.find().sort({role_level:1});
+        for(let i = 0; i < rolesABC.length; i++){
+            if(rolesABC[i].role_level === 5){
+                roles1.push(rolesABC[i])
+            }else if(rolesABC[i].role_level > parentUser.role.role_level){
+                roles1.push(rolesABC[i])
+            }
+        }
         operationparentId = req.currentUser.parent_id
 
     }
+    // let games = await gameModel.find({whiteLabelName:"1"})
+
+    // let newgames = []
+    // games.map(ele => {
+    //     newgames.push({
+    //         game_name:ele.game_name,
+    //         provider_name:ele.provider_name,
+    //         sub_provider_name:ele.sub_provider_name,
+    //         category:ele.category,
+    //         status:true,
+    //         game_id:ele.game_id,
+    //         game_code:ele.game_code,
+    //         url_thumb:ele.url_thumb,
+    //         whiteLabelName:'dev.ollscores.com'
+    //     })
+    // })
+    // await gameModel.insertMany(newgames)
 
     if(req.currentUser.roleName === "Super-Duper-Admin"){
         roles1 = roles1.filter(item => item.roleName !== 'DemoLogin')
@@ -132,11 +159,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://ollscores.com/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}`,
                 name:'user'
             },
             {
-                url:`http://ollscores.com/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -144,16 +171,16 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://ollscores.com/api/v1/users/getOwnChild`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild`,
                 name:'user'
             },
             {
-                url:`http://ollscores.com/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
     }
-    console.log(urls, req.token)
+    // console.log(urls, req.token)
     let requests = urls.map((item) => {
         return new Promise((resolve, reject) => {
           request(
@@ -168,7 +195,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
               if (error) {
                 reject(error);
               } else {
-                  console.log(body)
+                //   console.log(body)
                 resolve(JSON.parse(body));
               }
             }
@@ -177,7 +204,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     });
   
     const data = await Promise.all(requests);
-    console.log(data,'==>data')
+    // console.log(data,'==>data')
     if(data[0].status == 'Error'){
         return res.redirect('/admin/userManagement')
     }
@@ -209,8 +236,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         sum = 0
     }
     let adminBredcumArray = []
-    console.log(me, "memememememememememe")
-    console.log(currentUser, "CURR")
+    // console.log(me, "memememememememememe")
+    // console.log(currentUser, "CURR")
     if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
@@ -221,7 +248,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }else{
         for(let i = 0; i < me.parentUsers.length; i++){
             if(me.parentUsers[i] == currentUser._id.toString()){
-                console.log("WORKING")
+                // console.log("WORKING")
                 adminBredcumArray.push({
                     userName:currentUser.userName,
                     role:currentUser.roleName,
@@ -230,12 +257,15 @@ exports.userTable = catchAsync(async(req, res, next) => {
                 })
             }else{
                 let thatUser = await User.findById(me.parentUsers[i])
-                adminBredcumArray.push({
-                    userName:thatUser.userName,
-                    role:thatUser.roleName,
-                    id : thatUser._id.toString(),
-                    status:false
-                })
+                if(thatUser.role_type > currentUser.role_type){
+                    adminBredcumArray.push({
+                        userName:thatUser.userName,
+                        role:thatUser.roleName,
+                        id : thatUser._id.toString(),
+                        status:false
+                    })
+
+                }
             }
         }
         adminBredcumArray.push({
@@ -245,7 +275,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
             status:false
         })
     }
-    console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
+    console.log(roles)
+    // console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
@@ -273,6 +304,7 @@ exports.allOperators = catchAsync(async(req, res, next)=>{
 })
 
 exports.login = catchAsync(async(req, res, next) => {
+    // console.log('adminLogin PAge')
     if(req.currentUser){
         if(req.currentUser.role_type < 5){
            return res.redirect('/admin/dashboard')
@@ -336,11 +368,11 @@ exports.resetPassword = catchAsync(async(req,res,next)=> {
 exports.updateUser = catchAsync(async(req, res, next) => {
     let urls = [
         {
-            url:`http://ollscores.com/api/v1/users/getUser?id=${req.query.id}`,
+            url:`http://127.0.0.1:${process.env.port}/api/v1/users/getUser?id=${req.query.id}`,
             name:'user'
         },
         {
-            url:`http://ollscores.com/api/v1/role/getAuthROle`,
+            url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
             name:'role'
         }
     ]
@@ -573,8 +605,10 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     let featureEventId = []
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const data = await promotionModel.find({whiteLabelName: whiteLabel});
-    console.log(data, "datatatata")
+    // console.log(data, "datatatata")
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const banner = await bannerModel.find({whiteLabelName: whiteLabel})
     let sliders = await sliderModel.find({whiteLabelName: whiteLabel}).sort({Number:1})
@@ -589,6 +623,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
 
+    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         user,
@@ -599,11 +634,10 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         pages,
         check:"Home",
         userLog,
-        // LiveCricket,
-        // liveFootBall,
-        // liveTennis,
         notifications:req.notifications,
-        featureStatusArr
+        featureStatusArr,
+        basicDetails,
+        colorCode
     })
 })
 
@@ -622,6 +656,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }
     // console.log(req.query.id)
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
@@ -638,7 +674,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         verticalMenus,
         check:"ACCC",
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
     // )
 });
@@ -651,6 +689,8 @@ exports.myProfile = catchAsync(async(req, res, next) => {
     }
     // console.log(req.query.id)
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
     // fetch(fullUrl, {
@@ -665,7 +705,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         verticalMenus,
         check:"ACCC",
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
     // )
 });
@@ -722,7 +764,7 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     let bets = await betModel.aggregate([
         {
             $match: {
-              status: {$ne:"OPEN"},
+            //   status: {$ne:"OPEN"},
               userName:{$in:childrenUsername}
             }
         },
@@ -800,16 +842,8 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -1162,24 +1196,15 @@ exports.myaccount = catchAsync(async(req, res, next) => {
     }else{
         operatorId = req.currentUser._id
     }
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + operatorId 
-    fetch(fullUrl, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ` + req.token }
-    }).then(res => res.json())
-    .then(json =>{ 
-        // console.log(json)
-        const data = json.userAcc
-        res.status(200).render('./userAccountStatement/useracount',{
+    let accountStatementdata = await accountStatement.find({user_id:operatorId}).sort({date:-1}).limit(10)
+    res.status(200).render('./userAccountStatement/useracount', {
         title:"My Account Statement",
         me:currentUser,
-        data,
+        data:accountStatementdata,
         currentUser
     })
-});
-
-    
 })
+
 exports.adminaccount = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     // console.log(currentUser)
@@ -1431,12 +1456,16 @@ const hashedOutput = SHA256(privateKey, textToSign);
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const data = await promotionModel.find({whiteLabelName:whiteLabel})
     let currentUser = req.currentUser
     res.status(200).render("./promotion/promotion",{
         title:"Promotion",
         data,
-        currentUser
+        currentUser,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -1461,13 +1490,13 @@ exports.getoperationsPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
-    console.log('WORKING')
+    // console.log('WORKING')
     const me = req.currentUser
     // console.log(me)
     let settlement
-    settlement = await sattlementModel.findOne({userId:me.id})
+    settlement = await sattlementModel.findOne({userName:me.userName})
     if(settlement === null){
-        settlement = await sattlementModel.create({userId:me.id})
+        settlement = await sattlementModel.create({userId:me.id, userName:me.userName})
     }
     const currentDate = new Date(); // Current date
     const fiveDaysAgo = new Date(currentDate);
@@ -1489,7 +1518,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         //     childrenUsername.push(ele.userName) 
         // })
     }
-    console.log('START')
+    // console.log('START')
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
@@ -1542,7 +1571,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             }
         }
       ]);
-      console.log('END')
+    //   console.log('END')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
         me,
@@ -1798,7 +1827,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let notifications
-    var fullUrl = "http://ollscores.com/api/v1/notification/myNotifications"
+    var fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/myNotifications`
     await fetch(fullUrl, {
         method:"GET",
         headers: {
@@ -1882,8 +1911,20 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
                 date:-1
             }
         },
-        { $limit : limit }
+        { $limit : limit },
+        {
+            $lookup: {
+              from: 'users', // Assuming the name of the Whitelabel collection
+              localField: 'userName',
+              foreignField: 'userName',
+              as: 'whitelabelData'
+            }
+        },
     ])
+
+    console.log(betResult[0].whitelabelData, "betResultbetResultbetResult")
+    // let whiteLabelAndUSer = await User.find({ userName: { $in: childrenUsername }}, 'userName whiteLabel -role')
+    // console.log(whiteLabelAndUSer, "whiteLabelAndUSer")
 
     let events = await betModel.aggregate([
         {
@@ -1908,7 +1949,8 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         me,
         currentUser:me,
         events,
-        whiteLabels
+        whiteLabels,
+        // whiteLabelAndUSer
     })
            
 })
@@ -1971,15 +2013,20 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     let data;
     let RG;
     let currentUser = req.currentUser
-    data = await gameModel.find({game_name:new RegExp("32 Cards","i")})
-    RG = await gameModel.find({sub_provider_name:"Royal Gaming"})
+    let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    data = await gameModel.find({game_name:new RegExp("32 Cards","i"),whiteLabelName:whiteLabel})
+    RG = await gameModel.find({sub_provider_name:"Royal Gaming",whiteLabelName:whiteLabel})
     // console.log(RG.length)
     res.status(200).render("./casinoController/casinocontrol", {
         title:"Casino Controller",
         data:data,
         RG,
         currentUser,
-        me: currentUser
+        me: currentUser,
+        basicDetails,
+        colorCode
     })
 })
 
@@ -1992,12 +2039,17 @@ exports.promotion = catchAsync(async(req, res, next) => {
 });
 
 exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
-    const data = await gameModel.find({status:true});
+    let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    const data = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let user = req.currentUser
     res.status(200).render('allCasinoGame', {
         title:"All Games",
         data,
-        user
+        user,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -2166,7 +2218,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["1.220577046", "1.220570501", "1.220566377"]);
+    let body = JSON.stringify(["1.222218327", "4.1702114932195-BM", "4.1702288166905-F2", "4.1702115752278-OE"]);
     // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
@@ -2188,12 +2240,17 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
 
 exports.getLiveTv = catchAsync(async(req, res, next) => {
     let body = {
-        ipv4 : "46.101.225.192",
-        channel : "9002"
+        ipv4 : "172.105.58.243",
+        channel : "1029"
     }
     var fullUrl = 'https://score-session.dbm9.com/api/tv-stream-2';
     fetch(fullUrl, {
         method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'accept': 'application/json' ,
+            "Origin":"http://ollscores.com/",
+            "Referer":"http://ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -2206,7 +2263,7 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
 
 
 exports.getMarketResult = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify([ "4.1697461669317-F2"]);
+    let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
     // console.log(body)
     let fullUrl = "https://admin-api.dreamexch9.com/api/dream/markets/result";
     fetch(fullUrl, {
@@ -2216,6 +2273,51 @@ exports.getMarketResult = catchAsync(async(req, res, next) => {
     .then(res =>res.json())
     .then(result => {
         // console.log(result)
+        res.status(200).json({
+            result
+        })
+    })
+})
+
+
+
+exports.liveAllMarkets = catchAsync(async(req, res, next) => {
+    // let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
+    // console.log(body)
+    let fullUrl = "https://fbot.1cricket.co/api/Admin/getmarketsbysid/?sid=4";
+    console.log('fullUrl :', fullUrl)
+    fetch(fullUrl, {
+        method: 'get',
+        headers: { 
+            'Accept': 'application/json'
+            },
+        // body:body 
+    })
+    .then(res =>res.json())
+    .then(result => {
+        console.log('result:', result)
+        res.status(200).json({
+            result
+        })
+    })
+})
+
+
+exports.liveAllMarkets2 = catchAsync(async(req, res, next) => {
+    // let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
+    // console.log(body)
+    let fullUrl = "https://fbot.1cricket.co/api/Admin/getmarkets";
+    console.log('fullUrl :', fullUrl)
+    fetch(fullUrl, {
+        method: 'get',
+        headers: { 
+            'Accept': 'application/json'
+            },
+        // body:body 
+    })
+    .then(res =>res.json())
+    .then(result => {
+        console.log('result:', result)
         res.status(200).json({
             result
         })
@@ -2310,9 +2412,12 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const runners = await runnerData.find()
     let currentUser =  req.currentUser
+    let childrenUsername = await User.distinct('userName', { parentUsers : req.currentUser.id, role_type: 5 });
+    let bets = await betModel.distinct('marketId', {userName : {$in:childrenUsername}, status: 'OPEN'})
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         runners,
+        bets,
         currentUser,
         me: currentUser
     })
@@ -2322,6 +2427,8 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let pages = await pagesModel.find({whiteLabelName:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabel}).sort({num:1})
     let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
@@ -2336,7 +2443,9 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
         hosriZontalMenu,
         banner,
         pages,
-        sliders
+        sliders,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -2344,13 +2453,17 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
 exports.getPageManagement = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const pages = await pagesModel.find({whiteLabelName:whiteLabel})
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
         user,
         me:user,
         currentUser:user,
-        pages
+        pages,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -2375,6 +2488,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     let userMultimarkets
@@ -2440,6 +2555,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         footbalSeries,
         tennisSeries,
         catalog,        
+        basicDetails,
+        colorCode
     })
 })
 
@@ -2465,6 +2582,8 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     let liveFootBall1 = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     let userMultimarkets
@@ -2519,14 +2638,16 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         cricketSeries,
         footbalSeries,
         tennisSeries,
-        catalog
+        catalog,
+        basicDetails,
+        colorCode
     })
 })
 
 
 exports.cricketPage = catchAsync(async(req, res, next)=>{
     let user = req.currentUser
-    console.log('cricketPage')
+    // console.log('cricketPage')
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []
@@ -2537,6 +2658,8 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
@@ -2579,7 +2702,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         notifications:req.notifications,
         userMultimarkets,
         cricketSeries,
-        catalog
+        catalog,
+        basicDetails,
+        colorCode
         })
 })
 
@@ -2587,9 +2712,11 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.cardsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -2609,13 +2736,17 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         games,
         userLog,
         notifications:req.notifications,
-        check
+        check,
+        basicDetails,
+        colorCode
     })
 })
 
 exports.footBallPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
@@ -2658,13 +2789,17 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userMultimarkets,
         footbalSeries,
         catalog,
-        featureStatusArr
+        featureStatusArr,
+        basicDetails,
+        colorCode
     })
 })
 
 exports.TennisPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
@@ -2717,50 +2852,186 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userMultimarkets,
         tennisSeries,
         catalog,
+        basicDetails,
+        colorCode
     })
 })
 
 
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
+    // console.log(req.query)
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-
-    let data = await betModel.aggregate([
-        {
-            $match:{
-                userId:req.currentUser.id
-            }
-        },
-        {
-            $group: {
-              _id: "$event",
-              wins: {
-                $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
-              },
-              losses: {
-                $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
-              },
-              profit: {
-                $sum: "$returns"
-              }
-            }
-        }
-    ])
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser.id})
     }
-    // console.log(data)
-    res.status(200).render("./userSideEjs/plStatemenet/main",{
-        title:'P/L Reports',
-        user: req.currentUser,
-        data,
-        verticalMenus,
-        check:"plStatemenet",
-        userLog,
-        notifications:req.notifications
-    })
+    if(Object.keys(req.query).length === 0){
+    
+        let data = await betModel.aggregate([
+            {
+                $match:{
+                    userId:req.currentUser.id,
+                    status: {
+                        $in: ['WON', 'LOSS']
+                    }
+                }
+            },
+            {
+                $group: {
+                  _id: "$event",
+                  wins: {
+                    $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
+                  },
+                  losses: {
+                    $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
+                  },
+                  profit: {
+                    $sum: "$returns"
+                  }
+                }
+            },
+            {
+                $sort:{
+                    _id : 1,
+                    profit : 1
+                }
+            },
+            {
+                $limit:20
+            }
+        ])
+        // console.log(data)
+        res.status(200).render("./userSideEjs/plStatemenet/main",{
+            title:'P/L Reports',
+            user: req.currentUser,
+            data,
+            verticalMenus,
+            check:"plStatemenet",
+            userLog,
+            notifications:req.notifications,
+            basicDetails,
+            colorCode
+        })
+    }else{
+        if(req.query.eventname && !req.query.matchname){
+            let data = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        event : req.query.eventname,
+                    }
+                },
+                {
+                    $group: {
+                      _id: {
+                        match: '$match',
+                        event: '$event'
+                      },
+                      totalData: { $sum: 1 },
+                      win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+                      loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+                      cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+                      open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+                      totalSumOfReturns: { $sum: '$returns' }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 0,
+                      match: '$_id.match',
+                      event: '$_id.event',
+                      totalData: 1,
+                      win: 1,
+                      loss: 1,
+                      cancel: 1,
+                      open: 1,
+                      totalSumOfReturns: 1
+                    }
+                  },
+                {
+                    $sort: { totalSumOfReturns: -1 , match: 1}
+                  },
+                  {
+                    $limit: 20 
+                  }
+              ]);
+              res.status(200).render("./userSideEjs/frofitlossevent/main",{
+                title:'P/L Reports',
+                user:req.currentUser,
+                verticalMenus,
+                data,
+                check:"plStatemenet",
+                userLog,
+                notifications:req.notifications,
+                basicDetails,
+                colorCode
+            })
+        }else if(req.query.eventname && req.query.matchname){
+            let marketIds = await betModel.distinct('marketId', {userId:req.currentUser.id, event : req.query.eventname, match:req.query.matchname})
+            let dates = await settlementHisory.find({marketID:{$in:marketIds}})
+            let betsofthatMatch = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        event : req.query.eventname, 
+                        match:req.query.matchname
+                    }
+                },
+                {
+                    $sort:{date:-1}
+                },
+                {
+                    $group: {
+                      _id: '$marketId',
+                      marketName:{ $first: "$marketName" },
+                      date:{$first:"$date"},
+                      totalData: { $sum: 1 },
+                      win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+                      loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+                      cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+                      open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+                      totalSumOfReturns: { $sum: '$returns' }
+                    }
+                },
+            ])
+            let commisionDetails = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser.id,
+                        marketId:{
+                            $in:marketIds
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: '$marketId',
+                        totalCommission2 : { $sum: '$commission'}
+                    }
+                }
+            ])
+            console.log(betsofthatMatch)
+            res.status(200).render("./userSideEjs/frofitlossevent2/main",{
+                title:'P/L Reports',
+                user:req.currentUser,
+                verticalMenus,
+                commisionDetails,
+                betsofthatMatch,
+                dates,
+                check:"plStatemenet",
+                userLog,
+                notifications:req.notifications,
+                basicDetails,
+                colorCode,
+                matchName:req.query.matchname,
+                eventname:req.query.eventname
+            })
+        }
+    }
 });
 
 
@@ -2773,6 +3044,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         ipv4 = ip
     }
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
@@ -2821,7 +3094,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let stakeLabledata
         let userMultimarkets
         let betsOnthisMatch = []
-        let rules = await gamrRuleModel.find()
+        let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:req.currentUser._id})
             userMultimarkets = await multimarkets.findOne({userId:req.currentUser._id})
@@ -2927,7 +3200,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             maxFancy,
             commissionmarkerarr,
             notification,
-            channel:match.eventData.channelId
+            channel:match.eventData.channelId,
+            basicDetails,
+            colorCode
     })
 });
 
@@ -2935,11 +3210,13 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.multimarkets = catchAsync(async(req, res, next) => {
     
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     
     const betLimit = await betLimitModel.find()
-    // let rules = await gamrRuleModel.find()
+    // let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
     //     let date = new Date(item.updated_on);
@@ -2960,7 +3237,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     let multimarket 
     let stakeLabledata
     let betsOnthisMatch = []
-    let rules = await gamrRuleModel.find()
+    let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
@@ -2986,7 +3263,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         sportData,
         stakeLabledata,
         betsOnthisMatch,
-        rules
+        rules,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3005,6 +3284,8 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
     let gameData = await gameModel.findById(req.query.gameId)
     let urldata = await gameAPI(gameData, user)
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
@@ -3019,7 +3300,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check,
         urldata,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 })
 
@@ -3070,6 +3353,8 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     // console.log(CheckingData, "CheckingDataCheckingDataCheckingData")
     // return DATA
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
@@ -3084,7 +3369,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"Sportsbook",
         urldata,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3093,9 +3380,11 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.royalGamingPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({provider_name:"RG"});
+    let games = await gameModel.find({provider_name:"RG",whiteLabelName:whiteLabel});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -3108,7 +3397,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"Royal Casino",
         games,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3116,9 +3407,11 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.virtualsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -3131,7 +3424,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"Virtuals",
         games,
         userLog,
-        notifications:req.notifications
+        basicDetails,
+        notifications:req.notifications,
+        colorCode
     })
 });
 
@@ -3139,6 +3434,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.OthersGames = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
@@ -3152,7 +3449,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         data,
         check:"Other",
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3160,9 +3459,11 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let userLog
     let gamesFe = []
     if(user){
@@ -3181,7 +3482,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         games,
         userLog,
         notifications:req.notifications,
-        gamesFe
+        gamesFe,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3189,12 +3492,14 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     // console.log(user._id)
     let userLog = await loginLogs.find({user_id:user.id})
-    let bets = await betModel.find({userId:user._id}).sort({date:-1}).limit(20)
+    let bets = await betModel.find({userId:user._id, status:'OPEN'}).sort({date:-1}).limit(20)
     let betsDetails = await betModel.aggregate([
         {
             $match:{
@@ -3207,7 +3512,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
               totalReturns: { $sum: '$returns' },
               totalCount: { $sum: 1 }
             }
-          }
+        }
     ])
     // console.log(betsDetails)
     res.status(200).render("./userSideEjs/myBetsPage/main", {
@@ -3220,7 +3525,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userLog,
         bets,
         notifications:req.notifications,
-        betsDetails
+        betsDetails,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3228,9 +3535,11 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let userLog = await loginLogs.find({user_id:user._id})
     let bets = await betModel.aggregate([
         {
@@ -3279,16 +3588,20 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         games,
         bets,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 })
 
 exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let userLog = await loginLogs.find({user_id:user._id})
     let result = await betModel.aggregate([
         {
@@ -3341,16 +3654,20 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         games,
         userLog,
         result,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 })
 
 exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let userLog = await loginLogs.find({user_id:user._id})
     // console.log(req.query)
     let result = await betModel.find({event:req.query.eventName, match:req.query.matchName, userId:user.id}).limit(20)
@@ -3364,16 +3681,20 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         games,
         userLog,
         result,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 });
 
 exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let userLog = await loginLogs.find({user_id:user._id})
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
@@ -3424,7 +3745,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         games,
         userLog,
         notifications:req.notifications,
-        userProfileContent
+        userProfileContent,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3432,13 +3755,17 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.gameRulesPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let rules = await gamrRuleModel.find({whiteLabelName:whiteLabel})
     res.status(200).render("./Cms/ruleManager",{
         title:"Rules Management",
         user,
         me:user,
         currentUser:user,
-        rules
+        rules,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3446,9 +3773,11 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
 exports.getMyKycPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
     let userLog = await loginLogs.find({user_id:user._id})
     res.status(200).render("./userSideEjs/Kyc/main",{
         title:'KYC',
@@ -3458,7 +3787,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"Kyc",
         games,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -3468,16 +3799,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     let betsEventWiseOpen = await betModel.aggregate([
         {
@@ -3507,7 +3830,6 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(betsEventWiseOpen, 456465465465456456456)
     let betsEventWiseMap = await betModel.aggregate([
         {
             $match: {
@@ -3538,7 +3860,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-
+    // console.log(betsEventWiseMap, "betsEventWiseMapbetsEventWiseMapbetsEventWiseMapbetsEventWiseMap")
     let betsEventWiseCancel = await betModel.aggregate([
         {
             $match: {
@@ -3600,6 +3922,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     ])
 
     let data = await betModel.findOne({eventId:req.query.id})
+    let openBetsMarketIds = await betModel.distinct('marketId', {status:"OPEN", eventId:req.query.id, userName:{$in:childrenUsername}})
+    let runnersData = await runnerData.find({marketId:{$in:openBetsMarketIds}})
     res.status(200).render("./sattlementInPage/main",{
         title:"Settlements",
         me,
@@ -3609,7 +3933,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
         betsEventWiseMap,
         betsEventWiseCancel,
         betsEventWiseSettel,
-        inprogressData
+        inprogressData,
+        runnersData
     })
 } )
 
@@ -3711,7 +4036,10 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
           },
           {
               $group: {
-                  _id: "$eventName",
+                  _id: {
+                    eventName:'$eventName',
+                    id:'$eventId'
+                  },
               totalCommission: { $sum: "$commission" },
               eventDate: { $first: "$eventDate" }
             }
@@ -3945,11 +4273,11 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                     //     name:item.eventData.name,
                     //     type:"event"
                     // })
-                    count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
                     seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
                     
                 }else{
-                    count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
                     seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
 
                 }
@@ -3977,7 +4305,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
-    console.log('START')
+    // console.log('START')
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     let cricketEvents;
@@ -3988,14 +4316,14 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let data = {};
 
     let cricketList = sportListData[0].gameList[0]
-    // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
-    // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
 
     let newcricketEvents = cricketList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
-         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
             item.eventData.status = true
          }else{
@@ -4015,63 +4343,63 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
         return item
     })
-    // let newfootballEvents =  footballList.eventList.map(async(item) => {
-    //      let status = await catalogController.findOne({Id:item.eventData.eventId})
-    //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-    //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+    let newfootballEvents =  footballList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
 
-    //      count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-    //      if(!status){
-    //         item.eventData.status = true
-    //      }else{
-    //         item.eventData.status = false
-    //     }
-    //     if(!featureStatus){
-    //         item.eventData.featureStatus = false
-    //     }else{
-    //         item.eventData.featureStatus = true
-    //     }
-    //     if(!inPlayStatus){
-    //         item.eventData.inPlayStatus = false
-    //     }else{
-    //         item.eventData.inPlayStatus = true
-    //     }
-    //     item.eventData.count = count
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
 
-    //     return item
-    // })
-    // let newtennisEvents = tennisList.eventList.map(async(item) => {
-    //      let status = await catalogController.findOne({Id:item.eventData.eventId})
-    //      let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-    //      let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+        return item
+    })
+    let newtennisEvents = tennisList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
 
-    //      count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-    //      if(!status){
-    //         item.eventData.status = true
-    //      }else{
-    //         item.eventData.status = false
-    //     }
-    //     if(!featureStatus){
-    //         item.eventData.featureStatus = false
-    //     }else{
-    //         item.eventData.featureStatus = true
-    //     }
-    //     if(!inPlayStatus){
-    //         item.eventData.inPlayStatus = false
-    //     }else{
-    //         item.eventData.inPlayStatus = true
-    //     }
-    //     item.eventData.count = count
+         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
 
-    //     return item
-    // })
+        return item
+    })
 
     cricketEvents = await Promise.all(newcricketEvents);
-    // footballEvents = await Promise.all(newfootballEvents);
-    // tennisEvents = await Promise.all(newtennisEvents);
+    footballEvents = await Promise.all(newfootballEvents);
+    tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
-    // console.log(data, "fhdhhfdhfd")
+    // console.log(data.footballEvents, "fhdhhfdhfd")
     // data = {}
 
     return res.status(200).render("./eventController/eventController", {
@@ -4084,12 +4412,15 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
 
 exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
-    
+    let cricketData = await getCrkAndAllData()
+    const cricket = cricketData[0].gameList[0].eventList
+    // console.log(cricket, "cricketcricketcricket")
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
         title:"Commission Markets",
         me,
-        currentUser:me
+        currentUser:me,
+        cricket
     })
 });
 
@@ -4117,7 +4448,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
-                userId: req.currentUser.id
+                userId: req.currentUser.id,
+                commissionStatus: { $ne : 'cancel'}
             }
         },
         {
@@ -4135,6 +4467,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     }
     // console.log(commissionData, "commissionData")
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReport/main", {
         title:"Commission Report",
@@ -4145,7 +4479,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         notifications:req.notifications,
         // data,
         commissionData,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        basicDetails,
+        colorCode
     })
 })
 
@@ -4194,7 +4530,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId: req.currentUser.id,
-                sportId:sportId
+                sportId:sportId,
+                commissionStatus: { $ne : 'cancel'}
             }
         },
         {
@@ -4207,6 +4544,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     // console.log(data2, "commission")
     let sport = sportId
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportsIn/main", {
         title:"Commission Report",
@@ -4217,7 +4556,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         notifications:req.notifications,
         data,
         sport,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        basicDetails,
+        colorCode
     })
 })
 
@@ -4255,6 +4596,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
           $match: {
             userId: req.currentUser.id,
             seriesName: sportId,
+            commissionStatus: { $ne : 'cancel'}
           },
         },
         {
@@ -4271,6 +4613,8 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
     let sport = data[0]._id.sportId
     let event = sportId
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportEventwise/main", {
         title:"Commission Report",
@@ -4282,7 +4626,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         data,
         sport,
         event,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        basicDetails,
+        colorCode
     })
 })
 
@@ -4298,11 +4644,42 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId: req.currentUser.id,
-                eventName:sportId
+                eventName:sportId,
+                commissionStatus: { $ne : 'cancel'}
+            }
+        },
+        {
+            $group:{
+                _id:{
+                    marketId : '$marketId',
+                    commissionType : '$commissionType'
+                },
+                commission:{$sum:'$commission'},
+                eventName:{$first:'$eventName'},
+                seriesName:{$first:'$seriesName'},
+                sportId:{$first:'$sportId'},
+                eventId:{$first:'$eventId'},
+                marketName:{$first:'$marketName'}
+
+            }
+        },
+        {
+            $project:{
+                _id:0,
+                marketId:'$_id.marketId',
+                commissionType:'$_id.commissionType',
+                commission:'$commission',
+                eventName:"$eventName",
+                seriesName:'$seriesName',
+                sportId:'$sportId',
+                eventId:'$eventId',
+                marketName:'$marketName'
+
             }
         }
     ])
     
+    // console.log(data, "datadata")
 
     let sumData = await commissionNewModel.aggregate([
         {
@@ -4326,6 +4703,8 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
     }
     // console.log(data)
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
         title:"Commission Report",
@@ -4335,7 +4714,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userLog,
         notifications:req.notifications,
         data,
-        unclaimCommission:sum
+        unclaimCommission:sum,
+        basicDetails,
+        colorCode
     })
 })
 
@@ -4356,6 +4737,8 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         mainId = parentUser._id.toString()
     }
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
@@ -4444,7 +4827,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let stakeLabledata
         let userMultimarkets
         let Bets = []
-        let rules = await gamrRuleModel.find()
+        let rules = await gamrRuleModel.find({whiteLabelName:process.env.whiteLabelName})
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:mainId})
             userMultimarkets = await multimarkets.findOne({userId:mainId})
@@ -4476,7 +4859,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         let check = await resumeSuspendModel.aggregate([
             {
                 $match:{
-                    status:false
+                    status:false,
+                    whiteLabel:req.currentUser.whiteLabel
                 }
             }
         ])
@@ -4498,7 +4882,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             min,
             max,
             currentUser:req.currentUser,
-            suspend:check
+            suspend:check,
+            basicDetails,
+            colorCode
     })
 });
 
@@ -4612,9 +4998,25 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let allData = cricketList.concat(footballList, tennisList)
     let series = req.query.match
     let seriesMatch = allData.filter(item => item.eventData.name == series)
+    let marketList = seriesMatch[0].marketList
     let betLimitMatchWise = await betLimitMatchWisemodel.findOne({matchTitle:series})
-    
-    // console.log(seriesMatch)
+    // console.log(marketList)
+    let Session
+    let onlyOver
+    let w_p_market
+    let odd_even
+    let bookMaker
+    if(marketList.session !== null){
+        Session = marketList.session.filter(item => item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.startsWith("Only") && item.title.includes("Over"))
+        onlyOver = marketList.session.filter(item => item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && item.title.startsWith("Only"))
+        w_p_market = marketList.session.filter(item => item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.includes("Over"))
+    }
+    if(marketList.odd_even !== null){
+        odd_even = marketList.odd_even
+    }
+    if(marketList.bookmaker !== null){
+        bookMaker = marketList.bookmaker
+    }
     res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
         betLimit,
@@ -4622,7 +5024,12 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
         currentUser:me,
         seriesMatch,
         series,
-        betLimitMatchWise
+        betLimitMatchWise,
+        Session,
+        onlyOver,
+        w_p_market,
+        odd_even,
+        bookMaker
     })
 });
 
@@ -4639,6 +5046,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     //     childrenUsername.push(ele.userName) 
     // })
     if(req.query.market){
+        // console.log(req.query.market, "req.query.marketreq.query.marketreq.query.market")
         let market 
         let marketName 
         if(req.query.market.toLowerCase().startsWith('book')){
@@ -4650,15 +5058,16 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             market = req.query.market
             marketName = req.query.market
         }
+        let thatEvent = await commissionNewModel.findOne({eventId:match})
         // console.log(market)
         let thatMarketData = await commissionNewModel.aggregate([
             {
                 $match: {
-                eventDate: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                },
+                // eventDate: {
+                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                // },
                 userName:{$in:childrenUsername},
-                eventName:match,
+                eventId:match,
                 marketName:market,
                 loginUserId:{$exists:true},
                 parentIdArray:{$exists:true}
@@ -4707,28 +5116,34 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             me,
             currentUser:me,
             thatMarketData,
-            match,
+            match:thatEvent.eventName,
+            eventId:match,
             marketName
         })
     }else{
         let marketWiseData = await commissionNewModel.aggregate([
             {
                 $match: {
-                eventDate: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                },
+                // eventDate: {
+                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                // },
                 userName:{$in:childrenUsername},
-                eventName:match
+                eventId:match
                 }
             },
             {
                 $group: {
-                _id: "$marketName",
+                _id: {
+                    marketName : '$marketName',
+                    id:'$marketName'
+                },
                 totalCommission: { $sum: "$commission" },
-                eventDate: { $first: "$eventDate" }
+                eventDate: { $first: "$eventDate" },
+                eventName:{ $first: "$eventName" }
                 }
             }
         ])
+        // console.log(marketWiseData, "marketWiseDatamarketWiseData")
         res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
             title:"Commission Report",
             me,
@@ -4748,9 +5163,9 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
         let eventData = await commissionNewModel.aggregate([
             {
                 $match:{
-                    eventDate: {
-                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                    },
+                    // eventDate: {
+                    //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    // },
                     userName:user,
                     eventName:req.query.event
                 }
@@ -4769,9 +5184,9 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
         let Userdata = await commissionNewModel.aggregate([
                 {
                     $match: {
-                    eventDate: {
-                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                    },
+                    // eventDate: {
+                    //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    // },
                     userName:user
                     }
                 },
@@ -4791,6 +5206,97 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
             Userdata
         })
     }
+})
+
+exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
+    let loginuserid1 = req.currentUser._id
+    let sportdownlinecomm = await commissionNewModel.aggregate([
+        {
+            $match:{
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                loginUserId:{$exists:true},
+                parentIdArray:{$in:[loginuserid1.toString()]}
+
+            }
+        },
+        {
+            $group:{
+                _id:"$userName",
+                commissionClaim:{$sum:{
+                    $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                  }},
+                commissionUnclaim:{$sum:{
+                    $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
+                  }}
+            }
+        }
+    ])
+
+   
+
+    console.log(sportdownlinecomm,"==>sportdownlinecomm")
+
+    res.status(200).render('./downlinecommissionreport/userwisedlcr',{
+        title:'Downline Commission Report',
+        sportdownlinecomm,
+        currentUser:req.currentUser,
+        me:req.currentUser
+    })
+})
+
+exports.getSportwiseuplinecommreport = catchAsync(async(req, res, next)=>{
+    let loginuserid1 = req.currentUser._id
+    let sporttwisecommittion = await commissionNewModel.aggregate([
+        {
+            $match:{
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                loginUserId:{$exists:true},
+                userId:loginuserid1.toString()
+
+            }
+        },
+        {
+            $group:{
+                _id:"$sportId",
+                commissionClaim:{$sum:{
+                    $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                  }},
+            }
+        },
+        {
+            $sort:{_id:1}
+        }
+    ])
+
+    let result = sporttwisecommittion.map(ele=>{
+        if(ele['_id'] == '4'){
+            ele['sportname'] = 'Cricket'
+        }else if(ele['_id'] == '1'){
+            ele['sportname'] = 'Football'
+        }else if(ele['_id'] == '2'){
+            ele['sportname'] = 'Tennis'
+        }else if(ele['_id'] == '10'){
+            ele['sportname'] = 'Basketball'
+        }else if(ele['_id'] == '30'){
+            ele['sportname'] = 'Baseball'
+        }
+        return ele
+    })
+
+   
+
+    console.log(sporttwisecommittion,"==>sporttwisecommittion")
+
+    res.status(200).render('./uplinecommissionreport/uplinecommissionreport',{
+        title:'Upline Commission Report',
+        sporttwisecommittion:result,
+        currentUser:req.currentUser,
+        me:req.currentUser
+    })
 })
 
 
@@ -5352,14 +5858,12 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
 
 
 exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
+    // console.log(res.locals.B2C_Status, 121212212222222121)
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     newChilds = await User.distinct('userName', {parentUsers:req.currentUser._id});
-
-    // let chils = await User.find({parentUsers:req.currentUser._id})
-    // let newChilds = chils.map(ele => {
-    //     return ele.userName
-    // })
     let paymentreq = await paymentReportModel.find({username:{$in:newChilds}}).sort({date:-1}).limit(10)
-    // console.log(paymentreq)
     res.render('./PaymentApproval/PaymentApproval',{
         title:'Payment Approval',
         currentUser:req.currentUser,
@@ -5368,6 +5872,9 @@ exports.paymentApprovalPage = catchAsync(async(req, res, next)=>{
     })
 })
 exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     let paymentmethod = await PaymentMethodModel.find({userName:req.currentUser.userName});
     res.render('./PaymentMethod/paymentMethod',{
         title:'Payment Method',
@@ -5380,12 +5887,17 @@ exports.paymentMethodPage = catchAsync(async(req, res, next)=>{
 
 exports.getManagementAccount = catchAsync(async(req, res, next) => {
     let userLog
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     let accounts = await manageAccountUser.find({userName:req.currentUser.userName})
     // console.log(accounts, "accountsaccounts")
     let whiteLabel = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     res.status(200).render("./userSideEjs/manageAccounts/main", {
         title:"Manage Accounts",
@@ -5394,13 +5906,18 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         userLog,
         verticalMenus,
         notifications:req.notifications,
-        accounts
+        accounts,
+        basicDetails,
+        colorCode
     })
 })
 
 
 
 exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     let data = await withdrawalRequestModel.find({sdmUserName:req.currentUser.userName, reqStatus:'pending'}).sort({reqDate:-1}).limit(10)
     res.render('./withrowalReqAdmin/main',{
         title:'Withdrawal request',
@@ -5414,12 +5931,17 @@ exports.getWithrowReqPage = catchAsync(async(req, res, next) => {
 
 exports.myWithrowReq = catchAsync(async(req, res, next) => {
     let userLog
+    if(!res.locals.B2C_Status){
+        return next(new AppError('You do not have permission to perform this action', 404))
+    }
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     let whiteLabel = whiteLabelcheck(req)
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    let withrowReqData = await withdrawalRequestModel.find().sort({reqDate:-1}).limit(10)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let withrowReqData = await withdrawalRequestModel.find({userName:req.currentUser.userName}).sort({reqDate:-1}).limit(10)
     res.status(200).render("./userSideEjs/withrowReqPage/main", {
         title:"withdrawal request.",
         user:req.currentUser,
@@ -5427,7 +5949,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         check:"withdrawal",
         userLog,
         withrowReqData,
-        notifications:req.notifications
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
     })
 });
 
@@ -5435,3 +5959,19 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.getHTMLSCOREIFRm = catchAsync(async(req, res, next) => {
     res.status(200).render('./forSimpleHtmlOFSports')
 })
+
+
+exports.getGlobalSetting = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let whiteLabel = whiteLabelcheck(req)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    const colorcode = await colorCodeModel.findOne({whitelabel:whiteLabel })
+    res.status(200).render("./globalSettings/main",{
+        title:"Global settings",
+        user,
+        me:user,
+        currentUser:user,
+        basicDetails,
+        colorcode,
+    })
+});

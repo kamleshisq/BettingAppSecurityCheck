@@ -13,8 +13,22 @@
               </div>
               <input type="text" id="searchUser" list="text_editors" class="form-control searchUser" placeholder="Event Name" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               <div class="wrapper">
-                <ul id="search" class="users">
-              
+                <ul id="search" class="users hide">
+                  <%for(let i = 0; i < cricket.length; i++){%>
+                    <% 
+                    let date = new Date((cricket[i].eventData.time * 1000))
+                    var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                  };
+                  var formattedTime = date.toLocaleString('en-US', options);
+                    %>
+                    <li id="<%=cricket[i].eventData.eventId%>" class="matchName"><%=cricket[i].eventData.name%>  (<%=formattedTime%>)</li>
+                  <%}%>
                 </ul>
               </div>
               
@@ -79,7 +93,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 <script type="text/javascript" src="../js/bundle.js"></script>
-
+<script>
+  $(document).on('click', "#searchUser", function(e){
+    $('#search').removeClass('hide')
+  })
+  $('body').click(function(){
+  $(".wrapper #search:not(.hide)").addClass("hide");
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    $('#searchUser').on('input', function () {
+      const searchTerm = $(this).val().toLowerCase(); 
+      const $listItems = $('.matchName');
+      $listItems.each(function () {
+        const text = $(this).text().toLowerCase();
+        const isMatch = text.includes(searchTerm);
+        $(this).toggle(isMatch);
+      });
+    });
+  });
+</script>
 <script>
   function openCity(evt, cityName) {
 var i, tabcontent, tablinks;

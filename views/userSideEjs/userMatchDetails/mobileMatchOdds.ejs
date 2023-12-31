@@ -15,16 +15,16 @@
       <%if(check){%>
         <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com/assets/img/exchange/Vector2.svg" alt=""></button>  
       <%}else{%>
-        <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""></button>  
+        <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com/assets/img/exchange/Vector.png" alt=""></button>  
       <%}%>
     <%}else{%>
-      <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com:8080/assets/img/exchange/Vector.png" alt=""></button> 
+      <button class="multi_market" id="<%=match.marketList.match_odd.marketId%>"><img src="http://ollscores.com/assets/img/exchange/Vector.png" alt=""></button> 
     <%}%>
   </div>
 
     <div class="exc-inn-colaps-data-wrpdv">
 
-      <table class="acount-stat-tbl mo" id="<%=match.marketList.match_odd.marketId%>">
+      <table class="acount-stat-tbl mo market" id="<%=match.marketList.match_odd.marketId%>">
 
         <thead class="acount-stat-tbl-hed2">
             <tr class="acount-stat-tbl-hed-tr2">
@@ -48,7 +48,7 @@
                     </td>
                     
                     <td class="tbl-td-with5">
-                        <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[i]%>3" >
+                        <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[i]%>1" >
                                 
                         </span> 
                     </td>
@@ -56,7 +56,7 @@
                     
       
                     <td class="tbl-td-with5 suspended">
-                        <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[i]%>6" >
+                        <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[i]%>4" >
                                 
                         </span> 
                         <div class="match-status-message">

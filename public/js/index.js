@@ -32,6 +32,8 @@ import { createAndLoginUser } from "./createAndLoginUser";
 import { KYC } from "./kyc";
 import { paymentDeposite } from "./paymentDeposite";
 import { notificationsss } from "./notificationsss";
+import { updateBasicDetails } from "./updateBasicDetails";
+import session from "express-session";
 // import { func } from "joi";
 
 
@@ -54,9 +56,9 @@ const {
 $(document).ready(function(){ 
     const linkColor = document.querySelectorAll('.nav_link')
 	const operationPathnameArr = ['/admin/houseManagement','/admin/streammanagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
-    const reportsPathnameArr = ['/admin/gamereport','/admin/myaccount','/admin/adminaccount','/admin/useraccount','/admin/settlementHistory','/admin/reports','/admin/userhistoryreport','/admin/plreport','/admin/commissionReport']
-    const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules','/admin/promotion']
-    const patmentArr = ['/admin/paymentapproval','/admin/paymentmethods']
+    const reportsPathnameArr = ['/admin/gamereport','/admin/myaccount','/admin/adminaccount','/admin/useraccount','/admin/settlementHistory','/admin/reports','/admin/userhistoryreport','/admin/plreport','/admin/commissionReport','/admin/uplinecommissionReport','/admin/downlinecommissionReort']
+    const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules','/admin/promotion','/admin/globalSettings']
+    const patmentArr = ['/admin/paymentapproval','/admin/paymentmethods','/admin/withdrawalRequest']
 	function colorLink(){
         if(linkColor){
         linkColor.forEach(l=> l.classList.remove('active'))
@@ -83,6 +85,10 @@ $(document).ready(function(){
             $("a[href='"+'/admin/betlimit'+"'").addClass('active')
             $("a[href='"+'/admin/betlimit'+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+'/admin/betlimit'+"'").parent().parent().addClass('open')
+        }else if(pathname.startsWith('/admin/gamereport/match') || pathname.startsWith('/admin/gamereport/match/market') || pathname.startsWith('/admin/gamereport/match/market/report')){
+            $("a[href='"+'/admin/gamereport'+"'").addClass('active')
+            $("a[href='"+'/admin/gamereport'+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+'/admin/gamereport'+"'").parent().parent().addClass('open')
         }
         }
 	}
@@ -113,7 +119,7 @@ $(document).on("submit", ".loginFormAdmin", function(e){
     // console.log("Working") 
     // this.
     try{
-        console.log('WORKING')
+        // console.log('WORKING')
         $(this).find('button[type="submit"]').addClass("loading");
     }catch(err){
         console.log(err)
@@ -128,6 +134,45 @@ $(document).on('click', ".logOut", function(e){
     // console.log(this)
     logout()
 })
+
+let sentinterval1 = setInterval(()=>{
+    // console.log('WORKING', localStorage.getItem('logintime'))
+    if(pathname.startsWith('/admin')){
+        if(localStorage.getItem('logintimeAdmin')){
+            // console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
+            if(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')) >= 1000  * 60 * 30){
+                clearInterval(sentinterval1)
+                localStorage.removeItem('logintimeAdmin')
+                logout()
+                
+                
+            }
+        }else{
+            if($('body header').attr('data-logindata')){
+                location.reload(true)
+            }
+        }
+    }else{
+        if(localStorage.getItem('logintimeUser')){
+            // console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
+            if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 60 * 30){
+                // if(pathname.startsWith('/admin')){
+                //     logout()
+                // }else{
+                // }
+                clearInterval(sentinterval1)
+                localStorage.removeItem('logintimeUser')
+                logoutUser()
+            }
+        }else{
+            if($('body').attr('data-logindata')){
+                window.location.reload(true)
+            }
+        }
+    }
+},1000)
+
+
 $(document).on('click', ".logOutUser", function(e){
     e.preventDefault()
     // console.log('Working')
@@ -619,7 +664,7 @@ $(document).on("submit", ".form-data25",function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
-    console.log(fd,'==>fd')
+    // console.log(fd,'==>fd')
     updateBanner(fd)
 })
 
@@ -699,6 +744,18 @@ $(document).on('submit', ".kycForm", function(e){
     let data = Object.fromEntries(fd.entries());
     // console.log(data)
     KYC(fd)
+})
+
+$(document).on('submit', '.basicDetailsFOrm', function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let id = $(this).attr("id")
+    let table = $(this).closest('.fade').attr('id')
+    fd.append('id', id)
+    fd.append('table', table)
+    updateBasicDetails(fd)
+    // console.log(data, "DATA23232")
 })
 
 $(document).on('submit','#navmod3 .payment-fom',function(e){

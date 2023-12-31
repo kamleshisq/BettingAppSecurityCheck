@@ -56,9 +56,9 @@
           <div class="choose-payment-option">
             <div class="payment-tab">
                 <div class="payment-tab-list">
-                    <a href="#" class="img-payment bank-img active"><img src="http://ollscores.com/images/bank-transfer.png"></a>
-                    <a href="#" class="img-payment upi-img"><img src="http://ollscores.com/images/upi-pay.png"></a>
-                    <a href="#" class="img-payment pytm-img"><img src="http://ollscores.com/images/paytm-pay.png"></a>
+                    <a href="#" class="img-payment bank-img active"><img src="http://b2c.ollscores.com/images/bank-transfer.png"></a>
+                    <a href="#" class="img-payment upi-img"><img src="http://b2c.ollscores.com/images/upi-pay.png"></a>
+                    <a href="#" class="img-payment pytm-img"><img src="http://b2c.ollscores.com/images/paytm-pay.png"></a>
                 </div>
                 <div class="payment-tab-content">
                     <div class="title">Choose Beneficiary Account</div>
@@ -134,9 +134,9 @@
           <div class="choose-payment-option">
             <div class="payment-tab">
                 <div class="payment-tab-list">
-                    <a class="img-payment bankW-img active"><img src="http://ollscores.com/images/bank-transfer.png"></a>
-                    <a class="img-payment upiW-img"><img src="http://ollscores.com/images/upi-pay.png"></a>
-                    <a class="img-payment pytmW-img"><img src="http://ollscores.com/images/paytm-pay.png"></a>
+                    <a class="img-payment bankW-img active"><img src="http://b2c.ollscores.com/images/bank-transfer.png"></a>
+                    <a class="img-payment upiW-img"><img src="http://b2c.ollscores.com/images/upi-pay.png"></a>
+                    <a class="img-payment pytmW-img"><img src="http://b2c.ollscores.com/images/paytm-pay.png"></a>
                     <a class="payment-mng-link" href="/withdrawalRequest" >Past Requests</a>
                 </div>
                 <div class="payment-tab-content">
@@ -187,34 +187,56 @@
   </div>
 
   <script>
-   document.addEventListener("DOMContentLoaded", function () {
-  const passwordInputs = document.querySelectorAll('input[type="password"]');
-  const eyeIcons = document.querySelectorAll('.input-group-text');
+//    document.addEventListener("DOMContentLoaded", function () {
+//   const passwordInputs = document.querySelectorAll('input[type="password"]');
+//   const eyeIcons = document.querySelectorAll('.input-group-text');
 
-  eyeIcons.forEach((eyeIcon, index) => {
-    eyeIcon.addEventListener("click", function () {
-      const passwordInput = passwordInputs[index - 2];
-      const isVisible = passwordInput.getAttribute("type") === "text";
+//   eyeIcons.forEach((eyeIcon, index) => {
+//     eyeIcon.addEventListener("click", function () {
+//       const passwordInput = $(this).closest('div').find('input');
+//       console.log(passwordInput, passwordInput.attr("type"),"passwordInputpasswordInputpasswordInput")
+//       const isVisible = passwordInput.attr("type") === "text";
+//       console.log(isVisible, "isVisibleisVisibleisVisible")
 
-      if (isVisible) {
-        passwordInput.setAttribute("type", "password");
-        eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+//       if (isVisible) {
+//          passwordInput.attr("type", "password");
+//         eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+//       } else {
+//         passwordInput.attr("type", "text");
+//         eyeIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+
+//         // Hide the password after 3 seconds
+//         setTimeout(function () {
+//            passwordInput.attr("type", "password");
+//           eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+//         }, 3000);
+//       }
+//     });
+//   });
+// });
+
+
+  $(document).on('click', ".input-group-text", function(e){
+    const passwordInput = $(this).closest('div').find('input');
+    const isVisible = passwordInput.attr("type") === "text";
+    if (isVisible) {
+        passwordInput.attr("type", "password");
+        $(this).html('<i class="fa-solid fa-eye-slash"></i>');
       } else {
-        passwordInput.setAttribute("type", "text");
-        eyeIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+        passwordInput.attr("type", "text");
+        $(this).html('<i class="fa-solid fa-eye"></i>');
 
         // Hide the password after 3 seconds
         setTimeout(function () {
-          passwordInput.setAttribute("type", "password");
-          eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+           passwordInput.attr("type", "password");
+          $(this).html('<i class="fa-solid fa-eye-slash"></i>');
         }, 3000);
       }
-    });
-  });
-});
 
+  })
 
   </script>
+
   <% if (userLog && userLog.length === 1) { %>
     <%if(userLog[0].logs.length === 0){%>
     <script>

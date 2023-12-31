@@ -15,7 +15,7 @@ exports.getOwnChild = async(id,page) => {
         return next(new AppError('You do not have permission to perform this action',400))
     }
     if(id){
-        // Rows = await User.count({parent_id: id,isActive:true}).skip(page * limit).limit(limit)
+        // Rows = await User.countDocuments({parent_id: id,isActive:true}).skip(page * limit).limit(limit)
         child = await User.find({parent_id: id,isActive:true}).skip(page * limit).limit(limit);
         // me = await User.findById(id)
         roles = await Role.find({role_level:{$gt : userDetails.role.role_level}})
@@ -62,10 +62,10 @@ exports.getOwnChild = async(id,page) => {
 //         if(me.role.role_level < data.currentUser.role.role_level){
 //             return next(new AppError('You do not have permission to perform this action',400))
 //         }
-//         Rows = await User.count({parent_id: id,isActive:true})
+//         Rows = await User.countDocuments({parent_id: id,isActive:true})
 //         child = await User.find({parent_id: id,isActive:true}).skip(page * limit).limit(limit);
 //     }else{
-//         Rows = await User.count({parent_id: data.currentUser._id,isActive:true})
+//         Rows = await User.countDocuments({parent_id: data.currentUser._id,isActive:true})
 //         child = await User.find({parent_id: data.currentUser._id,isActive:true}).skip(page * limit).limit(limit);
 //         me = await User.findById(data.currentUser._id)
 //     }

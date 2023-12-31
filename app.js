@@ -21,6 +21,7 @@ const bannerRoutes = require("./routes/bannerRoutes");
 const sliderRoutes = require("./routes/sliderRoutes");
 const KycRoutes = require("./routes/kycRoutes");
 const houseFundRoutes = require("./routes/housefundRoutes");
+const globalRoutes = require('./routes/globalsSettingRoutes');
 const dotenv =require('dotenv');
 const cookieParser = require('cookie-parser');
 const globleErrorHandler = require('./controller/errorController');
@@ -28,7 +29,9 @@ const path = require('path');
 const middlewares = require("./middleWares/middleware");
 const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
+const cors = require('cors');
 const crone = require('./crones/crones');
+const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
 const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
@@ -38,6 +41,7 @@ const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
 
 
 app.use(requestIp.mw());
+app.use(cors());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
 mongoose.connect(process.env.db1,{
@@ -70,7 +74,8 @@ app.use(cookieParser());
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
 app.use(middlewares);
-// crone();
+crone();
+// cancelCrone();
 // userCrone(); 
 // betCrone();
 // dashCrone();
@@ -102,6 +107,7 @@ app.use("/api/v1/pages", pagesRoutes);
 app.use("/api/v1/slider", sliderRoutes);
 app.use("/api/v1/Kyc", KycRoutes);
 app.use("/api/v1/houseFund", houseFundRoutes);
+app.use("/api/v1/globalRoutes", globalRoutes);
 app.use("/", viewRoutes);
 // console.log(globleErrorHandler)
 

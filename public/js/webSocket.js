@@ -1,31 +1,67 @@
 
 const socket = io();
+let reconnectAttempts = 0;
 socket.on('disconnect', () => {
     console.log("WebSocket Disconnected");
     // Refresh the page when the WebSocket connection is lost
     
-    window.location.reload();
+    attemptReconnect();
 });
 let c = 0
 socket.on('connect', () => {
-    console.log("websocket Connected 45454545")
+    reconnectAttempts = 0;
+    console.log("websocket Connected")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
+        console.log(data, "datadatadata")
         const {
             host, hostname, href, origin, pathname, port, protocol, search
         } = window.location
-        console.log('WORKING45654', data)
-        let loginData
-        if(pathname.startsWith('/admin')){
-            if($('body header').attr('data-logindata')){
-                loginData = JSON.parse($('body header').attr('data-logindata'))
-            }
-        }else{
-            if($('body').attr('data-logindata')){
+        socket.emit('hostname1ColoreCOde', hostname)
+        // socket.on('hostname1ColoreCOde', data => {
+        //     const styleSheets = document.styleSheets;
+        //     for (let i = 0; i < styleSheets.length; i++) {
+        //       const styleSheet = styleSheets[i];
+        //       if (styleSheet.href) {
+        //         if(styleSheet.href == "http://ollscores.com/assets/css/style.css" || styleSheet.href == "http://ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://ollscores.com/assets/css/media.css"){
 
-                loginData = JSON.parse($('body').attr('data-logindata')) 
-            }
+        //             // console.log('Processing stylesheet:', styleSheet.href, data);
+        //             try {
+        //               document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
+        //               document.documentElement.style.setProperty('--color1', `linear-gradient(136deg, ${data.color1_1} 0%, ${data.color1_2} 100%)`);
+        //               document.documentElement.style.setProperty('--color2', `${data.color2}`);
+        //               document.documentElement.style.setProperty('--color7', `${data.color7}`);
+        //               document.documentElement.style.setProperty('--color14', `${data.color14}`);
+        //               document.documentElement.style.setProperty('--color15', `${data.color15}`);
+        //               document.documentElement.style.setProperty('--color13', `${data.color13}`);
+        //               document.documentElement.style.setProperty('--color5', `${data.color5}`);
+        //               document.documentElement.style.setProperty('--color3', `${data.color3}`);
+        //             } catch (err) {
+        //               console.error('Error setting styles:', err);
+        //             }
+        //         }
+        //       }
+        //     }
+        //   });
+        // console.log('WORKING45654', data)
+
+        let loginData = {
+            User : data.loginData,
+            Token : data.socket,
+            ip:data.Ip
         }
+        // if(data.data)
+
+        // if(pathname.startsWith('/admin')){
+        //     if($('body header').attr('data-logindata')){
+        //         loginData = JSON.parse($('body header').attr('data-logindata'))
+        //     }
+        // }else{
+        //     if($('body').attr('data-logindata')){
+
+        //         loginData = JSON.parse($('body').attr('data-logindata')) 
+        //     }
+        // }
         // console.log('loginData',loginData)
         // if(!loginData){
         // location.reload(true)
@@ -33,8 +69,22 @@ socket.on('connect', () => {
         if(loginData){
             LOGINDATA.LOGINUSER = loginData.User
             LOGINDATA.LOGINTOKEN = loginData.Token
-            LOGINDATA.IP = data.socket
+            LOGINDATA.IP = loginData.ip
+
+            function checkLogin(){
+                socket.emit('LoginCHeckUSerSIde', {loginData})
+                setTimeout(()=>{
+                    checkLogin()
+                  }, 1000)
+            }
+            checkLogin()
         }
+
+        socket.on('LoginCHeckUSerSIde', data => {
+            // console.log(data)
+            window.location.reload();
+        })
+
 
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();
@@ -42,7 +92,7 @@ socket.on('connect', () => {
         // }
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //ollscores.com ollscores.com http://ollscores.com/admin/userManagement http://ollscores.com  http: 
+        //dev.ollscores.com dev.ollscores.com http://ollscores.com/admin/userManagement http://ollscores.com  http: 
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
@@ -76,6 +126,7 @@ socket.on('connect', () => {
     // console.log(LOGINDATA,"==>cookie")
 
 
+ 
     
     let popupTimeout; 
 
@@ -92,11 +143,19 @@ socket.on('connect', () => {
         }, 5000);
     }
 
+    
+
     $('.button').click(function (event) {
         if ($(this).find('.mylock-data').length > 0) {
           event.stopImmediatePropagation();
         } 
     });
+
+    $('input[type="date"]').on('change', function() {
+        if(!$(this).hasClass('select-date')){
+            $(this).addClass('select-date');
+        }
+    })
 
     $(document).on('click', ".close-btn", function() {
         const grandParent = $(this).closest('.popup');
@@ -114,7 +173,7 @@ socket.on('connect', () => {
         }
 
         let check = validateUTR($(this).val())
-        console.log(check,'check')
+        // console.log(check,'check')
         if(!check){
             $(this).siblings('span.input_err').addClass('error')
             $(this).siblings('span.input_err').text('enter valid utr(minimum 12 digit alpha numarical)')
@@ -566,15 +625,11 @@ socket.on('connect', () => {
     socket.on('userLoginBalance', async(data) => {
         // console.log(data, "USERDATA")
         let html = `<div class="bet-blns-nav-wrp-amount-num">
-        <span> <i class="fa-solid fa-wallet text-white"></i>  Bal : ${data.userData.availableBalance.toFixed(2)}</span>
-      </div>
-      <div class="bet-blns-nav-wrp-txt">
-        <span class="">Bal : <span> &nbsp; ${data.userData.availableBalance.toFixed(2)}</span></span>
-        <span class="">Exp : <span> &nbsp; ${data.totalExposure.toFixed(2)}</span></span>
+        <span class=""><i class="fa-solid fa-wallet"></i> Bal : ${data.userData.availableBalance.toFixed(2)} <a href="/mybets"><span> &nbsp; Exp : ${data.totalExposure.toFixed(2)}</span></a> </span>
       </div>`
-      if(document.getElementById('userBalance')){
-          document.getElementById('userBalance').innerHTML = html
-      }
+      $('.userBalance').each(function(index, element) {
+        $(this).html(html)
+    });
     })
 
     function stakeLableForm(){
@@ -676,6 +731,7 @@ socket.on('connect', () => {
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
+    // console.log(data)
     socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
@@ -838,19 +894,14 @@ socket.on('connect', () => {
   socket.on('UserUpdatePass', async(data)=>{
   
     if(data.status === "success"){
-    //   function togglePopup(idname, id){
-    //     document.getElementById(idname).classList.toggle("active");
-    //     document.getElementById(id).innerText  = "password updated".toUpperCase()
-    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-    //   }
       togglePopupMain('popup-1', "redPopUP", "password updated")
-        // alert("password updated")
+      $(function () {
+        $('#navmod1').modal('show');
+        setTimeout(function () {
+            $('#navmod1').modal('hide');
+        }, 1000);
+    });
     }else{
-    //   function togglePopup1(idname, id){
-    //     document.getElementById(idname).classList.toggle("active");
-    //     document.getElementById(id).innerText  = data.message.toUpperCase()
-    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-    //   }
       togglePopupMain('popup-2', "redPopUP2", data.message.toUpperCase())
     }
    })
@@ -1220,48 +1271,83 @@ socket.on('connect', () => {
     // }
 
     $(document).on('click','.updateBetLimit',function(e){
-       let firstTd = $(this).closest("tr").find("td:first");
-       var innerText = firstTd.attr('id');
-    //    console.log(innerText)
-       socket.emit('BetLimitDetails', innerText)
-    })
-
-
-    socket.on('BetLimitDetails', data => {
-        // console.log(data)
-        if(data.status == "notFound"){
-            let form = $('#myModal2').find('.form-data')
-            form.find('input[name = "min_stake"]').val(0)
-            form.find('input[name = "max_stake"]').val(0)
-            form.find('input[name = "max_profit"]').val(0)
-            form.find('input[name = "max_odd"]').val(0)
-            form.find('input[name = "delay"]').val(0)
-            form.find('input[name = "max_bet"]').val(0)
-            form.find('input[name = "type"]').val(data.type)
-        }else if(data.status == "err"){
-            alert(data.message)
-        }else{
-            // console.log(data)
-            let form = $('#myModal2').find('.form-data')
-            form.find('input[name = "min_stake"]').val(data.details.min_stake)
-            form.find('input[name = "max_stake"]').val(data.details.max_stake)
-            form.find('input[name = "max_profit"]').val(data.details.max_profit)
-            form.find('input[name = "max_odd"]').val(data.details.max_odd)
-            form.find('input[name = "delay"]').val(data.details.delay)
-            form.find('input[name = "max_bet"]').val(data.details.max_bet)
-            form.find('input[name = "type"]').val(data.type)
+        let data = {}
+       let firstTr = $(this).closest("tr")
+       let type = firstTr.find('td:first-child').attr('id');
+       let min_stake = firstTr.find('input[name="min_stake"]').val();
+       let max_stake = firstTr.find('input[name="max_stake"]').val();
+       let max_profit = firstTr.find('input[name="max_profit"]').val();
+       let max_odd = firstTr.find('input[name="max_odd"]').val();
+       let delay = firstTr.find('input[name="delay"]').val();
+       let max_bet = firstTr.find('input[name="max_bet"]').val();
+       data.type = type
+       data.min_stake = min_stake
+       data.max_stake = max_stake
+       data.max_profit = max_profit
+       data.max_odd = max_odd
+       data.delay = delay
+       data.max_bet = max_bet
+       let check = true
+       Object.keys(data).map(ele => {
+        if(data[ele] == '0'){
+            check = false
         }
     })
-
-
-    $(document).on('submit', ".form-betLimit", function(e){
-        e.preventDefault()
-        let form = $(this)[0];
-        let fd = new FormData(form);
-        let data = Object.fromEntries(fd.entries());
-        // console.log(data, "BETLIMIT")
+    if(check){
+        console.log(data,'==>data')
         socket.emit('UpdateBetLimit', {data, LOGINDATA})
+    }else{
+        alert('not a singal value is 0')
+    }
+       
     })
+
+
+    // socket.on('BetLimitDetails', data1 => {
+    //     // console.log(data1)
+    //     if(data1.status == "notFound"){
+    //         let form = $('#myModal2').find('.form-data')
+    //         form.find('input[name = "min_stake"]').val(0)
+    //         form.find('input[name = "max_stake"]').val(0)
+    //         form.find('input[name = "max_profit"]').val(0)
+    //         form.find('input[name = "max_odd"]').val(0)
+    //         form.find('input[name = "delay"]').val(0)
+    //         form.find('input[name = "max_bet"]').val(0)
+    //         form.find('input[name = "type"]').val(data1.type)
+    //         let form1 = $('.form-betLimit')[0];
+    //         let fd = new FormData(form1);
+    //         let data = Object.fromEntries(fd.entries());
+    //         // console.log(data, "BETLIMIT")
+    //         socket.emit('UpdateBetLimit', {data, LOGINDATA})
+    //     }else if(data1.status == "err"){
+    //         alert(data1.message)
+    //     }else{
+    //         // console.log(data)
+    //         let form = $('#myModal2').find('.form-data')
+    //         form.find('input[name = "min_stake"]').val(data1.details.min_stake)
+    //         form.find('input[name = "max_stake"]').val(data1.details.max_stake)
+    //         form.find('input[name = "max_profit"]').val(data1.details.max_profit)
+    //         form.find('input[name = "max_odd"]').val(data1.details.max_odd)
+    //         form.find('input[name = "delay"]').val(data1.details.delay)
+    //         form.find('input[name = "max_bet"]').val(data1.details.max_bet)
+    //         form.find('input[name = "type"]').val(data1.type)
+    //         let form1 = $('.form-betLimit')[0];
+    //         let fd = new FormData(form1);
+    //         let data = Object.fromEntries(fd.entries());
+    //         // console.log(data, "BETLIMIT")
+    //         socket.emit('UpdateBetLimit', {data, LOGINDATA})
+    //     }
+    // })
+
+
+    // $(document).on('submit', ".form-betLimit", function(e){
+    //     e.preventDefault()
+    //     let form = $(this)[0];
+    //     let fd = new FormData(form);
+    //     let data = Object.fromEntries(fd.entries());
+    //     // console.log(data, "BETLIMIT")
+    //     socket.emit('UpdateBetLimit', {data, LOGINDATA})
+    // })
 
 
     socket.on('UpdateBetLimit', data => {
@@ -1530,6 +1616,20 @@ socket.on('connect', () => {
                     form.find('select[name="Bookmaker"]').val(`${data.commissionData[0].Bookmaker.percentage}`)
                     form.find('select[name="fency"]').val(`${data.commissionData[0].fency.percentage}`)
                     form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
+                }else{
+                    $('[name="BookmakerStatus"]').prop('checked', false);
+                    $('[name="fencyStatus"]').prop('checked', false);
+                    $('[name="matchOddsStatus"]').prop('checked', false);
+                  let  optionhtml = `<option value="0.025">0.025</option>
+                        <option value="0.05">0.05</option>
+                        <option value="0.075">0.075</option>
+                        <option value="0.1">0.1</option>
+                        <option value="0.125">0.125</option>
+                        <option value="0.15">0.15</option>
+                        <option value="0.175">0.175</option>
+                        <option value="0.2">0.2</option>
+                        `
+                        document.getElementById("bookmakerPer").innerHTML = optionhtml
                 }
             }
         })
@@ -1850,6 +1950,7 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
+            // console.log('working123654789')
             socket.emit("getUserDetaisl111", {id, dataId})
         })
 
@@ -1940,10 +2041,11 @@ socket.on('connect', () => {
             let userData = data.user
             let me = data.parent
             let type = form.find('select[name = "type"]').val()
-            let amount = parseFloat(form.find('input[name = "amount"]').val())
+            let amount = parseFloat(Math.abs(userData.uplinePL))
 
             form.find('.deposite').removeClass('active')
             form.find('.withdraw').removeClass('active')
+            // console.log(userData)
             if(userData.uplinePL >= 0){
                 form.find('.deposite').addClass('active')
                 form.find('input[name = "type"]').val("deposit")
@@ -1951,6 +2053,7 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',(me.availableBalance).toFixed(2))
                 form.find('input[name = "tuBalance"]').attr('value',(userData.availableBalance).toFixed(2))
                 form.find('input[name = "clintPL"]').attr('value',userData.pointsWL)
+                form.find('input[name = "amount"]').attr('value',amount)
                 form.find('input[name = "fromUser"]').attr('value',me.userName)
                 form.attr('id', userData._id)
                 form.find('#fuBlanceAfter').text((me.availableBalance - amount).toFixed(2))
@@ -1963,6 +2066,7 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',(userData.availableBalance).toFixed(2))
                 form.find('input[name = "tuBalance"]').attr('value',(me.availableBalance).toFixed(2))
                 form.find('input[name = "clintPL"]').attr('value',userData.pointsWL)
+                form.find('input[name = "amount"]').attr('value',amount)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
                 form.attr('id', userData._id)
                 form.find('#fuBlanceAfter').text((userData.availableBalance - amount).toFixed(2))
@@ -2007,6 +2111,40 @@ socket.on('connect', () => {
             }
         })
         
+        $(document).on('click', ".ExposureLimit", function(){
+            var row = this.closest("tr");
+            var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            let modleName = "#myModaL"
+            $(modleName).find('.form-data').attr('id',dataId )
+            $(modleName).find('.form-data').find('input[name = "NewEXP"]').val(data.exposureLimit)
+            socket.emit('changeExpLimit', {id, LOGINDATA, dataId})
+        })
+
+        socket.on('changeExpLimit', data => {
+            let modleName = "#myModaL"
+            let form = $(modleName).find('.form-data')
+            form.find('input[name = "OldEXP"]').val(data.exposureLimit)
+        })
+
+
+        $(document).on('submit', '.Exposure', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = this.id
+            data.id = id
+            socket.emit('changeExp', {data, LOGINDATA})
+        })
+
+        socket.on('changeExp', data => {
+            if(data.message){
+                alert(data.message)
+            }else{
+                alert('Please try again leter')
+            }
+        })
         // socket.on('getOwnChild',(data) => {
             // console.log(data)
             // let response = data.response;
@@ -2115,7 +2253,7 @@ socket.on('connect', () => {
             // console.log(data.refreshStatus)
             // console.log(data)
             // console.log('rows',data.result)
-            // let headHight = document.getElementsByClassName('HeadRow').height()
+            // let headHight = document.getElementsByClassName('Headraw').height()
             // console.log( "user row height", $('.UserRow').height())
             // loadHight += (data.result * $('.UserRow').height()) 
             let response = data.response;
@@ -2228,8 +2366,10 @@ socket.on('connect', () => {
                             //     } 
                             // }
                             // if(data.currentUser.role.authorization.includes('userStatus')){
-                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>
-                                `
+                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>`
+                                if(response[i].roleName === 'user'){
+                                    html += `<button data-bs-toggle="modal" data-bs-target="#myModaL" class="ExposureLimit" title="Exposure Limit">L</button>`
+                                }
                             // }
                             // if(data.currentUser.role.authorization.includes('userName')){
                                 html += `<button class="UserDetails" title="View details"><i class="fa-solid fa-database"></i></button>`
@@ -2331,9 +2471,11 @@ socket.on('connect', () => {
         let refreshStatus = true;
         socket.emit("search", {filterData,page,id, LOGINDATA ,refreshStatus})
         let data = {LOGINUSER:JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))}
-        socket.emit('loginuserbalance', data)
+        if(data.LOGINUSER && data.LOGINUSER._id){
+            socket.emit('loginuserbalance', data)
+        }
 
-    },1000)
+    },1000 * 5)
     
     $(document).on('click', ".COMMISSIONADMIN", function(e){
         e.preventDefault()
@@ -2667,6 +2809,20 @@ socket.on('connect', () => {
 
     if(pathname == "/admin/myaccount"){
 
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        $('#Fdate').val(tomorrowFormatted)
+        $('#Tdate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
 
         function generatePDF(table) {
             const printWindow = window.open('', '_blank');
@@ -2756,119 +2912,119 @@ socket.on('connect', () => {
         })
         let model 
 
-        // $(document).on('click','.ownAccDetails',function(e){
-        //     let modelId = $(this).attr('id')
-        //     let modelId1 = $(this).attr("data-bs-target")
-        //     model =  $(modelId1)
-        //     socket.emit("ElementID", modelId)
-        // })
+        $(document).on('click','.ownAccDetails',function(e){
+            let modelId = $(this).attr('id')
+            let modelId1 = $(this).attr("data-bs-target")
+            model =  $(modelId1)
+            socket.emit("ElementID", modelId)
+        })
 
-        // socket.on('getMyBetDetails',(data)=>{
-        //     // console.log(data)
-        //     let html = ``
-        //     if(data.transactionId){
-        //         html += `<thead>
-        //         <tr >
-        //           <th>Date</th>
-        //           <th>Event</th>
-        //           <th>Market</th>
-        //           <th>Bet on</th>
-        //           <th>odds</th>
-        //           <th>Stake</th>
-        //           <th>Status</th>
-        //           <th>Returns</th>
-        //         </tr>
-        //         </thead>`
-        //         html += `<tbody class="new-body" >
-        //         <tr  class="blue"><td>${new Date(data.date)}</td>
-        //         <td>${data.event}</td>`
-        //         if(data.marketName){
-        //             html += `<td>${data.marketName}</td>`
-        //         }else{
-        //             html += `<td>-</td>`
-        //         }
+        socket.on('getMyBetDetails',(data)=>{
+            // console.log(data)
+            let html = ``
+            if(data.transactionId){
+                html += `<thead>
+                <tr >
+                  <th>Date</th>
+                  <th>Event</th>
+                  <th>Market</th>
+                  <th>Bet on</th>
+                  <th>odds</th>
+                  <th>Stake</th>
+                  <th>Status</th>
+                  <th>Returns</th>
+                </tr>
+                </thead>`
+                html += `<tbody class="new-body" >
+                <tr  class="blue"><td>${new Date(data.date)}</td>
+                <td>${data.event}</td>`
+                if(data.marketName){
+                    html += `<td>${data.marketName}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
 
-        //         if(data.selectionName){
-        //             html += `<td>${data.selectionName}</td>`
-        //         }else{
-        //             html += `<td>-</td>`
-        //         }
-        //         if(data.oddValue){
-        //             html += `<td>${data.oddValue}</td>`
-        //         }else{
-        //             html += `<td>-</td>`
-        //         }
+                if(data.selectionName){
+                    html += `<td>${data.selectionName}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
+                if(data.oddValue){
+                    html += `<td>${data.oddValue}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
 
-        //         html += `
-        //         <td>${data.Stake}</td>
-        //         <td>${data.status}</td>
-        //         <td>${data.returns}</td></tr></tbody>`
-        //         model.find('table').html(html)
-        //     }else{
-        //         html += `<thead>
-        //         <tr >
-        //           <th>Date</th>
-        //           <th>Credit</th>
-        //           <th>Debit</th>
-        //           <th>From/To</th>
-        //           <th>Closing</th>
-        //           <th>Description</th>
-        //           <th>Remarks</th>
-        //         </tr>
-        //     </thead>
-        //     <tbody class="new-body" >`
-        //         html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
-        //         if(data.creditDebitamount>0){
-        //             html += `<td>${data.creditDebitamount}</td><td>0</td>`
-        //             if(data.parent_id){
-        //                 if(data.parent_id.userName == data.user_id.userName){
-        //                     if(data.child_id == null){
-        //                         html += `<td>-/${data.parent_id.userName}</td>`
-        //                     }else{
-        //                         html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
-        //                     }
-        //                 }else{
-        //                     if(data.child_id == null){
+                html += `
+                <td>${data.Stake}</td>
+                <td>${data.status}</td>
+                <td>${data.returns}</td></tr></tbody>`
+                model.find('table').html(html)
+            }else{
+                html += `<thead>
+                <tr >
+                  <th>Date</th>
+                  <th>Credit</th>
+                  <th>Debit</th>
+                  <th>From/To</th>
+                  <th>Closing</th>
+                  <th>Description</th>
+                  <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody class="new-body" >`
+                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
+                if(data.creditDebitamount>0){
+                    html += `<td>${data.creditDebitamount}</td><td>0</td>`
+                    if(data.parent_id){
+                        if(data.parent_id.userName == data.user_id.userName){
+                            if(data.child_id == null){
+                                html += `<td>-/${data.parent_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                            }
+                        }else{
+                            if(data.child_id == null){
 
-        //                         html += `<td>${data.parent_id.userName}/-</td>`
-        //                     }else{
+                                html += `<td>${data.parent_id.userName}/-</td>`
+                            }else{
 
-        //                         html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
-        //                     }
-        //                 }
-        //             }else{
-        //                 html += "<td>-</td>"
-        //             }
-        //         }else{
-        //             html += `<td>0</td><td>${data.creditDebitamount}</td>`
-        //             if(data.parent_id){
-        //                 if(data.parent_id.userName == data.user_id.userName){
-        //                     if(data.child_id == null){
-        //                         html += `<td>${data.parent_id.userName}/-</td>`
-        //                     }else{
-        //                         html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
-        //                     }
-        //                 }else{
-        //                     if(data.child_id == null){
-        //                         html += `<td>-/${data.parent_id.userName}</td>`
-        //                     }else{
-        //                         html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
-        //                     }
-        //                 }
-        //             }else{
-        //                 html += `<td>-</td>`
-        //             }
-        //         }
+                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                            }
+                        }
+                    }else{
+                        html += "<td>-</td>"
+                    }
+                }else{
+                    html += `<td>0</td><td>${data.creditDebitamount}</td>`
+                    if(data.parent_id){
+                        if(data.parent_id.userName == data.user_id.userName){
+                            if(data.child_id == null){
+                                html += `<td>${data.parent_id.userName}/-</td>`
+                            }else{
+                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                            }
+                        }else{
+                            if(data.child_id == null){
+                                html += `<td>-/${data.parent_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                            }
+                        }
+                    }else{
+                        html += `<td>-</td>`
+                    }
+                }
                 
-        //                 html += `
-        //                 <td>${data.balance}</td>
-        //                 <td>${data.description}</td>
-        //                 <td>-</td></tr></tbody>`
-        //                 // console.log(html)
-        //                 model.find('table').html(html)
-        //             }
-        //     // console.log(model)
-        // })
+                        html += `
+                        <td>${data.balance}</td>
+                        <td>${data.description}</td>
+                        <td>-</td></tr></tbody>`
+                        // console.log(html)
+                        model.find('table').html(html)
+                    }
+            // console.log(model)
+        })
 
 
         
@@ -2893,121 +3049,85 @@ socket.on('connect', () => {
                 document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
         })
+        let  data = {}
 
         let searchU 
         let SUSER
-       
+        let Fdate = document.getElementById("Fdate").value
+        let Tdate = document.getElementById("Tdate").value
+        Transaction_type = $('#transaction_type').val()
+        data.Transaction_type = Transaction_type
+        data.Fdate = Fdate;
+        if(Tdate != ''){
+            data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+        }else{
+            data.Tdate = Tdate
+        }      
+        data.LOGINDATA = LOGINDATA
+
         $(document).on("click", ".searchList", function(){
-            // console.log("working")
-            // console.log(this.textContent)
             document.getElementById("searchUser").value = this.textContent
             searchU = true
-                let  data = {}
-                let Fdate = document.getElementById("Fdate").value
-                let Tdate = document.getElementById("Tdate").value
-               
-                
-                data.Fdate = Fdate;
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                data.id = this.id
-                SUSER = this.id
-                data.page = 0
-                data.LOGINDATA = LOGINDATA
-                $('.pageLink').attr('data-page',1)
-                $('.wrapper').hide()
-                // console.log(data, 456)
-                // console.log(data)
-                socket.emit( "AccountScroll", data)
+            data.id = this.id
+            SUSER = this.id
+            data.page = 0
+            $('.pageLink').attr('data-page',1)
+            $('.wrapper').hide()
+            socket.emit( "AccountScroll", data)
         })
 
-        $('#Fdate,#Tdate').change(function(){
-            
+        $('#Fdate,#Tdate,#transaction_type').change(function(){
             let page = 0;
             $('.pageLink').attr('data-page',1)           
             Fdate = document.getElementById("Fdate").value
             Tdate = document.getElementById("Tdate").value
-            let data = {}
+            Transaction_type = $('#transaction_type').val()
             if(searchU){
                  data.id = SUSER
-                 data.page = page
-                 data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                data.LOGINDATA = LOGINDATA
-            }{
-                 data.page = page
-                 data.Fdate = Fdate
-                 if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                
-                data.LOGINDATA = LOGINDATA
             }
+            if(Tdate != ''){
+                data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+            }else{
+                data.Tdate = Tdate
+            }  
+            data.Fdate = Fdate
+            data.page = page
+            data.Transaction_type = Transaction_type
             socket.emit('AccountScroll',data)        
         })
 
         $('#load-more').click(function(e){
             let page = parseInt($('.pageLink').attr('data-page'));
-            // console.log(page)
-            Fdate = document.getElementById("Fdate").value
-            Tdate = document.getElementById("Tdate").value
             $('.pageLink').attr('data-page',page + 1)
-            let data = {}
+            data.page = page
            if(searchU){
                 data.id = SUSER
-                data.page = page
-                data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }
-                data.LOGINDATA = LOGINDATA
-           }{
-                data.page = page
-                data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                
-                data.LOGINDATA = LOGINDATA
            }
-        //    console.log(data)
-            
             socket.emit('AccountScroll',data)
         })
-
-
-    
 
          let count1 = 11
          socket.on("Acc", async(data) => {
             // console.log(data)
             if(data.json.status == "success"){
-
                 if(data.page == 0){
                     count1 = 1;
                 }
                 let html = "";
                 for(let i = 0; i < data.json.userAcc.length; i++){
                     let date = new Date(data.json.userAcc[i].date);
-                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
-                    // console.log(abc)
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
@@ -3057,9 +3177,7 @@ socket.on('connect', () => {
                         }
                     }else{
                         html += `<tr style="text-align: center;" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                            
                             if(data.json.userAcc[i].parent_id){
@@ -3112,13 +3230,17 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     if(data.json.userAcc.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
-                        $('#load-more').hide()
+                        $('#load-more').html('')
+                    }else{
+                        $('#load-more').html('<button class="load-more">Load More</button>')
                     }
                     $('tbody').html(html)
 
                 }else {
                     if(data.json.userAcc.length == 0){
-                        $('#load-more').hide()
+                        $('#load-more').html('')
+                    }else{
+                        $('#load-more').html('<button class="load-more">Load More</button>')
                     }
                     $('tbody').append(html)
 
@@ -3129,6 +3251,20 @@ socket.on('connect', () => {
      
     }
     if(pathname == "/admin/useraccount"){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        $('#Fdate').val(tomorrowFormatted)
+        $('#Tdate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
 
 
         function generatePDF(table) {
@@ -3337,9 +3473,21 @@ socket.on('connect', () => {
             }
         })
 
+        let  data = {}
+
         let searchU 
         let SUSER
-        let match = false
+        let Fdate = document.getElementById("Fdate").value
+        let Tdate = document.getElementById("Tdate").value
+        Transaction_type = $('#transaction_type').val()
+        data.Transaction_type = Transaction_type
+        data.Fdate = Fdate;
+        if(Tdate != ''){
+            data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+        }else{
+            data.Tdate = Tdate
+        }      
+        data.LOGINDATA = LOGINDATA
        
 
         $(document).on("click", ".searchList", function(){
@@ -3347,163 +3495,90 @@ socket.on('connect', () => {
             // console.log(this.textContent)
             document.getElementById("searchUser").value = this.textContent
             searchU = true
-                let  data = {}
-                let Fdate = document.getElementById("Fdate").value
-                let Tdate = document.getElementById("Tdate").value
-               
-                
-                data.Fdate = Fdate;
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }  
-                data.id = this.id
-                SUSER = this.id
-                data.page = 0
-                data.LOGINDATA = LOGINDATA
-                $('.pageLink').attr('data-page',1)
-                $('.wrapper').hide()
-                // console.log(data, 456)
-                // console.log(data)
-                socket.emit( "AccountScroll2", data)
+            data.id = this.id
+            SUSER = this.id
+            data.page = 0
+            $('.pageLink').attr('data-page',1)
+            $('.wrapper').hide()
+            socket.emit( "AccountScroll2", data)
         })
 
-        $('#Fdate,#Tdate').change(function(){
-            
+        $('#Fdate,#Tdate,#transaction_type').change(function(){
             let page = 0;
             $('.pageLink').attr('data-page',1)           
             Fdate = document.getElementById("Fdate").value
             Tdate = document.getElementById("Tdate").value
-            let data = {}
+            Transaction_type = $('#transaction_type').val()
             if(searchU){
                  data.id = SUSER
-                 data.page = page
-                 data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                data.LOGINDATA = LOGINDATA
-            }{
-                 data.page = page
-                 data.Fdate = Fdate
-                 if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                 
-                
-                data.LOGINDATA = LOGINDATA
             }
-
-            // console.log(data)
+            if(Tdate != ''){
+                data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+            }else{
+                data.Tdate = Tdate
+            }  
+            data.Fdate = Fdate
+            data.page = page
+            data.Transaction_type = Transaction_type
             socket.emit('AccountScroll2',data)        
         })
 
         $('#load-more').click(function(e){
             let page = parseInt($('.pageLink').attr('data-page'));
-            // console.log(page)
-            Fdate = document.getElementById("Fdate").value
-            Tdate = document.getElementById("Tdate").value
             $('.pageLink').attr('data-page',page + 1)
-            let data = {}
+            data.page = page
            if(searchU){
                 data.id = SUSER
-                data.page = page
-                data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }
-                data.LOGINDATA = LOGINDATA
-           }{
-                data.page = page
-                data.Fdate = Fdate
-                if(Tdate != ''){
-                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
-                }else{
-                    data.Tdate = Tdate
-                }                
-                data.LOGINDATA = LOGINDATA
            }
-        //    console.log(data)
-            
             socket.emit('AccountScroll2',data)
         })
     
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
-            // console.log(data)
-            if(data.json.status == "success"){
+            console.log(data)
+            if(data.json.status == "success" && data.user){
                 let html = "";
                 let html1 = "";
-                
                 if(data.page == 0){
                     count1 = 1;
                     html1 += `
                     <div class="skin-data green">
-                        
                         <h5>Credit Reference</h5>
                         <h6> ${data.user.creditReference.toFixed(2)}</h6>
                     </div>
-                    <!-- <div class="skin-data green">
-                      
-                      <h5>Balance</h5>
-                        <h6> ${data.user.balance.toFixed(2)}</h6>
-                    </div> -->
                     <div class="skin-data green">
-                      
-                      <h5>Available Balance</h5>
-                        <h6> ${data.user.availableBalance.toFixed(2)}</h6>
-                    </div>
-                    <div class="skin-data green">
-                      
                       <h5>Downline Balance</h5>
                         <h6> ${data.user.downlineBalance.toFixed(2)}</h6>
                     </div>`
-                    if(data.user.myPL.toFixed(2) > 0){
-                    html1 += `<div class="skin-data green">`
-                      }else{
-                        html1 += `<div class="skin-data red">`
-                      }
-                        html1 += `<h5>MY P/L</h5>
-                          <h6> ${data.user.myPL.toFixed(2)}</h6>
-                      </div>`
-                      if(data.user.uplinePL.toFixed(2) > 0){
+                    if(data.user.lifetimePL > 0){
                         html1 += `<div class="skin-data green">`
-                      }else{ 
+                    }else{
                         html1 += `<div class="skin-data red">`
-                      } 
-                      
-                      html1 += `<h5>Upline P/L</h5>
-                        <h6> ${data.user.uplinePL.toFixed(2)}</h6>
-                    </div>`
-                    if(data.user.lifetimePL.toFixed(2) > 0){
-                      html1 += `<div class="skin-data green">`
-                    }else{ 
-                      html1 += `<div class="skin-data red">`
-                    } 
-                      
-                      html1 += `<h5>Lifetime P/L</h5>
+                    }
+                      html1 += `
+                      <h5>Lifetime P/L</h5>
                         <h6> ${data.user.lifetimePL.toFixed(2)}</h6>
                     </div>
-                  
                   `
                   $('.welcome-info-btn').html(html1)
                 }
                 for(let i = 0; i < data.json.userAcc.length; i++){
                     let date = new Date(data.json.userAcc[i].date);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
                     // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
                     // console.log(abc)
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].transactionId){
                             if(data.json.userAcc[i].betDetails.length != 0){
 
@@ -3543,9 +3618,7 @@ socket.on('connect', () => {
                         }
                     }else{
                         html += `<tr style="text-align: center;" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].transactionId){
                             if(data.json.userAcc[i].betDetails.length != 0){
 
@@ -3609,8 +3682,6 @@ socket.on('connect', () => {
      
     }
     if(pathname == "/admin/adminaccount"){
-
-
         function generatePDF(table) {
             const printWindow = window.open('', '_blank');
                     printWindow.document.open();
@@ -4000,13 +4071,20 @@ socket.on('connect', () => {
                 let html = "";
                 for(let i = 0; i < data.json.userAcc.length; i++){
                     let date = new Date(data.json.userAcc[i].date);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                      };
+                      var formattedTime = date.toLocaleString('en-US', options);
                     // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
                     // console.log(abc)
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
@@ -4056,9 +4134,7 @@ socket.on('connect', () => {
                         }
                     }else{
                         html += `<tr style="text-align: center;" >
-                        <td>${count1 + i}</td>
-                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                            
                             if(data.json.userAcc[i].parent_id){
@@ -4374,16 +4450,35 @@ socket.on('connect', () => {
                 }else{
                     html += `<tr class="lay">`
                 }
-                html += `<td>${i + count}</td>
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                html += `
                 <td>${bets[i].userName}</td>
-                <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}</td>
-                <td>${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>`
+                <td>${formattedTime}</td>`
                 if(bets[i].match){
-                    html += `<td>-</td>
-                    <td>${bets[i].match}</td>
-                    <td>${bets[i].marketName}</td>
-                    <td>${bets[i].selectionName}</td>
-                    <td>${bets[i].oddValue}</td>`
+                    if(bets[i].selectionName.includes('@')){
+                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                        let selectionName = bets[i].selectionName.split('@')[0]
+                        let oddValue2 = bets[i].oddValue
+                        html += `<td>${bets[i].betType}</td>
+                        <td>${bets[i].match}</td>
+                        <td>${bets[i].marketName}</td>
+                        <td>${selectionName}@${oddValue2}</td>
+                        <td>${oddValue1}</td>`
+                    }else{
+                        html += `<td>${bets[i].betType}</td>
+                        <td>${bets[i].match}</td>
+                        <td>${bets[i].marketName}</td>
+                        <td>${bets[i].selectionName}</td>
+                        <td>${bets[i].oddValue}</td>`
+                    }
                 }else{
                     html += `<td>-</td>
                     <td>-</td>
@@ -4395,7 +4490,6 @@ socket.on('connect', () => {
                 <td>${bets[i].status}</td>
                 <td>${bets[i].Stake}</td>
                 <td>${bets[i].returns}</td>
-                <td>${bets[i].transactionId}</td>
                 <td>${bets[i].event}</td></tr>`
             }
             count += bets.length
@@ -4422,84 +4516,91 @@ socket.on('connect', () => {
 
     if(pathname == "/admin/casinocontrol"){
       
-        let BACCARAT,CASUALGAMES,FISHSHOOTING ,ANDARBAHAR,INSTANTWINGAMES,LIVE,BLACKJACK,FH,GAME,KENO,LIVEBACCARAT= false;
+        let BACCARAT,CASUALGAMES,FISHSHOOTING ,ANDARBAHAR,INSTANTWINGAMES,LIVE,BLACKJACK,FH,GAME,KENO,LIVEBACCARAT,CARDS32= false;
         let RGV = false;
         let EZ = false;
         let EG = false;
         $("#BACCARAT").click(function(){
             if(!BACCARAT){
                 // console.log("1")
-                socket.emit('BACCARAT', "on")
+                socket.emit('BACCARAT', {LOGINDATA})
                 BACCARAT = true
+            }
+        })
+        $("#32CARDS").click(function(){
+            if(!CARDS32){
+                // console.log("1")
+                socket.emit('32CARDS', {LOGINDATA})
+                CARDS32 = true
             }
         })
         $("#ANDARBAHAR").click(function(){
             if(!ANDARBAHAR){
                 // console.log("1")
-                socket.emit('ANDARBAHAR', "on")
+                socket.emit('ANDARBAHAR', {LOGINDATA})
                 ANDARBAHAR = true
             }
         })
         $("#CASUALGAMES").click(function(){
             if(!CASUALGAMES){
                 // console.log("1")
-                socket.emit('CASUALGAMES', "on")
+                socket.emit('CASUALGAMES', {LOGINDATA})
                 CASUALGAMES = true
             }
         })
         $("#FISHSHOOTING").click(function(){
             if(!FISHSHOOTING){
                 // console.log("1")
-                socket.emit('FISHSHOOTING', "on")
+                socket.emit('FISHSHOOTING', {LOGINDATA})
                 FISHSHOOTING = true
             }
         })
         $("#INSTANTWINGAMES").click(function(){
             if(!INSTANTWINGAMES){
                 // console.log("1")
-                socket.emit('INSTANTWINGAMES', "on")
+                socket.emit('INSTANTWINGAMES', {LOGINDATA})
                 INSTANTWINGAMES = true
             }
         })
         $("#LIVE").click(function(){
             if(!LIVE){
                 // console.log("1")
-                socket.emit('LIVE', "on")
+                socket.emit('LIVE', {LOGINDATA})
                 LIVE = true
             }
         })
         $("#BLACKJACK").click(function(){
             if(!BLACKJACK){
                 // console.log("1")
-                socket.emit('BLACKJACK', "on")
+                socket.emit('BLACKJACK', {LOGINDATA})
                 BLACKJACK = true
             }
         })
         $("#FH").click(function(){
             if(!FH){
                 // console.log("1")
-                socket.emit('FH', "on")
+                socket.emit('FH', {LOGINDATA})
                 FH = true
             }
         })
         $("#GAME").click(function(){
             if(!GAME){
                 // console.log("1")
-                socket.emit('GAME', "on")
+                socket.emit('GAME', {LOGINDATA})
                 GAME = true
             }
         })
         $("#KENO").click(function(){
             if(!KENO){
                 // console.log("1")
-                socket.emit('KENO', "on")
+                socket.emit('KENO', {LOGINDATA})
                 KENO = true
             }
         })
         $("#LIVEBACCARAT").click(function(){
             if(!LIVEBACCARAT){
                 // console.log("1")
-                socket.emit('LIVEBACCARAT', "on")
+                socket.emit('LIVEBACCARAT', {LOGINDATA})
                 LIVEBACCARAT = true
             }
         })
@@ -4535,21 +4636,21 @@ socket.on('connect', () => {
         $("#RGV").click(function(){
             if(!RGV){
                 // console.log(2)
-                socket.emit('RGV', "on")
+                socket.emit('RGV',  {LOGINDATA})
                 RGV=true
             }
         })
 
         $('#EZ').click(function(){
             if(!EZ){
-                socket.emit('EZ', "on")
+                socket.emit('EZ',  {LOGINDATA})
                 EZ = true
             }
         })
 
         $('#EG').click(function(){
             if(!EG){
-                socket.emit('EG', "on")
+                socket.emit('EG',  {LOGINDATA})
                 EG = true
             }
         })
@@ -4629,7 +4730,7 @@ socket.on('connect', () => {
             }
             if(id){
                 if(confirm('do you want to change status')){
-                    socket.emit('casionoStatusChange',{status,id})
+                    socket.emit('casionoStatusChange',{status,id,LOGINDATA})
                 }else{
                     $(this).prop('checked') ? $(this).prop('checked',false) : $(this).prop('checked',true)
                 }
@@ -5153,13 +5254,23 @@ socket.on('connect', () => {
                 count = 1
             }
             for(let i = 0;i<games.length;i++){
+                let date = new Date(games[i].date)
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
                 if(i % 2 == 0){
                   html += `<tr style="text-align: center;">`
                 }else{
                   html += `<tr style="text-align: center;" class="blue">`
                 }
                   html += `<td>${count + i}</td>
-                  <td>${games[i].date}</td>
+                  <td>${formattedTime}</td>
                   <td>${games[i].selectionName}</td>
                   <td>${games[i].oddValue}</td>
                   <td>${games[i].Stake}</td>`
@@ -5198,10 +5309,13 @@ socket.on('connect', () => {
          })
     }
     else if(pathname.startsWith('/admin/gamereport/match/market')){
-        $(document).on('click','.getajaxdataclick',function(e){
-        
-            let url = $(this).attr('data-href')
-            // console.log(url)
+        $(document).on('click','td',function(e){
+            let url;
+            if(!$(this).hasClass('getajaxdataclick')){
+                url = $(this).siblings('.getajaxdataclick').attr('data-href')
+            }else{
+                url = $(this).attr('data-href')
+            }
             location.href = url
          })
          $('#load-more').click(function(e){
@@ -5239,13 +5353,23 @@ socket.on('connect', () => {
                 count = 1
             }
             for(let i = 0;i<games.length;i++){
+                let date = new Date(games[i].date)
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
                 if(i % 2 == 0){
-                  html += `<tr style="text-align: center;">`
+                  html += `<tr style="text-align: center;"style="cursor: pointer;">`
                 }else{
-                  html += `<tr style="text-align: center;" class="blue">`
+                  html += `<tr style="text-align: center;" class="blue"style="cursor: pointer;">`
                 }
                   html += `<td>${count + i}</td>
-                  <td>${games[i].date}</td>
+                  <td>${formattedTime}</td>
                   <td class="clickableelement getajaxdataclick" data-href="${data.url}&market=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].won}</td>
@@ -5386,10 +5510,15 @@ socket.on('connect', () => {
             socket.emit('gameReport',data)
          }); 
 
-         $(document).on('click','.getajaxdataclick',function(e){
+         $(document).on('click','td',function(e){
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
-            let url = $(this).attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            let url;
+            if(!$(this).hasClass('getajaxdataclick')){
+                url = $(this).siblings('.getajaxdataclick').attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            }else{
+                url = $(this).attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            }
             location.href = url
          })
         $(document).on("click", ".searchList", function(){
@@ -5436,11 +5565,11 @@ socket.on('connect', () => {
             }
             for(let i = 0;i<games.length;i++){
                 if(i % 2 == 0){
-                  html += `<tr style="text-align: center;">`
+                  html += `<tr style="text-align: center;" style="cursor: pointer;">`
                 }else{
-                  html += `<tr style="text-align: center;" class="blue">`
+                  html += `<tr style="text-align: center;" class="blue"  style="cursor: pointer;">`
                 }
-                  html += `<td>${count + i}</td>
+                  html += ` 
                   <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
@@ -5475,8 +5604,14 @@ socket.on('connect', () => {
         })
     }
     else if(pathname.startsWith('/admin/gamereport/match')){
-        $(document).on('click','.getajaxdataclick',function(e){
-            let url = $(this).attr('data-href')
+        $(document).on('click','td',function(e){
+            let url;
+            if(!$(this).hasClass('getajaxdataclick')){
+                url = $(this).siblings('.getajaxdataclick').attr('data-href')
+            }else{
+                url = $(this).attr('data-href')
+            }
+            location.href = url
             // console.log(url)
             location.href = url
         })
@@ -5514,13 +5649,23 @@ socket.on('connect', () => {
                 count = 1
             }
             for(let i = 0;i<games.length;i++){
+                let date = new Date(games[i].eventDate)
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
                 if(i % 2 == 0){
-                  html += `<tr style="text-align: center;">`
+                  html += `<tr style="text-align: center;" style="cursor: pointer;" >`
                 }else{
-                  html += `<tr style="text-align: center;" class="blue">`
+                  html += `<tr style="text-align: center;" class="blue" style="cursor: pointer;">`
                 }
                   html += `<td>${count + i}</td>
-                  <td>${games[i].eventDate}</td>
+                  <td>${formattedTime}</td>
                   <td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
@@ -6009,34 +6154,70 @@ socket.on('connect', () => {
             }
             for(let i = 0; i < bets.length; i++){
                 let date = new Date(bets[i].date)
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
                 if(bets[i].bettype2 === 'BACK'){
                     html += `<tr class="back">`
                 }else{
                     html += `<tr class="lay">`
                 }
                 html += `<td>${i + count}</td>
-                <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                <td class="date-time">${formattedTime}</td>
+                <td>${bets[i].whitelabelData[0].whiteLabel}
                 <td>${bets[i].userName}</td>
                 `
                 if(bets[i].match){
-                    html += `
-                    <td class="text-nowrap">${bets[i].match}</td>
-                    <td class="text-nowrap">${bets[i].marketName}</td>
-                    <td>${bets[i].oddValue}</td>
-                    <td>${bets[i].selectionName}</td>`
+                    if(bets[i].selectionName.includes('@')){
+                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                        let selectionName = bets[i].selectionName.split('@')[0]
+                        let oddValue2 = bets[i].oddValue
+                        html += `
+                        <td class="text-nowrap">${bets[i].match}</td>
+                        <td class="text-nowrap">${bets[i].marketName}-${oddValue2}</td>
+                        <td>${oddValue1}</td>`
+                    }else{
+                        html += `
+                        <td class="text-nowrap">${bets[i].match}</td>
+                        <td class="text-nowrap">${bets[i].marketName}-${bets[i].selectionName}</td>
+                        <td>${bets[i].oddValue}</td>`
+                    }
                 }else{
                     html += `
-                    <td>-</td><td>-</td><td>-</td><td>-</td>`
+                    <td>-</td><td>-</td><td>-</td>`
                 }
                 html += `
                 <td>${bets[i].Stake}</td>
-                <td>${bets[i].transactionId}</td>
                 <td>${bets[i].status}</td>`
-                if(bets[i].status == 'OPEN' || bets[i].status == 'MAP'){
-                    html += `<td>${(0).toFixed(2)}</td>`
+                // if(bets[i].status == 'OPEN' || bets[i].status == 'MAP'){
+                //     html += `<td>${(0).toFixed(2)}</td>`
+                // }else{
+                //     html += `<td>${bets[i].returns.toFixed(2)}</td>`
+                // }
+                if(bets[i].result){
+                    html += `<td>${bets[i].result}</td>`
                 }else{
-                    html += `<td>${bets[i].returns.toFixed(2)}</td>`
+                    html += `<td>-</td>`
                 }
+
+                if(bets[i].WinAmount){
+                    html += `<td>${bets[i].WinAmount}</td>`
+                }else{
+                   html +=  `<td>-</td>`
+                }
+
+                if(bets[i].exposure){
+                    html += `<td>${bets[i].exposure}</td>`
+                }else{
+                   html +=  `<td>-</td>`
+                }
+
                 if(bets[i].ip){
                     html += `<td>${bets[i].ip}</td>`
                 }else{
@@ -6919,16 +7100,16 @@ socket.on('connect', () => {
 
 
 
-    if(pathname === "/"){
-        $(document).on('click', '.foo', async function(){
-            let id = $(this).attr('id')
-            socket.emit("PromotionId", id)
-        })
+    // if(pathname === "/"){
+    //     $(document).on('click', '.foo', async function(){
+    //         let id = $(this).attr('id')
+    //         socket.emit("PromotionId", id)
+    //     })
 
-        socket.on("PromotionId", async(data) => {
-            window.open(`${data.link}`, "_blank");
-        })
-    }
+    //     socket.on("PromotionId", async(data) => {
+    //         window.open(`${data.link}`, "_blank");
+    //     })
+    // }
 
 
     if(pathname === "/admin/promotion"){
@@ -6979,14 +7160,31 @@ socket.on('connect', () => {
         
 
         socket.on("aggreat", async(data) => {
-            let stake1 = 0;
-            let stake2 = 0;
-            data.forEach(item => {
-                    if(document.getElementById(`${item._id}`)){
-                        document.getElementById(`${item._id}`).innerText = item.totalStake
-                        document.getElementById(`${item._id}B`).innerText = item.count
+            // console.log(data)
+            $('section').each(function(){
+                let id = this.id
+                let alldataWiththatID = data.filter(item => item.eventId == id)
+                alldataWiththatID.forEach(item => {
+                    if($(this).find('#' + item.secId).length){
+                        $(this).find('#' + item.secId).text(item.totalStake);
+                        $(this).find('#' + item.secId + 'B').text(item.count);
                     }
+                })
             })
+            // data.forEach(item => {
+            //         // if(document.getElementById(`${item.secId}`)){
+            //         //     document.getElementById(`${item.secId}`).innerText = item.totalStake
+            //         //     document.getElementById(`${item.secId}B`).innerText = item.count
+            //         // }
+            //         if ($('#' + item.secId).length) {
+            //             let id =  $('#' + item.secId).closest('section').attr('id')
+            //             console.log(id,   $('#' + item.secId).closest('section'))
+            //             if(id == item.eventId){
+            //                 $('#' + item.secId).text(item.totalStake);
+            //                 $('#' + item.secId + 'B').text(item.count);
+            //             }
+            //         }
+            // })
         })
     }
 
@@ -7309,6 +7507,12 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'  ){
 
+        function fencyDetails( status ){
+            let eventId = search.split('=')[1]
+            socket.emit("marketIdbookDetailsFANCY", {LOGINDATA, eventId, status})
+        }
+
+
         if(document.getElementById('myIframe')){
             let channelId = document.getElementById('myIframe').getAttribute('data-id');
             // console.log(channelId, "channelIdchannelIdchannelId")
@@ -7391,46 +7595,92 @@ socket.on('connect', () => {
         $(document).on('click', ".cashout", function(e){
             let id = $(this).closest('table').attr('id')
             let eventID = search.split('=')[1]
+            // console.log('Working123456987')
             socket.emit('cashOOut', {LOGINDATA, id, eventID})
         })
 
         socket.on('cashOOut', async(data) => {
-            console.log(data)
-            let thatSpan
-            if(data.betType === "LAY"){
-                thatSpan = $(`#${data.secId}4`)
-            }else{
-                thatSpan = $(`#${data.secId}1`)
-            }
             $(".my-exc-inn-colaps-txt-dv").removeClass("open");
-            $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
-            let beton = $(thatSpan).closest("tr").find("td:first-child").text();
-            let secondPTag = $(thatSpan).closest("tr").next().find(".beton");
-            let numSpan = $(thatSpan).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
-            let secId = $(thatSpan).attr('id')
-            let secId2;
-            if($(thatSpan).hasClass('match_odd_Blue')){
-                secId2 = secId.slice(0,-1) + '1'
-            }else{
-                secId2 = secId.slice(0,-1) + '4'
-            }
-            secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
-            numSpan.text(data.odds);
-            console.log(thatSpan, $(thatSpan).hasClass('tbl-bg-blu-spn'))
-            if($(thatSpan).hasClass('tbl-bg-blu-spn')){
-                $(thatSpan).closest("tr").next().removeClass('lay-inplaymatch')
-                $(thatSpan).closest("tr").next().addClass('back-inplaymatch')
-            }else{
-                $(thatSpan).closest("tr").next().removeClass('back-inplaymatch')
-                $(thatSpan).closest("tr").next().addClass('lay-inplaymatch')
-            }
-            $(thatSpan).closest("tr").next().find(".set-stake-form-input2").val(parseFloat(data.stake.toFixed(2)))
-            var result = (parseFloat(data.stake) * parseFloat(data.odds)) - parseFloat(data.stake);
-            $(thatSpan)
-                  .closest("tr")
-                  .next()
-                  .find(".c-gren")
-                  .text(result.toFixed(2));
+
+            $('.button').each(function() { 
+                let thatSpan = $(this);
+                let status = false 
+                let id = $(thatSpan).attr('id')
+                // console.log(id, `${data.secId}4`)
+                if(data.betType === "LAY" && id === `${data.secId}4`){
+                    // thatSpan = $(`#${data.secId}4`)
+                    status = true
+                }else if(data.betType === "BACK" && id === `${data.secId}1`) {
+                    status = true
+                }
+                if(status){
+                    $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
+                    let beton = $(thatSpan).closest("tr").find("td:first-child").text();
+                    let secondPTag = $(thatSpan).closest("tr").next().find(".beton");
+                    let numSpan = $(thatSpan).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+                    let secId = $(thatSpan).attr('id')
+                    let secId2;
+                    if($(thatSpan).hasClass('match_odd_Blue')){
+                        secId2 = secId.slice(0,-1) + '1'
+                    }else{
+                        secId2 = secId.slice(0,-1) + '4'
+                    }
+                    secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
+                    numSpan.text(data.odds);
+                    // console.log(thatSpan, $(thatSpan).hasClass('tbl-bg-blu-spn'))
+                    if($(thatSpan).hasClass('tbl-bg-blu-spn')){
+                        $(thatSpan).closest("tr").next().removeClass('lay-inplaymatch')
+                        $(thatSpan).closest("tr").next().addClass('back-inplaymatch')
+                    }else{
+                        $(thatSpan).closest("tr").next().removeClass('back-inplaymatch')
+                        $(thatSpan).closest("tr").next().addClass('lay-inplaymatch')
+                    }
+                    $(thatSpan).closest("tr").next().find(".set-stake-form-input2").val(parseFloat(data.stake.toFixed(2)))
+                    var result = (parseFloat(data.stake) * parseFloat(data.odds)) - parseFloat(data.stake);
+                    $(thatSpan)
+                          .closest("tr")
+                          .next()
+                          .find(".c-gren")
+                          .text(result.toFixed(2));
+                }
+            })
+            // console.log(data)   
+            // let thatSpan
+            // if(data.betType === "LAY"){
+            //     thatSpan = $(`#${data.secId}4`)
+            // }else{
+            //     thatSpan = $(`#${data.secId}1`)
+            // }
+            // console.log(thatSpan, thatSpan.length, "thatSpanthatSpan")
+            // $(".my-exc-inn-colaps-txt-dv").removeClass("open");
+            // $(thatSpan).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
+            // let beton = $(thatSpan).closest("tr").find("td:first-child").text();
+            // let secondPTag = $(thatSpan).closest("tr").next().find(".beton");
+            // let numSpan = $(thatSpan).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+            // let secId = $(thatSpan).attr('id')
+            // let secId2;
+            // if($(thatSpan).hasClass('match_odd_Blue')){
+            //     secId2 = secId.slice(0,-1) + '1'
+            // }else{
+            //     secId2 = secId.slice(0,-1) + '4'
+            // }
+            // secondPTag.text(`Bet on :${beton}@${data.odds}`).attr("id", `${secId2}1`);;
+            // numSpan.text(data.odds);
+            // console.log(thatSpan, $(thatSpan).hasClass('tbl-bg-blu-spn'))
+            // if($(thatSpan).hasClass('tbl-bg-blu-spn')){
+            //     $(thatSpan).closest("tr").next().removeClass('lay-inplaymatch')
+            //     $(thatSpan).closest("tr").next().addClass('back-inplaymatch')
+            // }else{
+            //     $(thatSpan).closest("tr").next().removeClass('back-inplaymatch')
+            //     $(thatSpan).closest("tr").next().addClass('lay-inplaymatch')
+            // }
+            // $(thatSpan).closest("tr").next().find(".set-stake-form-input2").val(parseFloat(data.stake.toFixed(2)))
+            // var result = (parseFloat(data.stake) * parseFloat(data.odds)) - parseFloat(data.stake);
+            // $(thatSpan)
+            //       .closest("tr")
+            //       .next()
+            //       .find(".c-gren")
+            //       .text(result.toFixed(2));
         })
 
         function marketLimitId(){
@@ -7629,14 +7879,31 @@ socket.on('connect', () => {
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let parentElement = this.parentNode
                 if(this.id == `${section.selectionId}4` ){
-                    if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                        </span>`
+                        this.removeAttribute("data-bs-toggle");
+                        parentElement.classList.add("suspended");
+                        $(this).parent().find(".match-status-message").text("Suspended")
+                    }
+                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                    }else if(check){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
+                        parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                         if(first){
                             this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }else{
@@ -7806,9 +8073,25 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
+                let marketId = this.closest('table').id
+                let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
+                // console.log(check,data.status ,"checkcheckcheckcheck")
                 let parentElement = this.parentNode
                 if(this.id == `${section.selectionId}4` ){
-                    if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                        </span>`
+                        this.removeAttribute("data-bs-toggle");
+                        parentElement.classList.add("suspended");
+                        $(this).parent().find(".match-status-message").text("Suspended")
+                    }
+                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                    }else if(check){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7817,9 +8100,9 @@ socket.on('connect', () => {
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.setAttribute("data-bs-toggle", "collapse");
                         parentElement.classList.remove("suspended")
                         $(this).parent().find(".match-status-message").text("")
-                        this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
                             this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }else{
@@ -7855,23 +8138,34 @@ socket.on('connect', () => {
                         }
                         
                     }
-                }else if (this.id == `${section.selectionId}6`){
+                }
+                else if (this.id == `${section.selectionId}6`){
+                    // console.log(data)
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
-                      </span>`
+                        </span>`
+                        this.removeAttribute("data-bs-toggle");
+                        parentElement.classList.add("suspended");
+                        $(this).parent().find(".match-status-message").text("Suspended")
+                    }
+                   else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
+                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    //     <i class="fa-solid fa-lock"></i>
+                    //   </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }
-                    else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
+                    }else if(check){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else{
+                  
+                    }
+                    else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
                         parentElement.classList.remove("suspended")
@@ -8287,12 +8581,23 @@ socket.on('connect', () => {
         // });
       
         // jQuery approach
+        let clickTime
         $(document).ready(function () {
             $(".button").click(function () {
+                clickTime = Date.now()
+                const urlParams = new URLSearchParams(window.location.search);
+
+                let marketId = $(this).closest("table").attr("id");
+                if(!marketId){
+                    marketId = $(this).closest("tr").prev().find('.market').attr('id')
+                }
+                let eventId = urlParams.get('id');
+                socket.emit('checkDelay', {eventId, marketId})
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
                 let secondPTag = $(this).closest("tr").next().find(".beton");
+                let secondPTag2 = $(this).closest("tr").next().find(".selection-name");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 let secId2;
@@ -8302,6 +8607,7 @@ socket.on('connect', () => {
                   secId2 = secId.slice(0,-1) + '4'
                   }
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
+                secondPTag2.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
                 numSpan.text(odds);
 
                 if($(this).hasClass('tbl-bg-blu-spn')){
@@ -8316,9 +8622,11 @@ socket.on('connect', () => {
                 let odds = $(this).children("span:first-child").text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
                 let secondPTag = $(this).closest("tr").next().find(".beton");
+                let secondPTag2 = $(this).closest("tr").next().find(".selection-name");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
+                secondPTag2.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
                 numSpan.text(odds);
 
                 if($(this).hasClass('tbl-bg-blu-spn')){
@@ -8331,6 +8639,7 @@ socket.on('connect', () => {
             }else if(this.classList.contains('winner_Blue') || this.classList.contains('winner_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
+                let secondPTag2 = $(this).closest("tr").next().find(".selection-name");
                 let secondPTag = $(this).closest("tr").next().find(".beton");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
@@ -8340,6 +8649,7 @@ socket.on('connect', () => {
                   }else{
                   secId2 = secId.slice(0,-1) + '4'
                   }
+                secondPTag2.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
                 numSpan.text(odds);
 
@@ -8352,12 +8662,15 @@ socket.on('connect', () => {
                 }
             }else{
                 let odds = $(this).children("span").eq(1).text();
+                let textToshow = $(this).children("span").eq(0).text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
                 let secondPTag = $(this).closest("tr").next().find(".beton");
+                let secondPTag2 = $(this).closest("tr").next().find(".selection-name");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
-                secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
-                numSpan.text(odds);
+                secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);
+                secondPTag2.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);
+                numSpan.text(textToshow);
 
                 if($(this).hasClass('tbl-bg-blu-spn')){
                     $(this).closest("tr").next().removeClass('lay-inplaymatch')
@@ -8370,10 +8683,275 @@ socket.on('connect', () => {
             });
           });
 
+          function marketplusminus ( data ){
+            // console.log(data)
+            let table = data.element.closest('table')
+            let check = table.find('tr').length
+            // console.log(check, "CHECK")
+            if(check < 8){
+                if(table.hasClass("market")){
+                    let trLength = table.find("tr:eq(1)").find('td').length
+                    // console.log(trLength, "staleDiffstaleDiffstaleDiff")
+                    if(trLength === 4 || trLength === 8){
+                        if(data.status){
+                            // console.log(data.plusMinus, "newvaluenewvaluenewvalue")
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) - (data.result * 1) - (data.plusMinus * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                                let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                let newvalue = (oldValue * 1) + (data.result * 1)
+                                // console.log(newvalue , "newvaluenewvaluenewvalue")
+                                $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                if(newvalue > 0){
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                }else{
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                }
+                            })
+                        }else{
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) + (data.result * 1) + (data.NewStake * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                                let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                let newvalue = (oldValue * 1) - (data.NewStake * 1)
+                                $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                // console.log(newvalue)
+                                if(newvalue > 0){
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                }else{
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                }
+                            })
+                        }
+                    }else{
+                        table.find('th:eq(0)').after('<th></th>')
+                        if(data.status){
+                            // let thathtml = ''
+                            if((data.plusMinus * -1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }
+                            if((data.result * 1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
+                                var firstTd = $(this).find('td:first-child');
+                            
+                                if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                    // console.log('Working:', firstTd);
+                                    firstTd.after(newTd2.clone()); 
+                                }
+                            });
+                            table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function () {
+                                $(this).find('td:eq(0)').attr('colspan', 9)
+                            })
+                        }else{
+                            if((data.result * 1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            if((data.NewStake * -1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.NewStake * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.NewStake * -1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
+                                var firstTd = $(this).find('td:first-child');
+                            // console.log(firstTd.siblings().length, "firstTd.siblings().lengthfirstTd.siblings().lengthfirstTd.siblings().length")
+                                if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                    // console.log('Working:', firstTd);
+                                    firstTd.after(newTd2.clone()); 
+                                }
+                            });
+                            table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function () {
+                                $(this).find('td:eq(0)').attr('colspan', 9)
+                            })
+                        }
+                    }
+                }
+            }else{
+                if(table.hasClass("market")){
+                    let trLength = table.find("tr:eq(1)").find('td').length
+                    if(trLength === 4 || trLength === 8){ 
+                        if(data.status){
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) - (data.result * 1) - (data.plusMinus * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                    let newvalue = (oldValue * 1) + (data.result * 1)
+                                    $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                    if(newvalue > 0){
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                    }else{
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                    }
+                                })
+                            }
+                        }else{
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) + (data.result * 1) + (data.NewStake * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                    let newvalue = (oldValue * 1) - (data.NewStake * 1)
+                                    $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                    if(newvalue > 0){
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                    }else{
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                    }
+                                })
+                            }
+
+                        }
+                    }else{
+                        table.find('th:eq(0)').after('<th></th>')
+                        if(data.status){
+                            if((data.plusMinus * -1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }
+                            if((data.result * 1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                
+                                // Use your existing logic
+                                table.find(selector).each(function () {
+                                    var firstTd = $(this).find('td:first-child');
+                                    
+                                    if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                        firstTd.after(newTd2.clone());
+                                    }
+                                });
+                            }
+                            for (var i = 2; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    $(this).find('td:eq(0)').attr('colspan', 9);
+                                });
+                            }
+                        }else{
+                            if((data.result * 1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            if((data.NewStake * -1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.NewStake * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.NewStake * -1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    var firstTd = $(this).find('td:first-child');
+                                    
+                                    if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                        firstTd.after(newTd2.clone());
+                                    }
+                                });
+                            }
+                            
+                            for (var i = 2; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    $(this).find('td:eq(0)').attr('colspan', 9);
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+          }
+
+          function marketIdbookDetails( status ){
+            let eventId = search.split('=')[1]
+            socket.emit("marketIdbookDetails", {LOGINDATA, eventId, status})
+    }
+    
+    marketIdbookDetails( false )
+    fencyDetails( false )
+          
+    
+    function Onlyminus ( data ){
+            console.log(data)
+            if(data.check == 0){
+                marketIdbookDetails( false )
+            }else{
+                let table = data.element.closest('table')
+                if(table.hasClass("market")){
+                    let trLength = table.find("tr:eq(1)").find('td').length
+                    if(trLength === 4 || trLength === 8){
+                        if(data.status){
+                            // console.log(data.plusMinus, "newvaluenewvaluenewvalue")
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            // console.log(beforevalue)
+                            let newvale = (beforevalue * 1) + (data.result * 1) + (data.plusMinus * 1)
+                            // console.log(newvale)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                                let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                // console.log(oldValue)
+                                let newvalue = (oldValue * 1) - (data.result * 1)
+                                $(this).find('td:eq(1)').find('span').text(newvalue)
+                                if(newvalue > 0){
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                }else{
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                }
+                            })
+                        }else{
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) - (data.result * 1) - (data.NewStake * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                                let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                let newvalue = (oldValue * 1) + (data.NewStake * 1)
+                                $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                // console.log(newvalue)
+                                if(newvalue > 0){
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                }else{
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+          }
+
+
+
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
+                // console.log(IdButton, "IdButtonIdButtonIdButton")
+                let diff
+                let element = $(this)
+                let diffStake 
+                let plusMinus
             if($(this).closest('tr').hasClass('back-inplaymatch')){
                 if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue")){
                     var spanId = $(this).attr("id");
@@ -8383,14 +8961,42 @@ socket.on('connect', () => {
                     if(OldStake == ""){
                       newStake = parseFloat(spanId)
                     }else{
-                      newStake = parseFloat(spanId) + parseFloat(OldStake)
+                        newStake = parseFloat(spanId) + parseFloat(OldStake) 
                     }
+                    diffStake = parseFloat(spanId)
+                    // console.log(diffStake, "diffStakediffStakediffStake")
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
                     var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
+                    diff = (parseFloat(diffStake) * betValue) - parseFloat(diffStake);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = (staleDiff * betValue) - staleDiff;
+                            let data = {
+                                result : resultDiff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff,
+                                check : spanId
+                            }
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            diff = (staleDiff * betValue) - staleDiff;
+                            let data = {
+                                result : diff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff
+                            }
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
                       $(this)
@@ -8404,6 +9010,15 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    if(statusCHECK12){
+                        let data = {
+                            result : diff,
+                            element,
+                            status:false,
+                            NewStake : diffStake
+                        }
+                        marketplusminus(data)
+                    }
                 }else{
                     // console.log(IdButton)
                     var spanId = $(this).attr("id");
@@ -8415,12 +9030,50 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
-                    var betValue = parseFloat(
-                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                    );
+                    diffStake = parseFloat(spanId)
+                    var escapedId = buttonId.replace(/\./g, '\\.');
+                    let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                    // console.log(IdButton, escapedId)
+                    var betValue
+                    if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                        betValue = parseFloat(
+                            $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                          );
+                    }else{
+                         betValue = parseFloat(
+                          $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                        );
+                    }
+                    // console.log(betValue)
                     var result = ((parseFloat(newStake) * betValue) / 100);
+                    diff = ((parseFloat(diffStake) * betValue) / 100);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = (staleDiff * betValue) / 100
+                            let data = {
+                                result : resultDiff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff,
+                                check : spanId
+                            }
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            diff = (staleDiff * betValue) / 100
+                            let data = {
+                                result : diff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff
+                            }
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = ((parseFloat(spanId) * betValue) / 100)
                       $(this)
@@ -8434,6 +9087,15 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    if(statusCHECK12){
+                        let data = {
+                            result : diff,
+                            element,
+                            status:false,
+                            NewStake : diffStake
+                        }
+                        marketplusminus(data)
+                    }
                 }
             }else{
                 if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red")){
@@ -8446,12 +9108,44 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
+                    diffStake = parseFloat(spanId)
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
                     var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
-                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                    diff = parseFloat(spanId)
+                    plusMinus = (diff * betValue) - diff;
+                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))\
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = staleDiff;
+                            plusMinus = (staleDiff * betValue) - staleDiff;
+                            let data = {
+                                result:resultDiff,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus,
+                                check:spanId
+                            }
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            diff = staleDiff
+                            plusMinus = (staleDiff * betValue) - staleDiff;
+                            let data = {
+                                result : diff ,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus
+                            }
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
                       $(this)
@@ -8465,6 +9159,16 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    if(statusCHECK12){
+                        let data = {
+                            result : diff ,
+                            element,
+                            status:true,
+                            NewStake : diffStake,
+                            plusMinus
+                        }
+                        marketplusminus(data)
+                    }
                 }else{
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
@@ -8475,17 +9179,54 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
+                    diffStake = parseFloat(spanId)
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
                     let result = parseFloat(newStake)
-                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                    //     result = (parseFloat(newStake) * 2) - parseFloat(newStake);
-                    // }else{
-                    //     result = ((parseFloat(newStake) * betValue)/100)
-                    // }
+                    diff = parseFloat(spanId)
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                        plusMinus = (diffStake * betValue) / 100
+                    }else{
+                        plusMinus = (diffStake * betValue) / 100
+                    }
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        // console.log(diffStake, oldValue, oldValue > diffStake)
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = staleDiff;
+                            plusMinus = (staleDiff * betValue) / 100
+                            let data = {
+                                result:resultDiff,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus,
+                                check:spanId
+                            }
+                            // console.log(data)
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            // console.log(staleDiff, "staleDiffstaleDiff")
+                            diff = staleDiff
+
+                            plusMinus = (staleDiff * betValue) / 100
+                            // console.log(plusMinus, "plusMinusplusMinusplusMinus")
+                            let data = {
+                                result : diff ,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus
+                            }
+                            // console.log(data)
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = parseFloat(spanId)
                     //   if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
@@ -8504,6 +9245,14 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    let data = {
+                        result : diff ,
+                        element,
+                        status:true,
+                        NewStake : diffStake,
+                        plusMinus
+                    }
+                    marketplusminus(data)
                 }
             }
             });
@@ -8555,14 +9304,50 @@ socket.on('connect', () => {
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 let NewStake = spanId - 100;
                 let result
+                let element = $(this)
+                let staleDiff = 100
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
+                        resultDiff = (staleDiff * Odds) - staleDiff;
                     }else{
+                        var escapedId = buttonId.replace(/\./g, '\\.');
+                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                            Odds = parseFloat(
+                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                              );
+                        }
                         result = (NewStake * Odds) / 100
+                        resultDiff = (staleDiff * Odds) / 100
                     }
+                    let data = {
+                        result : resultDiff,
+                        element,
+                        status:false,
+                        NewStake : staleDiff,
+                        check : NewStake
+                    }
+                    Onlyminus(data)
                 }else{
                     result = NewStake
+                    let resultDiff = 100
+
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                        plusMinus = (100 * Odds) - 100;
+                         
+                    }else{
+                        plusMinus = (100 * Odds) / 100
+                    }
+                    let data = {
+                        result:resultDiff,
+                        element,
+                        status:true,
+                        NewStake : 100,
+                        plusMinus,
+                        check:NewStake
+                    }
+                    Onlyminus(data)
                     // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
                     //     result = (NewStake * 2) - NewStake;
                     // }else{
@@ -8594,15 +9379,7 @@ socket.on('connect', () => {
           })
 
 
-          $(document).on('click','.tbl-td-with5',function(e){
-                // console.log("WORKING")
-                $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
-                $(".minus")
-                .closest("tr")
-                .find(".c-gren")
-                .text('00');
-               
-          })
+          
 
           
           $(document).ready(function(){
@@ -8620,21 +9397,52 @@ socket.on('connect', () => {
                     NewStake = 100
                 }
                 let result
+                let element = $(this)
+                let plusMinus = 0
+                let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
+                    let diff = 0
                     if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
+                        diff = (100 * Odds) - 100;
                     }else{
+                        var escapedId = buttonId.replace(/\./g, '\\.');
+                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                            Odds = parseFloat(
+                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                              );
+                        }
                         result = (NewStake * Odds) / 100
+                        diff = (100 * Odds) / 100
                     }
+                    let data = {
+                        result : diff,
+                        element,
+                        status:false,
+                        NewStake : 100
+                    }
+                    marketplusminus(data)
                 }else{
-                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                    //     result = (NewStake * 2) - NewStake;
-                    // }else{
-                    //     result = (NewStake * Odds) / 100
-                    // }
-                    result - NewStake
+                    result = NewStake
+                    let diff = 100
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                        plusMinus = (100 * Odds) - 100;
+                         
+                    }else{
+                        plusMinus = (100 * Odds) / 100
+                    }
+                    let data = {
+                        result : diff ,
+                        element,
+                        status:true,
+                        NewStake : 100,
+                        plusMinus
+                    }
+                    marketplusminus(data)
                 }
                 // console.log(result)
+
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                     $(this)
@@ -8818,7 +9626,13 @@ socket.on('connect', () => {
         //     // console.log(data)
         //     socket.emit("betDetails", {data, LOGINDATA})
         // })
+        let checkTime
+          socket.on('checkDelay', data => {
+            if(data.delay && data.delay != 0){
+                checkTime = clickTime + data.delay * 1000
+            }
 
+          })
         $(document).ready(function () {
             $(".eventId").click(function () {
                 // console.log("working")
@@ -8828,7 +9642,15 @@ socket.on('connect', () => {
             data.eventId = $(this).attr("id");
             data.odds = $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
             let secId = $(this).closest("tr").find(".beton").attr('id')
+            // console.log(secId, "secIdsecIdsecIdsecId")
             data.secId = secId.slice(0,-1)
+            var escapedId =  data.secId.replace(/\./g, '\\.');
+            let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+            if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                data.odds = parseFloat(
+                    $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                    );
+            }
             data.market = $(this).closest("table").attr("id");
             data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
@@ -8860,8 +9682,19 @@ socket.on('connect', () => {
                 }else{
                     if(data.odds != '\n                        \n                      '){
                         // alert('132456')
-                        showLoader();
-                        socket.emit("betDetails", {data, LOGINDATA})
+                        if(checkTime){
+                            if(checkTime < Date.now()){
+                                togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
+                            }else{
+                                // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
+                            }
+                        }else{
+                            // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
+                        }
                         // console.log(data)
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
@@ -8877,8 +9710,19 @@ socket.on('connect', () => {
                     }else{
                         if(data.odds != '\n                        \n                      '){
                             // alert('132456')
-                            showLoader();
-                            socket.emit("betDetails", {data, LOGINDATA})
+                            if(checkTime){
+                                if(checkTime < Date.now()){
+                                    togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
+                                }else{
+                                    // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
+                                }
+                            }else{
+                                // console.log(data)
+                                    showLoader();
+                                    socket.emit("betDetails", {data, LOGINDATA})
+                            }
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                         }
@@ -8913,7 +9757,283 @@ socket.on('connect', () => {
         //     link.addEventListener("click", handlePlaceBetClick);
         //   });
 
+        
+        $(document).on('click', ".close-btn", function(){
+            marketIdbookDetails( false )
+        })
+
+        $(document).on('click','.tbl-td-with5',function(e){
+            // console.log("WORKING")
+            marketIdbookDetails( false )
+            $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
+            $(".minus")
+            .closest("tr")
+            .find(".c-gren")
+            .text('00');
+           
+      })
+        socket.on('marketIdbookDetails', data => {
+            if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
+                for(let i = 0; i < data.betsMarketIdWise.length; i++){
+                    let team1Data
+                    let team2Data
+                    let team3Data
+                    let status = false
+                    if(data.betsMarketIdWise[i].runnersData && data.betsMarketIdWise[i].runnersData.length === 3){
+                        status = true
+                        team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
+                        team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
+                        team3Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[2].runner)
+                    }else if(data.betsMarketIdWise[i].runnersData && data.betsMarketIdWise[i].runnersData.length === 2) {
+                        team1Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[0].runner)
+                        team2Data = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[1].runner)
+                    }
+                    let team1Amount
+                    let team2Amount
+                    let team3Amount
+                    if(status){
+                        if(team1Data && team2Data && team3Data){
+                            team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
+                        }else if ((team1Data && team2Data) && !team3Data){
+                            team1Amount = team1Data.totalAmount - team2Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure
+                            team3Amount = - team2Data.exposure - team1Data.exposure
+                        }else if (!team1Data && (team2Data && team3Data)){
+                            team1Amount = - team2Data.exposure - team3Data.exposure
+                            team2Amount = team2Data.totalAmount - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team2Data.exposure 
+                        }else if (team1Data && !team2Data && team3Data){
+                            team1Amount = team1Data.totalAmount - team3Data.exposure
+                            team2Amount = - team1Data.exposure - team3Data.exposure
+                            team3Amount = team3Data.totalAmount - team1Data.exposure
+                        }else if (team1Data && !team2Data && !team3Data){
+                            team1Amount = team1Data.totalAmount
+                            team2Amount = - team1Data.exposure
+                            team3Amount = - team1Data.exposure
+                        }else if (!team1Data && team2Data && !team3Data){
+                            team1Amount = - team2Data.exposure
+                            team2Amount = team2Data.totalAmount
+                            team3Amount = - team2Data.exposure 
+                        }else if (!team1Data && !team2Data && team3Data){
+                            team1Amount =  - team3Data.exposure
+                            team2Amount =  - team3Data.exposure
+                            team3Amount = team3Data.totalAmount 
+                        }
+                    }else{
+                        if(team1Data && team2Data){
+                            team1Amount = team1Data.totalAmount - team2Data.exposure
+                            team2Amount = team2Data.totalAmount - team1Data.exposure
+                        }else if (!team1Data && team2Data){
+                            team1Amount = - team2Data.exposure
+                            team2Amount = team2Data.totalAmount
+                        }else if(team1Data && !team2Data){
+                            team1Amount = team1Data.totalAmount
+                            team2Amount = - team1Data.exposure
+                        }
+    
+                    }
+                    $("table.market").each(function() { 
+                        let check = $(this).find('tr').length
+
+                        if(check < 8){
+                            if(this.id == data.betsMarketIdWise[i]._id){
+                                var table = $(this);
+                                let trLength = table.find("tr:eq(1)").find('td').length
+                                table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
+                                    $(this).find('td:eq(0)').attr('colspan', 9)
+                                })
+                                if(trLength === 4 || trLength === 8){
+                                    if(team1Amount > 0){
+                                        var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
+                                    }else{
+                                        var newTd = `<span class="c-reed" >${team1Amount.toFixed(2)}</span>`;
+                                    }
+                                    if(team2Amount > 0){
+                                        var newTd2 = `<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`;
+                                    }else{
+                                        var newTd2 = `<span class="c-reed" >${team2Amount.toFixed(2)}</span>`;
+                                    }
+                                    if(status){
+                                        if(team3Amount > 0){
+                                            var newTd3 = `<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`;
+                                        }else{
+                                            var newTd3 = `<span class="c-reed" >${team3Amount.toFixed(2)}</span>`;
+                                        }
+            
+                                        table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                        table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                        table.find("tr:eq(5)").find("td:eq(1)").html(newTd3);
+                                    }else{
+                                        table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                        table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                    }
+                                }else{
+                                    table.find('th:eq(0)').after('<th></th>')
+                                    if(team1Amount > 0){
+                                        var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
+                                    }else{
+                                        var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
+                                    }
+                                    if(team2Amount > 0){
+                                        var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
+                                    }else{
+                                        var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
+                                    }
+                                    if(status){
+                                        if(team3Amount > 0){
+                                            var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
+                                        }else{
+                                            var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
+                                        }
+            
+                                        table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                        table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                        table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
+                                    }else{
+                                        table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                        table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                    }
+                                }
+                            }else{
+                                // console.log('WORKING')
+                                if(!data.betsMarketIdWise.some(item => item._id == this.id)){
+                                    var table = $(this);
+                                    let trLength = table.find("tr:eq(1)").find('td').length
+                                    // console.log(trLength)
+                                    if(trLength === 4 || trLength === 8){
+                                        table.find("tr:eq(1)").find("td:eq(1)").remove();
+                                        table.find("tr:eq(3)").find("td:eq(1)").remove();
+                                        table.find("tr:eq(5)").find("td:eq(1)").remove();
+                                        table.find('th:eq(1)').remove();
+                                    }
+                                }
+                            }
+                        }else{
+                            if(this.id == data.betsMarketIdWise[i]._id){
+                                // console.log(data.betsMarketIdWise[i])
+                                let showData = []
+                                for(let j = 0; j < data.betsMarketIdWise[i].runnersData.length; j++){
+                                        console.log("got here")
+                                        let checkRunn = data.betsMarketIdWise[i].selections.find(item => item.selectionName == data.betsMarketIdWise[i].runnersData[j].runner)
+                                        // console.log(checkRunn, 123456789)
+                                        let amount = 0
+                                        if(checkRunn){
+                                            amount = checkRunn.totalAmount
+                                            for(const run in data.betsMarketIdWise[i].selections){
+                                                if(data.betsMarketIdWise[i].selections[run].selectionName !== checkRunn.selectionName){
+                                                    amount = amount - data.betsMarketIdWise[i].selections[run].exposure
+                                                }
+                                            }
+                                        }else{
+                                            for(const run in data.betsMarketIdWise[i].selections){
+                                                amount = amount - data.betsMarketIdWise[i].selections[run].exposure
+                                            }
+                                        }
+                                        // console.log(amount)
+                                        showData.push(amount)
+                                    }
+                                    console.log(showData)
+                                    var table = $(this);
+                                    let trLength = table.find("tr:eq(1)").find('td').length
+                                    if(trLength === 4 || trLength === 8){
+                                        for (var t = 1; t < check; t += 2) {
+                                            var selector = 'tr:eq(' + t + ')';
+                                            let length = Math.floor((t + 1) / 2) - 1
+                                            table.find(selector).each(function () {
+                                                $(this).find('td:eq(1)').find('span').text(showData[length].toFixed(2))
+                                                if(showData[length] > 0){
+                                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                                }else if(showData[length] < 0){
+                                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                                }
+                                            })
+                                        }
+                                    }else{
+                                        for (var t = 1; t < check; t += 2) {
+                                            var selector = 'tr:eq(' + t + ')';
+                                            let html = ''
+                                            let length = Math.floor((t + 1) / 2) - 1
+                                            if(showData[length] > 0){
+                                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(showData[length]).toFixed(2)}</span>`);
+                                            }else{
+                                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(showData[length]).toFixed(2)}</span>`);
+                                            }
+                                            table.find(selector).each(function () {
+                                                var firstTd = $(this).find('td:first-child');
+                                                
+                                                if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                                    firstTd.after(newTd.clone());
+                                                }
+                                            });
+                                        }
+                                        for (var t = 2; t < check; t += 2) {
+                                            var selector = 'tr:eq(' + t + ')';
+                                            table.find(selector).each(function () {
+                                                $(this).find('td:eq(0)').attr('colspan', 9);
+                                            });
+                                        }
+                                    }
+                                }else{
+                                    if(!data.betsMarketIdWise.some(item => item._id == this.id)){
+                                        var table = $(this);
+                                        let trLength = table.find("tr:eq(1)").find('td').length
+                                        // console.log(trLength)
+                                        if(trLength === 4 || trLength === 8){
+                                            for (var t = 1; t < check; t += 2) {
+                                                var selector = 'tr:eq(' + t + ')';
+                                                
+                                                // Use your existing logic
+                                                table.find('th:eq(1)').remove();
+                                                table.find(selector).each(function () {
+                                                    var firstTd = $(this).find('td:eq(1)');
+                                                    
+                                                    firstTd.remove()
+                                                });
+                                            }
+                                            // table.find('th:eq(1)').remove();
+                                        }
+                                    }
+                                }
+                        }
+                    })
+                }
+            }else{
+                $("table.market").each(function() {
+                    var table = $(this);
+                    let check = table.find('tr').length
+                    if(check < 8){
+                        let trLength = table.find("tr:eq(1)").find('td').length
+                        if(trLength === 4 || trLength === 8){
+                            table.find("tr:eq(1)").find("td:eq(1)").remove();
+                            table.find("tr:eq(3)").find("td:eq(1)").remove();
+                            table.find("tr:eq(5)").find("td:eq(1)").remove();
+                            table.find('th:eq(1)').remove();
+                        }
+                    }else{
+                        let trLength = table.find("tr:eq(1)").find('td').length
+                        if(trLength === 4 || trLength === 8){
+                            for (var t = 1; t < check; t += 2) {
+                                var selector = 'tr:eq(' + t + ')';
+                                
+                                // Use your extsttng logtc
+                                table.find('th:eq(1)').remove();
+                                table.find(selector).each(function () {
+                                    var firstTd = $(this).find('td:eq(1)');
+                                    
+                                    firstTd.remove()
+                                });
+                            }
+                        }
+                    }
+                })
+            }
+            // if()
+        })
         socket.on("betDetails" , (data) => {
+            marketIdbookDetails( true )
+            fencyDetails( false )
             hideLoader()
             // console.log(data.result)
             // function togglePopup(idname, id){
@@ -8923,6 +10043,9 @@ socket.on('connect', () => {
             //   }
             if(data.result === "Bet placed successfully"){
                 togglePopupMain('popup-1', "redPopUP", data.result.toUpperCase())
+                $('.my-exc-inn-colaps-txt-dv').each(function(){
+                    $(this).removeClass('open')
+                })
             }else{
                 togglePopupMain('popup-2', "redPopUP2", data.result.toUpperCase())
             }
@@ -8951,12 +10074,24 @@ socket.on('connect', () => {
                 }else{
                     html2 += `<tr class="lay-inplaymatch">`
                 }
-                  html2 += `<td>${ data.openBet[0].selectionName}</td>
-                    <td>${ data.openBet[0].oddValue }</td>
-                    <td>${ data.openBet[0].Stake }</td>
-                  </tr>
-                </tbody>
-              </table>`
+                if(data.openBet[0].selectionName.includes('@')){
+                    let oddValue1 = data.openBet[0].selectionName.split('@')[1]
+                    let selectionName = data.openBet[0].selectionName.split('@')[0]
+                    let oddValue2 = data.openBet[0].oddValue
+                    html2 += `<td>${selectionName}@${oddValue2}</td>
+                      <td>${ oddValue1 }</td>
+                      <td>${ data.openBet[0].Stake }</td>
+                    </tr>
+                  </tbody>
+                </table>`
+                }else{
+                    html2 += `<td>${ data.openBet[0].selectionName}</td>
+                      <td>${ data.openBet[0].oddValue }</td>
+                      <td>${ data.openBet[0].Stake }</td>
+                    </tr>
+                  </tbody>
+                </table>`
+                }
               document.getElementById('length1').innerHTML = html2
               document.getElementById('length2').innerHTML = html2
             }else{
@@ -8966,17 +10101,148 @@ socket.on('connect', () => {
                     }else{
                         html2 += `<tr class="lay-inplaymatch">`
                     }
-                    html2 += `<td>${ data.openBet[i].selectionName}</td>
-                    <td>${ data.openBet[i].oddValue }</td>
-                    <td>${ data.openBet[i].Stake }</td>
-                  </tr>`
+                    if(data.openBet[i].selectionName.includes('@')){
+                        let oddValue1 = data.openBet[i].selectionName.split('@')[1]
+                        let selectionName = data.openBet[i].selectionName.split('@')[0]
+                        let oddValue2 = data.openBet[i].oddValue
+                        html2 += `<td>${selectionName}@${oddValue2}</td>
+                        <td>${ oddValue1 }</td>
+                        <td>${ data.openBet[i].Stake }</td>
+                      </tr>`
+                    }else{
+                        html2 += `<td>${ data.openBet[i].selectionName}</td>
+                        <td>${ data.openBet[i].oddValue }</td>
+                        <td>${ data.openBet[i].Stake }</td>
+                      </tr>`
+                    }
                 }
                 // console.log(html2, "tableBETtableBET")
                 document.getElementById('tableBET').innerHTML = html2
                 document.getElementById('tableBET1').innerHTML = html2
             }
         })
+
+
+        socket.on('marketIdbookDetailsFANCY', data => {
+            if(data.betDetails && data.betDetails.length != 0){
+                $("td.market").each(function() {
+                    if(data.betDetails.some(item => item == this.id)){
+                        let text = $(this).text()
+                        text += '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
+                        $(this).html(text)
+                    } 
+
+                })
+            }
+        })
         
+        $(document).on('click', '.fancy-book', function(){
+            let id = $(this).closest('td').attr('id')
+            $('#FANCYBOOKDATA').html('<p>Please wait a moment</p>')
+            socket.emit('getFancyBookDATAuserSide', {id, LOGINDATA})
+        })
+        
+        socket.on('getFancyBookDATAuserSide', async(data) => {
+            if(data.status === "ODD"){
+                let html = ''
+                    html += `<table id="FANCYBOOK"
+                    <tbody>
+                    <tr class="headDetail"><th>Runner Name</th>
+                    <th>Profit/Loss</th></tr>`
+                    if(data.betDetails[0]._id === "odd_Even_No"){
+                        if(data.betDetails[0].totalWinAmount2 < 0){
+                            html += `<tr><td>0.0 or Less</td><td class="c-reed" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<tr><td>0.0 or Less</td><td class="c-gren" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
+                        }
+
+                        if(data.betDetails[1]){
+                            if(data.betDetails[1].totalWinAmount2 < 0){
+                                html += `<tr><td>1.0 or More</td><td class="c-reed" >${(data.betDetails[1].totalWinAmount2).toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<tr><td>1.0 or More</td><td class="c-gren" >${(data.betDetails[1].totalWinAmount2).toFixed(2)}</td></tr>`
+                            }
+                        }else{
+                            if(data.betDetails[0].totalAmount < 0){
+                                html += `<tr><td>1.0 or More</td><td class="c-reed" >${(data.betDetails[0].totalAmount).toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<tr><td>1.0 or More</td><td class="c-gren" >${(data.betDetails[0].totalAmount).toFixed(2)}</td></tr>`
+                            }
+                        }
+
+                    }else if(data.betDetails[0]._id === "odd_Even_Yes") {
+                        if(data.betDetails[0].totalWinAmount2 < 0){
+                            html += `<tr><td>1.0 or More</td><td class="c-reed" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<tr><td>1.0 or More</td><td class="c-gren" >${(data.betDetails[0].totalWinAmount2).toFixed(2)}</td></tr>`
+                        }
+
+                        if(data.betDetails[1]){
+                            if(data.betDetails[1].totalWinAmount2 < 0){
+                                html += `<tr><td>0.0 or Less</td><td class="c-reed" >${(data.betDetails[1].totalWinAmount2).toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<tr><td>0.0 or Less</td><td class="c-gren" >${(data.betDetails[1].totalWinAmount2).toFixed(2)}</td></tr>`
+                            }
+                        }else{
+                            if(data.betDetails[0].totalAmount < 0){
+                                html += `<tr><td>0.0 or Less</td><td class="c-reed" >${(data.betDetails[0].totalAmount).toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<tr><td>0.0 or Less</td><td class="c-gren" >${(data.betDetails[0].totalAmount).toFixed(2)}</td></tr>`
+                            }
+                        }
+                    }
+                     html += `</tbody>
+                    </table>`
+                    $('#FANCYBOOKDATA').html(html)
+            }else{
+                let html = ""
+                    html += `<table id="FANCYBOOK"
+                    <tbody>
+                    <tr class="headDetail"><th>Runner Name</th>
+                    <th>Profit/Loss</th></tr>`
+                    for(let i = 0; i < data.dataToshow.length; i++){
+                        // console.log(data.dataToshow[i])
+                        html += `<tr><td>${data.dataToshow[i].message}</td>`
+                        if(data.dataToshow[i].sum < 0){
+                            html += `<td class="c-reed" >${(data.dataToshow[i].sum).toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<td class="c-gren" >${(data.dataToshow[i].sum).toFixed(2)}</td></tr>`
+                        }
+                    } 
+                    html += `</tbody>
+                    </table>`
+                    $('#FANCYBOOKDATA').html(html)
+            }
+        })
+
+        function OddsCheck(){
+            $(document).ready(function(){
+                var ids = [];
+          
+                $(".market").each(function() {
+                  ids.push(this.id);
+                });
+                let eventId = search.split('=')[1]
+                // console.log(ids, eventId)
+                socket.emit('OddsCheck', {ids, eventId})
+                setTimeout(()=>{
+                    OddsCheck()
+                  }, 5000)
+            })
+        }
+        OddsCheck()
+
+        socket.on('OddsCheck', data => {
+            $('.market-limit').each(function(){
+                let id = this.id
+                let thisMarketLimit = data.find(item => item.marketId == id)
+                // console.log(thisMarketLimit)
+                if(thisMarketLimit){
+                    let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
+                    $(this).html(html)
+                }
+            })
+        })
     }
 
 
@@ -9464,32 +10730,17 @@ socket.on('connect', () => {
             }
         }else{
             // console.log("working")
-                $('.loadMoredive').html("")
+                // $('.loadMoredive').html("")
+                if(data.page === 0){
+                    html = ''
+                    $('.acount-stat-tbl-body').html(html)  
+                }
         }
         })
     }
 
 
     if(pathname === "/mybets"){
-        // console.log("WORKING")
-        // $(window).scroll(function() {
-        //     var scroll = $(window).scrollTop();
-        //     var windowHeight = $(window).height();
-        //     var documentHeight = $(document).height();
-        //     if (scroll + windowHeight >= documentHeight) {
-                // let page = parseInt($('.pageId').attr('data-pageid'));
-                // $('.pageId').attr('data-pageid',page + 1)
-                // let fromDate = $('#Fdate').val()
-                // let toDate = $('#Tdate').val()
-                // let type = $("#select").val()
-                // let filterData = {}
-                // filterData.fromDate = fromDate,
-                // filterData.toDate = toDate
-                // filterData.type = type
-                // socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
-        //     }
-        // });
-
         $(function () {
             $("div").slice(0, 4).show();
             $("#loadMore").on('click', function (e) {
@@ -9503,6 +10754,7 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
                 filterData.type = type
+                // console.log(page, filterData, "filterDatafilterDatafilterData")
                 socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
             });
         });
@@ -9579,9 +10831,18 @@ socket.on('connect', () => {
                         html += "<td title='Market'>-</td>"
                 }
                 if(bets[i].selectionName){
+                    if(bets[i].selectionName.includes('@')){
+                        let oddValue1 = bets[i].selectionName.split('@')[1]
+                        let selectionName = bets[i].selectionName.split('@')[0]
+                        let oddValue2 = bets[i].oddValue
+                        html +=    `<td title='Bet On'>${selectionName}@${oddValue2}</td>
+                        <td title="Bet Type" >${bets[i].bettype2}</td>
+                            <td title='Odds'>${oddValue1}</td>`
+                    }else{
                         html +=    `<td title='Bet On'>${bets[i].selectionName}</td>
                         <td title="Bet Type" >${bets[i].bettype2}</td>
                             <td title='Odds'>${bets[i].oddValue}</td>`
+                    }
                 }else{
                         html +=    "<td title='Bet On'>-</td><td title='Bet Type' >-</td><td title='Odds'>-</td>"
                 }
@@ -9598,14 +10859,15 @@ socket.on('connect', () => {
             count += 20
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
+                // $('.loadMoredive').html('<a id="loadMore"> Load More </a>')
             }else{
                 $('.acount-stat-tbl-body').append(html)         
             }
         }else{
             // console.log("working")
-                $('.loadMoredive').html("")
+                // $('.loadMoredive').html("")
                 if(data.page == 0){
-                    $('.acount-stat-tbl-body').html("")
+                    $('.acount-stat-tbl-body').html(`<tr class="empty_table"><td>No data found! </td></tr>`)
                 }
         }
         })
@@ -10586,8 +11848,10 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    section = item.odds.find(odd => odd.selectionId == id);
-                    return section !== undefined;
+                    if(item.odds){
+                        section = item.odds.find(odd => odd.selectionId == id);
+                        return section !== undefined;
+                    }
                 });
                 if(this.id == `${section.selectionId}1` ){
                     if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
@@ -10661,8 +11925,10 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    section = item.odds.find(odd => odd.selectionId == id);
-                    return section !== undefined;
+                    if(item.odds){
+                        section = item.odds.find(odd => odd.selectionId == id);
+                        return section !== undefined;
+                    }
                 });
                 let marketId = this.closest('table').id
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
@@ -11896,7 +13162,7 @@ socket.on('connect', () => {
               .then(editor => {
                 textEditorInstance = editor; // Store the new editor instance in the variable
                 textEditorInstance.setData(data.description); // Set initial data
-                console.log('ClassicEditor was initialized', editor);
+                // console.log('ClassicEditor was initialized', editor);
               })
               .catch(error => {
                 console.error('Error initializing ClassicEditor', error);
@@ -11945,10 +13211,18 @@ socket.on('connect', () => {
             socket.emit("KYC", {data, LOGINDATA})
         })
 
-        document.getElementById("viewPdfButton").addEventListener("click", function() {
-            // console.log("Click")
-            socket.emit('getPdf', {LOGINDATA})
-          });
+
+        let viewButton = document.getElementById('viewPdfButton')
+        if(viewButton){
+            viewButton.addEventListener("click", function() {
+                    // console.log("Click")
+                    socket.emit('getPdf', {LOGINDATA})
+                  });
+        }
+        // document.getElementById("viewPdfButton").addEventListener("click", function() {
+        //     // console.log("Click")
+        //     socket.emit('getPdf', {LOGINDATA})
+        //   });
 
 
           socket.on('getPdf', pdfData => {
@@ -11971,7 +13245,7 @@ socket.on('connect', () => {
                 socket.emit('chartMain', LOGINDATA) 
                 socket.emit("FIlterDashBoard", { LOGINDATA, value });
                 socket.emit('dashboardrefresh',LOGINDATA)
-            },1000 * 10)
+            },1000 * 15)
             socket.emit('chartMain', LOGINDATA) 
 
             socket.on("chartMain", data => {
@@ -12089,6 +13363,7 @@ socket.on('connect', () => {
             $(document).ready(function() {
                 $(".dropdown .item").click(function(e) {
                     e.preventDefault();
+                    // console.log('WORKING')
                     let value = $(this).attr("id");
                     $("#destination").text($(this).text());
                     $('.dropdown').attr('data-summary',value)
@@ -12249,9 +13524,9 @@ socket.on('connect', () => {
               };
               var formattedTime = date.toLocaleString('en-US', options);
 
-              html += `<tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=${data.eventData[i]._id}">
+              html += `<tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=${data.eventData[i]._id.id}">
               <td>${formattedTime}</td>
-              <td>${data.eventData[i]._id}</td>
+              <td>${data.eventData[i]._id.eventName}</td>
               <td>${data.eventData[i].totalCommission}</td>
                 </tr>`
             }
@@ -12267,7 +13542,7 @@ socket.on('connect', () => {
             }else{
                 document.getElementById('loadMorediveEvent').innerHTML = ""
                 if(data.page == 0){
-                    $('#event-tbody').html("NO MORE DATA ")
+                    $('#event-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
             }
             // if(data.page == 0){
@@ -12356,7 +13631,7 @@ socket.on('connect', () => {
             }else{
                 document.getElementById('loadMorediveAccCom').innerHTML = ""
                 if(data.page == 0){
-                    $('#AccountCom-tbody').html("NO MORE DATA ")
+                    $('#AccountCom-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
             }
         })
@@ -12453,7 +13728,7 @@ socket.on('connect', () => {
             }else{
                 document.getElementById('loadMorediveUser').innerHTML = ""
                 if(data.page == 0){
-                    $('#userLevel-tbody').html("NO MORE DATA ")
+                    $('#userLevel-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
             }
             // console.log(data)
@@ -13036,10 +14311,20 @@ socket.on('connect', () => {
                         <td>${bets[i].userName}</td>
                         <td>${bets[i].event}</td>`
                     if(bets[i].match){
+                        if(bets[i].selectionName.includes('@')){
+                            let oddValue1 = bets[i].selectionName.split('@')[1]
+                            let selectionName = bets[i].selectionName.split('@')[0]
+                            let oddValue2 = bets[i].oddValue
+                            html += `<td>${bets[i].marketName}</td>
+                            <td>${oddValue1}</td>
+                            <td>${bets[i].match}</td>
+                            <td>${selectionName}@${oddValue2}</td>`
+                        }else{
                             html += `<td>${bets[i].marketName}</td>
                             <td>${bets[i].oddValue}</td>
                             <td>${bets[i].match}</td>
                             <td>${bets[i].selectionName}</td>`
+                        }
                     }else{
                             html += `<td>-</td>
                             <td>-</td>
@@ -13047,7 +14332,6 @@ socket.on('connect', () => {
                             <td>-</td>`
                     }
                     html += `<td>${bets[i].Stake}</td>
-                    <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
                     <td>${bets[i].returns}</td>
                     </tr>`
@@ -13331,8 +14615,8 @@ socket.on('connect', () => {
                     }else{
                         html += ` <td>LogOut</td></tr>`
                     }
-                    countHistory += 10
                 }
+                countHistory += 10
                 // console.log(html)
                 if(data.page == 0){
 
@@ -13579,25 +14863,7 @@ socket.on('connect', () => {
             }
         })
 
-        // $(window).scroll(async function() {
-        //     var scroll = $(window).scrollTop();
-        //     var windowHeight = $(window).height();
-        //     var documentHeight = $(document).height();
-        //     if (scroll + windowHeight + 1 >= documentHeight) {
-        //         console.log('working')
-        //         let page = parseInt($('.rowId').attr('data-rowid'))
-        //         $('.rowId').attr('data-rowid',page + 1)
-        //         let to_date;
-        //         let from_date
-        //         if($('#Fdate').val() != ''){
-        //             from_date = $('#Fdate').val()
-        //         }
-        //         if($('#Tdate').val() != ''){
-        //             to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
-        //         }
-        //         socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
-        //     }
-        // })
+       
 
         $(document).on('click', ".load-more", function(e){
             let page = parseInt($('.rowId').attr('data-rowid'))
@@ -13615,8 +14881,6 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/settlementIn"){
-        // let inprogressTable = document.getElementById('InprogresDATA')
-        // if(inprogressTable){
 
         function winnerMarketOPtion(){
             let id 
@@ -13629,9 +14893,7 @@ socket.on('connect', () => {
         }
         winnerMarketOPtion()
         socket.on('WINNERMARKET', data => {
-            // console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
             let runners = JSON.parse(data.runners)
-            // console.log(runners, "runnersrunnersrunners")
             let html = '<option value="" selected></option>'
             for(let i = 0; i < runners.length; i++){
                 html += `<option value="${runners[i].runner}">${runners[i].runner}</option>`
@@ -13641,16 +14903,16 @@ socket.on('connect', () => {
             function getinProgressData(){
                 $(document).ready(function() {
                     socket.emit("getinProgressData", search.split('=')[1])
+                    socket.emit('getRefresh', search.split('=')[1])
                   });
                   setTimeout(()=>{
                     getinProgressData()
-                  }, 500)
+                  }, 5000)
             }
             getinProgressData()
         // }
         let status = false
         socket.on('getinProgressData', data => {
-            // console.log('WORKING', 123456789)
             let html= ''
             for(let i = 0; i < data.length; i++){
                 html = `<tr class="RAWCLASS" id="${data[i].marketId}"><td>${data[i].marketName}</td>
@@ -13680,12 +14942,84 @@ socket.on('connect', () => {
                     window.location.reload()
                 }
             }
+        })
 
+
+        socket.on('getRefresh', async(data) => {
+            // console.log(data, "datadatdatda")
+            if(data.getMapBetData && data.getMapBetData.length > 0){
+                var allRows = $('#mapMarket tr');
+                for (let i = 0; i < data.getMapBetData.length; i++) {
+                    var targetId = data.getMapBetData[i]._id.replace(/\./g, '\\.');
+                    var targetRow = allRows.filter(`#${targetId}`);
+                
+                    // If the target row is found, update the count
+                    if (targetRow.length > 0) {
+                        targetRow.find('td:eq(2)').text(`${data.getMapBetData[i].count}`);
+                    }
+                }
+                allRows.each(function () {
+                    var rowId = $(this).attr('id');
+                    var found = data.getMapBetData.some(item => item._id === rowId);
+                
+                    if (!found) {
+                        $(this).remove();
+                    }
+                });
+            }else{
+                $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
+            }
+
+            if( data.settledeBetData && data.settledeBetData.length > 0){
+
+                var allRowssettle = $('#settle-market-table tbody tr');
+                for (let i = 0; i < data.settledeBetData.length; i++) {
+                    var targetId = data.settledeBetData[i]._id.replace(/\./g, '\\.');
+                    var targetRow = allRowssettle.filter(`#${targetId}`);
+                
+                    // If the target row is found, update the count
+                    if (targetRow.length > 0) {
+                        targetRow.find('td:eq(2)').text(`${data.settledeBetData[i].count}`);
+                    }
+                }
+                allRowssettle.each(function () {
+                    var rowId = $(this).attr('id');
+                    var found = data.settledeBetData.some(item => item._id === rowId);
+                
+                    if (!found) {
+                        $(this).remove();
+                    }
+                });
+            }else{
+                $('#settle-market-table tbody').html('<tr class="empty_table"><td>No SETTLED Markets! </td></tr>')
+            }
+
+            if(data.cancelledBetData && data.cancelledBetData.length > 0){
+                var allRowsvoid = $('#void-market-table tbody tr');
+                for (let i = 0; i < data.cancelledBetData.length; i++) {
+                    var targetId = data.cancelledBetData[i]._id.replace(/\./g, '\\.');
+                    var targetRow = allRowsvoid.filter(`#${targetId}`);
+                
+                    if (targetRow.length > 0) {
+                        targetRow.find('td:eq(1)').text(`${data.cancelledBetData[i].count}`);
+                    }
+                }
+                allRowsvoid.each(function () {
+                    var rowId = $(this).attr('id');
+                    var found = data.cancelledBetData.some(item => item._id === rowId);
+                
+                    if (!found) {
+                        $(this).remove();
+                    }
+                });
+            }else{
+                $('#void-market-table tbody').html('<tr class="empty_table"><td>No VOIDED Markets! </td></tr>')
+            }
         })
 
         $(document).on('click', '.voidBet2', function(e){
             e.preventDefault()
-            let id =  this.id
+            let id = $(this).closest('tr').attr('id')
             let modleName = "#myModalSE1"
             let form = $(modleName).find('.voidbet-form2')
             form.attr('id', id);
@@ -13693,7 +15027,7 @@ socket.on('connect', () => {
 
         $(document).on('click', '.ROLLBACK', function(e){
             e.preventDefault()
-            let id = this.id
+            let id = $(this).closest('tr').attr('id')
             let modleName = "#myModalSE2"
             let form = $(modleName).find('.rollBack-form')
             form.attr('id', id);
@@ -13713,7 +15047,36 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{ 
-                alert(data)
+                alert(data.msg)
+                let html = ``
+                if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
+                  html += `
+                  <thead>
+                  <tr>
+                    <th>Market Name</th>
+                    <th>Cancel Bet</th>
+                  </tr>
+                </thead>`}
+              //   console.log($('#void-market-table tr'), `#${data.betdata.marketId.replace(/\./g, '\\.')}`)
+              //   console.log($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`))
+                var rowFound = false;
+                $('#void-market-table tbody tr').each(function () {
+                  var currentRowId = $(this).attr('id');
+                  if (currentRowId == data.betdata.marketId) {
+                    rowFound = true;
+                    return false;
+                  }
+                });
+                if(!rowFound){
+                    html += ` <tbody class="new-body" id="voidMarket"><tr id='${data.betdata.marketId}'>
+                    <td>${data.betdata.marketName}</td><td>0</td></tr>
+                    </tbody>`
+                }
+              if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length === 0){
+                  document.getElementById('voidMarket').insertAdjacentHTML('beforeend', html);
+              }else{
+                  document.getElementById('void-market-table').innerHTML = html
+              }
                 // window.location.reload()
             }
         })
@@ -13732,17 +15095,86 @@ socket.on('connect', () => {
         socket.on('ROLLBACKDETAILS', data => {
             if(data.status === "error"){
                 alert("Please try again later")
-            }else{ 
-                // console.log(data, " <=== Data")
+            }else if(data.status === "err"){
+                alert(data.msg)
+            }else { 
+                // console.log(data)
                 alert(data.message)
-                const deleteButton = document.getElementById(data.id);
-                // console.log(deleteButton)
-                const row = deleteButton.closest('tr'); 
-                if (row) {
-                    const table = row.parentNode;
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove();
-                  }
+                // const deleteButton = document.getElementById(data.id);
+                // const row = deleteButton.closest('tr'); 
+                // const table = row.parentNode;
+                // if (row) {
+                //     const rowIndex = Array.from(table.rows).indexOf(row);
+                //     row.remove();
+                //   }
+                let html = ``
+                if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length != 0){
+                    html += `
+                    <thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Result</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>`
+                }
+                html += ` <tbody class="new-body" id="openmarket"><tr>
+                <td>${data.betdata.marketName}</td>`
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM"){
+                    if(data.betdata.marketId.slice(-2).startsWith('OE')){
+                        html += `<td>
+                        <select class="selectOption" >
+                            <option value="" selected></option>
+                            <option value="LAY">LAY</option>
+                            <option value="BACK">BACK</option>
+                         </select>
+                      </td>`
+                    }else{
+                        html += `<td><input type="number" class="selectOption" placeholder="0"></td>`
+                    }
+                }else{
+                    let option = data.betdata.match.split(" v ")
+                    let option1 = option[0]
+                    let option2 = option[1]
+                    let runners1
+                    if(data.runnersData){
+                        runners1 = JSON.parse(data.runnersData.runners)
+                    }
+                    if(runners1){
+                        html += `<td>
+                        <select class="selectOption">
+                        <option value="" selected></option>`
+                        for(let i = 0; i < runners1.length; i++){
+                            html += `<option value="${runners1[i].runner }">${runners1[i].runner }</option>`
+                        }
+                        html  += `</select>
+                    </td>`
+                    }else{
+        
+                        html += `<td>
+                                    <select class="selectOption">
+                                    <option value="" selected></option>
+                                    <option value="${option1 }">${option1 }</option>
+                                    <option value="${option2 }">${option2 }</option>
+                                    </select>
+                                </td>`
+                    }
+                }
+                html += `<td>
+                    <div class="btn-group">
+                    <button class="result" data-bs-toggle="modal" data-bs-target="#myModalre" id="${data.betdata.marketId}"> Result</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
+                        <button class="acceptBet" id="${data.betdata.marketId}"> MAP</button>
+                    </div>
+                </td>
+                </tr>
+                </tbody>   `
+        
+                if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length === 0){
+                    document.getElementById('openmarket').insertAdjacentHTML('beforeend', html);
+                }else{
+                    document.getElementById('open-market-table').innerHTML = html
+                }
             }
         })
        
@@ -13750,6 +15182,9 @@ socket.on('connect', () => {
         $(document).on("click", ".voidBet", function(e){
             e.preventDefault()
             let id =  this.id
+            if(!id){
+                id = $(this).closest('tr').attr('id')
+            }
             let modleName = "#myModalSE"
             let form = $(modleName).find('.voidbet-form')
             form.attr('id', id);
@@ -13781,31 +15216,41 @@ socket.on('connect', () => {
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
                   }
-                //   let html = ``
-                //   console.log(document.getElementById('void-market-table').getElementsByClassName('empty_table'))
-                //   if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
-                //     html += `
-                //     <thead>
-                //     <tr>
-                //       <th>Market Name</th>
-                //       <th>Cancel Bet</th>
-                //     </tr>
-                //   </thead>`}
-                // html += ` <tbody class="new-body" id="voidMarket"><tr>
-                // <td>${data.betdata.marketName}</td><td>${data.count + 1}</td></tr>
-                // </tbody>`
-                // if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length === 0){
-                //     document.getElementById('voidMarket').insertAdjacentHTML('beforeend', html);
-                // }else{
-                //     document.getElementById('void-market-table').innerHTML = html
-                // }
-                // alert('Bets canceled successfully')
+                  let html = ``
+                  if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
+                    html += `
+                    <thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Cancel Bet</th>
+                    </tr>
+                  </thead>`}
+                //   console.log($('#void-market-table tr'), `#${data.betdata.marketId.replace(/\./g, '\\.')}`)
+                //   console.log($('#void-market-table tr').find(`#${data.betdata.marketId.replace(/\./g, '\\.')}`))
+                  var rowFound = false;
+                  $('#void-market-table tbody tr').each(function () {
+                    var currentRowId = $(this).attr('id');
+                    if (currentRowId == data.betdata.marketId) {
+                      rowFound = true;
+                      return false;
+                    }
+                  });
+                  if(!rowFound){
+                      html += ` <tbody class="new-body" id="voidMarket"><tr id='${data.betdata.marketId}'>
+                      <td>${data.betdata.marketName}</td><td>0</td></tr>
+                      </tbody>`
+                  }
+                if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length === 0){
+                    document.getElementById('voidMarket').insertAdjacentHTML('beforeend', html);
+                }else{
+                    document.getElementById('void-market-table').innerHTML = html
+                }
             }
         })
 
         $(document).on('click', ".Unmap", function(e){
             e.preventDefault()
-            let id = this.id
+            let id = $(this).closest('tr').attr('id')
             socket.emit('unmapBet', {LOGINDATA, id})
         })
 
@@ -13814,21 +15259,20 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
-                console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
+                const table = row.parentNode;
                 if (row) {
-                    const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
-                    console.log("rowremove")
-                    // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    // rowsToUpdate.forEach((row, index) => {
-                    //     const srNoCell = row.cells[0]; 
-                    //     srNoCell.textContent = index + rowIndex + 1;
-                    //   });
+                  }
+                  let length = $(table).find('tr').length;
+                  if(length < 1){
+                    try{
+                        $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
+                    }catch(err){
+                    }
                   }
                   let html = ``
-                //   console.log(document.getElementById('open-market-table').getElementsByClassName('empty_table'))
                   if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
@@ -13856,16 +15300,33 @@ socket.on('connect', () => {
                     let option = data.betdata.match.split(" v ")
                     let option1 = option[0]
                     let option2 = option[1]
-                    html += `<td>
-                                <select class="selectOption">
-                                <option value="" selected></option>
-                                <option value="${option1 }">${option1 }</option>
-                                <option value="${option2 }">${option2 }</option>
-                                </select>
-                            </td>`
+                    let runners1
+                    if(data.runnersData){
+                        runners1 = JSON.parse(data.runnersData.runners)
+                    }
+                    if(runners1){
+                        html += `<td>
+                        <select class="selectOption">
+                        <option value="" selected></option>`
+                        for(let i = 0; i < runners1.length; i++){
+                            html += `<option value="${runners1[i].runner }">${runners1[i].runner }</option>`
+                        }
+                        html  += `</select>
+                    </td>`
+                    }else{
+
+                        html += `<td>
+                                    <select class="selectOption">
+                                    <option value="" selected></option>
+                                    <option value="${option1 }">${option1 }</option>
+                                    <option value="${option2 }">${option2 }</option>
+                                    </select>
+                                </td>`
+                    }
                 }
                 html += `<td>
                     <div class="btn-group">
+                    <button class="result" data-bs-toggle="modal" data-bs-target="#myModalre" id="${data.betdata.marketId}"> Result</button>
                         <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
                         <button class="acceptBet" id="${data.betdata.marketId}"> MAP</button>
                     </div>
@@ -13884,37 +15345,67 @@ socket.on('connect', () => {
 
         $(document).on('click', ".Settle", function(e){
             e.preventDefault()
-            let id = this.id
+            let id = $(this).closest('tr').attr('id')
             let resultTag = $(this).closest('tr').find('.Result')
             let result = resultTag.text()
             socket.emit('Settle', {LOGINDATA, id, result})
         })
 
         socket.on('Settle', data => {
+            // console.log(data)
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
                 alert(data.message)
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
-                if (row) {
-                    const table = row.parentNode;
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove(); 
+                const table = row.parentNode;
+                let check = $('#settle-market-table').find(`tr#${data.id.replace(/\./g, '\\.')}`)
+                // console.log(check.length, "checkcheckcheckcheck")
+                if(!(check.length > 0)){
+                    let html = `<tr id="${data.id}">
+                    <td>${data.thatBet.marketName}</td>
+                    <td>${data.thatBet.result}</td>
+                    <td>0</td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="ROLLBACK" data-bs-toggle="modal" data-bs-target="#myModalSE2"> ROLLBACK</button>
+                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1"> VOID</button>
+                      </div>
+                    </td>
+                  </tr>`
+                  $('#settle-market-table tbody').append(html)
+                  if($('#settle-market-table thead tr').length === 0){
+                    let html = `<tr>
+                    <th>Market Name</th>
+                    <th>Result</th>
+                    <th>Settled Bets</th>
+                    <th>Action</th>
+                  </tr>`
+                  var thead = $('<thead>');
+                  thead.html(html)
+                  $('#settle-market-table').prepend(thead);
+                  $('#settle-market-table tbody').find('.empty_table').remove()
                   }
+                }
+
+                // if (row) {
+                //     const rowIndex = Array.from(table.rows).indexOf(row);
+                //     row.remove(); 
+                // }
+                let length = $(table).find('tr').length;
+                if(length < 1){
+                      $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
+                }
             }
         })
 
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
-            console.log("WORKING 123456789")
             let id =  this.id
             var newColumnCell = $(this).closest('tr').find('.selectOption');
-            // console.log(newColumnCell.val())
             let result = newColumnCell.val()
-            // console.log(result, "resultresultresultresultresultresult")
             socket.emit("VoidBetIn22", {LOGINDATA, id, result})
-            // console.log(id)
         })
 
         socket.on("VoidBetIn22", async(data) => {
@@ -13922,37 +15413,40 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
-                // console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
+                const table = row.parentNode;
                 if (row) {
-                    const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
-                    // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    // rowsToUpdate.forEach((row, index) => {
-                    //     const srNoCell = row.cells[0]; 
-                    //     srNoCell.textContent = index + rowIndex + 1;
-                    //   });
+                   
+                  }
+                  let length = $(table).find('tr').length;
+                  if(length < 1){
+                    try{
+                        $('#openmarket').html('<tr class="empty_table"><td>No OPEN Markets! </td></tr>')
+                    }catch(err){
+                    }
                   }
                   let html = ``
-                //   console.log(document.getElementById('mapped-market-table').getElementsByClassName('empty_table'))
                   if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
                     <tr>
                       <th>Market Name</th>
                       <th>Result</th>
+                      <th>Count</th>
                       <th>Action</th>
                     </tr>
                   </thead>`}
-                html += ` <tbody class="new-body" id="mapMarket"><tr>
+                html += ` <tbody class="new-body" id="mapMarket"><tr id="${data.betdata.marketId}">
                 <td>${data.betdata.marketName}</td>
                 <td class="Result" >${data.result}</td>
-                <td>
+                <td class="count" >0</td>
+                <td >
                     <div class="btn-group">
-                        <button class="Unmap" id="${data.betdata.marketId}"> Unmap</button>
-                        <button class="Settle" id="${data.betdata.marketId}"> Settle</button>
-                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
+                        <button class="Unmap" > Unmap</button>
+                        <button class="Settle" > Settle</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" > VOID</button>
                     </div>
                 </td>
                 </tr>
@@ -13968,7 +15462,17 @@ socket.on('connect', () => {
             }
         })
 
+        $(document).on('click', ".result", function(){
+            let id = this.id
+            let div = $('#myModalre')
+            $(div).find('.payment-method-data').html(`<div class="title">wait for the moment</div>`)
+            socket.emit('GETMarketResult', id)
+        })
 
+        socket.on('GETMarketResult', data => {
+            let div = $('#myModalre')
+            $(div).find('.payment-method-data').html(`<div class="title">${data.result}</div>`)
+        })
 
         // socket.on("Settle", async(data) => {
         //     if(data.status === "error"){
@@ -14140,16 +15644,16 @@ socket.on('connect', () => {
         //     });
         //   });
 
-          $('.searchUser').keyup(function(){
-            if($(this).hasClass("searchUser")){
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    socket.emit("MarketMatch", {inputValue:x, LOGINDATA})
-                }else{
-                    document.getElementById('search').innerHTML = ``
-                }
-            }
-        })
+        //   $('.searchUser').keyup(function(){
+        //     if($(this).hasClass("searchUser")){
+        //         if($(this).val().length >= 3 ){
+        //             let x = $(this).val(); 
+        //             socket.emit("MarketMatch", {inputValue:x, LOGINDATA})
+        //         }else{
+        //             document.getElementById('search').innerHTML = ``
+        //         }
+        //     }
+        // })
 
         //   socket.on("MarketMatch", async(data) => {
         //     console.log(data)
@@ -14181,7 +15685,7 @@ socket.on('connect', () => {
             e.preventDefault()
             // console.log($(this).attr('id'))
             let id = $(this).attr('id')
-            $('.wrapper').hide()
+            // $('.wrapper').hide()
             socket.emit("eventIdForMarketList", {LOGINDATA, id})
           })
 
@@ -14199,6 +15703,7 @@ socket.on('connect', () => {
                     if(Array.isArray(market)){
                         if(market.length !== 0){
                             for(let j = 0; j < market.length; j++){
+                                if( market[j].title && (market[j].title.toLowerCase().startsWith('book') || market[j].title.toLowerCase().startsWith('toss'))){
                                 html += `
                                 <tr id='${market[j].marketId}'>
                                 <td>${i + j }</td>
@@ -14220,13 +15725,41 @@ socket.on('connect', () => {
                                 </div></td>
                                   </tr>`
                                 }
+                            }else{
+                                // console.log(market[j], marketKey)
+                                if(marketKey === 'session' && market[j].title && market[j].status == 1 && market[j].bet_allowed == 1 && market[j].game_over == 0 && !market[j].title.startsWith("Only") && market[j].title.includes("Over")){
+                                    html += `
+                                <tr id='${market[j].marketId}'>
+                                <td>${i + j }</td>
+                                <td>${market[j].title}</td>`
+                                if(data.data1.some(item => item.marketId == market[j].marketId)){
+                                    html += `<td width="120px"> <div class="on-off-btn-section">
+                                    <span class="on-off">OFF &nbsp; <label class="switch on">
+                                    <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                                    <span class="slider round"></span>
+                                    </label>&nbsp; ON</span>
+                                </div></td>
+                                  </tr>`
+                                }else{
+                                    html += `<td width="120px"> <div class="on-off-btn-section">
+                                    <span class="on-off">OFF &nbsp; <label class="switch">
+                                    <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                                    <span class="slider round"></span>
+                                    </label>&nbsp; ON</span>
+                                </div></td>
+                                  </tr>`
+                                }
+                                }
+                            }
                             }
                         }else{
                             html += `<tr class="empty_table"><td>No record found</td></tr>`
                         }
                        
                     }else{
-                        html += `
+                        if(market.title.toLowerCase().startsWith('match')){
+
+                            html += `
                             <tr id='${market.marketId}'>  
                             <td>${i}</td>
                             <td>${market.title}</td>`
@@ -14247,8 +15780,11 @@ socket.on('connect', () => {
                             </div></td>
                               </tr>`
                             }
+                        }else{
+                            console.log(market, marketKey)
+                        }
                     }
-                  }
+                }
                 }
               }
             //   console.log(html)
@@ -15117,34 +16653,287 @@ socket.on('connect', () => {
             })
 
             socket.on('Book',async(data)=>{
+                // console.log(data.Bets)
                 if(data.Bets.length > 0){
-                    if(data.Bets[0].userName){ 
-                        if(data.sport == "Football"){   
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                            // let team3 = 
+                    // console.log(data.runn, "runnrunnrunn")
+                    if(data.runn && data.runn.length > 3){
+                        if(data.Bets[0].userName){
                             let html = ''
-                            for(let i = 0; i < data.Bets.length; i++){
-                                let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
-                                let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("The Drow"))
+                            for (let i = 0; i < data.Bets.length; i++) { 
+                                for (let j = 0; j < data.runn.length; j++) {
+                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner.toLowerCase()));
+                                    let winAmountForThatRUn = 0
+                                    if (currentTeamData) { 
+                                        winAmountForThatRUn = currentTeamData.winAmount
+                                    }else{
+                                        let amount = 0
+                                        for(const select in data.Bets[i].Bets[0].selections){
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                                        }
+                                        winAmountForThatRUn = amount
+                                    }
+                                    data.runn[j].showAmount = winAmountForThatRUn
+                                }
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                                    if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
-                                    }
-                                    if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
-                                    }
-                                    if(team3Data){
-                                        team3Data.winAmount = (team3Data.winAmount - (team3Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team3Data.lossAmount = (team3Data.lossAmount - (team3Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                }
+                                for(let j = 0; j < data.runn.length; j++) {
+                                    if(data.runn[j].showAmount < 0){
+                                        html += `<td class="red">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="green">${data.runn[j].showAmount.toFixed(2)}</td>`
                                     }
                                 }
+                                html += '</tr>'
+                            }
+                            let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                            $('#match_odd_Book').find(string).after(html)
+                        }else{
+                            let html = `<tr class="headDetail"><th>User name</th>`
+                            let status = true
+                            for(let i = 0; i < data.Bets.length; i++){
+                                for (let j = 0; j < data.runn.length; j++) {
+                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner.toLowerCase()));
+                                    let winAmountForThatRUn = 0
+                                    if (currentTeamData) { 
+                                        winAmountForThatRUn = currentTeamData.winAmount
+                                    }else{
+                                        let amount = 0
+                                        for(const select in data.Bets[i].Bets[0].selections){
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                                        }
+                                        winAmountForThatRUn = amount
+                                    }
+                                    data.runn[j].showAmount = winAmountForThatRUn
+                                    if(status){
+                                        html += `<th>${data.runn[j].runner}</th>`
+                                    }
+                                }
+                                status = false
+                                if(data.Bets[i].User.roleName == 'user'){
+                                    html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }else{
+                                    html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }
+                                for(let j = 0; j < data.runn.length; j++) {
+                                    if(data.runn[j].showAmount < 0){
+                                        html += `<td class="red">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="green">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }
+                                }
+                                html += '</tr>'
+                            }
+                            document.getElementById('match_odd_Book').innerHTML = html
+                        }
+                    }else{
+                        if(data.Bets[0].userName){ 
+                            if(data.check){   
+                                let team1 = data.matchName.split(' v ')[0].toLowerCase()
+                                let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                                // let team3 = 
+                                let html = ''
+                                for(let i = 0; i < data.Bets.length; i++){
+                                    let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                                    let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                                    let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the draw"))
+                                    if(data.Bets[i].User.roleName == 'user'){
+                                        html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                    }else{
+                                        html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                        if(team1Data){
+                                            team1Data.winAmount = (team1Data.winAmount) 
+                                            team1Data.lossAmount = (team1Data.lossAmount) 
+                                        }
+                                        if(team2Data){
+                                            team2Data.winAmount = (team2Data.winAmount) 
+                                            team2Data.lossAmount = (team2Data.lossAmount) 
+                                        }
+                                        if(team3Data){
+                                            team3Data.winAmount = (team3Data.winAmount) 
+                                            team3Data.lossAmount = (team3Data.lossAmount) 
+                                        }
+                                    }
+                                    if(team1Data && team2Data && team3Data){
+                                        if (team1Data.winAmount > 0){
+                                            html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if (team2Data.winAmount > 0){
+                                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if (team3Data.winAmount > 0){
+                                            html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if ((team1Data && team2Data) && !team3Data){
+                                        if (team1Data.winAmount > 0){
+                                            html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if (team2Data.winAmount > 0){
+                                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if ((-team1Data.exposure - team2Data.exposure) > 0){
+                                            html += `<td class="green">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        }
+                                    }else if (!team1Data && (team2Data && team3Data)){
+                                        if ((-team3Data.exposure - team2Data.exposure) > 0){
+                                            html += `<td class="green">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
+                                        }
+                                        if (team2Data.winAmount > 0){
+                                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if (team3Data.winAmount > 0){
+                                            html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if (team1Data && !team2Data && team3Data){
+                                        if (team1Data.winAmount > 0){
+                                            html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if ((-team1Data.exposure - team1Data.exposure) > 0){
+                                            html += `<td class="green">${(-team1Data.exposure - team1Data.exposure).toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${(-team1Data.exposure - team1Data.exposure).toFixed(2)}</td>`
+                                        }
+                                        if (team3Data.winAmount > 0){
+                                            html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if (team1Data && !team2Data && !team3Data){
+                                        if (team1Data.winAmount > 0){
+                                            html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if(team1Data.lossAmount > 0){
+                                             html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                                             html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
+                                            html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if (!team1Data && team2Data && !team3Data){
+                                        if (team2Data.winAmount > 0){
+                                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if(team2Data.lossAmount > 0){
+                                             html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                             html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                                            html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                                        }
+                                    }else if (!team1Data && !team2Data && team3Data){
+                                        if (team3Data.winAmount > 0){
+                                            html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                                        }
+                                        if(team3Data.lossAmount > 0){
+                                             html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
+                                             html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
+                                        }else{
+                                            html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
+                                            html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
+                                        }
+                                    }
+                                    html += '</tr>'
+        
+                                }
+                                let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                                $('#match_odd_Book').find(string).after(html)
+                            }else{
+                                let team1 = data.matchName.split(' v ')[0].toLowerCase()
+                                let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                                let html = '';
+                                for(let i = 0; i < data.Bets.length; i++){
+                                    // console.log(data.Bets[i].Bets[0])
+                                    let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                                    let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                                    if(data.Bets[i].User.roleName == 'user'){
+                                        html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                    }else{
+                                        html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                        if(team1Data){
+                                            team1Data.winAmount = (team1Data.winAmount) 
+                                            team1Data.lossAmount = (team1Data.lossAmount) 
+                                        }
+                                        if(team2Data){
+                                            team2Data.winAmount = (team2Data.winAmount) 
+                                            team2Data.lossAmount = (team2Data.lossAmount) 
+                                        }
+                                    }
+                                    // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                if(team1Data){
+                                    if (team1Data.winAmount > 0){
+                                        html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                                    }
+                                }else{
+                                    if (team2Data.lossAmount > 0){
+                                        html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                                    }
+                                }
+        
+                                if(team2Data){
+                                    if (team2Data.winAmount > 0){
+                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                    }else{
+                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                    }
+                            }else{
+                                if (team1Data.lossAmount > 0){
+                                    html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                                    }else{
+                                    html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
+                                    }
+                            }
+                            html += '</tr>'
+                                }
+        
+                                let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                                $('#match_odd_Book').find(string).after(html)
+                            }
+                        }else{
+                           if(data.check){
+        
+                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
+                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let html = `<tr class="headDetail"><th>User name</th>
+                            <th>${team1}</th>
+                            <th>${team2}</th>
+                            <th>The draw</th></tr>`
+                            for(let i = 0; i < data.Bets.length; i++){
+                                html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                                let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('the draw'))
                                 if(team1Data && team2Data && team3Data){
                                     if (team1Data.winAmount > 0){
                                         html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
@@ -15172,16 +16961,16 @@ socket.on('connect', () => {
                                     }else{
                                         html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if ((team1Data.lossAmount + team2Data.lossAmount) > 0){
-                                        html += `<td class="green">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                    if ((-team1Data.exposure - team2Data.exposure) > 0){
+                                        html += `<td class="green">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                        html += `<td class="red">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
                                     }
                                 }else if (!team1Data && (team2Data && team3Data)){
-                                    if ((team3Data.lossAmount + team2Data.lossAmount) > 0){
-                                        html += `<td class="green">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                    if ((-team3Data.exposure - team2Data.exposure) > 0){
+                                        html += `<td class="green">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                        html += `<td class="red">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
                                     }
                                     if (team2Data.winAmount > 0){
                                         html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
@@ -15199,10 +16988,10 @@ socket.on('connect', () => {
                                     }else{
                                         html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if ((team3Data.lossAmount + team1Data.lossAmount) > 0){
-                                        html += `<td class="green">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
+                                    if ((-team1Data.exposure - team3Data.exposure) > 0){
+                                        html += `<td class="green">${(-team1Data.exposure - team3Data.exposure).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
+                                        html += `<td class="red">${(-team1Data.exposure - team3Data.exposure).toFixed(2)}</td>`
                                     }
                                     if (team3Data.winAmount > 0){
                                         html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
@@ -15249,234 +17038,57 @@ socket.on('connect', () => {
                                         html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
                                     }
                                 }
-                                html += '</tr>'
-    
+                                
+        
+                                
+                            html += '</tr>'
+                            
                             }
-                            let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
-                            $('#match_odd_Book').find(string).after(html)
-                        }else{
+                            document.getElementById('match_odd_Book').innerHTML = html
+                           }else{
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                            let html = '';
+                            let html = `<tr class="headDetail"><th>User name</th>
+                            <th>${team1}</th>
+                            <th>${team2}</th></tr>`
+                            
                             for(let i = 0; i < data.Bets.length; i++){
-                                // console.log(data.Bets[i].Bets[0])
+                                html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                if(data.Bets[i].User.roleName == 'user'){
-                                    html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                                }else{
-                                    html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                                    if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                if(team1Data){
+                                    if (team1Data.winAmount > 0){
+                                        html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                }else{
+                                    if (team2Data.lossAmount > 0){
+                                        html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
                                     }
                                 }
-                                // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                            if(team1Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
+        
+                                if(team2Data){
+                                    if (team2Data.winAmount > 0){
+                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                                    }else{
+                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                                    }
                             }else{
-                                if (team2Data.lossAmount > 0){
-                                    html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }
-                            }
-    
-                            if(team2Data){
-                                if (team2Data.winAmount > 0){
-                                html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                        }else{
-                            if (team1Data.lossAmount > 0){
-                                html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }
-                        }
-                        html += '</tr>'
-                            }
-    
-                            let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
-                            $('#match_odd_Book').find(string).after(html)
-                        }
-                    }else{
-                       if(data.sport == "Football"){
-    
-                        let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                        let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                        let html = `<tr class="headDetail"><th>User name</th>
-                        <th>${team1}</th>
-                        <th>${team2}</th>
-                        <th>The Drow</th></tr>`
-                        for(let i = 0; i < data.Bets.length; i++){
-                            html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                            let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
-                            let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('The Draw'))
-                            if(team1Data && team2Data && team3Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if (team2Data.winAmount > 0){
-                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if (team3Data.winAmount > 0){
-                                    html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
-                                }
-                            }else if ((team1Data && team2Data) && !team3Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if (team2Data.winAmount > 0){
-                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if ((team1Data.lossAmount + team2Data.lossAmount) > 0){
-                                    html += `<td class="green">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
-                                }
-                            }else if (!team1Data && (team2Data && team3Data)){
-                                if ((team3Data.lossAmount + team2Data.lossAmount) > 0){
-                                    html += `<td class="green">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
-                                }
-                                if (team2Data.winAmount > 0){
-                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if (team3Data.winAmount > 0){
-                                    html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
-                                }
-                            }else if (team1Data && !team2Data && team3Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if ((team3Data.lossAmount + team1Data.lossAmount) > 0){
-                                    html += `<td class="green">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
-                                }
-                                if (team3Data.winAmount > 0){
-                                    html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
-                                }
-                            }else if (team1Data && !team2Data && !team3Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if(team1Data.lossAmount > 0){
-                                     html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                                     html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }else{
+                                if (team1Data.lossAmount > 0){
+                                    html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                                    }else{
                                     html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                                    html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }
-                            }else if (!team1Data && team2Data && !team3Data){
-                                if (team2Data.winAmount > 0){
-                                    html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if(team2Data.lossAmount > 0){
-                                     html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
-                                     html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
-                                    html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }
-                            }else if (!team1Data && !team2Data && team3Data){
-                                if (team3Data.winAmount > 0){
-                                    html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
-                                }
-                                if(team3Data.lossAmount > 0){
-                                     html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
-                                     html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
-                                    html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
-                                }
+                                    }
                             }
+                            html += '</tr>'
                             
-    
-                            
-                        html += '</tr>'
-                        
-                        }
-                        document.getElementById('match_odd_Book').innerHTML = html
-                       }else{
-                        let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                        let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                        let html = `<tr class="headDetail"><th>User name</th>
-                        <th>${team1}</th>
-                        <th>${team2}</th></tr>`
-                        
-                        for(let i = 0; i < data.Bets.length; i++){
-                            html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                            let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
-                            let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            if(team1Data){
-                                if (team1Data.winAmount > 0){
-                                    html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
-                                }
-                            }else{
-                                if (team2Data.lossAmount > 0){
-                                    html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                    html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
-                                }
                             }
-    
-                            if(team2Data){
-                                if (team2Data.winAmount > 0){
-                                html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                                }else{
-                                html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                                }
-                        }else{
-                            if (team1Data.lossAmount > 0){
-                                html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }else{
-                                html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                                }
+                            document.getElementById('match_odd_Book').innerHTML = html
+                           }
                         }
-                        html += '</tr>'
-                        
-                        }
-                        document.getElementById('match_odd_Book').innerHTML = html
-                       }
                     }
                 }else{
                     document.getElementById('match_odd_Book').innerHTML = '<tr class="empty_table"><td>No record found</td></tr>'
@@ -15486,8 +17098,83 @@ socket.on('connect', () => {
             let ubcC = 1;
             socket.on('UerBook', async(data) => {
                 if(data.Bets.length > 0){
+                    console.log(data, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
+                    if(data.runn && data.runn.length > 3){
+                        if(data.Bets[0].userName){ 
+                            let html = ''
+                            for (let i = 0; i < data.Bets.length; i++) { 
+                                for (let j = 0; j < data.runn.length; j++) {
+                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner.toLowerCase()));
+                                    let winAmountForThatRUn = 0
+                                    if (currentTeamData) { 
+                                        winAmountForThatRUn = currentTeamData.winAmount
+                                    }else{
+                                        let amount = 0
+                                        for(const select in data.Bets[i].Bets[0].selections){
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                                        }
+                                        winAmountForThatRUn = amount
+                                    }
+                                    data.runn[j].showAmount = winAmountForThatRUn
+                                }
+                                if(data.Bets[i].User.roleName == 'user'){
+                                    html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }else{
+                                    html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }
+                                for(let j = 0; j < data.runn.length; j++) {
+                                    if(data.runn[j].showAmount < 0){
+                                        html += `<td class="red">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="green">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }
+                                }
+                                html += '</tr>'
+                            }
+                            let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                            $('#match_odd').find(string).after(html)
+                        }else{
+                            let html = `<tr class="headDetail"><th>User name</th>`
+                            let status = true
+                            for (let i = 0; i < data.Bets.length; i++) { 
+                                for (let j = 0; j < data.runn.length; j++) {
+                                    let currentTeamData = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(data.runn[j].runner.toLowerCase()));
+                                    let winAmountForThatRUn = 0
+                                    if (currentTeamData) { 
+                                        winAmountForThatRUn = currentTeamData.winAmount
+                                    }else{
+                                        let amount = 0
+                                        for(const select in data.Bets[i].Bets[0].selections){
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
+                                        }
+                                        winAmountForThatRUn = amount
+                                    }
+                                    data.runn[j].showAmount = winAmountForThatRUn
+                                    if(status){
+                                        html += `<th>${data.runn[j].runner}</th>`
+                                    }
+                                }
+                                status = false
+                                if(data.Bets[i].User.roleName == 'user'){
+                                    html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }else{
+                                    html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                }
+                                for(let j = 0; j < data.runn.length; j++) {
+                                    if(data.runn[j].showAmount < 0){
+                                        html += `<td class="red">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }else{
+                                        html += `<td class="green">${data.runn[j].showAmount.toFixed(2)}</td>`
+                                    }
+                                }
+                                html += '</tr>'
+                            }
+                            document.getElementById('match_odd').innerHTML = html
+                        }
+                    }else{
                     if(data.Bets[0].userName){ 
-                        if(data.sport == "Football"){   
+                        // console.log('working', data.check)
+                        if(data.check){   
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
                             // let team3 = 
@@ -15495,22 +17182,23 @@ socket.on('connect', () => {
                             for(let i = 0; i < data.Bets.length; i++){
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("The Drow"))
+                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("the draw"))
+                                // console.log(team1Data, team2Data, team3Data, "team3Datateam3Datateam3Datateam3Data")
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                     if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team1Data.winAmount = (team1Data.winAmount) 
+                                        team1Data.lossAmount = (team1Data.lossAmount) 
                                     }
                                     if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team2Data.winAmount = (team2Data.winAmount) 
+                                        team2Data.lossAmount = (team2Data.lossAmount) 
                                     }
                                     if(team3Data){
-                                        team3Data.winAmount = (team3Data.winAmount - (team3Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team3Data.lossAmount = (team3Data.lossAmount - (team3Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team3Data.winAmount = (team3Data.winAmount) 
+                                        team3Data.lossAmount = (team3Data.lossAmount) 
                                     }
                                 }
                                 if(team1Data && team2Data && team3Data){
@@ -15540,16 +17228,16 @@ socket.on('connect', () => {
                                     }else{
                                         html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if ((team1Data.lossAmount + team2Data.lossAmount) > 0){
-                                        html += `<td class="green">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                    if ((-team1Data.exposure - team2Data.exposure) > 0){
+                                        html += `<td class="green">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                        html += `<td class="red">${(-team1Data.exposure - team2Data.exposure).toFixed(2)}</td>`
                                     }
                                 }else if (!team1Data && (team2Data && team3Data)){
-                                    if ((team3Data.lossAmount + team2Data.lossAmount) > 0){
-                                        html += `<td class="green">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                    if ((-team3Data.exposure - team2Data.exposure) > 0){
+                                        html += `<td class="green">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                        html += `<td class="red">${(-team3Data.exposure - team2Data.exposure).toFixed(2)}</td>`
                                     }
                                     if (team2Data.winAmount > 0){
                                         html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
@@ -15567,10 +17255,10 @@ socket.on('connect', () => {
                                     }else{
                                         html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
                                     }
-                                    if ((team3Data.lossAmount + team1Data.lossAmount) > 0){
-                                        html += `<td class="green">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
+                                    if ((-team3Data.exposure -team1Data.exposure) > 0){
+                                        html += `<td class="green">${(-team3Data.exposure -team1Data.exposure).toFixed(2)}</td>`
                                     }else{
-                                        html += `<td class="red">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
+                                        html += `<td class="red">${(-team3Data.exposure -team1Data.exposure).toFixed(2)}</td>`
                                     }
                                     if (team3Data.winAmount > 0){
                                         html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
@@ -15634,12 +17322,12 @@ socket.on('connect', () => {
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                     if(team1Data){
-                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team1Data.winAmount = (team1Data.winAmount) 
+                                        team1Data.lossAmount = (team1Data.lossAmount) 
                                     }
                                     if(team2Data){
-                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
-                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                        team2Data.winAmount = (team2Data.winAmount) 
+                                        team2Data.lossAmount = (team2Data.lossAmount) 
                                     }
                                 }
                                 // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
@@ -15677,19 +17365,19 @@ socket.on('connect', () => {
                             $('#match_odd').find(string).after(html)
                         }
                     }else{
-                       if(data.sport == "Football"){
+                       if(data.check){
     
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
                         let html = `<tr class="headDetail"><th>User name</th>
                         <th>${team1}</th>
                         <th>${team2}</th>
-                        <th>The Drow</th></tr>`
+                        <th>The draw</th></tr>`
                         for(let i = 0; i < data.Bets.length; i++){
                             html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                             let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('The Draw'))
+                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('the draw'))
                             if(team1Data && team2Data && team3Data){
                                 if (team1Data.winAmount > 0){
                                     html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
@@ -15717,16 +17405,16 @@ socket.on('connect', () => {
                                 }else{
                                     html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
                                 }
-                                if ((team1Data.lossAmount + team2Data.lossAmount) > 0){
-                                    html += `<td class="green">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                if ((-team1Data.exposure -team2Data.exposure) > 0){
+                                    html += `<td class="green">${(-team1Data.exposure -team2Data.exposure).toFixed(2)}</td>`
                                 }else{
-                                    html += `<td class="red">${(team1Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                    html += `<td class="red">${(-team1Data.exposure -team2Data.exposure).toFixed(2)}</td>`
                                 }
                             }else if (!team1Data && (team2Data && team3Data)){
-                                if ((team3Data.lossAmount + team2Data.lossAmount) > 0){
-                                    html += `<td class="green">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                if ((-team3Data.exposure -team2Data.exposure) > 0){
+                                    html += `<td class="green">${(-team3Data.exposure -team2Data.exposure).toFixed(2)}</td>`
                                 }else{
-                                    html += `<td class="red">${(team3Data.lossAmount + team2Data.lossAmount).toFixed(2)}</td>`
+                                    html += `<td class="red">${(-team3Data.exposure -team2Data.exposure).toFixed(2)}</td>`
                                 }
                                 if (team2Data.winAmount > 0){
                                     html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
@@ -15744,10 +17432,10 @@ socket.on('connect', () => {
                                 }else{
                                     html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
                                 }
-                                if ((team3Data.lossAmount + team1Data.lossAmount) > 0){
-                                    html += `<td class="green">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
+                                if ((-team3Data.exposure - team1Data.exposure) > 0){
+                                    html += `<td class="green">${(-team3Data.exposure - team1Data.exposure).toFixed(2)}</td>`
                                 }else{
-                                    html += `<td class="red">${(team3Data.lossAmount + team1Data.lossAmount).toFixed(2)}</td>`
+                                    html += `<td class="red">${(-team3Data.exposure - team1Data.exposure).toFixed(2)}</td>`
                                 }
                                 if (team3Data.winAmount > 0){
                                     html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
@@ -15812,6 +17500,7 @@ socket.on('connect', () => {
                             html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                             let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                            // console.log(team1Data, team2Data, "team2Datateam2Data")
                             if(team1Data){
                                 if (team1Data.winAmount > 0){
                                     html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
@@ -15844,7 +17533,7 @@ socket.on('connect', () => {
                         }
                         document.getElementById('match_odd').innerHTML = html
                        }
-                    }
+                    }}
                 }else{
                     // document.getElementById('match_odd').innerHTML = ''
                     document.getElementById('match_odd').innerHTML = '<tr class="empty_table"><td>No record found</td></tr>'
@@ -17097,54 +18786,76 @@ socket.on('connect', () => {
 
     
         $(document).on('click','.updateBetLimitMATCH',function(e){
-            let firstTd = $(this).closest("tr").find("td:first");
-            var innerText = firstTd.text();
-            let id = firstTd.attr('id');
-            // console.log(innerText, id)
-            socket.emit("updateBetLimitMATCH", {innerText, id})
+            let data = {}
+            let firstTr = $(this).closest("tr")
+            let type = firstTr.find('td:first-child').attr('id');
+            let min_stake = firstTr.find('input[name="min_stake"]').val();
+            let max_stake = firstTr.find('input[name="max_stake"]').val();
+            let max_profit = firstTr.find('input[name="max_profit"]').val();
+            let max_odd = firstTr.find('input[name="max_odd"]').val();
+            let delay = firstTr.find('input[name="delay"]').val();
+            let max_bet = firstTr.find('input[name="max_bet"]').val();
+            data.type = type
+            data.min_stake = min_stake
+            data.max_stake = max_stake
+            data.max_profit = max_profit
+            data.max_odd = max_odd
+            data.delay = delay
+            data.max_bet = max_bet
+            let check = true
+            Object.keys(data).map(ele => {
+                if(data[ele] == '0'){
+                    check = false
+                }
+            })
+            if(check){
+                socket.emit('UpdateBetLimit', {data, LOGINDATA})
+            }else{
+                alert('not a singal value is 0')
+            }
          })
 
    
 
-         socket.on('updateBetLimitMATCH', data =>{
-             if(data.status == "notFound"){
-                // console.log('working')
-            let form = $('#myModal2').find('.form-data')
-            form.find('input[name = "min_stake"]').val(0)
-            form.find('input[name = "max_stake"]').val(0)
-            form.find('input[name = "max_profit"]').val(0)
-            form.find('input[name = "max_odd"]').val(0)
-            form.find('input[name = "delay"]').val(0)
-            form.find('input[name = "type"]').val(data.data)
-            form.attr('id', data.id)
-            }else if (data.status == "errr"){
-                alert('please try again leter')
-            }else{
-                let form = $('#myModal2').find('.form-data')
-                // console.log(data.marketData)
-                form.find('input[name = "min_stake"]').val(data.marketData.min_stake)
-                form.find('input[name = "max_stake"]').val(data.marketData.max_stake)
-                form.find('input[name = "max_profit"]').val(data.marketData.max_profit)
-                form.find('input[name = "max_odd"]').val(data.marketData.max_odd)
-                form.find('input[name = "delay"]').val(data.marketData.delay)
-                form.find('input[name = "type"]').val(data.data)
-                form.attr('id', data.id)
-            }
-         })
+        //  socket.on('updateBetLimitMATCH', data =>{
+        //      if(data.status == "notFound"){
+        //         // console.log('working')
+        //     let form = $('#myModal2').find('.form-data')
+        //     form.find('input[name = "min_stake"]').val(0)
+        //     form.find('input[name = "max_stake"]').val(0)
+        //     form.find('input[name = "max_profit"]').val(0)
+        //     form.find('input[name = "max_odd"]').val(0)
+        //     form.find('input[name = "delay"]').val(0)
+        //     form.find('input[name = "type"]').val(data.data)
+        //     form.attr('id', data.id)
+        //     }else if (data.status == "errr"){
+        //         alert('please try again leter')
+        //     }else{
+        //         let form = $('#myModal2').find('.form-data')
+        //         // console.log(data.marketData)
+        //         form.find('input[name = "min_stake"]').val(data.marketData.min_stake)
+        //         form.find('input[name = "max_stake"]').val(data.marketData.max_stake)
+        //         form.find('input[name = "max_profit"]').val(data.marketData.max_profit)
+        //         form.find('input[name = "max_odd"]').val(data.marketData.max_odd)
+        //         form.find('input[name = "delay"]').val(data.marketData.delay)
+        //         form.find('input[name = "type"]').val(data.data)
+        //         form.attr('id', data.id)
+        //     }
+        //  })
 
 
-         $(document).on('submit', '.form-betLimitMatch', function(e){
-            e.preventDefault()
-            let form = $(this)[0];
-            let fd = new FormData(form);
-            let data = Object.fromEntries(fd.entries());
-            let id = $(this).attr('id');
-            data.type = id
-            // console.log(id)
-            // console.log(data)
-            // data.id = id
-            socket.emit('UpdateBetLimit', {data, LOGINDATA})
-         })
+        //  $(document).on('submit', '.form-betLimitMatch', function(e){
+        //     e.preventDefault()
+        //     let form = $(this)[0];
+        //     let fd = new FormData(form);
+        //     let data = Object.fromEntries(fd.entries());
+        //     let id = $(this).attr('id');
+        //     data.type = id
+        //     // console.log(id)
+        //     // console.log(data)
+        //     // data.id = id
+        //     socket.emit('UpdateBetLimit', {data, LOGINDATA})
+        //  })
 
          socket.on('updateBetLimitMarket', data => {
             if(data.status == "err"){
@@ -17276,7 +18987,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".UPI", function(e){
             e.preventDefault()
-            console.log("WORKING")
+            // console.log("WORKING")
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
             $('[name="' + "pmethod" + '"]').val('upi')
@@ -17292,7 +19003,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".addPaytm", function(e){
             e.preventDefault()
-            console.log("WORKING")
+            // console.log("WORKING")
             $(".withdrawWD").removeClass("active");
             $(this).addClass('active')
             $('[name="' + "pmethod" + '"]').val('paytm')
@@ -17315,7 +19026,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getpaymentmethoddetailsbyid',async(data)=>{
-            console.log(data)
+            // console.log(data)
             if(data.status == 'success'){
                 let form = $('#myModal1 form')
                 $('[name="' + "id" + '"]').val(data.data._id)
@@ -17371,7 +19082,7 @@ socket.on('connect', () => {
                     newData[ele] = data[ele]
                 }
             })
-            console.log(newData)
+            // console.log(newData)
             socket.emit('editpaymentMethod',newData)
         })
 
@@ -17410,7 +19121,7 @@ socket.on('connect', () => {
         $(document).on('click','.delete',function(e){
             e.preventDefault();
             let id = $(this).attr('data-docid')
-            console.log(id)
+            // console.log(id)
             if(id){
                 if(confirm('do you want to delete this payment method')){
                     socket.emit('deletePaymentMethod',{id})
@@ -17450,13 +19161,13 @@ socket.on('connect', () => {
         $(document).on('change','#pmethod',function(e){
             e.preventDefault();
             let data = $(this).val()
-            console.log(data)
+            // console.log(data)
             socket.emit('filterpaymentmethod',{data,LOGINDATA})
         })
 
         socket.on('filterpaymentmethod',async(data)=>{
             if(data.status == 'success'){
-                console.log(data)
+                // console.log(data)
                 let paymentmethod = data.data
                 let html = "";
                 for(let i = 0;i<paymentmethod.length;i++){
@@ -17609,7 +19320,7 @@ socket.on('connect', () => {
         $('#status,#type,#fromDate,#toDate').change(function(){
             $('.pageId').attr('data-pageid','1')
 
-            console.log("working")
+            // console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
@@ -17768,7 +19479,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getpaymentapprovalreqdata',async(data)=>{
-            console.log(data)
+            // console.log(data)
             if(data.status == 'fail'){
                 alert(data.msg)
             }else{
@@ -17790,7 +19501,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getpaymentdenyreqdata',async(data)=>{
-            console.log(data)
+            // console.log(data)
             if(data.status == 'fail'){
                 alert(data.msg)
             }else{
@@ -17834,12 +19545,12 @@ socket.on('connect', () => {
             let id = form.find('input[name="id"]').val()
             let remark = form.find('input[name="remark"]').val()
             let amount = form.find('input[name="amount"]').val()
-            console.log(id,remark,amount)
+            // console.log(id,remark,amount)
             socket.emit('deniePaymentReq',{id,remark,amount})
         })
 
         socket.on('deniePaymentReq',async(data)=>{
-            console.log(data.err)
+            // console.log(data.err)
             alert(data.msg)
             if(data.status == 'success'){
                 location.reload(true)
@@ -18326,7 +20037,7 @@ socket.on('connect', () => {
             }else{
                 $('#load-more').hide()
                 if(data.page == 0){
-                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    let html = `<tr class="empty_table"><td>No record found</td></tr>`
                     $('.new-body').html(html)
                 }
             }
@@ -18598,5 +20309,1161 @@ socket.on('connect', () => {
             }
         })
     }
+
+    if(pathname === "/admin/globalSettings"){
+        $(document).on('click', ".getBannerDetails", function(e){
+            e.preventDefault()
+            let tableData = $(this).data('bs-target');
+            let id = $(this).attr('id')
+            socket.emit('getbasicData', {id, tableData})
+        })
+
+        socket.on('getbasicData', data =>{
+            let form = $(`${data.tableData}`).find('.basicDetailsFOrm')
+            if(data.tableData === "#myModal7"){
+                form.find('#banner12').html(`<img src="../logo/${data.basicData.logo1}.png" alt="img" class="form__user-photo">`)
+            }else if(data.tableData === "#myModa18"){
+                form.find('#banner12').html(`<img src="../logo/${data.basicData.logo2}.png" alt="img" class="form__user-photo">`)
+            }else{
+                form.find('input[name="email"]').val(`${data.basicData.email}`)
+                form.find('input[name="contact"]').val(`${data.basicData.contactNumber}`)
+            }
+            form.attr('id', data.basicData._id)
+        })
+
+        $(document).on('submit', ".basicDetailsFOrmCOLORCODE", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            // console.log(data, "DATA")
+            socket.emit('colorCode', {data, LOGINDATA})
+        })
+
+        socket.on('colorCode', data => {
+            if(data.status === "sucess"){
+                alert('updated!!')
+                setTimeout(()=>{
+                    window.location.reload()
+                }, 1000)
+            }else{
+                alert('Please try again later')
+            }
+        })
+    }
+
+    if(pathname === "/MyPlStatement" || pathname === "/MyPlStatement/"){
+
+
+        var urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams.size, ".size.size.size")
+        if(urlParams.size === 0){
+            $(document).on('click', ".loadMoredive" ,function(){
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                socket.emit('MyPlStatementPagination', {LOGINDATA, page})
+            })
+    
+            socket.on('MyPlStatementPagination', data => {
+            // console.log(data)
+            if(data.senddata.length > 0){
+                let html = ''
+                for(let i = 0; i < data.senddata.length; i++){
+                    let encodedEventName = encodeURIComponent(data.senddata[i]._id);
+                    html += `<tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/MyPlStatement/?eventname=${encodedEventName}'>
+                    <td title="Game">${data.senddata[i]._id}</td>
+                    <td title="Lost">${data.senddata[i].losses}</td>
+                    <td title="Won">${data.senddata[i].wins}</td>`
+                    if(data.senddata[i].profit < 0){
+                        html += `<td class="c-reed" title="Profit/Loss">${data.senddata[i].profit}</td>`
+                    }else{
+                        html += `<td class="c-gren" title="Profit/Loss">${data.senddata[i].profit}</td>`
+                    }
+                }
+                if(data.page != 0){
+                    $('tbody').append(html)
+                }else{
+                    $('tbody').html(html)
+                }
+            }else{
+                $('.loadMoredive').html('')
+            }
+            })
+            $(document).on("click", ".tbl-data-href", function() {
+                console.log('WORKING');
+                window.location = $(this).data("href");
+            });
+        }else if (urlParams.size === 1){
+            var param1Value = urlParams.get('eventname');
+            $(document).on('click', ".loadMoredive" ,function(){
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                socket.emit('MyPlStatementPagination2', {LOGINDATA, page, param1Value})
+            })
+
+            socket.on('MyPlStatementPagination2', data => {
+                // console.log(data, "WORKING")
+                if(data.sendData.length > 0){
+                    let html = ''
+                    for(let i = 0; i < data.sendData.length; i++){
+                        let encodedEventName = encodeURIComponent(data.sendData[i].match);
+                        let encodedEventName2 = encodeURIComponent(data.sendData[i].event);
+                        html += `<tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/MyPlStatement?matchname=${encodedEventName}&eventname=${encodedEventName2}'>
+                        <td title="Match" >${data.sendData[i].match}</td>
+                        <td title="Bets" >${data.sendData[i].totalData}</td>
+                        <td title="Win" >${data.sendData[i].win}</td>
+                        <td title="Lost" >${data.sendData[i].loss}</td>
+                        <td title="Void" >${data.sendData[i].cancel}</td>
+                        <td title="Open" >${data.sendData[i].open}</td>`
+                        if(data.sendData[i].totalSumOfReturns > 0){
+                            html += `<td class="c-gren" title="Profit/Loss" >${data.sendData[i].totalSumOfReturns}</td>`
+                        }else{
+                            html += `<td class="c-reed" title="Profit/Loss" >${data.sendData[i].totalSumOfReturns}</td>`
+                        }
+                    }
+                    if(data.page === 0){
+                        $('tbody').html(html)
+                    }else{
+                        $('tbody').append(html)
+                    }
+                }else{
+                    $('.loadMoredive').html('')
+                }
+            })
+        }
+    }
+
+    if(pathname == "/myCommissionReportsMatch"){
+        $(document).on('click', '.commission-details', function(e){
+            let type = this.id
+            let marketId = $(this).closest('tr').attr('id')
+            const urlParams = new URLSearchParams(window.location.search);
+            const idValue = urlParams.get('id');
+            console.log(type, marketId, idValue)
+            socket.emit('getDetailsCommision',{LOGINDATA, type, marketId, idValue} )
+        })
+
+        socket.on('getDetailsCommision', data => {
+            let html = ""
+            if(data.length > 0){
+                html += `<table id="FANCYBOOK" <tbody="">
+                <tbody><tr class="headDetail"><th>Date</th>
+                <th>Event</th><th>Market</th><th>Bet On</th><th>Odds</th><th>Stake</th><th>Status</th><th>Returns</th></tr>`
+
+                for(let i = 0; i < data.length; i++){
+                    let date = new Date(data[i].date)
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                    if(data[i].bettype2 === 'BACK'){
+                        html += `<tr class='back'>`
+                    }else{
+                        html += `<tr class='lay'>`
+                    }
+                    html += `
+                    <td>${formattedTime}</td>
+                    <td>${data[i].match}</td>
+                    <td>${data[i].marketName}</td>
+                    `
+                    if(data[i].selectionName.includes('@')){
+                        let oddValue1 = data[i].selectionName.split('@')[1]
+                        let selectionName = data[i].selectionName.split('@')[0]
+                        let oddValue2 = data[i].oddValue
+                        html += `<td>${selectionName}@${oddValue2}</td>
+                            <td>@${oddValue1}</td>`
+                    }else{
+                        html += `<td>${data[i].selectionName}</td>
+                        <td>@${data[i].oddValue}</td>`
+                    }
+                    html += `<td>${data[i].Stake}</td><td>${data[i].status}</td><td>${data[i].returns}</td></tr>`
+                }
+                html += `</tbody>
+                </table>`
+            }else{
+                html = `<table>
+                <tbody>
+                  <tr class="empty_table"><td>No record found</td></tr>
+                </tbody>
+              </table>`
+            }
+            $('#commisiionDetailsData').html(html)
+        })
+    }
+
+    if(pathname == "/admin/commissionReportEvent"){
+        const urlParams = new URLSearchParams(window.location.search);
+        const event = urlParams.get('event');
+        const market = urlParams.get('market');
+        if(market && event){
+            $(document).on('click', '.viewDetailsButton', function(){
+                let userName = this.id
+                // console.log(userName, market, event)
+                socket.emit('getCommisionEVentDAta', {LOGINDATA, userName, market, event})
+            })
+        }
+
+        socket.on('getDetailsCommision', async(data) => {
+            console.log(data)
+            let html = ''
+            if(data.length > 0){
+                html += `<table id="FANCYBOOK" <tbody="">
+                <tbody><tr class="headDetail"><th>Date</th>
+                <th>Event</th><th>Market</th><th>Bet On</th><th>Odds</th><th>Stake</th><th>Status</th><th>Returns</th></tr>`
+
+                for(let i = 0; i < data.length; i++){
+                    let date = new Date(data[i].date)
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                    if(data[i].bettype2 === 'BACK'){
+                        html += `<tr class='back'>`
+                    }else{
+                        html += `<tr class='lay'>`
+                    }
+                    html += `
+                    <td>${formattedTime}</td>
+                    <td>${data[i].match}</td>
+                    <td>${data[i].marketName}</td>
+                    `
+                    if(data[i].selectionName.includes('@')){
+                        let oddValue1 = data[i].selectionName.split('@')[1]
+                        let selectionName = data[i].selectionName.split('@')[0]
+                        let oddValue2 = data[i].oddValue
+                        html += `<td>${selectionName}@${oddValue2}</td>
+                            <td>@${oddValue1}</td>`
+                    }else{
+                        html += `<td>${data[i].selectionName}</td>
+                        <td>@${data[i].oddValue}</td>`
+                    }
+                    html += `<td>${data[i].Stake}</td><td>${data[i].status}</td><td>${data[i].returns}</td></tr>`
+                }
+                html += `</tbody>
+                </table>`
+            }else{
+                html = `<table>
+                <tbody>
+                  <tr class="empty_table"><td>No record found</td></tr>
+                </tbody>
+              </table>`
+            }
+
+            $('#tableDTA').html(html)
+        })
+    }
+
+    if(pathname =='/admin/downlinecommissionReort'){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        $('#fromDate').val(tomorrowFormatted)
+        $('#toDate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+        $(document).on('click','.usernametr',function(e){
+            let data = {}
+            let userName = $(this).children('td.usernametd').attr('data-username')
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let bredcum =  [userName]
+            data.userName = userName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            console.log(data)
+            socket.emit('getgamewisedownlinecommitssion',{data})
+        })
+
+        socket.on('getgamewisedownlinecommitssion',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let parentdata = data.parentdata
+                let html = `<thead>
+                <tr>
+                  <th>Sport</th>
+                  <th>Commission</th>
+                </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer" class="sport_usernametr"><td class="sport_usernametd" data-sport_username='${JSON.stringify({userName:parentdata.userName,sportId:result[i]._id,sportname:result[i].sportname})}'>${result[i].sportname}</td>
+                      <td>${result[i].commission}</td></tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+                html += `</tbody>`
+
+
+                let html2 = ""
+
+                html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li>`
+
+                $('#table12').html(html)
+                $('.bredcum-container ul').html(html2)
+            }
+        })
+
+        $(document).on('click','.sport_usernametr',function(e){
+            let data = {}
+            console.log($(this).children('td.sport_usernametd'))
+            console.log($(this).children('td.sport_usernametd').attr('data-sport_username'))
+            let parentdetail = JSON.parse($(this).children('td.sport_usernametd').attr('data-sport_username'))
+            console.log(parentdetail)
+            let userName = parentdetail.userName
+            let sportId = parentdetail.sportId
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let bredcum =  [userName,sportId]
+            data.sportId = sportId
+            data.userName = userName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            console.log(data)
+            socket.emit('getsportwisedownlinecommitssion',{data})
+        })
+
+        socket.on('getsportwisedownlinecommitssion',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let parentdata = data.parentdata
+                let html = `<thead>
+                <tr>
+                  <th>Competition</th>
+                  <th>Commission</th>
+                </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer" class="series_sport_usernametr"><td class="series_sport_usernametd" data-series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:result[i]._id})}'>${result[i]._id}</td>
+                      <td>${result[i].commission}</td></tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+
+
+                html += `</tbody>`
+
+                let html2 = ""
+
+                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li>`
+
+                $('#table12').html(html)
+                $('.bredcum-container ul').html(html2)
+            }
+
+        })
+
+        $(document).on('click','.series_sport_usernametr',function(e){
+            let data = {}
+            let parentdetail = JSON.parse($(this).children('td.series_sport_usernametd').attr('data-series_sport_username'))
+            console.log(parentdetail)
+            let userName = parentdetail.userName
+            let sportId = parentdetail.sportId
+            let seriesName = parentdetail.seriesName
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let bredcum =  [userName,sportId,seriesName]
+            data.seriesName = seriesName
+            data.sportId = sportId
+            data.userName = userName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            console.log(data)
+            socket.emit('getserieswisedownlinecommitssion',{data})
+        })
+
+        socket.on('getserieswisedownlinecommitssion',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let parentdata = data.parentdata
+                let html = `<thead>
+                <tr>
+                  <th>Event</th>
+                  <th>Commission</th>
+                </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer" class="event_series_sport_usernametr"><td class="event_series_sport_usernametd" data-event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:result[i]._id})}'>${result[i]._id}</td>
+                      <td>${result[i].commission}</td></tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+
+
+                html += `</tbody>`
+
+                
+                let html2 = ""
+
+                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li>`
+
+                $('#table12').html(html)
+                $('.bredcum-container ul').html(html2)
+
+            }
+
+        })
+
+        $(document).on('click','.event_series_sport_usernametr',function(e){
+            let data = {}
+            let parentdetail = JSON.parse($(this).children('td.event_series_sport_usernametd').attr('data-event_series_sport_username'))
+            let userName = parentdetail.userName
+            let sportId = parentdetail.sportId
+            let seriesName = parentdetail.seriesName
+            let eventName = parentdetail.eventName
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let bredcum =  [userName,sportId,seriesName,eventName]
+            data.eventName = parentdetail.eventName
+            data.seriesName = seriesName
+            data.sportId = sportId
+            data.userName = userName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            console.log(data)
+            socket.emit('geteventwisedownlinecommitssion',{data})
+        })
+
+        socket.on('geteventwisedownlinecommitssion',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let parentdata = data.parentdata
+                let html = `<thead>
+                <tr>
+                  <th>Market</th>
+                  <th>Commission Type</th>
+                  <th>Percentage</th>
+                  <th>Commission Points</th>
+                  <th>Status</th>
+                  </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                    if(result[i].commissionType == 'Net Losing Commission'){
+                        html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                    }else{
+                        if(result[i].betId){
+                            html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType,betId:result[i].betId})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                        }else{
+                            html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                        }
+                    }
+                     html += `
+                      <td>${result[i].commissionType}</td>
+                      <td>${result[i].commissionPercentage}</td>
+                      <td>${result[i].commission}</td>
+                      <td>${result[i].commissionStatus}</td>
+                      </tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+                html += `</tbody>`
+                
+                let html2 = ""
+
+                html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li> <li class="active marketeventcompitisionsportusername" data-marketeventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
+               
+
+                $('#table12').html(html)
+                $('.bredcum-container ul').html(html2)
+            }
+
+        })
+
+        $(document).on('click','.market_event_series_sport_usernametr',function(e){
+            let data = {}
+            let parentdetail = JSON.parse($(this).children('td.market_event_series_sport_usernametd').attr('data-market_event_series_sport_username'))
+            let userName = parentdetail.userName
+            let sportId = parentdetail.sportId
+            let seriesName = parentdetail.seriesName
+            let eventName = parentdetail.eventName
+            let marketName = parentdetail.marketName
+            let bettype = parentdetail.bettype              
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            if(parentdetail.betId){
+                betId = parentdetail.betId
+                data.betId = betId
+            }
+            data.marketName = marketName
+            data.eventName = eventName
+            data.seriesName = seriesName
+            data.sportId = sportId
+            data.bettype = bettype
+            data.userName = userName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            console.log(data)
+            socket.emit('getmarketwisedownlinecommission',{data})
+        })
+
+        socket.on('getmarketwisedownlinecommission',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let html = ""
+              if(result.length > 0){
+                for(let i = 0;i<result.length;i++){
+                    html += `<tr>
+                    <td>${result[i].date}</td>
+                    <td>${result[i].userName}</td>
+                    <td>${result[i].selectionName}</td>
+                    <td>${result[i].oddValue}</td>
+                    <td>${result[i].Stake}</td>
+                    <td>${result[i].returns}</td>
+                    <td>${result[i].status}</td>
+                    </tr>`
+                }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+              $('#myModaladduser .modal-title').text(`${result[0].marketName}`)
+              $('#myModaladduser .modal-tbody').html(html)
+            }
+
+        })
+
+
+        $(document).on('click','.bredcum-container li',function(e){
+            if($(this).hasClass('marketeventcompitisionsportusername')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-marketeventcompitisionsportusername'))
+                let userName = parentdetail.userName
+                let sportId = parentdetail.sportId
+                let seriesName = parentdetail.seriesName
+                let eventName = parentdetail.eventName
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [userName,sportId,seriesName,eventName]
+                data.eventName = parentdetail.eventName
+                data.seriesName = seriesName
+                data.sportId = sportId
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                console.log(data)
+                socket.emit('geteventwisedownlinecommitssion',{data})
+            }else if($(this).hasClass('eventcompitisionsportusername')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-eventcompitisionsportusername'))
+                let userName = parentdetail.userName
+                let sportId = parentdetail.sportId
+                let seriesName = parentdetail.seriesName
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [userName,sportId,seriesName]
+                data.seriesName = seriesName
+                data.sportId = sportId
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                console.log(data)
+                socket.emit('getserieswisedownlinecommitssion',{data})
+            }else if($(this).hasClass('compitisionsportusername')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-compitisionsportusername'))
+                let userName = parentdetail.userName
+                let sportId = parentdetail.sportId
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [userName,sportId]
+                data.sportId = sportId
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                console.log(data)
+                socket.emit('getsportwisedownlinecommitssion',{data})
+            }else if($(this).hasClass('sportusername')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-sportusername'))
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let userName = parentdetail.userName
+                let bredcum =  [userName]
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                console.log(data)
+                socket.emit('getgamewisedownlinecommitssion',{data})
+            }
+        })
+
+       
+
+
+
+
+        socket.on('userwisedownlinecommittion',async(data)=>{
+            if(data.status == 'success'){
+                let result = data.result
+                let html = `<thead>
+                <tr>
+                  <th>
+                  User Name</th>
+                  <th>Commission</th>
+                  <th>Unclaimed Commission</th>
+                  </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer"  class="usernametr">
+                      <td class="usernametd" data-username="${result[i]._id}">${result[i]._id}</td>
+                    <td>${result[i].commissionClaim}</td>
+                    <td>${result[i].commissionUnclaim}</td>
+                      </tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+                $('#table12').html(html)
+            }
+
+        })
+
+        $('#fromDate,#toDate').change(async function(e){
+            let data = {}
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            data.fromdate = fromdate
+            data.todate = todate
+            if($('.bredcum-container li').length == 0){
+                data.LOGINUSER = LOGINDATA.LOGINUSER
+                socket.emit('userwisedownlinecommittion',{data})
+            }else{
+                if($('.bredcum-container li:last').hasClass('marketeventcompitisionsportusername')){
+                let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-marketeventcompitisionsportusername'))
+                let userName = parentdetail.userName
+                let sportId = parentdetail.sportId
+                let seriesName = parentdetail.seriesName
+                let eventName = parentdetail.eventName
+                let bredcum =  [userName,sportId,seriesName,eventName]
+                data.eventName = parentdetail.eventName
+                data.seriesName = seriesName
+                data.sportId = sportId
+                data.userName = userName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                socket.emit('geteventwisedownlinecommitssion',{data})
+                }else if($('.bredcum-container li:last').hasClass('eventcompitisionsportusername')){
+                    let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-eventcompitisionsportusername'))
+                    let userName = parentdetail.userName
+                    let sportId = parentdetail.sportId
+                    let seriesName = parentdetail.seriesName
+                    let bredcum =  [userName,sportId,seriesName]
+                    data.seriesName = seriesName
+                    data.sportId = sportId
+                    data.userName = userName;
+                    data.fromdate = fromdate;
+                    data.todate = todate;
+                    data.bredcum = bredcum;
+                    socket.emit('getserieswisedownlinecommitssion',{data})
+                }else if($('.bredcum-container li:last').hasClass('compitisionsportusername')){
+                    let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-compitisionsportusername'))
+                    let userName = parentdetail.userName
+                    let sportId = parentdetail.sportId
+                    let bredcum =  [userName,sportId]
+                    data.sportId = sportId
+                    data.userName = userName;
+                    data.fromdate = fromdate;
+                    data.todate = todate;
+                    data.bredcum = bredcum;
+                    console.log(data)
+                    socket.emit('getsportwisedownlinecommitssion',{data})
+                }else if($('.bredcum-container li:last').hasClass('sportusername')){
+                    let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-sportusername'))
+                    let userName = parentdetail.userName
+                    let bredcum =  [userName]
+                    data.userName = userName;
+                    data.fromdate = fromdate;
+                    data.todate = todate;
+                    data.bredcum = bredcum;
+                    console.log(data)
+                    socket.emit('getgamewisedownlinecommitssion',{data})
+                }
+            }
+        })
+
+
+
+
+    }
+    if(pathname =='/admin/uplinecommissionReport'){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        $('#fromDate').val(tomorrowFormatted)
+        $('#toDate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+        $(document).on('click','.sportnametr',function(e){
+            let data = {}
+            let sportname = $(this).children('td.sportnametd').attr('data-sportname')
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let bredcum =  [sportname]
+            data.sportname = sportname;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            data.LOGINUSER = LOGINDATA.LOGINUSER    
+            console.log(data)
+            socket.emit('getsportwiseuplinecommission',{data})
+        })
+
+        socket.on('getsportwiseuplinecommission',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let parentdata = data.parentdata
+                let html = `<thead>
+                <tr>
+                  <th>Competition</th>
+                  <th>	Commission</th>
+                </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer" class="comp_sporttr"><td class="comp_sporttd" data-comp_sport='${JSON.stringify({sportname:parentdata.sportId,seriesName:result[i]._id})}'>${result[i]._id}</td>
+                      <td>${result[i].commission}</td></tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+                html += `</tbody>`
+
+
+                let html2 = ""
+
+                html2 += `  <li class="active sportwise" data-sportwise='${parentdata.sportId}'>${data.bredcum[0]}</li>`
+
+                $('#table12').html(html)
+                $('.bredcum-container ul').html(html2)
+            }
+        })
+
+        $(document).on('click','.comp_sporttr',function(e){
+            let data = {}
+            let parentdetail = JSON.parse($(this).children('td.comp_sporttd').attr('data-comp_sport'))
+            let sportId = parentdetail.sportname
+            let seriesName = parentdetail.seriesName
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let bredcum =  [sportId,seriesName]
+            data.sportname = sportId;
+            data.seriesName = seriesName
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            socket.emit('getcommiwiseuplinecommitssion',{data})
+        })
+
+        socket.on('getcommiwiseuplinecommitssion',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let parentdata = data.parentdata
+                let html = `<thead>
+                <tr>
+                  <th>Event</th>
+                  <th>Commission</th>
+                </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer" class="event_compi_sporttr"><td class="event_compi_sporttd" data-event_compi_sport='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:result[i]._id})}'>${result[i]._id}</td>
+                      <td>${result[i].commission}</td></tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+
+
+                html += `</tbody>`
+
+                let html2 = ""
+
+                html2 += ` <li class="active sportwise" data-sportwise='${parentdata.sportId}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li>`
+
+                $('#table12').html(html)
+                $('.bredcum-container ul').html(html2)
+            }
+
+        })
+
+        $(document).on('click','.event_compi_sporttr',function(e){
+            let data = {}
+            let parentdetail = JSON.parse($(this).children('td.event_compi_sporttd').attr('data-event_compi_sport'))
+            let sportId = parentdetail.sportId
+            let seriesName = parentdetail.seriesName
+            let eventName = parentdetail.eventName
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let bredcum =  [sportId,seriesName,eventName]
+            data.seriesName = seriesName
+            data.sportname = sportId
+            data.eventName = eventName;
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.bredcum = bredcum;
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            socket.emit('geteventwiseuplinecommitssion',{data})
+        })
+
+        socket.on('geteventwiseuplinecommitssion',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let parentdata = data.parentdata
+                let html = `<thead>
+                <tr>
+                  <th>Market</th>
+                  <th>Commission Type</th>
+                  <th>Percentage</th>
+                  <th>Commission Points</th>
+                  <th>	Status</th>
+                  </tr>
+                  </thead><tbody class="new-body">`
+                  if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                    if(result[i].commissionType == 'Net Losing Commission'){
+                        html += `<tr style="cursor:pointer" class="market_event_commis_sporttr"><td class="market_event_commis_sporttd" data-market_event_commis_sport='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                    }else{
+                        if(result[i].betId){
+                            html += `<tr style="cursor:pointer" class="market_event_commis_sporttr"><td class="market_event_commis_sporttd" data-market_event_commis_sport='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType,betId:result[i].betId})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                        }else{
+                            html += `<tr style="cursor:pointer" class="market_event_commis_sporttr"><td class="market_event_commis_sporttd" data-market_event_commis_sport='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id,bettype:result[i].commissionType})}'><button class="commission-popup" data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>`
+                        }
+                    }
+                      html += `
+                      <td>${result[i].commissionType}</td>
+                      <td>${result[i].commissionPercentage}</td>
+                      <td>${result[i].commission}</td>
+                      <td>${result[i].commissionStatus}</td>
+                      </tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+
+
+                html += `</tbody>`
+
+                
+                let html2 = ""
+
+                html2 += `<li class="active sportwise" data-sportwise='${parentdata.sportId}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportwise" data-eventcompitisionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li>`
+
+                $('#table12').html(html)
+                $('.bredcum-container ul').html(html2)
+
+            }
+
+        })
+
+        // $(document).on('click','.market_event_commis_sporttr',function(e){
+        //     let data = {}
+        //     let parentdetail = JSON.parse($(this).children('td.market_event_commis_sporttd').attr('data-market_event_commis_sport'))
+        //     let userName = parentdetail.userName
+        //     let sportId = parentdetail.sportId
+        //     let seriesName = parentdetail.seriesName
+        //     let eventName = parentdetail.eventName
+        //     let fromdate = $('#fromDate').val()
+        //     let todate = $('#toDate').val()
+        //     let bredcum =  [userName,sportId,seriesName,eventName]
+        //     data.eventName = parentdetail.eventName
+        //     data.seriesName = seriesName
+        //     data.sportId = sportId
+        //     data.userName = userName;
+        //     data.fromdate = fromdate;
+        //     data.todate = todate;
+        //     data.bredcum = bredcum;
+        //     console.log(data)
+        //     socket.emit('geteventwisedownlinecommitssion',{data})
+        // })
+
+        // socket.on('geteventwisedownlinecommitssion',async(data)=>{
+        //     console.log(data)
+        //     if(data.status == 'success'){
+        //         let result = data.result
+        //         let parentdata = data.parentdata
+        //         let html = `<thead>
+        //         <tr>
+        //           <th>Market</th>
+        //           <th>Commission Type</th>
+        //           <th>Percentage</th>
+        //           <th>Commission Points</th>
+        //           <th>Status</th>
+        //           </tr>
+        //       </thead><tbody class="new-body">`
+        //       if(result.length > 0){
+        //           for(let i = 0;i<result.length;i++){
+        //               html += `<tr style="cursor:pointer" class="market_event_series_sport_usernametr"><td class="market_event_series_sport_usernametd" data-market_event_series_sport_username='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName,marketName:result[i]._id})}'><button data-bs-toggle="modal" data-bs-target="#myModaladduser">${result[i]._id}</button></td>
+        //               <td>${result[i].commissionType}</td>
+        //               <td>${result[i].commissionPercentage}</td>
+        //               <td>${result[i].commission}</td>
+        //               <td>${result[i].commissionStatus}</td>
+        //               </tr>`
+        //           }
+        //       }else{
+        //         html += `<tr class="empty_table"><td>No record found</td></tr>`
+        //       }
+        //         html += `</tbody>`
+                
+        //         let html2 = ""
+
+        //         html2 += ` <li class="active sportwise" data-sportwise='${JSON.stringify({sportId:parentdata.sportId})}'>${data.bredcum[0]}</li> <li class="active compititionsportwise" data-compititionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[1]}</li><li class="active eventcompitisionsportwise" data-eventcompitisionsportwise='${JSON.stringify({sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[2]}</li> <li class="active marketeventcompitisionsportwise" data-marketeventcompitisionsportwise='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName,eventName:parentdata.eventName})}'>${data.bredcum[3]}</li>`
+
+        //         $('#table12').html(html)
+        //         $('.bredcum-container ul').html(html2)
+        //     }
+
+        // })
+
+        $(document).on('click','.market_event_commis_sporttr',function(e){
+            let data = {}
+            let parentdetail = JSON.parse($(this).children('td.market_event_commis_sporttd').attr('data-market_event_commis_sport'))
+            let betId;
+            let sportId = parentdetail.sportId
+            let seriesName = parentdetail.seriesName
+            let eventName = parentdetail.eventName
+            let marketName = parentdetail.marketName
+            let bettype = parentdetail.bettype
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            if(parentdetail.betId){
+                betId = parentdetail.betId
+                data.betId = betId
+            }
+            data.marketName = marketName
+            data.bettype = bettype
+            data.eventName = eventName
+            data.seriesName = seriesName
+            data.sportId = sportId
+            data.fromdate = fromdate;
+            data.todate = todate;
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            console.log(data)
+            socket.emit('getmarketwiseuplinecommission',{data})
+        })
+
+        socket.on('getmarketwiseuplinecommission',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let html = ""
+              if(result.length > 0){
+                for(let i = 0;i<result.length;i++){
+                    html += `<tr>
+                    <td>${result[i].date}</td>
+                    <td>${result[i].userName}</td>
+                    <td>${result[i].selectionName}</td>
+                    <td>${result[i].oddValue}</td>
+                    <td>${result[i].Stake}</td>
+                    <td>${result[i].returns}</td>
+                    <td>${result[i].status}</td>
+                    </tr>`
+                }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+              $('#myModaladduser .modal-title').text(`${result[0].marketName}`)
+              $('#myModaladduser .modal-tbody').html(html)
+            }
+
+        })
+
+
+
+        $(document).on('click','.bredcum-container li',function(e){
+            if($(this).hasClass('eventcompitisionsportwise')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-eventcompitisionsportwise'))
+                let sportId = parentdetail.sportId
+                let seriesName = parentdetail.seriesName
+                let eventName = parentdetail.eventName
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [sportId,seriesName,eventName]
+                data.seriesName = seriesName
+                data.sportname = sportId
+                data.eventName = eventName;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                data.LOGINUSER = LOGINDATA.LOGINUSER
+                socket.emit('geteventwiseuplinecommitssion',{data})
+            }else if($(this).hasClass('compititionsportwise')){
+                let data = {}
+                let parentdetail = JSON.parse($(this).attr('data-compititionsportwise'))
+                let sportId = parentdetail.sportId
+                let seriesName = parentdetail.seriesName
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [sportId,seriesName]
+                data.sportname = sportId;
+                data.seriesName = seriesName
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                data.LOGINUSER = LOGINDATA.LOGINUSER
+                socket.emit('getcommiwiseuplinecommitssion',{data})
+            }else if($(this).hasClass('sportwise')){
+                let data = {}
+                let sportname = $(this).attr('data-sportwise')
+                let fromdate = $('#fromDate').val()
+                let todate = $('#toDate').val()
+                let bredcum =  [sportname]
+                data.sportname = sportname;
+                data.fromdate = fromdate;
+                data.todate = todate;
+                data.bredcum = bredcum;
+                data.LOGINUSER = LOGINDATA.LOGINUSER    
+                socket.emit('getsportwiseuplinecommission',{data})
+            }
+        })
+
+
+        socket.on('userwiseuplinecommittion',async(data)=>{
+            console.log(data)
+            if(data.status == 'success'){
+                let result = data.result
+                let html = `<thead>
+                <tr>
+                  <th>
+                  Sport</th>
+                  <th>Commission</th>
+                  </tr>
+              </thead><tbody class="new-body">`
+              if(result.length > 0){
+                  for(let i = 0;i<result.length;i++){
+                      html += `<tr style="cursor:pointer"  class="sportnametr">
+                      <td class="sportnametd" data-sportname="${result[i]._id}">${result[i].sportname}</td>
+                    <td>${result[i].commissionClaim}</td>
+                      </tr>`
+                  }
+              }else{
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+                $('#table12').html(html)
+            }
+
+        })
+
+        $('#fromDate,#toDate').change(async function(e){
+            let data = {}
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            data.fromdate = fromdate
+            data.todate = todate
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            if($('.bredcum-container li').length == 0){
+                console.log(data,'==data1')
+                socket.emit('userwiseuplinecommittion',{data})
+            }else{
+                if($('.bredcum-container li:last').hasClass('eventcompitisionsportwise')){
+                    let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-eventcompitisionsportwise'))
+                    let sportId = parentdetail.sportId
+                    let seriesName = parentdetail.seriesName
+                    let eventName = parentdetail.eventName
+                    let bredcum =  [sportId,seriesName,eventName]
+                    data.seriesName = seriesName
+                    data.sportname = sportId
+                    data.eventName = eventName;
+                    data.bredcum = bredcum;
+                    socket.emit('geteventwiseuplinecommitssion',{data})
+                }else if($('.bredcum-container li:last').hasClass('compititionsportwise')){
+                    let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-compititionsportwise'))
+                    let sportId = parentdetail.sportId
+                    let seriesName = parentdetail.seriesName
+                    let bredcum =  [sportId,seriesName]
+                    data.sportname = sportId;
+                    data.seriesName = seriesName
+                    data.bredcum = bredcum;
+                    socket.emit('getcommiwiseuplinecommitssion',{data})
+                }else if($('.bredcum-container li:last').hasClass('sportwise')){
+                    let sportname = $('.bredcum-container li:last').attr('data-sportwise')
+                    let bredcum =  [sportname]
+                    data.sportname = sportname;
+                    data.bredcum = bredcum;
+                    data.LOGINUSER = LOGINDATA.LOGINUSER    
+                    console.log(data)
+                    socket.emit('getsportwiseuplinecommission',{data})
+                }
+            }
+        })
+
+
+
+
+    }
+
+    
+
+
+
+    $(document).ready(function() {
+        setTimeout(function() {
+          $(".main-loader").addClass("hide");
+        }, 600);
+      });
 })
 })
+
+
+function attemptReconnect() {
+    const maxReconnectAttempts = 5; // Maximum number of reconnect attempts
+    if (reconnectAttempts < maxReconnectAttempts) {
+        const delay = 1000; // Exponential backoff
+        // console.log(delay)
+        setTimeout(() => {
+            console.log(`Attempting to reconnect (attempt ${reconnectAttempts + 1})`);
+            socket.connect();
+            reconnectAttempts++;
+            attemptReconnect()
+        }, delay);
+    } else {
+        // console.log("Max reconnect attempts reached. Please refresh the page.");
+        window.location.reload();
+    }
+}

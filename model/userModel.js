@@ -101,7 +101,7 @@ const userSchema = mongoose.Schema({
         type:String,
         required:[true, "please provide a password"],
         minlength:[8, "Please inter at-least 8 char."],
-        select: false
+        // select: false
     },
     passwordConfirm:{
         type:String,
@@ -212,13 +212,31 @@ userSchema.pre('save', async function(next){
     next();
 })
 
-userSchema.pre(/^find/, function(next){
+// userSchema.pre(/^find/, function(next){
+//     this.populate({
+//         path:'role',
+//         select:'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController'
+//     })
+//     next()
+// })
+
+userSchema.pre(/^find/, function (next) {
+    // Check if the query explicitly includes the password field
+    const includePassword = this._fields && this._fields.password === 1;
+
+    // Build the select option for the role population based on the includePassword flag
+    const roleSelect = includePassword
+        ? 'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController password'
+        : 'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController';
+
+    // Conditionally include or exclude the password field in the population
     this.populate({
-        path:'role',
-        select:'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController'
-    })
-    next()
-})
+        path: 'role',
+        select: roleSelect,
+    });
+
+    next();
+});
 
 // userSchema.pre('save', function (next) {
 //     this.myPL = roundToTwoDecimals(this.myPL);

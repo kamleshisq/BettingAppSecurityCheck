@@ -10,7 +10,7 @@
           <div class="bredcum-container">
             <ul>
                 <li><a href="/admin/commissionReport"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></a></li>
-                <li> <a href="/admin/commissionReportEvent?event=<%=match%>"> <%=match%></a></li>
+                <li> <a href="/admin/commissionReportEvent?event=<%=eventId%>"> <%=match%></a></li>
                 <li class="active" > <%=marketName%></li>
             </ul>
           </div>              
@@ -31,14 +31,16 @@
                 <th>User Name</th>
                 <th>Total Commission</th>
                 <th>Net Upline</th>
+                <!-- <th>Details</th> -->
                 </tr>
         </thead>
         <tbody class="new-body">
             <%for(let i = 0; i < thatMarketData.length; i++){%>
                 <tr>
                     <td><%=thatMarketData[i]._id%></td>
-                    <td><%=thatMarketData[i].totalCommission%></td>
-                    <td><%=thatMarketData[i].netupline%></td>
+                    <td><%=thatMarketData[i].totalCommission.toFixed(3)%></td>
+                    <td><%=thatMarketData[i].netupline.toFixed(3)%></td>
+                    <!-- <td><button class="viewDetailsButton" id="<%=thatMarketData[i]._id%>" data-bs-toggle="modal" data-bs-target="#CommisionDetailsEVENTLAST">View Details</button></td> -->
                 </tr>
             <%}%>
         </tbody>
@@ -92,6 +94,34 @@
             </div>
             <button type="submit" class="btn-submit mt-3">Change</button>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade useracount-modal" id="CommisionDetailsEVENTLAST" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Transaction Details</h4>
+        </div>
+        <div class="modal-body">
+          <div class="data-table" id="tableDTA">
+            <table><thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Balance Before</th>
+                  <th>Balance After</th>
+                  <th>Amount</th>
+                  <th>Remarks</th>
+                </tr>
+                </thead>
+                <tbody class="new-body"><tr><td>Wed Dec 27 2023 12:23:50 GMT+0530 (India Standard Time)</td><td>11488.00</td><td>11491</td><td>3</td><td>-</td></tr></tbody></table>
+          </div>
         </div>
       </div>
     </div>

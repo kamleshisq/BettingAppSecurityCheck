@@ -10,6 +10,8 @@ const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 const newCommissionModel =  require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
 const runnerDataModel = require('../model/runnersData');
+const exposurecheck = require('./checkExpoOfThatUSer');
+const checkLimit = require('./checkOddsLimit');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -25,12 +27,23 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 
 async function placeBet(data){
     // console.log(data, "data1")
+    if(!data.LOGINDATA.LOGINUSER){
+        return "Stake out of range"
+    }
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
-    if((check.availableBalance - check.exposure) < data.data.stake){
+    if(check.availableBalance < parseFloat(data.data.stake)){
         return "You do not have sufficient balance for bet"
-    }else if(check.exposureLimit === check.exposure){
+    }
+    let exposureCHECk = await exposurecheck(check)
+    if((exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full"
     }
+    // if((check.availableBalance - check.exposure) < data.data.stake){
+    //     return "You do not have sufficient balance for bet"
+    // }
+    // else if(check.exposureLimit === check.exposure){
+    //     return "Please try again later, Your exposure Limit is full"
+    // }
     let uniqueToken = generateString(5)
     const sportData = await cricketAndOtherSport()
     let gameList
@@ -143,10 +156,13 @@ if(data.data.spoetId == 1){
 
 //FOR PERTICULAR MARKETS
     let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
-    if(thatMarketLimit){
-        if(thatMarketLimit.min_stake > parseFloat(data.data.stake) ){
+    let limitData = await checkLimit({eventId:data.data.eventId, ids:[data.data.market]})
+    limitData = limitData[0].Limits
+    if(limitData){
+        // console.log(limitData,  parseFloat(data.data.stake),"123456789")
+        if(limitData.min_stake > parseFloat(data.data.stake) ){
             return `Stake out of range`
-        }else if(thatMarketLimit.max_stake < parseFloat(data.data.stake)){
+        }else if(limitData.max_stake < parseFloat(data.data.stake)){
             return `Stake out of range`
         }
     }
@@ -155,52 +171,72 @@ if(data.data.spoetId == 1){
 
 
 // FOR STAKE RANGE
-    if(marketDetails.title.toLowerCase().startsWith('match')){
+// console.log(marketDetails.title.toLowerCase(), marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd'), "marketDetails.title.toLowerCase()marketDetails.title.toLowerCase()")
+//     if(marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')){
 
-        let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
-        if(MATCHODDDATA){
-            minMatchOdds = MATCHODDDATA.min_stake
-            maxMatchOdds = MATCHODDDATA.max_stake
-        }
-        if(minMatchOdds > parseFloat(data.data.stake) ){
-            return `Stake out of range`
-        }else if(maxMatchOdds < parseFloat(data.data.stake)){
-            return `Stake out of range`
-        }
-    }else if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-        let BOOKMAKER = await betLimitModel.findOne({type:`${sportName}/bookMaker`})
-        if(BOOKMAKER){
-            minBookMaker = BOOKMAKER.min_stake
-            maxBookMaker = BOOKMAKER.max_stake
-        }
-        if(minBookMaker > parseFloat(data.data.stake) ){
-            return `Stake out of range`
-        }else if(maxBookMaker < parseFloat(data.data.stake)){
-            return `Stake out of range`
-        }
-    }else {
-        let FENCY = await betLimitModel.findOne({type:`${sportName}/fency`})
-        if(FENCY){
-            minFancy = FENCY.min_stake
-            maxFancy = FENCY.max_stake
-        }
-        if(minFancy > parseFloat(data.data.stake) ){
-            return `Stake out of range`
-        }else if(maxFancy < parseFloat(data.data.stake)){
-            return `Stake out of range`
-        }
-    }
+//         let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
+//         if(MATCHODDDATA){
+//             minMatchOdds = MATCHODDDATA.min_stake
+//             maxMatchOdds = MATCHODDDATA.max_stake
+//         }
+//         if(minMatchOdds > parseFloat(data.data.stake) ){
+//             return `Stake out of range`
+//         }else if(maxMatchOdds < parseFloat(data.data.stake)){
+//             return `Stake out of range`
+//         }
+//     }else if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+//         let BOOKMAKER = await betLimitModel.findOne({type:`${sportName}/bookMaker`})
+//         if(BOOKMAKER){
+//             minBookMaker = BOOKMAKER.min_stake
+//             maxBookMaker = BOOKMAKER.max_stake
+//         }
+//         if(minBookMaker > parseFloat(data.data.stake) ){
+//             return `Stake out of range`
+//         }else if(maxBookMaker < parseFloat(data.data.stake)){
+//             return `Stake out of range`
+//         }
+//     }else {
+//         let FENCY = await betLimitModel.findOne({type:`${sportName}/fency`})
+//         if(FENCY){
+//             minFancy = FENCY.min_stake
+//             maxFancy = FENCY.max_stake
+//         }
+//         if(minFancy > parseFloat(data.data.stake) ){
+//             return `Stake out of range`
+//         }else if(maxFancy < parseFloat(data.data.stake)){
+//             return `Stake out of range`
+//         }
+//     }
 
 // console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 // FOR ODDS LIMIT
-if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('winne')){
+if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
     if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.oldOdds * 1) + (betLimit.max_odd * 1) 
+        let OddChake = (data.data.oldOdds * 1) + (0.10) 
+        // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
+        if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
+            return 'Odds out of range back'
+        }
+
+        if(data.data.odds > limitData.max_odd){
+            return 'Odds out of range'
+        }
+    }else{
+        let OddChake = (data.data.oldOdds * 1) - (0.10)  
+        if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
+            return 'Odds out of range'
+        }
+    }
+}
+
+if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+    if(data.data.bettype2 === 'BACK'){
+        let OddChake = (data.data.oldOdds * 1) + (10) 
         if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
             return 'Odds out of range back'
         }
     }else{
-        let OddChake = (data.data.oldOdds * 1) - (betLimit.max_odd * 1)  
+        let OddChake = (data.data.oldOdds * 1) - (10)  
         if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
             return 'Odds out of range'
         }
@@ -214,7 +250,7 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
     let creditDebitamount
     let WinAmount
     if(data.data.bettype2 === "BACK"){
-        if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('winne')){
+        if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
             WinAmount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
@@ -225,7 +261,7 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
             WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
     }else{
-        if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('winne')){
+        if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
@@ -233,6 +269,10 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
         WinAmount = (parseFloat(data.data.stake)).toFixed(2)
+    }
+
+    if(WinAmount > limitData.max_profit){
+        return 'Win Amount out of range'
     }
 
     // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
@@ -249,18 +289,23 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
 }
 
 // console.log(marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
-if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('book')){
-    console.log('WORKING13546')
+if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd'))|| marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+    // console.log('WORKING13546')
     let check = await runnerDataModel.findOne({marketId:marketDetails.marketId})
     if(!check){
-    let data = {
-        runners:marketDetails.runners,
-        eventId:marketDetails.eid,
-        marketId:marketDetails.marketId,
-        sport:sportName,
-        marketTitle:marketDetails.title.toLowerCase()
-    }
-    await runnerDataModel.create(data)}
+        if(marketDetails.runners){
+
+            let runnerData = {
+                runners:marketDetails.runners,
+                eventId:marketDetails.eid,
+                marketId:marketDetails.marketId,
+                sport:sportName,
+                marketTitle:marketDetails.title.toLowerCase(),
+                matchTitle : data.data.title
+            }
+            await runnerDataModel.create(runnerData)
+        }
+}
 }
 
 //FOR BET PLACE DATA 
@@ -344,7 +389,11 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
     //     "stake": parseFloat(data.data.stake),
     //     "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
     // }
-    await betmodel.create(betPlaceData)
+    if(betPlaceData.oddValue !== 0){
+        await betmodel.create(betPlaceData)
+    }else{
+        return 'Please try again leter market SUSPENDED'
+    }
     // await accountStatementByUserModel.create(Acc)
 
 
@@ -401,89 +450,91 @@ if(marketDetails.title === "Winner" || marketDetails.title.toLowerCase().startsW
 
 // FOR COMMISSION REGARDIN THAT BET 
     // console.log(user)
-    try{
-        // console.log("COMMISSION MARKET")
-        let usercommissiondata;
-        let commissionMarket = await commissionMarketModel.find()
-        if(commissionMarket.some(item => item.marketId == data.data.market)){
-            let commission = await commissionModel.find({userId:user.id})
-            // console.log(commission, 456)
-            let commissionPer = 0
-            if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
-              commissionPer = commission[0].Bookmaker.percentage
-            }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('match')) && commission[0].fency.status){
-              commissionPer = commission[0].fency.percentage
-            }
-            let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
-            // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-            if(commissionPer > 0){
-                let commissiondata = {
-                    userName : user.userName,
-                    userId : user.id,
-                    eventId : liveBetGame.eventData.eventId,
-                    sportId : liveBetGame.eventData.sportId,
-                    seriesName : liveBetGame.eventData.league,
-                    marketId : marketDetails.marketId,
-                    eventDate : new Date(liveBetGame.eventData.time * 1000),
-                    eventName : liveBetGame.eventData.name,
-                    commission : commissionCoin,
-                    upline : 100,
-                    commissionType: 'Entry Wise Commission',
-                    commissionPercentage:commissionPer,
-                    date:Date.now(),
-                    marketName:marketDetails.title,
-                    loginUserId:data.LOGINDATA.LOGINUSER._id,
-                    parentIdArray:data.LOGINDATA.LOGINUSER.parentUsers
+    // try{
+    //     // console.log("COMMISSION MARKET")
+    //     let usercommissiondata;
+    //     let commissionMarket = await commissionMarketModel.find()
+    //     if(commissionMarket.some(item => item.marketId == data.data.market)){
+    //         let commission = await commissionModel.find({userId:user.id})
+    //         if(commission.length > 0){
+    //         // console.log(commission, 456)
+    //         let commissionPer = 0
+    //         if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
+    //           commissionPer = commission[0].Bookmaker.percentage
+    //         }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('match')) && commission[0].fency.status){
+    //           commissionPer = commission[0].fency.percentage
+    //         }
+    //         let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
+    //         // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
+    //         if(commissionPer > 0){
+    //             let commissiondata = {
+    //                 userName : user.userName,
+    //                 userId : user.id,
+    //                 eventId : liveBetGame.eventData.eventId,
+    //                 sportId : liveBetGame.eventData.sportId,
+    //                 seriesName : liveBetGame.eventData.league,
+    //                 marketId : marketDetails.marketId,
+    //                 eventDate : new Date(liveBetGame.eventData.time * 1000),
+    //                 eventName : liveBetGame.eventData.name,
+    //                 commission : commissionCoin,
+    //                 upline : 100,
+    //                 commissionType: 'Entry Wise Commission',
+    //                 commissionPercentage:commissionPer,
+    //                 date:Date.now(),
+    //                 marketName:marketDetails.title,
+    //                 loginUserId:data.LOGINDATA.LOGINUSER._id,
+    //                 parentIdArray:data.LOGINDATA.LOGINUSER.parentUsers
                     
-                }
-                usercommissiondata = await newCommissionModel.create(commissiondata)
-            }
+    //             }
+    //             usercommissiondata = await newCommissionModel.create(commissiondata)
+    //         }}
         
-            try{
-                for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                    let childUser = await userModel.findById(user.parentUsers[i])
-                    let parentUser = await userModel.findById(user.parentUsers[i - 1])
-                    let commissionChild = await commissionModel.find({userId:childUser.id})
-                    let commissionPer = 0
-                    if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
-                      commissionPer = commissionChild[0].Bookmaker.percentage
-                    }else if (commissionChild[0].fency.type == "ENTRY" && !(marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('match')) && commissionChild[0].fency.status){
-                      commissionPer = commissionChild[0].fency.percentage
+    //         try{
+    //             for(let i = user.parentUsers.length - 1; i >= 1; i--){
+    //                 let childUser = await userModel.findById(user.parentUsers[i])
+    //                 let parentUser = await userModel.findById(user.parentUsers[i - 1])
+    //                 let commissionChild = await commissionModel.find({userId:childUser.id})
+    //                 if(commissionChild.length > 0){
+    //                 let commissionPer = 0
+    //                 if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
+    //                   commissionPer = commissionChild[0].Bookmaker.percentage
+    //                 }else if (commissionChild[0].fency.type == "ENTRY" && !(marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('match')) && commissionChild[0].fency.status){
+    //                   commissionPer = commissionChild[0].fency.percentage
     
-                    }
+    //                 }
                     
-                    let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
-                    // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-                    if(commissionPer > 0){
-                        let commissiondata = {
-                            userName : childUser.userName,
-                            userId : childUser.id,
-                            eventId : liveBetGame.eventData.eventId,
-                            sportId : liveBetGame.eventData.sportId,
-                            seriesName : liveBetGame.eventData.league,
-                            marketId : marketDetails.marketId,
-                            eventDate : new Date(liveBetGame.eventData.time * 1000),
-                            eventName : liveBetGame.eventData.name,
-                            commission : commissionCoin,
-                            upline : 100,
-                            commissionType: 'Entry Wise Commission',
-                            commissionPercentage:commissionPer,
-                            date:Date.now(),
-                            marketName:marketDetails.title,
-                            loginUserId:data.LOGINDATA.LOGINUSER._id,
-                            parentIdArray:childUser.parentUsers,
-                            uniqueId:usercommissiondata._id
-                        }
-                        let commissionData = await newCommissionModel.create(commissiondata)
-                    }
-                }
-            }catch(err){
-                console.log(err)
-            }
-        }
-    }catch(err){
-        console.log(err)
-    }
+    //                 let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
+    //                 // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
+    //                 if(commissionPer > 0){
+    //                     let commissiondata = {
+    //                         userName : childUser.userName,
+    //                         userId : childUser.id,
+    //                         eventId : liveBetGame.eventData.eventId,
+    //                         sportId : liveBetGame.eventData.sportId,
+    //                         seriesName : liveBetGame.eventData.league,
+    //                         marketId : marketDetails.marketId,
+    //                         eventDate : new Date(liveBetGame.eventData.time * 1000),
+    //                         eventName : liveBetGame.eventData.name,
+    //                         commission : commissionCoin,
+    //                         upline : 100,
+    //                         commissionType: 'Entry Wise Commission',
+    //                         commissionPercentage:commissionPer,
+    //                         date:Date.now(),
+    //                         marketName:marketDetails.title,
+    //                         loginUserId:data.LOGINDATA.LOGINUSER._id,
+    //                         parentIdArray:childUser.parentUsers,
+    //                         uniqueId:usercommissiondata._id
+    //                     }
+    //                     let commissionData = await newCommissionModel.create(commissiondata)
+    //                 }}
+    //             }
+    //         }catch(err){
+    //             console.log(err)
+    //         }
+    //     }
+    // }catch(err){
+    //     console.log(err)
+    // }
     return "Bet placed successfully"
 }
 

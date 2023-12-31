@@ -1,0 +1,320 @@
+<section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading New_table_heading">
+          <h3>Basic Details</h3>
+          <!-- <div class="table-heading-btn">
+            <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Menu</button>
+          </div> -->
+        </div>
+        <div class="data-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Data</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%if(basicDetails.length > 0){%>
+                <tr>
+                  <td>Logo With white Background</td>
+                  <td><img src="../../logo/<%=basicDetails[0].logo1%>.png" ></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=basicDetails[0]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Logo With thime color Background</td>
+                  <td><img src="../../logo/<%=basicDetails[0].logo2%>.png" ></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModa18" id="<%=basicDetails[0]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>contact email and Number</td>
+                  <td><%=basicDetails[0].email%>  || <%=basicDetails[0].contactNumber%></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModal9" id="<%=basicDetails[0]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              <%}%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading New_table_heading">
+          <h3>Color Code</h3>
+          <!-- <div class="table-heading-btn">
+            <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Menu</button>
+          </div> -->
+        </div>
+        <div class="data-table">
+          <form class="basicDetailsFOrmCOLORCODE">
+            <%if(colorcode){%>
+              <div class="row">
+                <div class="col">
+                  <label for="color1">button, menu and background</label>
+                  <div class="color-picker" >
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color1_1%>" name="color1_1" required>
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color1_2%>" name="color1_2" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  
+                  <label for="color6">button, menu and background - hover</label>
+                  <div class="color-picker" >
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color6_1%>" name="color6_1" required>
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color6_2%>" name="color6_2" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color2">side menu,higlight-tex,highlight-border,background</label>
+                  <div class="color-picker" >  
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color2%>" name="color2" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color7">notification, input, some title, table row background</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color7%>" name="color7" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color14">overlay bg</label>
+                  <div class="color-picker" >
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color14%>" name="color14" required>
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color15">Home page service card icon background hover color</label>
+                  <div class="color-picker">
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color15%>" name="color15" required>
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color13">some info btn and animation</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color13%>" name="color13" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color5">Background Color</label>
+                  <div class="color-picker" >
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color5%>" name="color5" required>
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color3">Background Color of banners and photos</label>
+                  <div class="color-picker">
+                    <input type="color" class="form-control ml0" placeholder="" value="<%=colorcode.color3%>" name="color3" required>
+
+                  </div>
+                </div>
+              </div>
+            <%}else{%>
+              <div class="row">
+                <div class="col">
+                  <label for="color1">button, menu and background</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" name="color1_1" required>
+                    <input type="color" class="form-control ml0" placeholder="" name="color1_2" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color6">button, menu and background - hover</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" name="color6_1" required>
+                    <input type="color" class="form-control ml0" placeholder="" name="color6_2" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color2">side menu,higlight-tex,highlight-border,background</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" name="color2" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color7">notification, input, some title, table row background</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" name="color7" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color14">overlay bg</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" name="color14" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color15">Home page service card icon background hover color</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" name="color15" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color13">some info btn and animation</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" name="color13" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="color5">Background Color</label>
+                  <div class="color-picker" >
+
+                    <input type="color" class="form-control ml0" placeholder="" name="color5" required>
+                  </div>
+                </div>
+              </div>
+            <%}%>
+            <button type="submit" class="btn-submit mt-3">submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <div class="modal fade" id="myModal7" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">image Details</h4>
+        </div>
+        <div class="modal-body">
+          <form class="basicDetailsFOrm" id="Add-User4">
+            <div class="row mt-2">
+              <div class="col" id="banner12">
+  
+              </div>
+              <div class="col" >
+                <input type="file" name="file" id="file" >
+              </div>
+            </div>
+            <button type="submit" class="btn-submit mt-3">submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="myModal9" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Details</h4>
+        </div>
+        <div class="modal-body">
+          <form class="basicDetailsFOrm" id="Add-User4">
+            <div class="row">
+              <div class="col">
+                <label for="email">email</label>
+                <input type="text" class="form-control ml0" placeholder="" name="email" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="contact">contact</label>
+                <input type="text" class="form-control ml0" placeholder="" name="contact" required>
+              </div>
+            </div>
+            <button type="submit" class="btn-submit mt-3">submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModa18" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">image Details</h4>
+        </div>
+        <div class="modal-body">
+          <form class="basicDetailsFOrm" id="Add-User4">
+            <div class="row mt-2">
+              <div class="col" id="banner12">
+  
+              </div>
+              <div class="col" >
+                <input type="file" name="file" id="file" >
+              </div>
+            </div>
+            <button type="submit" class="btn-submit mt-3">submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

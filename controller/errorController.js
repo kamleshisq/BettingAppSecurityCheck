@@ -51,7 +51,8 @@ const sendErrorDev = (err, req,res) => {
             message = "Opps! Please try again later"
         }else if(err.message.startsWith('not a valid user')){
             message = "not a valid user"
-
+        }else {
+            message = err.message
         }
         return res.render('./errorMessage',{
             statusCode : err.statusCode,

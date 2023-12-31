@@ -68,16 +68,38 @@ const liveStreameData = require('./utils/getLiveStream');
 const manageAccountsUser = require('./model/paymentMethodUserSide');
 const withdowReqModel = require('./model/withdrowReqModel');
 const runnerData = require('./model/runnersData');
+const globalSettingModel = require('./model/globalSetting');
+const colorCodeModel = require('./model/colorcodeModel');
+const oddsLimitCHeck = require('./utils/checkOddsLimit');
+const { ObjectId } = require('mongodb');
+
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
-    console.log('connected to client')
-   
+    // console.log('connected to client')
+    // console.log(socket.request, socket.request.app,"21212")
+    if (!socket.request.app) {
+        socket.request.app = app;
+      }
+    if (socket.request && socket.request.app) {
+        const myVariable = socket.request.app.get('User');
+        const myVariable2 = socket.request.app.get('token');
+        const ip = socket.request.app.get('Ip');
+        socket.emit("loginUser", {
+            loginData:myVariable,
+            socket:myVariable2,
+            Ip:ip
+        })
+    }
     // console.log(loginData.Token)
     // console.log(global._token)
-    socket.emit("loginUser", {
-        loginData:global.loginData,
-        socket:socket.request.connection.remoteAddress
+
+    socket.on('hostname1ColoreCOde', async(data) =>{
+        // console.log(data,"datadata121")
+        let colorCodeModeldata = await colorCodeModel.findOne({whitelabel:data}) 
+        if(colorCodeModeldata){
+            socket.emit('hostname1ColoreCOde',colorCodeModeldata )
+        }
     })
     const urlRequestAdd = async(url,method, Token, user) => {
         const login = await loginlogs.findOne({session_id:Token, isOnline:true})
@@ -94,6 +116,17 @@ io.on('connection', (socket) => {
             data.logs = [fullUrl]
             await loginlogs.create(data)
         }
+    }
+
+    const checkwhiteLabel = (LOGINDATA) => {
+        let whiteLabel;
+        if(LOGINDATA.LOGINUSER && LOGINDATA.LOGINUSER.role_type == 1){
+            whiteLabel = "1"
+        }else{
+            whiteLabel = process.env.whiteLabelName
+        }
+
+        return whiteLabel
     }
 
 
@@ -212,7 +245,7 @@ io.on('connection', (socket) => {
         }else{
             operationUser = me
             operationId = operationUser._id
-            roles = await Role.find({role_level: {$gt:operationUser.role.role_level}});
+            roles = await Role.find();
         }
         
         if(Object.keys(data.filterData).length !== 0){
@@ -260,6 +293,7 @@ io.on('connection', (socket) => {
                 }            
             }else{
                 if(data.filterData.role_type){
+                    console.log(role_type)
                     if(role_type.includes((data.filterData.role_type) * 1)){
                         // console.log('here')
                         user = await User.find(data.filterData).skip(skip).limit(limit)
@@ -318,15 +352,17 @@ io.on('connection', (socket) => {
     })
 
     socket.on('loginuserbalance',async(data)=>{
-        let id = data.LOGINUSER._id
-        if(data.LOGINUSER.role.roleName == 'Operator'){
-            let parentUser = await User.findById(data.LOGINUSER.parent_id)
-            data.LOGINUSER = parentUser
-            id = parentUser._id.toString()
+        if(data.LOGINUSER && data.LOGINUSER._id){
+            let id = data.LOGINUSER._id
+            if(data.LOGINUSER.role.roleName == 'Operator'){
+                let parentUser = await User.findById(data.LOGINUSER.parent_id)
+                data.LOGINUSER = parentUser
+                id = parentUser._id.toString()
+            }
+            const user = await User.findById(id)
+            // console.log(user, "CONSOLEUSER")
+            socket.emit('loginuserbalance',user)
         }
-        const user = await User.findById(id)
-        // console.log(user, "CONSOLEUSER")
-        socket.emit('loginuserbalance',user)
     })
 
     socket.on('userHistory',async(data)=>{
@@ -427,7 +463,7 @@ io.on('connection', (socket) => {
         // console.log(id,'back end id')
         // let data = {userId:`${id}`}
         try{
-            let fullUrl =  `http://ollscores.com/api/v1/auth/logOutSelectedUser?userId=`+id
+            let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser?userId=`+id
             fetch(fullUrl, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ` + loginData.Token }
@@ -492,7 +528,7 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("AccountScroll", async(data)=>{
-        // console.log(data)
+        console.log(data, "DATA")
         let fullUrl
         let operatorId;
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
@@ -500,31 +536,80 @@ io.on('connection', (socket) => {
         }else{
             operatorId = data.LOGINDATA.LOGINUSER._id
         }
-        if(data.id){
-            // console.log()
-            fullUrl = 'http://ollscores.com/api/v1/Account/getUserAccStatement?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
+        let json
+        if(data.refreshStatus){
+            if(data.id){
+    
+                // console.log()
+                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
+            }else{
+                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
+    
+            }
+            fetch(fullUrl, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ` + loginData.Token },
+            }).then(res => res.json())
+            .then(json =>{ 
+                socket.emit('Acc', {json,page:data.page})
+            });
         }else{
-            fullUrl = 'http://ollscores.com/api/v1/Account/getUserAccStatement?id=' + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
-
+            let filter = {}
+            filter.user_id = data.LOGINDATA.LOGINUSER._id
+            if(data.Fdate != "" && data.Tdate == ""){
+                filter.date = {
+                    $gt : new Date(data.Fdate)
+                }
+            }else if(data.Fdate == "" && data.Tdate != ""){
+                filter.date = {
+                    $lt : new Date(data.Tdate)
+                }
+            }else if (data.Fdate != "" && data.Tdate != ""){
+                filter.date = {
+                    $gte : new Date(data.Fdate),
+                    $lt : new Date(data.Tdate)
+                }
+            }
+            if (data.Transaction_type === "Deposit"){
+                filter.stake = undefined
+                filter.accStype = undefined
+                filter.creditDebitamount = {
+                    $gt: 0
+                }
+            }else if(data.Transaction_type === "Withdraw"){
+                filter.stake = undefined
+                filter.accStype = undefined
+                filter.creditDebitamount = {
+                    $lt: 0
+                }
+            }else if (data.Transaction_type === "Settlement_Deposit"){
+                filter.stake = undefined
+                filter.accStype = {
+                    $ne:undefined
+                }
+                filter.creditDebitamount = {
+                    $gt: 0
+                }
+            }else if(data.Transaction_type === "Settlement_Withdraw"){
+                filter.stake = undefined
+                filter.accStype = {
+                    $ne:undefined
+                }
+                filter.creditDebitamount = {
+                    $lt: 0
+                }
+            }
+            page = 0
+            if(data.page){
+                page = data.page
+            }
+            let userAcc = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
+            json = {
+                status : 'success',
+                userAcc
+            }
+            socket.emit('Acc', {json,page})
         }
-
-        //urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}&search = ${data.search}`,'GET', data.LOGINDATA.LOGINTOKEN)
-
-
-        // console.log(fullUrl)
-        fetch(fullUrl, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ` + loginData.Token },
-        }).then(res => res.json())
-        .then(json =>{ 
-            // console.log(json)
-            socket.emit('Acc', {json,page:data.page})
-            // const data = json.userAcc
-            // res.status(200).render('./userAccountStatement/useracount',{
-            // title:"UserAccountStatement",
-            // me:currentUser,
-            // data})
-        });
     })
 
     socket.on("AccountScroll1", async(data)=>{
@@ -538,9 +623,9 @@ io.on('connection', (socket) => {
         }
         if(data.id){
             // console.log()
-            fullUrl = 'http://ollscores.com/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
         }else{
-            fullUrl = 'http://ollscores.com/api/v1/Account/getUserAccStatement1?id=' + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate 
+            fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate 
 
         }
 
@@ -564,7 +649,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("AccountScroll2", async(data)=>{
-        // console.log(data)
+        console.log(data)
         const user = await User.findById(data.id)
         let fullUrl
         let account;
@@ -580,9 +665,41 @@ io.on('connection', (socket) => {
             filter.date = {$lte:new Date(data.Tdate)}
         }
         filter.user_id = new mongoose.Types.ObjectId(data.id)
-
+        if(data.Transaction_type === "Bet_Settlement"){
+            filter.stake = {
+                $ne:undefined
+            }
+        }else if (data.Transaction_type === "Deposit"){
+            filter.stake = undefined
+            filter.accStype = undefined
+            filter.creditDebitamount = {
+                $gt: 0
+            }
+        }else if(data.Transaction_type === "Withdraw"){
+            filter.stake = undefined
+            filter.accStype = undefined
+            filter.creditDebitamount = {
+                $lt: 0
+            }
+        }else if (data.Transaction_type === "Settlement_Deposit"){
+            filter.stake = undefined
+            filter.accStype = {
+                $ne:undefined
+            }
+            filter.creditDebitamount = {
+                $gt: 0
+            }
+        }else if(data.Transaction_type === "Settlement_Withdraw"){
+            filter.stake = undefined
+            filter.accStype = {
+                $ne:undefined
+            }
+            filter.creditDebitamount = {
+                $lt: 0
+            }
+        }
         if(data.id){
-            // console.log()
+            // console.log(filter, "filterfilterfilterfilter")
             let Logs = await AccModel.aggregate([
                 {
                     $match:filter
@@ -608,11 +725,12 @@ io.on('connection', (socket) => {
                     $limit:limit
                 }
             ])
+            console.log(Logs, "LogsLogs")
             json.userAcc = Logs
 
             // account  = await AccModel.find({user_id:data.id})
             
-            // fullUrl = 'http://ollscores.com/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            // fullUrl = 'http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
         }else{
             json.userAcc = [] 
             
@@ -653,7 +771,7 @@ io.on('connection', (socket) => {
     socket.on("UserSearchId", async(data) => {
         // console.log(data, 123545)
         let user = await User.findOne({userName:data.userName})
-        let fullUrl = 'http://ollscores.com/api/v1/Account/getUserAccStatement?id=' + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
+        let fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
         // console.log(fullUrl)
         //urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}`,'GET', data.LOGINDATA.LOGINTOKEN)
 
@@ -679,7 +797,7 @@ io.on('connection', (socket) => {
     socket.on("bettingList", async(data) => {
         let user = await User.findOne({userName:data.val})
         // console.log(user)
-        let fullUrl = "http://ollscores.com/api/v1/bets/betListByUserId?id=" + user._id;
+        let fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/bets/betListByUserId?id=` + user._id;
         // console.log(fullUrl)
         fetch(fullUrl, {
             method: 'GET',
@@ -705,57 +823,75 @@ io.on('connection', (socket) => {
 
     socket.on('BACCARAT', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"BACCARAT"})
+    })
+
+    socket.on('32CARDS', async(A) => {
+        let data
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("32 Cards","i")},{category:new RegExp("32 Cards","i")},{game_code:new RegExp("32 Cards","i")}],whiteLabelName:whiteLabel})
+        socket.emit('baccarat1', {data,id:"32CARDS"})
     })
     socket.on('CASUALGAMES', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("CASUAL","i")},{category:new RegExp("CASUAL","i")},{game_code:new RegExp("CASUAL","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("CASUAL","i")},{category:new RegExp("CASUAL","i")},{game_code:new RegExp("CASUAL","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"CASUALGAMES"})
     })
     socket.on('FISHSHOOTING', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("FISH","i")},{category:new RegExp("FISH","i")},{game_code:new RegExp("FISH","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("FISH","i")},{category:new RegExp("FISH","i")},{game_code:new RegExp("FISH","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"FISHSHOOTING"})
     })
     socket.on('INSTANTWINGAMES', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("INSTANT","i")},{category:new RegExp("INSTANT","i")},{game_code:new RegExp("INSTANT","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("INSTANT","i")},{category:new RegExp("INSTANT","i")},{game_code:new RegExp("INSTANT","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"INSTANTWINGAMES"})
     })
     socket.on('LIVE', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("LIVE","i")},{category:new RegExp("LIVE","i")},{game_code:new RegExp("LIVE","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("LIVE","i")},{category:new RegExp("LIVE","i")},{game_code:new RegExp("LIVE","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"LIVE"})
     })
     socket.on('BLACKJACK', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BLACK","i")},{category:new RegExp("BLACK","i")},{game_code:new RegExp("BLACK","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("BLACK","i")},{category:new RegExp("BLACK","i")},{game_code:new RegExp("BLACK","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"BLACKJACK"})
     })
     socket.on('FH', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("FH","i")},{category:new RegExp("FH","i")},{game_code:new RegExp("FH","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("FH","i")},{category:new RegExp("FH","i")},{game_code:new RegExp("FH","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"FH"})
     })
     socket.on('GAME', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("GAME","i")},{category:new RegExp("GAME","i")},{game_code:new RegExp("GAME","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("GAME","i")},{category:new RegExp("GAME","i")},{game_code:new RegExp("GAME","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"GAME"})
     })
     socket.on('KENO', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("KENO","i")},{category:new RegExp("KENO","i")},{game_code:new RegExp("KENO","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("KENO","i")},{category:new RegExp("KENO","i")},{game_code:new RegExp("KENO","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"KENO"})
     })
     socket.on('LIVEBACCARAT', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"LIVEBACCARAT"})
     })
     socket.on('ANDARBAHAR', async(A) => {
         let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("ANDAR","i")},{category:new RegExp("ANDAR","i")},{game_code:new RegExp("ANDAR","i")}]})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({$or:[{game_name:new RegExp("ANDAR","i")},{category:new RegExp("ANDAR","i")},{game_code:new RegExp("ANDAR","i")}],whiteLabelName:whiteLabel})
         socket.emit('baccarat1', {data,id:"ANDARBAHAR"})
     })
 
@@ -763,17 +899,19 @@ io.on('connection', (socket) => {
 
     socket.on("RGV", async(A)=>{
         let data;
-        data = await gameModel.find({sub_provider_name:"Royal Gaming Virtual"})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({sub_provider_name:"Royal Gaming Virtual",whiteLabelName:whiteLabel})
        
         socket.emit("RGV1", {data, provider:"RGV"})
     })
 
     socket.on('casionoStatusChange',async(data)=>{
         try{
+            let whiteLabel = checkwhiteLabel(data.LOGINDATA)
             if(data.status){
-                await gameModel.updateOne({game_id:data.id},{status:true})
+                await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:true})
             }else{
-                await gameModel.updateOne({game_id:data.id},{status:false})
+                await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:false})
             }
             socket.emit('casionoStatusChange',{status:'success'})
         }catch(error){
@@ -804,13 +942,15 @@ io.on('connection', (socket) => {
 
     socket.on("EZ", async(A)=>{
         let data;
-        data = await gameModel.find({sub_provider_name:"Ezugi"})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({sub_provider_name:"Ezugi",whiteLabelName:whiteLabel})
         socket.emit("RGV1", {data, provider:"EZ"})
     })
 
     socket.on("EG", async(A)=>{
         let data;
-        data = await gameModel.find({sub_provider_name:"Evolution Gaming"})
+        let whiteLabel = checkwhiteLabel(A.LOGINDATA)
+        data = await gameModel.find({sub_provider_name:"Evolution Gaming",whiteLabelName:whiteLabel})
         socket.emit("RGV1", {data, provider:"EG"})
     })
 
@@ -1244,9 +1384,10 @@ io.on('connection', (socket) => {
         if(data.filterData.betType === 'All'){
             delete data.filterData['betType']
         }
-
+        // console.log(data.filterData)
         if(data.filterData.status == 'All'){
-            data.filterData.status = {$ne: "OPEN"}
+            // data.filterData.status = {$ne: "OPEN"}
+            delete data.filterData['status']
         }
         // console.log(data.filterData)
 
@@ -1268,6 +1409,7 @@ io.on('connection', (socket) => {
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             data.filterData.userName = {$in:childrenUsername}
         }
+        // console.log(skip, limit, data.filterData)
         let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
 
 
@@ -1386,7 +1528,27 @@ io.on('connection', (socket) => {
                 }
             ])
         }
-        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+        // let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+        let ubDetails = await Bet.aggregate([
+            {
+                $match:data.filterData
+            },
+            {
+                $sort:{'date':-1}
+            },{
+                $skip : skip
+            },{
+                $limit:limit
+            },
+            {
+                $lookup: {
+                  from: 'users', // Assuming the name of the Whitelabel collection
+                  localField: 'userName',
+                  foreignField: 'userName',
+                  as: 'whitelabelData'
+                }
+            }
+        ])
         socket.emit('betMoniter',{ubDetails,page,events,refreshStatus:data.refreshStatus})
 
     })
@@ -1655,12 +1817,38 @@ io.on('connection', (socket) => {
                     marketId : {
                         $in:data.ids
                     },
-                    status:false
+                    status:false,
+                }
+            },
+            {
+                $facet: {
+                    whiteLabel1: [
+                        { $match: { whiteLabel: '1' } },
+                        { $limit: 1 } // Limit to one document
+                    ],
+                    otherWhiteLabel: [
+                        { $match: { whiteLabel: process.env.whiteLabelName } }
+                    ]
+                }
+            },
+            {
+                $project: {
+                    result: {
+                        $cond: {
+                            if: { $gt: [{ $size: '$whiteLabel1' }, 0] },
+                            then: '$whiteLabel1',
+                            else: '$otherWhiteLabel'
+                        }
+                    }
                 }
             }
         ])
         let forFancy 
-        // console.log(finalResult, "finalResult[1].event_idfinalResult[1].event_id")
+        if(resumeSuspendMarkets && resumeSuspendMarkets.length > 0){
+            resumeSuspendMarkets = resumeSuspendMarkets[0].result
+        }else{
+            resumeSuspendMarkets = []
+        }
         if(finalResult.items.length > 0 ){
             if(finalResult.items[1]){
                 forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
@@ -1967,7 +2155,7 @@ io.on('connection', (socket) => {
     socket.on('createNotification', async(data) => {
         data.data.userId = data.LOGINDATA.LOGINUSER._id
         let bodyData = JSON.stringify(data.data)
-        const fullUrl = 'http://ollscores.com/api/v1/notification/createNotification'
+        const fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/createNotification`
         fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -1995,7 +2183,7 @@ io.on('connection', (socket) => {
 
     socket.on("deleteNotification", async(data) => {
         let id = data.id.slice(0, -1);
-        const fullUrl = 'http://ollscores.com/api/v1/notification/deleteNotification?id=' + `${id}`
+        const fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/deleteNotification?id=` + `${id}`
         fetch(fullUrl, {
             method: 'GET',
             headers: { 
@@ -2038,57 +2226,25 @@ io.on('connection', (socket) => {
               },
               {
                   $group:{
-                      _id: '$secId',
+                      _id: {
+                        secId:'$secId',
+                        eventId : '$eventId'
+                      },
                       totalStake: { $sum: '$Stake' },
                       count: { $sum: 1 }
                   }
+              },
+              {
+                $project:{
+                    _id : 0,
+                    secId : '$_id.secId',
+                    eventId : '$_id.eventId',
+                    totalStake:'$totalStake',
+                    count:'$count'
+                }
               }
         ])
-        // console.log(userIds, "userIdsuserIdsuserIds")
         socket.emit("aggreat", bets)
-        // User.aggregate([
-        //     {
-        //       $match: {
-        //         parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }
-        //       }
-        //     },
-        //     {
-        //       $group: {
-        //         _id: null,
-        //         userIds: { $push: '$_id' } 
-        //       }
-        //     }
-        //   ])
-        //     .then((userResult) => {
-        //         // console.log(userResult, "userResultuserResultuserResultuserResult")
-        //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-        //     //   console.log(userIds, "aggreataggreataggreataggreataggreataggreat")
-        //       Bet.aggregate([
-        //         {
-        //           $match: {
-        //             userId: { $in: userIds },
-        //             status: 'OPEN'
-        //           }
-        //         },
-        //         {
-        //             $group:{
-        //                 _id: '$secId',
-        //                 totalStake: { $sum: '$Stake' },
-        //                 count: { $sum: 1 }
-        //             }
-        //         }
-        //       ])
-        //         .then((betResult) => {
-        //           socket.emit("aggreat", betResult)
-        //         })
-        //         .catch((error) => {
-        //           console.error(error);
-        //         });
-        //     })
-        //     .catch((error) => {
-        //       console.error(error);
-        //     });
-
     })
 
 
@@ -2099,7 +2255,7 @@ io.on('connection', (socket) => {
 
 
     socket.on("createVerticalMenu", async(data) => {
-        let fullUrl = "http://ollscores.com/api/v1/verticalMenu/createVerticalMenu"
+        let fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/verticalMenu/createVerticalMenu`
         fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -2306,7 +2462,7 @@ io.on('connection', (socket) => {
 
     socket.on("UserUpdatePass", async(data) => {
         // console.log(data.LOGINDATA.LOGINTOKEN)
-        let fullUrl = "http://ollscores.com/api/v1/users/updateCurrentUserPass"
+        let fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/users/updateCurrentUserPass`
         fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -2339,10 +2495,11 @@ io.on('connection', (socket) => {
 
     socket.on('liveCasinoPage', async(data) => {
         let games
+        let whiteLabel = checkwhiteLabel(data.LOGINDATA);
         if(data.selectedValue === "All"){
-             games = await gameModel.find()
+             games = await gameModel.find({whiteLabelName:whiteLabel,status:true})
         }else{
-            games = await gameModel.find({provider_name:data.selectedValue})
+            games = await gameModel.find({provider_name:data.selectedValue,whiteLabelName:whiteLabel,status:true})
         }
         let fevGames = []
         if(data.LOGINDATA.LOGINUSER != "" && data.LOGINDATA.LOGINUSER != undefined){
@@ -2378,15 +2535,42 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
-    if(data.filterData.type === "2"){
+    if(data.Transaction_type === "2"){
         filter.stake = {
             $ne:undefined
         }
-    }else if (data.filterData.type === "1"){
+    }else if (data.filterData.type === "deposit"){
         filter.stake = undefined
+        filter.accStype = undefined
+        filter.creditDebitamount = {
+            $gt: 0
+        }
+    }else if(data.filterData.type === "withdraw"){
+        filter.stake = undefined
+        filter.accStype = undefined
+        filter.creditDebitamount = {
+            $lt: 0
+        }
+    }else if (data.filterData.type === "sdeposit"){
+        filter.stake = undefined
+        filter.accStype = {
+            $ne:undefined
+        }
+        filter.creditDebitamount = {
+            $gt: 0
+        }
+    }else if(data.filterData.type === "swithdraw"){
+        filter.stake = undefined
+        filter.accStype = {
+            $ne:undefined
+        }
+        filter.creditDebitamount = {
+            $lt: 0
+        }
     }
     // console.log(filter)
     let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
+    // console.log(userAcc, page)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
     })
 
@@ -2771,6 +2955,7 @@ io.on('connection', (socket) => {
     
 
     socket.on("FIlterDashBoard", async(data) => {
+        // console.log('WORKING')
         let filter;
         let filter2;
         let result = {}
@@ -2780,11 +2965,6 @@ io.on('connection', (socket) => {
         }
         let childrenUsername = []
         childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
-        // let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
-        
         var today = new Date();
         var todayFormatted = formatDate(today);
         var tomorrow = new Date();
@@ -2873,8 +3053,6 @@ io.on('connection', (socket) => {
                 }
             }
         ])
-
-        // console.log(turnOver,'turnOver')
         if(turnOver.length > 0){
             result.turnOver = turnOver[0].totalAmount
             result.Income = turnOver[0].Income
@@ -2882,60 +3060,23 @@ io.on('connection', (socket) => {
             result.turnOver = 0
             result.Income = 0
         }
-
-        if(data.value === "all"){
-            betCount = await Bet.aggregate([
-                {
-                    $match:{
-                        date:filter2,
-                        userName : {$in:childrenUsername}
-                    }
-                }
-               
-              ])
-        }else{
-            betCount = await Bet.aggregate([
-                {
-                    $match:{
-                        date:filter2,
-                        userName : {$in:childrenUsername}
-                    }
-                }
-            
-              ])
-        }
-
-        // console.log(betCount,'betCount')
-
-        result.betCount = betCount.length
-        // console.log(turnOver)
-        // console.log(turnOver.length)
-
+        let  betcount = await Bet.countDocuments({date:filter2,userName : {$in:childrenUsername}})
+        result.betCount = betcount
+        // console.log('WORKING2')
         socket.emit("FIlterDashBoard", {result})
 
     })
 
     socket.on('dashboardrefresh',async(data)=>{
-        // console.log("WORKING")
-        let roles
-        let users
         let topGames
         let Categories
-        let userCount = 0
-        let adminCount = 0
-        let betCount = 0
         let alertBet
         let betsEventWise
-        let turnOver
         if(data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
         }
         let childrenUsername = []
-        // let children = await User.find({parentUsers:data.LOGINUSER._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
         childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINUSER._id });
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -2948,7 +3089,6 @@ io.on('connection', (socket) => {
                     userName:{$in:childrenUsername}
                 }
             },
-    
             {
                 $group: {
                     _id: "$event",
@@ -3328,9 +3468,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on("BETSFORUSERAdminSide", async(data) => {
-        // console.log(data)
         try{
-            let limit = 20
+            let limit = 10
             let page = 0
             if(data.page){
                 page = data.page
@@ -3357,24 +3496,10 @@ io.on('connection', (socket) => {
                 filter.status = data.filterData.type
             }
             // console.log(filter)
+            let childUserName = await User.distinct('userName', { parentUsers: data.id })
+            filter.userName = {$in:childUserName}
             if(user.roleName != "user"){
                 bets = await Bet.aggregate([
-                    {
-                        $lookup: {
-                          from: "users",
-                          localField: "userName",
-                          foreignField: "userName",
-                          as: "user"
-                        }
-                      },
-                      {
-                        $unwind: "$user"
-                      },
-                      {
-                        $match: {
-                          "user.parentUsers": { $in: [data.id] }
-                        }
-                      },
                       {
                         $match:filter
                       },
@@ -3430,8 +3555,34 @@ io.on('connection', (socket) => {
             filter.stake = {
                 $ne:undefined
             }
-        }else if (data.filterData.type === "1"){
+        }else if (data.filterData.type === "Deposit"){
             filter.stake = undefined
+            filter.accStype = undefined
+            filter.creditDebitamount = {
+                $gt: 0
+            }
+        }else if(data.filterData.type === "Withdraw"){
+            filter.stake = undefined
+            filter.accStype = undefined
+            filter.creditDebitamount = {
+                $lt: 0
+            }
+        }else if (data.filterData.type === "SDeposit"){
+            filter.stake = undefined
+            filter.accStype = {
+                $ne:undefined
+            }
+            filter.creditDebitamount = {
+                $gt: 0
+            }
+        }else if(data.filterData.type === "SWithdraw"){
+            filter.stake = undefined
+            filter.accStype = {
+                $ne:undefined
+            }
+            filter.creditDebitamount = {
+                $lt: 0
+            }
         }
         // console.log(filter)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
@@ -3445,8 +3596,10 @@ io.on('connection', (socket) => {
 
     socket.on("loadMorediveHistory", async(data) => {
         let page = data.page
+        // console.log(page)
         let userDetails = await User.findById(data.id)
-        let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).skip(page*20).limit(20)
+        let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).skip(page*10).limit(10)
+        // console.log(historty, "histortyhistortyhistorty")
         socket.emit("loadMorediveHistory", historty)
     })
 
@@ -3508,7 +3661,8 @@ io.on('connection', (socket) => {
                 $group: {
                   _id: {
                     betType: "$betType",
-                    matchName: "$match"
+                    eventId1 : "$eventId",
+                    matchName: "$match",
                   },
                   count: { $sum: 1 },
                   eventdate: { $first: "$eventDate" }, 
@@ -3624,7 +3778,8 @@ io.on('connection', (socket) => {
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
                 socket.emit("VoidBetIn",{message:"please provide a valid password", status:"error"})
             }else{
-                socket.emit('VoidBetIn', {message: 'Void Bet Process Start', id:data.id})
+                let betdata = await Bet.findOne({marketId:data.id})
+                socket.emit('VoidBetIn', {message: 'Void Bet Process Start', id:data.id, betdata})
                 let result = await voidBetBeforePlace(data)
             }
         }catch(err){
@@ -3640,7 +3795,8 @@ io.on('connection', (socket) => {
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
                 socket.emit('VoidBetIn2', 'please provide a valid password') 
             }else{
-                socket.emit('VoidBetIn2', 'Void Bet Process Start')
+                let betdata = await Bet.findOne({marketId : data.id})
+                socket.emit('VoidBetIn2', {msg : 'Void Bet Process Start', betdata})
                 let reultData = await voidbetAfterPlace(data)
             }
         }catch(err){
@@ -3654,7 +3810,8 @@ io.on('connection', (socket) => {
         try{
             await Bet.updateMany({ marketId: data.id, status: 'MAP' }, { $unset: { result: 1 }, $set: { status: 'OPEN' } });
             let betdata = await Bet.findOne({marketId:data.id})
-            socket.emit('unmapBet', {status:"success", betdata, result:data.result})
+            let runnersData = await runnerDataModel.findOne({marketId:data.id})
+            socket.emit('unmapBet', {status:"success", betdata, result:data.result, runnersData})
         }catch(err){
             console.log(err)
             socket.emit('unmapBet', {message:'err', status:'error'})
@@ -3664,7 +3821,8 @@ io.on('connection', (socket) => {
     socket.on('Settle', async(data) => {
         try{
             // console.log(data)
-            socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id})
+            let thatBet = await Bet.findOne({marketId : data.id})
+            socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id, thatBet, result:data.result})
             let data1 = mapBet(data)
             // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
@@ -3975,11 +4133,11 @@ io.on('connection', (socket) => {
         // console.log(data.id)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
-        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
-        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
-        footBall = footBall.eventList
-        Tennis = Tennis.eventList
-        const resultSearch = cricket.concat(footBall, Tennis);
+        // let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        // let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        // footBall = footBall.eventList
+        // Tennis = Tennis.eventList
+        const resultSearch = cricket
         // console.log(resultSearch)
         let result = resultSearch.find(item => item.eventData.eventId == data.id)
         let data1 = await commissionMarketModel.find()
@@ -4025,7 +4183,7 @@ io.on('connection', (socket) => {
                     // console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
                     let commission = commissionAmount[0].totalCommission
                     user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
-                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission}})
+                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission, downlineBalance: commission}})
                     // console.log(user)
                     let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
@@ -4132,8 +4290,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('UerBook', async(data) => {
-        console.log('START')
-        // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
+        // console.log('START')
         let users = []
         let falg = false
         let Id 
@@ -4150,74 +4307,22 @@ io.on('connection', (socket) => {
                 falg = true
                 users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
 
-                // parentIdOfClickedUser = thatUSer._id
             }
-            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id.toString(), isActive:true , roleName:{$ne:'Operator'}})
-            // users = await User.find({userName:'testing_sdm-10000'})
-            // users = await User.aggregate([
-            //     {
-            //         $match: {
-            //             parent_id: data.LOGINDATA.LOGINUSER._id.toString(),
-            //             isActive: true,
-            //             roleName: { $ne: 'Operator' }
-            //         }
-            //     },
-            //     {
-            //         $addFields: {
-            //             userIdString: { $toString: "$_id" }
-            //         }
-            //     },
-            //     {
-            //         $lookup: {
-            //             from: "betmodels", 
-            //             let: { userId: "$userIdString", userName: "$userName" },
-            //             pipeline: [
-            //                 {
-            //                     $match: {
-            //                         marketId : data.marketId,
-            //                         $expr: {
-            //                             $or: [
-            //                                 { $in: ["$$userId", "$parentArray.parentUSerId"] },
-            //                                 { $eq: ["$$userName", "$userName"] }
-            //                             ]
-            //                         },
-            //                         status: 'OPEN',
-            //                     }
-            //                 },
-            //                 { $limit: 1 }
-            //             ],
-            //             as: "openBets"
-            //         }
-            //     },
-            //     {
-            //         $match: {
-            //             openBets: { $not: { $size: 0 } }
-            //         }
-            //     }
-            // ]);
-            // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
             Id = data.LOGINDATA.LOGINUSER.userName   
-
         }
-        console.log('MIDDLE')
-        console.log(users, "usersusersusers")
+        
         try{
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
-                let children
-                let parentIdOfClickedUser
                 if(falg){
                     childrenUsername1 = await User.distinct("userName", {parentUsers:ele.id})
-                    parentIdOfClickedUser = ele.id
                 }else{
                     childrenUsername1 = await User.distinct("userName", {parentUsers:ele._id})
-                    parentIdOfClickedUser = ele._id
                 }
-                // children.map(ele1 => {
-                //     childrenUsername1.push(ele1.userName) 
-                // })
+                // console.log(ele.id,childrenUsername1, "ele.idele.id")
+                
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
                         {
@@ -4240,7 +4345,7 @@ io.on('connection', (socket) => {
                                             if : {$eq: ['$bettype2', "BACK"]},
                                             then:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
                                                     then:{
                                                         $sum: {
                                                             $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -4255,7 +4360,7 @@ io.on('connection', (socket) => {
                                             },
                                             else:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
                                                     then:{
                                                         $sum: {
                                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -4284,6 +4389,9 @@ io.on('connection', (socket) => {
                                         }
                                     }
                                 },
+                                exposure:{
+                                    $sum:'$exposure'
+                                },
                                 parentArray: { $first: "$parentArray" },
                                 role_type: { $first: "$role_type" },
                                 parentId: { $first: "$parentId" },
@@ -4299,6 +4407,7 @@ io.on('connection', (socket) => {
                                     $push: {
                                         selectionName: "$_id.selectionName",
                                         totalAmount: '$totalAmount',
+                                        exposure:'$exposure',
                                         matchName: "$_id.matchName",
                                         Stake: { $multiply: ["$Stake", -1] },
                                     },
@@ -4321,7 +4430,8 @@ io.on('connection', (socket) => {
                                             matchName: "$$selection.matchName",
                                             Stake: "$$selection.Stake",
                                             winAmount: "$$selection.totalAmount",
-                                            lossAmount:"$$selection.Stake"
+                                            lossAmount:"$$selection.Stake",
+                                            exposure:'$$selection.exposure'
                                         }
                                     }
                                 }
@@ -4384,11 +4494,16 @@ io.on('connection', (socket) => {
                                                                         then : {
                                                                             $cond:{
                                                                                 if : {$eq : ["$parentId", ele.id]},
-                                                                                then:"$$selection.winAmount",
+                                                                                then:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
                                                                                 else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else :{$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
+                                                                        
                                                                     }
                                                                 },
                                                                 flag:false
@@ -4431,11 +4546,16 @@ io.on('connection', (socket) => {
                                                                         then : {
                                                                             $cond:{
                                                                                 if : {$eq : ["$parentId", ele.id]},
-                                                                                then:"$$selection.lossAmount",
-                                                                                else:{$subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                                then:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else :{$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
+                                                                        
                                                                     }
                                                                 },
                                                                 flag:false
@@ -4443,7 +4563,59 @@ io.on('connection', (socket) => {
                                                         }
                                                     }
                                                 }
-                                            }
+                                            },
+                                            exposure: {
+                                                $reduce:{
+                                                    input:'$parentArray',
+                                                    initialValue: { value: 0, flag: true },
+                                                    in : {
+                                                        $cond:{
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
+                                                            then : {
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                flag: true,
+                                                                
+                                                            },
+                                                            else : {
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : {
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
+                                                                        },
+                                                                        else :{$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
+                                                                        
+                                                                    }
+                                                                },
+                                                                flag:false
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
                                         }
                                     }
                                 }
@@ -4459,7 +4631,8 @@ io.on('connection', (socket) => {
                                 selectionName: "$selections2.selectionName"
                               },
                               totalWinAmount: { $sum: "$selections2.winAmount2.value" },
-                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" },
+                              exposure : { $sum: "$selections2.exposure.value" }
                             }
                         },
                         {
@@ -4473,7 +4646,8 @@ io.on('connection', (socket) => {
                                 },
                                 totalLossAmount:{
                                     $multiply:["$totalLossAmount", -1]
-                                }
+                                },
+                                exposure:'$exposure'
                               }
                             }
                         },
@@ -4501,6 +4675,7 @@ io.on('connection', (socket) => {
                                         in: { 
                                             selectionName: "$$selection.selectionName",
                                             totalAmount: "$$selection.totalWinAmount",
+                                            exposure : {$multiply:["$$selection.exposure", -1]},
                                             winAmount: { 
                                                 $add : [
                                                     "$$selection.totalWinAmount", 
@@ -4582,7 +4757,7 @@ io.on('connection', (socket) => {
                                                 if : {$eq: ['$bettype2', "BACK"]},
                                                 then:{
                                                     $cond:{
-                                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
                                                         then:{
                                                             $sum: {
                                                                 $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -4597,7 +4772,7 @@ io.on('connection', (socket) => {
                                                 },
                                                 else:{
                                                     $cond:{
-                                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
                                                         then:{
                                                             $sum: {
                                                                $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -4626,6 +4801,9 @@ io.on('connection', (socket) => {
                                             }
                                         }
                                     },
+                                    exposure:{
+                                        $sum:'$exposure'
+                                    },
                                     parentArray: { $first: "$parentArray" }
                                 },
                             },
@@ -4637,6 +4815,7 @@ io.on('connection', (socket) => {
                                         $push: {
                                             selectionName: "$_id.selectionName",
                                             totalAmount: "$totalAmount",
+                                            exposure : "$exposure",
                                             matchName: "$_id.matchName",
                                             Stake: { $multiply: ["$Stake", -1] },
                                         },
@@ -4658,7 +4837,8 @@ io.on('connection', (socket) => {
                                                 matchName: "$$selection.matchName",
                                                 Stake: "$$selection.Stake",
                                                 winAmount: "$$selection.totalAmount",
-                                                lossAmount:"$$selection.Stake"
+                                                lossAmount:"$$selection.Stake",
+                                                exposure : "$$selection.exposure"
                                             }
                                         }
                                     }
@@ -4679,7 +4859,8 @@ io.on('connection', (socket) => {
                                     selectionName: "$selections.selectionName"
                                   },
                                   totalWinAmount: { $sum: "$selections.winAmount" },
-                                  totalLossAmount: { $sum: "$selections.lossAmount" }
+                                  totalLossAmount: { $sum: "$selections.lossAmount" },
+                                  exposure : { $sum : "$selections.exposure"}
                                 }
                             },
                             {
@@ -4689,7 +4870,8 @@ io.on('connection', (socket) => {
                                   selection: {
                                     selectionName: "$_id.selectionName",
                                     totalWinAmount: "$totalWinAmount",
-                                    totalLossAmount: "$totalLossAmount"
+                                    totalLossAmount: "$totalLossAmount",
+                                    exposure : "$exposure"
                                   }
                                 }
                             },
@@ -4717,6 +4899,7 @@ io.on('connection', (socket) => {
                                             in: { 
                                                 selectionName: "$$selection.selectionName",
                                                 totalAmount: "$$selection.totalWinAmount",
+                                                exposure : "$$selection.exposure",
                                                 winAmount: { 
                                                     $add : [
                                                         "$$selection.totalWinAmount", 
@@ -4775,9 +4958,7 @@ io.on('connection', (socket) => {
                 }
             })
             let resultPromise = await Promise.all(newUser)
-            console.log(resultPromise, "resultPromiseresultPromise")
             const result = resultPromise.filter(item => item && item.Bets && item.Bets.length > 0);
-            console.log(result, "resultresultresultresult")
             
             let matchName2 = await Bet.findOne({marketId: data.marketId})
             let matchName
@@ -4786,8 +4967,17 @@ io.on('connection', (socket) => {
                 matchName = matchName2.match
                 sport = matchName2.betType
             }
-
-           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
+            let runnerData = await runnerDataModel.findOne({marketId:data.marketId})
+            let check = false
+            let runn
+            if(runnerData){
+                runn = JSON.parse(runnerData.runners)
+                if(runn.length === 3){
+                    check = true
+                }
+            }
+            // console.log(result[0].userName)
+           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport, check, runn});
         }catch(err){
             console.log(err)
             socket.emit('UerBook', {message:"err", status:"error"})
@@ -4823,13 +5013,13 @@ io.on('connection', (socket) => {
                 let childrenUsername1 = []
                 let children
                 if(falg){
-                    children = await User.find({parentUsers:ele.id})
+                    childrenUsername1 = await User.distinct("userName", {parentUsers:ele.id})
                 }else{
-                    children = await User.find({parentUsers:ele._id})
+                    childrenUsername1 = await User.distinct("userName", {parentUsers:ele.id})
                 }
-                children.map(ele1 => {
-                    childrenUsername1.push(ele1.userName) 
-                })
+                // children.map(ele1 => {
+                //     childrenUsername1.push(ele1.userName) 
+                // })
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
                         {
@@ -4852,7 +5042,7 @@ io.on('connection', (socket) => {
                                             if : {$eq: ['$bettype2', "BACK"]},
                                             then:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
                                                     then:{
                                                         $sum: {
                                                             $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -4867,7 +5057,7 @@ io.on('connection', (socket) => {
                                             },
                                             else:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
                                                     then:{
                                                         $sum: {
                                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -4896,6 +5086,9 @@ io.on('connection', (socket) => {
                                         }
                                     }
                                 },
+                                exposure:{
+                                    $sum:'$exposure'
+                                },
                                 parentArray: { $first: "$parentArray" },
                                 role_type : { $first: "$role_type" }
                             }
@@ -4911,6 +5104,7 @@ io.on('connection', (socket) => {
                                         totalAmount: "$totalAmount",
                                         matchName: "$_id.matchName",
                                         Stake: { $multiply: ["$Stake", -1] },
+                                        exposure:"$exposure"
                                     }
                                 }
                             }
@@ -4931,7 +5125,8 @@ io.on('connection', (socket) => {
                                             matchName: "$$selection.matchName",
                                             Stake: "$$selection.Stake",
                                             winAmount: "$$selection.totalAmount",
-                                            lossAmount:"$$selection.Stake"
+                                            lossAmount:"$$selection.Stake",
+                                            exposure: "$$selection.exposure"
                                         }
                                     }
                                 }
@@ -4991,9 +5186,18 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", loginId]},
+                                                                                then:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
+                                                                            // $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else :{$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
                                                                     }
                                                                 },
                                                                 flag:false
@@ -5034,9 +5238,68 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", loginId]},
+                                                                                then:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else : {$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
+                                                                    }
+                                                                },
+                                                                flag:false
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            exposure:{
+                                                $reduce:{ 
+                                                    input:'$parentArray',
+                                                    initialValue: { value: 0, flag: true },
+                                                    in : {
+                                                        $cond:{
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
+                                                            then : {
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                flag: true,
+                                                                
+                                                            },
+                                                            else : {
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : {
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", loginId]},
+                                                                                then:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
+                                                                        },
+                                                                        else : {$cond:{
+                                                                            if : {$eq : ['$$value.flag', true]},
+                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            else:"$$value.value"
+                                                                        }}
                                                                     }
                                                                 },
                                                                 flag:false
@@ -5060,13 +5323,14 @@ io.on('connection', (socket) => {
                                 selectionName: "$selections2.selectionName"
                               },
                               totalWinAmount: { $sum: "$selections2.winAmount2.value" },
-                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" },
+                              exposure : { $sum : "$selections2.exposure.value"}
                             }
                         },
                         {
                             $project: {
                               _id: 0,
-                              elementUser: "$_id.elementUser",
+                              elementUser: "$_id.elementUser", 
                               selection: {
                                 selectionName: "$_id.selectionName",
                                 totalWinAmount: {
@@ -5074,7 +5338,8 @@ io.on('connection', (socket) => {
                                 },
                                 totalLossAmount:{
                                     $multiply:["$totalLossAmount", -1]
-                                }
+                                },
+                                exposure:"$exposure",
                               }
                             }
                         },
@@ -5102,6 +5367,7 @@ io.on('connection', (socket) => {
                                         in: { 
                                             selectionName: "$$selection.selectionName",
                                             totalAmount: "$$selection.totalWinAmount",
+                                            exposure : {$multiply:["$$selection.exposure", -1]},
                                             winAmount: { 
                                                 $add : [
                                                     "$$selection.totalWinAmount", 
@@ -5145,7 +5411,7 @@ io.on('connection', (socket) => {
                                                         }
                                                     }
                                                 ]
-                                            },
+                                            }
                                         }
                                     }
                                 }
@@ -5155,8 +5421,10 @@ io.on('connection', (socket) => {
 
 
                     if(falg){
+                        // console.log(Bets[0].selections)
                         return({User:ele, Bets:Bets, userName:data.userName})
                     }else{
+                        // console.log(Bets[0].selections)
                         return({User:ele, Bets:Bets})
                     }
 
@@ -5183,7 +5451,7 @@ io.on('connection', (socket) => {
                                                 if : {$eq: ['$bettype2', "BACK"]},
                                                 then:{
                                                     $cond:{
-                                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
                                                         then:{
                                                             $sum: {
                                                                 $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -5198,7 +5466,7 @@ io.on('connection', (socket) => {
                                                 },
                                                 else:{
                                                     $cond:{
-                                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
                                                         then:{
                                                             $sum: {
                                                                $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -5227,6 +5495,9 @@ io.on('connection', (socket) => {
                                             }
                                         }
                                     },
+                                    exposure:{
+                                        $sum:'$exposure'
+                                    },
                                     parentArray: { $first: "$parentArray" }
                                 },
                             },
@@ -5240,6 +5511,7 @@ io.on('connection', (socket) => {
                                             totalAmount: "$totalAmount",
                                             matchName: "$_id.matchName",
                                             Stake: { $multiply: ["$Stake", -1] },
+                                            exposure:"$exposure"
                                         },
                                     },
                                 },
@@ -5259,7 +5531,8 @@ io.on('connection', (socket) => {
                                                 matchName: "$$selection.matchName",
                                                 Stake: "$$selection.Stake",
                                                 winAmount: "$$selection.totalAmount",
-                                                lossAmount:"$$selection.Stake"
+                                                lossAmount:"$$selection.Stake",
+                                                exposure: "$$selection.exposure"
                                             }
                                         }
                                     }
@@ -5319,9 +5592,17 @@ io.on('connection', (socket) => {
                                                                         $cond : {
                                                                             if : { $eq : ["$$value.value" , 0]},
                                                                             then : {
-                                                                                $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                                $cond:{
+                                                                                    if : {$eq : ["$parentId", loginId]},
+                                                                                    then:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                    else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                                }
                                                                             },
-                                                                            else : "$$value.value"
+                                                                            else : {$cond:{
+                                                                                if : {$eq : ['$$value.flag', true]},
+                                                                                then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:"$$value.value"
+                                                                            }}
                                                                         }
                                                                     },
                                                                     flag:false
@@ -5362,9 +5643,68 @@ io.on('connection', (socket) => {
                                                                         $cond : {
                                                                             if : { $eq : ["$$value.value" , 0]},
                                                                             then : {
-                                                                                $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                                $cond:{
+                                                                                    if : {$eq : ["$parentId", loginId]},
+                                                                                    then:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                    else:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                                }
                                                                             },
-                                                                            else : "$$value.value"
+                                                                            else :{$cond:{
+                                                                                if : {$eq : ['$$value.flag', true]},
+                                                                                then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:"$$value.value"
+                                                                            }}
+                                                                        }
+                                                                    },
+                                                                    flag:false
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                exposure:{
+                                                    $reduce:{ 
+                                                        input:'$parentArray',
+                                                        initialValue: { value: 0, flag: true },
+                                                        in : {
+                                                            $cond:{
+                                                                if : {
+                                                                    $and: [
+                                                                      { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                      { $eq: ['$$value.flag', true] } 
+                                                                    ]
+                                                                  },
+                                                                then : {
+                                                                    value: { 
+                                                                        $cond:{
+                                                                            if:{ $eq: ["$$value.value", 0] },
+                                                                            then:{
+                                                                                $multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]
+                                                                            },
+                                                                            else:{
+                                                                                $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    flag: true,
+                                                                    
+                                                                },
+                                                                else : {
+                                                                    value: {
+                                                                        $cond : {
+                                                                            if : { $eq : ["$$value.value" , 0]},
+                                                                            then : {
+                                                                                $cond:{
+                                                                                    if : {$eq : ["$parentId", loginId]},
+                                                                                    then:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                    else:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                                }
+                                                                            },
+                                                                            else : {$cond:{
+                                                                                if : {$eq : ['$$value.flag', true]},
+                                                                                then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                                else:"$$value.value"
+                                                                            }}
                                                                         }
                                                                     },
                                                                     flag:false
@@ -5388,7 +5728,8 @@ io.on('connection', (socket) => {
                                     selectionName: "$selections2.selectionName"
                                   },
                                   totalWinAmount: { $sum: "$selections2.winAmount2.value" },
-                                  totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                                  totalLossAmount: { $sum: "$selections2.lossAmount2.value" },
+                                  exposure : { $sum : "$selections2.exposure.value"}
                                 }
                             },
                             {
@@ -5402,7 +5743,8 @@ io.on('connection', (socket) => {
                                     },
                                     totalLossAmount:{
                                         $multiply:["$totalLossAmount", -1]
-                                    }
+                                    },
+                                    exposure:"$exposure",
                                   }
                                 }
                             },
@@ -5430,6 +5772,7 @@ io.on('connection', (socket) => {
                                             in: { 
                                                 selectionName: "$$selection.selectionName",
                                                 totalAmount: "$$selection.totalWinAmount",
+                                                exposure : {$multiply:["$$selection.exposure", -1]},
                                                 winAmount: { 
                                                     $add : [
                                                         "$$selection.totalWinAmount", 
@@ -5482,8 +5825,8 @@ io.on('connection', (socket) => {
 
                         ])
                         // console.log(Bets, "BETSBETS")
-                        // console.log(Bets[0].selections, "selectionsselections")
                         if(Bets.length > 0){
+                            // console.log(Bets[0].selections, "selectionsselections")
 
                             return({User:ele, Bets:Bets, status:'User', userName:data.userName})
                         }
@@ -5506,8 +5849,17 @@ io.on('connection', (socket) => {
                 matchName = matchName2.match
                 sport = matchName2.betType
             }
+            let runnerData = await runnerDataModel.findOne({marketId:data.marketId})
+            let check = false
+            let runn
+            if(runnerData){
+                runn = JSON.parse(runnerData.runners)
+                if(runn.length === 3){
+                    check = true
+                }
+            }
 
-           socket.emit('Book', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
+           socket.emit('Book', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport,check,runn});
         }catch(err){
             console.log(err)
             socket.emit('Book', {message:"err", status:"error"})
@@ -5524,10 +5876,10 @@ io.on('connection', (socket) => {
             data.id = parentUser._id.toString()
         }
         let forcheck = await Bet.find({marketId: data.marketId}) 
-        let children = await User.find({parentUsers:data.id, role_type: 5})
-        children.map(ele1 => {
-            childrenUsername1.push(ele1.userName) 
-        })
+        childrenUsername1 = await User.distinct("userName", {parentUsers:data.id, role_type: 5})
+        // children.map(ele1 => {
+        //     childrenUsername1.push(ele1.userName) 
+        // })
         // let checkBET = await Bet.findOne({marketId:data.marketId})
         if(forcheck.length > 0){
             if(data.marketId.slice(-2).startsWith('OE')){
@@ -5601,10 +5953,23 @@ io.on('connection', (socket) => {
                                                 value: {
                                                     $cond : {
                                                         if : { $eq : ["$$value.value" , 0]},
-                                                        then : {
-                                                            $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        then :
+                                                        {
+                                                            $cond:{
+                                                                if : {$eq : ["$parentId", data.id]},
+                                                                then:{$subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                else:{$subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                            }
                                                         },
-                                                        else : "$$value.value"
+                                                        
+                                                        // {
+                                                        //     $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        // },
+                                                        else : {$cond:{
+                                                            if : {$eq : ['$$value.flag', true]},
+                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                            else:"$$value.value"
+                                                        }}
                                                     }
                                                 },
                                                 flag:false
@@ -5645,9 +6010,21 @@ io.on('connection', (socket) => {
                                                     $cond : {
                                                         if : { $eq : ["$$value.value" , 0]},
                                                         then : {
-                                                            $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                            $cond:{
+                                                                if : {$eq : ["$parentId", data.id]},
+                                                                then:{$subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                else:{$subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                            }
                                                         },
-                                                        else : "$$value.value"
+                                                        
+                                                        // {
+                                                        //     $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        // },
+                                                        else : {$cond:{
+                                                            if : {$eq : ['$$value.flag', true]},
+                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                            else:"$$value.value"
+                                                        }}
                                                     }
                                                 },
                                                 flag:false
@@ -5815,9 +6192,21 @@ io.on('connection', (socket) => {
                                                     $cond : {
                                                         if : { $eq : ["$$value.value" , 0]},
                                                         then : {
-                                                            $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                            $cond:{
+                                                                if : {$eq : ["$parentId", data.id]},
+                                                                then:{$subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                else:{$subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                            }
                                                         },
-                                                        else : "$$value.value"
+                                                        
+                                                        // {
+                                                        //     $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        // },
+                                                        else : {$cond:{
+                                                            if : {$eq : ['$$value.flag', true]},
+                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                            else:"$$value.value"
+                                                        }}
                                                     }
                                                 },
                                                 flag:false
@@ -5858,9 +6247,20 @@ io.on('connection', (socket) => {
                                                     $cond : {
                                                         if : { $eq : ["$$value.value" , 0]},
                                                         then : {
-                                                            $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                            $cond:{
+                                                                if : {$eq : ["$parentId", data.id]},
+                                                                then:{$subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                else:{$subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                            }
                                                         },
-                                                        else : "$$value.value"
+                                                        // {
+                                                        //     $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        // },
+                                                        else : {$cond:{
+                                                            if : {$eq : ['$$value.flag', true]},
+                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                            else:"$$value.value"
+                                                        }}
                                                     }
                                                 },
                                                 flag:false
@@ -6463,7 +6863,7 @@ io.on('connection', (socket) => {
                 try{
                     let commission = commissionAmount[0].totalCommission
                     await User.findByIdAndUpdate(operationUser._id,{$inc:{availableBalance:commission}})
-                    let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{availableBalance: -commission}})
+                    let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{availableBalance: -commission, downlineBalance:commission}})
                     let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
                     let childdata = {
@@ -6520,27 +6920,18 @@ io.on('connection', (socket) => {
 
 
     socket.on('UpdateBetLimit', async(data) => {
-        // console.log(data, "LimitData")
+        console.log(data, "LimitData")
         try{
-            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            // console.log(loginUser, "loginUser")
-            if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
-                let check = await betLimit.findOne({type:data.data.type})
-                // console.log(check)
-                if(check){
-                    // console.log('WORKING')
-                    await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
-                    socket.emit('UpdateBetLimit', {status:'success'})
-                }else{
-                    await betLimit.create(data.data)
-                    socket.emit('UpdateBetLimit', {status:'success'})
-                }
+            let check = await betLimit.findOne({type:data.data.type})
+            // console.log(check)
+            if(check){
+                // console.log('WORKING')
+                await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
+                socket.emit('UpdateBetLimit', {status:'success'})
             }else{
-                socket.emit('UpdateBetLimit', {message:"Please provide a valid password", status:"err"})
-            }   
-
-
-
+                await betLimit.create(data.data)
+                socket.emit('UpdateBetLimit', {status:'success'})
+            }
         }catch(err){
             console.log(err)
             socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
@@ -6595,9 +6986,11 @@ io.on('connection', (socket) => {
             
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
-                socket.emit('ROLLBACKDETAILS', 'please provide a valid password') 
+                socket.emit('ROLLBACKDETAILS', {msg:'please provide a valid password', status:'err'}) 
             }else{ 
-                socket.emit('ROLLBACKDETAILS', {message:'RollBack Process Start', id:data.id})
+                let betdata = await Bet.findOne({marketId:data.id})
+                let runnersData = await runnerDataModel.findOne({marketId:data.id})
+                socket.emit('ROLLBACKDETAILS', {message:'RollBack Process Start', id:data.id, betdata, runnersData})
                 let resultDate = rollBackBet(data)
             }
         }catch(err){
@@ -6754,7 +7147,10 @@ io.on('connection', (socket) => {
                   },
                   {
                       $group: {
-                          _id: "$eventName",
+                          _id:{
+                            eventName:'$eventName',
+                            id:'$eventId'
+                          },
                       totalCommission: { $sum: "$commission" },
                       eventDate: { $first: "$eventDate" }
                     }
@@ -7213,7 +7609,7 @@ io.on('connection', (socket) => {
                         status: "OPEN",
                         userName:userData.userName,
                         marketName: {
-                            $regex: /^(match|book)/i
+                            $regex: /^(match|book|winn)/i
                         }
                         
                     }
@@ -7222,75 +7618,125 @@ io.on('connection', (socket) => {
                     $group:{
                         _id: {
                             selectionName: "$selectionName",
-                            marketId : "$marketId"
+                            marketId : "$marketId",
+                            matchName: "$match"
                         },
-                        totalWinAmount:{
-                            $sum: { 
-                                $cond: { 
-                                    if : {$eq: ['$bettype2', "BACK"]},
-                                    then : {
-                                        $sum: "$WinAmount"
-                                    },
-                                    else:{ 
-                                        $sum: "$exposure"
+                        totalAmount: {
+                            $sum: {
+                            $cond: { 
+                                if : {$eq: ['$bettype2', "BACK"]},
+                                then:{
+                                    $cond:{
+                                        if: {
+                                                $or: [
+                                                    { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                ]
+                                            },
+                                        then:{
+                                            $sum: {
+                                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                            }
+                                        },
+                                        else:{
+                                            $sum: {
+                                                $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                            }
+                                        }
                                     }
-                                }
-                            }
-                        },
-                        totalLossAmount:{
-                            $sum: { 
-                                $cond: { 
-                                    if : {$eq: ['$bettype2', "BACK"]},
-                                    then : {
-                                        $sum: "$exposure"
-                                    },
-                                    else:{ 
-                                        $sum: "$WinAmount"
+                                },
+                                else:{
+                                    $cond:{
+                                        if: {
+                                                $or: [
+                                                    { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                ]
+                                            },
+                                        then:{
+                                            $sum: {
+                                                $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                            }
+                                        },
+                                        else:{
+                                            $sum: { 
+                                                $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
+                    },
+                    Stake: {
+                        $sum: { 
+                           $cond: { 
+                               if : {$eq: ['$bettype2', "BACK"]},
+                               then : {
+                                   $sum: '$Stake' 
+                               },
+                               else : {
+                                   $multiply: ['$Stake', -1]
+                               }
+                           }
+                       }
+                   },
+                   exposure:{
+                    // $sum:'$exposure'
+                    $sum: { 
+                        $cond: { 
+                            if : {$eq: ['$bettype2', "BACK"]},
+                            then : {
+                                $sum: '$exposure' 
+                            },
+                            else : {
+                                $multiply: ['$Stake', -1]
+                            }
+                        }
                     }
+                }
+                }
                 },
                 {
-                    $group:{
-                        _id:"$_id.marketId",
-                        data:{ 
-                            $push:{ 
-                                selectionName : "$_id.selectionName",
-                                totalWinAmount : "$totalWinAmount",
-                                totalLossAmount : {
-                                    $multiply:["$totalLossAmount", -1]
-                                }
-                            }
-                        }
-
-                    }
+                    $group: {
+                        _id: "$_id.marketId",
+                        selections: {
+                            $push: {
+                                selectionName: "$_id.selectionName",
+                                totalAmount: '$totalAmount',
+                                exposure:'$exposure',
+                                matchName: "$_id.matchName",
+                                Stake: { $multiply: ["$Stake", -1] },
+                            },
+                        },
+                    },
                 },
                 {
                     $project: {
                       _id: "$_id",
                       data: {
                         $map: {
-                          input: "$data",
+                          input: "$selections",
                           as: "item",
                           in: {
                             selectionName: "$$item.selectionName",
-                            totalWinAmount: "$$item.totalWinAmount",
+                            totalAmount: "$$item.totalAmount",
+                            exposure : "$$item.exposure",
+                            Stake : "$$item.Stake",
                             totalLossAmount: {
                               $add: [
-                                "$$item.totalLossAmount",
+                                "$$item.totalAmount",
                                 {
                                     $sum:{
                                         $reduce: { 
-                                            input: "$data",
+                                            input: "$selections",
                                             initialValue: 0,
                                             in: { 
                                                 $cond: { 
                                                     if: {
                                                         $ne: ["$$this.selectionName", "$$item.selectionName"] 
                                                       },
-                                                      then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                      then: { $add: ["$$value", "$$this.Stake"]  },
                                                       else: {
                                                           $add: ["$$value", 0] 
                                                       }
@@ -7306,56 +7752,95 @@ io.on('connection', (socket) => {
                       }
                     }
                   },
-                  {
-                    $project: {
-                      _id: 1,
-                      data: 1
-                    }
-                  },
-                  {
-                    $unwind: "$data"
-                  },
-                  {
-                    $sort: {
-                      "data.totalLossAmount": 1
-                    }
-                  },
-                  {
-                    $group: {
-                      _id: "$_id",
-                      selectionName: { $first: "$data.selectionName" },
-                      amount: { $first: "$data.totalLossAmount" }
-                    }
-                  },
-                  {
-                        $project: {
-                        _id: 1,
-                        marketId: "$_id",
-                        amount: 1
-                        }
-                    },
-                    // {
-                    //     $project:{
-                    //         _id:0,
-                    //         amount:{
-                    //             $sum:'$amount'
-                    //         }
-                    //     }
-                    // }
-                    {
-                        $group:{
-                            _id:null,
-                            amount:{ $sum:'$amount'}
-                        }
-                    }
+                //   {
+                //     $project: {
+                //       _id: 1,
+                //       data: 1
+                //     }
+                //   },
+                //   {
+                //     $unwind: "$data"
+                //   },
+                //   {
+                //     $sort: {
+                //       "data.totalLossAmount": 1
+                //     }
+                //   },
+                //   {
+                //     $group: {
+                //       _id: "$_id",
+                //       selectionName: { $first: "$data.selectionName" },
+                //       amount: { $first: "$data.totalLossAmount" }
+                //     }
+                //   },
+                //   {
+                //         $project: {
+                //         _id: 1,
+                //         marketId: "$_id",
+                //         amount: 1
+                //         }
+                //     },
+                //     // {
+                //     //     $project:{
+                //     //         _id:0,
+                //     //         amount:{
+                //     //             $sum:'$amount'
+                //     //         }
+                //     //     }
+                //     // }
+                //     {
+                //         $group:{
+                //             _id:null,
+                //             amount:{ $sum:'$amount'}
+                //         }
+                //     }
             ])
 
             let exposer3Amount = 0
+            // console.log(exposure3[1].data, exposure3[0].data,userData.userName)
             if(exposure3.length > 0){
-                exposer3Amount = exposure3[0].amount
+                for(let i = 0; i < exposure3.length; i++){
+                    let thisAMOunt = 0
+                    let thisAMOunt2 = 0
+                    let statusrun = true
+                    let runnersData1 = await runnerData.findOne({marketId:exposure3[i]._id})
+                    if(runnersData1){
+                        runnersData1 = JSON.parse(runnersData1.runners)
+                        // console.log(runnersData1)
+                        for(const runDATA in runnersData1){
+                            let thatdata = exposure3[i].data.find(item =>  item.selectionName === runnersData1[runDATA].runner)
+                            if(thatdata ){
+                                if(thatdata.totalLossAmount < 0){
+                                if(thatdata.totalLossAmount < thisAMOunt){
+                                        thisAMOunt = thatdata.totalLossAmount
+                                    }
+                                }
+                            }else{
+                                statusrun = false
+                            }
+                        }
+                    }
+                    if(!statusrun){
+                        for(const j in exposure3[i].data){
+                            thisAMOunt2 = thisAMOunt2 - exposure3[i].data[j].exposure
+                        }
+                    // console.log(thisAMOunt, thisAMOunt2)
+                    }
+                    if(thisAMOunt > thisAMOunt2){
+                        if(thisAMOunt2 < 0){
+                            exposer3Amount = exposer3Amount + thisAMOunt2
+                        }
+                    }else{
+                        if(thisAMOunt < 0){
+                            exposer3Amount = exposer3Amount + thisAMOunt
+                        }
+                    }
+                }
+                // exposer3Amount = exposure3[0].amount
+                // console.log(exposer3Amount)
             }
         
-            // console.log(exposure3, exposure2, exposure1)
+            // console.log(exposure3, exposure2, exposure1,'==>exposures')
 
             function getExposure(runs,obj){
                 runs.sort((a, b) => a - b)
@@ -7490,13 +7975,21 @@ io.on('connection', (socket) => {
 
     socket.on('suspendResume', async(data) => {
         try{
-            let check = await resumeSuspendModel.findOne({marketId:data.id})
+            let check
+            let white
+            if(data.LOGINDATA.LOGINUSER.whiteLabel === "1"){
+                check = await resumeSuspendModel.findOne({marketId:data.id, whiteLabel:'1'})
+                white = "1"
+            }else{
+                check = await resumeSuspendModel.findOne({marketId:data.id, whiteLabel:process.env.whiteLabelName})
+                white = process.env.whiteLabelName
+            }
             let status 
             if(check){
-                await resumeSuspendModel.findOneAndUpdate({marketId:data.id}, {userName:data.LOGINDATA.LOGINUSER.userName, status:!check.status})
+                await resumeSuspendModel.findOneAndUpdate({marketId:data.id, whiteLabel:white}, {userName:data.LOGINDATA.LOGINUSER.userName, status:!check.status})
                 status = !check.status
             }else{
-                await resumeSuspendModel.create({marketId:data.id, userName:data.LOGINDATA.LOGINUSER.userName, status:false})
+                await resumeSuspendModel.create({marketId:data.id, userName:data.LOGINDATA.LOGINUSER.userName, status:false, whiteLabel:white})
                 status = false
             }
             socket.emit('suspendResume', {status, marketId:data.id, status2:'success'})
@@ -7859,7 +8352,7 @@ io.on('connection', (socket) => {
             // children.map(ele => {
             //     childrenArr.push(ele.userName)
             // })
-            let paymentreqcount = await paymentReportModel.count({username:{$in:childrenArr},status:'pending'})
+            let paymentreqcount = await paymentReportModel.countDocuments({username:{$in:childrenArr},status:'pending'})
             socket.emit('getcountofpaymentreq',{status:'success',paymentreqcount})
         }catch(err){
             socket.emit('getcountofpaymentreq',{status:'fail',msg:'something went wrong'})
@@ -7869,7 +8362,7 @@ io.on('connection', (socket) => {
 
     socket.on('getcountofWITHROWREQ',async(data)=>{
         try{
-            let withrowReqCount = await withdowReqModel.count({sdmUserName:data.LOGINUSER.userName,reqStatus:'pending'})
+            let withrowReqCount = await withdowReqModel.countDocuments({sdmUserName:data.LOGINUSER.userName,reqStatus:'pending'})
             socket.emit('getcountofWITHROWREQ',{status:'success',withrowReqCount})
         }catch(err){
             socket.emit('getcountofWITHROWREQ',{status:'fail',msg:'something went wrong'})
@@ -7879,7 +8372,7 @@ io.on('connection', (socket) => {
 
     socket.on('channelId', async(data) => {
 
-        console.log(data)
+        // console.log(data)
         if(data.LOGINDATA.LOGINUSER){
             let ip = data.LOGINDATA.IP.split('::ffff:')[1];
             let eventId = data.search.split('=')[1]
@@ -7892,7 +8385,7 @@ io.on('connection', (socket) => {
                 }
             }else{
                 liveStream = await liveStreameData(data.channelId, ip)
-                console.log(liveStream, "liveStreamliveStreamliveStream")
+                // console.log(liveStream, "liveStreamliveStreamliveStream")
                 const src_regex = /src='([^']+)'/;
                 let match1
                 // let src
@@ -7907,7 +8400,7 @@ io.on('connection', (socket) => {
                     }
                 }
             }
-            console.log(srs, "liveStreamliveStreamliveStream")
+            // console.log(srs, "liveStreamliveStreamliveStream")
             socket.emit("channelId", srs)
         }
     })
@@ -8047,7 +8540,7 @@ io.on('connection', (socket) => {
         if(data.LOGINUSER){
             try{
                 let accounts = await manageAccountsUser.find({userName:data.LOGINUSER.userName, pmethod:'paytmW', status:true})
-                console.log(accounts, "accountsaccounts")
+                // console.log(accounts, "accountsaccounts")
                 socket.emit('getAccountDataPaytm', {status:'sucess', data:accounts})
             }catch{
                 console.log(err)
@@ -8127,7 +8620,8 @@ io.on('connection', (socket) => {
         // console.log(data)
         try{
             let reqData = await withdowReqModel.findById(data.data.id)
-            if(reqData){
+            // console.log(reqData)
+            if(reqData && reqData.reqStatus === "pending"){
                 // console.log(reqData, "reqDatareqDatareqData")
                 let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
                 const passcheck = await userCe.correctPassword(data.data.password, userCe.password)
@@ -8160,7 +8654,7 @@ io.on('connection', (socket) => {
                         role_type:parentUser.role_type,
                         Remark:reqData.note
                     }
-                    let updatedParentUser = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance:amount, balance:amount}})
+                    let updatedParentUser = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance:amount, balance:amount, downlineBalance : -amount}})
                     let updatedUser = await User.findByIdAndUpdate(user.id, {$inc:{availableBalance: -amount, balance: -amount}})
                     if(updatedParentUser && updatedUser){
                         await AccModel.create(userAccData)
@@ -8172,7 +8666,7 @@ io.on('connection', (socket) => {
                     socket.emit('reqApproveUpdate', {status:'err', msg:'Please Provide a valid Password'})
                 }
             }else{
-                socket.emit('reqApproveUpdate', {status:'err', msg:'Please try again leter'})
+                socket.emit('reqApproveUpdate', {status:'err', msg:'There is no pending request found with that Id'})
             }
         }catch(err){
             console.log(err)
@@ -8281,7 +8775,7 @@ io.on('connection', (socket) => {
                 }
 
             }else{
-                console.log('WORKING123456')
+                // console.log('WORKING123456')
                 socket.emit('editData', {status:'err', msg:'Please try again leter'})
             }
         }catch(err){
@@ -8389,6 +8883,9 @@ io.on('connection', (socket) => {
         if(Bets.length > 0){
             if(Bets[0].betType === 'Tennis' || Bets[0].betType === 'Cricket'){
                 Status = true
+                if(Bets[0].event.toLowerCase().startsWith('test')){
+                    Status = false
+                }
             }
         }
         socket.emit('cashoutCheck', {Status})
@@ -8405,7 +8902,7 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             let runners = await runnerData.findOne({marketId:data.id})
             runners = JSON.parse(runners.runners)
-            console.log(runners, "runnersrunners")
+            // console.log(runners, "runnersrunners")
             let bets = await Bet.aggregate([
                 {
                     $match:{
@@ -8536,8 +9033,1273 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on('getbasicData', async(data) => {
+        let basicData = await globalSettingModel.findById(data.id)
+        socket.emit('getbasicData', {basicData,tableData: data.tableData})
+    })
+
+
+    socket.on('colorCode', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            let colorCodesForThatUser = await colorCodeModel.findOne({whitelabel:data.LOGINDATA.LOGINUSER.whiteLabel})
+            if(colorCodesForThatUser){
+                // console.log(data.data)
+                data.data.whitelabel = data.LOGINDATA.LOGINUSER.whiteLabel
+                let UpdatedDATA = await colorCodeModel.findOneAndUpdate({whitelabel:data.LOGINDATA.LOGINUSER.whiteLabel}, data.data)
+                if(UpdatedDATA){
+                    socket.emit('colorCode', {status:'sucess'})
+                }else{
+                    socket.emit('colorCode', {status:'err'})
+                }
+            }else{
+                // console.log(data.data, "jgfghfghf")
+                data.data.whitelabel = data.LOGINDATA.LOGINUSER.whiteLabel
+                let UpdatedDATA = await colorCodeModel.create(data.data)
+                if(UpdatedDATA){
+                    socket.emit('colorCode', {status:'sucess'})
+                }else{
+                    socket.emit('colorCode', {status:'err'})
+                }
+            }
+        }
+    })
+
+
+    socket.on('getRefresh', async(data) => {
+        let getMapBetData = await Bet.aggregate([
+            {
+                $match: {
+                    status:"MAP",
+                    eventId:data,
+                }
+            },
+            {
+                $group: {
+                  _id: "$marketId",
+                  count: { $sum: 1 },
+                }
+            }
+        ])
+        let settledeBetData = await Bet.aggregate([
+            {
+                $match: {
+                    status:{$nin: ["OPEN", "CANCEL", "MAP"]},
+                    eventId:data
+                }
+            },
+            {
+                $group: {
+                  _id: "$marketId",
+                  count: { $sum: 1 },
+                }
+            }
+        ])
+        let cancelledBetData = await Bet.aggregate([
+            {
+                $match: {
+                    status:"CANCEL",
+                    eventId:data
+                }
+            },
+            {
+                $group: {
+                  _id: "$marketId",
+                  count: { $sum: 1 },
+                }
+            }
+        ])
+       socket.emit('getRefresh', {getMapBetData, settledeBetData, cancelledBetData})
+    })
+
+    socket.on('GETMarketResult', async(data) => {
+
+        try{
+            const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
+            let result;
+            await fetch(fullUrl, {
+                method:'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json'
+                    },
+                body:JSON.stringify([data])
+            }).then(res =>res.json())
+            .then(data => {
+                result = data
+            })
+            // console.log(result)
+            if(result.data.length > 0){
+                socket.emit('GETMarketResult', {result:result.data[0].result, status:'sucess'})
+            }else{
+                socket.emit('GETMarketResult', {result:'result yet to be declared', status:'sucess'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('GETMarketResult', {result:'Please try again leter', status:'err'})
+        }
+    })
+
+    socket.on('marketIdbookDetails', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            let betsMarketIdWise = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        eventId: data.eventId,
+                        userName:data.LOGINDATA.LOGINUSER.userName
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                        marketId: "$marketId",
+                        selectionName: "$selectionName",
+                        matchName: "$match",
+                    },
+                    totalAmount: {
+                            $sum: {
+                            $cond: { 
+                                if : {$eq: ['$bettype2', "BACK"]},
+                                then:{
+                                    $cond:{
+                                        if: {
+                                                $or: [
+                                                    { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                ]
+                                            },
+                                        then:{
+                                            $sum: {
+                                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                            }
+                                        },
+                                        else:{
+                                            $sum: {
+                                                $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                            }
+                                        }
+                                    }
+                                },
+                                else:{
+                                    $cond:{
+                                        if: {
+                                                $or: [
+                                                    { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                ]
+                                            },
+                                        then:{
+                                            $sum: {
+                                                $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                            }
+                                        },
+                                        else:{
+                                            $sum: { 
+                                                $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    Stake: {
+                         $sum: { 
+                            $cond: { 
+                                if : {$eq: ['$bettype2', "BACK"]},
+                                then : {
+                                    $sum: '$Stake' 
+                                },
+                                else : {
+                                    $multiply: ['$Stake', -1]
+                                }
+                            }
+                        }
+                    },
+                    exposure:{
+                        // $sum:'$exposure'
+                        $sum: { 
+                            $cond: { 
+                                if : {$eq: ['$bettype2', "BACK"]},
+                                then : {
+                                    $sum: '$exposure' 
+                                },
+                                else : {
+                                    $multiply: ['$Stake', -1]
+                                }
+                            }
+                        }
+                    }
+                },
+                },
+                {
+                    $group: {
+                        _id: "$_id.marketId",
+                        selections: {
+                            $push: {
+                                selectionName: "$_id.selectionName",
+                                totalAmount: '$totalAmount',
+                                exposure:'$exposure',
+                                matchName: "$_id.matchName",
+                                Stake: { $multiply: ["$Stake", -1] },
+                            },
+                        },
+                    },
+                },
+            ])
+
+            let marketIds = await Bet.distinct('marketId', {status: "OPEN", eventId: data.eventId,})
+            let runnerData = await runnerDataModel.find({marketId:{$in:marketIds}})
+            // console.log(runnerData)
+            for(let i = 0; i < betsMarketIdWise.length; i++){
+                let currentMarketrunnersData = runnerData.find(item => item.marketId == betsMarketIdWise[i]._id)
+                if(currentMarketrunnersData){
+                    betsMarketIdWise[i].runnersData = JSON.parse(currentMarketrunnersData.runners)
+                }
+            }
+            console.log(betsMarketIdWise[0])
+            socket.emit("marketIdbookDetails" ,{betsMarketIdWise, status: data.status})
+        }else{
+            betsMarketIdWise = []
+            socket.emit("marketIdbookDetails" ,{betsMarketIdWise, status: data.status})
+        }
+
+    })
+
+    socket.on('marketIdbookDetailsFANCY', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            let betDetails = await Bet.distinct('marketId', {status: "OPEN",eventId: data.eventId,userName:data.LOGINDATA.LOGINUSER.userName,marketId: {$regex: /(OE|F2)$/}})
+            socket.emit("marketIdbookDetailsFANCY", {betDetails})
+        }
+    })
+
+
+    socket.on('getFancyBookDATAuserSide', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            if(data.id.slice(-2).startsWith('OE')){
+                let betDetails = await Bet.aggregate([
+                    {
+                        $match : {
+                            status: "OPEN",
+                            marketId : data.id,
+                            userName:data.LOGINDATA.LOGINUSER.userName
+                        }
+                    },
+                    {
+                        $group: { 
+                            _id: {
+                                "secId":"$secId",
+                            },
+                            totalAmount: { 
+                                $sum: '$returns'
+                            },
+                            totalWinAmount:{
+                                $sum: { 
+                                    $cond : {
+                                        if : {$eq: ["$secId", "odd_Even_Yes"]},
+                                    then:{
+                                        $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                    },
+                                    else:"$Stake"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        $group: {
+                          _id: null,
+                          data: {
+                            $push: {
+                              _id: "$_id.secId",
+                              totalAmount: {
+                                $multiply:["$totalAmount", 1]
+                              },
+                              totalWinAmount: {
+                                $multiply:["$totalWinAmount", 1]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        $project: {
+                          _id: 0,
+                          data: {
+                            $map: {
+                              input: "$data",
+                              as: "item",
+                              in: {
+                                _id: "$$item._id",
+                                totalAmount: "$$item.totalAmount",
+                                totalWinAmount: "$$item.totalWinAmount",
+                                totalWinAmount2: {
+                                  $add: ["$$item.totalWinAmount", {
+                                    $reduce: { 
+                                        input: "$data",
+                                        initialValue: 0,
+                                        in: {
+                                            $cond: {
+                                                if: {
+                                                    $ne: ["$$this._id", "$$item._id"] 
+                                                },
+                                                then: { $add: ["$$value", "$$this.totalAmount"] },
+                                                else: {
+                                                    $add: ["$$value", 0] 
+                                                }
+                                            }
+                                        }
+                                    }
+                                  }]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                ])
+                socket.emit('getFancyBookDATAuserSide', {betDetails:betDetails[0].data, status:'ODD'})
+            }else{
+                let betDetails = await Bet.aggregate([
+                    {
+                        $match : {
+                            status: "OPEN",
+                            marketId : data.id,
+                            userName:data.LOGINDATA.LOGINUSER.userName
+                        }
+                    },
+                    {
+                        $addFields: {
+                          runs: {
+                            $toInt: {
+                              $arrayElemAt: [
+                                { $split: ["$selectionName", "@"] },
+                                1 
+                              ]
+                            }
+                          }
+                        }
+                    },
+                    {
+                        $group: { 
+                            _id: {
+                                "secId":"$secId",
+                                "runs":"$runs"
+                            },
+                            totalAmount: { 
+                                $sum: '$returns'
+                            },
+                            totalWinAmount:{
+                                $sum: { 
+                                    $cond : {
+                                        if : {$eq: ["$secId", "odd_Even_Yes"]},
+                                    then:{
+                                        $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                    },
+                                    else:"$Stake"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        $project:{
+                            _id:0,
+                            secId: "$_id.secId",
+                            runs: "$_id.runs",
+                            totalAmount:"$totalAmount",
+                            totalWinAmount:"$totalWinAmount",
+                        }
+                    },
+                    {
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $addToSet: "$runs" },
+                          data: { $push: "$$ROOT" } 
+                        }
+                    },
+                    {
+                        $project: {
+                          _id: 0, 
+                          uniqueRuns: 1,
+                          data: 1 
+                        }
+                      },
+                      {
+                        $unwind: "$uniqueRuns" 
+                      },
+                      {
+                        $sort: {
+                          "uniqueRuns": 1 
+                        }
+                      },
+                      {
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $push: "$uniqueRuns" },
+                          data: { $push: "$data" }
+                        }
+                      },
+                ])
+                console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
+                let dataToshow = []
+                if(betDetails.length != 0){
+                    betDetails = betDetails[0]
+                    for(let i = 0; i < betDetails.uniqueRuns.length; i++){ 
+                        if(betDetails.uniqueRuns.length === 1){
+                            let data1 = {}
+                            data1.message = `${betDetails.uniqueRuns[i] - 1} or less`
+                            let sum = 0
+                            for(let j = 0; j < betDetails.data[0].length; j++){
+                                if(betDetails.data[0][j].secId === "odd_Even_No"){
+                                    sum += betDetails.data[0][j].totalWinAmount
+                                }else{
+                                    sum += betDetails.data[0][j].totalAmount
+                                }
+                            }
+                            data1.sum = sum
+                            dataToshow.push(data1)
+                            let data2 = {}
+                            let sum2 = 0
+                            data2.message = `${betDetails.uniqueRuns[i]} or more`
+                            for(let j = 0; j < betDetails.data[0].length; j++){
+                                if(betDetails.data[0][j].secId === "odd_Even_Yes"){
+                                    sum2 += betDetails.data[0][j].totalWinAmount
+                                }else{
+                                    sum2 += betDetails.data[0][j].totalAmount
+                                }
+                            }
+                            data2.sum = sum2
+                            dataToshow.push(data2)
+                        }else{
+                            if(i === 0){
+                                let data = {}
+                                data.message = `${betDetails.uniqueRuns[i] - 1} or less`
+                                let sum = 0
+                                for(let j = 0; j < betDetails.data[0].length; j++){
+                                    if(betDetails.data[0][j].secId === "odd_Even_No" && betDetails.data[0][j].runs >= (betDetails.uniqueRuns[i])){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }else{
+                                        sum += betDetails.data[0][j].totalAmount
+                                    }
+                                }
+                                data.sum = sum
+                                dataToshow.push(data)
+                            }else if (i === (betDetails.uniqueRuns.length - 1)){
+                                let data = {}
+                                let data1 = {}
+                                if(betDetails.uniqueRuns[i - 1] == (betDetails.uniqueRuns[i] - 1)){
+                                    data.message = `${betDetails.uniqueRuns[i - 1]}`
+                                }else{
+                                    data.message = `between ${betDetails.uniqueRuns[i - 1]} and ${betDetails.uniqueRuns[i] - 1}`
+                                }
+                                let sum = 0
+                                for(let j = 0; j < betDetails.data[0].length; j++){
+                                    if(betDetails.data[0][j].secId === "odd_Even_No" && betDetails.data[0][j].runs == betDetails.uniqueRuns[i]){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }else if (betDetails.data[0][j].secId === "odd_Even_Yes" && betDetails.data[0][j].runs == betDetails.uniqueRuns[i - 1]){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }
+                                    else{
+                                        sum += betDetails.data[0][j].totalAmount
+                                    }
+                                }
+                                data.sum = sum
+                                dataToshow.push(data)
+                                let sum2 = 0
+                                data1.message = `${betDetails.uniqueRuns[i]} or more`
+                                for(let j = 0; j < betDetails.data[0].length; j++){
+                                    if(betDetails.data[0][j].secId === "odd_Even_Yes" && betDetails.data[0][j].runs <= betDetails.uniqueRuns[i]){
+                                        sum2 += betDetails.data[0][j].totalWinAmount
+                                    }
+                                    else{
+                                        sum2 += betDetails.data[0][j].totalAmount
+                                    }
+                                }
+                                data1.sum = sum2
+                                dataToshow.push(data1)
+                            }else{
+                                let data = {}
+                                if(betDetails.uniqueRuns[i - 1] == (betDetails.uniqueRuns[i] - 1)){
+                                    data.message = `${betDetails.uniqueRuns[i] - 1}`
+                                }else{
+                                    data.message = `between ${betDetails.uniqueRuns[i - 1]} and ${betDetails.uniqueRuns[i] - 1}`
+                                }
+                                let sum = 0
+                                for(let j = 0; j < betDetails.data[0].length; j++){
+                                    if(betDetails.data[0][j].secId === "odd_Even_No" && betDetails.data[0][j].runs == betDetails.uniqueRuns[i]){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }else if (betDetails.data[0][j].secId === "odd_Even_Yes" && betDetails.data[0][j].runs == betDetails.uniqueRuns[i - 1]){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }
+                                    else{
+                                        sum += betDetails.data[0][j].totalAmount
+                                    }
+                                }
+                                data.sum = sum
+                                dataToshow.push(data)
+                            }
+                        }
+                    }
+                }
+                console.log(dataToshow, "dataToshowdataToshow")
+                socket.emit('getFancyBookDATAuserSide', {dataToshow, status:'Fancy'})
+            }
+        }
+    })
+
+
+    socket.on('MyPlStatementPagination', async(data) => {
+        console.log(data, "DTADTDA")
+        if(data.LOGINDATA.LOGINUSER){
+            let page = data.page
+            if(!page){
+                page = 0
+            }
+            let senddata = await Bet.aggregate([
+                {
+                    $match:{
+                        userId:data.LOGINDATA.LOGINUSER._id,
+                        status: {
+                            $in: ['WON', 'LOSS']
+                        }
+                    }
+                },
+                {
+                    $group: {
+                      _id: "$event",
+                      wins: {
+                        $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
+                      },
+                      losses: {
+                        $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
+                      },
+                      profit: {
+                        $sum: "$returns"
+                      }
+                    }
+                },
+                {
+                    $sort:{
+                        _id : 1,
+                        profit : 1
+                    }
+                },
+                {
+                    $skip:(page * 20)
+                },
+                {
+                    $limit:20
+                }
+            ])
+
+
+            socket.emit('MyPlStatementPagination', {senddata, page})
+        }
+    })
+
+
+    socket.on('MyPlStatementPagination2', async(data) => {
+        console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            let page = data.page
+            if(!page){
+                page = 0
+            }
+            let sendData = await Bet.aggregate([
+                {
+                    $match:{
+                        userId:data.LOGINDATA.LOGINUSER._id,
+                        event : data.param1Value,
+                    }
+                },
+                {
+                    $group: {
+                      _id: {
+                        match: '$match',
+                        event: '$event'
+                      },
+                      totalData: { $sum: 1 },
+                      win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+                      loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+                      cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+                      open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+                      totalSumOfReturns: { $sum: '$returns' }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 0,
+                      match: '$_id.match',
+                      event: '$_id.event',
+                      totalData: 1,
+                      win: 1,
+                      loss: 1,
+                      cancel: 1,
+                      open: 1,
+                      totalSumOfReturns: 1
+                    }
+                  },
+                {
+                    $sort: { totalSumOfReturns: -1 , match: 1}
+                },
+                {
+                    $skip:(page*20)
+                },
+                  {
+                    $limit: 20 
+                  }
+              ]);
+
+              socket.emit('MyPlStatementPagination2', {sendData, page})
+        }
+    })
+
+
+    socket.on('changeExpLimit', async(data) => {
+        // console.log(data)
+        if(data.LOGINDATA.LOGINUSER){
+            let thatUser = await User.findById(data.dataId)
+            if(thatUser){
+                socket.emit('changeExpLimit', thatUser)
+            }
+        }
+    })
+
+
+
+    socket.on('changeExp', async(data) => {
+        // console.log(data, "WORKING123456789")
+            try{
+                let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+                // console.log(loginUser, "loginUserloginUserloginUser")
+                if(loginUser && (await loginUser.correctPassword(data.data.Password, loginUser.password))){
+                    let user = await User.findByIdAndUpdate(data.data.id, {exposureLimit:data.data.NewEXP})
+                    if(user){
+                        socket.emit('changeExp', {message:'Updated!', status:'success'})
+                    }
+                }else{
+                    socket.emit('changeExp', {message:"Please provide a valid password", status:"err"})
+                }   
+            }catch(err){
+                console.log(err)
+                socket.emit('changeExp', {message:"Please try again leter", status:"err"})
+            }
+    })
+
+
+
+    socket.on('getDetailsCommision', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+
+            let bets = await Bet.aggregate([
+                {
+                    $match:{
+                        marketId:data.marketId,
+                        userName:data.LOGINDATA.LOGINUSER.userName,
+                    }
+                }
+            ])
+    
+            let thatCommissions
+            if(data.type != 'Net Losing Commission'){
+                // thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}}, 'betId')
+                thatCommissions = await newCommissionModel.distinct('betId', {commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName, betId:{$ne:undefined}})
+                bets = bets.filter(item => thatCommissions.includes(item._id.toString()))
+            }else{
+                thatCommissions = await newCommissionModel.find({commissionType:data.type, marketId:data.marketId, userName:data.LOGINDATA.LOGINUSER.userName})
+            }
+            // console.log(thatCommissions, bets, "betsbetsbetsbets")
+            socket.emit('getDetailsCommision', bets)
+        }
+
+
+    })
+
+
+
+    socket.on('getCommisionEVentDAta', async(data) => {
+        if(data.LOGINDATA.LOGINUSER){
+            let thatUSer = await User.findOne({userName:data.userName})
+            if(thatUSer.roleName === 'user'){
+                let bets = await Bet.aggregate([
+                    {
+                        $match:{
+                            eventId:data.event,
+                            userName:data.userName,
+                            marketName:data.market
+                        }
+                    }
+                ])
+                console.log(bets)
+                socket.emit('getDetailsCommision', bets)
+            }else{
+                let thatUSersChild = await User.distinct('usename', { parentUsers: thatUSer.id })
+
+            }
+        }
+    })
+
+    socket.on('LoginCHeckUSerSIde', async(data) => {
+        if(data.loginData.User){
+            let lgoginData = await loginLogs.findOne({session_id:data.loginData.Token, userName:data.loginData.User.userName})
+            if(lgoginData){
+                if(!lgoginData.isOnline){
+                    socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
+                }
+            }else{
+                socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
+            }
+        }
+    })
+
+    socket.on('userwisedownlinecommittion',async(data)=>{
+        try{
+            let loginuserid1 = data.data.LOGINUSER._id
+            let sportdownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$in:[loginuserid1.toString()]}
+    
+                    }
+                },
+                {
+                    $group:{
+                        _id:"$userName",
+                        commissionClaim:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                        }},
+                        commissionUnclaim:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
+                        }}
+                    }
+                }
+            ])
+
+            socket.emit('userwisedownlinecommittion',{status:'success',result:sportdownlinecomm})
+        }catch(err){
+            socket.emit('userwisedownlinecommittion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>userwisedownlinecommittion')
+        }
+       
+
+    })
+
+    socket.on('getgamewisedownlinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true}
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$sportId',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+
+            console.log(sportwisedownlinecomm,'==>sportwisedownlinecomm')
+             let result = sportwisedownlinecomm.map(ele=>{
+                if(ele['_id'] == '4'){
+                    ele['sportname'] = 'Cricket'
+                }else if(ele['_id'] == '1'){
+                    ele['sportname'] = 'Football'
+                }else if(ele['_id'] == '2'){
+                    ele['sportname'] = 'Tennis'
+                }else if(ele['_id'] == '10'){
+                    ele['sportname'] = 'Basketball'
+                }else if(ele['_id'] == '30'){
+                    ele['sportname'] = 'Baseball'
+                }
+                return ele
+            })
+    
+            socket.emit('getgamewisedownlinecommitssion',{status:'success',result,bredcum:data.data.bredcum,parentdata:{userName:data.data.userName}})
+        }catch(err){
+            socket.emit('getgamewisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getgamewisedownlinecommitssion')
+        }
+    })
+
+    socket.on('getsportwisedownlinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportId
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$seriesName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+
+            if(data.data.sportId == '4'){
+                data.data.bredcum[1] = 'Cricket'
+            }else if(data.data.sportId == '1'){
+                data.data.bredcum[1] = 'Football'
+            }else if(data.data.sportId == '2'){
+                data.data.bredcum[1] = 'Tennis'
+            }else if(data.data.sportId == '10'){
+                data.data.bredcum[1] = 'Basketball'
+            }else if(data.data.sportId == '30'){
+                data.data.bredcum[1] = 'Baseball'
+            }
+    
+            socket.emit('getsportwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
+                sportId:data.data.sportId},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('getsportwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getsportwisedownlinecommitssion')
+        }
+    })
+
+    socket.on('getserieswisedownlinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportId,
+                        seriesName:data.data.seriesName
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$eventName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+
+         
+            if(data.data.sportId == '4'){
+                data.data.bredcum[1] = 'Cricket'
+            }else if(data.data.sportId == '1'){
+                data.data.bredcum[1] = 'Football'
+            }else if(data.data.sportId == '2'){
+                data.data.bredcum[1] = 'Tennis'
+            }else if(data.data.sportId == '10'){
+                data.data.bredcum[1] = 'Basketball'
+            }else if(data.data.sportId == '30'){
+                data.data.bredcum[1] = 'Baseball'
+            }
+            socket.emit('getserieswisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
+                sportId:data.data.sportId,seriesName:data.data.seriesName},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('getserieswisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getserieswisedownlinecommitssion')
+        }
+    })
+
+    socket.on('geteventwisedownlinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        userName:data.data.userName,
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportId,
+                        seriesName:data.data.seriesName,
+                        eventName:data.data.eventName
+                    }
+                    
+                },
+                {
+                    $group:{
+                        _id:'$marketName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
+                        commissionType:{$first:'$commissionType'},
+                        commissionStatus:{$first:'$commissionStatus'},
+                        commissionPercentage:{$first:'$commissionPercentage'},
+                        betId:{$first:'$betId'}
+
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+
+         
+            if(data.data.sportId == '4'){
+                data.data.bredcum[1] = 'Cricket'
+            }else if(data.data.sportId == '1'){
+                data.data.bredcum[1] = 'Football'
+            }else if(data.data.sportId == '2'){
+                data.data.bredcum[1] = 'Tennis'
+            }else if(data.data.sportId == '10'){
+                data.data.bredcum[1] = 'Basketball'
+            }else if(data.data.sportId == '30'){
+                data.data.bredcum[1] = 'Baseball'
+            }
+            socket.emit('geteventwisedownlinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{userName:data.data.userName,
+                sportId:data.data.sportId,seriesName:data.data.seriesName,eventName:data.data.eventName},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('geteventwisedownlinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>geteventwisedownlinecommitssion')
+        }
+    })
+    socket.on('getmarketwisedownlinecommission',async(data)=>{
+        try{
+            let user = await User.findOne({userName:data.data.userName})
+            let usernameArr = [];
+            let netlosing = false;
+            if(user.roleName == 'user'){
+                usernameArr = [user.userName]
+            }else{
+                usernameArr = await User.distinct("userName",{parentUsers:user._id})
+            }
+            let filter = {
+                date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                userName:{$in:usernameArr},
+                gameId:data.data.sportId,
+                event:data.data.seriesName,
+                match:data.data.eventName,
+                marketName:data.data.marketName
+            }
+
+            if(data.data.bettype == 'Net Losing Commission'){
+                netlosing = true
+            }else{  
+                if(data.data.betId){
+                    filter._id = new ObjectId(data.data.betId)
+                }else{
+                    
+                }
+            }
+            console.log(usernameArr,'==>usernameArr')
+            let sportwisedownlinecomm = await Bet.aggregate([
+                {
+                    $match:filter
+                },
+                {
+                    $sort:{
+                        date:-1
+                    }
+                }
+            ])
+
+         
+    
+            socket.emit('getmarketwisedownlinecommission',{status:'success',result:sportwisedownlinecomm})
+        }catch(err){
+            socket.emit('getmarketwisedownlinecommission',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getmarketwisedownlinecommission')
+        }
+    })
+
+    socket.on('getsportwiseuplinecommission',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportname,
+                        userId:data.data.LOGINUSER._id.toString()
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$seriesName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }}
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+            if(data.data.sportname == '4'){
+                data.data.bredcum[0] = 'Cricket'
+            }else if(data.data.sportname == '1'){
+                data.data.bredcum[0] = 'Football'
+            }else if(data.data.sportname == '2'){
+                data.data.bredcum[0] = 'Tennis'
+            }else if(data.data.sportname == '10'){
+                data.data.bredcum[0] = 'Basketball'
+            }else if(data.data.sportname == '30'){
+                data.data.bredcum[0] = 'Baseball'
+            }
+            socket.emit('getsportwiseuplinecommission',{status:'success',result:sportwisedownlinecomm,parentdata:{
+                sportId:data.data.sportname},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('getsportwiseuplinecommission',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getsportwiseuplinecommission')
+        }
+    })
+
+    socket.on('getcommiwiseuplinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportname,
+                        userId:data.data.LOGINUSER._id.toString(),
+                        seriesName:data.data.seriesName
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$eventName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }}
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+            if(data.data.sportname == '4'){
+                data.data.bredcum[0] = 'Cricket'
+            }else if(data.data.sportname == '1'){
+                data.data.bredcum[0] = 'Football'
+            }else if(data.data.sportname == '2'){
+                data.data.bredcum[0] = 'Tennis'
+            }else if(data.data.sportname == '10'){
+                data.data.bredcum[0] = 'Basketball'
+            }else if(data.data.sportname == '30'){
+                data.data.bredcum[0] = 'Baseball'
+            }
+            socket.emit('getcommiwiseuplinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{
+                sportId:data.data.sportname,seriesName:data.data.seriesName},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('getcommiwiseuplinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getcommiwiseuplinecommitssion')
+        }
+    })
+
+    socket.on('geteventwiseuplinecommitssion',async(data)=>{
+        try{
+            let sportwisedownlinecomm = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true},
+                        sportId:data.data.sportname,
+                        userId:data.data.LOGINUSER._id.toString(),
+                        seriesName:data.data.seriesName,
+                        eventName:data.data.eventName
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$marketName',
+                        commission:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                        }},
+                        commissionType:{$first:'$commissionType'},
+                        commissionPercentage:{$first:'$commissionPercentage'},
+                        commissionStatus:{$first:'$commissionStatus'},
+                        betId:{$first:'$betId'}
+                        
+                    }
+                },
+                {
+                    $sort:{
+                        _id:-1
+                    }
+                }
+            ])
+            if(data.data.sportname == '4'){
+                data.data.bredcum[0] = 'Cricket'
+            }else if(data.data.sportname == '1'){
+                data.data.bredcum[0] = 'Football'
+            }else if(data.data.sportname == '2'){
+                data.data.bredcum[0] = 'Tennis'
+            }else if(data.data.sportname == '10'){
+                data.data.bredcum[0] = 'Basketball'
+            }else if(data.data.sportname == '30'){
+                data.data.bredcum[0] = 'Baseball'
+            }
+            socket.emit('geteventwiseuplinecommitssion',{status:'success',result:sportwisedownlinecomm,parentdata:{
+                sportId:data.data.sportname,seriesName:data.data.seriesName,eventName:data.data.eventName},bredcum:data.data.bredcum})
+        }catch(err){
+            socket.emit('geteventwiseuplinecommitssion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>geteventwiseuplinecommitssion')
+        }
+    })
+
+    socket.on('getmarketwiseuplinecommission',async(data)=>{
+        try{
+           
+            let user = await User.findOne({userName:data.data.LOGINUSER.userName})
+            let usernameArr = [];
+            let netlosing = false;
+            if(user.roleName == 'user'){
+                usernameArr = [user.userName]
+            }else{
+                usernameArr = await User.distinct("userName",{parentUsers:user._id})
+            }
+            let filter = {
+                date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                userName:{$in:usernameArr},
+                gameId:data.data.sportId,
+                event:data.data.seriesName,
+                match:data.data.eventName,
+                marketName:data.data.marketName
+            }
+
+            if(data.data.bettype == 'Net Losing Commission'){
+                netlosing = true
+            }else{  
+                if(data.data.betId){
+                    filter._id = new ObjectId(data.data.betId)
+                }else{
+                    
+                }
+            }
+            console.log(usernameArr,'==>usernameArr')
+            let sportwisedownlinecomm = await Bet.aggregate([
+                {
+                    $match:filter
+                },
+                {
+                    $sort:{
+                        date:-1
+                    }
+                }
+            ])
+
+         
+    
+            socket.emit('getmarketwiseuplinecommission',{status:'success',result:sportwisedownlinecomm})
+        }catch(err){
+            socket.emit('getmarketwiseuplinecommission',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>getmarketwiseuplinecommission')
+        }
+    })
+
+    socket.on('userwiseuplinecommittion',async(data)=>{
+        try{
+            let loginuserid1 = data.data.LOGINUSER._id
+            let sporttwisecommittion = await newCommissionModel.aggregate([
+                {
+                    $match:{
+                        date:{$gte:new Date(data.data.fromdate),$lte:new Date((new Date(data.data.todate).getTime()) + ((24 * 60 * 60 * 1000) -1))},
+                        loginUserId:{$exists:true},
+                        userId:loginuserid1.toString()
+                    }
+                },
+                {
+                    $group:{
+                        _id:"$sportId",
+                        commissionClaim:{$sum:{
+                            $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                          }},
+                    }
+                },
+                {
+                    $sort:{_id:1}
+                }
+            ])
+            let result = sporttwisecommittion.map(ele=>{
+                if(ele['_id'] == '4'){
+                    ele['sportname'] = 'Cricket'
+                }else if(ele['_id'] == '1'){
+                    ele['sportname'] = 'Football'
+                }else if(ele['_id'] == '2'){
+                    ele['sportname'] = 'Tennis'
+                }else if(ele['_id'] == '10'){
+                    ele['sportname'] = 'Basketball'
+                }else if(ele['_id'] == '30'){
+                    ele['sportname'] = 'Baseball'
+                }
+                return ele
+            })
+        
+           
+            socket.emit('userwiseuplinecommittion',{status:'success',result})
+        }catch(err){
+            socket.emit('userwiseuplinecommittion',{status:'fail',msg:'something went wrong'})
+            console.log(err,'==>userwiseuplinecommittion')
+        }
+       
+    })
+
+
+
+    socket.on('checkDelay', async(data)=>{
+        if(data.eventId && data.marketId){
+            let response = await oddsLimitCHeck({eventId:data.eventId, ids:[data.marketId]})
+            if(response[0]){
+                // console.log(response[0], "response[0]response[0]response[0]")
+                let sendData = response[0].Limits
+                socket.emit('checkDelay', sendData)
+            }
+        }
+    })
+
+
+    socket.on('OddsCheck', async(data) => {
+        let response = await oddsLimitCHeck(data)
+        // console.log(response)
+        socket.emit('OddsCheck', response)
+    })
+
 })
 
-http.listen(8888,()=> {
-    console.log('app is running on port 8888')
+http.listen(process.env.port,()=> {
+    console.log(`app is running on port ${process.env.port}`)
 })

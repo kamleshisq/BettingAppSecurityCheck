@@ -1,10 +1,8 @@
 <table id="table12">
   <thead>
     <tr>
-      <th>S.No</th>
       <th>User Name</th>
       <th>Date</th>
-      <th>Time</th>
       <th>Sport</th>
       <th>Match</th>
       <th>Market</th>
@@ -13,7 +11,6 @@
       <th>Status</th>
       <th>Stake</th>
       <th>Returns</th>
-      <th>Txn ID</th>
       <th>Game/Round</th>
     </tr>
   </thead>
@@ -21,21 +18,43 @@
     <%if(bets.length !== 0){%>
     <% for(let i = 0; i < bets.length; i++){%>
     <% let date = new Date(bets[i].date)%>
+    <%
+      var options = { 
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true
+      };
+      var formattedTime = date.toLocaleString('en-US', options);
+    %>
     <%if(bets[i].bettype2 === 'BACK'){%>
       <tr class="back">
     <%}else{%>
       <tr class="lay">
     <%}%>
-        <td><%=i + 1%></td>
         <td><%=bets[i].userName%></td>
-        <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-        <td class="date-time"><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+        <td class="date-time"><%=formattedTime%></td>
         <%if(bets[i].match){%>
-        <td>-</td>
-        <td class="text-nowrap"><%=bets[i].match%></td>
-        <td><%=bets[i].marketName%></td>
-        <td><%=bets[i].selectionName%></td>
-        <td><%=bets[i].oddValue%></td>
+          <%if(bets[i].selectionName.includes('@')){%>
+            <%
+            let oddValue1 = bets[i].selectionName.split('@')[1]
+            let selectionName = bets[i].selectionName.split('@')[0]
+            let oddValue2 = bets[i].oddValue
+            %>
+            <td><%=bets[i].betType%></td>
+            <td class="text-nowrap"><%=bets[i].match%></td>
+            <td><%=bets[i].marketName%></td>
+            <td><%=selectionName%>@<%=oddValue2%></td>
+            <td><%=oddValue1%></td>
+          <%}else{%>
+            <td><%=bets[i].betType%></td>
+            <td class="text-nowrap"><%=bets[i].match%></td>
+            <td><%=bets[i].marketName%></td>
+            <td><%=bets[i].selectionName%></td>
+            <td><%=bets[i].oddValue%></td>
+          <%}%>
         <%}else{%>
         <td>-</td>
         <td>-</td>
@@ -46,7 +65,6 @@
         <td><%=bets[i].status%></td>
         <td><%=bets[i].Stake%></td>
         <td><%=bets[i].returns%></td>
-        <td><%=bets[i].transactionId%></td>
         <td><%=bets[i].event%></td>
       </tr>
       <%}%>

@@ -199,7 +199,7 @@ module.exports = () => {
                 //   const newData = Object.values(groupedData);
 
                 //   newData.forEach(async(user) => {
-                //     // let updatedUser = await userModel.findAndUpdate({userName:user.userName}, {})
+                //     // let updatedUser = await userModel.updateMany({userName:user.userName}, {})
                 //   })
                 
             });

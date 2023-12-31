@@ -22,6 +22,8 @@ router.get("/getMarketDetails", viewController.getmarketDetailsByMarketId);
 router.get("/getLiveTv", viewController.getLiveTv);
 router.get("/getMarketResult", viewController.getMarketResult);
 router.get("/htmlDATA", viewController.getHTMLSCOREIFRm);
+router.get('/liveMarkets', viewController.liveAllMarkets)
+router.get('/liveAllMarkets2', viewController.liveAllMarkets2)
 router.post('/getFancyBookDATA', viewController.getFancyBookDATA)
 
 // Admin Panal 
@@ -57,6 +59,8 @@ router.get("/admin/settlementIn", authController.isProtected, authController.isA
 router.get("/admin/settlementHistory", authController.isProtected, authController.isAdmin, authController.restrictToOperator("settlements"),viewController.getSettlementHistoryPage);
 router.get("/admin/commissionReport", authController.isProtected, authController.isAdmin,viewController.getCommissionReport);
 router.get("/admin/commissionReportEvent", authController.isProtected, authController.isAdmin,viewController.getcommissionMarketWise1);
+router.get("/admin/downlinecommissionReort", authController.isProtected, authController.isAdmin,viewController.getSportwisedownlinecommreport);
+router.get("/admin/uplinecommissionReport", authController.isProtected, authController.isAdmin,viewController.getSportwiseuplinecommreport);
 router.get("/admin/commissionReportUser", authController.isProtected, authController.isAdmin,viewController.getcommissionUser);
 router.get("/admin/whiteLableAnalysis", authController.isProtected, authController.isAdmin, authController.restrictToOperator("whiteLabelAnalysis"),viewController.WhiteLabelAnalysis);
 router.get("/admin/gameanalysis", authController.isProtected, authController.isAdmin, authController.restrictToOperator("gameAnalysis"),viewController.gameAnalysis);
@@ -92,6 +96,7 @@ router.get("/admin/matchBets", authController.isProtected, authController.isAdmi
 router.get("/admin/paymentmethods", authController.isProtected, authController.isAdmin,viewController.paymentMethodPage);
 router.get("/admin/paymentapproval", authController.isProtected, authController.isAdmin,viewController.paymentApprovalPage);
 router.get("/admin/withdrawalRequest", authController.isProtected, authController.isAdmin,viewController.getWithrowReqPage);
+router.get("/admin/globalSettings", authController.isProtected, authController.isAdmin,viewController.getGlobalSetting);
 
 //User Panal
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);

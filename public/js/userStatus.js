@@ -15,11 +15,14 @@ export const userStatus = (data, rawId) => {
                 }else{
                     alert("Updated!")
                 }
+            }else{
+                alert(data.message)
             }
             // console.log(data, 1212121)
         },
         error:function(err){
-            alert(err.response.data.message)
+            console.log(err)
+            alert(err.responseJSON.message)
         }
     })
 }

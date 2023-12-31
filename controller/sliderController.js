@@ -39,7 +39,6 @@ exports.addImage = catchAsync(async(req, res, next) =>{
     if(req.files){
         if(req.files.image.mimetype.startsWith('image')){
             const image = req.files.image
-            // console.log(logo)
             image.mv(`public/sliderImages/${req.body.menuName}.png`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))

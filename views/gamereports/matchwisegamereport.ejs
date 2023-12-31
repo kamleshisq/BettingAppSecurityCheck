@@ -12,7 +12,6 @@
         </div>
       
       </div>
-    <%- include("../loginUserAdminsideDetails") %>
   </section>
 
   <section>
@@ -40,13 +39,25 @@
             </thead>
             <tbody class="new-body">
               <%for(let i = 0;i<games.length;i++){%>
+                <% let date = new Date(games[i].eventDate)%>
+                <%
+                  var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                  };
+                  var formattedTime = date.toLocaleString('en-US', options);
+                %>
               <%if(i % 2 == 0){%>
-              <tr>
+              <tr style="cursor: pointer;">
                 <%}else{%>
-                <tr>
+                <tr style="cursor: pointer;">
                   <%}%>
                   <td><%=i + 1%></td>
-                  <td><%=games[i].eventDate%></td>
+                  <td><%=formattedTime%></td>
                   <td class="clickableelement getajaxdataclick" data-href="<%=url%>&match=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
                   <td><%=games[i].gameCount%></td>
                   <td><%=games[i].betCount%></td>
@@ -97,7 +108,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
-<script type="text/javascript" src="../js/bundle.js"></script>
+<script type="text/javascript" src="../../js/bundle.js"></script>
 
 
 </body>
