@@ -485,6 +485,7 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
         let parentUser = await User.findById(id)
         id = parentUser.id
     }
+    console.log(id, "ididid")
     // let users
     // if(req.currentUser.role_type == 1){
     //     users = await User.find({is_Online:true})
