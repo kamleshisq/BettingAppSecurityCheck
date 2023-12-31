@@ -480,6 +480,7 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     //     role_type.push(roles[i].role_type)
     // }
     const currentUser = req.currentUser
+    console.log(currentUser)
     let id = currentUser._id
     if(currentUser.roleName == 'Operator'){
         let parentUser = await User.findById(id)
