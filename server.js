@@ -9442,9 +9442,14 @@ io.on('connection', (socket) => {
                     },
                 },
             ])
-            Senddata.push(betsMarketIdWise)
+            if(betsMarketIdWise.length > 0){
+                let runnerData = await runnerDataModel.find({marketId:uniqueIds[i]})
+                betsMarketIdWise[0].runnersData = JSON.parse(runnerData.runners)
+                Senddata.push(betsMarketIdWise[0])
+            }
         }
         console.log(Senddata)
+        socket.emit('marketDetailsMultiMarket', {Senddata})
     })
 
     socket.on('marketIdbookDetailsFANCY', async(data) => {
