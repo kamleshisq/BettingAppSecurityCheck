@@ -11884,7 +11884,7 @@ socket.on('connect', () => {
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             let data2 = htmldiv.find('span:first').next().text()
-                            console.log(data1, data2, section.backSize1, section.backPrice1 ,(data1 != section.backPrice1 || data2 != section.backSize1 ))
+                            console.log(data1, data2, section.backSize1, section.backPrice1 ,data1 != section.backPrice1 ,data2 != section.backSize1 )
                             if(data1 != section.backPrice1 || data2 != section.backSize1 ){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
