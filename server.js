@@ -1977,7 +1977,7 @@ io.on('connection', (socket) => {
         // console.log(data, "DATA")
         let multimarketstatus = false
 
-        if(data.status222 && data.status222 == 'multiMarket'){
+        if(data.data.status222 && data.data.status222 == 'multiMarket'){
             multimarketstatus = true
         }
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
