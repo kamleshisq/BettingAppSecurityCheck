@@ -2872,88 +2872,91 @@ io.on('connection', (socket) => {
 
     socket.on("chartMain", async (data) => {
         // console.log(data);
-        if(data.LOGINUSER.role.roleName == 'Operator'){
-            let parentUser = await User.findById(data.LOGINUSER.parent_id)
-            data.LOGINUSER = parentUser
-        }
-    
-        const currentDate = new Date();
-        const tenDaysAgo = new Date();
-        tenDaysAgo.setDate(currentDate.getDate() - 10);
-    
-        const dateSequence = [];
-        for (let i = 0; i < 10; i++) {
-            const currentDate = new Date(tenDaysAgo);
-            currentDate.setDate(tenDaysAgo.getDate() + i);
-            dateSequence.push(currentDate.toDateString());
-        }
-    
-        let accountForGraph = await AccModel.aggregate([
-            {
-                $match: {
-                    userName: data.LOGINUSER.userName,
-                    date: {
-                        $gte: tenDaysAgo,
-                        $lte: currentDate,
-                    },
-                },
-            },
-            {
-                $group: {
-                    _id: {
-                        year: { $year: '$date' },
-                        month: { $month: '$date' },
-                        day: { $dayOfMonth: '$date' },
-                    },
-                    totalIncome: {
-                        $sum: '$creditDebitamount',
-                    },
-                    totalIncome2: {
-                        $sum: { $abs: '$creditDebitamount' },
-                    },
-                },
-            },
-            {
-                $sort: { '_id.year': 1, '_id.month': 1, '_id.day': 1 },
-            },
-        ]);
-    
-        const newDataArray = [];
-        const currentDate1 = new Date(tenDaysAgo);
-        for (let i = 0; i < 10; i++) {
-            const matchingData = accountForGraph.find(item =>
-                item._id.year === currentDate1.getFullYear() &&
-                item._id.month === currentDate1.getMonth() + 1 &&
-                item._id.day === currentDate1.getDate()
-            );
-    
-            if (matchingData) {
-                newDataArray.push(matchingData);
-            } else {
-                newDataArray.push({
-                    _id: {
-                        year: currentDate1.getFullYear(),
-                        month: currentDate1.getMonth() + 1,
-                        day: currentDate1.getDate(),
-                    },
-                    totalIncome: 0,
-                    totalIncome2: 0,
-                });
+        if(data.LOGINUSER){
+
+            if(data.LOGINUSER.role.roleName == 'Operator'){
+                let parentUser = await User.findById(data.LOGINUSER.parent_id)
+                data.LOGINUSER = parentUser
             }
-    
-            currentDate1.setDate(currentDate1.getDate() + 1);
+        
+            const currentDate = new Date();
+            const tenDaysAgo = new Date();
+            tenDaysAgo.setDate(currentDate.getDate() - 10);
+        
+            const dateSequence = [];
+            for (let i = 0; i < 10; i++) {
+                const currentDate = new Date(tenDaysAgo);
+                currentDate.setDate(tenDaysAgo.getDate() + i);
+                dateSequence.push(currentDate.toDateString());
+            }
+        
+            let accountForGraph = await AccModel.aggregate([
+                {
+                    $match: {
+                        userName: data.LOGINUSER.userName,
+                        date: {
+                            $gte: tenDaysAgo,
+                            $lte: currentDate,
+                        },
+                    },
+                },
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: '$date' },
+                            month: { $month: '$date' },
+                            day: { $dayOfMonth: '$date' },
+                        },
+                        totalIncome: {
+                            $sum: '$creditDebitamount',
+                        },
+                        totalIncome2: {
+                            $sum: { $abs: '$creditDebitamount' },
+                        },
+                    },
+                },
+                {
+                    $sort: { '_id.year': 1, '_id.month': 1, '_id.day': 1 },
+                },
+            ]);
+        
+            const newDataArray = [];
+            const currentDate1 = new Date(tenDaysAgo);
+            for (let i = 0; i < 10; i++) {
+                const matchingData = accountForGraph.find(item =>
+                    item._id.year === currentDate1.getFullYear() &&
+                    item._id.month === currentDate1.getMonth() + 1 &&
+                    item._id.day === currentDate1.getDate()
+                );
+        
+                if (matchingData) {
+                    newDataArray.push(matchingData);
+                } else {
+                    newDataArray.push({
+                        _id: {
+                            year: currentDate1.getFullYear(),
+                            month: currentDate1.getMonth() + 1,
+                            day: currentDate1.getDate(),
+                        },
+                        totalIncome: 0,
+                        totalIncome2: 0,
+                    });
+                }
+        
+                currentDate1.setDate(currentDate1.getDate() + 1);
+            }
+        
+            // Format data to two decimal places
+            const formattedDataArray = newDataArray.map(item => ({
+                _id: item._id,
+                totalIncome: item.totalIncome.toFixed(2),
+                totalIncome2: item.totalIncome2.toFixed(2),
+            }));
+        
+            const Income = formattedDataArray.map(item => parseFloat(item.totalIncome));
+            const Revanue = formattedDataArray.map(item => parseFloat(item.totalIncome2));
+            socket.emit("chartMain", { Income, Revanue });
         }
-    
-        // Format data to two decimal places
-        const formattedDataArray = newDataArray.map(item => ({
-            _id: item._id,
-            totalIncome: item.totalIncome.toFixed(2),
-            totalIncome2: item.totalIncome2.toFixed(2),
-        }));
-    
-        const Income = formattedDataArray.map(item => parseFloat(item.totalIncome));
-        const Revanue = formattedDataArray.map(item => parseFloat(item.totalIncome2));
-        socket.emit("chartMain", { Income, Revanue });
     });
     
 
