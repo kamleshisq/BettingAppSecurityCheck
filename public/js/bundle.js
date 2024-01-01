@@ -5498,7 +5498,7 @@ var login = /*#__PURE__*/function () {
               }, 100);
             } else {
               window.setTimeout(function () {
-                location.assign('/admin/userManagement');
+                location.assign('/admin/dashboard');
               }, 100);
             }
           }
@@ -57042,8 +57042,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60526" + '/');
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50586" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49953" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

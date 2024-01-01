@@ -10143,7 +10143,8 @@ socket.on('connect', () => {
                     if(data.betDetails.some(item => item == this.id)){
                         let text = $(this).text()
                         text += '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
-                        $(this).html(text)
+                        console.log(text, "texttext")
+                        // $(this).html(text)
                     } 
 
                 })
