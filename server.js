@@ -2212,7 +2212,7 @@ io.on('connection', (socket) => {
 
     socket.on("aggreat", async(data) => {
         let id = ``
-        if(data.LOGINUSER.role.roleName == 'Operator'){
+        if(data.LOGINUSER && data.LOGINUSER.role.roleName == 'Operator'){
             let parentUser = await User.findById(data.LOGINUSER.parent_id)
             data.LOGINUSER = parentUser
         }
