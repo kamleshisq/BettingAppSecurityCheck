@@ -17859,7 +17859,7 @@ socket.on('connect', () => {
             let html =''
             html += `<option value="All" selected> Select Event </option>`
             for(let i = 0;i<data.length;i++){
-                html += `<option value="${data.eventId}">${data._id}</option>`
+                html += `<option value="${data[i].eventId}">${data[i]._id}</option>`
             }
             $('#Event').html(html)
         })
