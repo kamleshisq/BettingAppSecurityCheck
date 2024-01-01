@@ -9448,7 +9448,7 @@ io.on('connection', (socket) => {
                 Senddata.push(betsMarketIdWise[0])
             }
         }
-        console.log(Senddata)
+        // console.log(Senddata)
         socket.emit('marketDetailsMultiMarket', {Senddata})
     })
 

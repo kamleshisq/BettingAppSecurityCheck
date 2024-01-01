@@ -13645,6 +13645,11 @@ socket.on('connect', () => {
             })
 
 
+            socket.on('marketDetailsMultiMarket', data => {
+                console.log(data)
+            })
+
+
     }
 
     
