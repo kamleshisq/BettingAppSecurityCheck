@@ -7814,6 +7814,8 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                            let data2 = htmldiv.find('span:first').next().text()
+                            console.log(data2, "data2data2data2data2")
                             if(data1 != section.backPrice1){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
