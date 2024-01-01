@@ -6716,7 +6716,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
 
@@ -6943,7 +6943,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
 
@@ -6993,7 +6993,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
 
@@ -10934,7 +10934,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
         // socket.on("marketId", (data) => {
@@ -11119,7 +11119,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
         // socket.on("marketId", (data) => {
@@ -11303,7 +11303,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
         // socket.on("marketId", (data) => {
@@ -11488,7 +11488,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
         // socket.on("marketId", (data) => {
@@ -11835,7 +11835,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 5000)
+              }, 1000)
         }
         marketId()
         let first = true
