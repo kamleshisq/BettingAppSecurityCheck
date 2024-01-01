@@ -10144,7 +10144,7 @@ socket.on('connect', () => {
                         let text = $(this).text()
                         text += '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
                         console.log(text, "texttext")
-                        // $(this).html(text)
+                        $(this).html(text)
                     } 
 
                 })
