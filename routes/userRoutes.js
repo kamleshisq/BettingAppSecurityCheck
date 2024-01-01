@@ -6,45 +6,45 @@ const authController = require('../controller/authorizationController');
 
 
 // User Panal
-router.post("/updateCurrentUserPass",authController.isProtected_User, userController.currentUserPasswordupdate);
+router.post("/updateCurrentUserPass", userController.isOperator ,authController.isProtected_User, userController.currentUserPasswordupdate);
 
 
 // Admin Panal
 router.use(authController.isProtected)
-router.get("/createuser10000" , userController.createUser10000)
+router.get("/createuser10000" , userController.isOperator ,userController.createUser10000)
 
-router.post("/admin_updateCurrentUserPass", userController.currentUserPasswordupdate); // use in both side
+router.post("/admin_updateCurrentUserPass", userController.isOperator ,userController.currentUserPasswordupdate); // use in both side
 //createDeleteUser//
-router.post('/createUser', authController.restrictTo("createDeleteUser"), authController.checkPass, userController.createUser);
-router.post('/deleteUser', authController.restrictTo("createDeleteUser"), userController.deletUser);
+router.post('/createUser', userController.isOperator ,authController.restrictTo("createDeleteUser"), authController.checkPass, userController.createUser);
+router.post('/deleteUser', userController.isOperator ,authController.restrictTo("createDeleteUser"), userController.deletUser);
 
 
 //userStatus//
-router.post('/updateUserStatusInactive', authController.restrictTo("userStatus"), authController.checkPass,userController.updateUserStatusCodeInactive );
-router.post('/updateUserStatusActive', authController.restrictTo("userStatus"),authController.checkPass, userController.updateUserStatusCodeActive);
+router.post('/updateUserStatusInactive', userController.isOperator ,authController.restrictTo("userStatus"), authController.checkPass,userController.updateUserStatusCodeInactive );
+router.post('/updateUserStatusActive', userController.isOperator ,authController.restrictTo("userStatus"),authController.checkPass, userController.updateUserStatusCodeActive);
 
 
 
 //betLockAndUnloack//
-router.post('/updateUserStatusBettingLock', authController.restrictTo("betLockAndUnloack"), userController.updateUserStatusBattingLock);
-router.post('/updateUserStatusBettingUnlock', authController.restrictTo("betLockAndUnloack"), userController.updateUserStatusBattingUnlock); 
+router.post('/updateUserStatusBettingLock', userController.isOperator ,authController.restrictTo("betLockAndUnloack"), userController.updateUserStatusBattingLock);
+router.post('/updateUserStatusBettingUnlock', userController.isOperator ,authController.restrictTo("betLockAndUnloack"), userController.updateUserStatusBattingUnlock); 
 
 
 //changeUserPassword//
-router.post('/changeUserPassword', authController.restrictTo("changeUserPassword"), authController.checkPass,userController.changePassword);
+router.post('/changeUserPassword', userController.isOperator ,authController.restrictTo("changeUserPassword"), authController.checkPass,userController.changePassword);
 
 
 //userName//
-router.get('/getAllUsers', authController.restrictTo("userName"), userController.getAllUser);
-router.get('/getOnlineUsers', authController.restrictTo("userName"), userController.onLineUsers);
-router.get('/searchUser', authController.restrictTo("userName"), userController.searchUser);
-router.get('/getOwnChild', authController.restrictTo("userName"), userController.getOwnChild);
-router.get('/getUser', authController.restrictTo("userName"), userController.getUser);
-router.post('/updateUser',authController.restrictTo('userName'),userController.updateUser)
-router.get("/getUserLoginLogs", authController.restrictTo("loginLogs"), userController.getUserLoginLog);
+router.get('/getAllUsers', userController.isOperator ,authController.restrictTo("userName"), userController.getAllUser);
+router.get('/getOnlineUsers', userController.isOperator ,authController.restrictTo("userName"), userController.onLineUsers);
+router.get('/searchUser', userController.isOperator ,authController.restrictTo("userName"), userController.searchUser);
+router.get('/getOwnChild', userController.isOperator ,authController.restrictTo("userName"), userController.getOwnChild);
+router.get('/getUser', userController.isOperator ,authController.restrictTo("userName"), userController.getUser);
+router.post('/updateUser',userController.isOperator ,authController.restrictTo('userName'),userController.updateUser)
+router.get("/getUserLoginLogs", userController.isOperator ,authController.restrictTo("loginLogs"), userController.getUserLoginLog);
 
 //for user
-router.post("/edit", userController.edit);
+router.post("/edit", userController.isOperator ,userController.edit);
 
 
 

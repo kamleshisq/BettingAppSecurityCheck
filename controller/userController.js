@@ -16,6 +16,10 @@ const gamerulesModel = require('../model/gamesRulesModel')
 const gamemodel = require('../model/gameModel')
 const globalSettingModel = require('../model/globalSetting')
 
+exports.isOperator = catchAsync(async(req, res, next) => {
+    console.log(req.currentUser, "req.currentUserreq.currentUser")
+})
+
 exports.createUser = catchAsync(async(req, res, next)=>{
     // console.log(req.body)
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
