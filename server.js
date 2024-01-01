@@ -9444,7 +9444,7 @@ io.on('connection', (socket) => {
             ])
             Senddata.push(betsMarketIdWise)
         }
-        console.log(betsMarketIdWise)
+        console.log(Senddata)
     })
 
     socket.on('marketIdbookDetailsFANCY', async(data) => {
