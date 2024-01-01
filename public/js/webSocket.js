@@ -12596,7 +12596,13 @@ socket.on('connect', () => {
                 },300)
         })
 
-
+        function marketIdbookDetails( status ){
+            var ids = [];
+            $(".market").each(function() {
+                ids.push(this.id);
+              });
+              socket.emit('marketDetailsMultiMarket',{ids, LOGINDATA} )
+        }
 
         $(document).ready(function () {
             $(".button").click(function () {

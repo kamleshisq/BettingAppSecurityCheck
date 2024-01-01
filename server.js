@@ -9329,6 +9329,12 @@ io.on('connection', (socket) => {
 
     })
 
+
+
+    socket.on('marketDetailsMultiMarket', async(data) => {
+        console.log(data)
+    })
+
     socket.on('marketIdbookDetailsFANCY', async(data) => {
         if(data.LOGINDATA.LOGINUSER){
             let betDetails = await Bet.distinct('marketId', {status: "OPEN",eventId: data.eventId,userName:data.LOGINDATA.LOGINUSER.userName,marketId: {$regex: /(OE|F2)$/}})
