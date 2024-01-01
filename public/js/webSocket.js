@@ -12894,12 +12894,12 @@ socket.on('connect', () => {
             }
           }
 
-          function marketIdbookDetails( status ){
-            let eventId = search.split('=')[1]
-            socket.emit("marketIdbookDetails", {LOGINDATA, eventId, status})
-    }
+    //       function marketIdbookDetails( status ){
+    //         let eventId = search.split('=')[1]
+    //         socket.emit("marketIdbookDetails", {LOGINDATA, eventId, status})
+    // }
     
-    marketIdbookDetails( false )
+    // marketIdbookDetails( false )
     
           
     
@@ -13579,12 +13579,12 @@ socket.on('connect', () => {
               });
 
               $(document).on('click', ".close-btn", function(){
-                marketIdbookDetails( false )
+                marketIdbookDetailsmultimarket( false )
             })
     
             socket.on("betDetails" , (data) => {
                 hideLoader()
-                marketIdbookDetails( true )
+                marketIdbookDetailsmultimarket( true )
                 // console.log(data.result)
                 // function togglePopup(idname, id){
                 //     document.getElementById(idname).classList.toggle("active");
@@ -13642,7 +13642,7 @@ socket.on('connect', () => {
 
             $(document).on('click','.tbl-td-with5',function(e){
                 // console.log("WORKING")
-                marketIdbookDetails( true )
+                marketIdbookDetailsmultimarket( true )
                 $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
                 $(".minus")
                 .closest("tr")
