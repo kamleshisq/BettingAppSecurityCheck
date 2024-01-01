@@ -9443,7 +9443,7 @@ io.on('connection', (socket) => {
                 },
             ])
             if(betsMarketIdWise.length > 0){
-                let runnerData = await runnerDataModel.find({marketId:uniqueIds[i]})
+                let runnerData = await runnerDataModel.findOne({marketId:uniqueIds[i]})
                 betsMarketIdWise[0].runnersData = JSON.parse(runnerData.runners)
                 Senddata.push(betsMarketIdWise[0])
             }
