@@ -5190,7 +5190,7 @@ io.on('connection', (socket) => {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
                                                                             $cond:{
-                                                                                if : {$eq : ["$parentId", loginId]},
+                                                                                if : {$eq : ["$$this.parentUSerId", loginId]},
                                                                                 then:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
                                                                                 else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
@@ -5242,7 +5242,7 @@ io.on('connection', (socket) => {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
                                                                             $cond:{
-                                                                                if : {$eq : ["$parentId", loginId]},
+                                                                                if : {$eq : ["$$this.parentUSerId", loginId]},
                                                                                 then:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
                                                                                 else:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
