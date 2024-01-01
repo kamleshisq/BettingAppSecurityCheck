@@ -17846,8 +17846,8 @@ socket.on('connect', () => {
             let Sport = $(this).val()
             // console.log(Sport)
             if(['1','2','4'].includes(Sport)){
-                fromDate = $('#fromDate').val()
-                toDate = $('#toDate').val()
+                fromDate = $('#Fdate').val()
+                toDate = $('#Tdate').val()
                 socket.emit('getEvetnsOfSport',{sport:Sport,fromDate,toDate})
             }else{
                 $('#Event').html(`<option value="All" selected> Select Event </option>`)
@@ -17859,7 +17859,7 @@ socket.on('connect', () => {
             let html =''
             html += `<option value="All" selected> Select Event </option>`
             for(let i = 0;i<data.length;i++){
-                html += `<option value="${data.eventId}">${data._id}</option>`
+                html += `<option value="${data[i].eventId}">${data[i]._id}</option>`
             }
             $('#Event').html(html)
         })
