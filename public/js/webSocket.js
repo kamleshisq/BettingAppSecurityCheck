@@ -12600,6 +12600,8 @@ socket.on('connect', () => {
 
         $(document).ready(function () {
             $(".button").click(function () {
+                let marketId = $(this).closest("table").attr("id");
+                
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
