@@ -2594,9 +2594,9 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     let liveFootBall1 = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     let userMultimarkets
     if(user){
@@ -2622,7 +2622,26 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             footbalSeries[seriesIndex].matchdata.push(match);
         }
     });
+    // LiveCricket.forEach(match => {
+    //     let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
+    //     if (seriesIndex === -1) {
+    //         cricketSeries.push({ series: match.eventData.league, matchdata: [match] });
+    //     } else {
+    //         cricketSeries[seriesIndex].matchdata.push(match);
+    //     }
+    // });
+
     LiveCricket.forEach(match => {
+        let fancyCount = 0
+            if(match.marketList.session != null){
+                let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
+                fancyCount += count
+            }
+            if(match.marketList.odd_even != null){
+                let count = match.marketList.odd_even.length
+                fancyCount += count
+            }
+        match.fancyCount = fancyCount
         let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             cricketSeries.push({ series: match.eventData.league, matchdata: [match] });
