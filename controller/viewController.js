@@ -2631,7 +2631,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         }
     });
 
-    console.log(cricketSeries,'==>>cricketSeries')
+    console.log(cricketSeries[0].matchdata,'==>>cricketSeries')
     let catalog = await catalogController.find()
 
     res.status(200).render('./userSideEjs/inplayPage/main',{
