@@ -13511,7 +13511,7 @@ socket.on('connect', () => {
                 $(".eventId").click(function () {
                     // console.log("working")
                 let data = {}
-                data.status = 'multiMarket'
+                data.status222 = 'multiMarket'
                 let secforFency 
                 data.title = $(this).closest("tr").find(".name").text()
                 data.eventId = $(this).attr("id");

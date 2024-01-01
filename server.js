@@ -1975,6 +1975,10 @@ io.on('connection', (socket) => {
 
     socket.on('betDetails', async(data) => {
         // console.log(data, "DATA")
+        let multimarketstatus = false
+        if(data.status222 && data.status222 == 'multiMarket'){
+            multimarketstatus = true
+        }
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
         // data.data.oldData = data.data.odds
@@ -2045,9 +2049,9 @@ io.on('connection', (socket) => {
             data.data.secId = data.data.secId.slice(0,-1)
         }
         // console.log(data ,'++++++==>DATA')
-        let result = await placeBet(data)
+        // let result = await placeBet(data)
         let openBet = []
-        if(data.status && data.status === "multiMarket"){
+        if(multimarketstatus){
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
         }else{
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
