@@ -18396,7 +18396,7 @@ socket.on('connect', () => {
 
 
         socket.on("gameAnalysis", data => {
-            // console.log(data)
+            console.log(data,'==>gameAnalysis')
             if($('#FOOTBALL').find('.matchOddsBack')){
                 $('#FOOTBALL').find('.matchOddsBack').html('')
             }
