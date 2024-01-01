@@ -9340,7 +9340,7 @@ io.on('connection', (socket) => {
                 {
                     $match: {
                         status: "OPEN",
-                        marketId: data.uniqueIds[i],
+                        marketId: uniqueIds[i],
                         userName:data.LOGINDATA.LOGINUSER.userName
                     }
                 },
