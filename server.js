@@ -9332,7 +9332,8 @@ io.on('connection', (socket) => {
 
 
     socket.on('marketDetailsMultiMarket', async(data) => {
-        console.log(data)
+        let uniqueIds = [...new Set(data.ids)];
+        console.log(uniqueIds, "uniqueIdsuniqueIds")
     })
 
     socket.on('marketIdbookDetailsFANCY', async(data) => {
