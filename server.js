@@ -2217,35 +2217,37 @@ io.on('connection', (socket) => {
             data.LOGINUSER = parentUser
         }
         // console.log(data.LOGINUSER._id.toString(), "data.LOGINUSERdata.LOGINUSERdata.LOGINUSER")
-        let userIds = await User.distinct('userName', {parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }}).lean();
-        let bets = await Bet.aggregate([
-            {
-                $match: {
-                    userName: { $in: userIds },
-                    status: 'OPEN'
-                }
-              },
-              {
-                  $group:{
-                      _id: {
-                        secId:'$secId',
-                        eventId : '$eventId'
-                      },
-                      totalStake: { $sum: '$Stake' },
-                      count: { $sum: 1 }
+        if(data.LOGINUSER){
+            let userIds = await User.distinct('userName', {parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id.toString() } }}).lean();
+            let bets = await Bet.aggregate([
+                {
+                    $match: {
+                        userName: { $in: userIds },
+                        status: 'OPEN'
+                    }
+                  },
+                  {
+                      $group:{
+                          _id: {
+                            secId:'$secId',
+                            eventId : '$eventId'
+                          },
+                          totalStake: { $sum: '$Stake' },
+                          count: { $sum: 1 }
+                      }
+                  },
+                  {
+                    $project:{
+                        _id : 0,
+                        secId : '$_id.secId',
+                        eventId : '$_id.eventId',
+                        totalStake:'$totalStake',
+                        count:'$count'
+                    }
                   }
-              },
-              {
-                $project:{
-                    _id : 0,
-                    secId : '$_id.secId',
-                    eventId : '$_id.eventId',
-                    totalStake:'$totalStake',
-                    count:'$count'
-                }
-              }
-        ])
-        socket.emit("aggreat", bets)
+            ])
+            socket.emit("aggreat", bets)
+        }
     })
 
 
