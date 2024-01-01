@@ -13623,17 +13623,25 @@ socket.on('connect', () => {
                   </table>`
                   document.getElementById('length1').innerHTML = html2
                 }else{
+                    let allmarket = []
+                    $(".market").each(function() {
+                        allmarket.push(this.id);
+                      });
+
+                      let uniqueIds = [...new Set(allmarket)];
                     for(let i = 0; i < data.openBet.length; i++){
-                        if(data.openBet[i].bettype2 === "BACK"){
-                            html2 +=  `<tr class="back-inplaymatch" >`
-                         }else{
-                             html2 +=  `<tr class="lay-inplaymatch" >`
-                         }
-                        html2 += `
-                        <td>${ data.openBet[i].selectionName}</td>
-                        <td>${ data.openBet[i].oddValue }</td>
-                        <td>${ data.openBet[i].Stake }</td>
-                      </tr>`
+                        if(uniqueIds.some(item => item == data.openBet[i].id)){
+                            if(data.openBet[i].bettype2 === "BACK"){
+                                html2 +=  `<tr class="back-inplaymatch" >`
+                             }else{
+                                 html2 +=  `<tr class="lay-inplaymatch" >`
+                             }
+                            html2 += `
+                            <td>${ data.openBet[i].selectionName}</td>
+                            <td>${ data.openBet[i].oddValue }</td>
+                            <td>${ data.openBet[i].Stake }</td>
+                          </tr>`
+                        }
                     }
                     document.getElementById('tableBET').innerHTML = html2
                 }
