@@ -13606,6 +13606,7 @@ socket.on('connect', () => {
 
                 let uniqueIds = [...new Set(allmarket)];
                 console.log(uniqueIds, "uniqueIdsuniqueIdsuniqueIds")
+                data.openBet = data.openBet.filter(item => uniqueIds.includes(item._id.toString()))
                 document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
                 if(data.openBet.length === 1){
                     html2 = `<table class="table-new-d">
