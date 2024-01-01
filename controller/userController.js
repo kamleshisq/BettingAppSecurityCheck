@@ -18,6 +18,7 @@ const globalSettingModel = require('../model/globalSetting')
 
 exports.isOperator = catchAsync(async(req, res, next) => {
     console.log(req.currentUser, "req.currentUserreq.currentUser")
+    next()
 })
 
 exports.createUser = catchAsync(async(req, res, next)=>{
