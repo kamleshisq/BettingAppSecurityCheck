@@ -12596,16 +12596,16 @@ socket.on('connect', () => {
                 },300)
         })
 
-        function marketIdbookDetails( status ){
+        function marketIdbookDetailsmultimarket( status ){
             var ids = [];
             $(".market").each(function() {
                 ids.push(this.id);
               });
               console.log('GOTHERE')
-              socket.emit('marketDetailsMultiMarket',{ids, LOGINDATA} )
+              socket.emit('marketDetailsMultiMarket',{ids, LOGINDATA, status} )
         }
 
-        marketIdbookDetails( false )
+        marketIdbookDetailsmultimarket( false )
 
         $(document).ready(function () {
             $(".button").click(function () {
