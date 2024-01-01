@@ -13605,8 +13605,8 @@ socket.on('connect', () => {
                       });
 
                 let uniqueIds = [...new Set(allmarket)];
-                console.log(uniqueIds, "uniqueIdsuniqueIdsuniqueIds")
-                console.log(data.openBet)
+                // console.log(uniqueIds, "uniqueIdsuniqueIdsuniqueIds")
+                // console.log(data.openBet)
                 data.openBet = data.openBet.filter(item => uniqueIds.includes(item.marketId))
                 document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
                 if(data.openBet.length === 1){
@@ -13633,7 +13633,7 @@ socket.on('connect', () => {
                   document.getElementById('length1').innerHTML = html2
                 }else{
                     for(let i = 0; i < data.openBet.length; i++){
-                        if(uniqueIds.some(item => item == data.openBet[i].id)){
+                        if(data.openBet[i].bettype2 === "BACK"){
                                 html2 +=  `<tr class="back-inplaymatch" >`
                              }else{
                                  html2 +=  `<tr class="lay-inplaymatch" >`
