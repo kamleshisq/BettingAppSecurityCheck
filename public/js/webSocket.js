@@ -12601,7 +12601,7 @@ socket.on('connect', () => {
             $(".market").each(function() {
                 ids.push(this.id);
               });
-              console.log('GOTHERE')
+            //   console.log('GOTHERE')
               socket.emit('marketDetailsMultiMarket',{ids, LOGINDATA, status} )
         }
 
@@ -13511,6 +13511,7 @@ socket.on('connect', () => {
                 $(".eventId").click(function () {
                     // console.log("working")
                 let data = {}
+                data.status = 'multiMarket'
                 let secforFency 
                 data.title = $(this).closest("tr").find(".name").text()
                 data.eventId = $(this).attr("id");
