@@ -5665,7 +5665,7 @@ io.on('connection', (socket) => {
                                                                             if : { $eq : ["$$value.value" , 0]},
                                                                             then : {
                                                                                 $cond:{
-                                                                                    if : {$eq : ["$parentId", loginId]},
+                                                                                    if : {$eq : ["$$this.uplineShare", loginId]},
                                                                                     then:{
                                                                                         $cond:{
                                                                                             if:{$eq:['$$this.uplineShare', 0]},
