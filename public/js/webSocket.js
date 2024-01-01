@@ -23,7 +23,7 @@ socket.on('connect', () => {
         //     for (let i = 0; i < styleSheets.length; i++) {
         //       const styleSheet = styleSheets[i];
         //       if (styleSheet.href) {
-        //         if(styleSheet.href == "http://dev.ollscores.com/assets/css/style.css" || styleSheet.href == "http://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://dev.ollscores.com/assets/css/media.css"){
+        //         if(styleSheet.href == "http://ollscores.com/assets/css/style.css" || styleSheet.href == "http://ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://ollscores.com/assets/css/media.css"){
 
         //             // console.log('Processing stylesheet:', styleSheet.href, data);
         //             try {
@@ -92,7 +92,7 @@ socket.on('connect', () => {
         // }
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //dev.ollscores.com dev.ollscores.com http://dev.ollscores.com/admin/userManagement http://dev.ollscores.com  http: 
+        //dev.ollscores.com dev.ollscores.com http://ollscores.com/admin/userManagement http://ollscores.com  http: 
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
