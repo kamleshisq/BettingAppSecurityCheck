@@ -13577,9 +13577,14 @@ socket.on('connect', () => {
                 }
                 });
               });
+
+              $(document).on('click', ".close-btn", function(){
+                marketIdbookDetails( false )
+            })
     
             socket.on("betDetails" , (data) => {
                 hideLoader()
+                marketIdbookDetails( true )
                 // console.log(data.result)
                 // function togglePopup(idname, id){
                 //     document.getElementById(idname).classList.toggle("active");
@@ -13637,6 +13642,7 @@ socket.on('connect', () => {
 
             $(document).on('click','.tbl-td-with5',function(e){
                 // console.log("WORKING")
+                marketIdbookDetails( true )
                 $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
                 $(".minus")
                 .closest("tr")
