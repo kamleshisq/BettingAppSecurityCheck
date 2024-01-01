@@ -9659,7 +9659,7 @@ socket.on('connect', () => {
             data.secId = secId.slice(0,-1)
             var escapedId =  data.secId.replace(/\./g, '\\.');
             let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
-            if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+            if(IdButton.hasClass('only_over_blue') || IdButton.hasClass('odd_even_blue') || IdButton.hasClass('odd_even_red') || IdButton.hasClass('only_over_red')){
                 data.odds = parseFloat(
                     $(this).closest("tr").find(".selection-name").text().split('@')[1]
                     );
