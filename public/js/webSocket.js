@@ -12604,6 +12604,8 @@ socket.on('connect', () => {
               socket.emit('marketDetailsMultiMarket',{ids, LOGINDATA} )
         }
 
+        marketIdbookDetails( false )
+
         $(document).ready(function () {
             $(".button").click(function () {
                 let marketId = $(this).closest("table").attr("id");
