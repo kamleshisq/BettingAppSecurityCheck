@@ -12601,6 +12601,7 @@ socket.on('connect', () => {
             $(".market").each(function() {
                 ids.push(this.id);
               });
+              console.log('GOTHERE')
               socket.emit('marketDetailsMultiMarket',{ids, LOGINDATA} )
         }
 
