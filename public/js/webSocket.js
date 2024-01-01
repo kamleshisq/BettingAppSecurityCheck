@@ -13599,6 +13599,13 @@ socket.on('connect', () => {
                 }
                 
                 let html2 = ""
+                let allmarket = []
+                    $(".market").each(function() {
+                        allmarket.push(this.id);
+                      });
+
+                let uniqueIds = [...new Set(allmarket)];
+                console.log(uniqueIds, "uniqueIdsuniqueIdsuniqueIds")
                 document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
                 if(data.openBet.length === 1){
                     html2 = `<table class="table-new-d">
@@ -13623,15 +13630,8 @@ socket.on('connect', () => {
                   </table>`
                   document.getElementById('length1').innerHTML = html2
                 }else{
-                    let allmarket = []
-                    $(".market").each(function() {
-                        allmarket.push(this.id);
-                      });
-
-                      let uniqueIds = [...new Set(allmarket)];
                     for(let i = 0; i < data.openBet.length; i++){
                         if(uniqueIds.some(item => item == data.openBet[i].id)){
-                            if(data.openBet[i].bettype2 === "BACK"){
                                 html2 +=  `<tr class="back-inplaymatch" >`
                              }else{
                                  html2 +=  `<tr class="lay-inplaymatch" >`
@@ -13641,7 +13641,6 @@ socket.on('connect', () => {
                             <td>${ data.openBet[i].oddValue }</td>
                             <td>${ data.openBet[i].Stake }</td>
                           </tr>`
-                        }
                     }
                     document.getElementById('tableBET').innerHTML = html2
                 }
