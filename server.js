@@ -2050,7 +2050,7 @@ io.on('connection', (socket) => {
             data.data.secId = data.data.secId.slice(0,-1)
         }
         console.log(data ,'++++++==>DATA', multimarketstatus)
-        // let result = await placeBet(data)
+        let result = await placeBet(data)
         let openBet = []
         if(multimarketstatus){
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
