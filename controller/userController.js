@@ -156,7 +156,9 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             await globalSettingModel.create(newglobalsetting)
     }
     if((user_type.role_level < req.currentUser.role.role_level) && (user_type.role_level !== 5)){
-        return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+        if(req.currentUser.roleName != "Operator"){
+            return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+        }
     }
     // if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
     //     return next(new AppError("You do not have permission to perform this action", 404))
@@ -259,7 +261,9 @@ exports.deletUser = catchAsync(async(req, res, next) =>{
     // console.log(user.role.role_type)
     // console.log(req.currentUser.role.role_type)
     if((req.currentUser.role.role_type > user.role.role_type) && (user.role.role_type !== 5)){
+        if(req.currentUser.roleName != "Operator"){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+        }
     }
     const deleteuser = await User.findByIdAndDelete(req.body.id)
     if(!deleteuser){
@@ -290,7 +294,9 @@ exports.updateUserStatusCodeInactive = catchAsync(async(req, res, next) => {
     // console.log(user.role.role_type)
     // console.log(req.currentUser.role.role_type)
     if((req.currentUser.role.role_type > user.role.role_type) && (user.role.role_type !== 5)){
+        if(req.currentUser.roleName != "Operator"){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+        }
     }
     if(!user.isActive){
         res.status(200).json({
@@ -395,7 +401,9 @@ exports.updateUserStatusBattingLock = catchAsync(async(req, res, next) => {
         return next(new AppError("User not found", 404))
     }
     if((req.currentUser.role.role_type > user1.role.role_type)  && (user1.role.role_type !== 5)){
+        if(req.currentUser.roleName != "Operator"){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+        }
     }
     if(user1.betLock){
         return res.status(200).json({
@@ -427,7 +435,9 @@ exports.updateUserStatusBattingUnlock = catchAsync(async(req, res, next) => {
         return next(new AppError("User not found", 404))
     }
     if((req.currentUser.role.role_type > user1.role.role_type)  && (user1.role.role_type !== 5)){
+        if(req.currentUser.roleName != "Operator"){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+        }
     }
     if(!user1.betLock){
         return res.status(200).json({
@@ -456,7 +466,9 @@ exports.changePassword = catchAsync(async(req, res, next) => {
         return next(new AppError("User not found", 404))
     }
     if((req.currentUser.role.role_type > user.role.role_type) && (user.role.role_type !== 5)){
+        if(req.currentUser.roleName != "Operator"){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+        }
     }
     
     user.password = req.body.password
