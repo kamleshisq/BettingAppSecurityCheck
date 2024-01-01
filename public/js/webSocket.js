@@ -10141,7 +10141,9 @@ socket.on('connect', () => {
             if(data.betDetails && data.betDetails.length != 0){
                 $("td.market").each(function() {
                     if(data.betDetails.some(item => item == this.id)){
-                        let text = $(this).text()
+                        let text = $(this).contents().filter(function() {
+                            return this.nodeType === 3; // Filter out non-text nodes
+                        }).text().trim();
                         text += '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
                         console.log(text, "texttext")
                         $(this).html(text)
