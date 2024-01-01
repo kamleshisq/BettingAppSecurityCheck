@@ -31,6 +31,10 @@ exports.createNewNotification = catchAsync(async(req, res, next) => {
 
 
 exports.getMyNotification = catchAsync(async(req, res, next) => {
+    let id = req.currentUser._id
+    if(req.currentUser.roleName === "Operator"){
+        id = req.currentUser.parent_id
+    }
     const notifications = await notificationModel.find({userId:req.currentUser._id})
     res.status(200).json({
         status:'success',
