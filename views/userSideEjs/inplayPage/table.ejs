@@ -68,19 +68,19 @@
                         <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> MO </p>
-                            <span>35</span>
+                            <span>1</span>
                           </div>
                         <%} %>
                         <%if(cricketSeries[i].matchdata[j].marketList.fancy != null || cricketSeries[i].matchdata[j].marketList.session!= null || cricketSeries[i].matchdata[j].marketList.odd_even!= null ){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> F </p>
-                            <span>1</span>
+                            <span><%=cricketSeries[i].matchdata[j].fancyCount%></span>
                           </div>
                         <%} %>
                         <%if(cricketSeries[i].matchdata[j].marketList.bookmaker != null){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> B </p>
-                            <span>1</span>
+                            <span><%=cricketSeries[i].matchdata[j].marketList.bookmaker.length%></span>
                           </div>
                         <%} %>
                         <!-- <div class="exchange-td2-txtdv-inn1">
@@ -286,19 +286,19 @@
                         <%if(footbalSeries[i].matchdata[j].marketList.match_odd != null){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> MO </p>
-                            <span>35</span>
+                            <span>1</span>
                           </div>
                         <%} %>
                         <%if(footbalSeries[i].matchdata[j].marketList.fancy != null || footbalSeries[i].matchdata[j].marketList.session!= null || footbalSeries[i].matchdata[j].marketList.odd_even!= null ){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> F </p>
-                            <span>1</span>
+                            <span><%=footbalSeries[i].matchdata[j].fancyCount%></span>
                           </div>
                         <%} %>
                         <%if(footbalSeries[i].matchdata[j].marketList.bookmaker != null){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> B </p>
-                            <span>1</span>
+                            <span><%=footbalSeries[i].matchdata[j].marketList.bookmaker.length%></span>
                           </div>
                         <%} %>
                         <!-- <div class="exchange-td2-txtdv-inn1">
@@ -504,19 +504,19 @@
                         <%if(tennisSeries[i].matchdata[j].marketList.match_odd != null){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> MO </p>
-                            <span>35</span>
+                            <span>1</span>
                           </div>
                         <%} %>
                         <%if(tennisSeries[i].matchdata[j].marketList.fancy != null || tennisSeries[i].matchdata[j].marketList.session!= null || tennisSeries[i].matchdata[j].marketList.odd_even!= null ){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> F </p>
-                            <span>1</span>
+                            <span><%=tennisSeries[i].matchdata[j].fancyCount%></span>
                           </div>
                         <%} %>
                         <%if(tennisSeries[i].matchdata[j].marketList.bookmaker != null){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> B </p>
-                            <span>1</span>
+                            <span><%=tennisSeries[i].matchdata[j].marketList.bookmaker.length%></span>
                           </div>
                         <%} %>
                         <!-- <div class="exchange-td2-txtdv-inn1">
