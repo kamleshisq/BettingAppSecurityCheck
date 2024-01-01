@@ -35,7 +35,7 @@ exports.getMyNotification = catchAsync(async(req, res, next) => {
     if(req.currentUser.roleName === "Operator"){
         id = req.currentUser.parent_id
     }
-    const notifications = await notificationModel.find({userId:req.currentUser._id})
+    const notifications = await notificationModel.find({userId:id})
     res.status(200).json({
         status:'success',
         notifications
