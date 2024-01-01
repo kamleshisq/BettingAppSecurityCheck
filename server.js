@@ -6490,6 +6490,22 @@ io.on('connection', (socket) => {
             }
         }
 
+        let events;
+        if(data.type){
+
+        }else{
+            events = await Bet.aggregate([
+                {
+                    $match: data.filterData
+                },
+                {
+                    $group:{
+                        _id:'$match',
+                        eventId:{$first:'$eventId'}
+                    }
+                }
+            ])
+        }
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
@@ -6593,7 +6609,7 @@ io.on('connection', (socket) => {
             }
         ])
         // console.log(gameAnalist)
-        socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter})
+        socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter,events})
     })
 
     socket.on('matchOdds',async(data)=>{
@@ -6819,16 +6835,31 @@ io.on('connection', (socket) => {
 
     socket.on('getEvetnsOfSport',async(data)=>{
         // console.log(data);
-        const sportData = await getCrkAndAllData()
-        // console.log(sportData)
-        let sportList;
-        if(data.sport == '4'){
-            sportList = sportData[0].gameList[0]
-        }else{
-            sportList = sportData[1].gameList.find(item => item.sportId == parseInt(data.sport))
-        }
+        // const sportData = await getCrkAndAllData()
+        // // console.log(sportData)
+        // let sportList;
+        // if(data.sport == '4'){
+        //     sportList = sportData[0].gameList[0]
+        // }else{
+        //     sportList = sportData[1].gameList.find(item => item.sportId == parseInt(data.sport))
+        // }
 
-        socket.emit('getEvetnsOfSport',sportList)
+        let events = await Bet.aggregate([
+            {
+                $match: {
+                    date:{$gte:new Date(data.fromDate),$lte:new Date(new Date(data.toDate).getTime() + ((24 * 60 * 60 * 1000)  - 1))},
+                    gameId:data.sport
+                }
+            },
+            {
+                $group:{
+                    _id:'$match',
+                    eventId:{$first:'$eventId'}
+                }
+            }
+        ])
+
+        socket.emit('getEvetnsOfSport',events)
 
     })
 
