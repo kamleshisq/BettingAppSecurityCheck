@@ -6496,7 +6496,7 @@ io.on('connection', (socket) => {
         }else{
             events = await Bet.aggregate([
                 {
-                    $match: data.filterData
+                    $match: filter
                 },
                 {
                     $group:{
