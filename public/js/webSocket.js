@@ -17846,8 +17846,8 @@ socket.on('connect', () => {
             let Sport = $(this).val()
             // console.log(Sport)
             if(['1','2','4'].includes(Sport)){
-                fromDate = $('#fromDate').val()
-                toDate = $('#toDate').val()
+                fromDate = $('#Fdate').val()
+                toDate = $('#Tdate').val()
                 socket.emit('getEvetnsOfSport',{sport:Sport,fromDate,toDate})
             }else{
                 $('#Event').html(`<option value="All" selected> Select Event </option>`)
