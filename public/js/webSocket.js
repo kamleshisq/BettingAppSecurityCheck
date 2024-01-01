@@ -17798,6 +17798,22 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/gameanalysis"){
+
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        $('#Fdate').val(tomorrowFormatted)
+        $('#Tdate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+
         $(document).on('change','#Fdate',function(e){
             let from_date = $(this).val()
             let market = $("#market").val()
@@ -17830,18 +17846,20 @@ socket.on('connect', () => {
             let Sport = $(this).val()
             // console.log(Sport)
             if(['1','2','4'].includes(Sport)){
-                socket.emit('getEvetnsOfSport',{sport:Sport})
+                fromDate = $('#fromDate').val()
+                toDate = $('#toDate').val()
+                socket.emit('getEvetnsOfSport',{sport:Sport,fromDate,toDate})
             }else{
                 $('#Event').html(`<option value="All" selected> Select Event </option>`)
             }
         })
 
         socket.on('getEvetnsOfSport',async(data)=>{
-            // console.log(data,"getEvetnsOfSport")
+            console.log(data,"getEvetnsOfSport")
             let html =''
             html += `<option value="All" selected> Select Event </option>`
-            for(let i = 0;i<data.eventList.length;i++){
-                html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
+            for(let i = 0;i<data.length;i++){
+                html += `<option value="${data.eventId}">${data._id}</option>`
             }
             $('#Event').html(html)
         })
@@ -17852,6 +17870,9 @@ socket.on('connect', () => {
             let market = $("#market").val()
             let to_date
             let from_date
+            let type;
+            // console.log($(this).attr('id'))
+            type = 'changeevent'
             if($('#Fdate').val() != ''){
                 from_date = $('#Fdate').val()
             }
@@ -17860,7 +17881,7 @@ socket.on('connect', () => {
             }
             let page = 0
             if(Sport != 'All'){
-                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market,type})
             }
         })
 
@@ -18407,6 +18428,17 @@ socket.on('connect', () => {
             $('.matchOddsBack').removeClass('active')
             let html = "";
             let html2 = "";
+            let html4 = ""
+            if(data.events){
+                html4 += `<option value="All" selected> Select Event </option>`
+                for(let i = 0;i<data.events.length;i++){
+                    if(data.events[i]._id){
+                        html4 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                    }
+                }
+                $('#Event').html(html4)
+            }
+            
             if(data.page == 0){
                 html += `<thead>
                     <tr>
