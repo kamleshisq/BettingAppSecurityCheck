@@ -1976,6 +1976,7 @@ io.on('connection', (socket) => {
     socket.on('betDetails', async(data) => {
         // console.log(data, "DATA")
         let multimarketstatus = false
+
         if(data.status222 && data.status222 == 'multiMarket'){
             multimarketstatus = true
         }
@@ -2048,7 +2049,7 @@ io.on('connection', (socket) => {
             // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        // console.log(data ,'++++++==>DATA')
+        console.log(data ,'++++++==>DATA', multimarketstatus)
         // let result = await placeBet(data)
         let openBet = []
         if(multimarketstatus){
