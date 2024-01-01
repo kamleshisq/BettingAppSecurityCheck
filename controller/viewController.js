@@ -480,13 +480,20 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     //     role_type.push(roles[i].role_type)
     // }
     const currentUser = req.currentUser
+    console.log(currentUser)
+    let id = currentUser._id
+    if(currentUser.roleName == 'Operator'){
+        let parentUser = await User.findById(currentUser.parent_id)
+        id = parentUser.id
+    }
+    console.log(id, "ididid")
     // let users
     // if(req.currentUser.role_type == 1){
     //     users = await User.find({is_Online:true})
     // }else{
     //     users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:req.currentUser.whiteLabel, parentUsers:{$elemMatch:{$eq:req.currentUser.id}}})
     // }
-    let users = await User.find({is_Online:true , parentUsers:{$in:[currentUser._id]}}).limit(limit)
+    let users = await User.find({is_Online:true , parentUsers:{$in:[id]}}).limit(limit)
     let me = req.currentUser
     res.status(200).render('./onlineUsers/onlineUsers',{
         title:"Online Users",
@@ -1922,7 +1929,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         },
     ])
 
-    console.log(betResult[0].whitelabelData, "betResultbetResultbetResult")
+    // console.log(betResult[0].whitelabelData, "betResultbetResultbetResult")
     // let whiteLabelAndUSer = await User.find({ userName: { $in: childrenUsername }}, 'userName whiteLabel -role')
     // console.log(whiteLabelAndUSer, "whiteLabelAndUSer")
 
