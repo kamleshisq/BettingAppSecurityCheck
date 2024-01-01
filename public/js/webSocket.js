@@ -11885,7 +11885,7 @@ socket.on('connect', () => {
                             let data1 = htmldiv.find('span:first').text()
                             let data2 = htmldiv.find('span:first').next().text()
                             console.log("data2:", data2, typeof data2);
-                            console.log("Comparison result:", data2 == section.backSize1);
+                            console.log("Comparison result:", data2 === section.backSize1);
                             console.log("section.backSize1:", section.backSize1, typeof section.backSize1);
                             if(data1 != section.backPrice1 || data2 != section.backSize1 ){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
