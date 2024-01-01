@@ -12889,7 +12889,7 @@ socket.on('connect', () => {
     }
     
     marketIdbookDetails( false )
-    fencyDetails( false )
+    
           
     
     function Onlyminus ( data ){
