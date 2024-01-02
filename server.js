@@ -10242,7 +10242,7 @@ io.on('connection', (socket) => {
                     
                 }
             }
-            // console.log(usernameArr,'==>usernameArr')
+            console.log(filter,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
                 {
                     $match:filter
