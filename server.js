@@ -1983,7 +1983,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        // console.log(data, "DATA")
+        console.log(data, "DATA")
         const startTimestamp = performance.now(); 
         let delay = await oddsLimitCHeck({eventId:data.data.eventId, ids:[data.data.market]})
         // console.log(delay, "delay")
