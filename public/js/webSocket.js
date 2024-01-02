@@ -8374,6 +8374,14 @@ socket.on('connect', () => {
             //     }
             // })
             $(".bookmaker_blue").each(function() {
+                let marketId = $(this).closest('table').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
                     
                 let id = this.id
                 id = id.slice(0, -1);
@@ -8391,7 +8399,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}1` ){
-                    if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
+                    if( section.back == "-" || section.back == "1,000.00" || section.back == "0" || (macLimitStatus && macLimitStatus < section.back)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8407,6 +8415,16 @@ socket.on('connect', () => {
 
             $(".bookmaker_red").each(function() {
                     
+                let marketId = this.closest('table').id
+
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
+
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8423,7 +8441,6 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
-                let marketId = this.closest('table').id
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
@@ -8434,15 +8451,17 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0"){
+                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0" || (macLimitStatus && macLimitStatus < section.lay)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
-                          parentElement.classList.add("suspended");
-                          $(this).parent().find(".match-status-message").text("Suspended")
-                      }
+                      parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
+                    //   if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
+                    //       parentElement.classList.add("suspended");
+                    //       $(this).parent().find(".match-status-message").text("Suspended")
+                    //   }
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
