@@ -8400,7 +8400,7 @@ socket.on('connect', () => {
                 })
                 if(this.id == `${section.secId}1` ){
                     console.log(section.back, "macLimitStatus", macLimitStatus,  macLimitStatus < section.back)
-                    if( section.back == "-" || section.back == "1,000.00" || section.back == "0" || (macLimitStatus && macLimitStatus < section.back)){
+                    if( section.back == "-" || section.back == "1,000.00" || section.back == "0" || (macLimitStatus != undefined && macLimitStatus < section.back)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8459,7 +8459,7 @@ socket.on('connect', () => {
                     }else if(check){
                         parentElement.classList.add("suspended");
                           $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0" || (macLimitStatus && macLimitStatus < section.lay)){
+                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0" || (macLimitStatus != undefined && macLimitStatus < section.lay)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8613,7 +8613,7 @@ socket.on('connect', () => {
                 })
                 if(this.id == `${section.market_id}1` ){
                     // console.log(section.yes, section.yes_rate)
-                    if( section.yes_rate == "-" || section.yes_rate == "1,000.00" || section.yes_rate == "0"|| (macLimitStatus && macLimitStatus < section.yes_rate)){
+                    if( section.yes_rate == "-" || section.yes_rate == "1,000.00" || section.yes_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.yes_rate)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8690,7 +8690,7 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.no_rate == "-" || section.no_rate == "1,000.00" || section.no_rate == "0"|| (macLimitStatus && macLimitStatus < section.no_rate)){
+                    }else if( section.no_rate == "-" || section.no_rate == "1,000.00" || section.no_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.no_rate)){
                         // console.log('WORKING123456789')
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
