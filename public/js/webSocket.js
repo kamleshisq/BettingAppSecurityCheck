@@ -9682,7 +9682,7 @@ socket.on('connect', () => {
             if(data.secId.startsWith('odd_Even_')){
                 console.log($(`#${secforFency}`).children("span").eq(1))
                 specificSpan = $(`#${secforFency}`).children("span").eq(1).text();
-                // console.log(`#${secforFency}`)
+                console.log(specificSpan)
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
                 
@@ -9698,6 +9698,7 @@ socket.on('connect', () => {
                         // alert('132456')
                         if(checkTime){
                             if(checkTime < Date.now()){
+                                console.log('WORKING')
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                             }else{
                                 // console.log(data)
