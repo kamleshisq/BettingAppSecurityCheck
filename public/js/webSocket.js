@@ -7816,7 +7816,7 @@ socket.on('connect', () => {
                 let eventId = search.split('=')[1]
                 socket.emit("marketId", {ids, eventId})
               });
-            if(limitData.length !== 0){
+            if(limitData.length === 0){
                 marketId()
             }else{
                 setTimeout(()=>{
