@@ -7726,7 +7726,7 @@ socket.on('connect', () => {
                 })
             })
         })
-        let oddSTATUS = false
+        let oddSTATUS = true
         function OddsCheck(){
             $(document).ready(function(){
                 var ids = [];
@@ -7740,7 +7740,7 @@ socket.on('connect', () => {
                 if(oddSTATUS){
                     console.log('WORKING')
                     setTimeout(()=>{
-                        oddSTATUS = true
+                        oddSTATUS = false
                         setInterval(OddsCheck, 5000);
                       }, 1000)
                 }
