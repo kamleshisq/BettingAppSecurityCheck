@@ -2304,7 +2304,7 @@ exports.liveAllMarkets = catchAsync(async(req, res, next) => {
     .then(result => {
         console.log('result:', result)
         res.status(200).json({
-            result
+            result:JSON.parse(result)
         })
     })
 })
@@ -2326,7 +2326,7 @@ exports.liveAllMarkets2 = catchAsync(async(req, res, next) => {
     .then(result => {
         console.log('result:', result)
         res.status(200).json({
-            result
+            result : JSON.parse(result)
         })
     })
 })
