@@ -7824,7 +7824,14 @@ socket.on('connect', () => {
             
             $(".match_odd_Blue").each(function() {
                 let marketId = $(this).closest('table').attr('id')
-                console.log(marketId, "marketIdmarketIdmarketId")
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
+                console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
                 let id = this.id
 
                 id = id.slice(0, -1);
