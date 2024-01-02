@@ -1975,6 +1975,7 @@ io.on('connection', (socket) => {
 
     socket.on('betDetails', async(data) => {
         // console.log(data, "DATA")
+        const startTimestamp = performance.now(); 
         let multimarketstatus = false
 
         if(data.data.status222 && data.data.status222 == 'multiMarket'){
@@ -2049,8 +2050,11 @@ io.on('connection', (socket) => {
             // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        console.log(data ,'++++++==>DATA', multimarketstatus)
+        // console.log(data ,'++++++==>DATA', multimarketstatus)
         let result = await placeBet(data)
+        const endTimestamp = performance.now();
+        const elapsedTimeInSeconds = (endTimestamp - startTimestamp) / 1000;
+        console.log(`The 'placeBet' function took ${elapsedTimeInSeconds} seconds to complete.`);
         let openBet = []
         if(multimarketstatus){
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
