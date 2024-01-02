@@ -4407,9 +4407,9 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let count;
     let data = {};
 
-    let cricketList = sportList.filter(item => item.sprtID == "4")
-    let footballList = sportList.filter(item => item.sprtID == "1")
-    let tennisList = sportList.filter(item => item.sprtID == "2")
+    let cricketList = sportListData.filter(item => item.sprtID == "4")
+    let footballList = sportListData.filter(item => item.sprtID == "1")
+    let tennisList = sportListData.filter(item => item.sprtID == "2")
     let newcricketEvents = cricketList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.evntID})
          let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
