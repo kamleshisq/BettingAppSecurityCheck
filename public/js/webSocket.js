@@ -8612,8 +8612,8 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
-                    console.log(section.yes, section.yes_rate)
-                    if( section.yes == "-" || section.yes == "1,000.00" || section.yes == "0"|| (macLimitStatus && macLimitStatus < section.yes)){
+                    // console.log(section.yes, section.yes_rate)
+                    if( section.yes_rate == "-" || section.yes_rate == "1,000.00" || section.yes_rate == "0"|| (macLimitStatus && macLimitStatus < section.yes_rate)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8690,8 +8690,8 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.no == "-" || section.no == "1,000.00" || section.no == "0"|| (macLimitStatus && macLimitStatus < section.no)){
-                        console.log('WORKING123456789')
+                    }else if( section.no_rate == "-" || section.no_rate == "1,000.00" || section.no_rate == "0"|| (macLimitStatus && macLimitStatus < section.no_rate)){
+                        // console.log('WORKING123456789')
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
