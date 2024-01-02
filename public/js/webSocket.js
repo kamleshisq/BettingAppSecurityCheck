@@ -8653,6 +8653,7 @@ socket.on('connect', () => {
                 let parentElement = this.parentNode
                 // console.log(section.ball_running)
                 if(this.id == `${section.market_id}2` ){
+                    console.log(macLimitStatus < section.no)
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
