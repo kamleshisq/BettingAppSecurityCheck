@@ -3909,14 +3909,8 @@ io.on('connection', (socket) => {
 
     socket.on('sportStatusChange',async(data) => {
         // console.log(data)
-        let allData =  await getCrkAndAllData()
-        const cricket = allData[0].gameList[0].eventList
-        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
-        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
-        footBall = footBall.eventList
-        Tennis = Tennis.eventList
-        const resultSearch = cricket.concat(footBall, Tennis);
-        let result = resultSearch.find(item => item.eventData.compId == data.id)
+        let allData =  await getLiveGameData()
+        let result = allData.find(item => item.compID == data.id)
         if(data.status){
             let cataLog =  await catalogController.findOneAndDelete({Id:data.id},{status:true})
             if(cataLog){
@@ -3929,7 +3923,7 @@ io.on('connection', (socket) => {
         }else{
             let createData = {
                 Id : data.id,
-                name : result.eventData.league,
+                name : result.compNm,
                 type : "league",
                 status : false      
             }
