@@ -7913,7 +7913,15 @@ socket.on('connect', () => {
 
 
             $(".match_odd_Red").each(function() {
-                    
+
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
+
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -7933,7 +7941,7 @@ socket.on('connect', () => {
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
+                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0" || (macLimitStatus && macLimitStatus < section.layPrice1)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7965,7 +7973,7 @@ socket.on('connect', () => {
                         
                     }
                 }else if(this.id == `${section.selectionId}5`){
-                    if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0"){
+                    if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0" || (macLimitStatus && macLimitStatus < section.layPrice2)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7997,7 +8005,7 @@ socket.on('connect', () => {
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                   else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
+                   else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0" || (macLimitStatus && macLimitStatus < section.layPrice3)){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
                     //   </span>`
