@@ -16,7 +16,7 @@
                 <ul id="search" class="users hide">
                   <%for(let i = 0; i < cricket.length; i++){%>
                     <% 
-                    let date = new Date((cricket[i].playTm * 1000))
+                    let date = new Date(new Date(cricket[i].playTm) * 1000)
                     var options = { 
                       year: 'numeric',
                       month: 'long',
