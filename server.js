@@ -10239,11 +10239,15 @@ io.on('connection', (socket) => {
             }else{  
                 let betId = await commissionNewModel.distinct('betId', {userName:{$in:usernameArr}, sportId:data.data.sportId, marketName:data.data.marketName, eventName:data.data.eventName})
                 console.log(betId)
-                if(data.data.betId){
-                    filter._id = new ObjectId(data.data.betId)
-                }else{
-                    
+                betId.map(id => mongoose.Types.ObjectId(id))
+                filter._id = {
+                    $in:betId
                 }
+                // if(data.data.betId){
+                //     filter._id = new ObjectId(data.data.betId)
+                // }else{
+                    
+                // }
             }
             console.log(filter,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
