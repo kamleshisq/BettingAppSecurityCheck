@@ -48,9 +48,7 @@ const InPlayEvent = require('./model/inPlayModel')
 const PaymentMethodModel = require('./model/paymentmethodmodel')
 const paymentReportModel = require('./model/paymentreport')
 
-const { error } = require('console');
 const checkPass = require("./websocketController/checkPassUser");
-const { type } = require('os');
 const checkPassAsync = util.promisify(checkPass.checkPass);
 const betLimitMatchWisemodel = require('./model/betLimitMatchWise');
 const voidbetAfterPlace = require('./utils/voideBetAfterPlace');
@@ -72,6 +70,7 @@ const globalSettingModel = require('./model/globalSetting');
 const colorCodeModel = require('./model/colorcodeModel');
 const oddsLimitCHeck = require('./utils/checkOddsLimit');
 const { ObjectId } = require('mongodb');
+const getLiveGameData = require('./utils/getlivedata')
 
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
@@ -4132,15 +4131,15 @@ io.on('connection', (socket) => {
 
     socket.on("eventIdForMarketList", async(data) => {
         // console.log(data.id)
-        let allData =  await getCrkAndAllData()
-        const cricket = allData[0].gameList[0].eventList
+        let allData =  await getLiveGameData()
+        let cricket = allData.filter( (ele) =>{ return ele.sprtID == "4"})
         // let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
         // let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
         // footBall = footBall.eventList
         // Tennis = Tennis.eventList
         const resultSearch = cricket
         // console.log(resultSearch)
-        let result = resultSearch.find(item => item.eventData.eventId == data.id)
+        let result = resultSearch.find(item => item.evntID == data.id)
         let data1 = await commissionMarketModel.find()
         // console.log(result, 123)
         socket.emit("eventIdForMarketList", {result, data1})

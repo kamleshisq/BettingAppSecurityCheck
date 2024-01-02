@@ -15694,108 +15694,35 @@ socket.on('connect', () => {
             // console.log(data)
             let i = 0
             let html = ""
-            for (var marketKey in data.result.marketList) {
-                if (data.result.marketList.hasOwnProperty(marketKey)) {
-                  var market = data.result.marketList[marketKey];
-                  if (market !== null && typeof market === "object") {
-                    i ++
-                    // console.log("Market Key:", marketKey);
-                    // console.log("Market Object:", market);
-                    if(Array.isArray(market)){
-                        if(market.length !== 0){
-                            for(let j = 0; j < market.length; j++){
-                                if( market[j].title && (market[j].title.toLowerCase().startsWith('book') || market[j].title.toLowerCase().startsWith('toss'))){
-                                html += `
-                                <tr id='${market[j].marketId}'>
-                                <td>${i + j }</td>
-                                <td>${market[j].title}</td>`
-                                if(data.data1.some(item => item.marketId == market[j].marketId)){
-                                    html += `<td width="120px"> <div class="on-off-btn-section">
-                                    <span class="on-off">OFF &nbsp; <label class="switch on">
-                                    <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
-                                    <span class="slider round"></span>
-                                    </label>&nbsp; ON</span>
-                                </div></td>
-                                  </tr>`
-                                }else{
-                                    html += `<td width="120px"> <div class="on-off-btn-section">
-                                    <span class="on-off">OFF &nbsp; <label class="switch">
-                                    <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-                                    <span class="slider round"></span>
-                                    </label>&nbsp; ON</span>
-                                </div></td>
-                                  </tr>`
-                                }
-                            }else{
-                                // console.log(market[j], marketKey)
-                                if(marketKey === 'session' && market[j].title && market[j].status == 1 && market[j].bet_allowed == 1 && market[j].game_over == 0 && !market[j].title.startsWith("Only") && market[j].title.includes("Over")){
-                                    html += `
-                                <tr id='${market[j].marketId}'>
-                                <td>${i + j }</td>
-                                <td>${market[j].title}</td>`
-                                if(data.data1.some(item => item.marketId == market[j].marketId)){
-                                    html += `<td width="120px"> <div class="on-off-btn-section">
-                                    <span class="on-off">OFF &nbsp; <label class="switch on">
-                                    <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
-                                    <span class="slider round"></span>
-                                    </label>&nbsp; ON</span>
-                                </div></td>
-                                  </tr>`
-                                }else{
-                                    html += `<td width="120px"> <div class="on-off-btn-section">
-                                    <span class="on-off">OFF &nbsp; <label class="switch">
-                                    <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-                                    <span class="slider round"></span>
-                                    </label>&nbsp; ON</span>
-                                </div></td>
-                                  </tr>`
-                                }
-                                }
-                            }
-                            }
-                        }else{
-                            html += `<tr class="empty_table"><td>No record found</td></tr>`
-                        }
-                       
-                    }else{
-                        if(market.title.toLowerCase().startsWith('match')){
-
-                            html += `
-                            <tr id='${market.marketId}'>  
-                            <td>${i}</td>
-                            <td>${market.title}</td>`
-                            if(data.data1.some(item => item.marketId == market.marketId)){
-                                html += `<td width="120px"> <div class="on-off-btn-section">
-                                <span class="on-off">OFF &nbsp; <label class="switch on">
-                                <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
-                                <span class="slider round"></span>
-                                </label>&nbsp; ON</span>
-                            </div></td>
-                              </tr>`
-                            }else{
-                                html += `<td width="120px"> <div class="on-off-btn-section">
-                                <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-                                <span class="slider round"></span>
-                                </label>&nbsp; ON</span>
-                            </div></td>
-                              </tr>`
-                            }
-                        }else{
-                            console.log(market, marketKey)
-                        }
-                    }
+           for(let i = 0;i<data.result.length;i++){
+                html += `
+                <tr id='${data.result.mrktID}'>  
+                <td>${i}</td>
+                <td>${data.result.mrktNm}</td>`
+                if(data.data1.some(item => item. marketId == data.result.mrktID)){
+                    html += `<td width="120px"> <div class="on-off-btn-section">
+                    <span class="on-off">OFF &nbsp; <label class="switch on">
+                    <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                    <span class="slider round"></span>
+                    </label>&nbsp; ON</span>
+                </div></td>
+                </tr>`
+                }else{
+                    html += `<td width="120px"> <div class="on-off-btn-section">
+                    <span class="on-off">OFF &nbsp; <label class="switch">
+                    <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                    <span class="slider round"></span>
+                    </label>&nbsp; ON</span>
+                </div></td>
+                </tr>`
                 }
-                }
-              }
-            //   console.log(html)
-            //   console.log(html == "")
+           }
               if(html == ""){
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
-            //   console.log(html)
               document.getElementById("markets").innerHTML = html
           })
+
           $(document).on("change", ".checkbox", function(e) {
               e.preventDefault()
               const isChecked = $(this).prop("checked");
