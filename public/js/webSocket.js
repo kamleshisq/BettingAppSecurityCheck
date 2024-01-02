@@ -8382,7 +8382,7 @@ socket.on('connect', () => {
                         macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
                     }
                 }
-                console.log(macLimitStatus ,"macLimitStatusmacLimitStatus")
+                // console.log(macLimitStatus ,"macLimitStatusmacLimitStatus")
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8399,7 +8399,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}1` ){
-                    console.log(section.back)
+                    // console.log(section.back)
                     if( section.back == "-" || section.back == "1,000.00" || section.back == "0" || (macLimitStatus && macLimitStatus < section.back)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -8690,6 +8690,7 @@ socket.on('connect', () => {
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }else if( section.no == "-" || section.no == "1,000.00" || section.no == "0"|| (macLimitStatus && macLimitStatus < section.no)){
+                        console.log('WORKING123456789')
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
