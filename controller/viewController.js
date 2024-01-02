@@ -1765,9 +1765,9 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
         sportList
     })
     
-    // if(sportList){
-    //     sportName = sportList.sport_name;
-    //     let newSportList = sportList.eventList.map(async(item) => {
+    // if(sportList.length != 0){
+    //     sportName = sportList[0].sprtNm;
+    //     let newSportList = sportList.map(async(item) => {
     //         if(item.eventData.type == 'IN_PLAY' && item.eventData.isTv == 1){
     //             let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
     //             let liveStream = await liveStreameData(item.eventData.channelId)
@@ -2220,6 +2220,19 @@ exports.getCricketData1 = catchAsync(async(req, res, next) => {
         res.status(200).json({
             result:JSON.parse(result)
         })
+    })
+});
+exports.getCricketData2 = catchAsync(async(req, res, next) => {
+    var fullUrl = `https://fbot.1cricket.co/api/Admin/getmarketsbysid/?sid=${id}`;
+    let result = await fetch(fullUrl, {
+        method: 'GET'
+    })
+    let jsonresult = await result.json()
+    let finalresult = JSON.parse(jsonresult)
+
+    res.status(200).json({
+        status:'success',
+        finalresult
     })
 });
 
