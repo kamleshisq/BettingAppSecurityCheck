@@ -2211,7 +2211,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 });
 
 exports.getCricketData1 = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://fbot.1cricket.co/api/Admin/getmarketsbysid/?sid=4';
+    var fullUrl = 'https://fbot.1cricket.co/api/Admin/getmarkets';
     fetch(fullUrl, {
         method: 'GET'
     })
