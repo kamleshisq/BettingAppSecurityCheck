@@ -158,6 +158,7 @@ if(data.data.spoetId == 1){
     let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
     let limitData = await checkLimit({eventId:data.data.eventId, ids:[data.data.market]})
     limitData = limitData[0].Limits
+    console.log(limitData)
     if(limitData){
         // console.log(limitData,  parseFloat(data.data.stake),"123456789")
         if(limitData.min_stake > parseFloat(data.data.stake) ){
