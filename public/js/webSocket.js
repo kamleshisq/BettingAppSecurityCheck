@@ -8613,10 +8613,12 @@ socket.on('connect', () => {
                 })
                 if(this.id == `${section.market_id}1` ){
                     if( section.yes == "-" || section.yes == "1,000.00" || section.yes == "0"|| (macLimitStatus && macLimitStatus < section.yes)){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      this.setAttribute("data-bs-toggle", "collapse");
+                      $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         // this.innerHTML = `<span><b>${section.yes}</b></span>` 
@@ -8638,7 +8640,7 @@ socket.on('connect', () => {
                             macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
                         }
                     }
-                    console.log(macLimitStatus, "FANCY")
+                    // console.log(macLimitStatus, "FANCY")
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8653,7 +8655,7 @@ socket.on('connect', () => {
                 let parentElement = this.parentNode
                 // console.log(section.ball_running)
                 if(this.id == `${section.market_id}2` ){
-                    console.log(macLimitStatus < section.no)
+                    // console.log(macLimitStatus < section.no)
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -8692,6 +8694,8 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      this.setAttribute("data-bs-toggle", "collapse");
+                      $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
