@@ -4416,9 +4416,9 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
          count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.status = true
-         }else{
             item.status = false
+         }else{
+            item.status = true
         }
         if(!featureStatus){
             item.featureStatus = false
