@@ -8379,7 +8379,7 @@ socket.on('connect', () => {
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
                     if(limitOnTHis.Limits.max_odd){
-                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                        macLimitStatus =  ((limitOnTHis.Limits.max_odd) / 100) + 1
                     }
                 }
                     
@@ -8421,7 +8421,7 @@ socket.on('connect', () => {
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
                     if(limitOnTHis.Limits.max_odd){
-                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                        macLimitStatus =  ((limitOnTHis.Limits.max_odd) / 100) + 1
                     }
                 }
 
