@@ -1,8 +1,8 @@
 const app = require('./app');
 const mongoose = require('mongoose')
 const util = require('util');
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const https = require('https').Server(app);
+const io = require('socket.io')(https);
 const fetch = require('node-fetch');
 const gameAPI = require('./utils/gameAPI');
 const Role = require('./model/roleModel');
@@ -463,7 +463,7 @@ io.on('connection', (socket) => {
         // console.log(id,'back end id')
         // let data = {userId:`${id}`}
         try{
-            let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser?userId=`+id
+            let fullUrl =  `https://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser?userId=`+id
             fetch(fullUrl, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ` + loginData.Token }
@@ -541,9 +541,9 @@ io.on('connection', (socket) => {
             if(data.id){
     
                 // console.log()
-                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
+                fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
             }else{
-                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
+                fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
     
             }
             fetch(fullUrl, {
@@ -623,9 +623,9 @@ io.on('connection', (socket) => {
         }
         if(data.id){
             // console.log()
-            fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
         }else{
-            fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate 
+            fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate 
 
         }
 
@@ -730,7 +730,7 @@ io.on('connection', (socket) => {
 
             // account  = await AccModel.find({user_id:data.id})
             
-            // fullUrl = 'http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            // fullUrl = 'https://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
         }else{
             json.userAcc = [] 
             
@@ -771,7 +771,7 @@ io.on('connection', (socket) => {
     socket.on("UserSearchId", async(data) => {
         // console.log(data, 123545)
         let user = await User.findOne({userName:data.userName})
-        let fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
+        let fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
         // console.log(fullUrl)
         //urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}`,'GET', data.LOGINDATA.LOGINTOKEN)
 
@@ -797,7 +797,7 @@ io.on('connection', (socket) => {
     socket.on("bettingList", async(data) => {
         let user = await User.findOne({userName:data.val})
         // console.log(user)
-        let fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/bets/betListByUserId?id=` + user._id;
+        let fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/bets/betListByUserId?id=` + user._id;
         // console.log(fullUrl)
         fetch(fullUrl, {
             method: 'GET',
@@ -2156,7 +2156,7 @@ io.on('connection', (socket) => {
     socket.on('createNotification', async(data) => {
         data.data.userId = data.LOGINDATA.LOGINUSER._id
         let bodyData = JSON.stringify(data.data)
-        const fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/createNotification`
+        const fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/notification/createNotification`
         fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -2184,7 +2184,7 @@ io.on('connection', (socket) => {
 
     socket.on("deleteNotification", async(data) => {
         let id = data.id.slice(0, -1);
-        const fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/deleteNotification?id=` + `${id}`
+        const fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/notification/deleteNotification?id=` + `${id}`
         fetch(fullUrl, {
             method: 'GET',
             headers: { 
@@ -2256,7 +2256,7 @@ io.on('connection', (socket) => {
 
 
     socket.on("createVerticalMenu", async(data) => {
-        let fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/verticalMenu/createVerticalMenu`
+        let fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/verticalMenu/createVerticalMenu`
         fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -2463,7 +2463,7 @@ io.on('connection', (socket) => {
 
     socket.on("UserUpdatePass", async(data) => {
         // console.log(data.LOGINDATA.LOGINTOKEN)
-        let fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/users/updateCurrentUserPass`
+        let fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/users/updateCurrentUserPass`
         fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -9147,7 +9147,7 @@ io.on('connection', (socket) => {
     socket.on('GETMarketResult', async(data) => {
 
         try{
-            const fullUrl = 'http://admin-api.dreamexch9.com/api/dream/markets/result';
+            const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
             let result;
             await fetch(fullUrl, {
                 method:'POST',
@@ -10332,6 +10332,6 @@ io.on('connection', (socket) => {
 
 })
 
-http.listen(process.env.port,()=> {
+https.listen(process.env.port,()=> {
     console.log(`app is running on port ${process.env.port}`)
 })

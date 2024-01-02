@@ -67,7 +67,7 @@ cron.schedule('*/5 * * * *', async() => {
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
 
 //CALL API FOR RESULTS
-        const fullUrl = 'http://admin-api.dreamexch9.com/api/dream/markets/result';
+        const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
         await fetch(fullUrl, {
             method:'POST',

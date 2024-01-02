@@ -19,7 +19,7 @@ module.exports = () => {
         if(check && check.status){
         let marketIds = await betModel.distinct('marketId', {status: 'OPEN'})
 
-        const fullUrl = 'http://admin-api.dreamexch9.com/api/dream/markets/result';
+        const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
         await fetch(fullUrl, {
             method:'POST',

@@ -43,7 +43,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
     // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN *1000*2 *30)),
-        httpOnly: true,
+        httpsOnly: true,
         // secure: true
         }
     if(process.env.NODE_ENV === "production"){
@@ -94,7 +94,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
-        httpOnly: true,
+        httpsOnly: true,
         // secure: true
         }
     if(process.env.NODE_ENV === "production"){
@@ -134,7 +134,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
     const { recaptchaToken } = req.body;
     // console.log(recaptchaToken, "recaptchaTokenrecaptchaTokenrecaptchaToken")
     const response = await axios.post(
-        'http://www.google.com/recaptcha/api/siteverify',
+        'https://www.google.com/recaptcha/api/siteverify',
         {
           secret: '6LcFdCEpAAAAAImXcw73zbjF0Epdpus_4HvxhPCP',
           response: req.body['g-recaptcha-response'],
@@ -754,7 +754,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
     
         res.cookie('JWT', 'loggedout', {
             expires: new Date(date + 500),
-            httpOnly: true
+            httpsOnly: true
         });
     
         res.status(200).json({
@@ -797,7 +797,7 @@ exports.admin_logOut = catchAsync( async(req, res) => {
       await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
 	res.cookie('ADMIN_JWT', 'loggedout', {
         expires: new Date(date + 500),
-        httpOnly: true
+        httpsOnly: true
     });
 
     res.status(200).json({

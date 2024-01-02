@@ -5,7 +5,7 @@ async function getmarketdetails(array){
     let body = JSON.stringify(array);
     try{
 
-        var fullUrl = 'http://oddsserver.dbm9.com/dream/get_odds';
+        var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
         await fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -20,7 +20,7 @@ async function getmarketdetails(array){
         })
     }catch(err){
         console.log(err, "fetchERROr")
-        var fullUrl = 'http://oddsserver.dbm9.com/dream/get_odds';
+        var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
         await fetch(fullUrl, {
             method: 'POST',
             headers: { 

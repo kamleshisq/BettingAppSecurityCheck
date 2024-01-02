@@ -12,13 +12,13 @@ sudo apt install nodejs
 
 for install MongoDb by cmd ubuntu
 
-http://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/ (follow this link)
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/ (follow this link)
 
 
 
 for git install 
-http://www.youtube.com/watch?v=lzqV8bYjCP4&t=325s 
-http://thecodebeast.com/auto-deploy-git-on-digital-ocean-or-any-other-vps/ (follow this link)
+https://www.youtube.com/watch?v=lzqV8bYjCP4&t=325s 
+https://thecodebeast.com/auto-deploy-git-on-digital-ocean-or-any-other-vps/ (follow this link)
 
 git config --global user.name "[some user-name]"
 
@@ -82,7 +82,7 @@ git clone -b [branch_name] git@github.com:[githubuser]/[gitrepo].git /var/www/[s
 eXhange@179!
 
 
-http://www.mirchiexch9.com/home
+https://www.mirchiexch9.com/home
 zdemo0001 / Pa$$w0rd
 
 
@@ -90,7 +90,7 @@ sudo lsof -i :80
 sudo kill <PID>
 
 
-http://dev-ha.hypexexch.com/admin/user_management
+https://dev-ha.hypexexch.com/admin/user_management
 
 mazaa / Abcd1234
 
