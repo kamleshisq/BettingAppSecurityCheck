@@ -7831,7 +7831,8 @@ socket.on('connect', () => {
                         macLimitStatus =  limitOnTHis.Limits.max_odd
                     }
                 }
-                console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
+                // console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
+
                 let id = this.id
 
                 id = id.slice(0, -1);
@@ -7842,7 +7843,7 @@ socket.on('connect', () => {
                 });
                 if(this.id == `${section.selectionId}1` ){
 
-                    if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
+                    if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
