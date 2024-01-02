@@ -4295,27 +4295,30 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     if(series.length != 0){
         breadcumArr.push({id:sportId,name:series[0].sprtNm})
         nameArr.push(series[0].sprtNm)
-        if(!nameArr.includes(item.evntNm)){
-            breadcumArr.push({id:compId,name:item.compNm,sportId:sportId})
-            nameArr.push(item.compNm)
-        }
-        let status = await catalogController.findOne({Id:item.evntID})
-        let count = 0;
-        if(!status){
-            await catalogController.create({
-                Id:item.evntID,
-                name:item.evntNm,
-                type:"event",
-                status:true
-            })
-            count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
-            seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:true,count,eventId:item.evntID})
-            
-        }else{
-            count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
-            seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:status.status,count,eventId:item.evntID})
+        let eventListPromis = series.map(async(item)=>{
+            if(!nameArr.includes(item.evntNm)){
+                breadcumArr.push({id:compId,name:item.compNm,sportId:sportId})
+                nameArr.push(item.compNm)
+            }
+            let status = await catalogController.findOne({Id:item.evntID})
+            let count = 0;
+            if(!status){
+                await catalogController.create({
+                    Id:item.evntID,
+                    name:item.evntNm,
+                    type:"event",
+                    status:true
+                })
+                count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
+                seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:true,count,eventId:item.evntID})
+                
+            }else{
+                count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
+                seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:status.status,count,eventId:item.evntID})
 
-        }
+            }
+      
+        })
         Promise.all(eventListPromis).then(()=>{
             return res.status(200).render("./catalogController/events", {
                 title:"Catalog Controller",
