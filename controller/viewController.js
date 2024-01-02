@@ -1744,85 +1744,88 @@ exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
-    const sportData = await getCrkAndAllData()
+    const sportData = await getLiveGameData()
     const sportId = req.query.sportId;
     const me = req.currentUser
-    let cricketEvents;
-    let footballEvents;
-    let tennisEvents;
     let sportList;
     let eventList = [];
     let sportName;
    
     let data = {};
 
-    if(sportId == '4'){
-        sportList = sportData[0].gameList[0]
-    }else{
-        sportList = sportData[1].gameList.find(item => item.sportId == parseInt(sportId))
-    }
+    // if(sportId == '4'){
+    //     sportList = sportData[0].gameList[0]
+    // }else{
+    //     sportList = sportData[1].gameList.find(item => item.sportId == parseInt(sportId))
+    // }
+    sportList = await sportData.filter(item => item.sprtID == sportId)
+
+    res.status(200).json({
+        status:'success',
+        sportList
+    })
     
-    if(sportList){
-        sportName = sportList.sport_name;
-        let newSportList = sportList.eventList.map(async(item) => {
-            if(item.eventData.type == 'IN_PLAY' && item.eventData.isTv == 1){
-                let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
-                let liveStream = await liveStreameData(item.eventData.channelId)
-                let status;
-                let url;
-                if(stream){
-                    status = stream.status
-                    if(stream.url != ''){
-                        url = stream.url
-                    }else{
-                        const src_regex = /src='([^']+)'/;
-                        let match1
-                        if(liveStream.data){
-                            match1 = liveStream.data.match(src_regex);
-                            if (match1) {
-                                url = match1[1];
-                            } else {
-                                ("No 'src' attribute found in the iframe tag.");
-                            }
-                        }
+    // if(sportList){
+    //     sportName = sportList.sport_name;
+    //     let newSportList = sportList.eventList.map(async(item) => {
+    //         if(item.eventData.type == 'IN_PLAY' && item.eventData.isTv == 1){
+    //             let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
+    //             let liveStream = await liveStreameData(item.eventData.channelId)
+    //             let status;
+    //             let url;
+    //             if(stream){
+    //                 status = stream.status
+    //                 if(stream.url != ''){
+    //                     url = stream.url
+    //                 }else{
+    //                     const src_regex = /src='([^']+)'/;
+    //                     let match1
+    //                     if(liveStream.data){
+    //                         match1 = liveStream.data.match(src_regex);
+    //                         if (match1) {
+    //                             url = match1[1];
+    //                         } else {
+    //                             ("No 'src' attribute found in the iframe tag.");
+    //                         }
+    //                     }
                     
-                    }
-                    eventList.push({eventId:item.eventData.eventId,sportId,created_on:item.eventData.created_on,eventName:item.eventData.name,sportName:sportName,status,url})
-                }else{
-                    const src_regex = /src='([^']+)'/;
-                    let match1
-                    if(liveStream.data){
-                        match1 = liveStream.data.match(src_regex);
-                        if (match1) {
-                            url = match1[1];
-                        } else {
-                            console.log("No 'src' attribute found in the iframe tag.");
-                        }
-                        // console.log(src, 123)
-                    }
-                    eventList.push({eventId:item.eventData.eventId,sportId,created_on:item.eventData.created_on,eventName:item.eventData.name,sportName:sportName,status:true,url})
+    //                 }
+    //                 eventList.push({eventId:item.eventData.eventId,sportId,created_on:item.eventData.created_on,eventName:item.eventData.name,sportName:sportName,status,url})
+    //             }else{
+    //                 const src_regex = /src='([^']+)'/;
+    //                 let match1
+    //                 if(liveStream.data){
+    //                     match1 = liveStream.data.match(src_regex);
+    //                     if (match1) {
+    //                         url = match1[1];
+    //                     } else {
+    //                         console.log("No 'src' attribute found in the iframe tag.");
+    //                     }
+    //                     // console.log(src, 123)
+    //                 }
+    //                 eventList.push({eventId:item.eventData.eventId,sportId,created_on:item.eventData.created_on,eventName:item.eventData.name,sportName:sportName,status:true,url})
 
-                }
-            }
-        })
+    //             }
+    //         }
+    //     })
 
-        Promise.all(newSportList).then(()=>{
-            res.status(200).render("./streamManagement/events",{
-                title:"Stream Management",
-                me,
-                currentUser:me,
-                eventList
-            })
-        })
+    //     Promise.all(newSportList).then(()=>{
+    //         res.status(200).render("./streamManagement/events",{
+    //             title:"Stream Management",
+    //             me,
+    //             currentUser:me,
+    //             eventList
+    //         })
+    //     })
 
-    }else{
-        res.status(200).render("./streamManagement/events",{
-            title:"Stream Management",
-            me,
-            currentUser:me,
-            eventList
-        })
-    }
+    // }else{
+    //     res.status(200).render("./streamManagement/events",{
+    //         title:"Stream Management",
+    //         me,
+    //         currentUser:me,
+    //         eventList
+    //     })
+    // }
 
 
 })
