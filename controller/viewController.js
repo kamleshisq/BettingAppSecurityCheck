@@ -53,6 +53,8 @@ const manageAccountUser = require('../model/paymentMethodUserSide');
 const withdrawalRequestModel = require('../model/withdrowReqModel');
 const globalSettingModel = require('../model/globalSetting');
 const colorCodeModel = require('../model/colorcodeModel');
+const getLiveGameData = require('../utils/getlivedata')
+
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -4440,16 +4442,20 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
 
 exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
-    let cricketData = await getCrkAndAllData()
-    const cricket = cricketData[0].gameList[0].eventList
+    let cricketData = await getLiveGameData()
+    // const cricket = cricketData[0].gameList[0].eventList
     // console.log(cricket, "cricketcricketcricket")
     const me = req.currentUser
-    res.status(200).render("./commissionMarket/main",{
-        title:"Commission Markets",
-        me,
-        currentUser:me,
-        cricket
+    res.status(200).json({
+        status:'success',
+        cricketData
     })
+    // res.status(200).render("./commissionMarket/main",{
+    //     title:"Commission Markets",
+    //     me,
+    //     currentUser:me,
+    //     cricket
+    // })
 });
 
 exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
