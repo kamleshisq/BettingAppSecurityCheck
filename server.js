@@ -1817,7 +1817,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("marketId", async(data) => {
-        console.log(data)
+        console.log(data.ids)
         if(Array.isArray(data.ids)){
 
             const result = await marketDetailsBymarketID(data.ids)
