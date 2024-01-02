@@ -2256,8 +2256,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://172.105.58.243:8880/",
-            "Referer":"http://172.105.58.243:8880/"},
+            "Origin":"https://dev.ollscores.com/",
+            "Referer":"https://dev.ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
