@@ -72,6 +72,7 @@ const globalSettingModel = require('./model/globalSetting');
 const colorCodeModel = require('./model/colorcodeModel');
 const oddsLimitCHeck = require('./utils/checkOddsLimit');
 const { ObjectId } = require('mongodb');
+const commissionNewModel = require('./model/commissioNNModel');
 // const checkLimit = require('./utils/checkOddsLimit');
 
 // const { date } = require('joi');
@@ -10236,6 +10237,8 @@ io.on('connection', (socket) => {
             if(data.data.bettype == 'Net Losing Commission'){
                 netlosing = true
             }else{  
+                let betId = await commissionNewModel.distinct('betId', {userName:{$in:usernameArr}, sportId:data.data.sportId, marketName:data.data.marketName, eventName:data.data.eventName})
+                console.log(betId)
                 if(data.data.betId){
                     filter._id = new ObjectId(data.data.betId)
                 }else{
