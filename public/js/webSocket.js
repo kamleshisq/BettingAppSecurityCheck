@@ -7731,7 +7731,7 @@ socket.on('connect', () => {
 
 
         socket.on('marketLimitId', data => {
-            // console.log(data, 'returnData')
+            console.log(data, 'returnDataMarketLimitId')
             $('.market-limit').each(function(){
                 let limitData = data.find(item => item.type == this.id)
                 if(limitData){
