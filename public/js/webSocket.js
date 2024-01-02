@@ -7831,7 +7831,7 @@ socket.on('connect', () => {
                         macLimitStatus =  limitOnTHis.Limits.max_odd
                     }
                 }
-                // console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
+                console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
 
                 let id = this.id
 
