@@ -95,6 +95,10 @@ io.on('connection', (socket) => {
             socket.emit('customEvent', {message:"Hey there!, what's up"})
         }
         setInterval(myFunctionsendDATA, 1000);
+
+        socket.on('customEvent', data => {
+            console.log(data)
+        })
     }
     // console.log(loginData.Token)
     // console.log(global._token)
