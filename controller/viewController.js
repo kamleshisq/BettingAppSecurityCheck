@@ -275,7 +275,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             status:false
         })
     }
-    console.log(roles)
+    // console.log(roles)
     // console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
@@ -480,13 +480,13 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     //     role_type.push(roles[i].role_type)
     // }
     const currentUser = req.currentUser
-    console.log(currentUser)
+    // console.log(currentUser)
     let id = currentUser._id
     if(currentUser.roleName == 'Operator'){
         let parentUser = await User.findById(currentUser.parent_id)
         id = parentUser.id
     }
-    console.log(id, "ididid")
+    // console.log(id, "ididid")
     // let users
     // if(req.currentUser.role_type == 1){
     //     users = await User.find({is_Online:true})
@@ -3047,7 +3047,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                     }
                 }
             ])
-            console.log(betsofthatMatch)
+            // console.log(betsofthatMatch)
             res.status(200).render("./userSideEjs/frofitlossevent2/main",{
                 title:'P/L Reports',
                 user:req.currentUser,
@@ -5269,7 +5269,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
 
    
 
-    console.log(sportdownlinecomm,"==>sportdownlinecomm")
+    // console.log(sportdownlinecomm,"==>sportdownlinecomm")
 
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Downline Commission Report',
@@ -5322,7 +5322,7 @@ exports.getSportwiseuplinecommreport = catchAsync(async(req, res, next)=>{
 
    
 
-    console.log(sporttwisecommittion,"==>sporttwisecommittion")
+    // console.log(sporttwisecommittion,"==>sporttwisecommittion")
 
     res.status(200).render('./uplinecommissionreport/uplinecommissionreport',{
         title:'Upline Commission Report',

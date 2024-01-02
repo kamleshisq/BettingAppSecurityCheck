@@ -316,7 +316,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
 
 
 exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
-    console.log(req.query)
+    // console.log(req.query)
     let userAcc
     let page = req.query.page
     let filter = {}
@@ -336,7 +336,7 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
 
         }
     }
-    console.log(userAcc)
+    // console.log(userAcc)
     res.status(200).json({
         status:"success",
         userAcc

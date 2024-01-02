@@ -293,7 +293,7 @@ io.on('connection', (socket) => {
                 }            
             }else{
                 if(data.filterData.role_type){
-                    console.log(role_type)
+                    // console.log(role_type)
                     if(role_type.includes((data.filterData.role_type) * 1)){
                         // console.log('here')
                         user = await User.find(data.filterData).skip(skip).limit(limit)
@@ -528,7 +528,7 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("AccountScroll", async(data)=>{
-        console.log(data, "DATA")
+        // console.log(data, "DATA")
         let fullUrl
         let operatorId;
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
@@ -649,7 +649,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("AccountScroll2", async(data)=>{
-        console.log(data)
+        // console.log(data)
         const user = await User.findById(data.id)
         let fullUrl
         let account;
@@ -725,7 +725,7 @@ io.on('connection', (socket) => {
                     $limit:limit
                 }
             ])
-            console.log(Logs, "LogsLogs")
+            // console.log(Logs, "LogsLogs")
             json.userAcc = Logs
 
             // account  = await AccModel.find({user_id:data.id})
@@ -5866,7 +5866,7 @@ io.on('connection', (socket) => {
                         ])
                         // console.log(Bets, "BETSBETS")
                         if(Bets.length > 0){
-                            console.log(Bets[0].selections, "selectionsselections")
+                            // console.log(Bets[0].selections, "selectionsselections")
 
                             return({User:ele, Bets:Bets, status:'User', userName:data.userName})
                         }
@@ -6991,7 +6991,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('UpdateBetLimit', async(data) => {
-        console.log(data, "LimitData")
+        // console.log(data, "LimitData")
         try{
             let check = await betLimit.findOne({type:data.data.type})
             // console.log(check)
@@ -9097,7 +9097,7 @@ io.on('connection', (socket) => {
                 if(data1.stake.toFixed(1) >= 1){
                     socket.emit('cashOOut', data1)
                 }else{
-                    console.log(data1.stake.toFixed(1))
+                    // console.log(data1.stake.toFixed(1))
                 }
               }
             }
@@ -9638,7 +9638,7 @@ io.on('connection', (socket) => {
                         }
                       },
                 ])
-                console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
+                // console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
                 let dataToshow = []
                 if(betDetails.length != 0){
                     betDetails = betDetails[0]
@@ -9739,7 +9739,7 @@ io.on('connection', (socket) => {
                         }
                     }
                 }
-                console.log(dataToshow, "dataToshowdataToshow")
+                // console.log(dataToshow, "dataToshowdataToshow")
                 socket.emit('getFancyBookDATAuserSide', {dataToshow, status:'Fancy'})
             }
         }
@@ -9747,7 +9747,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('MyPlStatementPagination', async(data) => {
-        console.log(data, "DTADTDA")
+        // console.log(data, "DTADTDA")
         if(data.LOGINDATA.LOGINUSER){
             let page = data.page
             if(!page){
@@ -9797,7 +9797,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('MyPlStatementPagination2', async(data) => {
-        console.log(data)
+        // console.log(data)
         if(data.LOGINDATA.LOGINUSER){
             let page = data.page
             if(!page){
@@ -9928,7 +9928,7 @@ io.on('connection', (socket) => {
                         }
                     }
                 ])
-                console.log(bets)
+                // console.log(bets)
                 socket.emit('getDetailsCommision', bets)
             }else{
                 let thatUSersChild = await User.distinct('usename', { parentUsers: thatUSer.id })
