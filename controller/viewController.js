@@ -2219,7 +2219,7 @@ exports.getCricketData1 = catchAsync(async(req, res, next) => {
     .then(result => {
         // console.log(result)
         res.status(200).json({
-            result:result
+            result:JSON.parse(result)
         })
     })
 });
