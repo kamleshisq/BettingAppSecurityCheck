@@ -15691,7 +15691,7 @@ socket.on('connect', () => {
           })
 
           socket.on("eventIdForMarketList", async(data) => {
-            // console.log(data)
+            console.log(data)
             let i = 0
             let html = ""
            for(let i = 0;i<data.result.length;i++){
