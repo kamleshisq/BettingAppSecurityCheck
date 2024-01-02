@@ -45,7 +45,7 @@
                       <%}%>
                     </td>
                     <%
-                      var timestamp = data.tennisEvents[i].time * 1000 
+                      var timestamp = new Date(data.tennisEvents[i].time) * 1000 
                       var date = new Date(timestamp);
                       var options = { 
                           year: 'numeric',
@@ -59,7 +59,7 @@
                     %>
                    
                     <td><%=formattedTime %></td>
-                    <td><%=data.tennisEvents[i].name%></td>
+                    <td><%=data.tennisEvents[i].evntNm%></td>
                     <td><%=data.tennisEvents[i].count%></td>
                     <td> 
                       <%if(data.tennisEvents[i].featureStatus){%>
