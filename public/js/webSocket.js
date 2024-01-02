@@ -7816,13 +7816,16 @@ socket.on('connect', () => {
                 let eventId = search.split('=')[1]
                 socket.emit("marketId", {ids, eventId})
               });
-              setTimeout(()=>{
+            if(limitData.length !== 0){
                 marketId()
-              }, 5000)
+            }else{
+                setTimeout(()=>{
+                  marketId()
+                }, 5000)
+            }
         }
-        if(limitData.length !== 0){
-            marketId()
-        }
+        marketId()
+        
 
         let first = true
         socket.on("marketId", async(data) => {
