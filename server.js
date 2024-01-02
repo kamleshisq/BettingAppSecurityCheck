@@ -3908,51 +3908,32 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sportStatusChange',async(data) => {
-        // console.log(data)
-        let allData =  await getLiveGameData()
-        let result = allData.find(item => item.compID == data.id)
-        if(data.status){
-            let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:true})
-            if(cataLog){
-                msg = 'series activated'
-                socket.emit('sportStatusChange',{status:'success',msg})
+        try{
+            if(data.status){
+                let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:true})
+                if(cataLog){
+                    msg = 'series activated'
+                    socket.emit('sportStatusChange',{status:'success',msg})
+                }else{
+                    msg = "Something went wrong please try again later!"
+                    socket.emit('sportStatusChange',{status:'success',msg})
+                }
             }else{
-                msg = "Something went wrong please try again later!"
-                socket.emit('sportStatusChange',{status:'success',msg})
+                let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:false})
+                if(cataLog){
+                    msg = 'series deactivated'
+                    socket.emit('sportStatusChange',{status:'success',msg})
+                }else{
+                    msg = "Something went wrong please try again later!"
+                    socket.emit('sportStatusChange',{status:'success',msg})
+                }
             }
-        }else{
-            let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:false})
-            if(cataLog){
-                msg = 'series deactivated'
-                socket.emit('sportStatusChange',{status:'success',msg})
-            }else{
-                msg = "Something went wrong please try again later!"
-                socket.emit('sportStatusChange',{status:'success',msg})
-            }
+        }catch(err){
+            msg = "Something went wrong please try again later!"
+            socket.emit('sportStatusChange',{status:'success',msg})
         }
-        // console.log(data)
-         // try{
-        //     let msg;
-        //     let sport;
-        //     if(data.status){
-        //         sport = await catalogController.updateOne({Id:data.id},{status:true})
-        //         if(sport.type == 'event'){
-        //             msg = 'event activated'
-        //         }else{
-        //             msg = 'series activated'
-        //         }
-        //     }else{
-        //         sport = await catalogController.updateOne({Id:data.id},{status:false})
-        //         if(sport.type == 'event'){
-        //             msg = 'event deactivated'
-        //         }else{
-        //             msg = 'series deactivated'
-        //         }
-        //     }
-        //     socket.emit('sportStatusChange',{status:'success',msg})
-        // }catch(error){
-        //     socket.emit('sportStatusChange',{status:'fail'})
-        // }
+        
+       
     })
 
     socket.on('sportStatusChange2',async(data) => {

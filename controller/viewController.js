@@ -4268,48 +4268,16 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
         })
     })
     }else{
+        return res.status(200).render("./catalogController/compitition", {
+            title:"Catalog Controller",
+            data:seriesObjList,
+            me: user,
+            currentUser: user,
+            breadcumArr
+        })
 
     }
-    // if(series){
-    //     let seriesPromise = series.eventList.map(async(item)=>{
-    //         if(!seriesList.includes(item.eventData.compId)){
-    //             seriesList.push(item.eventData.compId)
-    //             let status = await catalogController.findOne({Id:item.eventData.compId})
-    //             // if(!status){
-    //             //     await catalogController.create({
-    //             //         Id:item.eventData.compId,
-    //             //         name:item.eventData.league,
-    //             //         type:"league"
-    //             //     })
-    //             //     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId:sportId})
-    //             // }else{
-    //                 if(status){
-    //                     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:false,sportId})
-
-    //                 }else{
-    //                     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId})
-    //                 }
-    //             // }
-    //         }
-    //     })
-    //     Promise.all(seriesPromise).then(()=>{
-    //         return res.status(200).render("./catalogController/compitition", {
-    //             title:"Catalog Controller",
-    //             data:seriesObjList,
-    //             me: user,
-    //             currentUser: user,
-    //             breadcumArr
-    //         })
-    //     })
-    // }else{
-    //     return res.status(200).render("./catalogController/compitition", {
-    //         title:"Catalog Controller",
-    //         data:seriesObjList,
-    //         me: user,
-    //         currentUser: user,
-    //         breadcumArr
-    //     })
-    // }
+   
    
     
 })
@@ -4323,44 +4291,31 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     let nameArr = []
     let series;
     let seriesObjList = []
-    if(sportId == 4){
-        series = sportListData[0].gameList[0]
-        breadcumArr.push({id:sportId,name:series.sport_name})
-
-    }else{
-        series = sportListData[1].gameList.find(item => item.sportId == sportId)
-        breadcumArr.push({id:sportId,name:series.sport_name})
-
-
-    }
-
-    if(series){
-        nameArr.push(series.sport_name)
-        let eventListPromis = series.eventList.map(async(item) => {
-            if(item.eventData.compId == compId){
-                if(!nameArr.includes(item.eventData.league)){
-                    breadcumArr.push({id:compId,name:item.eventData.league,sportId:sportId})
-                    nameArr.push(item.eventData.league)
-                }
-                let status = await catalogController.findOne({Id:item.eventData.eventId})
-                let count = 0;
-                if(!status){
-                    // await catalogController.create({
-                    //     Id:item.eventData.eventId,
-                    //     name:item.eventData.name,
-                    //     type:"event"
-                    // })
-                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
-                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
-                    
-                }else{
-                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
-                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
-
-                }
-            }
+    series = sportListData.filter(item => item.compID == compId)
+    if(series.length != 0){
+        breadcumArr.push({id:sportId,name:series[0].sprtNm})
+        nameArr.push(series[0].sprtNm)
+        if(!nameArr.includes(item.evntNm)){
+            breadcumArr.push({id:compId,name:item.compNm,sportId:sportId})
+            nameArr.push(item.compNm)
+        }
+        let status = await catalogController.findOne({Id:item.evntID})
+        let count = 0;
+        if(!status){
+            await catalogController.create({
+                Id:item.evntID,
+                name:item.evntNm,
+                type:"event",
+                status:true
+            })
+            count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
+            seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:true,count,eventId:item.evntID})
             
-        })
+        }else{
+            count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
+            seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:status.status,count,eventId:item.evntID})
+
+        }
         Promise.all(eventListPromis).then(()=>{
             return res.status(200).render("./catalogController/events", {
                 title:"Catalog Controller",
@@ -4378,7 +4333,64 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
             currentUser: user,
             breadcumArr
         })
+
     }
+    // if(sportId == 4){
+    //     series = sportListData[0].gameList[0]
+    //     breadcumArr.push({id:sportId,name:series.sport_name})
+
+    // }else{
+    //     series = sportListData[1].gameList.find(item => item.sportId == sportId)
+    //     breadcumArr.push({id:sportId,name:series.sport_name})
+
+
+    // }
+
+    // if(series){
+    //     nameArr.push(series.sport_name)
+    //     let eventListPromis = series.eventList.map(async(item) => {
+    //         if(item.eventData.compId == compId){
+    //             if(!nameArr.includes(item.eventData.league)){
+    //                 breadcumArr.push({id:compId,name:item.eventData.league,sportId:sportId})
+    //                 nameArr.push(item.eventData.league)
+    //             }
+    //             let status = await catalogController.findOne({Id:item.eventData.eventId})
+    //             let count = 0;
+    //             if(!status){
+    //                 // await catalogController.create({
+    //                 //     Id:item.eventData.eventId,
+    //                 //     name:item.eventData.name,
+    //                 //     type:"event"
+    //                 // })
+    //                 count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+    //                 seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
+                    
+    //             }else{
+    //                 count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+    //                 seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
+
+    //             }
+    //         }
+            
+    //     })
+    //     Promise.all(eventListPromis).then(()=>{
+    //         return res.status(200).render("./catalogController/events", {
+    //             title:"Catalog Controller",
+    //             data:seriesObjList,
+    //             me: user,
+    //             currentUser: user,
+    //             breadcumArr
+    //         })
+    //     })
+    // }else{
+    //     return res.status(200).render("./catalogController/events", {
+    //         title:"Catalog Controller",
+    //         data:seriesObjList,
+    //         me: user,
+    //         currentUser: user,
+    //         breadcumArr
+    //     })
+    // }
 })
 
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
