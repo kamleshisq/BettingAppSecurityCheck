@@ -8382,7 +8382,7 @@ socket.on('connect', () => {
                         macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
                     }
                 }
-                console.log(macLimitStatus, "macLimitStatusmacLimitStatus")
+                // console.log(macLimitStatus, "macLimitStatusmacLimitStatus")
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8488,7 +8488,14 @@ socket.on('connect', () => {
             })
 
             $(".odd_even_blue").each(function() {
-                    
+                let marketId = $(this).closest('tr').find('.market').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                    }
+                }
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8501,7 +8508,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
-                    if( section.odd == "-" || section.odd == "1,000.00" || section.odd == "0"){
+                    if( section.odd == "-" || section.odd == "1,000.00" || section.odd == "0" || (macLimitStatus && macLimitStatus < section.odd)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8515,7 +8522,14 @@ socket.on('connect', () => {
             })
 
             $(".odd_even_red").each(function() {
-                    
+                let marketId = $(this).closest('tr').find('.market').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                    }
+                }
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8563,11 +8577,13 @@ socket.on('connect', () => {
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"|| (macLimitStatus && macLimitStatus < section.odd)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      this.setAttribute("data-bs-toggle", "collapse");
+                      $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
