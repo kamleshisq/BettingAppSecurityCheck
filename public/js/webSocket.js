@@ -7683,20 +7683,20 @@ socket.on('connect', () => {
             //       .text(result.toFixed(2));
         })
 
-        function marketLimitId(){
-            $(document).ready(function() {
-                var ids = [];
+        // function marketLimitId(){
+        //     $(document).ready(function() {
+        //         var ids = [];
           
-                $(".market-limit").each(function() {
-                    if (!ids.includes(this.id)) {
-                        ids.push(this.id);
-                    }
-                });
-                // console.log(ids)
-                socket.emit("marketLimitId", ids)
-              });
-        }
-        marketLimitId()
+        //         $(".market-limit").each(function() {
+        //             if (!ids.includes(this.id)) {
+        //                 ids.push(this.id);
+        //             }
+        //         });
+        //         // console.log(ids)
+        //         socket.emit("marketLimitId", ids)
+        //       });
+        // }
+        // marketLimitId()
 
 
         function marketNotificationId(){
@@ -7727,18 +7727,48 @@ socket.on('connect', () => {
             })
         })
 
+        function OddsCheck(){
+            $(document).ready(function(){
+                var ids = [];
+          
+                $(".market").each(function() {
+                  ids.push(this.id);
+                });
+                let eventId = search.split('=')[1]
+                // console.log(ids, eventId)
+                socket.emit('OddsCheck', {ids, eventId})
+                setTimeout(()=>{
+                    OddsCheck()
+                  }, 5000)
+            })
+        }
+        OddsCheck()
 
-
-
-        socket.on('marketLimitId', data => {
-            console.log(data, 'returnDataMarketLimitId')
+        socket.on('OddsCheck', data => {
+            console.log(data)
             $('.market-limit').each(function(){
-                let limitData = data.find(item => item.type == this.id)
-                if(limitData){
-                    this.innerHTML = `<b>Min : ${limitData.min_stake}, Max : ${limitData.max_stake}</b>`
+                let id = this.id
+                let thisMarketLimit = data.find(item => item.marketId == id)
+                // console.log(thisMarketLimit)
+                if(thisMarketLimit){
+                    let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
+                    $(this).html(html)
                 }
             })
         })
+
+
+
+
+        // socket.on('marketLimitId', data => {
+        //     console.log(data, 'returnDataMarketLimitId')
+        //     $('.market-limit').each(function(){
+        //         let limitData = data.find(item => item.type == this.id)
+        //         if(limitData){
+        //             this.innerHTML = `<b>Min : ${limitData.min_stake}, Max : ${limitData.max_stake}</b>`
+        //         }
+        //     })
+        // })
 
 
 
@@ -10232,34 +10262,7 @@ socket.on('connect', () => {
             }
         })
 
-        function OddsCheck(){
-            $(document).ready(function(){
-                var ids = [];
-          
-                $(".market").each(function() {
-                  ids.push(this.id);
-                });
-                let eventId = search.split('=')[1]
-                // console.log(ids, eventId)
-                socket.emit('OddsCheck', {ids, eventId})
-                setTimeout(()=>{
-                    OddsCheck()
-                  }, 5000)
-            })
-        }
-        OddsCheck()
-
-        socket.on('OddsCheck', data => {
-            $('.market-limit').each(function(){
-                let id = this.id
-                let thisMarketLimit = data.find(item => item.marketId == id)
-                // console.log(thisMarketLimit)
-                if(thisMarketLimit){
-                    let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
-                    $(this).html(html)
-                }
-            })
-        })
+        
     }
 
 

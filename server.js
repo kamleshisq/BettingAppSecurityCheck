@@ -7071,15 +7071,15 @@ io.on('connection', (socket) => {
     })
 
 
-    socket.on('marketLimitId', async(data) => {
-        try{
-            let LimitData = await betLimit.find({type:{$in:data}})
-            socket.emit('marketLimitId', LimitData)
+    // socket.on('marketLimitId', async(data) => {
+    //     try{
+    //         let LimitData = await betLimit.find({type:{$in:data}})
+    //         socket.emit('marketLimitId', LimitData)
 
-        }catch(err){
-            console.log(err)
-        }
-    })
+    //     }catch(err){
+    //         console.log(err)
+    //     }
+    // })
 
     socket.on('HouseFundData', async(data) => {
         try{
