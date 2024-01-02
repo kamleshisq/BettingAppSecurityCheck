@@ -8579,8 +8579,8 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      this.setAttribute("data-bs-toggle", "collapse");
-                      $(this).parent().find(".match-status-message").text("")
+                      parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
@@ -8614,12 +8614,10 @@ socket.on('connect', () => {
                 if(this.id == `${section.market_id}1` ){
                     // console.log(section.yes, section.yes_rate)
                     if( section.yes_rate == "-" || section.yes_rate == "1,000.00" || section.yes_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.yes_rate)){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      this.setAttribute("data-bs-toggle", "collapse");
-                      $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         // this.innerHTML = `<span><b>${section.yes}</b></span>` 
@@ -8696,8 +8694,8 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                    //   this.setAttribute("data-bs-toggle", "collapse");
-                      $(this).parent().find(".match-status-message").text("")
+                      parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
