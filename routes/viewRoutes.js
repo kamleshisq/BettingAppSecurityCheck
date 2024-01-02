@@ -19,6 +19,7 @@ router.get("/sportDetails", viewController.getSportList);
 router.get("/getCricketData", viewController.getCricketData);
 router.get("/getLiveGameData", viewController.getCricketData1);
 router.get("/getgamedatabyid", viewController.getCricketData2);
+router.get("/getmarketresult", viewController.getCricketData2);
 // router.get("/getFootballData", viewController.getFootballData);
 router.get("/getMarketDetails", viewController.getmarketDetailsByMarketId);
 router.get("/getLiveTv", viewController.getLiveTv);
