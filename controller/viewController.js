@@ -4299,7 +4299,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
         let eventListPromis = series.map(async(item)=>{
             if(!nameArr.includes(item.evntNm)){
                 breadcumArr.push({id:compId,name:item.compNm,sportId:sportId})
-                nameArr.push(item.compNm)
+                nameArr.push(item.evntNm)
                 let status = await catalogController.findOne({Id:item.evntID})
                 let count = 0;
                 if(!status){
