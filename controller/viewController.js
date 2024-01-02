@@ -4256,7 +4256,9 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             }
         }
 
-        Promise.all(seriesPromise).then(()=>{
+       
+    })
+    Promise.all(seriesPromise).then(()=>{
         return res.status(200).render("./catalogController/compitition", {
             title:"Catalog Controller",
             data:seriesObjList,
@@ -4265,8 +4267,6 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             breadcumArr
         })
     })
-    })
-
     }else{
 
     }
