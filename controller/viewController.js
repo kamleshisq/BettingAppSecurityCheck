@@ -4445,11 +4445,11 @@ exports.CommissionMarkets = catchAsync(async(req, res, next) => {
     let cricketData = await getLiveGameData()
     // const cricket = cricketData[0].gameList[0].eventList
     // console.log(cricket, "cricketcricketcricket")
-    let cricket = cricketData.filter( sprtID == "4")
+    // let cricket = cricketData.filter( sprtID == "4")
     const me = req.currentUser
     res.status(200).json({
         status:'success',
-        cricketData:cricket
+        cricketData
     })
     // res.status(200).render("./commissionMarket/main",{
     //     title:"Commission Markets",
