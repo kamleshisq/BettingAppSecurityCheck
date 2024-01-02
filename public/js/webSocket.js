@@ -9639,13 +9639,13 @@ socket.on('connect', () => {
         //     // console.log(data)
         //     socket.emit("betDetails", {data, LOGINDATA})
         // })
-        let checkTime
-          socket.on('checkDelay', data => {
-            if(data.delay && data.delay != 0){
-                checkTime = clickTime + data.delay * 1000
-            }
+        // let checkTime
+        //   socket.on('checkDelay', data => {
+        //     if(data.delay && data.delay != 0){
+        //         checkTime = clickTime + data.delay * 1000
+        //     }
 
-          })
+        //   })
         $(document).ready(function () {
             $(".eventId").click(function () {
                 // console.log("working")
@@ -9696,20 +9696,20 @@ socket.on('connect', () => {
                 }else{
                     if(data.odds != '\n                        \n                      '){
                         // alert('132456')
-                        if(checkTime){
-                            if(checkTime < Date.now()){
-                                // console.log('WORKING')
-                                togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
-                            }else{
-                                // console.log(data)
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
-                            }
-                        }else{
-                            // console.log(data)
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
-                        }
+                        // if(checkTime){
+                        //     if(checkTime < Date.now()){
+                        //         // console.log('WORKING')
+                        //         togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
+                        //     }else{
+                        //         // console.log(data)
+                        //             showLoader();
+                        //             socket.emit("betDetails", {data, LOGINDATA})
+                        //     }
+                        // }else{
+                        //     // console.log(data)
+                        // }
+                        showLoader();
+                        socket.emit("betDetails", {data, LOGINDATA})
                         // console.log(data)
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
@@ -9725,19 +9725,19 @@ socket.on('connect', () => {
                     }else{
                         if(data.odds != '\n                        \n                      '){
                             // alert('132456')
-                            if(checkTime){
-                                if(checkTime < Date.now()){
-                                    togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
-                                }else{
-                                    // console.log(data)
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
-                                }
-                            }else{
-                                // console.log(data)
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
-                            }
+                            // if(checkTime){
+                            //     if(checkTime < Date.now()){
+                            //         togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
+                            //     }else{
+                            //         // console.log(data)
+                            //         showLoader();
+                            //         socket.emit("betDetails", {data, LOGINDATA})
+                            //     }
+                            // }else{
+                            //     // console.log(data)
+                            // }
+                            showLoader();
+                            socket.emit("betDetails", {data, LOGINDATA})
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                         }
