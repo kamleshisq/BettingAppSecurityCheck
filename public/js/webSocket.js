@@ -15504,6 +15504,7 @@ socket.on('connect', () => {
             let id = $(this).data('id')
             // console.log(id)
             console.log(status,'status')
+            console.log(id,'id')
             if(id){
                 if(confirm('do you want to change status')){
                     socket.emit('sportStatusChange',{status,id})
