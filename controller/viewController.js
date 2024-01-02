@@ -4315,7 +4315,6 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                 }else{
                     count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
                     seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:status.status,count,eventId:item.evntID})
-    
                 }
             }
       

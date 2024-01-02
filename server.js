@@ -3937,17 +3937,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sportStatusChange2',async(data) => {
-        // console.log(data)
-        let allData =  await getCrkAndAllData()
-        const cricket = allData[0].gameList[0].eventList
-        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
-        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
-        footBall = footBall.eventList
-        Tennis = Tennis.eventList
-        const resultSearch = cricket.concat(footBall, Tennis);
-        let result = resultSearch.find(item => item.eventData.eventId == data.id)
         if(data.status){
-            let cataLog =  await catalogController.findOneAndDelete({Id:data.id},{status:true})
+            let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:true})
             if(cataLog){
                 msg = 'series activated'
                 socket.emit('sportStatusChange2',{status:'success',msg})
@@ -3956,16 +3947,7 @@ io.on('connection', (socket) => {
                 socket.emit('sportStatusChange2',{status:'success',msg})
             }
         }else{
-            let createData = {
-                Id : data.id,
-                name : result.eventData.name,
-                type : "event",
-                status : false      
-            }
-            let cataLog
-            if(!await catalogController.findOne({Id:data.id})){
-                cataLog = await catalogController.create(createData)
-            }
+            let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:false})
             if(cataLog){
                 msg = 'series deactivated'
                 socket.emit('sportStatusChange2',{status:'success',msg})
