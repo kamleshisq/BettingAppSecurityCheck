@@ -4243,11 +4243,12 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
                 await catalogController.create({
                     Id:item.compID,
                     name:item.compNm,
-                    type:"league"
+                    type:"league",
+                    status:true
                 })
-                seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId:sportId})
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId:sportId})
             }else{
-                seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId})
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId})
                 // if(status){
                 //     seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId})
                 // }else{
