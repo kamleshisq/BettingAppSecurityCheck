@@ -7739,7 +7739,7 @@ socket.on('connect', () => {
                 socket.emit('OddsCheck', {ids, eventId})
                 setTimeout(()=>{
                     OddsCheck()
-                  }, 5000)
+                  }, 1000)
             })
         }
         OddsCheck()
