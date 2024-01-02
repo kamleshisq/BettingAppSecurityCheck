@@ -4460,7 +4460,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
         return item
     })
-    let newtennisEvents = tennisList.eventList.map(async(item) => {
+    let newtennisEvents = tennisList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.evntID})
          let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
