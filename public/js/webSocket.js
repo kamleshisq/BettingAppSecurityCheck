@@ -7836,7 +7836,7 @@ socket.on('connect', () => {
                         macLimitStatus =  limitOnTHis.Limits.max_odd
                     }
                 }
-                console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
+                // console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
 
                 let id = this.id
 
@@ -8016,9 +8016,10 @@ socket.on('connect', () => {
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
                     //   </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Suspended")
+                    this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    <i class="fa-solid fa-lock"></i>
+                  </span>`
+                  this.removeAttribute("data-bs-toggle");
                     }else if(check){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
