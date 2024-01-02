@@ -4447,16 +4447,12 @@ exports.CommissionMarkets = catchAsync(async(req, res, next) => {
     // console.log(cricket, "cricketcricketcricket")
     let cricket = cricketData.filter( (ele) =>{ return ele.sprtID == "4"})
     const me = req.currentUser
-    res.status(200).json({
-        status:'success',
-        cricketData:cricket
+    res.status(200).render("./commissionMarket/main",{
+        title:"Commissin Moarkets",
+        me,
+        currentUser:me,
+        cricket
     })
-    // res.status(200).render("./commissionMarket/main",{
-    //     title:"Commission Markets",
-    //     me,
-    //     currentUser:me,
-    //     cricket
-    // })
 });
 
 exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
