@@ -4286,7 +4286,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const compId = req.query.compId
     const sportId = req.query.sportId
-    const sportListData = await getCrkAndAllData()
+    const sportListData = await getLiveGameData()
     let breadcumArr = []
     let nameArr = []
     let series;
