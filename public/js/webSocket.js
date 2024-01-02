@@ -8021,6 +8021,7 @@ socket.on('connect', () => {
                   </span>`
                   this.removeAttribute("data-bs-toggle");
                   parentElement.classList.remove("suspended")
+                  $(this).parent().find(".match-status-message").text("")
                     }else if(check){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
