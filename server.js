@@ -91,14 +91,14 @@ io.on('connection', (socket) => {
             socket:myVariable2,
             Ip:ip
         })
-        // function myFunctionsendDATA(){
-        //     socket.emit('customEvent', {message:"Hey there!, what's up"})
-        // }
-        // setInterval(myFunctionsendDATA, 1000);
+        function myFunctionsendDATA(){
+            socket.emit('customEvent', {message:"Hey there!, what's up"})
+        }
+        setInterval(myFunctionsendDATA, 1000);
 
-        // socket.on('customEvent', data => {
-        //     console.log(data, "ADroid socket")
-        // })
+        socket.on('customEvent', data => {
+            // console.log(data, "ADroid socket")
+        })
     }
     // console.log(loginData.Token)
     // console.log(global._token)
