@@ -10254,7 +10254,7 @@ io.on('connection', (socket) => {
                 }
             ])
 
-         
+         console.log(sportwisedownlinecomm, "sportwisedownlinecommsportwisedownlinecommsportwisedownlinecomm")
     
             socket.emit('getmarketwisedownlinecommission',{status:'success',result:sportwisedownlinecomm})
         }catch(err){
