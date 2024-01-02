@@ -2215,11 +2215,11 @@ exports.getCricketData1 = catchAsync(async(req, res, next) => {
     fetch(fullUrl, {
         method: 'GET'
     })
-    .then(res =>JSON.parse(res.json()))
+    .then(res =>res.json())
     .then(result => {
         // console.log(result)
         res.status(200).json({
-            result
+            result:result[0]
         })
     })
 });
