@@ -4292,6 +4292,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     let series;
     let seriesObjList = []
     series = sportListData.filter(item => item.compID == compId)
+    console.log(series,'==>series')
     if(series.length != 0){
         breadcumArr.push({id:sportId,name:series[0].sprtNm})
         nameArr.push(series[0].sprtNm)
