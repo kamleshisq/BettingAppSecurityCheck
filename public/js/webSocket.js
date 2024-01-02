@@ -23,7 +23,7 @@ socket.on('connect', () => {
         //     for (let i = 0; i < styleSheets.length; i++) {
         //       const styleSheet = styleSheets[i];
         //       if (styleSheet.href) {
-        //         if(styleSheet.href == "https://app.ollscores.com/assets/css/style.css" || styleSheet.href == "https://app.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="https://app.ollscores.com/assets/css/media.css"){
+        //         if(styleSheet.href == "https://app.ollscores.com/assets/css/style.css" || styleSheet.href == "http://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://dev.ollscores.com/assets/css/media.css"){
 
         //             // console.log('Processing stylesheet:', styleSheet.href, data);
         //             try {
