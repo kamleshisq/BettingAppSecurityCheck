@@ -7743,9 +7743,10 @@ socket.on('connect', () => {
             })
         }
         OddsCheck()
-
+        let limitData = []
         socket.on('OddsCheck', data => {
-            console.log(data)
+            // console.log(data)
+            limitData = data
             $('.market-limit').each(function(){
                 let id = this.id
                 let thisMarketLimit = data.find(item => item.marketId == id)
@@ -7820,8 +7821,10 @@ socket.on('connect', () => {
         let first = true
         socket.on("marketId", async(data) => {
             // console.log("working")
+            
             $(".match_odd_Blue").each(function() {
-                    
+                let marketId = $(this).closest('table').attr('id')
+                console.log(marketId, "marketIdmarketIdmarketId")
                 let id = this.id
 
                 id = id.slice(0, -1);
@@ -7831,6 +7834,7 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
+
                     if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
