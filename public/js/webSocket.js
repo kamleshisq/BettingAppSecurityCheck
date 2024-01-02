@@ -9698,7 +9698,7 @@ socket.on('connect', () => {
                         // alert('132456')
                         if(checkTime){
                             if(checkTime < Date.now()){
-                                console.log('WORKING')
+                                // console.log('WORKING')
                                 togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
                             }else{
                                 // console.log(data)
@@ -13596,6 +13596,9 @@ socket.on('connect', () => {
                 //   }
                 if(data.result === "Bet placed successfully"){
                     togglePopupMain('popup-1', "redPopUP", data.result.toUpperCase())
+                     $('.my-exc-inn-colaps-txt-dv').each(function(){
+                    $(this).removeClass('open')
+                })
                 }else{
                     togglePopupMain('popup-2', "redPopUP2", data.result.toUpperCase())
                 }
