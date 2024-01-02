@@ -97,7 +97,7 @@ io.on('connection', (socket) => {
         setInterval(myFunctionsendDATA, 1000);
 
         socket.on('customEvent', data => {
-            console.log(data)
+            console.log(data, "ADroid socket")
         })
     }
     // console.log(loginData.Token)
