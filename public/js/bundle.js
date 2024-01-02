@@ -1156,7 +1156,7 @@ var global = arguments[3];
 /*!
  * The buffer module from node.js, for the browser.
  *
- * @author   Feross Aboukhadijeh <https://feross.org>
+ * @author   Feross Aboukhadijeh <http://feross.org>
  * @license  MIT
  */
 /* eslint-disable no-proto */
@@ -2144,7 +2144,7 @@ function utf8Slice (buf, start, end) {
   return decodeCodePointsArray(res)
 }
 
-// Based on https://stackoverflow.com/a/22747272/680742, the browser with
+// Based on http://stackoverflow.com/a/22747272/680742, the browser with
 // the lowest limit is Chrome, with 0x10000 args.
 // We go 1 magnitude less, for safety
 var MAX_ARGUMENTS_LENGTH = 0x1000
@@ -3221,7 +3221,7 @@ function encode(val) {
 /**
  * Build a URL by appending params to the end
  *
- * @param {string} url The base of the url (e.g., https://www.google.com)
+ * @param {string} url The base of the url (e.g., http://www.google.com)
  * @param {object} [params] The params to be appended
  * @param {?object} options
  *
@@ -3382,7 +3382,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Determine if we're running in a standard browser environment
  *
  * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLhttpsRequest, but not fully standard globals.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
  *
  * web workers:
  *  typeof window -> undefined
@@ -3426,7 +3426,7 @@ var _default = {
   },
   isStandardBrowserEnv,
   isStandardBrowserWebWorkerEnv,
-  protocols: ['https', 'httpss', 'file', 'blob', 'url', 'data']
+  protocols: ['http', 'https', 'file', 'blob', 'url', 'data']
 };
 exports.default = _default;
 },{"./classes/URLSearchParams.js":"../../node_modules/axios/lib/platform/browser/classes/URLSearchParams.js","./classes/FormData.js":"../../node_modules/axios/lib/platform/browser/classes/FormData.js","./classes/Blob.js":"../../node_modules/axios/lib/platform/browser/classes/Blob.js"}],"../../node_modules/axios/lib/platform/index.js":[function(require,module,exports) {
@@ -3596,7 +3596,7 @@ function stringifySafely(rawValue, parser, encoder) {
 }
 const defaults = {
   transitional: _transitional.default,
-  adapter: ['xhr', 'https'],
+  adapter: ['xhr', 'http'],
   transformRequest: [function transformRequest(data, headers) {
     const contentType = headers.getContentType() || '';
     const hasJSONContentType = contentType.indexOf('application/json') > -1;
@@ -3699,7 +3699,7 @@ exports.default = void 0;
 var _utils = _interopRequireDefault(require("./../utils.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 // RawAxiosHeaders whose duplicates are ignored by node
-// c.f. https://nodejs.org/api/https.html#https_message_headers
+// c.f. https://nodejs.org/api/http.html#http_message_headers
 const ignoreDuplicateOf = _utils.default.toObjectSet(['age', 'authorization', 'content-length', 'content-type', 'etag', 'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since', 'last-modified', 'location', 'max-forwards', 'proxy-authorization', 'referer', 'retry-after', 'user-agent']);
 
 /**
@@ -4202,7 +4202,7 @@ function standardBrowserEnv() {
     }
     urlParsingNode.setAttribute('href', href);
 
-    // urlParsingNode provides the UrlUtils interface - https://url.spec.whatwg.org/#urlutils
+    // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
     return {
       href: urlParsingNode.href,
       protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
@@ -4337,7 +4337,7 @@ function progressEventReducer(listener, isDownloadStream) {
     listener(data);
   };
 }
-const isXHRAdapterSupported = typeof XMLhttpsRequest !== 'undefined';
+const isXHRAdapterSupported = typeof XMLHttpRequest !== 'undefined';
 var _default = isXHRAdapterSupported && function (config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
     let requestData = config.data;
@@ -4356,9 +4356,9 @@ var _default = isXHRAdapterSupported && function (config) {
       requestHeaders.setContentType(false); // Let the browser set it
     }
 
-    let request = new XMLhttpsRequest();
+    let request = new XMLHttpRequest();
 
-    // https basic authentication
+    // HTTP basic authentication
     if (config.auth) {
       const username = config.auth.username || '';
       const password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
@@ -4527,12 +4527,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _utils = _interopRequireDefault(require("../utils.js"));
-var _https = _interopRequireDefault(require("./https.js"));
+var _http = _interopRequireDefault(require("./http.js"));
 var _xhr = _interopRequireDefault(require("./xhr.js"));
 var _AxiosError = _interopRequireDefault(require("../core/AxiosError.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const knownAdapters = {
-  https: _https.default,
+  http: _http.default,
   xhr: _xhr.default
 };
 _utils.default.forEach(knownAdapters, (fn, value) => {
@@ -4577,7 +4577,7 @@ var _default = {
   adapters: knownAdapters
 };
 exports.default = _default;
-},{"../utils.js":"../../node_modules/axios/lib/utils.js","./https.js":"../../node_modules/axios/lib/helpers/null.js","./xhr.js":"../../node_modules/axios/lib/adapters/xhr.js","../core/AxiosError.js":"../../node_modules/axios/lib/core/AxiosError.js"}],"../../node_modules/axios/lib/core/dispatchRequest.js":[function(require,module,exports) {
+},{"../utils.js":"../../node_modules/axios/lib/utils.js","./http.js":"../../node_modules/axios/lib/helpers/null.js","./xhr.js":"../../node_modules/axios/lib/adapters/xhr.js","../core/AxiosError.js":"../../node_modules/axios/lib/core/AxiosError.js"}],"../../node_modules/axios/lib/core/dispatchRequest.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -4737,8 +4737,8 @@ function mergeConfig(config1, config2) {
     maxBodyLength: defaultToConfig2,
     beforeRedirect: defaultToConfig2,
     transport: defaultToConfig2,
+    httpAgent: defaultToConfig2,
     httpsAgent: defaultToConfig2,
-    httpssAgent: defaultToConfig2,
     cancelToken: defaultToConfig2,
     socketPath: defaultToConfig2,
     responseEncoding: defaultToConfig2,
@@ -5008,8 +5008,8 @@ _utils.default.forEach(['delete', 'get', 'head', 'options'], function forEachMet
 _utils.default.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   /*eslint func-names:0*/
 
-  function generatehttpsMethod(isForm) {
-    return function httpsMethod(url, data, config) {
+  function generateHTTPMethod(isForm) {
+    return function httpMethod(url, data, config) {
       return this.request((0, _mergeConfig.default)(config || {}, {
         method,
         headers: isForm ? {
@@ -5020,8 +5020,8 @@ _utils.default.forEach(['post', 'put', 'patch'], function forEachMethodWithData(
       }));
     };
   }
-  Axios.prototype[method] = generatehttpsMethod();
-  Axios.prototype[method + 'Form'] = generatehttpsMethod(true);
+  Axios.prototype[method] = generateHTTPMethod();
+  Axios.prototype[method + 'Form'] = generateHTTPMethod(true);
 });
 var _default = Axios;
 exports.default = _default;
@@ -5193,14 +5193,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function isAxiosError(payload) {
   return _utils.default.isObject(payload) && payload.isAxiosError === true;
 }
-},{"./../utils.js":"../../node_modules/axios/lib/utils.js"}],"../../node_modules/axios/lib/helpers/httpsStatusCode.js":[function(require,module,exports) {
+},{"./../utils.js":"../../node_modules/axios/lib/utils.js"}],"../../node_modules/axios/lib/helpers/HttpStatusCode.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-const httpsStatusCode = {
+const HttpStatusCode = {
   Continue: 100,
   SwitchingProtocols: 101,
   Processing: 102,
@@ -5258,17 +5258,17 @@ const httpsStatusCode = {
   BadGateway: 502,
   ServiceUnavailable: 503,
   GatewayTimeout: 504,
-  httpsVersionNotSupported: 505,
+  HttpVersionNotSupported: 505,
   VariantAlsoNegotiates: 506,
   InsufficientStorage: 507,
   LoopDetected: 508,
   NotExtended: 510,
   NetworkAuthenticationRequired: 511
 };
-Object.entries(httpsStatusCode).forEach(([key, value]) => {
-  httpsStatusCode[value] = key;
+Object.entries(HttpStatusCode).forEach(([key, value]) => {
+  HttpStatusCode[value] = key;
 });
-var _default = httpsStatusCode;
+var _default = HttpStatusCode;
 exports.default = _default;
 },{}],"../../node_modules/axios/lib/axios.js":[function(require,module,exports) {
 'use strict';
@@ -5292,7 +5292,7 @@ var _AxiosError = _interopRequireDefault(require("./core/AxiosError.js"));
 var _spread = _interopRequireDefault(require("./helpers/spread.js"));
 var _isAxiosError = _interopRequireDefault(require("./helpers/isAxiosError.js"));
 var _AxiosHeaders = _interopRequireDefault(require("./core/AxiosHeaders.js"));
-var _httpsStatusCode = _interopRequireDefault(require("./helpers/httpsStatusCode.js"));
+var _HttpStatusCode = _interopRequireDefault(require("./helpers/HttpStatusCode.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 /**
  * Create an instance of Axios
@@ -5354,19 +5354,19 @@ axios.isAxiosError = _isAxiosError.default;
 axios.mergeConfig = _mergeConfig.default;
 axios.AxiosHeaders = _AxiosHeaders.default;
 axios.formToJSON = thing => (0, _formDataToJSON.default)(_utils.default.isHTMLForm(thing) ? new FormData(thing) : thing);
-axios.httpsStatusCode = _httpsStatusCode.default;
+axios.HttpStatusCode = _HttpStatusCode.default;
 axios.default = axios;
 
 // this module should only have a default export
 var _default = axios;
 exports.default = _default;
-},{"./utils.js":"../../node_modules/axios/lib/utils.js","./helpers/bind.js":"../../node_modules/axios/lib/helpers/bind.js","./core/Axios.js":"../../node_modules/axios/lib/core/Axios.js","./core/mergeConfig.js":"../../node_modules/axios/lib/core/mergeConfig.js","./defaults/index.js":"../../node_modules/axios/lib/defaults/index.js","./helpers/formDataToJSON.js":"../../node_modules/axios/lib/helpers/formDataToJSON.js","./cancel/CanceledError.js":"../../node_modules/axios/lib/cancel/CanceledError.js","./cancel/CancelToken.js":"../../node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel.js":"../../node_modules/axios/lib/cancel/isCancel.js","./env/data.js":"../../node_modules/axios/lib/env/data.js","./helpers/toFormData.js":"../../node_modules/axios/lib/helpers/toFormData.js","./core/AxiosError.js":"../../node_modules/axios/lib/core/AxiosError.js","./helpers/spread.js":"../../node_modules/axios/lib/helpers/spread.js","./helpers/isAxiosError.js":"../../node_modules/axios/lib/helpers/isAxiosError.js","./core/AxiosHeaders.js":"../../node_modules/axios/lib/core/AxiosHeaders.js","./helpers/httpsStatusCode.js":"../../node_modules/axios/lib/helpers/httpsStatusCode.js"}],"../../node_modules/axios/index.js":[function(require,module,exports) {
+},{"./utils.js":"../../node_modules/axios/lib/utils.js","./helpers/bind.js":"../../node_modules/axios/lib/helpers/bind.js","./core/Axios.js":"../../node_modules/axios/lib/core/Axios.js","./core/mergeConfig.js":"../../node_modules/axios/lib/core/mergeConfig.js","./defaults/index.js":"../../node_modules/axios/lib/defaults/index.js","./helpers/formDataToJSON.js":"../../node_modules/axios/lib/helpers/formDataToJSON.js","./cancel/CanceledError.js":"../../node_modules/axios/lib/cancel/CanceledError.js","./cancel/CancelToken.js":"../../node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel.js":"../../node_modules/axios/lib/cancel/isCancel.js","./env/data.js":"../../node_modules/axios/lib/env/data.js","./helpers/toFormData.js":"../../node_modules/axios/lib/helpers/toFormData.js","./core/AxiosError.js":"../../node_modules/axios/lib/core/AxiosError.js","./helpers/spread.js":"../../node_modules/axios/lib/helpers/spread.js","./helpers/isAxiosError.js":"../../node_modules/axios/lib/helpers/isAxiosError.js","./core/AxiosHeaders.js":"../../node_modules/axios/lib/core/AxiosHeaders.js","./helpers/HttpStatusCode.js":"../../node_modules/axios/lib/helpers/HttpStatusCode.js"}],"../../node_modules/axios/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.all = exports.VERSION = exports.httpsStatusCode = exports.CanceledError = exports.CancelToken = exports.Cancel = exports.AxiosHeaders = exports.AxiosError = exports.Axios = void 0;
+exports.all = exports.VERSION = exports.HttpStatusCode = exports.CanceledError = exports.CancelToken = exports.Cancel = exports.AxiosHeaders = exports.AxiosError = exports.Axios = void 0;
 Object.defineProperty(exports, "default", {
   enumerable: true,
   get: function () {
@@ -5392,13 +5392,13 @@ const {
   spread,
   toFormData,
   AxiosHeaders,
-  httpsStatusCode,
+  HttpStatusCode,
   formToJSON,
   mergeConfig
 } = _axios.default;
 exports.mergeConfig = mergeConfig;
 exports.formToJSON = formToJSON;
-exports.httpsStatusCode = httpsStatusCode;
+exports.HttpStatusCode = HttpStatusCode;
 exports.AxiosHeaders = AxiosHeaders;
 exports.toFormData = toFormData;
 exports.spread = spread;
@@ -7304,10 +7304,10 @@ function parse(str, options) {
  * Serialize data into a cookie header.
  *
  * Serialize the a name value pair into a cookie string suitable for
- * https headers. An optional options object specified cookie parameters.
+ * http headers. An optional options object specified cookie parameters.
  *
- * serialize('foo', 'bar', { httpsOnly: true })
- *   => "foo=bar; httpsOnly"
+ * serialize('foo', 'bar', { httpOnly: true })
+ *   => "foo=bar; httpOnly"
  *
  * @param {string} name
  * @param {string} val
@@ -7355,8 +7355,8 @@ function serialize(name, val, options) {
     }
     str += '; Expires=' + opt.expires.toUTCString();
   }
-  if (opt.httpsOnly) {
-    str += '; httpsOnly';
+  if (opt.httpOnly) {
+    str += '; HttpOnly';
   }
   if (opt.secure) {
     str += '; Secure';
@@ -11929,7 +11929,7 @@ module.exports = Sha
  * Version 2.1a Copyright Paul Johnston 2000 - 2002.
  * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
  * Distributed under the BSD License
- * See https://pajhome.org.uk/crypt/md5 for details.
+ * See http://pajhome.org.uk/crypt/md5 for details.
  */
 
 var inherits = require('inherits')
@@ -17894,7 +17894,7 @@ function GHASH (key) {
   this.cache = Buffer.allocUnsafe(0)
 }
 
-// from https://bitwiseshiftleft.github.io/sjcl/doc/symbols/src/core_gcm.js.html
+// from http://bitwiseshiftleft.github.io/sjcl/doc/symbols/src/core_gcm.js.html
 // by Juho Vähä-Herttua
 GHASH.prototype.ghash = function (block) {
   var i = -1
@@ -34627,7 +34627,7 @@ Point.prototype.isInfinity = function isInfinity() {
 };
 
 Point.prototype.dbl = function dbl() {
-  // https://hyperelliptic.org/EFD/g1p/auto-montgom-xz.html#doubling-dbl-1987-m-3
+  // http://hyperelliptic.org/EFD/g1p/auto-montgom-xz.html#doubling-dbl-1987-m-3
   // 2M + 2S + 4A
 
   // A = X1 + Z1
@@ -34652,7 +34652,7 @@ Point.prototype.add = function add() {
 };
 
 Point.prototype.diffAdd = function diffAdd(p, diff) {
-  // https://hyperelliptic.org/EFD/g1p/auto-montgom-xz.html#diffadd-dadd-1987-m-3
+  // http://hyperelliptic.org/EFD/g1p/auto-montgom-xz.html#diffadd-dadd-1987-m-3
   // 4M + 2S + 6A
 
   // A = X2 + Z2
@@ -52281,10 +52281,10 @@ function useColors() {
     return true;
   }
 
-  // is webkit? https://stackoverflow.com/a/16459606/376773
+  // is webkit? http://stackoverflow.com/a/16459606/376773
   // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
   return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance ||
-  // is firebug? https://stackoverflow.com/a/398120/376773
+  // is firebug? http://stackoverflow.com/a/398120/376773
   typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
   // is firefox >= v31?
   // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
@@ -53398,12 +53398,12 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
     },
     // protocols that always contain a // bit.
     slashedProtocol = {
+      'http': true,
       'https': true,
-      'httpss': true,
       'ftp': true,
       'gopher': true,
       'file': true,
-      'https:': true,
+      'http:': true,
       'https:': true,
       'ftp:': true,
       'gopher:': true,
@@ -53438,7 +53438,7 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
   var rest = url;
 
   // trim before proceeding.
-  // This is to support parse stuff like "  https://foo.com  \n"
+  // This is to support parse stuff like "  http://foo.com  \n"
   rest = rest.trim();
 
   if (!slashesDenoteHost && url.split('#').length === 1) {
@@ -53495,8 +53495,8 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     // URLs are obnoxious.
     //
     // ex:
-    // https://a@b@c/ => user:a@b host:c
-    // https://a@b?@c => user:a host:c path:/?@c
+    // http://a@b@c/ => user:a@b host:c
+    // http://a@b?@c => user:a host:c path:/?@c
 
     // v0.12 TODO(isaacs): This is not quite how Chrome does things.
     // Review our test case against browsers more comprehensively.
@@ -53517,7 +53517,7 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
       atSign = rest.lastIndexOf('@');
     } else {
       // atSign must be in auth portion.
-      // https://a@b/c@d => host:b auth:a path:/c@d
+      // http://a@b/c@d => host:b auth:a path:/c@d
       atSign = rest.lastIndexOf('@', hostEnd);
     }
 
@@ -53668,7 +53668,7 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     this.pathname = '/';
   }
 
-  //to support https.request
+  //to support http.request
   if (this.pathname || this.search) {
     var p = this.pathname || '';
     var s = this.search || '';
@@ -53794,7 +53794,7 @@ Url.prototype.resolveObject = function(relative) {
         result[rkey] = relative[rkey];
     }
 
-    //urlParse appends trailing / to urls like https://www.example.com
+    //urlParse appends trailing / to urls like http://www.example.com
     if (slashedProtocol[result.protocol] &&
         result.hostname && !result.pathname) {
       result.path = result.pathname = '/';
@@ -53841,7 +53841,7 @@ Url.prototype.resolveObject = function(relative) {
     result.auth = relative.auth;
     result.hostname = relative.hostname || relative.host;
     result.port = relative.port;
-    // to support https.request
+    // to support http.request
     if (result.pathname || result.search) {
       var p = result.pathname || '';
       var s = result.search || '';
@@ -53925,7 +53925,7 @@ Url.prototype.resolveObject = function(relative) {
     }
     result.search = relative.search;
     result.query = relative.query;
-    //to support https.request
+    //to support http.request
     if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
       result.path = (result.pathname ? result.pathname : '') +
                     (result.search ? result.search : '');
@@ -53938,7 +53938,7 @@ Url.prototype.resolveObject = function(relative) {
     // no path at all.  easy.
     // we've already handled the other stuff above.
     result.pathname = null;
-    //to support https.request
+    //to support http.request
     if (result.search) {
       result.path = '/' + result.search;
     } else {
@@ -54019,7 +54019,7 @@ Url.prototype.resolveObject = function(relative) {
     result.pathname = srcPath.join('/');
   }
 
-  //to support request.https
+  //to support request.http
   if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
     result.path = (result.pathname ? result.pathname : '') +
                   (result.search ? result.search : '');
@@ -54467,7 +54467,7 @@ var deprecate = require('depd')('express-session');
 var Cookie = module.exports = function Cookie(options) {
   this.path = '/';
   this.maxAge = null;
-  this.httpsOnly = true;
+  this.httpOnly = true;
   if (options) {
     if (typeof options !== 'object') {
       throw new TypeError('argument options must be a object');
@@ -54547,7 +54547,7 @@ Cookie.prototype = {
       originalMaxAge: this.originalMaxAge,
       expires: this._expires,
       secure: this.secure,
-      httpsOnly: this.httpsOnly,
+      httpOnly: this.httpOnly,
       domain: this.domain,
       path: this.path,
       sameSite: this.sameSite
@@ -54906,7 +54906,7 @@ function inspect(obj, opts) {
 }
 exports.inspect = inspect;
 
-// https://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
 inspect.colors = {
   'bold': [1, 22],
   'italic': [3, 23],
@@ -54982,7 +54982,7 @@ function formatValue(ctx, value, recurseTimes) {
   }
 
   // IE doesn't make error fields non-enumerable
-  // https://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
   if (isError(value) && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
     return formatError(value);
   }
@@ -55854,7 +55854,7 @@ function session(options) {
         return;
       }
 
-      // only send secure cookies via httpss
+      // only send secure cookies via https
       if (req.session.cookie.secure && !issecure(req, trustProxy)) {
         debug('not secured');
         return;
@@ -56195,7 +56195,7 @@ function hash(sess) {
  */
 
 function issecure(req, trustProxy) {
-  // socket is httpss server
+  // socket is https server
   if (req.connection && req.connection.encrypted) {
     return true;
   }
@@ -56214,7 +56214,7 @@ function issecure(req, trustProxy) {
   var header = req.headers['x-forwarded-proto'] || '';
   var index = header.indexOf(',');
   var proto = index !== -1 ? header.substr(0, index).toLowerCase().trim() : header.toLowerCase().trim();
-  return proto === 'httpss';
+  return proto === 'https';
 }
 
 /**

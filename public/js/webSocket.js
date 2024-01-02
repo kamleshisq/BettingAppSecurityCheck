@@ -23,7 +23,7 @@ socket.on('connect', () => {
         //     for (let i = 0; i < styleSheets.length; i++) {
         //       const styleSheet = styleSheets[i];
         //       if (styleSheet.href) {
-        //         if(styleSheet.href == "http://app.ollscores.com/assets/css/style.css" || styleSheet.href == "https://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="https://dev.ollscores.com/assets/css/media.css"){
+        //         if(styleSheet.href == "http://app.ollscores.com/assets/css/style.css" || styleSheet.href == "http://app.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://app.ollscores.com/assets/css/media.css"){
 
         //             // console.log('Processing stylesheet:', styleSheet.href, data);
         //             try {
@@ -92,7 +92,7 @@ socket.on('connect', () => {
         // }
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //172.105.58.243:8880 172.105.58.243:8880 http://app.ollscores.com/admin/userManagement http://app.ollscores.com  https: 
+        //dev.ollscores.com dev.ollscores.com http://app.ollscores.com/admin/userManagement http://app.ollscores.com  http: 
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
@@ -6228,7 +6228,7 @@ socket.on('connect', () => {
                 if(bets[i].status == 'Alert'){
 
                     html += `
-                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${bets[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" 
+                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${bets[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                     viewBox="0 0 447.514 447.514" xml:space="preserve">
                  <path d="M389.183,10.118c-3.536-2.215-7.963-2.455-11.718-0.634l-50.653,24.559c-35.906,17.409-77.917,16.884-113.377-1.418
                    c-38.094-19.662-83.542-18.72-120.789,2.487V20c0-11.046-8.954-20-20-20s-20,8.954-20,20v407.514c0,11.046,8.954,20,20,20
@@ -6237,7 +6237,7 @@ socket.on('connect', () => {
                  </svg></button>
                     `
                 }else{
-                    html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${bets[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" 
+                    html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${bets[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                     viewBox="0 0 489 489" xml:space="preserve">
                  <g>
                    <g>
@@ -16252,7 +16252,7 @@ socket.on('connect', () => {
                     <!-- <td>${data.data[i].userName}</td> -->
                     <td>${data.data[i].oddValue}</td>
                     <td>${data.data[i].Stake}</td>
-                    <td><div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${data.data[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" viewBox="0 0 489 489" xml:space="preserve">
+                    <td><div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${data.data[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489 489" xml:space="preserve">
                     <g>
                       <g>
                         <path d="M454.3,31.6c-28.5-15.3-59.1-23.4-93.7-23.4c-40.7,0-81.5,11.2-120.2,21.4S166,50,130.4,50c-23.8,0-45.3-4.6-65.2-13.7

@@ -139,7 +139,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     //         game_id:ele.game_id,
     //         game_code:ele.game_code,
     //         url_thumb:ele.url_thumb,
-    //         whiteLabelName:'172.105.58.243:8880'
+    //         whiteLabelName:'dev.ollscores.com'
     //     })
     // })
     // await gameModel.insertMany(newgames)
@@ -159,11 +159,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`https://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}`,
                 name:'user'
             },
             {
-                url:`https://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -171,11 +171,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`https://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild`,
                 name:'user'
             },
             {
-                url:`https://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -368,11 +368,11 @@ exports.resetPassword = catchAsync(async(req,res,next)=> {
 exports.updateUser = catchAsync(async(req, res, next) => {
     let urls = [
         {
-            url:`https://127.0.0.1:${process.env.port}/api/v1/users/getUser?id=${req.query.id}`,
+            url:`http://127.0.0.1:${process.env.port}/api/v1/users/getUser?id=${req.query.id}`,
             name:'user'
         },
         {
-            url:`https://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
+            url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
             name:'role'
         }
     ]
@@ -1834,7 +1834,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let notifications
-    var fullUrl = `https://127.0.0.1:${process.env.port}/api/v1/notification/myNotifications`
+    var fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/myNotifications`
     await fetch(fullUrl, {
         method:"GET",
         headers: {
@@ -4435,7 +4435,7 @@ exports.CommissionMarkets = catchAsync(async(req, res, next) => {
         me,
         currentUser:me,
         cricket
-    })   
+    })
 });
 
 exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
