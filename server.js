@@ -1991,7 +1991,7 @@ io.on('connection', (socket) => {
         if(delay[0] && delay[0].Limits!= 0 ){
             delayReal = delay[0].Limits.delay - 0.7 - 3 
         }
-        async function placeBetAfterDelay(data){
+            setTimeout(async function(data){
             let multimarketstatus = false
     
             if(data.data.status222 && data.data.status222 == 'multiMarket'){
@@ -2080,8 +2080,8 @@ io.on('connection', (socket) => {
             // console.log(openBet, "openBet")
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
             socket.emit("betDetails", {result, openBet, user})
-        }
-        setTimeout(placeBetAfterDelay(data), delayReal * 1000);
+
+        }, delayReal * 1000);
     })
 
     socket.on('voidBet', async(data) => {
