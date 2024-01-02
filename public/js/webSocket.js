@@ -15695,9 +15695,9 @@ socket.on('connect', () => {
             let html = ""
            for(let i = 0;i<data.result.length;i++){
                 html += `
-                <tr id='${data.result[0].mrktID}'>  
-                <td>${data.result[0].mrktNm}</td>`
-                if(data.data1.some(item => item.marketId == data.result[0].mrktID)){
+                <tr id='${data.result[i].mrktID}'>  
+                <td>${data.result[i].mrktNm}</td>`
+                if(data.data1.some(item => item.marketId == data.result[i].mrktID)){
                     html += `<td width="120px"> <div class="on-off-btn-section">
                     <span class="on-off">OFF &nbsp; <label class="switch on">
                     <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
