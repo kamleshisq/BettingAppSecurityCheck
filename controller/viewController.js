@@ -4435,7 +4435,7 @@ exports.CommissionMarkets = catchAsync(async(req, res, next) => {
         me,
         currentUser:me,
         cricket
-    })
+    })   
 });
 
 exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
