@@ -9329,7 +9329,7 @@ io.on('connection', (socket) => {
                     betsMarketIdWise[i].runnersData = JSON.parse(currentMarketrunnersData.runners)
                 }
             }
-            console.log(betsMarketIdWise[0])
+            // console.log(betsMarketIdWise[0])
             socket.emit("marketIdbookDetails" ,{betsMarketIdWise, status: data.status})
         }else{
             betsMarketIdWise = []
@@ -10012,7 +10012,7 @@ io.on('connection', (socket) => {
                 }
             ])
 
-            console.log(sportwisedownlinecomm,'==>sportwisedownlinecomm')
+            // console.log(sportwisedownlinecomm,'==>sportwisedownlinecomm')
              let result = sportwisedownlinecomm.map(ele=>{
                 if(ele['_id'] == '4'){
                     ele['sportname'] = 'Cricket'
@@ -10214,7 +10214,7 @@ io.on('connection', (socket) => {
                     
                 }
             }
-            console.log(usernameArr,'==>usernameArr')
+            // console.log(usernameArr,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
                 {
                     $match:filter
@@ -10407,7 +10407,7 @@ io.on('connection', (socket) => {
                     
                 }
             }
-            console.log(usernameArr,'==>usernameArr')
+            // console.log(usernameArr,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
                 {
                     $match:filter
