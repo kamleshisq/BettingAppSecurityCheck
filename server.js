@@ -1986,98 +1986,102 @@ io.on('connection', (socket) => {
         // console.log(data, "DATA")
         const startTimestamp = performance.now(); 
         let delay = await oddsLimitCHeck({eventId:data.data.eventId, ids:[data.data.market]})
-        console.log(delay, "delay")
-        if(delay){
-
+        // console.log(delay, "delay")
+        let delayReal = 0
+        if(delay[0] && delay[0].Limits!= 0 ){
+            delayReal = delay[0].Limits.delay - 0.7 - 3 
         }
-        // let multimarketstatus = false
-
-        // if(data.data.status222 && data.data.status222 == 'multiMarket'){
-        //     multimarketstatus = true
-        // }
-        // let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-        // // console.log(marketDetails.data.items)
-        // // data.data.oldData = data.data.odds
-        // data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
-        // let thatMarket = marketDetails.data.items[0]
-        // if(data.data.secId.startsWith('odd_Even_')){
-        //     if(data.data.secId == "odd_Even_Yes"){
-        //         let odds
-        //         if(thatMarket.odd){
-        //             odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
-        //             data.data.selectionName = thatMarket.title + "@" + odds
-        //         }else{
-        //             odds = thatMarket.yes_rate
-        //             data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
-        //         }
-        //         data.data.odds = odds
-        //         data.data.bettype2 = 'BACK'
-                
-        //     }else{
-        //         let odds
-        //         if(thatMarket.even){
-        //             odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
-        //             data.data.selectionName = thatMarket.title + "@" + odds
-
-        //         }else{
-        //             odds = thatMarket.no_rate
-        //             data.data.selectionName = thatMarket.title + "@" + thatMarket.no
-
-        //         }
-        //         data.data.odds = odds
-        //         data.data.bettype2 = 'LAY'
-        //     }
-        // }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
-        //     // console.log(thatMarket, 45454545454)
-        //     let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
-        //     let name
-        //     // let bettype2
-        //     if(data.data.secId.slice(-1) > 3){
-        //         name = `layPrice${data.data.secId.slice(-1) - 3}`
-        //         data.data.bettype2 = 'LAY'
-        //     }else{
-        //         name = `backPrice${data.data.secId.slice(-1)}`
-        //         data.data.bettype2 = 'BACK'
-        //     }
-        //     // let odds = realodd[name];
-        //     // data.data.odds = odds
-        //     data.data.secId = data.data.secId.slice(0,-1)
-        // }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
-        //     // console.log(thatMarket, 4545454)
-        //     let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
-        //     let name
-        //     // console.log(data)
-        //     if(data.data.secId.slice(-1) == 2){
-        //         name = `layPrice${data.data.secId.slice(-1) - 3}`
-        //         name =  name.slice(0, -2)
-
-        //         data.data.bettype2 = 'LAY'
-        //     }else{
-        //         name = `backPrice${data.data.secId.slice(-1)}`
-        //         name = name.slice(0, -1)
-        //         data.data.bettype2 = 'BACK'
-        //     }
-        //     // console.log(name)
-        //     // console.log(name)
-        //     // console.log(realodd[name], realodd, "realodds")
-        //     // let odds = realodd[name];
-        //     // data.data.odds = odds
-        //     data.data.secId = data.data.secId.slice(0,-1)
-        // }
-        // // console.log(data ,'++++++==>DATA', multimarketstatus)
-        // let result = await placeBet(data)
-        // const endTimestamp = performance.now();
-        // const elapsedTimeInSeconds = (endTimestamp - startTimestamp) / 1000;
-        // console.log(`The 'placeBet' function took ${elapsedTimeInSeconds} seconds to complete.`);
-        // let openBet = []
-        // if(multimarketstatus){
-        //     openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
-        // }else{
-        //     openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
-        // }
-        // // console.log(openBet, "openBet")
-        // let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
-        // socket.emit("betDetails", {result, openBet, user})
+        async function placeBetAfterDelay(data){
+            let multimarketstatus = false
+    
+            if(data.data.status222 && data.data.status222 == 'multiMarket'){
+                multimarketstatus = true
+            }
+            let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
+            // console.log(marketDetails.data.items)
+            // data.data.oldData = data.data.odds
+            data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
+            let thatMarket = marketDetails.data.items[0]
+            if(data.data.secId.startsWith('odd_Even_')){
+                if(data.data.secId == "odd_Even_Yes"){
+                    let odds
+                    if(thatMarket.odd){
+                        odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
+                        data.data.selectionName = thatMarket.title + "@" + odds
+                    }else{
+                        odds = thatMarket.yes_rate
+                        data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
+                    }
+                    data.data.odds = odds
+                    data.data.bettype2 = 'BACK'
+                    
+                }else{
+                    let odds
+                    if(thatMarket.even){
+                        odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
+                        data.data.selectionName = thatMarket.title + "@" + odds
+    
+                    }else{
+                        odds = thatMarket.no_rate
+                        data.data.selectionName = thatMarket.title + "@" + thatMarket.no
+    
+                    }
+                    data.data.odds = odds
+                    data.data.bettype2 = 'LAY'
+                }
+            }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
+                // console.log(thatMarket, 45454545454)
+                let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
+                let name
+                // let bettype2
+                if(data.data.secId.slice(-1) > 3){
+                    name = `layPrice${data.data.secId.slice(-1) - 3}`
+                    data.data.bettype2 = 'LAY'
+                }else{
+                    name = `backPrice${data.data.secId.slice(-1)}`
+                    data.data.bettype2 = 'BACK'
+                }
+                // let odds = realodd[name];
+                // data.data.odds = odds
+                data.data.secId = data.data.secId.slice(0,-1)
+            }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
+                // console.log(thatMarket, 4545454)
+                let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
+                let name
+                // console.log(data)
+                if(data.data.secId.slice(-1) == 2){
+                    name = `layPrice${data.data.secId.slice(-1) - 3}`
+                    name =  name.slice(0, -2)
+    
+                    data.data.bettype2 = 'LAY'
+                }else{
+                    name = `backPrice${data.data.secId.slice(-1)}`
+                    name = name.slice(0, -1)
+                    data.data.bettype2 = 'BACK'
+                }
+                // console.log(name)
+                // console.log(name)
+                // console.log(realodd[name], realodd, "realodds")
+                // let odds = realodd[name];
+                // data.data.odds = odds
+                data.data.secId = data.data.secId.slice(0,-1)
+            }
+            // console.log(data ,'++++++==>DATA', multimarketstatus)
+            let result = await placeBet(data)
+            const endTimestamp = performance.now();
+            const elapsedTimeInSeconds = (endTimestamp - startTimestamp) / 1000;
+            console.log(`The 'placeBet' function took ${elapsedTimeInSeconds} seconds to complete.`);
+            let openBet = []
+            if(multimarketstatus){
+                openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
+            }else{
+                openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
+            }
+            // console.log(openBet, "openBet")
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+            socket.emit("betDetails", {result, openBet, user})
+        }
+        setTimeout(placeBetAfterDelay(data), delayReal * 1000);
     })
 
     socket.on('voidBet', async(data) => {
