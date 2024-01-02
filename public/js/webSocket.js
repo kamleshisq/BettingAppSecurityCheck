@@ -1293,12 +1293,12 @@ socket.on('connect', () => {
             check = false
         }
     })
-    if(check){
-        console.log(data,'==>data')
-        socket.emit('UpdateBetLimit', {data, LOGINDATA})
-    }else{
-        alert('not a singal value is 0')
-    }
+    // if(check){
+    //     console.log(data,'==>data')
+    // }else{
+    //     alert('not a singal value is 0')
+    // }
+    socket.emit('UpdateBetLimit', {data, LOGINDATA})
        
     })
 
@@ -19779,11 +19779,11 @@ socket.on('connect', () => {
                     check = false
                 }
             })
-            if(check){
-                socket.emit('UpdateBetLimit', {data, LOGINDATA})
-            }else{
-                alert('not a singal value is 0')
-            }
+            // if(check){
+            // }else{
+            //     alert('not a singal value is 0')
+            // }
+            socket.emit('UpdateBetLimit', {data, LOGINDATA})
          })
 
    
