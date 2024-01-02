@@ -8399,7 +8399,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}1` ){
-                    // console.log(section.back)
+                    console.log(section.back, "macLimitStatus", macLimitStatus)
                     if( section.back == "-" || section.back == "1,000.00" || section.back == "0" || (macLimitStatus && macLimitStatus < section.back)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
