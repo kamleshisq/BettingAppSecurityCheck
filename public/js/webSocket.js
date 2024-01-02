@@ -7726,7 +7726,7 @@ socket.on('connect', () => {
                 })
             })
         })
-        let oddSTATUS = true
+
         function OddsCheck(){
             $(document).ready(function(){
                 var ids = [];
@@ -7737,13 +7737,9 @@ socket.on('connect', () => {
                 let eventId = search.split('=')[1]
                 // console.log(ids, eventId)
                 socket.emit('OddsCheck', {ids, eventId})
-                if(oddSTATUS){
-                    console.log('WORKING')
-                    setTimeout(()=>{
-                        oddSTATUS = false
-                        setInterval(OddsCheck, 5000);
-                      }, 1000)
-                }
+                setTimeout(()=>{
+                    OddsCheck()
+                  }, 1000)
             })
         }
         OddsCheck()
