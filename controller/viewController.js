@@ -2019,8 +2019,8 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     let RG;
     let currentUser = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     data = await gameModel.find({game_name:new RegExp("32 Cards","i"),whiteLabelName:whiteLabel})
     RG = await gameModel.find({sub_provider_name:"Royal Gaming",whiteLabelName:whiteLabel})
     // console.log(RG.length)
@@ -4208,7 +4208,8 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
     let user = req.currentUser
     const sportId = req.query.sportId
     // console.log(sportId)
-    const sportListData = await getCrkAndAllData()
+    // const sportListData = await getCrkAndAllData()
+    const sportListData = await getLiveGameData()
     let series;
     let seriesObjList = []
     let seriesList = []
@@ -4227,43 +4228,35 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             breadcumArr.push({name:item.sport_name,id:sportId})
         }
     })
-    if(sportId == 4){
-        series = sportListData[0].gameList[0]
-    }else{
-        series = sportListData[1].gameList.find(item => item.sportId == sportId)
-    }
-    if(series){
-        let seriesPromise = series.eventList.map(async(item)=>{
-            if(!seriesList.includes(item.eventData.compId)){
-                seriesList.push(item.eventData.compId)
-                let status = await catalogController.findOne({Id:item.eventData.compId})
-                // if(!status){
-                //     await catalogController.create({
-                //         Id:item.eventData.compId,
-                //         name:item.eventData.league,
-                //         type:"league"
-                //     })
-                //     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId:sportId})
-                // }else{
-                    if(status){
-                        seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:false,sportId})
+    // if(sportId == 4){
+    //     series = sportListData[0].gameList[0]
+    // }else{
+    //     series = sportListData[1].gameList.find(item => item.sportId == sportId)
+    // }
+    series = sportListData.filter(item => item.sprtID == sportId)
+    if(series.length != 0){
+        let seriesPromise = series.map(async(item)=>{
+        if(!seriesList.includes(item.compID)){
+            seriesList.push(item.compID)
+            let status = await catalogController.findOne({Id:item.compID})
+            if(!status){
+                await catalogController.create({
+                    Id:item.compID,
+                    name:item.compNm,
+                    type:"league"
+                })
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId:sportId})
+            }else{
+                if(status){
+                    seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId})
 
-                    }else{
-                        seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId})
-                    }
-                // }
+                }else{
+                    seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId})
+                }
             }
-        })
+        }
+
         Promise.all(seriesPromise).then(()=>{
-            return res.status(200).render("./catalogController/compitition", {
-                title:"Catalog Controller",
-                data:seriesObjList,
-                me: user,
-                currentUser: user,
-                breadcumArr
-            })
-        })
-    }else{
         return res.status(200).render("./catalogController/compitition", {
             title:"Catalog Controller",
             data:seriesObjList,
@@ -4271,7 +4264,52 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             currentUser: user,
             breadcumArr
         })
+    })
+    })
+
+    }else{
+
     }
+    // if(series){
+    //     let seriesPromise = series.eventList.map(async(item)=>{
+    //         if(!seriesList.includes(item.eventData.compId)){
+    //             seriesList.push(item.eventData.compId)
+    //             let status = await catalogController.findOne({Id:item.eventData.compId})
+    //             // if(!status){
+    //             //     await catalogController.create({
+    //             //         Id:item.eventData.compId,
+    //             //         name:item.eventData.league,
+    //             //         type:"league"
+    //             //     })
+    //             //     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId:sportId})
+    //             // }else{
+    //                 if(status){
+    //                     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:false,sportId})
+
+    //                 }else{
+    //                     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId})
+    //                 }
+    //             // }
+    //         }
+    //     })
+    //     Promise.all(seriesPromise).then(()=>{
+    //         return res.status(200).render("./catalogController/compitition", {
+    //             title:"Catalog Controller",
+    //             data:seriesObjList,
+    //             me: user,
+    //             currentUser: user,
+    //             breadcumArr
+    //         })
+    //     })
+    // }else{
+    //     return res.status(200).render("./catalogController/compitition", {
+    //         title:"Catalog Controller",
+    //         data:seriesObjList,
+    //         me: user,
+    //         currentUser: user,
+    //         breadcumArr
+    //     })
+    // }
    
     
 })
