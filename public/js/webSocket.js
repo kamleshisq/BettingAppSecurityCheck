@@ -15692,33 +15692,33 @@ socket.on('connect', () => {
 
           socket.on("eventIdForMarketList", async(data) => {
             console.log(data)
-            let i = 0
-            let html = ""
-            html += `
-            <tr id='${data.result.mrktID}'>  
-            <td>${i}</td>
-            <td>${data.result.mrktNm}</td>`
-            if(data.data1.some(item => item.marketId == data.result.mrktID)){
-                html += `<td width="120px"> <div class="on-off-btn-section">
-                <span class="on-off">OFF &nbsp; <label class="switch on">
-                <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
-                <span class="slider round"></span>
-                </label>&nbsp; ON</span>
-            </div></td>
-            </tr>`
-            }else{
-                html += `<td width="120px"> <div class="on-off-btn-section">
-                <span class="on-off">OFF &nbsp; <label class="switch">
-                <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-                <span class="slider round"></span>
-                </label>&nbsp; ON</span>
-            </div></td>
-            </tr>`
-            }
-            if(html == ""){
-            html += `<tr class="empty_table"><td>No record found</td></tr>`
-            }
-            document.getElementById("markets").innerHTML = html
+            // let i = 1
+            // let html = ""
+            // html += `
+            // <tr id='${data.result.mrktID}'>  
+            // <td>${i}</td>
+            // <td>${data.result.mrktNm}</td>`
+            // if(data.data1.some(item => item.marketId == data.result.mrktID)){
+            //     html += `<td width="120px"> <div class="on-off-btn-section">
+            //     <span class="on-off">OFF &nbsp; <label class="switch on">
+            //     <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+            //     <span class="slider round"></span>
+            //     </label>&nbsp; ON</span>
+            // </div></td>
+            // </tr>`
+            // }else{
+            //     html += `<td width="120px"> <div class="on-off-btn-section">
+            //     <span class="on-off">OFF &nbsp; <label class="switch">
+            //     <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+            //     <span class="slider round"></span>
+            //     </label>&nbsp; ON</span>
+            // </div></td>
+            // </tr>`
+            // }
+            // if(html == ""){
+            // html += `<tr class="empty_table"><td>No record found</td></tr>`
+            // }
+            // document.getElementById("markets").innerHTML = html
           })
 
           $(document).on("change", ".checkbox", function(e) {

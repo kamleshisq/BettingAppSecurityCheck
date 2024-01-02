@@ -4139,7 +4139,7 @@ io.on('connection', (socket) => {
         // Tennis = Tennis.eventList
         const resultSearch = cricket
         // console.log(resultSearch)
-        let result = resultSearch.find(item => item.evntID == data.id)
+        let result = resultSearch.filter(item => item.evntID == data.id)
         let data1 = await commissionMarketModel.find()
         // console.log(result, 123)
         socket.emit("eventIdForMarketList", {result, data1})
