@@ -8493,7 +8493,7 @@ socket.on('connect', () => {
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
                     if(limitOnTHis.Limits.max_odd){
-                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
                     }
                 }
                 let id = this.id
@@ -8527,7 +8527,7 @@ socket.on('connect', () => {
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
                     if(limitOnTHis.Limits.max_odd){
-                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
                     }
                 }
                 let id = this.id
@@ -8577,7 +8577,7 @@ socket.on('connect', () => {
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"|| (macLimitStatus && macLimitStatus < section.odd)){
+                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"|| (macLimitStatus && macLimitStatus < section.even)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
