@@ -15699,7 +15699,7 @@ socket.on('connect', () => {
                 <tr id='${data.result.mrktID}'>  
                 <td>${i}</td>
                 <td>${data.result.mrktNm}</td>`
-                if(data.data1.some(item => item. marketId == data.result.mrktID)){
+                if(data.data1.some(item => item.marketId == data.result.mrktID)){
                     html += `<td width="120px"> <div class="on-off-btn-section">
                     <span class="on-off">OFF &nbsp; <label class="switch on">
                     <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
