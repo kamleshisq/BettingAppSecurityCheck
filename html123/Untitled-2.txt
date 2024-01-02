@@ -3360,7 +3360,7 @@
         '    html,body{ padding: 0; margin: 0; }\n' +
         '.container-main {\n' +
         '        padding: 0;\n' +
-        '        background-image: url(https://www.stageandscreen.travel/sites/default/files/styles/large/public/LP%20-%20Cricket%20Australia.jpg?itok=dStxvjPW);\n' +
+        '        background-image: url(http://www.stageandscreen.travel/sites/default/files/styles/large/public/LP%20-%20Cricket%20Australia.jpg?itok=dStxvjPW);\n' +
         '        background-repeat: no-repeat;\n' +
         '        background-size: cover;\n' +
         '        margin-right: auto;\n' +

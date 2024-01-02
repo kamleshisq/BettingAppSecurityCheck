@@ -7,14 +7,14 @@ async function getLiveStream(id, ipv4){
             "ipv4":`172.105.58.243`,
             "channel":`${id}`
         };
-    var fullUrl = `https://api2.dbm9.com/api/tv-stream`;
+    var fullUrl = `http://api2.dbm9.com/api/tv-stream`;
     await fetch(fullUrl, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://dev.ollscores.com/",
-            "Referer":"http://dev.ollscores.com/"},
+            "Origin":"http://172.105.58.243:8880/",
+            "Referer":"http://172.105.58.243:8880/"},
         body:JSON.stringify(body)
     })
     .then(res =>res.json())

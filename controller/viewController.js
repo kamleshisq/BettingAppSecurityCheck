@@ -139,7 +139,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     //         game_id:ele.game_id,
     //         game_code:ele.game_code,
     //         url_thumb:ele.url_thumb,
-    //         whiteLabelName:'dev.ollscores.com'
+    //         whiteLabelName:'172.105.58.243:8880'
     //     })
     // })
     // await gameModel.insertMany(newgames)
@@ -721,7 +721,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 
 exports.APIcall = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/user-login';
+    var fullUrl = 'http://stage-api.mysportsfeed.io/api/v1/feed/user-login';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
@@ -1442,7 +1442,7 @@ const textToSign = JSON.stringify(body)
 const hashedOutput = SHA256(privateKey, textToSign);
 // console.log(hashedOutput)
 
-    var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
+    var fullUrl = 'http://dev-api.dreamdelhi.com/api/operator/login';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
@@ -2180,7 +2180,7 @@ exports.getBetLimitPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSportList = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata';
+    var fullUrl = 'http://admin-api.dreamexch9.com/api/dream/cron/get-sportdata';
     fetch(fullUrl, {
         method: 'GET'
     })
@@ -2197,7 +2197,7 @@ exports.getSportList = catchAsync(async(req, res, next) => {
 
 
 exports.getCricketData = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
+    var fullUrl = 'http://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
     fetch(fullUrl, {
         method: 'GET'
     })
@@ -2211,7 +2211,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 });
 
 // exports.getFootballData = catchAsync(async(req, res, next) => {
-//     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-footballdata';
+//     var fullUrl = 'http://admin-api.dreamexch9.com/api/dream/cron/get-footballdata';
 //     fetch(fullUrl, {
 //         method: 'GET'
 //     })
@@ -2227,7 +2227,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
     let body = JSON.stringify(["1.222218327", "4.1702114932195-BM", "4.1702288166905-F2", "4.1702115752278-OE"]);
     // console.log(body)
-    var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
+    var fullUrl = 'http://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
@@ -2250,14 +2250,14 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         ipv4 : "172.105.58.243",
         channel : "1029"
     }
-    var fullUrl = 'https://score-session.dbm9.com/api/tv-stream-2';
+    var fullUrl = 'http://score-session.dbm9.com/api/tv-stream-2';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://dev.ollscores.com/",
-            "Referer":"http://dev.ollscores.com/"},
+            "Origin":"http://172.105.58.243:8880/",
+            "Referer":"http://172.105.58.243:8880/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -2272,7 +2272,7 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
 exports.getMarketResult = catchAsync(async(req, res, next) => {
     let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
     // console.log(body)
-    let fullUrl = "https://admin-api.dreamexch9.com/api/dream/markets/result";
+    let fullUrl = "http://admin-api.dreamexch9.com/api/dream/markets/result";
     fetch(fullUrl, {
         method: 'POST',
         body:body 
@@ -2291,7 +2291,7 @@ exports.getMarketResult = catchAsync(async(req, res, next) => {
 exports.liveAllMarkets = catchAsync(async(req, res, next) => {
     // let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
     // console.log(body)
-    let fullUrl = "https://fbot.1cricket.co/api/Admin/getmarketsbysid/?sid=4";
+    let fullUrl = "http://fbot.1cricket.co/api/Admin/getmarketsbysid/?sid=4";
     console.log('fullUrl :', fullUrl)
     fetch(fullUrl, {
         method: 'get',
@@ -2313,7 +2313,7 @@ exports.liveAllMarkets = catchAsync(async(req, res, next) => {
 exports.liveAllMarkets2 = catchAsync(async(req, res, next) => {
     // let body = JSON.stringify([ "4.1701832199070-F2", "1.222032054", "4.1701498444440-BM", "4.1702616096118-OE", "4.1702629732107-OE", "4.1702629739420-OE"]);
     // console.log(body)
-    let fullUrl = "https://fbot.1cricket.co/api/Admin/getmarkets";
+    let fullUrl = "http://fbot.1cricket.co/api/Admin/getmarkets";
     console.log('fullUrl :', fullUrl)
     fetch(fullUrl, {
         method: 'get',
@@ -3340,7 +3340,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     const textToSign = JSON.stringify(body);
     const hashedOutput = SHA256(privateKey, textToSign);
     // console.log(hashedOutput)
-    var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/user-login';
+    var fullUrl = 'http://stage-api.mysportsfeed.io/api/v1/feed/user-login';
     await fetch(fullUrl, {
         method: 'POST',
         headers: { 

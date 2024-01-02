@@ -1,7 +1,7 @@
 provider_name	sub_provider_name	category	game_code	game_id	table_id	game_name	url_thumb
-EZUGI	Ezugi	blackjack	ezg_blackjack	105001	""""""	Blackjack	https://cdn.hub88.io/ezugi/ezg_blackjackgold5.jpg
-EZUGI	Ezugi	baccarat	ezg_baccarat	105002	""""""	Baccarat	https://cdn.hub88.io/ezugi/ezg_baccarat.jpg
-EZUGI	Ezugi	lucky7	ezg_lucky7	105007	""""""	Lucky 7	https://hx-app-assets.s3.eu-west-2.amazonaws.com/gap_casino/lucky7_228001.png
-EZUGI	Ezugi	sicbo	ezg_sicbo	105008	""""""	Sic Bo	https://cdn.hub88.io/ezugi/sicbo-thumbnail.jpg
-EZUGI	Ezugi	baccarat	ezg_dragontiger	105015	""""""	Dragon Tiger	https://cdn.hub88.io/ezugi/ezg_dragontiger.jpg
-EZUGI	Ezugi	andar_bahar	ezg_andarbahar	105019	""""""	Andar Bahar	https://cdn.hub88.io/ezugi/ezg_andarbahar.jpg
+EZUGI	Ezugi	blackjack	ezg_blackjack	105001	""""""	Blackjack	http://cdn.hub88.io/ezugi/ezg_blackjackgold5.jpg
+EZUGI	Ezugi	baccarat	ezg_baccarat	105002	""""""	Baccarat	http://cdn.hub88.io/ezugi/ezg_baccarat.jpg
+EZUGI	Ezugi	lucky7	ezg_lucky7	105007	""""""	Lucky 7	http://hx-app-assets.s3.eu-west-2.amazonaws.com/gap_casino/lucky7_228001.png
+EZUGI	Ezugi	sicbo	ezg_sicbo	105008	""""""	Sic Bo	http://cdn.hub88.io/ezugi/sicbo-thumbnail.jpg
+EZUGI	Ezugi	baccarat	ezg_dragontiger	105015	""""""	Dragon Tiger	http://cdn.hub88.io/ezugi/ezg_dragontiger.jpg
+EZUGI	Ezugi	andar_bahar	ezg_andarbahar	105019	""""""	Andar Bahar	http://cdn.hub88.io/ezugi/ezg_andarbahar.jpg

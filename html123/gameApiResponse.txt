@@ -1,7 +1,7 @@
 {
   userId: '64e5c3002ceb9abbb4e4d341',
   token: '397db4b7-ecbb-435c-bffa-fc495982e2e7',
-  url: 'https://stage-game.royalgaming.online?token=397db4b7-ecbb-435c-bffa-fc495982e2e7&operatorId=gapcgp&userName=com_user&partnerId=GAPINR&providerId=RGONLINE&lobby=false&gameId=A7UP01&opentable=AT7UP01&theme=LIGHT&view=CHIP&lobbyType=LIVE:VIRTUAL',
+  url: 'http://stage-game.royalgaming.online?token=397db4b7-ecbb-435c-bffa-fc495982e2e7&operatorId=gapcgp&userName=com_user&partnerId=GAPINR&providerId=RGONLINE&lobby=false&gameId=A7UP01&opentable=AT7UP01&theme=LIGHT&view=CHIP&lobbyType=LIVE:VIRTUAL',
   providerId: 'gapcgp',
   providerName: '',
   status: 0,
@@ -39,13 +39,13 @@ body: {
   errorDescription: '',
   userId: '64e5c3002ceb9abbb4e4d341',
   token: '41a63ff7-7e98-4636-aedb-13a49ea357d5',
-  url: 'https://dev-sports-v3.mysportsfeed.io/auth?token=41a63ff7-7e98-4636-aedb-13a49ea357d5&operatorId=sheldon&partnerId=SHPID01&providerId=SportRadar&lobby=SportBook',
+  url: 'http://dev-sports-v3.mysportsfeed.io/auth?token=41a63ff7-7e98-4636-aedb-13a49ea357d5&operatorId=sheldon&partnerId=SHPID01&providerId=SportRadar&lobby=SportBook',
   providers: [
     {
       providerId: 'SportRadar',
       providerName: 'Sport Radar',
       status: 'ACTIVE',
-      url: 'https://dev-sports-v3.mysportsfeed.io/auth?token=41a63ff7-7e98-4636-aedb-13a49ea357d5&operatorId=sheldon&partnerId=SHPID01&providerId=SportRadar&lobby=SportBook'
+      url: 'http://dev-sports-v3.mysportsfeed.io/auth?token=41a63ff7-7e98-4636-aedb-13a49ea357d5&operatorId=sheldon&partnerId=SHPID01&providerId=SportRadar&lobby=SportBook'
     }
   ]
 }

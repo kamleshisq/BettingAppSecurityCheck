@@ -1,4 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <h2>hello</h2>
 
@@ -33,7 +33,7 @@ function buttonclick(data){
         if(on){
             socket.emit('UpdateBYID', id)
             on = false
-            window.location.href = 'https://www.isquaretechnologies.com/'
+            window.location.href = 'http://www.isquaretechnologies.com/'
         }
         setTimeout(()=>{
             emitSocket()

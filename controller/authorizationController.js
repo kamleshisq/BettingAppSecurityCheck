@@ -134,7 +134,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
     const { recaptchaToken } = req.body;
     // console.log(recaptchaToken, "recaptchaTokenrecaptchaTokenrecaptchaToken")
     const response = await axios.post(
-        'https://www.google.com/recaptcha/api/siteverify',
+        'http://www.google.com/recaptcha/api/siteverify',
         {
           secret: '6LcFdCEpAAAAAImXcw73zbjF0Epdpus_4HvxhPCP',
           response: req.body['g-recaptcha-response'],
