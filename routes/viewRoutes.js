@@ -17,6 +17,7 @@ router.get('/API', viewController.APIcall);
 router.get('/API2', viewController.APIcall2);
 router.get("/sportDetails", viewController.getSportList);
 router.get("/getCricketData", viewController.getCricketData);
+router.get("/getLiveGameData", viewController.getCricketData1);
 // router.get("/getFootballData", viewController.getFootballData);
 router.get("/getMarketDetails", viewController.getmarketDetailsByMarketId);
 router.get("/getLiveTv", viewController.getLiveTv);

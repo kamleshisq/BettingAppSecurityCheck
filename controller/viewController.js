@@ -2210,6 +2210,20 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
     })
 });
 
+exports.getCricketData1 = catchAsync(async(req, res, next) => {
+    var fullUrl = 'https://fbot.1cricket.co/api/Admin/getmarketsbysid/?sid=4';
+    fetch(fullUrl, {
+        method: 'GET'
+    })
+    .then(res =>res.json())
+    .then(result => {
+        // console.log(result)
+        res.status(200).json({
+            result
+        })
+    })
+});
+
 // exports.getFootballData = catchAsync(async(req, res, next) => {
 //     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-footballdata';
 //     fetch(fullUrl, {
