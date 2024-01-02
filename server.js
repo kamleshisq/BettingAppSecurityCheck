@@ -1991,7 +1991,7 @@ io.on('connection', (socket) => {
         if(delay[0] && delay[0].Limits!= 0 ){
             delayReal = delay[0].Limits.delay - 0.7 - 3 
         }
-            setTimeout(async function(data){
+            setTimeout(async function(){
                 console.log(data)
             let multimarketstatus = false
     
