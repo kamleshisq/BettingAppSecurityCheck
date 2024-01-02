@@ -7922,6 +7922,7 @@ socket.on('connect', () => {
                         macLimitStatus =  limitOnTHis.Limits.max_odd
                     }
                 }
+                console.log(macLimitStatus)
 
                 let id = this.id
                 id = id.slice(0, -1);
