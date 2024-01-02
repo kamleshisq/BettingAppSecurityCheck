@@ -2061,7 +2061,7 @@ io.on('connection', (socket) => {
         }else{
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
         }
-        console.log(openBet, "openBet")
+        // console.log(openBet, "openBet")
         let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
         socket.emit("betDetails", {result, openBet, user})
     })
@@ -9940,7 +9940,7 @@ io.on('connection', (socket) => {
     socket.on('LoginCHeckUSerSIde', async(data) => {
         if(data.loginData.User){
             let lgoginData = await loginLogs.findOne({session_id:data.loginData.Token, userName:data.loginData.User.userName})
-            console.log(lgoginData, "lgoginDatalgoginDatalgoginData")
+            // console.log(lgoginData, "lgoginDatalgoginDatalgoginData")
             if(lgoginData){
                 if(!lgoginData.isOnline){
                     socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
