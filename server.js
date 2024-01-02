@@ -10440,11 +10440,22 @@ io.on('connection', (socket) => {
             if(data.data.bettype == 'Net Losing Commission'){
                 netlosing = true
             }else{  
-                if(data.data.betId){
-                    filter._id = new ObjectId(data.data.betId)
-                }else{
-                    
+
+                let betId = await commissionNewModel.distinct('betId', {userName:{$in:usernameArr}, sportId:data.data.sportId, marketName:data.data.marketName, eventName:data.data.eventName})
+                console.log(betId)
+                let newBetIds = []
+                betId.map(id => {
+                    let newId = new ObjectId(id)
+                    newBetIds.push(newId)
+                })
+                filter._id = {
+                    $in:newBetIds
                 }
+                // if(data.data.betId){
+                //     filter._id = new ObjectId(data.data.betId)
+                // }else{
+                    
+                // }
             }
             // console.log(usernameArr,'==>usernameArr')
             let sportwisedownlinecomm = await Bet.aggregate([
