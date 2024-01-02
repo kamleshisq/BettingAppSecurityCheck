@@ -7757,7 +7757,10 @@ socket.on('connect', () => {
                 }
             })
         })
-        console.log(limitData, "limitDatalimitDatalimitData")
+        if(limitData.length === 0){
+            OddsCheck()
+        }
+        // console.log(limitData, "limitDatalimitDatalimitData")
 
 
 
