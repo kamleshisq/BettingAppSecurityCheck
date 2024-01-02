@@ -4399,7 +4399,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     // console.log('START')
     let user = req.currentUser
-    const sportListData = await getCrkAndAllData()
+    const sportListData = await getLiveGameData()
     let cricketEvents;
     let footballEvents;
     let tennisEvents;
@@ -4407,82 +4407,81 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let count;
     let data = {};
 
-    let cricketList = sportListData[0].gameList[0]
-    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
-    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
-
-    let newcricketEvents = cricketList.eventList.map(async(item) => {
-         let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
-         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+    let cricketList = sportList.filter(item => item.sprtID == "4")
+    let footballList = sportList.filter(item => item.sprtID == "1")
+    let tennisList = sportList.filter(item => item.sprtID == "2")
+    let newcricketEvents = cricketList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.evntID})
+         let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
+         count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.eventData.status = true
+            item.status = true
          }else{
-            item.eventData.status = false
+            item.status = false
         }
         if(!featureStatus){
-            item.eventData.featureStatus = false
+            item.featureStatus = false
         }else{
-            item.eventData.featureStatus = true
+            item.featureStatus = true
         }
         if(!inPlayStatus){
-            item.eventData.inPlayStatus = false
+            item.inPlayStatus = false
         }else{
-            item.eventData.inPlayStatus = true
+            item.inPlayStatus = true
         }
-        item.eventData.count = count
+        item.count = count
 
         return item
     })
-    let newfootballEvents =  footballList.eventList.map(async(item) => {
-         let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+    let newfootballEvents =  footballList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.evntID})
+         let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
 
 
-         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.eventData.status = true
+            item.status = true
          }else{
-            item.eventData.status = false
+            item.status = false
         }
         if(!featureStatus){
-            item.eventData.featureStatus = false
+            item.featureStatus = false
         }else{
-            item.eventData.featureStatus = true
+            item.featureStatus = true
         }
         if(!inPlayStatus){
-            item.eventData.inPlayStatus = false
+            item.inPlayStatus = false
         }else{
-            item.eventData.inPlayStatus = true
+            item.inPlayStatus = true
         }
-        item.eventData.count = count
+        item.count = count
 
         return item
     })
     let newtennisEvents = tennisList.eventList.map(async(item) => {
-         let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+         let status = await catalogController.findOne({Id:item.evntID})
+         let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
 
-         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.eventData.status = true
+            item.status = true
          }else{
-            item.eventData.status = false
+            item.status = false
         }
         if(!featureStatus){
-            item.eventData.featureStatus = false
+            item.featureStatus = false
         }else{
-            item.eventData.featureStatus = true
+            item.featureStatus = true
         }
         if(!inPlayStatus){
-            item.eventData.inPlayStatus = false
+            item.inPlayStatus = false
         }else{
-            item.eventData.inPlayStatus = true
+            item.inPlayStatus = true
         }
-        item.eventData.count = count
+        item.count = count
 
         return item
     })
