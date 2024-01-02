@@ -7820,7 +7820,9 @@ socket.on('connect', () => {
                 marketId()
               }, 5000)
         }
-        marketId()
+        if(limitData.length !== 0){
+            marketId()
+        }
 
         let first = true
         socket.on("marketId", async(data) => {
