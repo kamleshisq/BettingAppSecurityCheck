@@ -1729,22 +1729,16 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
 
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    const sportData = await getCrkAndAllData()
-    let cricketList;
-    cricketList = sportData[0].gameList[0]
     const sportList =[
         {sport_name:"Cricket",sportId:4}	,
         {sport_name:"Football",sportId:1}	,
         {sport_name:"Tennis",sportId:2}
     ]
    
-    const streams = await Stream.find()
     res.status(200).render("./streamManagement/streammanagement",{
         title:"Stream Management",
         me,
         currentUser:me,
-        cricketList,
-        streams,
         sportList
     })
 })
