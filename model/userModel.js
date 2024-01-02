@@ -202,7 +202,8 @@ const userSchema = mongoose.Schema({
     },
     OperatorAuthorization:[{
             type:String
-        }]
+        }],
+    maxLimit
 })
 
 userSchema.pre('save', async function(next){

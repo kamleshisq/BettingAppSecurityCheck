@@ -1817,85 +1817,90 @@ io.on('connection', (socket) => {
     })
 
     socket.on("marketId", async(data) => {
-        const result = await marketDetailsBymarketID(data.ids)
-        let finalResult = result.data
-        // console.log(finalResult, "finalResultfinalResultfinalResult")
-        const betLimits = await betLimit.find({type:"Sport"})
-        let resumeSuspendMarkets = await resumeSuspendModel.aggregate([
-            {
-                $match:{
-                    marketId : {
-                        $in:data.ids
-                    },
-                    status:false,
-                }
-            },
-            {
-                $facet: {
-                    whiteLabel1: [
-                        { $match: { whiteLabel: '1' } },
-                        { $limit: 1 } // Limit to one document
-                    ],
-                    otherWhiteLabel: [
-                        { $match: { whiteLabel: process.env.whiteLabelName } }
-                    ]
-                }
-            },
-            {
-                $project: {
-                    result: {
-                        $cond: {
-                            if: { $gt: [{ $size: '$whiteLabel1' }, 0] },
-                            then: '$whiteLabel1',
-                            else: '$otherWhiteLabel'
+        if(Array.isArray(data.ids)){
+
+            const result = await marketDetailsBymarketID(data.ids)
+            let finalResult = result.data
+            // console.log(finalResult, "finalResultfinalResultfinalResult")
+            const betLimits = await betLimit.find({type:"Sport"})
+            let resumeSuspendMarkets = await resumeSuspendModel.aggregate([
+                {
+                    $match:{
+                        marketId : {
+                            $in:data.ids
+                        },
+                        status:false,
+                    }
+                },
+                {
+                    $facet: {
+                        whiteLabel1: [
+                            { $match: { whiteLabel: '1' } },
+                            { $limit: 1 } // Limit to one document
+                        ],
+                        otherWhiteLabel: [
+                            { $match: { whiteLabel: process.env.whiteLabelName } }
+                        ]
+                    }
+                },
+                {
+                    $project: {
+                        result: {
+                            $cond: {
+                                if: { $gt: [{ $size: '$whiteLabel1' }, 0] },
+                                then: '$whiteLabel1',
+                                else: '$otherWhiteLabel'
+                            }
                         }
                     }
                 }
-            }
-        ])
-        let forFancy 
-        if(resumeSuspendMarkets && resumeSuspendMarkets.length > 0){
-            resumeSuspendMarkets = resumeSuspendMarkets[0].result
-        }else{
-            resumeSuspendMarkets = []
-        }
-        if(finalResult.items.length > 0 ){
-            if(finalResult.items[1]){
-                forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
-            }
-        }
-        // console.log(forFancy)
-        let allData =  await getCrkAndAllData()
-        const cricket = allData[0].gameList[0].eventList
-        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
-        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
-        footBall = footBall.eventList
-        Tennis = Tennis.eventList
-        const resultSearch = cricket.concat(footBall, Tennis);
-        let status;
-        // console.log(data,"==>marketId eventId error")
-        if(data.eventId){
-            let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
-            // console.log(event,data.eventId,"==>Event")
-            if(await InPlayEvent.findOne({Id:event.eventData.eventId})){
-                status = true
+            ])
+            let forFancy 
+            if(resumeSuspendMarkets && resumeSuspendMarkets.length > 0){
+                resumeSuspendMarkets = resumeSuspendMarkets[0].result
             }else{
-                if(event.eventData.type == "IN_PLAY"){
-                    status = true
-                }else{
-                    status = false
+                resumeSuspendMarkets = []
+            }
+            if(finalResult.items.length > 0 ){
+                if(finalResult.items[1]){
+                    forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
                 }
             }
-
-        }else{
-            // console.log(finalResult)
-            for(let i = 0; i < finalResult.items.length; i++){
-                // console.log(finalResult.items[i])
+            // console.log(forFancy)
+            let allData =  await getCrkAndAllData()
+            const cricket = allData[0].gameList[0].eventList
+            let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+            let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+            footBall = footBall.eventList
+            Tennis = Tennis.eventList
+            const resultSearch = cricket.concat(footBall, Tennis);
+            let status;
+            // console.log(data,"==>marketId eventId error")
+            if(data.eventId){
+                let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
+                // console.log(event,data.eventId,"==>Event")
+                if(await InPlayEvent.findOne({Id:event.eventData.eventId})){
+                    status = true
+                }else{
+                    if(event.eventData.type == "IN_PLAY"){
+                        status = true
+                    }else{
+                        status = false
+                    }
+                }
+    
+            }else{
+                // console.log(finalResult)
+                for(let i = 0; i < finalResult.items.length; i++){
+                    // console.log(finalResult.items[i])
+                }
             }
+    
+            // console.log(resumeSuspendMarkets)
+            socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
+        }else{
+            socket.emit('marketId', {Message:'please Provide array'})
         }
-
-        // console.log(resumeSuspendMarkets)
-        socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
     })
 
     socket.on("SPORTDATA", async(data) => {
