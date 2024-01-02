@@ -8020,6 +8020,7 @@ socket.on('connect', () => {
                     <i class="fa-solid fa-lock"></i>
                   </span>`
                   this.removeAttribute("data-bs-toggle");
+                  parentElement.classList.remove("suspended")
                     }else if(check){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
