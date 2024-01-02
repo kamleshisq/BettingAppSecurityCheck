@@ -1817,7 +1817,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("marketId", async(data) => {
-        if(Array.isArray(data.ids)){
+        if(typeof data === "string"){
             data = JSON.parse(data)
         }
         
