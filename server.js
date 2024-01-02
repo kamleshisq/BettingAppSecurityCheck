@@ -1821,7 +1821,7 @@ io.on('connection', (socket) => {
             data = JSON.parse(data)
         }
         
-        console.log(data.ids, data, typeof data)
+        // console.log(data.ids, data, typeof data)
         if(Array.isArray(data.ids)){
             const result = await marketDetailsBymarketID(data.ids)
             let finalResult = result.data
