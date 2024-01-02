@@ -8612,6 +8612,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
+                    console.log(section.yes, section.yes_rate)
                     if( section.yes == "-" || section.yes == "1,000.00" || section.yes == "0"|| (macLimitStatus && macLimitStatus < section.yes)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
