@@ -3912,13 +3912,7 @@ io.on('connection', (socket) => {
         let allData =  await getLiveGameData()
         let result = allData.find(item => item.compID == data.id)
         if(data.status){
-            let createData = {
-                Id : data.id,
-                name : result.compNm,
-                type : "league",
-                status : true      
-            }
-            let cataLog =  await catalogController.create(createData)
+            let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:true})
             if(cataLog){
                 msg = 'series activated'
                 socket.emit('sportStatusChange',{status:'success',msg})
@@ -3927,7 +3921,7 @@ io.on('connection', (socket) => {
                 socket.emit('sportStatusChange',{status:'success',msg})
             }
         }else{
-            let cataLog =  await catalogController.findOneAndDelete({Id:data.id},{status:true})
+            let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:false})
             if(cataLog){
                 msg = 'series deactivated'
                 socket.emit('sportStatusChange',{status:'success',msg})

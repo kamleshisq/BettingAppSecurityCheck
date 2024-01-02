@@ -4248,11 +4248,11 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
                 })
                 seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId:sportId})
             }else{
-                seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId})
-                // if(status){
-                //     seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId})
-                // }else{
-                // }
+                if(status.status){
+                    seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId})
+                }else{
+                    seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId})
+                }
             }
         }
 
