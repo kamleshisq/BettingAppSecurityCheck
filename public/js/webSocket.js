@@ -8696,7 +8696,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      this.setAttribute("data-bs-toggle", "collapse");
+                    //   this.setAttribute("data-bs-toggle", "collapse");
                       $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
