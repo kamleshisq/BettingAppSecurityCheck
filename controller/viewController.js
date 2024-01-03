@@ -4852,17 +4852,17 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     //     let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
     //     match = data1liveCricket.find(item => item != undefined)
     // }
-    if(match == undefined){
-        // res.status(404).json({
-        //     status:"Success",
-        //     message:"This match is no more live"
-        // })
-        res.render('./errorMessage', {
-            statusCode : 404,
-            message:"Opps! Please try again later",
-            mainMassage:"The match you are looking for is no more live"
-        })
-    }
+    // if(match == undefined){
+    //     // res.status(404).json({
+    //     //     status:"Success",
+    //     //     message:"This match is no more live"
+    //     // })
+    //     res.render('./errorMessage', {
+    //         statusCode : 404,
+    //         message:"Opps! Please try again later",
+    //         mainMassage:"The match you are looking for is no more live"
+    //     })
+    // }
     let src
     let status = false
     let liveStream
