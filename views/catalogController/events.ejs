@@ -37,11 +37,7 @@
             </thead>
             <tbody class="new-body">
               <% for(let i = 0; i < data.length; i++){%>
-              <%if((i%2)==0){%>
-              <tr>
-                <%}else{%>
                 <tr>
-                  <%}%>
                   <td><%=i + 1%></td>
                   <td>
                     <%if(data[i].status){%>
@@ -84,9 +80,11 @@
                     </div>
                   </td>
                   <%}%>
-                  <%}%>
                 </tr>
-              </tr>
+                <%}%>
+                <%if(data.length == 0){%>
+                  <tr class="empty_table"><td>No record found</td></tr>
+                <%}%>
             </tbody>
           </table>
         </div>
