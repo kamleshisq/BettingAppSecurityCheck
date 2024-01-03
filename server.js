@@ -3909,6 +3909,8 @@ io.on('connection', (socket) => {
 
     socket.on('sportStatusChange',async(data) => {
         try{
+            let allData =  await getLiveGameData()
+            let result = allData.find(item => item.evntID == data.id)
             if(data.status){
                 let createData = {
                     Id : data.id,
@@ -3944,6 +3946,8 @@ io.on('connection', (socket) => {
 
     socket.on('sportStatusChange2',async(data) => {
         try{
+            let allData =  await getLiveGameData()
+            let result = allData.find(item => item.evntID == data.id)
             if(data.status){
                 let createData = {
                     Id : data.id,
