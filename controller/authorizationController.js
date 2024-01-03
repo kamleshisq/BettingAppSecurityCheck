@@ -9,9 +9,7 @@ const Role = require("../model/roleModel");
 const paymentReportModel = require('../model/paymentreport')
 const userWithReq = require('../model/withdrowReqModel');
 const whiteLabelMOdel = require('../model/whitelableModel');
-const session = require('express-session');
-const axios = require('axios');
-const uuid = require('uuid');
+const axios = require('axios')
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -29,11 +27,6 @@ function parseCookies(cookieString) {
     });
     return cookies;
   }
-
-  function generateUniqueSessionID() {
-    return uuid.v4();
-}
-
 
 const createSendToken = async (user, statuscode, res, req)=>{
     // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
@@ -87,18 +80,26 @@ const createSendToken = async (user, statuscode, res, req)=>{
     })
 }
 const user_createSendToken = async (user, statuscode, res, req)=>{
+    // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
+    // if (existingToken) {
+    //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
+    //     return res.status(403).json({
+    //         status: "error",
+    //         message: "User is already logged in"
+    //     });
+    // }
+
+    const token = createToken(user._id);
+    // req.session.userId = user._id;
+    // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
         httpOnly: true,
-        secure: false,
-        domain: 'dev.ollscores.com'
-    }
-    
-    const sessionID = user.id;
-    req.session.sessionID = sessionID;
-    console.log(req.ip)
-    console.log(sessionID, req.session, "req.sessionreq.sessionreq.sessionreq.sessionreq.session")
-    const token = createToken(req.session.sessionID);
+        // secure: true
+        }
+    if(process.env.NODE_ENV === "production"){
+        cookieOption.secure = true
+        }
     res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
@@ -114,11 +115,9 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
                             role_Type:user.role_type,
                             login_time:time, 
                             isOnline: true, 
-                            ip_address:req.ip, 
+                            ip_address:global.ip, 
                             session_id:token, 
-                            device_info:req.headers['user-agent'],
-                            sessionId:sessionID
-                        })
+                            device_info:req.headers['user-agent']})
     global._loggedInToken.push({token:token,time:time})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
@@ -126,8 +125,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
         status:"success",
         token,
         data: {
-            user,
-            sessionID
+            user
         }
     })
 }
@@ -378,15 +376,6 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-    // console.log(activeSessions)
-    const clientSessionID = req.session.sessionID;
-    // const serverSession = activeSessions[clientSessionID];
-    // console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
-    // if(clientSessionID && serverSession === req.session){
-    //     req.app.set('token', null);
-    //     req.app.set('User', null);
-    //     return res.redirect('/')
-    // }
     res.locals.whiteLabel = process.env.whiteLabelName
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
     if(whiteLabelData){
@@ -552,16 +541,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
-    // console.log(req.session, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
-    // const clientSessionID = req.session.sessionID
-    // console.log(clientSessionID, "activeSessionsactiveSessionsactiveSessions")
-    // const serverSession = activeSessions[clientSessionID];
-    // console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
-    // if(clientSessionID && serverSession === req.session){
-    //     req.app.set('token', null);
-    //     req.app.set('User', null);
-    //     return next()
-    // }
+    // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -598,11 +578,6 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
         return next()
     }
-    // if((clientSessionID && tokenId.sessionId != clientSessionID) || !clientSessionID){
-    //     req.app.set('token', null);
-    //     req.app.set('User', null);
-    //     return next()
-    // }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
