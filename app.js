@@ -67,7 +67,7 @@ app.use(fileUpload({
   }));
 const activeSessions = {};
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
-app.use(cookieParser());
+// app.use(cookieParser());
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
