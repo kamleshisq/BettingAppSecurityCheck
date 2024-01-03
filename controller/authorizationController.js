@@ -88,7 +88,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
 }
 const user_createSendToken = async (user, statuscode, res, req)=>{
     const sessionID = user.id;
-    // req.session.sessionID = sessionID;
+    req.session.sessionID = sessionID;
     console.log(req.ip)
     console.log(sessionID, req.session, "req.sessionreq.sessionreq.sessionreq.sessionreq.session")
     // activeSessions[sessionID] = req.session;
@@ -107,11 +107,12 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
         httpOnly: true,
-        // secure: true
+        secure: false,
+        domain: 'dev.ollscores.com'
         }
-    if(process.env.NODE_ENV === "production"){
-        cookieOption.secure = true
-        }
+    // if(process.env.NODE_ENV === "production"){
+    //     cookieOption.secure = true
+    //     }
     res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
