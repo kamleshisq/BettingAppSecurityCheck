@@ -2,6 +2,8 @@ import axios from "axios";
 import { notificationsss } from "./notificationsss";
 
 export const userLogin = async(data) => {
+    const idFromStorage = sessionStorage.getItem("ID_KEY");
+    console.log(idFromStorage, "idFromStorageidFromStorageidFromStorage")
     try{
         const res = await axios({
             method: 'POST',
@@ -10,22 +12,11 @@ export const userLogin = async(data) => {
         });
         if(res.data.status === 'success'){
             notificationsss({message : 'Logged in successfully!!!!', status:"success"});
-            sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
-            sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
-            sessionStorage.setItem('logintime',Date.now())
-            localStorage.setItem('logintimeUser', Date.now());
-
-            // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
-            // console.log(res.data)
-            // if(res.data.count){
-            //     window.setTimeout(()=>{
-            //         location.assign('/updatePassWord')
-            //     }, 100)
-            // }else{
+            console.log(res.data.data.sessionId)
+            sessionStorage.setItem('sessionID', res.data.data.sessionId);
                 setTimeout(function() {
                     location.reload();
-                  }, 300);
-            // }
+                  }, 3000);
         }
 
     }catch(err){

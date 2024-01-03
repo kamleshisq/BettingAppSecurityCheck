@@ -5498,7 +5498,7 @@ var login = /*#__PURE__*/function () {
               }, 100);
             } else {
               window.setTimeout(function () {
-                location.assign('/admin/userManagement');
+                location.assign('/admin/dashboard');
               }, 100);
             }
           }
@@ -6855,57 +6855,48 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var userLogin = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
-    var res;
+    var idFromStorage, res;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.prev = 0;
-          _context.next = 3;
+          idFromStorage = sessionStorage.getItem("ID_KEY");
+          console.log(idFromStorage, "idFromStorageidFromStorageidFromStorage");
+          _context.prev = 2;
+          _context.next = 5;
           return (0, _axios.default)({
             method: 'POST',
             url: '/api/v1/auth/userLogin',
             data: data
           });
-        case 3:
+        case 5:
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _notificationsss.notificationsss)({
               message: 'Logged in successfully!!!!',
               status: "success"
             });
-            sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
-            sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
-            sessionStorage.setItem('logintime', Date.now());
-            localStorage.setItem('logintimeUser', Date.now());
-
-            // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
-            // console.log(res.data)
-            // if(res.data.count){
-            //     window.setTimeout(()=>{
-            //         location.assign('/updatePassWord')
-            //     }, 100)
-            // }else{
+            console.log(res.data.data.sessionId);
+            sessionStorage.setItem('sessionID', res.data.data.sessionId);
             setTimeout(function () {
               location.reload();
-            }, 300);
-            // }
+            }, 3000);
           }
-          _context.next = 11;
+          _context.next = 13;
           break;
-        case 7:
-          _context.prev = 7;
-          _context.t0 = _context["catch"](0);
+        case 9:
+          _context.prev = 9;
+          _context.t0 = _context["catch"](2);
           console.log(_context.t0);
           (0, _notificationsss.notificationsss)({
             message: _context.t0.response.data.message,
             status: "error"
           });
           // setTimeout(alert(err.response.data.message), 1500)
-        case 11:
+        case 13:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee, null, [[2, 9]]);
   }));
   return function userLogin(_x) {
     return _ref.apply(this, arguments);
@@ -56371,6 +56362,11 @@ $(document).ready(function () {
     }
   });
 });
+var userId = sessionStorage.getItem('sessionID');
+console.log(userId);
+if (!userId) {
+  console.log('WORKING123456789');
+}
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working") 
@@ -56391,40 +56387,43 @@ $(document).on('click', ".logOut", function (e) {
   // console.log(this)
   (0, _logOut.logout)();
 });
-var sentinterval1 = setInterval(function () {
-  // console.log('WORKING', localStorage.getItem('logintime'))
-  if (pathname.startsWith('/admin')) {
-    if (localStorage.getItem('logintimeAdmin')) {
-      // console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
-      if (Date.now() - parseInt(localStorage.getItem('logintimeAdmin')) >= 1000 * 60 * 30) {
-        clearInterval(sentinterval1);
-        localStorage.removeItem('logintimeAdmin');
-        (0, _logOut.logout)();
-      }
-    } else {
-      if ($('body header').attr('data-logindata')) {
-        location.reload(true);
-      }
-    }
-  } else {
-    if (localStorage.getItem('logintimeUser')) {
-      // console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
-      if (Date.now() - parseInt(localStorage.getItem('logintimeUser')) >= 1000 * 60 * 30) {
-        // if(pathname.startsWith('/admin')){
-        //     logout()
-        // }else{
-        // }
-        clearInterval(sentinterval1);
-        localStorage.removeItem('logintimeUser');
-        (0, _logOutUser.logoutUser)();
-      }
-    } else {
-      if ($('body').attr('data-logindata')) {
-        window.location.reload(true);
-      }
-    }
-  }
-}, 1000);
+
+// let sentinterval1 = setInterval(()=>{
+//     // console.log('WORKING', localStorage.getItem('logintime'))
+//     if(pathname.startsWith('/admin')){
+//         if(localStorage.getItem('logintimeAdmin')){
+//             // console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
+//             if(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')) >= 1000  * 60 * 30){
+//                 clearInterval(sentinterval1)
+//                 localStorage.removeItem('logintimeAdmin')
+//                 logout()
+
+//             }
+//         }else{
+//             if($('body header').attr('data-logindata')){
+//                 location.reload(true)
+//             }
+//         }
+//     }else{
+//         if(localStorage.getItem('logintimeUser')){
+//             // console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
+//             if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 60 * 30){
+//                 // if(pathname.startsWith('/admin')){
+//                 //     logout()
+//                 // }else{
+//                 // }
+//                 clearInterval(sentinterval1)
+//                 localStorage.removeItem('logintimeUser')
+//                 logoutUser()
+//             }
+//         }else{
+//             if($('body').attr('data-logindata')){
+//                 window.location.reload(true)
+//             }
+//         }
+//     }
+// },1000)
+
 $(document).on('click', ".logOutUser", function (e) {
   e.preventDefault();
   // console.log('Working')
@@ -56463,7 +56462,7 @@ $('#Add-User').submit(function (e) {
   }
   formDataObj.OperatorAuthorization = checkedValues;
   // console.log(formDataObj, "+==> data")
-  // console.log(checkedValues);
+  // console.log(formDataObj);
   (0, _createUser.createUser)(formDataObj);
 });
 $(document).on('submit', '.passReset-form', function (e) {
@@ -57042,7 +57041,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53949" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49887" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -9,6 +9,7 @@ const Role = require("../model/roleModel");
 const paymentReportModel = require('../model/paymentreport')
 const userWithReq = require('../model/withdrowReqModel');
 const whiteLabelMOdel = require('../model/whitelableModel');
+const sessionStorage = require('sessionstorage-for-nodejs');
 const axios = require('axios')
 
 const createToken = A => {
@@ -90,15 +91,12 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     // }
 
     const token = createToken(user._id);
-    // req.session.userId = user._id;
+    req.session.token = token;
     // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
         httpOnly: true,
         // secure: true
-        }
-    if(process.env.NODE_ENV === "production"){
-        cookieOption.secure = true
         }
     res.cookie('JWT', token, cookieOption)
     // console.log(res);
@@ -107,7 +105,9 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     // console.log(req.headers['user-agent'])
     // req.loginUser = user
     let time = Date.now()
-    await loginLogs.updateMany({userName:user.userName}, {isOnline: false})
+    if(user.roleName != 'DemoLogin'){
+        await loginLogs.updateMany({userName:user.userName}, {isOnline: false})
+    }
     await loginLogs.create({user_id:user._id,
                             userName:user.userName, 
                             role_Type:user.role_type,
@@ -115,7 +115,9 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
                             isOnline: true, 
                             ip_address:global.ip, 
                             session_id:token, 
-                            device_info:req.headers['user-agent']})
+                            device_info:req.headers['user-agent'],
+                            sessionId:user.id
+                        })
     global._loggedInToken.push({token:token,time:time})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
@@ -123,7 +125,8 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
         status:"success",
         token,
         data: {
-            user
+            user,
+            sessionId:user.id
         }
     })
 }
@@ -540,6 +543,9 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+    console.log(req.cookies, "cookiescookiescookies")
+    console.log('product: ', sessionStorage.getItem('sessionID'));
+    console.log(req.session, "SESSSION")
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -747,8 +753,10 @@ exports.logOut = catchAsync( async function logout(req, res) {
           for(let i = 0; i < logs.length; i++){
               res.cookie(logs[i].session_id, '', { expires: new Date(0) });
               res.clearCookie(logs[i].session_id);
-          }
-          await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+            }
+            if(user.roleName != "DemoLogin"){
+                await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+            }
           global._loggedInToken.splice(logs.session_id, 1);
           await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
     

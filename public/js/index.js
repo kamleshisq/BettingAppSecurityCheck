@@ -112,7 +112,11 @@ $(document).ready(function(){
 
 });
 
-
+let userId = sessionStorage.getItem('sessionID')
+console.log(userId)
+if(!userId){
+    console.log('WORKING123456789')
+}
 
 $(document).on("submit", ".loginFormAdmin", function(e){
     e.preventDefault()
@@ -135,42 +139,42 @@ $(document).on('click', ".logOut", function(e){
     logout()
 })
 
-let sentinterval1 = setInterval(()=>{
-    // console.log('WORKING', localStorage.getItem('logintime'))
-    if(pathname.startsWith('/admin')){
-        if(localStorage.getItem('logintimeAdmin')){
-            // console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
-            if(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')) >= 1000  * 60 * 30){
-                clearInterval(sentinterval1)
-                localStorage.removeItem('logintimeAdmin')
-                logout()
+// let sentinterval1 = setInterval(()=>{
+//     // console.log('WORKING', localStorage.getItem('logintime'))
+//     if(pathname.startsWith('/admin')){
+//         if(localStorage.getItem('logintimeAdmin')){
+//             // console.log(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')))
+//             if(Date.now()-parseInt(localStorage.getItem('logintimeAdmin')) >= 1000  * 60 * 30){
+//                 clearInterval(sentinterval1)
+//                 localStorage.removeItem('logintimeAdmin')
+//                 logout()
                 
                 
-            }
-        }else{
-            if($('body header').attr('data-logindata')){
-                location.reload(true)
-            }
-        }
-    }else{
-        if(localStorage.getItem('logintimeUser')){
-            // console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
-            if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 60 * 30){
-                // if(pathname.startsWith('/admin')){
-                //     logout()
-                // }else{
-                // }
-                clearInterval(sentinterval1)
-                localStorage.removeItem('logintimeUser')
-                logoutUser()
-            }
-        }else{
-            if($('body').attr('data-logindata')){
-                window.location.reload(true)
-            }
-        }
-    }
-},1000)
+//             }
+//         }else{
+//             if($('body header').attr('data-logindata')){
+//                 location.reload(true)
+//             }
+//         }
+//     }else{
+//         if(localStorage.getItem('logintimeUser')){
+//             // console.log(Date.now()-parseInt(localStorage.getItem('logintimeUser')))
+//             if(Date.now()-parseInt(localStorage.getItem('logintimeUser')) >= 1000  * 60 * 30){
+//                 // if(pathname.startsWith('/admin')){
+//                 //     logout()
+//                 // }else{
+//                 // }
+//                 clearInterval(sentinterval1)
+//                 localStorage.removeItem('logintimeUser')
+//                 logoutUser()
+//             }
+//         }else{
+//             if($('body').attr('data-logindata')){
+//                 window.location.reload(true)
+//             }
+//         }
+//     }
+// },1000)
 
 
 $(document).on('click', ".logOutUser", function(e){
@@ -213,7 +217,7 @@ if(formDataObj.role == "650bccdbb3fdc8c922c34bbe"){
 }
 formDataObj.OperatorAuthorization = checkedValues
 // console.log(formDataObj, "+==> data")
-// console.log(checkedValues);
+// console.log(formDataObj);
 createUser(formDataObj)
 });
 

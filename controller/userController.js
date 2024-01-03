@@ -19,7 +19,7 @@ const globalSettingModel = require('../model/globalSetting')
 exports.isOperator = catchAsync(async(req, res, next) => {
 
     // console.log(req.currentUser, "req.currentUserreq.currentUser")
-    if(req.currentUser.roleName ==='Operator'){
+    if(req.currentUser && req.currentUser.roleName ==='Operator'){
         let parentUser = await User.findById(req.currentUser.parent_id)
         req.currentUser = parentUser
     }

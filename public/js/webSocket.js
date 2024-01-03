@@ -70,7 +70,7 @@ socket.on('connect', () => {
             LOGINDATA.LOGINUSER = loginData.User
             LOGINDATA.LOGINTOKEN = loginData.Token
             LOGINDATA.IP = loginData.ip
-
+            
             function checkLogin(){
                 socket.emit('LoginCHeckUSerSIde', {loginData})
                 setTimeout(()=>{
@@ -1293,12 +1293,12 @@ socket.on('connect', () => {
             check = false
         }
     })
-    if(check){
-        console.log(data,'==>data')
-        socket.emit('UpdateBetLimit', {data, LOGINDATA})
-    }else{
-        alert('not a singal value is 0')
-    }
+    // if(check){
+    //     console.log(data,'==>data')
+    // }else{
+    //     alert('not a singal value is 0')
+    // }
+    socket.emit('UpdateBetLimit', {data, LOGINDATA})
        
     })
 
@@ -6716,7 +6716,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
 
@@ -6943,7 +6943,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
 
@@ -6993,7 +6993,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
 
@@ -7683,20 +7683,20 @@ socket.on('connect', () => {
             //       .text(result.toFixed(2));
         })
 
-        function marketLimitId(){
-            $(document).ready(function() {
-                var ids = [];
+        // function marketLimitId(){
+        //     $(document).ready(function() {
+        //         var ids = [];
           
-                $(".market-limit").each(function() {
-                    if (!ids.includes(this.id)) {
-                        ids.push(this.id);
-                    }
-                });
-                // console.log(ids)
-                socket.emit("marketLimitId", ids)
-              });
-        }
-        marketLimitId()
+        //         $(".market-limit").each(function() {
+        //             if (!ids.includes(this.id)) {
+        //                 ids.push(this.id);
+        //             }
+        //         });
+        //         // console.log(ids)
+        //         socket.emit("marketLimitId", ids)
+        //       });
+        // }
+        // marketLimitId()
 
 
         function marketNotificationId(){
@@ -7727,18 +7727,53 @@ socket.on('connect', () => {
             })
         })
 
-
-
-
-        socket.on('marketLimitId', data => {
-            // console.log(data, 'returnData')
+        function OddsCheck(){
+            $(document).ready(function(){
+                var ids = [];
+          
+                $(".market").each(function() {
+                  ids.push(this.id);
+                });
+                let eventId = search.split('=')[1]
+                // console.log(ids, eventId)
+                socket.emit('OddsCheck', {ids, eventId})
+                setTimeout(()=>{
+                    OddsCheck()
+                  }, 1000)
+            })
+        }
+        OddsCheck()
+        let limitData = []
+        socket.on('OddsCheck', data => {
+            // console.log(data)
+            limitData = data
             $('.market-limit').each(function(){
-                let limitData = data.find(item => item.type == this.id)
-                if(limitData){
-                    this.innerHTML = `<b>Min : ${limitData.min_stake}, Max : ${limitData.max_stake}</b>`
+                let id = this.id
+                let thisMarketLimit = data.find(item => item.marketId == id)
+                // console.log(thisMarketLimit)
+                if(thisMarketLimit){
+                    let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
+                    $(this).html(html)
                 }
             })
         })
+        if(limitData.length === 0){
+            OddsCheck()
+        }
+        // console.log(limitData, "limitDatalimitDatalimitData")
+
+
+
+
+        // socket.on('marketLimitId', data => {
+        //     console.log(data, 'returnDataMarketLimitId')
+        //     $('.market-limit').each(function(){
+        //         let limitData = data.find(item => item.type == this.id)
+        //         if(limitData){
+        //             this.innerHTML = `<b>Min : ${limitData.min_stake}, Max : ${limitData.max_stake}</b>`
+        //         }
+        //     })
+        // })
 
 
 
@@ -7781,17 +7816,34 @@ socket.on('connect', () => {
                 let eventId = search.split('=')[1]
                 socket.emit("marketId", {ids, eventId})
               });
-              setTimeout(()=>{
-                marketId()
-              }, 5000)
+              if(limitData.length === 0){
+                setTimeout(()=>{
+                    marketId()
+                  }, 1000)
+              }else{
+                  setTimeout(()=>{
+                    marketId()
+                  }, 5000)
+              }
         }
         marketId()
+        
 
         let first = true
         socket.on("marketId", async(data) => {
             // console.log("working")
+            
             $(".match_odd_Blue").each(function() {
-                    
+                let marketId = $(this).closest('table').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
+                // console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
+
                 let id = this.id
 
                 id = id.slice(0, -1);
@@ -7801,7 +7853,8 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
-                    if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
+
+                    if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7814,7 +7867,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice1){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            // console.log(data2, "data2data2data2data2")
+                            if(data1 != section.backPrice1 || data2 != section.backSize1){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -7822,7 +7877,7 @@ socket.on('connect', () => {
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
                 }else if(this.id == `${section.selectionId}2`){
-                    if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0"){
+                    if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0" || (macLimitStatus && macLimitStatus < section.backPrice2)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7835,7 +7890,8 @@ socket.on('connect', () => {
 
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice2){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            if(data1 != section.backPrice2 || data2 !=  section.backSize2){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -7843,7 +7899,7 @@ socket.on('connect', () => {
                         // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
                 }else if (this.id == `${section.selectionId}3`){
-                    if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0"){
+                    if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0" || (macLimitStatus && macLimitStatus < section.backPrice3)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7855,8 +7911,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.backPrice3){
+                            if(data1 != section.backPrice3 || data2 != section.backSize3){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -7867,7 +7924,18 @@ socket.on('connect', () => {
 
 
             $(".match_odd_Red").each(function() {
-                    
+
+                let marketId = this.closest('table').id
+                // console.log(marketId)
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
+                // console.log(macLimitStatus, "redred")
+
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -7875,7 +7943,6 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
-                let marketId = this.closest('table').id
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let parentElement = this.parentNode
                 if(this.id == `${section.selectionId}4` ){
@@ -7887,7 +7954,7 @@ socket.on('connect', () => {
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
+                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0" || (macLimitStatus && macLimitStatus < section.layPrice1)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7909,8 +7976,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice1){
+                            if(data1 != section.layPrice1 || data2 != section.laySize1){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -7918,7 +7986,7 @@ socket.on('connect', () => {
                         
                     }
                 }else if(this.id == `${section.selectionId}5`){
-                    if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0"){
+                    if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0" || (macLimitStatus && macLimitStatus < section.layPrice2)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7931,8 +7999,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice2){
+                            if(data1 != section.layPrice2 || data2 != section.laySize2){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -7949,13 +8018,16 @@ socket.on('connect', () => {
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                   else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
+                   else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0" || (macLimitStatus && macLimitStatus < section.layPrice3)){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
                     //   </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Suspended")
+                    this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    <i class="fa-solid fa-lock"></i>
+                  </span>`
+                  this.removeAttribute("data-bs-toggle");
+                  parentElement.classList.remove("suspended")
+                  $(this).parent().find(".match-status-message").text("")
                     }else if(check){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -7975,8 +8047,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice3){
+                            if(data1 != section.layPrice3 || data2 != section.laySize3){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -7992,6 +8065,15 @@ socket.on('connect', () => {
                     
                 let id = this.id
 
+                let marketId = $(this).closest('table').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
+
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
@@ -7999,7 +8081,7 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
-                    if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
+                    if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8011,7 +8093,8 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice1){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            if(data1 != section.backPrice1 || data2 != section.backSize1){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -8019,7 +8102,7 @@ socket.on('connect', () => {
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
                 }else if(this.id == `${section.selectionId}2`){
-                    if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0"){
+                    if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8032,7 +8115,8 @@ socket.on('connect', () => {
 
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice2){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            if(data1 != section.backPrice2 || data2 != section.backSize2){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -8040,7 +8124,7 @@ socket.on('connect', () => {
                         // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
                 }else if (this.id == `${section.selectionId}3`){
-                    if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0"){
+                    if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8052,8 +8136,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.backPrice3){
+                            if(data1 != section.backPrice3 || data2 != section.backSize3){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -8065,7 +8150,14 @@ socket.on('connect', () => {
 
 
             $(".winner_Red").each(function() {
-                    
+                let marketId = this.closest('table').id
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8073,7 +8165,6 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
-                let marketId = this.closest('table').id
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 // console.log(check,data.status ,"checkcheckcheckcheck")
                 let parentElement = this.parentNode
@@ -8086,7 +8177,7 @@ socket.on('connect', () => {
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
+                    else if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0" || (macLimitStatus && macLimitStatus < section.layPrice1)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8108,8 +8199,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice1){
+                            if(data1 != section.layPrice1 || data2 != section.laySize1){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -8117,7 +8209,7 @@ socket.on('connect', () => {
                         
                     }
                 }else if(this.id == `${section.selectionId}5`){
-                    if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0"){
+                    if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0" || (macLimitStatus && macLimitStatus < section.layPrice2)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8130,8 +8222,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice2){
+                            if(data1 != section.layPrice2 || data2 != section.laySize2){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -8149,13 +8242,16 @@ socket.on('connect', () => {
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                   else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
+                   else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0" || (macLimitStatus && macLimitStatus < section.layPrice2)){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
                     //   </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Suspended")
+                    this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    <i class="fa-solid fa-lock"></i>
+                  </span>`
+                  this.removeAttribute("data-bs-toggle");
+                  parentElement.classList.remove("suspended")
+                  $(this).parent().find(".match-status-message").text("")
                     }else if(check){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -8175,8 +8271,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice3){
+                            if(data1 != section.layPrice3 || data2 != section.laySize3){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -8277,7 +8374,15 @@ socket.on('connect', () => {
             //     }
             // })
             $(".bookmaker_blue").each(function() {
-                    
+                let marketId = $(this).closest('table').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                    }
+                }
+                // console.log(macLimitStatus ,"macLimitStatusmacLimitStatus")
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8294,7 +8399,8 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}1` ){
-                    if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
+                    console.log(section.back, "macLimitStatus", macLimitStatus,  macLimitStatus < section.back)
+                    if( section.back == "-" || section.back == "1,000.00" || section.back == "0" || (macLimitStatus != undefined && macLimitStatus < section.back)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8310,6 +8416,16 @@ socket.on('connect', () => {
 
             $(".bookmaker_red").each(function() {
                     
+                let marketId = this.closest('table').id
+
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                    }
+                }
+
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8326,7 +8442,6 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
-                let marketId = this.closest('table').id
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
@@ -8337,15 +8452,6 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
-                          parentElement.classList.add("suspended");
-                          $(this).parent().find(".match-status-message").text("Suspended")
-                      }
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
@@ -8353,6 +8459,13 @@ socket.on('connect', () => {
                     }else if(check){
                         parentElement.classList.add("suspended");
                           $(this).parent().find(".match-status-message").text("Suspended")
+                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0" || (macLimitStatus != undefined && macLimitStatus < section.lay)){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                     }
                     else{
                         this.setAttribute("data-bs-toggle", "collapse");
@@ -8372,7 +8485,14 @@ socket.on('connect', () => {
             })
 
             $(".odd_even_blue").each(function() {
-                    
+                let marketId = $(this).closest('tr').find('.market').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8385,7 +8505,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
-                    if( section.odd == "-" || section.odd == "1,000.00" || section.odd == "0"){
+                    if( section.odd == "-" || section.odd == "1,000.00" || section.odd == "0" || (macLimitStatus && macLimitStatus < section.odd)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8399,7 +8519,14 @@ socket.on('connect', () => {
             })
 
             $(".odd_even_red").each(function() {
-                    
+                let marketId = $(this).closest('tr').find('.market').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8447,11 +8574,13 @@ socket.on('connect', () => {
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"|| (macLimitStatus && macLimitStatus < section.even)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
@@ -8463,7 +8592,14 @@ socket.on('connect', () => {
             });
 
             $(".only_over_blue").each(function() {
-                    
+                let marketId = $(this).closest('tr').find('.market').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                    }
+                }
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8476,7 +8612,8 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
-                    if( section.yes == "-" || section.yes == "1,000.00" || section.yes == "0"){
+                    // console.log(section.yes, section.yes_rate)
+                    if( section.yes_rate == "-" || section.yes_rate == "1,000.00" || section.yes_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.yes_rate)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8494,6 +8631,15 @@ socket.on('connect', () => {
 
             $(".only_over_red").each(function() {
                     // console.log(data.forFancy, "data.forFancydata.forFancydata.forFancy")
+                    let marketId = $(this).closest('tr').find('.market').attr('id')
+                    let macLimitStatus 
+                    let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                    if(limitOnTHis){
+                        if(limitOnTHis.Limits.max_odd){
+                            macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        }
+                    }
+                    // console.log(macLimitStatus, "FANCY")
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -8508,6 +8654,7 @@ socket.on('connect', () => {
                 let parentElement = this.parentNode
                 // console.log(section.ball_running)
                 if(this.id == `${section.market_id}2` ){
+                    // console.log(macLimitStatus < section.no)
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -8541,11 +8688,14 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.no == "-" || section.no == "1,000.00" || section.no == "0"){
+                    }else if( section.no_rate == "-" || section.no_rate == "1,000.00" || section.no_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.no_rate)){
+                        // console.log('WORKING123456789')
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
@@ -9626,13 +9776,13 @@ socket.on('connect', () => {
         //     // console.log(data)
         //     socket.emit("betDetails", {data, LOGINDATA})
         // })
-        let checkTime
-          socket.on('checkDelay', data => {
-            if(data.delay && data.delay != 0){
-                checkTime = clickTime + data.delay * 1000
-            }
+        // let checkTime
+        //   socket.on('checkDelay', data => {
+        //     if(data.delay && data.delay != 0){
+        //         checkTime = clickTime + data.delay * 1000
+        //     }
 
-          })
+        //   })
         $(document).ready(function () {
             $(".eventId").click(function () {
                 // console.log("working")
@@ -9646,7 +9796,7 @@ socket.on('connect', () => {
             data.secId = secId.slice(0,-1)
             var escapedId =  data.secId.replace(/\./g, '\\.');
             let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
-            if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+            if(IdButton.hasClass('only_over_blue') || IdButton.hasClass('odd_even_blue') || IdButton.hasClass('odd_even_red') || IdButton.hasClass('only_over_red')){
                 data.odds = parseFloat(
                     $(this).closest("tr").find(".selection-name").text().split('@')[1]
                     );
@@ -9667,9 +9817,9 @@ socket.on('connect', () => {
             }
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
-                console.log($(`#${secforFency}`))
-                specificSpan = $(`#${secforFency}`).children("span").eq(0).text();
-                // console.log(`#${secforFency}`)
+                console.log($(`#${secforFency}`).children("span").eq(1))
+                specificSpan = $(`#${secforFency}`).children("span").eq(1).text();
+                console.log(specificSpan)
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
                 
@@ -9683,19 +9833,20 @@ socket.on('connect', () => {
                 }else{
                     if(data.odds != '\n                        \n                      '){
                         // alert('132456')
-                        if(checkTime){
-                            if(checkTime < Date.now()){
-                                togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
-                            }else{
-                                // console.log(data)
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
-                            }
-                        }else{
-                            // console.log(data)
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
-                        }
+                        // if(checkTime){
+                        //     if(checkTime < Date.now()){
+                        //         // console.log('WORKING')
+                        //         togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
+                        //     }else{
+                        //         // console.log(data)
+                        //             showLoader();
+                        //             socket.emit("betDetails", {data, LOGINDATA})
+                        //     }
+                        // }else{
+                        //     // console.log(data)
+                        // }
+                        showLoader();
+                        socket.emit("betDetails", {data, LOGINDATA})
                         // console.log(data)
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
@@ -9711,19 +9862,19 @@ socket.on('connect', () => {
                     }else{
                         if(data.odds != '\n                        \n                      '){
                             // alert('132456')
-                            if(checkTime){
-                                if(checkTime < Date.now()){
-                                    togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
-                                }else{
-                                    // console.log(data)
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
-                                }
-                            }else{
-                                // console.log(data)
-                                    showLoader();
-                                    socket.emit("betDetails", {data, LOGINDATA})
-                            }
+                            // if(checkTime){
+                            //     if(checkTime < Date.now()){
+                            //         togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
+                            //     }else{
+                            //         // console.log(data)
+                            //         showLoader();
+                            //         socket.emit("betDetails", {data, LOGINDATA})
+                            //     }
+                            // }else{
+                            //     // console.log(data)
+                            // }
+                            showLoader();
+                            socket.emit("betDetails", {data, LOGINDATA})
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                         }
@@ -10128,7 +10279,9 @@ socket.on('connect', () => {
             if(data.betDetails && data.betDetails.length != 0){
                 $("td.market").each(function() {
                     if(data.betDetails.some(item => item == this.id)){
-                        let text = $(this).text()
+                        let text = $(this).contents().filter(function() {
+                            return this.nodeType === 3; // Filter out non-text nodes
+                        }).text().trim();
                         text += '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
                         $(this).html(text)
                     } 
@@ -10216,34 +10369,7 @@ socket.on('connect', () => {
             }
         })
 
-        function OddsCheck(){
-            $(document).ready(function(){
-                var ids = [];
-          
-                $(".market").each(function() {
-                  ids.push(this.id);
-                });
-                let eventId = search.split('=')[1]
-                // console.log(ids, eventId)
-                socket.emit('OddsCheck', {ids, eventId})
-                setTimeout(()=>{
-                    OddsCheck()
-                  }, 5000)
-            })
-        }
-        OddsCheck()
-
-        socket.on('OddsCheck', data => {
-            $('.market-limit').each(function(){
-                let id = this.id
-                let thisMarketLimit = data.find(item => item.marketId == id)
-                // console.log(thisMarketLimit)
-                if(thisMarketLimit){
-                    let html = `<b>Min : ${thisMarketLimit.Limits.min_stake}, Max : ${thisMarketLimit.Limits.max_stake}</b>` 
-                    $(this).html(html)
-                }
-            })
-        })
+        
     }
 
 
@@ -10934,7 +11060,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
         // socket.on("marketId", (data) => {
@@ -11119,7 +11245,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
         // socket.on("marketId", (data) => {
@@ -11303,7 +11429,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
         // socket.on("marketId", (data) => {
@@ -11488,7 +11614,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 1000)
         }
         marketId()
         // socket.on("marketId", (data) => {
@@ -11835,7 +11961,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 5000)
+              }, 1000)
         }
         marketId()
         let first = true
@@ -11868,7 +11994,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice1){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            // console.log(data2, section.backSize1, (data2 != section.backSize1))
+                            if(data1 != section.backPrice1 || data2 != section.backSize1 ){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -11889,7 +12017,8 @@ socket.on('connect', () => {
       
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice2){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            if(data1 != section.backPrice2 || data2 != section.backSize2){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -11909,8 +12038,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.backPrice3){
+                            if(data1 != section.backPrice3 || data2 != section.backSize3){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -11948,8 +12078,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice1){
+                            if(data1 != section.layPrice1 || data2 != section.laySize1){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -11970,8 +12101,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice2){
+                            if(data1 != section.layPrice2 || data2 != section.laySize2){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -12015,8 +12147,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice3){
+                            if(data1 != section.layPrice3 || data2 !=section.laySize3 ){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -12051,7 +12184,8 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice1){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            if(data1 != section.backPrice1 || data2 != section.backSize1){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -12072,7 +12206,8 @@ socket.on('connect', () => {
       
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice2){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            if(data1 != section.backPrice2 || data2 != section.backSize2){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -12092,8 +12227,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.backPrice3){
+                            if(data1 != section.backPrice3 || data2 != section.backSize3){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -12132,8 +12268,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice1){
+                            if(data1 != section.layPrice1 || data2 != section.laySize1){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -12154,8 +12291,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice2){
+                            if(data1 != section.layPrice2 || data2 != section.laySize2){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -12188,8 +12326,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice3){
+                            if(data1 != section.layPrice3 || data2 != section.laySize3){
                                 this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -12569,10 +12708,21 @@ socket.on('connect', () => {
                 },300)
         })
 
+        function marketIdbookDetailsmultimarket( status ){
+            var ids = [];
+            $(".market").each(function() {
+                ids.push(this.id);
+              });
+            //   console.log('GOTHERE')
+              socket.emit('marketDetailsMultiMarket',{ids, LOGINDATA, status} )
+        }
 
+        marketIdbookDetailsmultimarket( false )
 
         $(document).ready(function () {
             $(".button").click(function () {
+                let marketId = $(this).closest("table").attr("id");
+                
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
@@ -12653,11 +12803,275 @@ socket.on('connect', () => {
             }
             });
           });
+
+
+          function marketplusminus ( data ){
+            // console.log(data)
+            let table = data.element.closest('table')
+            let check = table.find('tr').length
+            // console.log(check, "CHECK")
+            if(check < 8){
+                if(table.hasClass("market")){
+                    let trLength = table.find("tr:eq(1)").find('td').length
+                    // console.log(trLength, "staleDiffstaleDiffstaleDiff")
+                    if(trLength === 4 || trLength === 8){
+                        if(data.status){
+                            // console.log(data.plusMinus, "newvaluenewvaluenewvalue")
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) - (data.result * 1) - (data.plusMinus * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                                let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                let newvalue = (oldValue * 1) + (data.result * 1)
+                                // console.log(newvalue , "newvaluenewvaluenewvalue")
+                                $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                if(newvalue > 0){
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                }else{
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                }
+                            })
+                        }else{
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) + (data.result * 1) + (data.NewStake * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                                let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                let newvalue = (oldValue * 1) - (data.NewStake * 1)
+                                $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                // console.log(newvalue)
+                                if(newvalue > 0){
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                }else{
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                }
+                            })
+                        }
+                    }else{
+                        table.find('th:eq(0)').after('<th></th>')
+                        if(data.status){
+                            // let thathtml = ''
+                            if((data.plusMinus * -1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }
+                            if((data.result * 1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
+                                var firstTd = $(this).find('td:first-child');
+                            
+                                if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                    // console.log('Working:', firstTd);
+                                    firstTd.after(newTd2.clone()); 
+                                }
+                            });
+                            table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function () {
+                                $(this).find('td:eq(0)').attr('colspan', 9)
+                            })
+                        }else{
+                            if((data.result * 1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            if((data.NewStake * -1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.NewStake * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.NewStake * -1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            table.find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function () {
+                                var firstTd = $(this).find('td:first-child');
+                            // console.log(firstTd.siblings().length, "firstTd.siblings().lengthfirstTd.siblings().lengthfirstTd.siblings().length")
+                                if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                    // console.log('Working:', firstTd);
+                                    firstTd.after(newTd2.clone()); 
+                                }
+                            });
+                            table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function () {
+                                $(this).find('td:eq(0)').attr('colspan', 9)
+                            })
+                        }
+                    }
+                }
+            }else{
+                if(table.hasClass("market")){
+                    let trLength = table.find("tr:eq(1)").find('td').length
+                    if(trLength === 4 || trLength === 8){ 
+                        if(data.status){
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) - (data.result * 1) - (data.plusMinus * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                    let newvalue = (oldValue * 1) + (data.result * 1)
+                                    $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                    if(newvalue > 0){
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                    }else{
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                    }
+                                })
+                            }
+                        }else{
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) + (data.result * 1) + (data.NewStake * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                    let newvalue = (oldValue * 1) - (data.NewStake * 1)
+                                    $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                    if(newvalue > 0){
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                    }else{
+                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                    }
+                                })
+                            }
+
+                        }
+                    }else{
+                        table.find('th:eq(0)').after('<th></th>')
+                        if(data.status){
+                            if((data.plusMinus * -1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.plusMinus * -1).toFixed(2)}</span>`);
+                            }
+                            if((data.result * 1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                
+                                // Use your existing logic
+                                table.find(selector).each(function () {
+                                    var firstTd = $(this).find('td:first-child');
+                                    
+                                    if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                        firstTd.after(newTd2.clone());
+                                    }
+                                });
+                            }
+                            for (var i = 2; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    $(this).find('td:eq(0)').attr('colspan', 9);
+                                });
+                            }
+                        }else{
+                            if((data.result * 1) > 0){
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.result * 1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.result * 1).toFixed(2)}</span>`);
+                            }
+                            if((data.NewStake * -1) > 0){
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(data.NewStake * -1).toFixed(2)}</span>`);
+                            }else{
+                                var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(data.NewStake * -1).toFixed(2)}</span>`);
+                            }
+                            data.element.closest('tr').prev().find("td:eq(0)").after(newTd)
+                            for (var i = 1; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    var firstTd = $(this).find('td:first-child');
+                                    
+                                    if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                        firstTd.after(newTd2.clone());
+                                    }
+                                });
+                            }
+                            
+                            for (var i = 2; i < check; i += 2) {
+                                var selector = 'tr:eq(' + i + ')';
+                                table.find(selector).each(function () {
+                                    $(this).find('td:eq(0)').attr('colspan', 9);
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+          }
+
+    //       function marketIdbookDetails( status ){
+    //         let eventId = search.split('=')[1]
+    //         socket.emit("marketIdbookDetails", {LOGINDATA, eventId, status})
+    // }
+    
+    // marketIdbookDetails( false )
+    
+          
+    
+    function Onlyminus ( data ){
+            console.log(data)
+            if(data.check == 0){
+                marketIdbookDetails( false )
+            }else{
+                let table = data.element.closest('table')
+                if(table.hasClass("market")){
+                    let trLength = table.find("tr:eq(1)").find('td').length
+                    if(trLength === 4 || trLength === 8){
+                        if(data.status){
+                            // console.log(data.plusMinus, "newvaluenewvaluenewvalue")
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            // console.log(beforevalue)
+                            let newvale = (beforevalue * 1) + (data.result * 1) + (data.plusMinus * 1)
+                            // console.log(newvale)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                                let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                // console.log(oldValue)
+                                let newvalue = (oldValue * 1) - (data.result * 1)
+                                $(this).find('td:eq(1)').find('span').text(newvalue)
+                                if(newvalue > 0){
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                }else{
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                }
+                            })
+                        }else{
+                            let beforevalue  = data.element.closest('tr').prev().find('td:eq(1)').find('span').text()
+                            let newvale = (beforevalue * 1) - (data.result * 1) - (data.NewStake * 1)
+                            data.element.closest('tr').prev().find('td:eq(1)').find('span').text(newvale.toFixed(2))
+                            data.element.closest('table').find('tr:eq(1), tr:eq(3), tr:eq(5)').each(function(){
+                                let oldValue = $(this).find('td:eq(1)').find('span').text()
+                                let newvalue = (oldValue * 1) + (data.NewStake * 1)
+                                $(this).find('td:eq(1)').find('span').text(newvalue.toFixed(2))
+                                // console.log(newvalue)
+                                if(newvalue > 0){
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                }else{
+                                    $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+          }
     
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
+                // console.log(IdButton, "IdButtonIdButtonIdButton")
+                let diff
+                let element = $(this)
+                let diffStake 
+                let plusMinus
             if($(this).closest('tr').hasClass('back-inplaymatch')){
                 if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue")){
                     var spanId = $(this).attr("id");
@@ -12667,14 +13081,42 @@ socket.on('connect', () => {
                     if(OldStake == ""){
                       newStake = parseFloat(spanId)
                     }else{
-                      newStake = parseFloat(spanId) + parseFloat(OldStake)
+                        newStake = parseFloat(spanId) + parseFloat(OldStake) 
                     }
+                    diffStake = parseFloat(spanId)
+                    // console.log(diffStake, "diffStakediffStakediffStake")
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
                     var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
+                    diff = (parseFloat(diffStake) * betValue) - parseFloat(diffStake);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = (staleDiff * betValue) - staleDiff;
+                            let data = {
+                                result : resultDiff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff,
+                                check : spanId
+                            }
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            diff = (staleDiff * betValue) - staleDiff;
+                            let data = {
+                                result : diff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff
+                            }
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
                       $(this)
@@ -12688,6 +13130,15 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    if(statusCHECK12){
+                        let data = {
+                            result : diff,
+                            element,
+                            status:false,
+                            NewStake : diffStake
+                        }
+                        marketplusminus(data)
+                    }
                 }else{
                     // console.log(IdButton)
                     var spanId = $(this).attr("id");
@@ -12699,12 +13150,50 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
-                    var betValue = parseFloat(
-                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                    );
+                    diffStake = parseFloat(spanId)
+                    var escapedId = buttonId.replace(/\./g, '\\.');
+                    let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                    // console.log(IdButton, escapedId)
+                    var betValue
+                    if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                        betValue = parseFloat(
+                            $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                          );
+                    }else{
+                         betValue = parseFloat(
+                          $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                        );
+                    }
+                    // console.log(betValue)
                     var result = ((parseFloat(newStake) * betValue) / 100);
+                    diff = ((parseFloat(diffStake) * betValue) / 100);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = (staleDiff * betValue) / 100
+                            let data = {
+                                result : resultDiff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff,
+                                check : spanId
+                            }
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            diff = (staleDiff * betValue) / 100
+                            let data = {
+                                result : diff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff
+                            }
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = ((parseFloat(spanId) * betValue) / 100)
                       $(this)
@@ -12718,6 +13207,15 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    if(statusCHECK12){
+                        let data = {
+                            result : diff,
+                            element,
+                            status:false,
+                            NewStake : diffStake
+                        }
+                        marketplusminus(data)
+                    }
                 }
             }else{
                 if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red")){
@@ -12730,12 +13228,44 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
+                    diffStake = parseFloat(spanId)
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
                     var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
-                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                    diff = parseFloat(spanId)
+                    plusMinus = (diff * betValue) - diff;
+                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))\
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = staleDiff;
+                            plusMinus = (staleDiff * betValue) - staleDiff;
+                            let data = {
+                                result:resultDiff,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus,
+                                check:spanId
+                            }
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            diff = staleDiff
+                            plusMinus = (staleDiff * betValue) - staleDiff;
+                            let data = {
+                                result : diff ,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus
+                            }
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
                       $(this)
@@ -12749,6 +13279,16 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    if(statusCHECK12){
+                        let data = {
+                            result : diff ,
+                            element,
+                            status:true,
+                            NewStake : diffStake,
+                            plusMinus
+                        }
+                        marketplusminus(data)
+                    }
                 }else{
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
@@ -12759,17 +13299,54 @@ socket.on('connect', () => {
                     }else{
                       newStake = parseFloat(spanId) + parseFloat(OldStake)
                     }
+                    diffStake = parseFloat(spanId)
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
                     let result = parseFloat(newStake)
-                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                    //     result = (parseFloat(newStake) * 2) - parseFloat(newStake);
-                    // }else{
-                    //     result = ((parseFloat(newStake) * betValue)/100)
-                    // }
+                    diff = parseFloat(spanId)
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                        plusMinus = (diffStake * betValue) / 100
+                    }else{
+                        plusMinus = (diffStake * betValue) / 100
+                    }
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                  let statusCHECK12 = true
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                        statusCHECK12 = false
+                        let oldValue = $(this).closest("tr").find(".set-stake-form-input2").val()
+                        // console.log(diffStake, oldValue, oldValue > diffStake)
+                        if(oldValue > diffStake){
+                            staleDiff = parseFloat(oldValue) - parseFloat(diffStake)
+                            resultDiff = staleDiff;
+                            plusMinus = (staleDiff * betValue) / 100
+                            let data = {
+                                result:resultDiff,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus,
+                                check:spanId
+                            }
+                            // console.log(data)
+                            Onlyminus(data)
+                        }else{
+                            staleDiff = parseFloat(diffStake) - parseFloat(oldValue)
+                            // console.log(staleDiff, "staleDiffstaleDiff")
+                            diff = staleDiff
+
+                            plusMinus = (staleDiff * betValue) / 100
+                            // console.log(plusMinus, "plusMinusplusMinusplusMinus")
+                            let data = {
+                                result : diff ,
+                                element,
+                                status:true,
+                                NewStake : staleDiff,
+                                plusMinus
+                            }
+                            // console.log(data)
+                            marketplusminus(data)
+                        }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
                       let result2 = parseFloat(spanId)
                     //   if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
@@ -12788,6 +13365,14 @@ socket.on('connect', () => {
                           .find(".c-gren")
                           .text(result.toFixed(2));
                     }
+                    let data = {
+                        result : diff ,
+                        element,
+                        status:true,
+                        NewStake : diffStake,
+                        plusMinus
+                    }
+                    marketplusminus(data)
                 }
             }
             });
@@ -12839,14 +13424,50 @@ socket.on('connect', () => {
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 let NewStake = spanId - 100;
                 let result
+                let element = $(this)
+                let staleDiff = 100
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
+                        resultDiff = (staleDiff * Odds) - staleDiff;
                     }else{
+                        var escapedId = buttonId.replace(/\./g, '\\.');
+                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                            Odds = parseFloat(
+                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                              );
+                        }
                         result = (NewStake * Odds) / 100
+                        resultDiff = (staleDiff * Odds) / 100
                     }
+                    let data = {
+                        result : resultDiff,
+                        element,
+                        status:false,
+                        NewStake : staleDiff,
+                        check : NewStake
+                    }
+                    Onlyminus(data)
                 }else{
                     result = NewStake
+                    let resultDiff = 100
+
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                        plusMinus = (100 * Odds) - 100;
+                         
+                    }else{
+                        plusMinus = (100 * Odds) / 100
+                    }
+                    let data = {
+                        result:resultDiff,
+                        element,
+                        status:true,
+                        NewStake : 100,
+                        plusMinus,
+                        check:NewStake
+                    }
+                    Onlyminus(data)
                     // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
                     //     result = (NewStake * 2) - NewStake;
                     // }else{
@@ -12904,21 +13525,52 @@ socket.on('connect', () => {
                     NewStake = 100
                 }
                 let result
+                let element = $(this)
+                let plusMinus = 0
+                let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
+                    let diff = 0
                     if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
+                        diff = (100 * Odds) - 100;
                     }else{
+                        var escapedId = buttonId.replace(/\./g, '\\.');
+                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                            Odds = parseFloat(
+                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                              );
+                        }
                         result = (NewStake * Odds) / 100
+                        diff = (100 * Odds) / 100
                     }
+                    let data = {
+                        result : diff,
+                        element,
+                        status:false,
+                        NewStake : 100
+                    }
+                    marketplusminus(data)
                 }else{
-                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                    //     result = (NewStake * 2) - NewStake;
-                    // }else{
-                    //     result = (NewStake * Odds) / 100
-                    // }
-                    result - NewStake
+                    result = NewStake
+                    let diff = 100
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                        plusMinus = (100 * Odds) - 100;
+                         
+                    }else{
+                        plusMinus = (100 * Odds) / 100
+                    }
+                    let data = {
+                        result : diff ,
+                        element,
+                        status:true,
+                        NewStake : 100,
+                        plusMinus
+                    }
+                    marketplusminus(data)
                 }
                 // console.log(result)
+
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                     $(this)
@@ -12971,6 +13623,7 @@ socket.on('connect', () => {
                 $(".eventId").click(function () {
                     // console.log("working")
                 let data = {}
+                data.status222 = 'multiMarket'
                 let secforFency 
                 data.title = $(this).closest("tr").find(".name").text()
                 data.eventId = $(this).attr("id");
@@ -13037,9 +13690,14 @@ socket.on('connect', () => {
                 }
                 });
               });
+
+              $(document).on('click', ".close-btn", function(){
+                marketIdbookDetailsmultimarket( false )
+            })
     
             socket.on("betDetails" , (data) => {
                 hideLoader()
+                marketIdbookDetailsmultimarket( true )
                 // console.log(data.result)
                 // function togglePopup(idname, id){
                 //     document.getElementById(idname).classList.toggle("active");
@@ -13048,11 +13706,23 @@ socket.on('connect', () => {
                 //   }
                 if(data.result === "Bet placed successfully"){
                     togglePopupMain('popup-1', "redPopUP", data.result.toUpperCase())
+                     $('.my-exc-inn-colaps-txt-dv').each(function(){
+                    $(this).removeClass('open')
+                })
                 }else{
                     togglePopupMain('popup-2', "redPopUP2", data.result.toUpperCase())
                 }
                 
                 let html2 = ""
+                let allmarket = []
+                    $(".market").each(function() {
+                        allmarket.push(this.id);
+                      });
+
+                let uniqueIds = [...new Set(allmarket)];
+                // console.log(uniqueIds, "uniqueIdsuniqueIdsuniqueIds")
+                // console.log(data.openBet)
+                data.openBet = data.openBet.filter(item => uniqueIds.includes(item.marketId))
                 document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
                 if(data.openBet.length === 1){
                     html2 = `<table class="table-new-d">
@@ -13079,15 +13749,15 @@ socket.on('connect', () => {
                 }else{
                     for(let i = 0; i < data.openBet.length; i++){
                         if(data.openBet[i].bettype2 === "BACK"){
-                            html2 +=  `<tr class="back-inplaymatch" >`
-                         }else{
-                             html2 +=  `<tr class="lay-inplaymatch" >`
-                         }
-                        html2 += `
-                        <td>${ data.openBet[i].selectionName}</td>
-                        <td>${ data.openBet[i].oddValue }</td>
-                        <td>${ data.openBet[i].Stake }</td>
-                      </tr>`
+                                html2 +=  `<tr class="back-inplaymatch" >`
+                             }else{
+                                 html2 +=  `<tr class="lay-inplaymatch" >`
+                             }
+                            html2 += `
+                            <td>${ data.openBet[i].selectionName}</td>
+                            <td>${ data.openBet[i].oddValue }</td>
+                            <td>${ data.openBet[i].Stake }</td>
+                          </tr>`
                     }
                     document.getElementById('tableBET').innerHTML = html2
                 }
@@ -13097,11 +13767,273 @@ socket.on('connect', () => {
 
             $(document).on('click','.tbl-td-with5',function(e){
                 // console.log("WORKING")
+                marketIdbookDetailsmultimarket( true )
                 $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
                 $(".minus")
                 .closest("tr")
                 .find(".c-gren")
                 .text('00');
+            })
+
+
+            socket.on('marketDetailsMultiMarket', data => {
+                if(data && data.Senddata && data.Senddata.length != 0){
+                    for(let i = 0; i < data.Senddata.length; i++){
+                        let team1Data
+                        let team2Data
+                        let team3Data
+                        let status = false
+                        if(data.Senddata[i].runnersData && data.Senddata[i].runnersData.length === 3){
+                            status = true
+                            team1Data = data.Senddata[i].selections.find(item => item.selectionName == data.Senddata[i].runnersData[0].runner)
+                            team2Data = data.Senddata[i].selections.find(item => item.selectionName == data.Senddata[i].runnersData[1].runner)
+                            team3Data = data.Senddata[i].selections.find(item => item.selectionName == data.Senddata[i].runnersData[2].runner)
+                        }else if(data.Senddata[i].runnersData && data.Senddata[i].runnersData.length === 2) {
+                            team1Data = data.Senddata[i].selections.find(item => item.selectionName == data.Senddata[i].runnersData[0].runner)
+                            team2Data = data.Senddata[i].selections.find(item => item.selectionName == data.Senddata[i].runnersData[1].runner)
+                        }
+                        let team1Amount
+                        let team2Amount
+                        let team3Amount
+                        if(status){
+                            if(team1Data && team2Data && team3Data){
+                                team1Amount = team1Data.totalAmount - team2Data.exposure - team3Data.exposure
+                                team2Amount = team2Data.totalAmount - team1Data.exposure - team3Data.exposure
+                                team3Amount = team3Data.totalAmount - team2Data.exposure - team1Data.exposure
+                            }else if ((team1Data && team2Data) && !team3Data){
+                                team1Amount = team1Data.totalAmount - team2Data.exposure
+                                team2Amount = team2Data.totalAmount - team1Data.exposure
+                                team3Amount = - team2Data.exposure - team1Data.exposure
+                            }else if (!team1Data && (team2Data && team3Data)){
+                                team1Amount = - team2Data.exposure - team3Data.exposure
+                                team2Amount = team2Data.totalAmount - team3Data.exposure
+                                team3Amount = team3Data.totalAmount - team2Data.exposure 
+                            }else if (team1Data && !team2Data && team3Data){
+                                team1Amount = team1Data.totalAmount - team3Data.exposure
+                                team2Amount = - team1Data.exposure - team3Data.exposure
+                                team3Amount = team3Data.totalAmount - team1Data.exposure
+                            }else if (team1Data && !team2Data && !team3Data){
+                                team1Amount = team1Data.totalAmount
+                                team2Amount = - team1Data.exposure
+                                team3Amount = - team1Data.exposure
+                            }else if (!team1Data && team2Data && !team3Data){
+                                team1Amount = - team2Data.exposure
+                                team2Amount = team2Data.totalAmount
+                                team3Amount = - team2Data.exposure 
+                            }else if (!team1Data && !team2Data && team3Data){
+                                team1Amount =  - team3Data.exposure
+                                team2Amount =  - team3Data.exposure
+                                team3Amount = team3Data.totalAmount 
+                            }
+                        }else{
+                            if(team1Data && team2Data){
+                                team1Amount = team1Data.totalAmount - team2Data.exposure
+                                team2Amount = team2Data.totalAmount - team1Data.exposure
+                            }else if (!team1Data && team2Data){
+                                team1Amount = - team2Data.exposure
+                                team2Amount = team2Data.totalAmount
+                            }else if(team1Data && !team2Data){
+                                team1Amount = team1Data.totalAmount
+                                team2Amount = - team1Data.exposure
+                            }
+        
+                        }
+                        $("table.market").each(function() { 
+                            let check = $(this).find('tr').length
+    
+                            if(check < 8){
+                                if(this.id == data.Senddata[i]._id){
+                                    var table = $(this);
+                                    let trLength = table.find("tr:eq(1)").find('td').length
+                                    table.find('tr:eq(2), tr:eq(4), tr:eq(6)').each(function(){
+                                        $(this).find('td:eq(0)').attr('colspan', 9)
+                                    })
+                                    if(trLength === 4 || trLength === 8){
+                                        if(team1Amount > 0){
+                                            var newTd = `<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`;
+                                        }else{
+                                            var newTd = `<span class="c-reed" >${team1Amount.toFixed(2)}</span>`;
+                                        }
+                                        if(team2Amount > 0){
+                                            var newTd2 = `<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`;
+                                        }else{
+                                            var newTd2 = `<span class="c-reed" >${team2Amount.toFixed(2)}</span>`;
+                                        }
+                                        if(status){
+                                            if(team3Amount > 0){
+                                                var newTd3 = `<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`;
+                                            }else{
+                                                var newTd3 = `<span class="c-reed" >${team3Amount.toFixed(2)}</span>`;
+                                            }
+                
+                                            table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                            table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                            table.find("tr:eq(5)").find("td:eq(1)").html(newTd3);
+                                        }else{
+                                            table.find("tr:eq(1)").find("td:eq(1)").html(newTd);
+                                            table.find("tr:eq(3)").find("td:eq(1)").html(newTd2);
+                                        }
+                                    }else{
+                                        table.find('th:eq(0)').after('<th></th>')
+                                        if(team1Amount > 0){
+                                            var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team1Amount.toFixed(2)}</span>`);
+                                        }else{
+                                            var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team1Amount.toFixed(2)}</span>`);
+                                        }
+                                        if(team2Amount > 0){
+                                            var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team2Amount.toFixed(2)}</span>`);
+                                        }else{
+                                            var newTd2 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team2Amount.toFixed(2)}</span>`);
+                                        }
+                                        if(status){
+                                            if(team3Amount > 0){
+                                                var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${team3Amount.toFixed(2)}</span>`);
+                                            }else{
+                                                var newTd3 = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${team3Amount.toFixed(2)}</span>`);
+                                            }
+                
+                                            table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                            table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                            table.find("tr:eq(5)").find("td:eq(0)").after(newTd3);
+                                        }else{
+                                            table.find("tr:eq(1)").find("td:eq(0)").after(newTd);
+                                            table.find("tr:eq(3)").find("td:eq(0)").after(newTd2);
+                                        }
+                                    }
+                                }else{
+                                    // console.log('WORKING')
+                                    if(!data.Senddata.some(item => item._id == this.id)){
+                                        var table = $(this);
+                                        let trLength = table.find("tr:eq(1)").find('td').length
+                                        // console.log(trLength)
+                                        if(trLength === 4 || trLength === 8){
+                                            table.find("tr:eq(1)").find("td:eq(1)").remove();
+                                            table.find("tr:eq(3)").find("td:eq(1)").remove();
+                                            table.find("tr:eq(5)").find("td:eq(1)").remove();
+                                            table.find('th:eq(1)').remove();
+                                        }
+                                    }
+                                }
+                            }else{
+                                if(this.id == data.Senddata[i]._id){
+                                    // console.log(data.Senddata[i])
+                                    let showData = []
+                                    for(let j = 0; j < data.Senddata[i].runnersData.length; j++){
+                                            console.log("got here")
+                                            let checkRunn = data.Senddata[i].selections.find(item => item.selectionName == data.Senddata[i].runnersData[j].runner)
+                                            // console.log(checkRunn, 123456789)
+                                            let amount = 0
+                                            if(checkRunn){
+                                                amount = checkRunn.totalAmount
+                                                for(const run in data.Senddata[i].selections){
+                                                    if(data.Senddata[i].selections[run].selectionName !== checkRunn.selectionName){
+                                                        amount = amount - data.Senddata[i].selections[run].exposure
+                                                    }
+                                                }
+                                            }else{
+                                                for(const run in data.Senddata[i].selections){
+                                                    amount = amount - data.Senddata[i].selections[run].exposure
+                                                }
+                                            }
+                                            // console.log(amount)
+                                            showData.push(amount)
+                                        }
+                                        console.log(showData)
+                                        var table = $(this);
+                                        let trLength = table.find("tr:eq(1)").find('td').length
+                                        if(trLength === 4 || trLength === 8){
+                                            for (var t = 1; t < check; t += 2) {
+                                                var selector = 'tr:eq(' + t + ')';
+                                                let length = Math.floor((t + 1) / 2) - 1
+                                                table.find(selector).each(function () {
+                                                    $(this).find('td:eq(1)').find('span').text(showData[length].toFixed(2))
+                                                    if(showData[length] > 0){
+                                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-gren');
+                                                    }else if(showData[length] < 0){
+                                                        $(this).find('td:eq(1)').find('span').attr('class', 'c-reed');
+                                                    }
+                                                })
+                                            }
+                                        }else{
+                                            for (var t = 1; t < check; t += 2) {
+                                                var selector = 'tr:eq(' + t + ')';
+                                                let html = ''
+                                                let length = Math.floor((t + 1) / 2) - 1
+                                                if(showData[length] > 0){
+                                                    var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-gren" >+${(showData[length]).toFixed(2)}</span>`);
+                                                }else{
+                                                    var newTd = $("<td class='tbl-td-with5'>").html(`<span class="c-reed" >${(showData[length]).toFixed(2)}</span>`);
+                                                }
+                                                table.find(selector).each(function () {
+                                                    var firstTd = $(this).find('td:first-child');
+                                                    
+                                                    if (firstTd.length === 1 && (firstTd.siblings().length === 6 || firstTd.siblings().length === 2)) {
+                                                        firstTd.after(newTd.clone());
+                                                    }
+                                                });
+                                            }
+                                            for (var t = 2; t < check; t += 2) {
+                                                var selector = 'tr:eq(' + t + ')';
+                                                table.find(selector).each(function () {
+                                                    $(this).find('td:eq(0)').attr('colspan', 9);
+                                                });
+                                            }
+                                        }
+                                    }else{
+                                        if(!data.Senddata.some(item => item._id == this.id)){
+                                            var table = $(this);
+                                            let trLength = table.find("tr:eq(1)").find('td').length
+                                            // console.log(trLength)
+                                            if(trLength === 4 || trLength === 8){
+                                                for (var t = 1; t < check; t += 2) {
+                                                    var selector = 'tr:eq(' + t + ')';
+                                                    
+                                                    // Use your existing logic
+                                                    table.find('th:eq(1)').remove();
+                                                    table.find(selector).each(function () {
+                                                        var firstTd = $(this).find('td:eq(1)');
+                                                        
+                                                        firstTd.remove()
+                                                    });
+                                                }
+                                                // table.find('th:eq(1)').remove();
+                                            }
+                                        }
+                                    }
+                            }
+                        })
+                    }
+                }else{
+                    $("table.market").each(function() {
+                        var table = $(this);
+                        let check = table.find('tr').length
+                        if(check < 8){
+                            let trLength = table.find("tr:eq(1)").find('td').length
+                            if(trLength === 4 || trLength === 8){
+                                table.find("tr:eq(1)").find("td:eq(1)").remove();
+                                table.find("tr:eq(3)").find("td:eq(1)").remove();
+                                table.find("tr:eq(5)").find("td:eq(1)").remove();
+                                table.find('th:eq(1)').remove();
+                            }
+                        }else{
+                            let trLength = table.find("tr:eq(1)").find('td').length
+                            if(trLength === 4 || trLength === 8){
+                                for (var t = 1; t < check; t += 2) {
+                                    var selector = 'tr:eq(' + t + ')';
+                                    
+                                    // Use your extsttng logtc
+                                    table.find('th:eq(1)').remove();
+                                    table.find(selector).each(function () {
+                                        var firstTd = $(this).find('td:eq(1)');
+                                        
+                                        firstTd.remove()
+                                    });
+                                }
+                            }
+                        }
+                    })
+                }
+                // if()
             })
 
 
@@ -15804,7 +16736,8 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice1){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            if(data1 != section.backPrice1 || data2 != section.backSize1){
                                 this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -15825,7 +16758,8 @@ socket.on('connect', () => {
 
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            if(data1 != section.backPrice2){
+                             let data2 = htmldiv.find('span:first').next().text().trim()
+                            if(data1 != section.backPrice2 || data2 != section.backSize2){
                                 this.innerHTML = `<strong>${section.backPrice2}</strong> <span class="small">${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -15845,8 +16779,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.backPrice3){
+                            if(data1 != section.backPrice3 || data2 != section.backSize3){
                                 this.innerHTML = `<strong>${section.backPrice3}</strong> <span class="small">${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -15877,8 +16812,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice1){
+                            if(data1 != section.layPrice1 || data2 != section.laySize1){
                                 this.innerHTML = `<strong>${section.layPrice1}</strong> <span class="small">${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -15899,8 +16835,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice2){
+                            if(data1 != section.layPrice2 || data2 != section.laySize2){
                                 this.innerHTML = `<strong>${section.layPrice2}</strong> <span class="small">${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -15921,8 +16858,9 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
+                             let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
-                            if(data1 != section.layPrice3){
+                            if(data1 != section.layPrice3 || data2 != section.laySize3){
                                 this.innerHTML = `<strong>${section.layPrice3}</strong> <span class="small">${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -18768,11 +19706,11 @@ socket.on('connect', () => {
                     check = false
                 }
             })
-            if(check){
-                socket.emit('UpdateBetLimit', {data, LOGINDATA})
-            }else{
-                alert('not a singal value is 0')
-            }
+            // if(check){
+            // }else{
+            //     alert('not a singal value is 0')
+            // }
+            socket.emit('UpdateBetLimit', {data, LOGINDATA})
          })
 
    

@@ -27,7 +27,7 @@ export const login = async(userName, password)=>{
                 }, 100)
             }else{
                 window.setTimeout(()=>{
-                    location.assign('/admin/userManagement')
+                    location.assign('/admin/dashboard')
                 }, 100)
             }
         }

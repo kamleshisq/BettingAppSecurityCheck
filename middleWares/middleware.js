@@ -66,6 +66,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
                 })
             }
         }
+        // console.log(req.body.data, "req.body.datareq.body.datareq.body.data")
         if(req.body.data != "Demo"){
             const userLog = await loginLogs.find({user_id:id._id})
             if(id.role.role_level != 1){
