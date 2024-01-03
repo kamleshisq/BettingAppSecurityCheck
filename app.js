@@ -32,6 +32,7 @@ const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
 const session = require('express-session')
+const uuid = require('uuid').v4;
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -70,6 +71,7 @@ app.use(session({
     secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: true,
+    genid: () => uuid(),
 }));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
