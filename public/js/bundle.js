@@ -6879,7 +6879,7 @@ var userLogin = /*#__PURE__*/function () {
             // sessionStorage.setItem('sessionID', res.data.data.sessionId);
             setTimeout(function () {
               location.reload();
-            }, 300);
+            }, 3000);
           }
           _context.next = 13;
           break;
