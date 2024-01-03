@@ -15542,7 +15542,7 @@ socket.on('connect', () => {
         $(document).on('click','.status_check',function(){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
-            // console.log(id)
+            console.log(status,'status')
             if(id){
                 if(confirm('do you want to change status')){
                     socket.emit('sportStatusChange2',{status,id})
