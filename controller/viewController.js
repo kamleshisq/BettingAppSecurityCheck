@@ -4863,32 +4863,32 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     //         mainMassage:"The match you are looking for is no more live"
     //     })
     // }
-    let src
-    let status = false
-    let liveStream
-    let StreamData = await streamModel.findOne({eventId:req.query.id})
-    if(StreamData){
-        if(StreamData.status){
-            src = StreamData.url
-        }
-    }else{
-        liveStream = await liveStreameData(match.eventData.channelId, ipv4)
-        const src_regex = /src='([^']+)'/;
-        let match1
-        // let src
-        if(liveStream.data){
+    // let src
+    // let status = false
+    // let liveStream
+    // let StreamData = await streamModel.findOne({eventId:req.query.id})
+    // if(StreamData){
+    //     if(StreamData.status){
+    //         src = StreamData.url
+    //     }
+    // }else{
+    //     liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+    //     const src_regex = /src='([^']+)'/;
+    //     let match1
+    //     // let src
+    //     if(liveStream.data){
     
-            match1 = liveStream.data.match(src_regex);
-            if (match1) {
-                src = match1[1];
-                status = true
-            } else {
-                console.log("No 'src' attribute found in the iframe tag.");
-            }
-            // console.log(src, 123)
-        }
+    //         match1 = liveStream.data.match(src_regex);
+    //         if (match1) {
+    //             src = match1[1];
+    //             status = true
+    //         } else {
+    //             console.log("No 'src' attribute found in the iframe tag.");
+    //         }
+    //         // console.log(src, 123)
+    //     }
 
-    }
+    // }
     // const src_regex = /src='([^']+)'/;
     // let match1
     // if(liveStream.data){
