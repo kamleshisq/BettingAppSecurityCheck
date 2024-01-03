@@ -15,9 +15,8 @@ async function getSportDATA(data){
     })
     let jsonresult = await result.json()
     console.log(jsonresult)
-    let finalresult = JSON.parse(jsonresult)
 
-    return finalresult
+    return jsonresult
 }
 
 module.exports = getSportDATA
