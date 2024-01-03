@@ -14,6 +14,7 @@ export const userLogin = async(data) => {
             sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
             sessionStorage.setItem('logintime',Date.now())
             localStorage.setItem('logintimeUser', Date.now());
+            sessionStorage.setItem('sessionID', res.data.data.sessionID);
 
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)

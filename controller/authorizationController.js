@@ -9,6 +9,7 @@ const Role = require("../model/roleModel");
 const paymentReportModel = require('../model/paymentreport')
 const userWithReq = require('../model/withdrowReqModel');
 const whiteLabelMOdel = require('../model/whitelableModel');
+const session = require('express-session');
 const axios = require('axios')
 
 const createToken = A => {
@@ -80,6 +81,9 @@ const createSendToken = async (user, statuscode, res, req)=>{
     })
 }
 const user_createSendToken = async (user, statuscode, res, req)=>{
+    const sessionID = generateUniqueSessionID();
+    req.session.sessionID = sessionID;
+
     // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
     // if (existingToken) {
     //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
@@ -125,7 +129,8 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
         status:"success",
         token,
         data: {
-            user
+            user,
+            sessionID
         }
     })
 }
@@ -376,6 +381,14 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
+    const clientSessionID = sessionStorage.getItem('sessionID');
+    const serverSessionID = req.session.sessionID;
+    console.log(clientSessionID, serverSessionID, "serverSessionIDserverSessionIDserverSessionIDserverSessionID")
+    if(clientSessionID !== serverSessionID){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/')
+    }
     res.locals.whiteLabel = process.env.whiteLabelName
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
     if(whiteLabelData){
@@ -542,6 +555,14 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+    const clientSessionID = sessionStorage.getItem('sessionID');
+    const serverSessionID = req.session.sessionID;
+    console.log(clientSessionID, serverSessionID, "serverSessionIDserverSessionIDserverSessionIDserverSessionID")
+    if(clientSessionID !== serverSessionID){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
