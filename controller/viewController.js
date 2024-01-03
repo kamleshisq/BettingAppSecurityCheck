@@ -4844,7 +4844,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    const sportData = await getlivemarketbyeventids(`"${req.query.id}"`)
+    const sportData = await getlivemarketbyeventids(req.query.id)
 
     // const cricket = sportData[0].gameList[0].eventList
     // let match = cricket.find(item => item.eventData.eventId == req.query.id);
