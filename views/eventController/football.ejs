@@ -21,28 +21,31 @@
               </thead>
               <tbody class="new-body">
                 <% for(let i = 0; i < data.footballEvents.length; i++){%>
-                  <%if(data.cricketEvents[i]){%>
-                    <tr>
+                <%if((i%2)==0){%>
+                <tr>
+                  <%}else{%>
+                  <tr>
+                    <%}%>
                     <td><%=i + 1%></td>
                     <td>
-                      <%if(data.footballEvents[i].status){%>
+                      <%if(data.footballEvents[i].eventData.status){%>
                       <div class="on-off-btn-section">
                         <span class="on-off">OFF &nbsp; <label class="switch">
-                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].evntID%>" checked>
+                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>" checked>
                         <span class="slider round"></span>
                         </label>&nbsp; ON</span>
                       </div>
                       <%}else{%>
                       <div class="on-off-btn-section">
                         <span class="on-off">OFF &nbsp; <label class="switch">
-                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].evntID%>">
+                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>">
                         <span class="slider round"></span>
                         </label>&nbsp; ON</span>
                       </div>
                       <%}%>
                     </td>
                     <%
-                      var timestamp = new Date(data.footballEvents[i].playTm) * 1000 
+                      var timestamp = data.footballEvents[i].eventData.time * 1000 
                       var date = new Date(timestamp);
                       var options = { 
                           year: 'numeric',
@@ -56,37 +59,37 @@
                     %>
                    
                     <td><%=formattedTime %></td>
-                    <td><%=data.footballEvents[i].evntNm%></td>
-                    <td><%=data.footballEvents[i].count%></td>
+                    <td><%=data.footballEvents[i].eventData.name%></td>
+                    <td><%=data.footballEvents[i].eventData.count%></td>
                     <td> 
-                      <%if(data.footballEvents[i].featureStatus){%>
+                      <%if(data.footballEvents[i].eventData.featureStatus){%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch on">
-                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].evntID%>" checked>
+                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>" checked>
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
                         <%}else{%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch">
-                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].evntID%>">
+                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>">
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
                         <%}%>
                     </td>
                     <td> 
-                      <%if(data.footballEvents[i].inPlayStatus){%>
+                      <%if(data.footballEvents[i].eventData.inPlayStatus){%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch on">
-                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].evntID%>" checked>
+                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>" checked>
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
                         <%}else{%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch">
-                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].evntID%>">
+                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>">
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
@@ -95,11 +98,11 @@
                     <%if(currentUser.roleName != 'Operator'){%>
                     <td>
                       <div class="btn-group">
-                        <a class="btn" href="/admin/riskAnalysis?id=<%=data.footballEvents[i].evntID%>">View Details</a>
+                        <a class="btn" href="/admin/riskAnalysis?id=<%=data.footballEvents[i].eventData.eventId%>">View Details</a>
                       </div>
                     </td>
                     <%}%>
-                    <%}}%>
+                    <%}%>
                   </tr>
                 </tr>
               </tbody>

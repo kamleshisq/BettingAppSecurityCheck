@@ -16,7 +16,7 @@ export const userLogin = async(data) => {
             sessionStorage.setItem('sessionID', res.data.data.sessionId);
                 setTimeout(function() {
                     location.reload();
-                  }, 3000);
+                  }, 300);
         }
 
     }catch(err){

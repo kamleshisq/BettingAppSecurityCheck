@@ -48,7 +48,9 @@ const InPlayEvent = require('./model/inPlayModel')
 const PaymentMethodModel = require('./model/paymentmethodmodel')
 const paymentReportModel = require('./model/paymentreport')
 
+const { error } = require('console');
 const checkPass = require("./websocketController/checkPassUser");
+const { type } = require('os');
 const checkPassAsync = util.promisify(checkPass.checkPass);
 const betLimitMatchWisemodel = require('./model/betLimitMatchWise');
 const voidbetAfterPlace = require('./utils/voideBetAfterPlace');
@@ -3950,125 +3952,180 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sportStatusChange',async(data) => {
-        try{
-            let allData =  await getLiveGameData()
-            let result = allData.find(item => item.compID == data.id)
-            if(data.status){
-                let cataLog =  await catalogController.findOneAndDelete({Id:data.id})
-                if(cataLog){
-                    msg = 'series activated'
-                    socket.emit('sportStatusChange',{status:'success',msg})
-                }else{
-                    msg = "Something went wrong please try again later!"
-                    socket.emit('sportStatusChange',{status:'success',msg})
-                }
+        // console.log(data)
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let result = resultSearch.find(item => item.eventData.compId == data.id)
+        if(data.status){
+            let cataLog =  await catalogController.findOneAndDelete({Id:data.id},{status:true})
+            if(cataLog){
+                msg = 'series activated'
+                socket.emit('sportStatusChange',{status:'success',msg})
             }else{
-                let createData = {
-                    Id : data.id,
-                    name : result.evntNm,
-                    type:'league',
-                    status:false
-                }
-                let cataLog =  await catalogController.create(createData)
-                
-                if(cataLog){
-                    msg = 'series deactivated'
-                    socket.emit('sportStatusChange',{status:'success',msg})
-                }else{
-                    msg = "Something went wrong please try again later!"
-                    socket.emit('sportStatusChange',{status:'success',msg})
-                }
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange',{status:'success',msg})
             }
-        }catch(err){
-            msg = "Something went wrong please try again later!"
-            socket.emit('sportStatusChange',{status:'success',msg})
+        }else{
+            let createData = {
+                Id : data.id,
+                name : result.eventData.league,
+                type : "league",
+                status : false      
+            }
+            let cataLog = await catalogController.create(createData)
+            if(cataLog){
+                msg = 'series deactivated'
+                socket.emit('sportStatusChange',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange',{status:'success',msg})
+            }
         }
-        
-       
+        // console.log(data)
+         // try{
+        //     let msg;
+        //     let sport;
+        //     if(data.status){
+        //         sport = await catalogController.updateOne({Id:data.id},{status:true})
+        //         if(sport.type == 'event'){
+        //             msg = 'event activated'
+        //         }else{
+        //             msg = 'series activated'
+        //         }
+        //     }else{
+        //         sport = await catalogController.updateOne({Id:data.id},{status:false})
+        //         if(sport.type == 'event'){
+        //             msg = 'event deactivated'
+        //         }else{
+        //             msg = 'series deactivated'
+        //         }
+        //     }
+        //     socket.emit('sportStatusChange',{status:'success',msg})
+        // }catch(error){
+        //     socket.emit('sportStatusChange',{status:'fail'})
+        // }
     })
 
     socket.on('sportStatusChange2',async(data) => {
-        try{
-            let allData =  await getLiveGameData()
-            let result = allData.find(item => item.evntID == data.id)
-            if(data.status){
-                let cataLog =  await catalogController.findOneAndDelete({Id:data.id})
-                if(cataLog){
-                    msg = 'series activated'
-                    socket.emit('sportStatusChange2',{status:'success',msg})
-                }else{
-                    msg = "Something went wrong please try again later!"
-                    socket.emit('sportStatusChange2',{status:'success',msg})
-                }
+        // console.log(data)
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let result = resultSearch.find(item => item.eventData.eventId == data.id)
+        if(data.status){
+            let cataLog =  await catalogController.findOneAndDelete({Id:data.id},{status:true})
+            if(cataLog){
+                msg = 'series activated'
+                socket.emit('sportStatusChange2',{status:'success',msg})
             }else{
-                let createData = {
-                    Id : data.id,
-                    name : result.evntNm,
-                    type:'event',
-                    status:false
-                }
-                let cataLog =  await catalogController.create(createData)
-                if(cataLog){
-                    msg = 'series deactivated'
-                    socket.emit('sportStatusChange2',{status:'success',msg})
-                }else{
-                    msg = "Something went wrong please try again later!"
-                    socket.emit('sportStatusChange2',{status:'success',msg})
-                }
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange2',{status:'success',msg})
             }
-        }catch(err){
-            msg = "Something went wrong please try again later!"
-            socket.emit('sportStatusChange2',{status:'fail',msg})
+        }else{
+            let createData = {
+                Id : data.id,
+                name : result.eventData.name,
+                type : "event",
+                status : false      
+            }
+            let cataLog
+            if(!await catalogController.findOne({Id:data.id})){
+                cataLog = await catalogController.create(createData)
+            }
+            if(cataLog){
+                msg = 'series deactivated'
+                socket.emit('sportStatusChange2',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange2',{status:'success',msg})
+            }
         }
-       
-       
+        // console.log(data)
+         // try{
+        //     let msg;
+        //     let sport;
+        //     if(data.status){
+        //         sport = await catalogController.updateOne({Id:data.id},{status:true})
+        //         if(sport.type == 'event'){
+        //             msg = 'event activated'
+        //         }else{
+        //             msg = 'series activated'
+        //         }
+        //     }else{
+        //         sport = await catalogController.updateOne({Id:data.id},{status:false})
+        //         if(sport.type == 'event'){
+        //             msg = 'event deactivated'
+        //         }else{
+        //             msg = 'series deactivated'
+        //         }
+        //     }
+        //     socket.emit('sportStatusChange',{status:'success',msg})
+        // }catch(error){
+        //     socket.emit('sportStatusChange',{status:'fail'})
+        // }
     })
     socket.on('sportStatusChange3',async(data) => {
         // console.log(data)
-        try{
-            let allData =  await getLiveGameData()
-            let result = allData.find(item => item.evntID == data.id)
-            if(data.status){
-                let createData = {
-                    Id : data.id,
-                    name : result.evntNm
-                }
-                let cataLog
-                if(!await featureEventModel.findOne({Id:data.id})){
-                    cataLog = await featureEventModel.create(createData)
-                }
-                if(cataLog){
-                    msg = 'event activated'
-                    socket.emit('sportStatusChange3',{status:'success',msg})
-                }else{
-                    msg = "Something went wrong please try again later!"
-                    socket.emit('sportStatusChange3',{status:'success',msg})
-                }
-               
-            }else{
-                let cataLog =  await featureEventModel.findOneAndDelete({Id:data.id})
-                if(cataLog){
-                    msg = 'event deactivated'
-                    socket.emit('sportStatusChange3',{status:'success',msg})
-                }else{
-                    msg = "Something went wrong please try again later!"
-                    socket.emit('sportStatusChange3',{status:'success',msg})
-                }
-              
-            }
-        }catch(err){
-            msg = "Something went wrong please try again later!"
-            socket.emit('sportStatusChange3',{status:'success',msg})
-        }
-        
-    })
-    socket.on('sportStatusChange4',async(data) => {
-        let allData =  await getLiveGameData()
-            let result = allData.find(item => item.evntID == data.id)
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let result = resultSearch.find(item => item.eventData.eventId == data.id)
         if(data.status){
             let createData = {
                 Id : data.id,
-                name : result.evntNm
+                name : result.eventData.name
+            }
+            let cataLog
+            if(!await featureEventModel.findOne({Id:data.id})){
+                cataLog = await featureEventModel.create(createData)
+            }
+            if(cataLog){
+                msg = 'event activated'
+                socket.emit('sportStatusChange3',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange3',{status:'success',msg})
+            }
+           
+        }else{
+            let cataLog =  await featureEventModel.findOneAndDelete({Id:data.id})
+            if(cataLog){
+                msg = 'event deactivated'
+                socket.emit('sportStatusChange3',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange3',{status:'success',msg})
+            }
+          
+        }
+    })
+    socket.on('sportStatusChange4',async(data) => {
+        // console.log(data)
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let result = resultSearch.find(item => item.eventData.eventId == data.id)
+        if(data.status){
+            let createData = {
+                Id : data.id,
+                name : result.eventData.name
             }
             let cataLog
             if(!await InPlayEvent.findOne({Id:data.id})){
@@ -4116,17 +4173,18 @@ io.on('connection', (socket) => {
         }
     })
 
+   
     socket.on("eventIdForMarketList", async(data) => {
         // console.log(data.id)
-        let allData =  await getLiveGameData()
-        let cricket = allData.filter( (ele) =>{ return ele.sprtID == "4"})
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
         // let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
         // let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
         // footBall = footBall.eventList
         // Tennis = Tennis.eventList
         const resultSearch = cricket
         // console.log(resultSearch)
-        let result = resultSearch.filter(item => item.evntID == data.id)
+        let result = resultSearch.find(item => item.eventData.eventId == data.id)
         let data1 = await commissionMarketModel.find()
         // console.log(result, 123)
         socket.emit("eventIdForMarketList", {result, data1})
@@ -4146,6 +4204,7 @@ io.on('connection', (socket) => {
             socket.emit("commissionMarketbyId", {status:'fail',msg:'somothing went wrong'})
         }
     })
+
 
     socket.on("claimCommission", async(data) => {
         // console.log(data)
