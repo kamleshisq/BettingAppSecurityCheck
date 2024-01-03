@@ -25,18 +25,16 @@
     <meta property="og:image" content="" />
 
     <!-- FONTAWOSAM CSS  -->
-    <%console.log(user)%>
+    <%console.log(user, 123456)%>
     <%if(user){%>
     <script>
       if (!sessionStorage.tabIdentifier) {
         sessionStorage.tabIdentifier = Math.random().toString(36).substring(2) + '_' + Date.now();
         user = undefined
       }
-      // var currentTabIdentifier = sessionStorage.tabIdentifier;
-      // console.log("Current Tab Identifier: " + currentTabIdentifier);
     </script>
     <%}%>
-    <%console.log(user)%>
+    <%console.log(user, 987654)%>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
