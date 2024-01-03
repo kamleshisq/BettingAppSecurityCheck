@@ -71,7 +71,6 @@ app.use(session({
     secret: `It doesn't matter how you start, finish it like a Dhoni`,
     resave: false,
     saveUninitialized: false,
-    store: store,
     cookie: {
         secure: false, // Set to true if using HTTPS
         httpOnly: true,
