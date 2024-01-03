@@ -36,6 +36,9 @@ const loginLogSchema = mongoose.Schema({
     }],
     gameToken:{
         type:String
+    },
+    sessionId:{
+        type:String
     }
 });
 

@@ -127,9 +127,11 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
                             role_Type:user.role_type,
                             login_time:time, 
                             isOnline: true, 
-                            ip_address:global.ip, 
+                            ip_address:req.ip, 
                             session_id:token, 
-                            device_info:req.headers['user-agent']})
+                            device_info:req.headers['user-agent'],
+                            sessionId:sessionID
+                        })
     global._loggedInToken.push({token:token,time:time})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
@@ -605,6 +607,11 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         return next()
     }
     if(!tokenId.isOnline){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+    if(clientSessionID && tokenId.sessionId != clientSessionID){
         req.app.set('token', null);
         req.app.set('User', null);
         return next()
