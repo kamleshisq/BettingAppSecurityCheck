@@ -21544,6 +21544,7 @@ socket.on('connect', () => {
                 html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li>`
 
                 $('#table12').html(html)
+                $('.bredcum-container > ul > li:not(.afteraddnewbredcum)').remove()
                 $('.bredcum-container ul .afteraddnewbredcum').last().after(html2)
             }
         })
@@ -21596,6 +21597,8 @@ socket.on('connect', () => {
                 html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li>`
 
                 $('#table12').html(html)
+                $('.bredcum-container > ul > li:not(.afteraddnewbredcum)').remove()
+                
                 $('.bredcum-container ul .afteraddnewbredcum').last().after(html2)
             }
 
@@ -21650,6 +21653,7 @@ socket.on('connect', () => {
                 html2 += ` <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li> <li class="active compitisionsportusername" data-compitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId})}'>${data.bredcum[1]}</li> <li class="active eventcompitisionsportusername" data-eventcompitisionsportusername='${JSON.stringify({userName:parentdata.userName,sportId:parentdata.sportId,seriesName:parentdata.seriesName})}'>${data.bredcum[2]}</li>`
 
                 $('#table12').html(html)
+                $('.bredcum-container > ul > li:not(.afteraddnewbredcum)').remove()
                 $('.bredcum-container ul .afteraddnewbredcum').last().after(html2)
 
             }
@@ -21720,6 +21724,7 @@ socket.on('connect', () => {
                
 
                 $('#table12').html(html)
+                $('.bredcum-container > ul > li:not(.afteraddnewbredcum)').remove()
                 $('.bredcum-container ul .afteraddnewbredcum').last().after(html2)
             }
 
