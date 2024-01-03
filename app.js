@@ -58,7 +58,7 @@ app.use(
       resave: false,
       saveUninitialized: true,
       cookie: {
-        expires: new Date(Date.now() + (process.env.COOKIE_EXPIRES_IN * 1000 * 60)),
+        expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
         httpOnly: false, 
         secure: false,
         domain: 'dev.ollscores.com',
