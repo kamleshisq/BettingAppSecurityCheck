@@ -31,6 +31,7 @@ const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
+const session = require('express-session')
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -65,11 +66,11 @@ app.use(fileUpload({
   }));
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
-// app.use(session({
-//     secret: 'your-secret-key-jk@123@jk',
-//     resave: false,
-//     saveUninitialized: true,
-// }));
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+}));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
