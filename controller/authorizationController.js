@@ -87,32 +87,18 @@ const createSendToken = async (user, statuscode, res, req)=>{
     })
 }
 const user_createSendToken = async (user, statuscode, res, req)=>{
-    const sessionID = user.id;
-    req.session.sessionID = sessionID;
-    console.log(req.ip)
-    console.log(sessionID, req.session, "req.sessionreq.sessionreq.sessionreq.sessionreq.session")
-    // activeSessions[sessionID] = req.session;
-    // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
-    // if (existingToken) {
-    //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
-    //     return res.status(403).json({
-    //         status: "error",
-    //         message: "User is already logged in"
-    //     });
-    // }
-
-    const token = createToken(user._id);
-    // req.session.userId = user._id;
-    // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
         httpOnly: true,
         secure: false,
         domain: 'dev.ollscores.com'
-        }
-    // if(process.env.NODE_ENV === "production"){
-    //     cookieOption.secure = true
-    //     }
+    }
+    
+    const sessionID = user.id;
+    req.session.sessionID = sessionID;
+    console.log(req.ip)
+    console.log(sessionID, req.session, "req.sessionreq.sessionreq.sessionreq.sessionreq.session")
+    const token = createToken(req.session.sessionID);
     res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;

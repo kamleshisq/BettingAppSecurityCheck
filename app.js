@@ -51,12 +51,7 @@ mongoose.connect(process.env.db2,{
 }).then(()=>{
     console.log("MongoDB connected")
 })
-app.use(session({
-    secret: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } 
-  }));
+app.use(expressSession({ secret: 'abcdefghijklmnopqrstuvwxyz', resave: true, saveUninitialized: true }));
 // console.log("WORKING 54545 ")
 global._blacklistToken=[];
 global._loggedInToken=[];
