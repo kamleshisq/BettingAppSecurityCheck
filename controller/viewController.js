@@ -4241,19 +4241,9 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             seriesList.push(item.compID)
             let status = await catalogController.findOne({Id:item.compID})
             if(!status){
-                await catalogController.create({
-                    Id:item.compID,
-                    name:item.compNm,
-                    type:"league",
-                    status:true
-                })
-                seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId:sportId})
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId:sportId})
             }else{
-                if(status.status){
-                    seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId})
-                }else{
-                    seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId})
-                }
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId})
             }
         }
 
