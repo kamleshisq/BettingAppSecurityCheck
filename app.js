@@ -72,9 +72,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false, // Set to true if using HTTPS
+        secure: false, 
         httpOnly: true,
-        // Add other cookie options as needed
     },
 }));
 // console.log("WORKING 54545 ")
