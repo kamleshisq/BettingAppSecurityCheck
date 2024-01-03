@@ -10,7 +10,7 @@ export const userLogin = async(data) => {
         });
         if(res.data.status === 'success'){
             notificationsss({message : 'Logged in successfully!!!!', status:"success"});
-            // console.log(res.data.data.sessionID)
+            console.log(res.data.data.sessionID)
             sessionStorage.setItem('sessionID', res.data.data.sessionID);
                 setTimeout(function() {
                     location.reload();
