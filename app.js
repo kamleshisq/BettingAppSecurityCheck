@@ -32,7 +32,7 @@ const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
 const session = require('express-session');
-const MongoStore = require('connect-mongo').default;
+const { MongoStore } = require('connect-mongo');
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -52,7 +52,7 @@ mongoose.connect(process.env.db2,{
 }).then(()=>{
     console.log("MongoDB connected")
 })
-const sessionStore =  MongoStore({
+const sessionStore = new MongoStore({
     mongooseConnection: mongoose.connection,
     collection: 'sessions', // Optionally, specify the name of the session collection
   });
