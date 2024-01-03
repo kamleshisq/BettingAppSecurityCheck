@@ -4441,8 +4441,6 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         if(eventidstatus){
             return item
-        }else{
-            return null
         }
     })
     let newfootballEvents =  footballList.map(async(item) => {
