@@ -4433,7 +4433,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.count = count
         eventidarr.push(item.evntID)
-        if(!eventidarr.includes(item.evntID)){
+        if(eventidarr.includes(item.evntID)){
             return item
         }
     })
@@ -4459,7 +4459,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         item.count = count
 
         eventidarr.push(item.evntID)
-        if(!eventidarr.includes(item.evntID)){
+        if(eventidarr.includes(item.evntID)){
             return item
         }
     })
@@ -4487,7 +4487,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         item.count = count
 
         eventidarr.push(item.evntID)
-        if(!eventidarr.includes(item.evntID)){
+        if(eventidarr.includes(item.evntID)){
             return item
         }
     })
