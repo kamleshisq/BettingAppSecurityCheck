@@ -4408,6 +4408,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let count;
     let data = {};
     let eventidarr = []
+    let eventidstatus = true
     let cricketList = await getlivegamebyid(4)
     let footballList = await getlivegamebyid(1)
     let tennisList = await getlivegamebyid(2)
@@ -4432,8 +4433,13 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.inPlayStatus = true
         }
         item.count = count
-        eventidarr.push(item.evntID)
-        if(eventidarr.includes(item.evntID)){
+        if(!eventidarr.includes(item.evntID)){
+            eventidarr.push(item.evntID)
+            eventidstatus = true
+        }else{
+            eventidstatus = false
+        }
+        if(eventidstatus){
             return item
         }
     })
