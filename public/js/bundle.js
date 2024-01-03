@@ -6874,7 +6874,7 @@ var userLogin = /*#__PURE__*/function () {
               status: "success"
             });
             console.log(res.data.data.sessionId);
-            sessionStorage.setItem('sessionID', res.data.data.sessionId);
+            // sessionStorage.setItem('sessionID', res.data.data.sessionId);
             setTimeout(function () {
               location.reload();
             }, 300);
