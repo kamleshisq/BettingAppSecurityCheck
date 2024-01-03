@@ -52,7 +52,19 @@ mongoose.connect(process.env.db2,{
     console.log("MongoDB connected")
 })
 app.use(cookieParser());
-app.use(expressSession({ secret: 'abcdefghijklmnopqrstuvwxyz', resave: true, saveUninitialized: true }));
+app.use(
+    session({
+      secret: process.env.JWT_SECRET,
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        expires: new Date(Date.now() + (process.env.COOKIE_EXPIRES_IN * 1000 * 60)),
+        httpOnly: false, 
+        secure: false,
+        domain: 'dev.ollscores.com',
+      },
+    })
+  );
 // console.log("WORKING 54545 ")
 global._blacklistToken=[];
 global._loggedInToken=[];
