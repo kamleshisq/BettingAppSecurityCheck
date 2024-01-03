@@ -21,11 +21,8 @@
               </thead>
               <tbody class="new-body">
                 <% for(let i = 0; i < data.cricketEvents.length; i++){%>
-                <%if((i%2)==0){%>
-                  <tr>
-                  <%}else{%>
-                  <tr>
-                    <%}%>
+                  <%if(data.cricketEvents[i]){%>
+               <tr>
                     <td><%=i + 1%></td>
                     <td>
                       <%if(data.cricketEvents[i].status){%>
@@ -102,7 +99,7 @@
                       </div>
                     </td>
                     <%}%>
-                    <%}%>
+                    <%}}%>
                   </tr>
                 </tr>
               </tbody>
