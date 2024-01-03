@@ -6009,3 +6009,41 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
         colorcode,
     })
 });
+
+
+
+exports.userdashboard22 = catchAsync(async(req, res, next) => {
+    let featureEventId = []
+    let user = req.currentUser
+    let whiteLabel = whiteLabelcheck(req)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    const data = await promotionModel.find({whiteLabelName: whiteLabel});
+    // console.log(data, "datatatata")
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    const banner = await bannerModel.find({whiteLabelName: whiteLabel})
+    let sliders = await sliderModel.find({whiteLabelName: whiteLabel}).sort({Number:1})
+    let pages = await pagesModel.find({whiteLabelName: whiteLabel})
+    
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(parseInt(ele.Id))
+    })
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
+    res.status(200).render("./userSideEjs/home/homePage",{
+        title:'Home',
+        data,
+        verticalMenus,
+        banner,
+        sliders,
+        pages,
+        check:"Home",
+        notifications:req.notifications,
+        featureStatusArr,
+        basicDetails,
+        colorCode
+    })
+})
