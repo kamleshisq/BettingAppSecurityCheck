@@ -56,6 +56,7 @@ const colorCodeModel = require('../model/colorcodeModel');
 const getLiveGameData = require('../utils/getlivedata')
 const getlivegamebyid = require('../utils/getlivemarketsbysportid')
 const getlivemarketbyeventids = require('../utils/getlivemarketbyeventids')
+const getMarketratebymarketids = require('../utils/getlivemarketratebymarketids')
 
 
 // exports.userTable = catchAsync(async(req, res, next) => {
@@ -4845,6 +4846,14 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getlivemarketbyeventids(req.query.id)
+    let marketids = [];
+    sportData.map(item => {
+        marketids.push(item.mrktID)
+    })
+
+    const marketrates = getMarketratebymarketids(marketids.join())
+
+
 
     // const cricket = sportData[0].gameList[0].eventList
     // let match = cricket.find(item => item.eventData.eventId == req.query.id);
@@ -4972,7 +4981,8 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
 
         res.status(200).json({
             status:'success',
-            sportData
+            sportData,
+            marketrates
         })
         // res.status(200).render("./mainRiskAnalysis/main",{
         //     title:"Risk Analysis",
