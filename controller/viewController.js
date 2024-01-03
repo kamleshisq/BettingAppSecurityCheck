@@ -2284,8 +2284,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://app.ollscores.com/",
-            "Referer":"http://app.ollscores.com/"},
+            "Origin":"http://dev.ollscores.com/",
+            "Referer":"http://dev.ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -4865,59 +4865,50 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    const sportData = await getlivemarketbyeventids(req.query.id)
-    let marketids = [];
-    sportData.map(item => {
-        marketids.push(item.mrktID)
-    })
-
-    const marketrates = await getMarketratebymarketids(marketids.join())
-
-
-
-    // const cricket = sportData[0].gameList[0].eventList
-    // let match = cricket.find(item => item.eventData.eventId == req.query.id);
-    // if(match === undefined){
-    //     let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
-    //     match = data1liveCricket.find(item => item != undefined)
-    // }
-    // if(match == undefined){
-    //     // res.status(404).json({
-    //     //     status:"Success",
-    //     //     message:"This match is no more live"
-    //     // })
-    //     res.render('./errorMessage', {
-    //         statusCode : 404,
-    //         message:"Opps! Please try again later",
-    //         mainMassage:"The match you are looking for is no more live"
-    //     })
-    // }
-    // let src
-    // let status = false
-    // let liveStream
-    // let StreamData = await streamModel.findOne({eventId:req.query.id})
-    // if(StreamData){
-    //     if(StreamData.status){
-    //         src = StreamData.url
-    //     }
-    // }else{
-    //     liveStream = await liveStreameData(match.eventData.channelId, ipv4)
-    //     const src_regex = /src='([^']+)'/;
-    //     let match1
-    //     // let src
-    //     if(liveStream.data){
+    const sportData = await getCrkAndAllData()
+    const cricket = sportData[0].gameList[0].eventList
+    let match = cricket.find(item => item.eventData.eventId == req.query.id);
+    if(match === undefined){
+        let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
+        match = data1liveCricket.find(item => item != undefined)
+    }
+    if(match == undefined){
+        // res.status(404).json({
+        //     status:"Success",
+        //     message:"This match is no more live"
+        // })
+        res.render('./errorMessage', {
+            statusCode : 404,
+            message:"Opps! Please try again later",
+            mainMassage:"The match you are looking for is no more live"
+        })
+    }
+    let src
+    let status = false
+    let liveStream
+    let StreamData = await streamModel.findOne({eventId:req.query.id})
+    if(StreamData){
+        if(StreamData.status){
+            src = StreamData.url
+        }
+    }else{
+        liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+        const src_regex = /src='([^']+)'/;
+        let match1
+        // let src
+        if(liveStream.data){
     
-    //         match1 = liveStream.data.match(src_regex);
-    //         if (match1) {
-    //             src = match1[1];
-    //             status = true
-    //         } else {
-    //             console.log("No 'src' attribute found in the iframe tag.");
-    //         }
-    //         // console.log(src, 123)
-    //     }
+            match1 = liveStream.data.match(src_regex);
+            if (match1) {
+                src = match1[1];
+                status = true
+            } else {
+                console.log("No 'src' attribute found in the iframe tag.");
+            }
+            // console.log(src, 123)
+        }
 
-    // }
+    }
     // const src_regex = /src='([^']+)'/;
     // let match1
     // if(liveStream.data){
@@ -4934,7 +4925,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
         //     let date = new Date(item.updated_on);
-        //     return date < Date.now() - 1000 * 60 * 60;
+        //     return date < Date.now() - 1000  60  60;
         // });
         let childrenUsername = []
         childrenUsername = await User.distinct('userName', {parentUsers:mainId});
@@ -4998,34 +4989,28 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                 }
             }
         ])
-
-        res.status(200).json({
-            status:'success',
-            sportData,
-            marketrates
-        })
-        // res.status(200).render("./mainRiskAnalysis/main",{
-        //     title:"Risk Analysis",
-        //     user: req.currentUser,
-        //     verticalMenus,
-        //     check:"ExchangeIn",
-        //     match,
-        //     SportLimits,
-        //     liveStream,
-        //     userLog,
-        //     notifications:req.notifications,
-        //     stakeLabledata,
-        //     Bets,
-        //     rules,
-        //     src,
-        //     userMultimarkets,
-        //     min,
-        //     max,
-        //     currentUser:req.currentUser,
-        //     suspend:check,
-        //     basicDetails,
-        //     colorCode
-        // })
+        res.status(200).render("./mainRiskAnalysis/main",{
+            title:"Risk Analysis",
+            user: req.currentUser,
+            verticalMenus,
+            check:"ExchangeIn",
+            match,
+            SportLimits,
+            liveStream,
+            userLog,
+            notifications:req.notifications,
+            stakeLabledata,
+            Bets,
+            rules,
+            src,
+            userMultimarkets,
+            min,
+            max,
+            currentUser:req.currentUser,
+            suspend:check,
+            basicDetails,
+            colorCode
+    })
 });
 
 
