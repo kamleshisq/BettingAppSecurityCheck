@@ -386,6 +386,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
+    console.log(activeSessions)
     const clientSessionID = req.session.sessionID;
     const serverSession = activeSessions[clientSessionID];
     console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
