@@ -4537,9 +4537,9 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
 exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
     let cricketData = await getLiveGameData()
-    const cricket = cricketData[0].gameList[0].eventList
+    // const cricket = cricketData[0].gameList[0].eventList
     // console.log(cricket, "cricketcricketcricket")
-    // let cricket = cricketData.filter( (ele) =>{ return ele.sprtID == "4"})
+    let cricket = cricketData.filter( (ele) =>{ return ele.sprtID == "4"})
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
         title:"Commissin Moarkets",
