@@ -31,10 +31,6 @@ const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
-const session = require('express-session');
-const redis = require('redis');
-let RedisStore = require('connect-redis').default;
-let redisClient = redis.createClient();
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -48,28 +44,12 @@ app.use(requestIp.mw());
 app.use(cors());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
-mongoose.connect(process.env.db2,{
+mongoose.connect(process.env.db1,{
     useNewUrlParser: true, 
     useUnifiedTopology: true
 }).then(()=>{
     console.log("MongoDB connected")
 })
-app.use(cookieParser());
-app.use(
-    session({
-      secret: [process.env.JWT_SECRET,'notsoimportantsecret',process.env.JWT_SECRET], 
-       name: process.env.JWT_SECRET, 
-       cookie: {
-        httpOnly: true,
-        secure: true,
-        sameSite: true,
-        maxAge: 600000 // Time is in miliseconds
-    },
-      store: new RedisStore({ client: redisClient ,ttl: 86400}),   
-      resave: false
-    })
-  )
-  app.set('trust proxy', 1)
 // console.log("WORKING 54545 ")
 global._blacklistToken=[];
 global._loggedInToken=[];
@@ -84,6 +64,12 @@ app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
   }));
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
+app.use(cookieParser());
+// app.use(session({
+//     secret: 'your-secret-key-jk@123@jk',
+//     resave: false,
+//     saveUninitialized: true,
+// }));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
