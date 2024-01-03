@@ -56356,8 +56356,7 @@ $(document).ready(function () {
     }
   }
   colorLink();
-
-  // $('input:checked').parents('.switch').addClass("on");
+  $('input:checked').parents('.switch').addClass("on");
   // $('input:checkbox').change(function(){
   //     if($(this).is(":checked")) {
   //         $(this).parents('.switch').addClass("on");
