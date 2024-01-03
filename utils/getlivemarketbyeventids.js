@@ -14,6 +14,8 @@ async function getSportDATA(data){
         },
         body:{"eid":`"${data}"`}
     })
+    console.log(result)
+    console.log(result.json())
     let jsonresult = await result.json()
     let finalresult = JSON.parse(jsonresult)
 
