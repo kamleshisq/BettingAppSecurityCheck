@@ -12,7 +12,7 @@ async function getSportDATA(data){
             "Accept":"application/json",
             "Content-Type" : "application/json"
         },
-        body:{"eid":data}
+        body:JSON.stringify({"eid":data})
     })
     console.log(result)
     let jsonresult = await result.json()
