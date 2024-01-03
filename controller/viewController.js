@@ -5352,6 +5352,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
         // console.log(me, "memememememememememe")
         // console.log(currentUser, "CURR")
         let me = await User.findById(req.query.id)
+        let currentUser = req.currentUser
         if(me.userName === currentUser.userName){
             adminBredcumArray.push({
                 userName:me.userName,
