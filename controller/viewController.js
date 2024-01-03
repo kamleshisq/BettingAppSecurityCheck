@@ -4407,7 +4407,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     
     let count;
     let data = {};
-
+    let eventidarr = []
     let cricketList = await getlivegamebyid(4)
     let footballList = await getlivegamebyid(1)
     let tennisList = await getlivegamebyid(2)
@@ -4432,8 +4432,10 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.inPlayStatus = true
         }
         item.count = count
-
-        return item
+        eventidarr.push(item.evntID)
+        if(!eventidarr.includes(item.evntID)){
+            return item
+        }
     })
     let newfootballEvents =  footballList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.evntID})
@@ -4456,7 +4458,10 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.count = count
 
-        return item
+        eventidarr.push(item.evntID)
+        if(!eventidarr.includes(item.evntID)){
+            return item
+        }
     })
     let newtennisEvents = tennisList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.evntID})
@@ -4481,7 +4486,10 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.count = count
 
-        return item
+        eventidarr.push(item.evntID)
+        if(!eventidarr.includes(item.evntID)){
+            return item
+        }
     })
 
     cricketEvents = await Promise.all(newcricketEvents);
