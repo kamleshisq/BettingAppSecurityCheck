@@ -21544,6 +21544,7 @@ socket.on('connect', () => {
                 html2 += `  <li class="active sportusername" data-sportusername='${JSON.stringify({userName:parentdata.userName})}'>${data.bredcum[0]}</li>`
 
                 $('#table12').html(html)
+                $('.bredcum-container > ul > li:not(.afteraddnewbredcum)').remove()
                 $('.bredcum-container ul .afteraddnewbredcum').last().after(html2)
             }
         })
