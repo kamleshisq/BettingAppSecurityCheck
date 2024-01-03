@@ -32,7 +32,7 @@ const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
 const session = require('express-session')
-const uuid = require('uuid').v4;
+const uuid = require('uuid');
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -72,6 +72,15 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
+
+app.use((req, res, next) => {
+    // Store a unique tab identifier in the session
+    if (!req.session.tabId) {
+      req.session.tabId = uuid.v4();
+    }
+  
+    next();
+  });
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
