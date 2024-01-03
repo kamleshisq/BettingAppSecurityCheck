@@ -55,6 +55,7 @@ const globalSettingModel = require('../model/globalSetting');
 const colorCodeModel = require('../model/colorcodeModel');
 const getLiveGameData = require('../utils/getlivedata')
 const getlivegamebyid = require('../utils/getlivemarketsbysportid')
+const getlivemarketbyeventids = require('../utils/getlivemarketbyeventids')
 
 
 // exports.userTable = catchAsync(async(req, res, next) => {
@@ -4843,13 +4844,14 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    const sportData = await getCrkAndAllData()
-    const cricket = sportData[0].gameList[0].eventList
-    let match = cricket.find(item => item.eventData.eventId == req.query.id);
-    if(match === undefined){
-        let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
-        match = data1liveCricket.find(item => item != undefined)
-    }
+    const sportData = await getlivemarketbyeventids(`"${req.query.id}"`)
+
+    // const cricket = sportData[0].gameList[0].eventList
+    // let match = cricket.find(item => item.eventData.eventId == req.query.id);
+    // if(match === undefined){
+    //     let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
+    //     match = data1liveCricket.find(item => item != undefined)
+    // }
     if(match == undefined){
         // res.status(404).json({
         //     status:"Success",
@@ -4967,28 +4969,33 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                 }
             }
         ])
-        res.status(200).render("./mainRiskAnalysis/main",{
-            title:"Risk Analysis",
-            user: req.currentUser,
-            verticalMenus,
-            check:"ExchangeIn",
-            match,
-            SportLimits,
-            liveStream,
-            userLog,
-            notifications:req.notifications,
-            stakeLabledata,
-            Bets,
-            rules,
-            src,
-            userMultimarkets,
-            min,
-            max,
-            currentUser:req.currentUser,
-            suspend:check,
-            basicDetails,
-            colorCode
-    })
+
+        res.status(200).json({
+            status:'success',
+            sportData
+        })
+        // res.status(200).render("./mainRiskAnalysis/main",{
+        //     title:"Risk Analysis",
+        //     user: req.currentUser,
+        //     verticalMenus,
+        //     check:"ExchangeIn",
+        //     match,
+        //     SportLimits,
+        //     liveStream,
+        //     userLog,
+        //     notifications:req.notifications,
+        //     stakeLabledata,
+        //     Bets,
+        //     rules,
+        //     src,
+        //     userMultimarkets,
+        //     min,
+        //     max,
+        //     currentUser:req.currentUser,
+        //     suspend:check,
+        //     basicDetails,
+        //     colorCode
+        // })
 });
 
 
