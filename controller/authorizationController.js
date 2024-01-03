@@ -98,7 +98,10 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
         httpOnly: true,
         // secure: true
         }
+        const sessionId = user.id
     res.cookie('JWT', token, cookieOption)
+    res.cookie('sessionId', sessionId);
+
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
@@ -546,6 +549,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log(req.cookies, "cookiescookiescookies")
     // console.log('product: ', sessionStorage.getItem('sessionID'));
     // console.log(req.session, "SESSSION")
+    console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies21212")
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -613,9 +617,11 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             return next()
         }
     }
-
+    console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies")
     if (!req.cookies.sessionId) {
-        
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
     }
     let loginData = {
         Token : token,
