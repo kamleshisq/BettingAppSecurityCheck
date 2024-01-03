@@ -10,10 +10,10 @@ export const userLogin = async(data) => {
         });
         if(res.data.status === 'success'){
             notificationsss({message : 'Logged in successfully!!!!', status:"success"});
-            sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
-            sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
-            sessionStorage.setItem('logintime',Date.now())
-            localStorage.setItem('logintimeUser', Date.now());
+            // sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
+            // sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
+            // sessionStorage.setItem('logintime',Date.now())
+            // localStorage.setItem('logintimeUser', Date.now());
             sessionStorage.setItem('sessionID', res.data.data.sessionID);
 
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
