@@ -543,6 +543,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+    console.log(req)
     console.log('product: ', sessionStorage.getItem('sessionID'));
     console.log(req.session, "SESSSION")
     let token 
