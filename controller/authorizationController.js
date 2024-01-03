@@ -87,7 +87,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
     })
 }
 const user_createSendToken = async (user, statuscode, res, req)=>{
-    const sessionID = generateUniqueSessionID();
+    const sessionID = user._id;
     req.session.sessionID = sessionID;
     console.log(req.ip)
     console.log(sessionID, req.session, "req.sessionreq.sessionreq.sessionreq.sessionreq.session")
