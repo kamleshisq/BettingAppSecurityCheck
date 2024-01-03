@@ -5336,22 +5336,25 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
 exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let loginuserid1
     let adminBredcumArray = []
+    let me
     if(Object.keys(req.query).length == 0){
         // let parentUser = await distinct("userName")
         loginuserid1 = await User.distinct("_id",{parent_id:req.currentUser._id})
         loginuserid1 = loginuserid1.toString()
         loginuserid1 = loginuserid1.split(',')
         console.log(loginuserid1,"loginuserid1")
-       
+        me = req.currentUser
     }else{
         loginuserid1 = await User.distinct("_id",{parent_id:req.query.id})
         loginuserid1 = loginuserid1.toString()
         loginuserid1 = loginuserid1.split(',')
         console.log(loginuserid1,"loginuserid1")
-        
-        // console.log(me, "memememememememememe")
+        me = await User.findById(req.query.id)
+    }
+
+    // console.log(me, "memememememememememe")
         // console.log(currentUser, "CURR")
-        let me = await User.findById(req.query.id)
+        
         let currentUser = req.currentUser
         if(me.userName === currentUser.userName){
             adminBredcumArray.push({
@@ -5390,7 +5393,6 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
                 status:false
             })
         }
-    }
 
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
