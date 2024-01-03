@@ -562,6 +562,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     const clientSessionID = req.session.sessionID;
+    console.log(clientSessionID, activeSessions, "activeSessionsactiveSessionsactiveSessions")
     const serverSession = activeSessions[clientSessionID];
     console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
     if(clientSessionID && serverSession === req.session){
