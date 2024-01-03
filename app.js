@@ -71,6 +71,9 @@ app.use(session({
     secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: true,
+    genid: (req) => {
+        return uuid.v4(); 
+      },
 }));
 
 app.use((req, res, next) => {
