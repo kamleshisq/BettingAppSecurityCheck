@@ -28,26 +28,26 @@
     <ul class="open">
       <%for(let i = 0; i < adminBredcumArray.length; i++){%>
         <%if(adminBredcumArray[i].role === "Admin"){%>
-          <li> <a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
+          <li class="afteraddnewbredcum"> <a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
 
         <%}else if(adminBredcumArray[i].role === "Super-Duper-Admin"){%>
           <%if(adminBredcumArray[i].status){%>
-            <li><a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
+            <li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
           <%}else{%>
-            <li> <a href="/admin/downlinecommissionReort?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+            <li class="afteraddnewbredcum"> <a href="/admin/downlinecommissionReort?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
           <%}%>
 
         <%}else if(adminBredcumArray[i].role === "Super-Admin"){%>
           <%if(adminBredcumArray[i].status){%>
-            <li><a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
+            <li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
           <%}else{%>
-            <li><a href="/admin/downlinecommissionReort?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+            <li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
           <%}%>
         <%}else if(adminBredcumArray[i].role === "Duper-Admin"){%>
           <%if(adminBredcumArray[i].status){%>
-            <li><a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
+            <li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
           <%}else{%>
-            <li><a href="/admin/downlinecommissionReort?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+            <li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
           <%}%>
         <%}else if(adminBredcumArray[i].role === "AGENT"){%>
             <%if(adminBredcumArray[i].status){%>
