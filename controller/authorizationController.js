@@ -611,7 +611,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
         return next()
     }
-    if(clientSessionID && tokenId.sessionId != clientSessionID){
+    if((clientSessionID && tokenId.sessionId != clientSessionID) || !clientSessionID){
         req.app.set('token', null);
         req.app.set('User', null);
         return next()
