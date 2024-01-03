@@ -4241,9 +4241,9 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             seriesList.push(item.compID)
             let status = await catalogController.findOne({Id:item.compID})
             if(!status){
-                seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId:sportId})
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId:sportId})
             }else{
-                seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId})
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId})
             }
         }
 
@@ -4295,10 +4295,10 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                 let count = 0;
                 if(!status){
                     count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
-                    seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:false,count,eventId:item.evntID})
+                    seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:true,count,eventId:item.evntID})
                 }else{
                     count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
-                    seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:true,count,eventId:item.evntID})
+                    seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:false,count,eventId:item.evntID})
                 }
             }
       
@@ -4401,9 +4401,9 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
          count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.status = false
+            item.status = true
          }else{
-             item.status = true
+             item.status = false
         }
         if(!featureStatus){
             item.featureStatus = false
@@ -4433,9 +4433,9 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
          if(!status){
-            item.status = false
+            item.status = true
          }else{
-             item.status = true
+             item.status = false
         }
         if(!featureStatus){
             item.featureStatus = false
@@ -4468,9 +4468,9 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
          count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.status = false
+            item.status = true
          }else{
-             item.status = true
+             item.status = false
         }
         if(!featureStatus){
             item.featureStatus = false
@@ -4840,9 +4840,9 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         mainId = parentUser._id.toString()
     }
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
     let match = cricket.find(item => item.eventData.eventId == req.query.id);

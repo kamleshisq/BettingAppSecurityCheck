@@ -3912,13 +3912,7 @@ io.on('connection', (socket) => {
             let allData =  await getLiveGameData()
             let result = allData.find(item => item.compID == data.id)
             if(data.status){
-                let createData = {
-                    Id : data.id,
-                    name : result.evntNm,
-                    type:'league',
-                    status:true
-                }
-                let cataLog =  await catalogController.create(createData)
+                let cataLog =  await catalogController.findOneAndDelete({Id:data.id})
                 if(cataLog){
                     msg = 'series activated'
                     socket.emit('sportStatusChange',{status:'success',msg})
@@ -3927,7 +3921,14 @@ io.on('connection', (socket) => {
                     socket.emit('sportStatusChange',{status:'success',msg})
                 }
             }else{
-                let cataLog =  await catalogController.findOneAndDelete({Id:data.id})
+                let createData = {
+                    Id : data.id,
+                    name : result.evntNm,
+                    type:'league',
+                    status:false
+                }
+                let cataLog =  await catalogController.create(createData)
+                
                 if(cataLog){
                     msg = 'series deactivated'
                     socket.emit('sportStatusChange',{status:'success',msg})
@@ -3949,13 +3950,7 @@ io.on('connection', (socket) => {
             let allData =  await getLiveGameData()
             let result = allData.find(item => item.evntID == data.id)
             if(data.status){
-                let createData = {
-                    Id : data.id,
-                    name : result.evntNm,
-                    type:'event',
-                    status:true
-                }
-                let cataLog =  await catalogController.create(createData)
+                let cataLog =  await catalogController.findOneAndDelete({Id:data.id})
                 if(cataLog){
                     msg = 'series activated'
                     socket.emit('sportStatusChange2',{status:'success',msg})
@@ -3964,7 +3959,14 @@ io.on('connection', (socket) => {
                     socket.emit('sportStatusChange2',{status:'success',msg})
                 }
             }else{
-                let cataLog =  await catalogController.findOneAndDelete({Id:data.id})
+                
+                let createData = {
+                    Id : data.id,
+                    name : result.evntNm,
+                    type:'event',
+                    status:true
+                }
+                let cataLog =  await catalogController.create(createData)
                 if(cataLog){
                     msg = 'series deactivated'
                     socket.emit('sportStatusChange2',{status:'success',msg})
