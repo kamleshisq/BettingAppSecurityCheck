@@ -613,7 +613,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             return next()
         }
     }
-
+    console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies")
     if (!req.cookies.sessionId) {
         req.app.set('token', null);
         req.app.set('User', null);
