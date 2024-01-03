@@ -100,7 +100,7 @@ router.get("/admin/globalSettings", authController.isProtected, authController.i
 
 //User Panal
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);
-router.get("/homepageWithoutLogin", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard222);
+// router.get("/homepageWithoutLogin", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard222);
 router.get('/exchange', authController.isLogin, notificationController.myNotifications ,viewController.getUserExchangePage);
 router.get('/exchange/cricket', authController.isLogin, notificationController.myNotifications ,viewController.cricketPage);
 router.get('/exchange/football', authController.isLogin, notificationController.myNotifications ,viewController.footBallPage);
