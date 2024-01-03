@@ -5335,7 +5335,7 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
 
 exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let loginuserid1 = await User.distinct("_id",{parent_id:req.currentUser._id})
-
+    console.log(loginuserid1,"loginuserid1")
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
