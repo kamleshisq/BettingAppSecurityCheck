@@ -563,13 +563,13 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     const clientSessionID = req.session.sessionID;
     console.log(clientSessionID, activeSessions, "activeSessionsactiveSessionsactiveSessions")
-    const serverSession = activeSessions[clientSessionID];
-    console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
-    if(clientSessionID && serverSession === req.session){
-        req.app.set('token', null);
-        req.app.set('User', null);
-        return next()
-    }
+    // const serverSession = activeSessions[clientSessionID];
+    // console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
+    // if(clientSessionID && serverSession === req.session){
+    //     req.app.set('token', null);
+    //     req.app.set('User', null);
+    //     return next()
+    // }
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
