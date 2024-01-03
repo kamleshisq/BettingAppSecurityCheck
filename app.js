@@ -71,7 +71,6 @@ app.use(session({
     secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: true,
-    genid: () => uuid(),
 }));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
