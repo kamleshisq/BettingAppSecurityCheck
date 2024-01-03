@@ -3959,12 +3959,11 @@ io.on('connection', (socket) => {
                     socket.emit('sportStatusChange2',{status:'success',msg})
                 }
             }else{
-                
                 let createData = {
                     Id : data.id,
                     name : result.evntNm,
                     type:'event',
-                    status:true
+                    status:false
                 }
                 let cataLog =  await catalogController.create(createData)
                 if(cataLog){
