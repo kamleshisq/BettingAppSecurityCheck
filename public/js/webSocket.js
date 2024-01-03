@@ -70,8 +70,7 @@ socket.on('connect', () => {
             LOGINDATA.LOGINUSER = loginData.User
             LOGINDATA.LOGINTOKEN = loginData.Token
             LOGINDATA.IP = loginData.ip
-            let userId = sessionStorage.getItem('sessionID')
-            console.log(userId)
+            
             function checkLogin(){
                 socket.emit('LoginCHeckUSerSIde', {loginData})
                 setTimeout(()=>{

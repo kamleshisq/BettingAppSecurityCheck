@@ -56362,6 +56362,11 @@ $(document).ready(function () {
     }
   });
 });
+var userId = sessionStorage.getItem('sessionID');
+console.log(userId);
+if (!userId) {
+  console.log('WORKING123456789');
+}
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working") 
