@@ -98,9 +98,9 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
         httpOnly: true,
         // secure: true
         }
-        const sessionId = user.id
+        // const sessionId = user.id
     res.cookie('JWT', token, cookieOption)
-    res.cookie('sessionId', sessionId);
+    // res.cookie('sessionId', sessionId);
 
     // console.log(res);
     user.password = undefined;
@@ -617,12 +617,12 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             return next()
         }
     }
-    console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies")
-    if (!req.cookies.sessionId) {
-        req.app.set('token', null);
-        req.app.set('User', null);
-        return next()
-    }
+    // console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies")
+    // if (!req.cookies.sessionId) {
+    //     req.app.set('token', null);
+    //     req.app.set('User', null);
+    //     return next()
+    // }
     let loginData = {
         Token : token,
         User : currentUser
