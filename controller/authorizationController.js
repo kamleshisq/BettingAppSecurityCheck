@@ -89,6 +89,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
 const user_createSendToken = async (user, statuscode, res, req)=>{
     const sessionID = generateUniqueSessionID();
     req.session.sessionID = sessionID;
+    console.log(req.ip)
     console.log(sessionID, req.session, "req.sessionreq.sessionreq.sessionreq.sessionreq.session")
     // activeSessions[sessionID] = req.session;
     // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
