@@ -3,7 +3,7 @@ const fetch = require("node-fetch") ;
 
 
 async function getSportDATA(data){
-    console.log(data)
+    // console.log(data)
     var fullUrl = `https://fbot.1cricket.co/api/Admin/getmarketdetails`;
     let result = await fetch(fullUrl, {
         method: 'POST',
@@ -14,9 +14,10 @@ async function getSportDATA(data){
         body:JSON.stringify({"mid":data})
     })
     let jsonresult = await result.json()
-    console.log(jsonresult)
+    // console.log(jsonresult)
+    let finalresult = JSON.parse(jsonresult)
 
-    return jsonresult
+    return finalresult
 }
 
 module.exports = getSportDATA

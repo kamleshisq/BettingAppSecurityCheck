@@ -4851,7 +4851,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         marketids.push(item.mrktID)
     })
 
-    const marketrates = getMarketratebymarketids(marketids.join())
+    const marketrates = await getMarketratebymarketids(marketids.join())
 
 
 
