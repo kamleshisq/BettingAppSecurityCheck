@@ -10217,6 +10217,16 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getuserdetailsforcomm',async(id) =>{
+        try{
+
+            let user = await User.findById(id)
+            socket.emit('getuserdetailsforcomm',{status:'success',user})
+        }catch(err){
+            socket.emit('getuserdetailsforcomm',{status:'fail',user})
+        }
+    })
+
     socket.on('getsportwiseuplinecommission',async(data)=>{
         try{
             let sportwisedownlinecomm = await newCommissionModel.aggregate([

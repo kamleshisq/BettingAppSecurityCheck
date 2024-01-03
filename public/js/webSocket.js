@@ -21475,18 +21475,46 @@ socket.on('connect', () => {
             var day = date.getDate().toString().padStart(2, '0');
             return year + "-" + month + "-" + day;
         }
+        // $(document).on('click','.usernametr',function(e){
+        //     let data = {}
+        //     let userName = $(this).children('td.usernametd').attr('data-username')
+        //     socket.on('getuserdetailsforcomm',id)
+        //     let fromdate = $('#fromDate').val()
+        //     let todate = $('#toDate').val()
+        //     let bredcum =  [userName]
+        //     data.userName = userName;
+        //     data.fromdate = fromdate;
+        //     data.todate = todate;
+        //     data.bredcum = bredcum;
+        //     console.log(data)
+        //     socket.emit('getgamewisedownlinecommitssion',{data})
+        // })
+
         $(document).on('click','.usernametr',function(e){
             let data = {}
             let userName = $(this).children('td.usernametd').attr('data-username')
-            let fromdate = $('#fromDate').val()
-            let todate = $('#toDate').val()
-            let bredcum =  [userName]
-            data.userName = userName;
-            data.fromdate = fromdate;
-            data.todate = todate;
-            data.bredcum = bredcum;
+            let id = userName
+            socket.emit('getuserdetailsforcomm',id)
+        })
+
+        socket.on('getuserdetailsforcomm',async(data)=>{
             console.log(data)
-            socket.emit('getgamewisedownlinecommitssion',{data})
+            if(data.status == 'success'){
+                if(data.user.roleName == 'user'){
+                    let userName = data.user.userName
+                    let fromdate = $('#fromDate').val()
+                    let todate = $('#toDate').val()
+                    let bredcum =  [userName]
+                    data.userName = userName;
+                    data.fromdate = fromdate;
+                    data.todate = todate;
+                    data.bredcum = bredcum;
+                    console.log(data)
+                    socket.emit('getgamewisedownlinecommitssion',{data})
+                }else{
+                    location.href = `/admin/downlinecommissionReort?id=${data.user._id}`
+                }
+            }
         })
 
         socket.on('getgamewisedownlinecommitssion',async(data)=>{
