@@ -4441,6 +4441,8 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         if(eventidstatus){
             return item
+        }else{
+            return null
         }
     })
     let newfootballEvents =  footballList.map(async(item) => {
@@ -4464,9 +4466,16 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.count = count
 
-        eventidarr.push(item.evntID)
-        if(eventidarr.includes(item.evntID)){
+        if(!eventidarr.includes(item.evntID)){
+            eventidarr.push(item.evntID)
+            eventidstatus = true
+        }else{
+            eventidstatus = false
+        }
+        if(eventidstatus){
             return item
+        }else{
+            return null
         }
     })
     let newtennisEvents = tennisList.map(async(item) => {
@@ -4492,9 +4501,16 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
         }
         item.count = count
 
-        eventidarr.push(item.evntID)
-        if(eventidarr.includes(item.evntID)){
+        if(!eventidarr.includes(item.evntID)){
+            eventidarr.push(item.evntID)
+            eventidstatus = true
+        }else{
+            eventidstatus = false
+        }
+        if(eventidstatus){
             return item
+        }else{
+            return null
         }
     })
 
