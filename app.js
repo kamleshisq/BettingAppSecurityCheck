@@ -52,7 +52,7 @@ mongoose.connect(process.env.db2,{
 }).then(()=>{
     console.log("MongoDB connected")
 })
-const sessionStore = new MongoStore({
+const sessionStore =  MongoStore({
     mongooseConnection: mongoose.connection,
     collection: 'sessions', // Optionally, specify the name of the session collection
   });
