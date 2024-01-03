@@ -60,7 +60,7 @@
               <%if(sportdownlinecomm.length > 0){%>
               <%for(let i = 0;i<sportdownlinecomm.length;i++){%>
               <tr style="cursor:pointer" class="usernametr">
-                  <td class="usernametd" data-username="<%=sportdownlinecomm[i]._id%>"><%=sportdownlinecomm[i]._id%></td>
+                  <td class="usernametd" data-username="<%=sportdownlinecomm[i].userid%>"><%=sportdownlinecomm[i]._id%></td>
                   <td><%=sportdownlinecomm[i].commissionClaim%></td>
                   <td><%=sportdownlinecomm[i].commissionUnclaim%></td>
                 </tr>

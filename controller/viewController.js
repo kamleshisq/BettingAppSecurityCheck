@@ -5334,10 +5334,19 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
 })
 
 exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
-    let loginuserid1 = await User.distinct("_id",{parent_id:req.currentUser._id})
-    loginuserid1 = loginuserid1.toString()
-    loginuserid1 = loginuserid1.split(',')
-    console.log(loginuserid1,"loginuserid1")
+    let loginuserid1
+    if(Object.keys(req.query).length == 0){
+        loginuserid1 = await User.distinct("_id",{parent_id:req.currentUser._id})
+        loginuserid1 = loginuserid1.toString()
+        loginuserid1 = loginuserid1.split(',')
+        console.log(loginuserid1,"loginuserid1")
+    }else{
+        loginuserid1 = await User.distinct("_id",{parent_id:req.query.id})
+        loginuserid1 = loginuserid1.toString()
+        loginuserid1 = loginuserid1.split(',')
+        console.log(loginuserid1,"loginuserid1")
+    }
+
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
@@ -5357,7 +5366,8 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
                   }},
                 commissionUnclaim:{$sum:{
                     $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
-                  }}
+                  }},
+                userid:{$first:"$userId"}
             }
         }
     ])
