@@ -2,9 +2,6 @@
 <html lang="en">
   <head>
     <script>
-      if (!sessionStorage.tabIdentifier) {
-      sessionStorage.tabIdentifier = Math.random().toString(36).substring(2) + '_' + Date.now();
-      }
       let tabId = sessionStorage.getItem('tabId')
       alert(tabId)
     </script>
