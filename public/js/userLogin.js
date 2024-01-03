@@ -2,6 +2,8 @@ import axios from "axios";
 import { notificationsss } from "./notificationsss";
 
 export const userLogin = async(data) => {
+    const idFromStorage = sessionStorage.getItem("ID_KEY");
+    console.log(idFromStorage, "idFromStorageidFromStorageidFromStorage")
     try{
         const res = await axios({
             method: 'POST',

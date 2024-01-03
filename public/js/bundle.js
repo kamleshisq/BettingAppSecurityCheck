@@ -6855,18 +6855,20 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var userLogin = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
-    var res;
+    var idFromStorage, res;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.prev = 0;
-          _context.next = 3;
+          idFromStorage = sessionStorage.getItem("ID_KEY");
+          console.log(idFromStorage, "idFromStorageidFromStorageidFromStorage");
+          _context.prev = 2;
+          _context.next = 5;
           return (0, _axios.default)({
             method: 'POST',
             url: '/api/v1/auth/userLogin',
             data: data
           });
-        case 3:
+        case 5:
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _notificationsss.notificationsss)({
@@ -6879,22 +6881,22 @@ var userLogin = /*#__PURE__*/function () {
               location.reload();
             }, 300);
           }
-          _context.next = 11;
+          _context.next = 13;
           break;
-        case 7:
-          _context.prev = 7;
-          _context.t0 = _context["catch"](0);
+        case 9:
+          _context.prev = 9;
+          _context.t0 = _context["catch"](2);
           console.log(_context.t0);
           (0, _notificationsss.notificationsss)({
             message: _context.t0.response.data.message,
             status: "error"
           });
           // setTimeout(alert(err.response.data.message), 1500)
-        case 11:
+        case 13:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee, null, [[2, 9]]);
   }));
   return function userLogin(_x) {
     return _ref.apply(this, arguments);
