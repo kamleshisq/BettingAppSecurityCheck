@@ -5334,13 +5334,14 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
 })
 
 exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
+    let loginuserid1
     if(Object.keys(req.query).length == 0){
-        let loginuserid1 = await User.distinct("_id",{parent_id:req.currentUser._id})
+        loginuserid1 = await User.distinct("_id",{parent_id:req.currentUser._id})
         loginuserid1 = loginuserid1.toString()
         loginuserid1 = loginuserid1.split(',')
         console.log(loginuserid1,"loginuserid1")
     }else{
-        let loginuserid1 = await User.distinct("_id",{parent_id:req.query.id})
+        loginuserid1 = await User.distinct("_id",{parent_id:req.query.id})
         loginuserid1 = loginuserid1.toString()
         loginuserid1 = loginuserid1.split(',')
         console.log(loginuserid1,"loginuserid1")
