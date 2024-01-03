@@ -566,7 +566,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
-    const clientSessionID = req.session
+    const clientSessionID = req.sessionStorage
     console.log(clientSessionID, "activeSessionsactiveSessionsactiveSessions")
     // const serverSession = activeSessions[clientSessionID];
     // console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
