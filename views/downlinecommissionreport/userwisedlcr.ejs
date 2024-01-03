@@ -51,9 +51,9 @@
           <%}%>
         <%}else if(adminBredcumArray[i].role === "AGENT"){%>
             <%if(adminBredcumArray[i].status){%>
-              <li><a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
+              <li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort">  <%=adminBredcumArray[i].userName%></a></li>
             <%}else{%>
-              <li><a href="/admin/downlinecommissionReort?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
+              <li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort?id=<%=adminBredcumArray[i].id%>">  <%=adminBredcumArray[i].userName%></a></li>
             <%}%>
         <%}%>
       <%}%>
