@@ -31,14 +31,14 @@
                       <%if(data.cricketEvents[i].status){%>
                       <div class="on-off-btn-section">
                         <span class="on-off">OFF &nbsp; <label class="switch on">
-                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventId%>" checked>
+                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].evntID%>" checked>
                         <span class="slider round"></span>
                         </label>&nbsp; ON</span>
                       </div>
                       <%}else{%>
                       <div class="on-off-btn-section">
                         <span class="on-off">OFF &nbsp; <label class="switch">
-                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventId%>">
+                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].evntID%>">
                         <span class="slider round"></span>
                         </label>&nbsp; ON</span>
                       </div>
@@ -65,14 +65,14 @@
                       <%if(data.cricketEvents[i].featureStatus){%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch on">
-                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventId%>" checked>
+                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].evntID%>" checked>
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
                         <%}else{%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch">
-                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventId%>">
+                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].evntID%>">
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
@@ -82,14 +82,14 @@
                       <%if(data.cricketEvents[i].inPlayStatus){%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch on">
-                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventId%>" checked>
+                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].evntID%>" checked>
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
                         <%}else{%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch">
-                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventId%>">
+                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].evntID%>">
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
@@ -98,7 +98,7 @@
                     <%if(currentUser.roleName != 'Operator'){%>
                     <td>
                       <div class="btn-group">
-                        <a class="btn" href="/admin/riskAnalysis?id=<%=data.cricketEvents[i].eventId%>">View Details</a>
+                        <a class="btn" href="/admin/riskAnalysis?id=<%=data.cricketEvents[i].evntID%>">View Details</a>
                       </div>
                     </td>
                     <%}%>
