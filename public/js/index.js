@@ -95,13 +95,13 @@ $(document).ready(function(){
     colorLink()
 
     $('input:checked').parents('.switch').addClass("on");
-    // $('input:checkbox').change(function(){
-    //     if($(this).is(":checked")) {
-    //         $(this).parents('.switch').addClass("on");
-    //     } else {
-    //         $(this).parents('.switch').removeClass("on");
-    //     }
-    // });
+    $('input:checkbox').change(function(){
+        if($(this).is(":checked")) {
+            $(this).parents('.switch').addClass("on");
+        } else {
+            $(this).parents('.switch').removeClass("on");
+        }
+    });
     
     $('.searchUser').keypress(function(event){
         var keycode = (event.keyCode ? event.keyCode : event.which);
