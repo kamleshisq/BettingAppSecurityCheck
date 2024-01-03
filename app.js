@@ -32,6 +32,9 @@ const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
 const session = require('express-session');
+// const redis = require('redis');
+// let RedisStore = require('connect-redis')(session);
+// let redisClient = redis.createClient();
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -53,11 +56,16 @@ mongoose.connect(process.env.db2,{
 })
 app.use(cookieParser());
 app.use(session({
-    secret: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } 
-  }));
+    secret: process.env.JWT_SECRET,  
+     name: "secretname",
+    cookie: {
+        httpOnly: true,
+        secure: true,
+        sameSite: true,
+        maxAge: 60000 // Time is in miliseconds
+    }
+  }))
+  app.set('trust proxy', 1)
 // console.log("WORKING 54545 ")
 global._blacklistToken=[];
 global._loggedInToken=[];
