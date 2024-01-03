@@ -545,7 +545,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
-    console.log(req.session)
+    console.log(req.session, "SESSSION")
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
