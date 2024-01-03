@@ -53,6 +53,11 @@ const manageAccountUser = require('../model/paymentMethodUserSide');
 const withdrawalRequestModel = require('../model/withdrowReqModel');
 const globalSettingModel = require('../model/globalSetting');
 const colorCodeModel = require('../model/colorcodeModel');
+const getLiveGameData = require('../utils/getlivedata')
+const getlivegamebyid = require('../utils/getlivemarketsbysportid')
+const getlivemarketbyeventids = require('../utils/getlivemarketbyeventids')
+const getMarketratebymarketids = require('../utils/getlivemarketratebymarketids')
+
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -1727,22 +1732,16 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
 
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    const sportData = await getCrkAndAllData()
-    let cricketList;
-    cricketList = sportData[0].gameList[0]
     const sportList =[
         {sport_name:"Cricket",sportId:4}	,
         {sport_name:"Football",sportId:1}	,
         {sport_name:"Tennis",sportId:2}
     ]
    
-    const streams = await Stream.find()
     res.status(200).render("./streamManagement/streammanagement",{
         title:"Stream Management",
         me,
         currentUser:me,
-        cricketList,
-        streams,
         sportList
     })
 })
@@ -1751,20 +1750,22 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
     const sportData = await getCrkAndAllData()
     const sportId = req.query.sportId;
     const me = req.currentUser
-    let cricketEvents;
-    let footballEvents;
-    let tennisEvents;
     let sportList;
     let eventList = [];
     let sportName;
    
-    let data = {};
 
     if(sportId == '4'){
         sportList = sportData[0].gameList[0]
     }else{
         sportList = sportData[1].gameList.find(item => item.sportId == parseInt(sportId))
     }
+    // sportList = await sportData.filter(item => item.sprtID == sportId)
+
+    // res.status(200).json({
+    //     status:'success',
+    //     sportList
+    // })
     
     if(sportList){
         sportName = sportList.sport_name;
@@ -2021,8 +2022,8 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     let RG;
     let currentUser = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     data = await gameModel.find({game_name:new RegExp("32 Cards","i"),whiteLabelName:whiteLabel})
     RG = await gameModel.find({sub_provider_name:"Royal Gaming",whiteLabelName:whiteLabel})
     // console.log(RG.length)
@@ -2210,6 +2211,33 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
     })
 });
 
+exports.getCricketData1 = catchAsync(async(req, res, next) => {
+    var fullUrl = 'https://fbot.1cricket.co/api/Admin/getmarkets';
+    fetch(fullUrl, {
+        method: 'GET'
+    })
+    .then(res =>res.json())
+    .then(result => {
+        // console.log(result)
+        res.status(200).json({
+            result:JSON.parse(result)
+        })
+    })
+});
+exports.getCricketData2 = catchAsync(async(req, res, next) => {
+    var fullUrl = `https://fbot.1cricket.co/api/Admin/getmarketsbysid/?sid=4`;
+    let result = await fetch(fullUrl, {
+        method: 'GET'
+    })
+    let jsonresult = await result.json()
+    let finalresult = JSON.parse(jsonresult)
+
+    res.status(200).json({
+        status:'success',
+        finalresult
+    })
+});
+
 // exports.getFootballData = catchAsync(async(req, res, next) => {
 //     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-footballdata';
 //     fetch(fullUrl, {
@@ -2256,8 +2284,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://dev.ollscores.com/",
-            "Referer":"http://dev.ollscores.com/"},
+            "Origin":"http://app.ollscores.com/",
+            "Referer":"http://app.ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -4203,7 +4231,8 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
     let user = req.currentUser
     const sportId = req.query.sportId
     // console.log(sportId)
-    const sportListData = await getCrkAndAllData()
+    // const sportListData = await getCrkAndAllData()
+    const sportListData = await getLiveGameData()
     let series;
     let seriesObjList = []
     let seriesList = []
@@ -4222,42 +4251,35 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             breadcumArr.push({name:item.sport_name,id:sportId})
         }
     })
-    if(sportId == 4){
-        series = sportListData[0].gameList[0]
-    }else{
-        series = sportListData[1].gameList.find(item => item.sportId == sportId)
-    }
-    if(series){
-        let seriesPromise = series.eventList.map(async(item)=>{
-            if(!seriesList.includes(item.eventData.compId)){
-                seriesList.push(item.eventData.compId)
-                let status = await catalogController.findOne({Id:item.eventData.compId})
-                // if(!status){
-                //     await catalogController.create({
-                //         Id:item.eventData.compId,
-                //         name:item.eventData.league,
-                //         type:"league"
-                //     })
-                //     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId:sportId})
-                // }else{
-                    if(status){
-                        seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:false,sportId})
-
-                    }else{
-                        seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId})
-                    }
-                // }
+    // if(sportId == 4){
+    //     series = sportListData[0].gameList[0]
+    // }else{
+    //     series = sportListData[1].gameList.find(item => item.sportId == sportId)
+    // }
+    series = sportListData.filter(item => item.sprtID == sportId)
+    if(series.length != 0){
+        let seriesPromise = series.map(async(item)=>{
+        if(!seriesList.includes(item.compID)){
+            seriesList.push(item.compID)
+            let status = await catalogController.findOne({Id:item.compID})
+            if(!status){
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:true,sportId:sportId})
+            }else{
+                seriesObjList.push({name:item.compNm,compId:item.compID,status:false,sportId})
             }
+        }
+
+       
+    })
+    Promise.all(seriesPromise).then(()=>{
+        return res.status(200).render("./catalogController/compitition", {
+            title:"Catalog Controller",
+            data:seriesObjList,
+            me: user,
+            currentUser: user,
+            breadcumArr
         })
-        Promise.all(seriesPromise).then(()=>{
-            return res.status(200).render("./catalogController/compitition", {
-                title:"Catalog Controller",
-                data:seriesObjList,
-                me: user,
-                currentUser: user,
-                breadcumArr
-            })
-        })
+    })
     }else{
         return res.status(200).render("./catalogController/compitition", {
             title:"Catalog Controller",
@@ -4266,7 +4288,9 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             currentUser: user,
             breadcumArr
         })
+
     }
+   
    
     
 })
@@ -4275,48 +4299,31 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const compId = req.query.compId
     const sportId = req.query.sportId
-    const sportListData = await getCrkAndAllData()
+    const sportListData = await getLiveGameData()
     let breadcumArr = []
     let nameArr = []
     let series;
     let seriesObjList = []
-    if(sportId == 4){
-        series = sportListData[0].gameList[0]
-        breadcumArr.push({id:sportId,name:series.sport_name})
-
-    }else{
-        series = sportListData[1].gameList.find(item => item.sportId == sportId)
-        breadcumArr.push({id:sportId,name:series.sport_name})
-
-
-    }
-
-    if(series){
-        nameArr.push(series.sport_name)
-        let eventListPromis = series.eventList.map(async(item) => {
-            if(item.eventData.compId == compId){
-                if(!nameArr.includes(item.eventData.league)){
-                    breadcumArr.push({id:compId,name:item.eventData.league,sportId:sportId})
-                    nameArr.push(item.eventData.league)
-                }
-                let status = await catalogController.findOne({Id:item.eventData.eventId})
+    series = sportListData.filter(item => item.compID == compId)
+    console.log(series,'==>series')
+    if(series.length != 0){
+        breadcumArr.push({id:sportId,name:series[0].sprtNm})
+        nameArr.push(series[0].sprtNm)
+        let eventListPromis = series.map(async(item)=>{
+            if(!nameArr.includes(item.evntNm)){
+                breadcumArr.push({id:compId,name:item.compNm,sportId:sportId})
+                nameArr.push(item.evntNm)
+                let status = await catalogController.findOne({Id:item.evntID})
                 let count = 0;
                 if(!status){
-                    // await catalogController.create({
-                    //     Id:item.eventData.eventId,
-                    //     name:item.eventData.name,
-                    //     type:"event"
-                    // })
-                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
-                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
-                    
+                    count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
+                    seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:true,count,eventId:item.evntID})
                 }else{
-                    count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
-                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
-
+                    count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
+                    seriesObjList.push({name:item.evntNm,created_on:item.playTm,status:false,count,eventId:item.evntID})
                 }
             }
-            
+      
         })
         Promise.all(eventListPromis).then(()=>{
             return res.status(200).render("./catalogController/events", {
@@ -4335,105 +4342,188 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
             currentUser: user,
             breadcumArr
         })
+
     }
+    // if(sportId == 4){
+    //     series = sportListData[0].gameList[0]
+    //     breadcumArr.push({id:sportId,name:series.sport_name})
+
+    // }else{
+    //     series = sportListData[1].gameList.find(item => item.sportId == sportId)
+    //     breadcumArr.push({id:sportId,name:series.sport_name})
+
+
+    // }
+
+    // if(series){
+    //     nameArr.push(series.sport_name)
+    //     let eventListPromis = series.eventList.map(async(item) => {
+    //         if(item.eventData.compId == compId){
+    //             if(!nameArr.includes(item.eventData.league)){
+    //                 breadcumArr.push({id:compId,name:item.eventData.league,sportId:sportId})
+    //                 nameArr.push(item.eventData.league)
+    //             }
+    //             let status = await catalogController.findOne({Id:item.eventData.eventId})
+    //             let count = 0;
+    //             if(!status){
+    //                 // await catalogController.create({
+    //                 //     Id:item.eventData.eventId,
+    //                 //     name:item.eventData.name,
+    //                 //     type:"event"
+    //                 // })
+    //                 count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+    //                 seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
+                    
+    //             }else{
+    //                 count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+    //                 seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
+
+    //             }
+    //         }
+            
+    //     })
+    //     Promise.all(eventListPromis).then(()=>{
+    //         return res.status(200).render("./catalogController/events", {
+    //             title:"Catalog Controller",
+    //             data:seriesObjList,
+    //             me: user,
+    //             currentUser: user,
+    //             breadcumArr
+    //         })
+    //     })
+    // }else{
+    //     return res.status(200).render("./catalogController/events", {
+    //         title:"Catalog Controller",
+    //         data:seriesObjList,
+    //         me: user,
+    //         currentUser: user,
+    //         breadcumArr
+    //     })
+    // }
 })
 
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     // console.log('START')
     let user = req.currentUser
-    const sportListData = await getCrkAndAllData()
+    // const sportListData = await getLiveGameData()
     let cricketEvents;
     let footballEvents;
     let tennisEvents;
     
     let count;
     let data = {};
-
-    let cricketList = sportListData[0].gameList[0]
-    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
-    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
-
-    let newcricketEvents = cricketList.eventList.map(async(item) => {
-         let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
-         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+    let eventidarr = []
+    let eventidstatus = true
+    let cricketList = await getlivegamebyid(4)
+    let footballList = await getlivegamebyid(1)
+    let tennisList = await getlivegamebyid(2)
+    let newcricketEvents = cricketList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.evntID})
+         let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
+         count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.eventData.status = true
+            item.status = true
          }else{
-            item.eventData.status = false
+             item.status = false
         }
         if(!featureStatus){
-            item.eventData.featureStatus = false
+            item.featureStatus = false
         }else{
-            item.eventData.featureStatus = true
+            item.featureStatus = true
         }
         if(!inPlayStatus){
-            item.eventData.inPlayStatus = false
+            item.inPlayStatus = false
         }else{
-            item.eventData.inPlayStatus = true
+            item.inPlayStatus = true
         }
-        item.eventData.count = count
-
-        return item
+        item.count = count
+        if(!eventidarr.includes(item.evntID)){
+            eventidarr.push(item.evntID)
+            eventidstatus = true
+        }else{
+            eventidstatus = false
+        }
+        if(eventidstatus){
+            return item
+        }else{
+            return null
+        }
     })
-    let newfootballEvents =  footballList.eventList.map(async(item) => {
-         let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
-
-
-         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+    let newfootballEvents =  footballList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.evntID})
+         let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
          if(!status){
-            item.eventData.status = true
+            item.status = true
          }else{
-            item.eventData.status = false
+             item.status = false
         }
         if(!featureStatus){
-            item.eventData.featureStatus = false
+            item.featureStatus = false
         }else{
-            item.eventData.featureStatus = true
+            item.featureStatus = true
         }
         if(!inPlayStatus){
-            item.eventData.inPlayStatus = false
+            item.inPlayStatus = false
         }else{
-            item.eventData.inPlayStatus = true
+            item.inPlayStatus = true
         }
-        item.eventData.count = count
+        item.count = count
 
-        return item
+        if(!eventidarr.includes(item.evntID)){
+            eventidarr.push(item.evntID)
+            eventidstatus = true
+        }else{
+            eventidstatus = false
+        }
+        if(eventidstatus){
+            return item
+        }else{
+            return null
+        }
     })
-    let newtennisEvents = tennisList.eventList.map(async(item) => {
-         let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
-         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+    let newtennisEvents = tennisList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.evntID})
+         let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
 
-         count = await betModel.countDocuments({eventId:item.eventData.eventId,status:"OPEN"})
+         count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.eventData.status = true
+            item.status = true
          }else{
-            item.eventData.status = false
+             item.status = false
         }
         if(!featureStatus){
-            item.eventData.featureStatus = false
+            item.featureStatus = false
         }else{
-            item.eventData.featureStatus = true
+            item.featureStatus = true
         }
         if(!inPlayStatus){
-            item.eventData.inPlayStatus = false
+            item.inPlayStatus = false
         }else{
-            item.eventData.inPlayStatus = true
+            item.inPlayStatus = true
         }
-        item.eventData.count = count
+        item.count = count
 
-        return item
+        if(!eventidarr.includes(item.evntID)){
+            eventidarr.push(item.evntID)
+            eventidstatus = true
+        }else{
+            eventidstatus = false
+        }
+        if(eventidstatus){
+            return item
+        }else{
+            return null
+        }
     })
 
     cricketEvents = await Promise.all(newcricketEvents);
     footballEvents = await Promise.all(newfootballEvents);
     tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
-    // console.log(data.footballEvents, "fhdhhfdhfd")
+    console.log(data.cricketEvents, "fhdhhfdhfd")
     // data = {}
 
     return res.status(200).render("./eventController/eventController", {
@@ -4446,12 +4536,13 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
 
 exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
-    let cricketData = await getCrkAndAllData()
-    const cricket = cricketData[0].gameList[0].eventList
+    let cricketData = await getLiveGameData()
+    // const cricket = cricketData[0].gameList[0].eventList
     // console.log(cricket, "cricketcricketcricket")
+    let cricket = cricketData.filter( (ele) =>{ return ele.sprtID == "4"})
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
-        title:"Commission Markets",
+        title:"Commissin Moarkets",
         me,
         currentUser:me,
         cricket
@@ -4771,53 +4862,62 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         mainId = parentUser._id.toString()
     }
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    const sportData = await getCrkAndAllData()
-    const cricket = sportData[0].gameList[0].eventList
-    let match = cricket.find(item => item.eventData.eventId == req.query.id);
-    if(match === undefined){
-        let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
-        match = data1liveCricket.find(item => item != undefined)
-    }
-    if(match == undefined){
-        // res.status(404).json({
-        //     status:"Success",
-        //     message:"This match is no more live"
-        // })
-        res.render('./errorMessage', {
-            statusCode : 404,
-            message:"Opps! Please try again later",
-            mainMassage:"The match you are looking for is no more live"
-        })
-    }
-    let src
-    let status = false
-    let liveStream
-    let StreamData = await streamModel.findOne({eventId:req.query.id})
-    if(StreamData){
-        if(StreamData.status){
-            src = StreamData.url
-        }
-    }else{
-        liveStream = await liveStreameData(match.eventData.channelId, ipv4)
-        const src_regex = /src='([^']+)'/;
-        let match1
-        // let src
-        if(liveStream.data){
-    
-            match1 = liveStream.data.match(src_regex);
-            if (match1) {
-                src = match1[1];
-                status = true
-            } else {
-                console.log("No 'src' attribute found in the iframe tag.");
-            }
-            // console.log(src, 123)
-        }
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    const sportData = await getlivemarketbyeventids(req.query.id)
+    let marketids = [];
+    sportData.map(item => {
+        marketids.push(item.mrktID)
+    })
 
-    }
+    const marketrates = await getMarketratebymarketids(marketids.join())
+
+
+
+    // const cricket = sportData[0].gameList[0].eventList
+    // let match = cricket.find(item => item.eventData.eventId == req.query.id);
+    // if(match === undefined){
+    //     let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
+    //     match = data1liveCricket.find(item => item != undefined)
+    // }
+    // if(match == undefined){
+    //     // res.status(404).json({
+    //     //     status:"Success",
+    //     //     message:"This match is no more live"
+    //     // })
+    //     res.render('./errorMessage', {
+    //         statusCode : 404,
+    //         message:"Opps! Please try again later",
+    //         mainMassage:"The match you are looking for is no more live"
+    //     })
+    // }
+    // let src
+    // let status = false
+    // let liveStream
+    // let StreamData = await streamModel.findOne({eventId:req.query.id})
+    // if(StreamData){
+    //     if(StreamData.status){
+    //         src = StreamData.url
+    //     }
+    // }else{
+    //     liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+    //     const src_regex = /src='([^']+)'/;
+    //     let match1
+    //     // let src
+    //     if(liveStream.data){
+    
+    //         match1 = liveStream.data.match(src_regex);
+    //         if (match1) {
+    //             src = match1[1];
+    //             status = true
+    //         } else {
+    //             console.log("No 'src' attribute found in the iframe tag.");
+    //         }
+    //         // console.log(src, 123)
+    //     }
+
+    // }
     // const src_regex = /src='([^']+)'/;
     // let match1
     // if(liveStream.data){
@@ -4898,28 +4998,34 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
                 }
             }
         ])
-        res.status(200).render("./mainRiskAnalysis/main",{
-            title:"Risk Analysis",
-            user: req.currentUser,
-            verticalMenus,
-            check:"ExchangeIn",
-            match,
-            SportLimits,
-            liveStream,
-            userLog,
-            notifications:req.notifications,
-            stakeLabledata,
-            Bets,
-            rules,
-            src,
-            userMultimarkets,
-            min,
-            max,
-            currentUser:req.currentUser,
-            suspend:check,
-            basicDetails,
-            colorCode
-    })
+
+        res.status(200).json({
+            status:'success',
+            sportData,
+            marketrates
+        })
+        // res.status(200).render("./mainRiskAnalysis/main",{
+        //     title:"Risk Analysis",
+        //     user: req.currentUser,
+        //     verticalMenus,
+        //     check:"ExchangeIn",
+        //     match,
+        //     SportLimits,
+        //     liveStream,
+        //     userLog,
+        //     notifications:req.notifications,
+        //     stakeLabledata,
+        //     Bets,
+        //     rules,
+        //     src,
+        //     userMultimarkets,
+        //     min,
+        //     max,
+        //     currentUser:req.currentUser,
+        //     suspend:check,
+        //     basicDetails,
+        //     colorCode
+        // })
 });
 
 
@@ -5251,7 +5357,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 },
                 loginUserId:{$exists:true},
-                parentIdArray:{$in:[loginuserid1.toString()]}
+                parent_id:loginuserid1.toString()
 
             }
         },
