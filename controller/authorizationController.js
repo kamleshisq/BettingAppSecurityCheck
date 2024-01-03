@@ -90,7 +90,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     // }
 
     const token = createToken(user._id);
-    req.session.token = token;
+    // req.session.token = token;
     // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
