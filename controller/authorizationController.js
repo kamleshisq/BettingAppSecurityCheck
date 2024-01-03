@@ -29,6 +29,11 @@ function parseCookies(cookieString) {
     return cookies;
   }
 
+  function generateUniqueSessionID() {
+    return uuid.v4();
+}
+
+
 const createSendToken = async (user, statuscode, res, req)=>{
     // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
     // if (existingToken) {
@@ -381,10 +386,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-    const clientSessionID = sessionStorage.getItem('sessionID');
-    const serverSessionID = req.session.sessionID;
-    console.log(clientSessionID, serverSessionID, "serverSessionIDserverSessionIDserverSessionIDserverSessionID")
-    if(clientSessionID !== serverSessionID){
+    const clientSessionID = req.session.sessionID;
+    const serverSession = activeSessions[clientSessionID];
+    console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
+    if(clientSessionID && serverSession === req.session){
         req.app.set('token', null);
         req.app.set('User', null);
         return res.redirect('/')
