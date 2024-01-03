@@ -32,6 +32,7 @@ const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -40,11 +41,6 @@ const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
 
 // const ejs = require("ejs");
 
-app.use(session({
-    secret: 'abcdefghijklmnopqrstuvwxyz',
-    resave: false,
-    saveUninitialized: true,
-  }));
 
 app.use(requestIp.mw());
 app.use(cors());
@@ -56,6 +52,16 @@ mongoose.connect(process.env.db2,{
 }).then(()=>{
     console.log("MongoDB connected")
 })
+app.use(session({
+    secret: 'abcdefghijklmnopqrstuvwxyz',
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: {
+      secure: false, // Set to true if using HTTPS
+      httpOnly: true,
+    },
+  }));
 // console.log("WORKING 54545 ")
 global._blacklistToken=[];
 global._loggedInToken=[];
