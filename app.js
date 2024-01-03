@@ -56,15 +56,10 @@ mongoose.connect(process.env.db2,{
 })
 app.use(cookieParser());
 app.use(session({
-    secret: process.env.JWT_SECRET,  
-     name: "secretname",
-    cookie: {
-        httpOnly: true,
-        secure: true,
-        sameSite: true,
-        maxAge: 60000 // Time is in miliseconds
-    }
-  }))
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
   app.set('trust proxy', 1)
 // console.log("WORKING 54545 ")
 global._blacklistToken=[];
