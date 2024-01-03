@@ -543,9 +543,9 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
-    console.log(req.cookies, "cookiescookiescookies")
-    console.log('product: ', sessionStorage.getItem('sessionID'));
-    console.log(req.session, "SESSSION")
+    // console.log(req.cookies, "cookiescookiescookies")
+    // console.log('product: ', sessionStorage.getItem('sessionID'));
+    // console.log(req.session, "SESSSION")
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -612,6 +612,10 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
             return next()
         }
+    }
+
+    if (!req.cookies.sessionId) {
+        
     }
     let loginData = {
         Token : token,
