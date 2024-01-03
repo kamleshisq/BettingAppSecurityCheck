@@ -552,9 +552,9 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
-    console.log(req.session, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
-    const clientSessionID = req.session.sessionID
-    console.log(clientSessionID, "activeSessionsactiveSessionsactiveSessions")
+    // console.log(req.session, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
+    // const clientSessionID = req.session.sessionID
+    // console.log(clientSessionID, "activeSessionsactiveSessionsactiveSessions")
     // const serverSession = activeSessions[clientSessionID];
     // console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
     // if(clientSessionID && serverSession === req.session){
@@ -598,11 +598,11 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
         return next()
     }
-    if((clientSessionID && tokenId.sessionId != clientSessionID) || !clientSessionID){
-        req.app.set('token', null);
-        req.app.set('User', null);
-        return next()
-    }
+    // if((clientSessionID && tokenId.sessionId != clientSessionID) || !clientSessionID){
+    //     req.app.set('token', null);
+    //     req.app.set('User', null);
+    //     return next()
+    // }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
