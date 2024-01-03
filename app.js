@@ -52,11 +52,15 @@ mongoose.connect(process.env.db2,{
 }).then(()=>{
     console.log("MongoDB connected")
 })
+const sessionStore = new MongoStore({
+    mongooseConnection: mongoose.connection,
+    collection: 'sessions', // Optionally, specify the name of the session collection
+  });
 app.use(session({
     secret: 'abcdefghijklmnopqrstuvwxyz',
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: sessionStore,
     cookie: {
       secure: false, // Set to true if using HTTPS
       httpOnly: true,
