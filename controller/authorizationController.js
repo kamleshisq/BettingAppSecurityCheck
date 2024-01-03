@@ -97,7 +97,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
         httpOnly: true,
         // secure: true
         }
-    // res.cookie('JWT', token, cookieOption)
+    res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)

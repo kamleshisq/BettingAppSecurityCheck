@@ -71,10 +71,6 @@ app.use(session({
     secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: {
-        sameSite: 'none',  // 'none' allows cross-origin requests
-        secure: false,      // This attribute should be enabled if you're using HTTPS
-    },
 }));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
