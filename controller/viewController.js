@@ -54,6 +54,7 @@ const withdrawalRequestModel = require('../model/withdrowReqModel');
 const globalSettingModel = require('../model/globalSetting');
 const colorCodeModel = require('../model/colorcodeModel');
 const getLiveGameData = require('../utils/getlivedata')
+const getlivegamebyid = require('../utils/getlivemarketsbysportid')
 
 
 // exports.userTable = catchAsync(async(req, res, next) => {
@@ -4399,7 +4400,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     // console.log('START')
     let user = req.currentUser
-    const sportListData = await getLiveGameData()
+    // const sportListData = await getLiveGameData()
     let cricketEvents;
     let footballEvents;
     let tennisEvents;
@@ -4407,18 +4408,24 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let count;
     let data = {};
 
-    let cricketList = sportListData.filter(item => item.sprtID == 4)
-    let footballList = sportListData.filter(item => item.sprtID == 1)
-    let tennisList = sportListData.filter(item => item.sprtID == 2)
+    let cricketList = await getlivegamebyid(4)
+    let footballList = await getlivegamebyid(1)
+    let tennisList = await getlivegamebyid(2)
     let newcricketEvents = cricketList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.evntID})
          let featureStatus = await FeatureventModel.findOne({Id:item.evntID})
          let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
          count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
          if(!status){
-            item.status = false
-         }else{
             item.status = true
+         }else{
+            if(status.status){
+
+                item.status = true
+            }else{
+                item.status = false
+
+            }
         }
         if(!featureStatus){
             item.featureStatus = false
@@ -4441,10 +4448,16 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
 
          count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
-         if(!status){
+        if(!status){
             item.status = true
          }else{
-            item.status = false
+            if(status.status){
+
+                item.status = true
+            }else{
+                item.status = false
+
+            }
         }
         if(!featureStatus){
             item.featureStatus = false
@@ -4466,10 +4479,16 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          let inPlayStatus = await InPlayEvent.findOne({Id:item.evntID})
 
          count = await betModel.countDocuments({eventId:item.evntID,status:"OPEN"})
-         if(!status){
+        if(!status){
             item.status = true
          }else{
-            item.status = false
+            if(status.status){
+
+                item.status = true
+            }else{
+                item.status = false
+
+            }
         }
         if(!featureStatus){
             item.featureStatus = false
