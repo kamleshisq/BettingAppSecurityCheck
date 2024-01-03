@@ -5338,11 +5338,11 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
-                date: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                },
+                // date: {
+                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                // },
                 loginUserId:{$exists:true},
-                parent_id:loginuserid1
+                parent_id:loginuserid1.toString()
 
             }
         },
