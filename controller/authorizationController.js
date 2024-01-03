@@ -95,7 +95,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     }
     
     const sessionID = user.id;
-    req.session.Session.sessionID = sessionID;
+    req.session.sessionID = sessionID;
     console.log(req.ip)
     console.log(sessionID, req.session, "req.sessionreq.sessionreq.sessionreq.sessionreq.session")
     const token = createToken(req.session.sessionID);

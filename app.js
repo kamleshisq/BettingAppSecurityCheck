@@ -32,9 +32,9 @@ const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
 const session = require('express-session');
-// const redis = require('redis');
-// let RedisStore = require('connect-redis')(session);
-// let redisClient = redis.createClient();
+const redis = require('redis');
+let RedisStore = require('connect-redis')(session);
+let redisClient = redis.createClient();
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
@@ -55,11 +55,20 @@ mongoose.connect(process.env.db2,{
     console.log("MongoDB connected")
 })
 app.use(cookieParser());
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: false,
-}));
+app.use(
+    session({
+      secret: [process.env.JWT_SECRET,'notsoimportantsecret',process.env.JWT_SECRET], 
+       name: process.env.JWT_SECRET, 
+       cookie: {
+        httpOnly: true,
+        secure: true,
+        sameSite: true,
+        maxAge: 600000 // Time is in miliseconds
+    },
+      store: new RedisStore({ client: redisClient ,ttl: 86400}),   
+      resave: false
+    })
+  )
   app.set('trust proxy', 1)
 // console.log("WORKING 54545 ")
 global._blacklistToken=[];
