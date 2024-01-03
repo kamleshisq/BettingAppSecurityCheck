@@ -3947,7 +3947,7 @@ io.on('connection', (socket) => {
                 socket.emit('sportStatusChange2',{status:'success',msg})
             }
         }else{
-            let cataLog =  await catalogController.findOneAndUpdate({Id:data.id},{status:false})
+            let cataLog =  await catalogController.findOneAndDelete({Id:data.id})
             if(cataLog){
                 msg = 'series deactivated'
                 socket.emit('sportStatusChange2',{status:'success',msg})
