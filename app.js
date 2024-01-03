@@ -67,11 +67,11 @@ app.use(fileUpload({
   }));
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-}));
+// app.use(session({
+//     secret: process.env.JWT_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+// }));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
