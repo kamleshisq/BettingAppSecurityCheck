@@ -545,7 +545,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     next()
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
-    console.log(req.session.tabId)
+    console.log(req.session.tabId, "TABID")
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
     // console.log(req.cookies, "cookiescookiescookies")
