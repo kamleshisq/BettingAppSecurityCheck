@@ -389,15 +389,15 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
-    console.log(activeSessions)
+    // console.log(activeSessions)
     const clientSessionID = req.session.sessionID;
-    const serverSession = activeSessions[clientSessionID];
-    console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
-    if(clientSessionID && serverSession === req.session){
-        req.app.set('token', null);
-        req.app.set('User', null);
-        return res.redirect('/')
-    }
+    // const serverSession = activeSessions[clientSessionID];
+    // console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
+    // if(clientSessionID && serverSession === req.session){
+    //     req.app.set('token', null);
+    //     req.app.set('User', null);
+    //     return res.redirect('/')
+    // }
     res.locals.whiteLabel = process.env.whiteLabelName
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
     if(whiteLabelData){
