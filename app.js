@@ -31,10 +31,7 @@ const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
-const redis = require('redis');
 const session = require('express-session')
-let RedisStore = require('connect-redis').default;
-let redisClient = redis.createClient();
 const uuid = require('uuid').v4;
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
@@ -70,20 +67,11 @@ app.use(fileUpload({
   }));
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
-app.use(
-    session({
-      secret: [process.env.JWT_SECRET,'notsoimportantsecret','highlyprobablysecret'], 
-       name: "jkjkjjkjkj", 
-       cookie: {
-        httpOnly: true,
-        secure: true,
-        sameSite: true,
-        maxAge: 30000 // Time is in miliseconds
-    },
-      store: new RedisStore({ client: redisClient ,ttl: 86400}),   
-      resave: false
-    })
-  )
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+}));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
