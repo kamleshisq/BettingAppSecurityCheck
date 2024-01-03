@@ -64,6 +64,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
   }));
+const activeSessions = {};
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
 app.use(session({

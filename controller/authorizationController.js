@@ -88,7 +88,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
 const user_createSendToken = async (user, statuscode, res, req)=>{
     const sessionID = generateUniqueSessionID();
     req.session.sessionID = sessionID;
-
+    activeSessions[sessionID] = req.session;
     // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
     // if (existingToken) {
     //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
