@@ -73,7 +73,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         sameSite: 'none',  // 'none' allows cross-origin requests
-        secure: true,      // This attribute should be enabled if you're using HTTPS
+        secure: false,      // This attribute should be enabled if you're using HTTPS
     },
 }));
 // console.log("WORKING 54545 ")
