@@ -6873,11 +6873,11 @@ var userLogin = /*#__PURE__*/function () {
               message: 'Logged in successfully!!!!',
               status: "success"
             });
-            console.log(res.data.data.sessionID);
+            // console.log(res.data.data.sessionID)
             sessionStorage.setItem('sessionID', res.data.data.sessionID);
             setTimeout(function () {
               location.reload();
-            }, 3000);
+            }, 300);
           }
           _context.next = 11;
           break;
