@@ -560,10 +560,10 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
 exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log('WORKING')
     // console.log(req.originalUrl, "req.originalUrlreq.originalUrlreq.originalUrlreq.originalUrlreq.originalUrl")
-    const clientSessionID = sessionStorage.getItem('sessionID');
-    const serverSessionID = req.session.sessionID;
-    console.log(clientSessionID, serverSessionID, "serverSessionIDserverSessionIDserverSessionIDserverSessionID")
-    if(clientSessionID !== serverSessionID){
+    const clientSessionID = req.session.sessionID;
+    const serverSession = activeSessions[clientSessionID];
+    console.log(clientSessionID, serverSession, req.session,"serverSessionIDserverSessionIDserverSessionIDserverSessionID")
+    if(clientSessionID && serverSession === req.session){
         req.app.set('token', null);
         req.app.set('User', null);
         return next()
