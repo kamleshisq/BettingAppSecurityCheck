@@ -70,7 +70,13 @@ app.use(cookieParser());
 app.use(session({
     secret: `It doesn't matter how you start, finish it like a Dhoni`,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+        secure: false, // Set to true if using HTTPS
+        httpOnly: true,
+        // Add other cookie options as needed
+    },
 }));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
