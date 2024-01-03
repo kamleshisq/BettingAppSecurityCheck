@@ -40,6 +40,11 @@ const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
 
 // const ejs = require("ejs");
 
+app.use(session({
+    secret: 'abcdefghijklmnopqrstuvwxyz',
+    resave: false,
+    saveUninitialized: true,
+  }));
 
 app.use(requestIp.mw());
 app.use(cors());
@@ -67,12 +72,6 @@ app.use(fileUpload({
 const activeSessions = {};
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
-app.use(session({
-    secret: `It doesn't matter how you start, finish it like a Dhoni`,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false, httpOnly: true }
-}));
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")

@@ -2652,7 +2652,7 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
 
     // console.log(cricketSeries[0].matchdata,'==>>cricketSeries')
     let catalog = await catalogController.find()
-    console.log(catalog, "catalogcatalogcatalog")
+    // console.log(catalog, "catalogcatalogcatalog")
 
     res.status(200).render('./userSideEjs/inplayPage/main',{
         title:'In Play',
