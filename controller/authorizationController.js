@@ -10,7 +10,8 @@ const paymentReportModel = require('../model/paymentreport')
 const userWithReq = require('../model/withdrowReqModel');
 const whiteLabelMOdel = require('../model/whitelableModel');
 const session = require('express-session');
-const axios = require('axios')
+const axios = require('axios');
+const uuid = require('uuid');
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
