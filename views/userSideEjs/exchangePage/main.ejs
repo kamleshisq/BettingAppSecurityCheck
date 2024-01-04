@@ -16,6 +16,7 @@
                             </div>
                           <%}%>
                         </section>
+                        <%if(LiveCricket.length > 0 && liveFootBall.length > && liveTennis.length >)%>
                         <section class="exchange-pg-tranding-maches-nav-sec">
                           <div class="exchange-pg-tranding-maches-nav-sec-wrp" id="liveMatch_data">
                             <%for(let i = 0; i < LiveCricket.length; i++){%>
@@ -44,7 +45,8 @@
                             <%}%>
                           </div>
                       </section>
-                      <section class="exchange-pg-tbl-dvwrp pt-3 mob-dis-no">
+                            <%}%>
+                        <section class="exchange-pg-tbl-dvwrp pt-3 mob-dis-no">
                         <%-include('./table')%>
                       </section>
                         
