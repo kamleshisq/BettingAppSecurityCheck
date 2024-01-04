@@ -5386,10 +5386,10 @@ async function getcommissionreport (me,currentUser,userName){
     return sportdownlinecomm
 }
 
+let resultArray = [];
 for(let i = 0 ;i<loginuserid1.length;i++){
     let status = false;
     let result
-    let resultArray = [];
     while(status == false){
         let user = await User.findOne({userName:loginuserid1[i]})
         result = await getcommissionreport(me,currentUser,loginuserid1[i])
