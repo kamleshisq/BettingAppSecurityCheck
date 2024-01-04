@@ -3381,9 +3381,14 @@ socket.on('connect', () => {
                   <th>Returns</th>
                 </tr>
                 </thead>`
-                html += `<tbody class="new-body" >
-                <tr  class="blue"><td>${new Date(data.date)}</td>
-                <td>${data.event}</td>`
+
+                html += `<tbody class="new-body" >`
+                if(data.bettype2 === "LAY"){
+                    html += `<tr class="lay" ><td>${new Date(data.date)}</td>`
+                }else{
+                    html += `<tr class="back" ><td>${new Date(data.date)}</td>`
+                }
+                html += `<td>${data.event}</td>`
                 if(data.marketName){
                     html += `<td>${data.marketName}</td>`
                 }else{
