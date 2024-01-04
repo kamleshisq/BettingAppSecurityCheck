@@ -180,6 +180,7 @@ async function mapBet(data){
             // console.log(bet, "betbetbet")
             console.log(bets[bet].selectionName.split('@')[1], data.result, bets[bet].bettype2, (bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK', ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY"), "hjgjhgjhgjghghghghghghghghghghghgh")
             if((bets[bet].selectionName.toLowerCase() === data.result.toLowerCase() && bets[bet].bettype2 == 'BACK') || (bets[bet].selectionName.toLowerCase() !== data.result.toLowerCase() && bets[bet].bettype2 == 'LAY')){
+                console.log("matchoddsLike")
                 let debitCreditAmount;
                 let exposure = bets[bet].exposure
                 if(bets[bet].bettype2 == 'BACK'){
@@ -382,6 +383,7 @@ async function mapBet(data){
                   "transactionId":`${bets[bet].transactionId}`
                 })
             }else if (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")){
+                console.log('FANCY')
                 let creditDebitamount 
                         let exposure = bets[bet].exposure
                         if(bets[bet].bettype2 == "BACK"){
@@ -437,6 +439,7 @@ async function mapBet(data){
                           "transactionId":`${bets[bet].transactionId}`
                         })
             }else{
+                console.log('LOOSE')
                 let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"LOSS", result:data.result})
                 let user 
                 let exposure = bets[bet].exposure
