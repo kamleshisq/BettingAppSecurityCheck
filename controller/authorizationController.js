@@ -284,7 +284,15 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 
 exports.checkHouse = catchAsync(async(req, res, next) => {
     let token 
-    let loginData
+    let loginData = {}
+
+    let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+    if(whiteLabelData){
+        res.locals.B2C_Status = whiteLabelData.B2C_Status
+    }else{
+        res.locals.B2C_Status = false
+    }
+
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
@@ -525,6 +533,97 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     req.app.set('User', currentUser);
     next()
 });
+
+
+exports.checkAdmin_isLogin = catchAsync( async(req, res, next) => {
+    let token 
+    res.locals.loginData = undefined
+    let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+    if(whiteLabelData){
+        res.locals.B2C_Status = whiteLabelData.B2C_Status
+    }else{
+        res.locals.B2C_Status = false
+    }
+
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1].split("=")[1];
+    }else if(req.headers.cookie){
+        token = parseCookies(req.headers.cookie).ADMIN_JWT;
+        // console.log(token)
+    }
+
+    if(!token){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+    if(token == "loggedout"){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+
+    const tokenId = await loginLogs.findOne({session_id:token})
+    // console.log(tokenId, "TOKENID")
+    if(!tokenId){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+    if(!tokenId.isOnline){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+    const currentUser = await User.findById(decoded.A);
+    if(!currentUser){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }
+
+    if(currentUser.roleName != "DemoLogin"){
+        if(!currentUser){
+            req.app.set('token', null);
+        req.app.set('User', null);
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.isActive){
+            req.app.set('token', null);
+        req.app.set('User', null);
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.is_Online){
+            req.app.set('token', null);
+        req.app.set('User', null);
+            return next()
+        }else if (currentUser.role.roleName !== "Super-Duper-Admin"){
+            req.app.set('token', null);
+            req.app.set('User', null);
+            return next()
+        }
+    }
+    
+    req.currentUser = currentUser
+    req.token = token
+    let loginData = {
+        Token : token,
+        User : currentUser
+    }
+    req.app.set('token', token);
+    req.app.set('User', currentUser);
+    res.locals.loginData = loginData
+    next()
+})
+
 
 exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     // console.log('adminLogin')
