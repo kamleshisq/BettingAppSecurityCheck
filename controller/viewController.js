@@ -5407,43 +5407,43 @@ async function getcommissionreport (loginuserid1){
             }else{
                 let usernameStatus = true;
                 while(usernameStatus){
+                    console.log(roleName[0],usernameStatus,userName,'==>roleName[0]')
                     if(roleName[0] == 'Admin'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Duper-Admin'})
                         if(userName.length == 0){
                             roleName[0] = 'Super-Duper-Admin'
                         }else{
-                            usernameStatus == false
+                            usernameStatus = false
                         }
                     }else if(roleName[0] == 'Super-Duper-Admin'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Admin'})
                         if(userName.length == 0){
                             roleName[0] = 'Super-Admin'
                         }else{
-                            usernameStatus == false
+                            usernameStatus = false
                         }
                     }else if(roleName[0] == 'Super-Admin'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Duper-Admin'})
                         if(userName.length == 0){
                             roleName[0] = 'Duper-Admin'
                         }else{
-                            usernameStatus == false
+                            usernameStatus = false
                         }
                     }else if(roleName[0] == 'Duper-Admin'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'AGENT'})
                         if(userName.length == 0){
                             roleName[0] = 'AGENT'
                         }else{
-                            usernameStatus == false
+                            usernameStatus = false
                         }
                     }else if(roleName[0] == 'AGENT'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'user'})
-                        if(userName.length == 0){
-                            roleName[0] = 'user'
-                        }else{
-                            usernameStatus == true
-                        }
+                        roleName[0] = 'user'
+                        usernameStatus = false
                     }else{
                         status = true
+                        usernameStatus = false
+                        
                     }
                 }
             }
