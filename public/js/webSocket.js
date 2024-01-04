@@ -21973,7 +21973,7 @@ socket.on('connect', () => {
                 const searchParams = new URLSearchParams(window.location.search);
                 console.log(searchParams,'searchParams')
                 data.LOGINUSER = LOGINDATA.LOGINUSER
-                socket.emit('userwisedownlinecommittion',{data})
+                // socket.emit('userwisedownlinecommittion',{data})
             }else{
                 if($('.bredcum-container li:last').hasClass('marketeventcompitisionsportusername')){
                 let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-marketeventcompitisionsportusername'))
