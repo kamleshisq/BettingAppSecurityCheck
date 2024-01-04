@@ -25,16 +25,12 @@
             <li><button class="open-bets-show">Open Bets</button></li>
         </ul>
     </div>
+    <%if(match.eventData.type != "UPCOMING"){ %>
+      <div class="live-score-banner">
+          <div class="live-score"></div>
+      </div>
+    <%}%>
         <div class="content-left">
-            <!-- Live match score -->
-            <%if(match.eventData.type != "UPCOMING"){ %>
-              <div class="live-score-banner">
-                  <div class="live-score">
-                      
-                  </div>
-              </div>
-            <%}%>
-            <!-- Match Odds -->
             <%if(match.marketList.match_odd != null){%>
               <div class="bets-table">
                   <div class="title">
