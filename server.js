@@ -9987,11 +9987,12 @@ io.on('connection', (socket) => {
             let loginuserid1
             let adminBredcumArray = []
             let me
+            let query = data.data.query
            let currentUser = data.data.LOGINUSER        
-            if(Object.keys(req.query).length == 0){
-                me = req.currentUser
+            if(Object.keys(query).length == 0){
+                me = currentUser
             }else{
-                me = await User.findById(req.query.id)
+                me = await User.findById(query.id)
             }  
             loginuserid1 = await User.distinct("userName",{parent_id:me._id})
                 if(me.userName === currentUser.userName){
@@ -10035,9 +10036,7 @@ io.on('connection', (socket) => {
             let sportdownlinecomm = await commissionNewModel.aggregate([
                 {
                     $match:{
-                        date: {
-                            $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                        },
+                        date: {$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         loginUserId:{$exists:true},
                         userName:{$in:loginuserid1}
         
@@ -10129,14 +10128,6 @@ io.on('connection', (socket) => {
             }
         
             console.log(resultArray,"==>resultArray1")
-        
-            res.status(200).render('./downlinecommissionreport/userwisedlcr',{
-                title:'Downline Commission Report',
-                sportdownlinecomm:resultArray,
-                currentUser:req.currentUser,
-                me:req.currentUser,
-                adminBredcumArray
-            })
 
             socket.emit('userwisedownlinecommittion',{status:'success',result:sportdownlinecomm,adminBredcumArray})
         }catch(err){
