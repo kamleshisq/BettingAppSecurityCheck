@@ -5442,6 +5442,7 @@ async function getcommissionreport (loginuserid1){
                         usernameStatus = false
                     }else{
                         status = true
+                        usernameStatus = false
                         
                     }
                 }
