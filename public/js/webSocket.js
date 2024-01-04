@@ -21965,7 +21965,9 @@ socket.on('connect', () => {
                     <td>${result[i].commissionUnclaim}</td>
                       </tr>`
                   }
+                  $('.load-more').show()
               }else{
+                $('.load-more').hide()
                 if(page == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
