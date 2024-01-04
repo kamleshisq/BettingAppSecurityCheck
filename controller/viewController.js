@@ -5406,6 +5406,8 @@ for(let i = 0 ;i<loginuserid1.length;i++){
                 loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'AGENT'})
             }else if(user.roleName == 'AGENT'){
                 loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'user'})
+            }else{
+                status = true
             }
         }
     }
