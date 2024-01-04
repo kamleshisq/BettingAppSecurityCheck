@@ -178,7 +178,8 @@ async function mapBet(data){
 
 
             // console.log(bet, "betbetbet")
-            if((bets[bet].selectionName.toLowerCase().includes(data.result.toLowerCase()) && bets[bet].bettype2 == 'BACK') || (!bets[bet].selectionName.toLowerCase().includes(data.result.toLowerCase()) && bets[bet].bettype2 == 'LAY')){
+            console.log(bets[bet].selectionName.split('@')[1], data.result, bets[bet].bettype2, (bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK', ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY"))
+            if((bets[bet].selectionName.toLowerCase() === data.result.toLowerCase() && bets[bet].bettype2 == 'BACK') || (bets[bet].selectionName.toLowerCase() !== data.result.toLowerCase() && bets[bet].bettype2 == 'LAY')){
                 let debitCreditAmount;
                 let exposure = bets[bet].exposure
                 if(bets[bet].bettype2 == 'BACK'){
