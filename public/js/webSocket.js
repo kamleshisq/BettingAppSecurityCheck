@@ -21970,7 +21970,7 @@ socket.on('connect', () => {
             let todate = $('#toDate').val()
             data.fromdate = fromdate
             data.todate = todate
-            if($('.bredcum-container li').length == 0){
+            if($('.bredcum-container li:last').hasClass('afteraddnewbredcum')){
                 const searchParams = new URLSearchParams(window.location.search);
                 console.log(searchParams,'searchParams')
                 data.LOGINUSER = LOGINDATA.LOGINUSER
