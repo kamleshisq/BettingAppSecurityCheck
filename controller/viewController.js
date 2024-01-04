@@ -5398,7 +5398,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
                 roleName = await User.distinct("roleName",{userName:userName[0]})
             }
             result = await getcommissionreport(userNamearra)
-            console.log(result,roleName,userName,'-->result')
+            console.log(resultArray,'-->resultArray')
             if(result.length !== 0){
                 status = true
                 resultArray.concat(result)
@@ -5427,7 +5427,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
 
    
 
-    console.log(resultArray,"==>resultArray")
+    console.log(resultArray,"==>resultArray1")
 
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Downline Commission Report',
