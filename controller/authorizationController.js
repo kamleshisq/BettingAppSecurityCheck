@@ -40,9 +40,9 @@ const createSendToken = async (user, statuscode, res, req)=>{
         cookieOption.secure = true
         }
         console.log(req.body)
-    if(req.body.url1 === '/adminlogin'){
-        res.cookie('ADMIN_JWT', token, cookieOption)
-    }
+    // if(req.body.url1 === '/adminlogin'){
+        // }
+            res.cookie('ADMIN_JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
