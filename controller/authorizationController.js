@@ -1045,44 +1045,49 @@ exports.logOut = catchAsync( async function logout(req, res) {
     }
 });
 exports.admin_logOut = catchAsync( async(req, res) => {
-    const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
-    if(!user){
-        return next(new AppError('User not find with this id',404))
-    }
-    
-    // console.log(req.headers)
-	let token
-    // console.log(req.headers)
-    if(req.headers.authorization){
-        token = req.headers.authorization.split(' ');
-    }else{
-        token = req.headers.cookie.split('=')
-    }
-    // console.log(token)
-    let date = Date.now();
-    // console.log(global._loggedInToken)
-	let findToken=global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
-	if (findToken >= 0) {
-		global._loggedInToken.splice(findToken, 1);
-	}
-      // console.log(user._id)
-      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
-      // console.log(logs)
-      for(let i = 0; i < logs.length; i++){
-          res.cookie(logs[i].session_id, '', { expires: new Date(0) });
-          res.clearCookie(logs[i].session_id);
-      }
-    //   await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
-      global._loggedInToken.splice(logs.session_id, 1);
-      await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-	res.cookie('ADMIN_JWT', 'loggedout', {
-        expires: new Date(date + 500),
-        httpOnly: true
-    });
+    try{
 
-    res.status(200).json({
-        status:'success'
-    })
+        const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
+        if(!user){
+            return next(new AppError('User not find with this id',404))
+        }
+        
+        // console.log(req.headers)
+        let token
+        // console.log(req.headers)
+        if(req.headers.authorization){
+            token = req.headers.authorization.split(' ');
+        }else{
+            token = req.headers.cookie.split('=')
+        }
+        // console.log(token)
+        let date = Date.now();
+        // console.log(global._loggedInToken)
+        let findToken=global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
+        if (findToken >= 0) {
+            global._loggedInToken.splice(findToken, 1);
+        }
+          // console.log(user._id)
+          const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+          // console.log(logs)
+          for(let i = 0; i < logs.length; i++){
+              res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+              res.clearCookie(logs[i].session_id);
+          }
+        //   await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+          global._loggedInToken.splice(logs.session_id, 1);
+          await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
+        res.cookie('ADMIN_JWT', 'loggedout', {
+            expires: new Date(date + 500),
+            httpOnly: true
+        });
+    
+        res.status(200).json({
+            status:'success'
+        })
+    }catch(err){
+        console.log(err)
+    }
 });
 
 
