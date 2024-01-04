@@ -5386,7 +5386,7 @@ async function getcommissionreport (loginuserid1){
     for(let i = 0 ;i<loginuserid1.length;i++){
         let result
         let userName = loginuserid1[i]
-        let user = await findOne({userName:loginuserid1[i]})
+        let user = await User.findOne({userName:loginuserid1[i]})
         result = await getcommissionreport([userName])
         if(result.length == 0){
             resultArray.concat([{
