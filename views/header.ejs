@@ -56,11 +56,18 @@
               </audio>
           <%}%>
           <!-- <span> <a  target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-message"></i></a></span>  -->
-          <span class="username-admin"> 
-            <a  target="" data-toggle="tooltip" data-placement="bottom" title="Setting"></a>
-            <ul>
-              <li> <a href="/admin/dashboard" style="color: black;text-decoration:none;"></a></li>
-            </ul>
+          <span class="username-admin">
+            <%if(currentUser.roleName === "Admin"){%>
+              <span class="bredcum-span-tag">House </span> <a href="/admin/userManagement">  <%=currentUser.userName%></a>
+            <%}else if(currentUser.roleName === "Super-Duper-Admin"){%>
+                <span class="bredcum-span-tag">SDM</span> <a href="/admin/userManagement">  <%=currentUser.userName%></a>
+            <%}else if(currentUser.roleName === "Super-Admin"){%>
+                <span class="bredcum-span-tag">SM</span><a href="/admin/userManagement">  <%=currentUser.userName%></a>
+            <%}else if(currentUser.roleName === "Duper-Admin"){%>
+                <span class="bredcum-span-tag">DM</span><a href="/admin/userManagement">  <%=currentUser.userName%></a>
+            <%}else if(currentUser.roleName === "AGENT"){%>
+                <span class="bredcum-span-tag">AGENT</span><a href="/admin/userManagement">  <%=currentUser.userName%></a>
+            <%}%>
           </span>
           <span class="setiing-admin"> 
             <a  target="" data-toggle="tooltip" data-placement="bottom" title="Setting"><i class="fa-solid fa-gear"></i></a>
