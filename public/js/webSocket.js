@@ -21974,7 +21974,11 @@ socket.on('connect', () => {
             data.todate = todate
             if($('.bredcum-container li:last').hasClass('afteraddnewbredcum')){
                 const searchParams = new URLSearchParams(window.location.search);
-                console.log(searchParams,'searchParams')
+                const paramsObject = {};
+                searchParams.forEach((value, key) => {
+                    paramsObject[key] = value;
+                });
+                console.log(paramsObject,'paramsObject')
                 data.LOGINUSER = LOGINDATA.LOGINUSER
                 // socket.emit('userwisedownlinecommittion',{data})
             }else{
