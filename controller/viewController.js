@@ -5248,16 +5248,17 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let me
     if(Object.keys(req.query).length == 0){
         // let parentUser = await distinct("userName")
-        loginuserid1 = await User.distinct("_id",{parent_id:req.currentUser._id})
+        loginuserid1 = await User.distinct("userName",{parent_id:req.currentUser._id})
+        console.log(loginuserid1, "loginuserid1")
         me = req.currentUser
     }else{
-        loginuserid1 = await User.distinct("_id",{parent_id:req.query.id})
+        loginuserid1 = await User.distinct("userName",{parent_id:req.query.id})
         me = await User.findById(req.query.id)
     }
 
-    loginuserid1 = loginuserid1.toString()
-    loginuserid1 = loginuserid1.split(',')
-
+    // loginuserid1 = loginuserid1.toString()
+    // loginuserid1 = loginuserid1.split(',')
+    // console.log(loginuserid1, "loginuserid1loginuserid1loginuserid1")
     // console.log(me, "memememememememememe")
         // console.log(currentUser, "CURR")
         
@@ -5303,11 +5304,11 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
-                // date: {
-                //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                // },
-                // loginUserId:{$exists:true},
-                userId:{$in:loginuserid1}
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                loginUserId:{$exists:true},
+                userName:{$in:loginuserid1}
 
             }
         },
