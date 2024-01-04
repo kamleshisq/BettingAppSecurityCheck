@@ -5398,12 +5398,14 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
                 roleName = await User.distinct("roleName",{userName:userName[0]})
             }
             result = await getcommissionreport(userNamearra)
-            console.log(result,'-->result')
+            console.log(result,roleName,userName,'-->result')
             if(result.length !== 0){
                 status = true
                 resultArray.concat(result)
             }else{
                 if(roleName[0] == 'Admin'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Super-Duper-Admin'})
+                }else if(roleName[0] == 'Super-Duper-Admin'){
                     userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Super-Admin'})
                 }else if(roleName[0] == 'Super-Admin'){
                     userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Duper-Admin'})
