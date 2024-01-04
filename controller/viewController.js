@@ -5308,6 +5308,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let adminBredcumArray = []
     let me
    let currentUser = req.currentUser
+   let limit = 10
 
    
 
@@ -5316,7 +5317,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     }else{
         me = await User.findById(req.query.id)
     }  
-    loginuserid1 = await User.distinct("userName",{parent_id:me._id})
+    loginuserid1 = await User.distinct("userName",{parent_id:me._id}).sort({"userName":1}).limit(limit)
         if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
