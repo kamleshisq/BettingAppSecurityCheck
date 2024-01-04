@@ -8813,7 +8813,7 @@ socket.on('connect', () => {
                 }
             }else{
                 let odds = $(this).children("span").eq(1).text();
-                console.log($(this).children("span").eq(0), "$(this).children("span").eq(0).$(this).children("span").eq(0).")
+                console.log($(this).children("span").eq(0), "$(this).children(")
                 let textToshow = $(this).children("span").eq(0).text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
                 let secondPTag = $(this).closest("tr").next().find(".beton");
