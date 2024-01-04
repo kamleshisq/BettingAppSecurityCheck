@@ -9984,24 +9984,30 @@ io.on('connection', (socket) => {
 
     socket.on('userwisedownlinecommittion',async(data)=>{
         try{
-            let loginuserid1
+            let loginuserid1 = []
             let adminBredcumArray = []
             let me
+            let currentUser = data.data.LOGINUSER
             let query = data.data.query
-           let currentUser = data.data.LOGINUSER        
+            let limit = 10
+            let page = data.data.page
             if(Object.keys(query).length == 0){
                 me = currentUser
             }else{
                 me = await User.findById(query.id)
             }  
-            loginuserid1 = await User.distinct("userName",{parent_id:me._id})
-                if(me.userName === currentUser.userName){
-                adminBredcumArray.push({
-                    userName:me.userName,
-                    role:me.roleName,
-                    id : me._id.toString(),
-                    status:true
-                })
+            let childrens = await User.find({parent_id:me._id}).sort({"userName":1}).skip(limit*page).limit(limit)
+            childrens.map(item =>{
+                loginuserid1.push(item.userName)
+            })
+
+            if(me.userName === currentUser.userName){
+            adminBredcumArray.push({
+                userName:me.userName,
+                role:me.roleName,
+                id : me._id.toString(),
+                status:true
+            })
             }else{
                 for(let i = 0; i < me.parentUsers.length; i++){
                     if(me.parentUsers[i] == currentUser._id.toString()){
@@ -10021,7 +10027,7 @@ io.on('connection', (socket) => {
                                 id : thatUser._id.toString(),
                                 status:false
                             })
-        
+
                         }
                     }
                 }
@@ -10038,8 +10044,8 @@ io.on('connection', (socket) => {
                     $match:{
                         date: {$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                         loginUserId:{$exists:true},
-                        userName:{$in:loginuserid1}
-        
+                        userName:loginuserid1
+
                     }
                 },
                 {
@@ -10047,86 +10053,36 @@ io.on('connection', (socket) => {
                         _id:"$userName",
                         commissionClaim:{$sum:{
                             $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
-                          }},
+                        }},
                         commissionUnclaim:{$sum:{
                             $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
-                          }},
+                        }},
                         userid:{$first:"$userId"}
                     }
                 }
             ])
             return sportdownlinecomm
         }
-        
+
             let resultArray = [];
             for(let i = 0 ;i<loginuserid1.length;i++){
-                let status = false;
                 let result
                 let userName = loginuserid1[i]
                 let user = await User.findOne({userName:loginuserid1[i]})
-                let userNamearra;
-                let roleName;
-                while(status == false){
-                    if(!Array.isArray(userName)){
-                        userNamearra = [userName]
-                        roleName = await User.distinct("roleName",{userName:userName})
-                    }else{
-                        userNamearra = userName
-                        roleName = await User.distinct("roleName",{userName:userName[0]})
-                    }
-                    result = await getcommissionreport(userNamearra)
-                    if(result.length !== 0){
-                        status = true
-                        resultArray = resultArray.concat(result)
-                    }else{
-                        let usernameStatus = true;
-                        while(usernameStatus){
-                            console.log(roleName[0],usernameStatus,userName,'==>roleName[0]')
-                            if(roleName[0] == 'Admin'){
-                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Duper-Admin'})
-                                if(userName.length == 0){
-                                    roleName[0] = 'Super-Duper-Admin'
-                                }else{
-                                    usernameStatus = false
-                                }
-                            }else if(roleName[0] == 'Super-Duper-Admin'){
-                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Admin'})
-                                if(userName.length == 0){
-                                    roleName[0] = 'Super-Admin'
-                                }else{
-                                    usernameStatus = false
-                                }
-                            }else if(roleName[0] == 'Super-Admin'){
-                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Duper-Admin'})
-                                if(userName.length == 0){
-                                    roleName[0] = 'Duper-Admin'
-                                }else{
-                                    usernameStatus = false
-                                }
-                            }else if(roleName[0] == 'Duper-Admin'){
-                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'AGENT'})
-                                if(userName.length == 0){
-                                    roleName[0] = 'AGENT'
-                                }else{
-                                    usernameStatus = false
-                                }
-                            }else if(roleName[0] == 'AGENT'){
-                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'user'})
-                                roleName[0] = 'user'
-                                usernameStatus = false
-                            }else{
-                                status = true
-                                usernameStatus = false
-                                
-                            }
-                        }
-                    }
+                result = await getcommissionreport(userName)
+                if(result.length == 0){
+                    resultArray=resultArray.concat([{
+                        _id:userName,
+                        commissionClaim:0,
+                        commissionUnclaim:0,
+                        userid:(user._id).toString()
+                    }])
+                }else{
+                    resultArray=resultArray.concat(result)
                 }
-        
-            }
-            // console.log(resultArray,"==>resultArray1")
 
-            socket.emit('userwisedownlinecommittion',{status:'success',result:resultArray,adminBredcumArray})
+            }
+            socket.emit('userwisedownlinecommittion',{status:'success',result:resultArray,adminBredcumArray,page})
         }catch(err){
             socket.emit('userwisedownlinecommittion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>userwisedownlinecommittion')

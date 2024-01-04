@@ -21573,6 +21573,7 @@ socket.on('connect', () => {
         // })
 
         $(document).on('click','.usernametr',function(e){
+            $('.load-more').hide()
             let data = {}
             let userName = $(this).children('td.usernametd').attr('data-username')
             let id = userName
@@ -21959,7 +21960,9 @@ socket.on('connect', () => {
                     <td>${result[i].commissionUnclaim}</td>
                       </tr>`
                   }
+                  $('.load-more').show()
               }else{
+                $('.load-more').hide()
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
               let html2 = "";
@@ -22001,18 +22004,41 @@ socket.on('connect', () => {
 
         })
 
+        $(document).on('click','.load-more',function(e){
+            let data = {}
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let page = parseInt($('.pageId').attr('data-pageid'))
+            $('.pageId').attr('data-pageid',page + 1)
+            data.fromdate = fromdate
+            data.todate = todate
+            data.page = page
+            const searchParams = new URLSearchParams(window.location.search);
+            const paramsObject = {};
+            searchParams.forEach((value, key) => {
+                paramsObject[key] = value;
+            });
+            data.query = paramsObject
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            socket.emit('userwisedownlinecommittion',{data})
+
+        })
+
         $('#fromDate,#toDate').change(async function(e){
+           
             let data = {}
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
             data.fromdate = fromdate
             data.todate = todate
             if($('.bredcum-container li:last').hasClass('afteraddnewbredcum')){
+                $('.pageId').attr('data-pageid',"1")
                 const searchParams = new URLSearchParams(window.location.search);
                 const paramsObject = {};
                 searchParams.forEach((value, key) => {
                     paramsObject[key] = value;
                 });
+                data.page = 0
                 data.query = paramsObject
                 data.LOGINUSER = LOGINDATA.LOGINUSER
                 socket.emit('userwisedownlinecommittion',{data})
