@@ -19450,7 +19450,11 @@ socket.on('connect', () => {
                 }else{
                     html2 += `<td class="red">${data.marketAnalist[i].returns.toFixed(2)}</td>`
                 }
-                html2 += `<td>-</td></tr>`
+                if(data.marketAnalist[i].result){
+                    html2 += `<td>${data.marketAnalist[i].result}</td></tr>`
+                }else{
+                    html2 += `<td>-</td></tr>`
+                }
             } 
             if(data.page == 0){
                 if(!(data.gameAnalist.length < 10)){
