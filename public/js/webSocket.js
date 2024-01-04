@@ -22013,7 +22013,6 @@ socket.on('connect', () => {
                 searchParams.forEach((value, key) => {
                     paramsObject[key] = value;
                 });
-                console.log(paramsObject,'paramsObject')
                 data.query = paramsObject
                 data.LOGINUSER = LOGINDATA.LOGINUSER
                 socket.emit('userwisedownlinecommittion',{data})
