@@ -5307,19 +5307,17 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let loginuserid1
     let adminBredcumArray = []
     let me
-   
+   let currentUser = req.currentUser
 
    
 
-if(Object.keys(req.query).length == 0){
-    me = req.currentUser
-}else{
-    me = await User.findById(req.query.id)
-}  
-loginuserid1 = await User.distinct("userName",{parent_id:me._id})
-
-async function getcommissionreport (me,currentUser,loginuserid1){
-    if(me.userName === currentUser.userName){
+    if(Object.keys(req.query).length == 0){
+        me = req.currentUser
+    }else{
+        me = await User.findById(req.query.id)
+    }  
+    loginuserid1 = await User.distinct("userName",{parent_id:me._id})
+        if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
             role:me.roleName,
@@ -5356,6 +5354,7 @@ async function getcommissionreport (me,currentUser,loginuserid1){
             status:false
         })
     }
+async function getcommissionreport (loginuserid1){
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
@@ -5380,37 +5379,54 @@ async function getcommissionreport (me,currentUser,loginuserid1){
             }
         }
     ])
-    return {sportdownlinecomm,roleName:me.roleName}
+    return sportdownlinecomm
 }
 
-
-let currentUser = req.currentUser
-let status = false;
-let result
-while(status == false){
-    result = await getcommissionreport(me,currentUser,loginuserid1)
-    if(result.sportdownlinecomm.length !== 0){
-        status = true
-    }else{
-        if(result.roleName == 'Admin'){
-            loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'Super-Admin'})
-        }else if(result.roleName == 'Super-Admin'){
-            loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'Duper-Admin'})
-        }else if(result.roleName == 'Duper-Admin'){
-            loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'AGENT'})
-        }else if(result.roleName == 'AGENT'){
-            loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'user'})
+    let resultArray = [];
+    for(let i = 0 ;i<loginuserid1.length;i++){
+        let status = false;
+        let result
+        let userName = loginuserid1[i]
+        let userNamearra;
+        let roleName;
+        while(status == false){
+            if(!Array.isArray(userName)){
+                userNamearra = [userName]
+                roleName = await User.distinct("roleName",{userName:userName})
+            }else{
+                userNamearra = userName
+                roleName = await User.distinct("roleName",{userName:userName[0]})
+            }
+            result = await getcommissionreport(userNamearra)
+            console.log(resultArray,'-->resultArray')
+            console.log(result,'result')
+            if(result.length !== 0){
+                status = true
+                resultArray = resultArray.concat(result)
+            }else{
+                if(roleName[0] == 'Admin'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Super-Duper-Admin'})
+                }else if(roleName[0] == 'Super-Duper-Admin'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Super-Admin'})
+                }else if(roleName[0] == 'Super-Admin'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Duper-Admin'})
+                }else if(roleName[0] == 'Duper-Admin'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'AGENT'})
+                }else if(roleName[0] == 'AGENT'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'user'})
+                }else{
+                    status = true
+                }
+            }
         }
+
     }
-}
 
-   
-
-    // console.log(sportdownlinecomm,"==>sportdownlinecomm")
+    console.log(resultArray,"==>resultArray1")
 
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Downline Commission Report',
-        sportdownlinecomm:result.sportdownlinecomm,
+        sportdownlinecomm:resultArray,
         currentUser:req.currentUser,
         me:req.currentUser,
         adminBredcumArray
