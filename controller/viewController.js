@@ -5389,14 +5389,14 @@ async function getcommissionreport (loginuserid1){
         let user = await User.findOne({userName:loginuserid1[i]})
         result = await getcommissionreport(userName)
         if(result.length == 0){
-            resultArray.concat([{
+            resultArray=resultArray.concat([{
                 _id:userName,
                 commissionClaim:0,
                 commissionUnclaim:0,
                 userid:(user._id).toString()
             }])
         }else{
-            resultArray.concat(result)
+            resultArray=resultArray.concat(result)
         }
 
     }
