@@ -3693,63 +3693,126 @@ io.on('connection', (socket) => {
         }
     
     
+        // let betsEventWise = await Bet.aggregate([
+        //     {
+        //         $match: {
+        //             // status:"OPEN" ,
+        //             eventDate: dataobj,
+        //             userName:{$in:childrenUsername}
+        //         }
+        //     },
+        //       {
+        //         $group: {
+        //           _id: {
+        //             betType: "$betType",
+        //             eventId1 : "$eventId",
+        //             matchName: "$match",
+        //           },
+        //           count: { $sum: 1 },
+        //           eventdate: { $first: "$eventDate" }, 
+        //           eventid: { $first: "$eventId" },
+        //           series: {$first: "$event"},
+        //           betType : {$first: '$betType'},
+        //           count2: { 
+        //               $sum: {
+        //                 $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+        //               },
+        //           },
+        //         }
+        //       },
+        //       {
+        //         $group: {
+        //           _id: "$_id.betType",
+        //           data: {
+        //             $push: {
+        //               matchName: "$_id.matchName",
+        //               count: "$count",
+        //               eventdate : '$eventdate',
+        //               eventid : "$eventid",
+        //               series : '$series',
+        //               count2: "$count2",
+        //               betType : '$betType'
+        //             }
+        //           }
+        //         }
+        //       },
+        //       {
+        //         $project: {
+        //           _id: 0,
+        //           id: "$_id", 
+        //           data: 1
+        //         }
+        //       },
+        //       {
+        //         $sort: {
+        //             "data.eventdate": -1 
+        //         }
+        //     }
+        
+        // ])
+
         let betsEventWise = await Bet.aggregate([
             {
-                $match: {
-                    // status:"OPEN" ,
-                    eventDate: dataobj,
-                    userName:{$in:childrenUsername}
-                }
+              $match: {
+                eventDate: dataobj,
+                userName: { $in: childrenUsername }
+              }
             },
-              {
-                $group: {
-                  _id: {
-                    betType: "$betType",
-                    eventId1 : "$eventId",
-                    matchName: "$match",
+            {
+              $group: {
+                _id: {
+                  betType: "$betType",
+                  eventId1: "$eventId",
+                  matchName: "$match",
+                },
+                count: { $sum: 1 },
+                eventdate: { $first: "$eventDate" },
+                eventid: { $first: "$eventId" },
+                series: { $first: "$event" },
+                betType: { $first: '$betType' },
+                count2: {
+                  $sum: {
+                    $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
                   },
-                  count: { $sum: 1 },
-                  eventdate: { $first: "$eventDate" }, 
-                  eventid: { $first: "$eventId" },
-                  series: {$first: "$event"},
-                  betType : {$first: '$betType'},
-                  count2: { 
-                      $sum: {
-                        $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
-                      },
-                  },
-                }
-              },
-              {
-                $group: {
-                  _id: "$_id.betType",
-                  data: {
-                    $push: {
-                      matchName: "$_id.matchName",
-                      count: "$count",
-                      eventdate : '$eventdate',
-                      eventid : "$eventid",
-                      series : '$series',
-                      count2: "$count2",
-                      betType : '$betType'
-                    }
+                },
+              }
+            },
+            {
+              $sort: {
+                count2: -1,
+                eventdate: -1
+              }
+            },
+            {
+              $group: {
+                _id: "$_id.betType",
+                data: {
+                  $push: {
+                    matchName: "$_id.matchName",
+                    count: "$count",
+                    eventdate: '$eventdate',
+                    eventid: "$eventid",
+                    series: '$series',
+                    count2: "$count2",
+                    betType: '$betType'
                   }
                 }
-              },
-              {
-                $project: {
-                  _id: 0,
-                  id: "$_id", 
-                  data: 1
-                }
-              },
-              {
-                $sort: {
-                    "data.eventdate": -1 
-                }
+              }
+            },
+            {
+              $project: {
+                _id: 0,
+                id: "$_id",
+                data: 1
+              }
+            },
+            {
+              $sort: {
+                'data.eventdate': -1
+              }
             }
-        
-        ])
+          ]);
+          
         socket.emit('settlement',{betsEventWise,dataobj,data})
 
     })
@@ -6658,7 +6721,8 @@ io.on('connection', (socket) => {
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
                     void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}},
+                    result:{$first:'$result'}
                     
                 }
             },
