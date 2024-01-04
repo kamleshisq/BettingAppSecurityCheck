@@ -16809,7 +16809,7 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
-                    // console.log('Working')
+                    console.log(section.backPrice1)
                     if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -16829,6 +16829,7 @@ socket.on('connect', () => {
                         // this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
                     }
                 }else if(this.id == `${section.selectionId}2`){
+                    console.log(section.backPrice2)
                     if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -16851,6 +16852,7 @@ socket.on('connect', () => {
                         // this.innerHTML = `<strong>${section.backPrice2}</strong> <span class="small">${section.backSize2}</span>`
                     }
                 }else if (this.id == `${section.selectionId}3`){
+                    console.log(section.backPrice3)
                     if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -16885,6 +16887,7 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}4` ){
+                    console.log(section.layPrice1)
                     if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -16906,6 +16909,7 @@ socket.on('connect', () => {
                         
                     }
                 }else if(this.id == `${section.selectionId}5`){
+                    console.log(section.layPrice2)
                     if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -16929,6 +16933,7 @@ socket.on('connect', () => {
                         
                     }
                 }else if (this.id == `${section.selectionId}6`){
+                    console.log(section.layPrice3)
                     if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
