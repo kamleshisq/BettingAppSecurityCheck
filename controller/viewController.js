@@ -5308,7 +5308,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
                 //     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 // },
                 // loginUserId:{$exists:true},
-                userName:{$in:userName}
+                userName:{$in:loginuserid1}
 
             }
         },
