@@ -8814,8 +8814,9 @@ socket.on('connect', () => {
             }else{
                 let odds = $(this).children("span").eq(1).text();
                 let textToshow = $(this).children("span").eq(0).text();
-                console.log(textToshow, "textToshowtextToshowtextToshow")
+                // console.log(textToshow, "textToshowtextToshowtextToshow")
                 let beton = $(this).closest("tr").find("td:first-child").text();
+                console.log(beton)
                 let secondPTag = $(this).closest("tr").next().find(".beton");
                 let secondPTag2 = $(this).closest("tr").next().find(".selection-name");
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
