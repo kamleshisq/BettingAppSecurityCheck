@@ -5401,7 +5401,7 @@ async function getcommissionreport (loginuserid1){
             console.log(resultArray,'-->resultArray')
             if(result.length !== 0){
                 status = true
-                resultArray.concat(result)
+                resultArray = resultArray.concat(result)
             }else{
                 if(roleName[0] == 'Admin'){
                     userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Super-Duper-Admin'})
