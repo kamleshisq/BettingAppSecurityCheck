@@ -5362,7 +5362,7 @@ async function getcommissionreport (loginuserid1){
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 },
                 loginUserId:{$exists:true},
-                userName:{$in:loginuserid1}
+                userName:loginuserid1
 
             }
         },
@@ -5387,13 +5387,13 @@ async function getcommissionreport (loginuserid1){
         let result
         let userName = loginuserid1[i]
         let user = await User.findOne({userName:loginuserid1[i]})
-        result = await getcommissionreport([userName])
+        result = await getcommissionreport(userName)
         if(result.length == 0){
             resultArray.concat([{
                 _id:userName,
                 commissionClaim:0,
                 commissionUnclaim:0,
-                userid:user._id.toString()
+                userid:(user._id).toString()
             }])
         }else{
             resultArray.concat(result)
@@ -5401,7 +5401,7 @@ async function getcommissionreport (loginuserid1){
 
     }
 
-
+    console.log(resultArray,'==>resultArray')
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Downline Commission Report',
         sportdownlinecomm:resultArray,
