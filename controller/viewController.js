@@ -5392,7 +5392,7 @@ async function getcommissionreport (loginuserid1){
             resultArray.concat([{
                 _id:userName,
                 commissionClaim:0,
-                commissionUnclaim0,
+                commissionUnclaim:0,
                 userid:user._id.toString()
             }])
         }else{
