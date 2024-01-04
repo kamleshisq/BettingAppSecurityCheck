@@ -56,8 +56,18 @@
               </audio>
           <%}%>
           <!-- <span> <a  target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-message"></i></a></span>  -->
-          <span class="username-admin"> 
-            <a href="/admin/dashboard"><%=currentUser.userName%></a>
+          <span class="username-admin">
+            <%if(currentUser.roleName === "Admin"){%>
+              <li><span class="bredcum-span-tag">House </span> <a href="/admin/userManagement">  <%=currentUser.userName%></a></li>
+            <%}else if(currentUser.roleName === "Super-Duper-Admin"){%>
+                <li><span class="bredcum-span-tag">SDM</span> <a href="/admin/userManagement">  <%=currentUser.userName%></a></li>
+            <%}else if(currentUser.roleName === "Super-Admin"){%>
+                <li><span class="bredcum-span-tag">SM</span><a href="/admin/userManagement">  <%=currentUser.userName%></a></li>
+            <%}else if(currentUser.roleName === "Duper-Admin"){%>
+                <li><span class="bredcum-span-tag">DM</span><a href="/admin/userManagement">  <%=currentUser.userName%></a></li>
+            <%}else if(currentUser.roleName === "AGENT"){%>
+                <li><span class="bredcum-span-tag">AGENT</span><a href="/admin/userManagement">  <%=currentUser.userName%></a></li>
+            <%}%>
           </span>
           <span class="setiing-admin"> 
             <a  target="" data-toggle="tooltip" data-placement="bottom" title="Setting"><i class="fa-solid fa-gear"></i></a>
