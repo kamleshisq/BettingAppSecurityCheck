@@ -68,7 +68,6 @@ router.get("/admin/streammanagement", authController.isProtected, authController
 router.get("/admin/streammanagement/event", authController.isProtected, authController.isAdmin,viewController.getStreamEventListPage);
 router.get("/admin/Notification", authController.isProtected, authController.isAdmin,  authController.restrictToOperator("notification"),viewController.getNotificationsPage);
 router.get("/admin/casinocontrol", authController.isProtected, authController.isAdmin,viewController.getCasinoControllerPage);
-// router.get("/pp", viewController.promotion);
 router.get('/ALLGAMEFORTESTING', authController.isProtected, viewController.getAllCasinoPageFOrTEsting);
 router.get("/SPORT",authController.isProtected, gameController.sport ,viewController.getSpoertPage);
 router.get("/admin/betmoniter", authController.isProtected, authController.isAdmin, authController.restrictToOperator("betsMonitaring"),viewController.getBetMoniterPage);
