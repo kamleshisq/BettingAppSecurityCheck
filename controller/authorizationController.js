@@ -30,18 +30,7 @@ function parseCookies(cookieString) {
   }
 
 const createSendToken = async (user, statuscode, res, req)=>{
-    // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
-    // if (existingToken) {
-    //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
-    //     return res.status(403).json({
-    //         status: "error",
-    //         message: "User is already logged in"
-    //     });
-    // }
-
     const token = createToken(user._id);
-    // req.session.userId = user._id;
-    // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN *1000*2 *30)),
         httpOnly: true,
@@ -50,7 +39,9 @@ const createSendToken = async (user, statuscode, res, req)=>{
     if(process.env.NODE_ENV === "production"){
         cookieOption.secure = true
         }
-    res.cookie('ADMIN_JWT', token, cookieOption)
+    if(req.body.url === '/adminlogin'){
+        res.cookie('ADMIN_JWT', token, cookieOption)
+    }
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
@@ -244,6 +235,13 @@ exports.login = catchAsync (async(req, res, next) => {
             res.status(404).json({
                 status:'error',
                 message:"Your account is inactive"
+            })
+        }
+
+        if(req.body.url === '/adminlogin' && user.roleName !== 'Admin'){
+            res.status(404).json({
+                status:'error',
+                message:"You not have permition to login"
             })
         }
         // else if(user.is_Online){

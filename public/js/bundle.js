@@ -5468,7 +5468,7 @@ var login = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          url = window.location.origin;
+          url = window.location.pathname;
           console.log(url);
           _context.next = 5;
           return (0, _axios.default)({
@@ -5476,7 +5476,8 @@ var login = /*#__PURE__*/function () {
             url: '/api/v1/auth/login',
             data: {
               userName: userName,
-              password: password
+              password: password,
+              url: url
             }
           });
         case 5:
