@@ -317,7 +317,6 @@ exports.checkHouse = catchAsync(async(req, res, next) => {
         req.app.set('User', null);
         return res.redirect('/adminlogin')
     }
-    console.log(token, "tokentokentokentokentoken")
     const tokenId = await loginLogs.findOne({session_id:token})
     if( tokenId &&!tokenId.isOnline){
         // console.log('working12121')
@@ -327,6 +326,7 @@ exports.checkHouse = catchAsync(async(req, res, next) => {
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
+    console.log(currentUser, "tokentokentokentokentoken")
     if(!currentUser){
         req.app.set('token', null);
         req.app.set('User', null);
@@ -336,11 +336,7 @@ exports.checkHouse = catchAsync(async(req, res, next) => {
     let childrenArr = []
     let paymentreqcount = 0
     let WithdrawReqCount = 0
-    if(currentUser.role.roleName === "Super-Duper-Admin"){
-        childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
-        // console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
-        paymentreqcount = await paymentReportModel.countDocuments({username:{$in:childrenArr},status:'pending'})
-        WithdrawReqCount = await userWithReq.countDocuments({username:currentUser.userName, reqStatus:'pending'})
+    if(currentUser.roleName === 'Admin'){
         loginData.User = currentUser
         res.locals.loginData = loginData
         res.locals.paymentreqcount = paymentreqcount
