@@ -8485,40 +8485,6 @@ socket.on('connect', () => {
                 }
             })
 
-            $(".odd_even_blue").each(function() {
-                let marketId = $(this).closest('tr').find('.market').attr('id')
-                let macLimitStatus 
-                let limitOnTHis = limitData.find(item => item.marketId == marketId)
-                if(limitOnTHis){
-                    if(limitOnTHis.Limits.max_odd){
-                        macLimitStatus =  limitOnTHis.Limits.max_odd
-                    }
-                }
-                let id = this.id
-                id = id.slice(0, -1);
-                let section = null;
-                data.finalResult.items.some(item => {
-                    if(item){
-
-                        if(item.market_id == id){
-                            section = item
-                        }
-                    }
-                })
-                if(this.id == `${section.market_id}1` ){
-                    if( section.odd == "-" || section.odd == "1,000.00" || section.odd == "0" || (macLimitStatus && macLimitStatus < section.odd)){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                    }else{
-                        this.setAttribute("data-bs-toggle", "collapse");
-                        let x = ((section.odd * 100) - 100).toFixed(2)
-                        this.innerHTML = `<span><b>1</b></span> <span> ${x}</span>` 
-                    }
-                }
-            })
-
             $(".odd_even_red").each(function() {
                 let marketId = $(this).closest('tr').find('.market').attr('id')
                 let macLimitStatus 
@@ -8539,17 +8505,51 @@ socket.on('connect', () => {
                         }
                     }
                 })
-                let parentElement = this.parentNode
                 if(this.id == `${section.market_id}2` ){
-                    if(!data.status){
+                    if( section.even == "-" || section.even == "1,000.00" || section.even == "0" || (macLimitStatus && macLimitStatus < section.even)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                    }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        let x = ((section.even * 100) - 100).toFixed(2)
+                        this.innerHTML = `<span><b>1</b></span> <span> ${x}</span>` 
+                    }
+                }
+            })
+
+            $(".odd_even_blue").each(function() {
+                let marketId = $(this).closest('tr').find('.market').attr('id')
+                let macLimitStatus 
+                let limitOnTHis = limitData.find(item => item.marketId == marketId)
+                if(limitOnTHis){
+                    if(limitOnTHis.Limits.max_odd){
+                        macLimitStatus =  limitOnTHis.Limits.max_odd
+                    }
+                }
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                let parentElement = this.parentNode
+                if(this.id == `${section.market_id}1` ){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }else if (data.forFancy  && data.forFancy.length > 0){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
@@ -8557,7 +8557,7 @@ socket.on('connect', () => {
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }
                     else if(section.ball_running){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
@@ -8568,15 +8568,15 @@ socket.on('connect', () => {
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
                     }else if(section.suspended){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"|| (macLimitStatus && macLimitStatus < section.even)){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    else if( section.odd == "-" || section.odd == "1,000.00" || section.odd == "0"|| (macLimitStatus && macLimitStatus < section.odd)){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
@@ -8586,7 +8586,7 @@ socket.on('connect', () => {
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
                         parentElement.classList.remove("suspended")
-                        let x = ((section.even * 100) - 100).toFixed(2)
+                        let x = ((section.odd * 100) - 100).toFixed(2)
                         this.innerHTML = `<span><b>1</b></span> <span> ${x}</span>` 
                     }
                 }
