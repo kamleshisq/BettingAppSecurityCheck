@@ -5399,8 +5399,6 @@ async function getcommissionreport (loginuserid1){
                 roleName = await User.distinct("roleName",{userName:userName[0]})
             }
             result = await getcommissionreport(userNamearra)
-            console.log(resultArray,'-->resultArray')
-            console.log(result,roleName,'result')
             if(result.length !== 0){
                 status = true
                 resultArray = resultArray.concat(result)
@@ -5451,7 +5449,6 @@ async function getcommissionreport (loginuserid1){
 
     }
 
-    console.log(resultArray,"==>resultArray1")
 
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Downline Commission Report',

@@ -10075,8 +10075,6 @@ io.on('connection', (socket) => {
                         roleName = await User.distinct("roleName",{userName:userName[0]})
                     }
                     result = await getcommissionreport(userNamearra)
-                    console.log(resultArray,'-->resultArray')
-                    console.log(result,roleName,'result')
                     if(result.length !== 0){
                         status = true
                         resultArray = resultArray.concat(result)
@@ -10129,7 +10127,7 @@ io.on('connection', (socket) => {
         
             console.log(resultArray,"==>resultArray1")
 
-            socket.emit('userwisedownlinecommittion',{status:'success',result:sportdownlinecomm,adminBredcumArray})
+            socket.emit('userwisedownlinecommittion',{status:'success',result:resultArray,adminBredcumArray})
         }catch(err){
             socket.emit('userwisedownlinecommittion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>userwisedownlinecommittion')
