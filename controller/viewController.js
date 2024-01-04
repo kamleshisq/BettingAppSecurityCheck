@@ -5438,6 +5438,7 @@ async function getcommissionreport (loginuserid1){
                         }
                     }else if(roleName[0] == 'AGENT'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'user'})
+                        roleName[0] == 'user'
                         usernameStatus = false
                     }else{
                         status = true
