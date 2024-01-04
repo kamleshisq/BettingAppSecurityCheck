@@ -8592,7 +8592,7 @@ socket.on('connect', () => {
                 }
             });
 
-            $(".only_over_blue").each(function() {
+            $(".only_over_red").each(function() {
                 let marketId = $(this).closest('tr').find('.market').attr('id')
                 let macLimitStatus 
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
@@ -8612,25 +8612,25 @@ socket.on('connect', () => {
                         }
                     }
                 })
-                if(this.id == `${section.market_id}1` ){
+                if(this.id == `${section.market_id}2` ){
                     // console.log(section.yes, section.yes_rate)
-                    if( section.yes_rate == "-" || section.yes_rate == "1,000.00" || section.yes_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.yes_rate)){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                    if( section.no_rate == "-" || section.no_rate == "1,000.00" || section.no_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.no_rate)){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         // this.innerHTML = `<span><b>${section.yes}</b></span>` 
-                        let x = (parseFloat(section.yes_rate) + 100)/100
+                        let x = (parseFloat(section.no_rate) + 100)/100
                         // this.innerHTML = `<span><b>${x}</b></span> <span> ${section.yes}</span>`
-                        this.innerHTML = `<span><b>${section.yes}</b></span> <span> ${section.yes_rate}</span>`
+                        this.innerHTML = `<span><b>${section.yes}</b></span> <span> ${section.no_rate}</span>`
                     }
                 }
             });
 
 
-            $(".only_over_red").each(function() {
+            $(".only_over_blue").each(function() {
                     // console.log(data.forFancy, "data.forFancydata.forFancydata.forFancy")
                     let marketId = $(this).closest('tr').find('.market').attr('id')
                     let macLimitStatus 
@@ -8654,17 +8654,17 @@ socket.on('connect', () => {
                 })
                 let parentElement = this.parentNode
                 // console.log(section.ball_running)
-                if(this.id == `${section.market_id}2` ){
+                if(this.id == `${section.market_id}1` ){
                     // console.log(macLimitStatus < section.no)
                     if(!data.status){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }else if (data.forFancy && data.forFancy.length > 0){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
@@ -8672,7 +8672,7 @@ socket.on('connect', () => {
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }
                     else if(section.ball_running){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
@@ -8683,15 +8683,15 @@ socket.on('connect', () => {
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
                     }else if(section.suspended){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.no_rate == "-" || section.no_rate == "1,000.00" || section.no_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.no_rate)){
+                    }else if( section.yes_rate == "-" || section.yes_rate == "1,000.00" || section.yes_rate == "0"|| (macLimitStatus != undefined && macLimitStatus < section.yes_rate)){
                         // console.log('WORKING123456789')
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
@@ -8701,9 +8701,9 @@ socket.on('connect', () => {
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
                         parentElement.classList.remove("suspended")
-                        let x = (parseFloat(section.no_rate) + 100)/100
+                        let x = (parseFloat(section.yes_rate) + 100)/100
                         // this.innerHTML = `<span><b>${x}</b></span> <span> ${section.no}</span>`
-                        this.innerHTML = `<span><b>${section.no}</b></span> <span> ${section.no_rate}</span>`
+                        this.innerHTML = `<span><b>${section.no}</b></span> <span> ${section.yes_rate}</span>`
                         // this.innerHTML = `<span><b>${section.no}</b></span>` 
                     }
                 }
