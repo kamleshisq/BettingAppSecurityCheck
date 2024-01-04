@@ -17067,21 +17067,22 @@ socket.on('connect', () => {
                 let parentElement = this.parentNode
                 // console.log(section.ball_running)
                 if(this.id == `${section.market_id}2` ){
-                    if(section.ball_running){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Ball Running")
-                    }else if(section.suspended){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.no == "-" || section.no == "1,000.00" || section.no == "0"){
+                    // if(section.ball_running){
+                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    //     <i class="fa-solid fa-lock"></i>
+                    //   </span>`
+                    //   this.removeAttribute("data-bs-toggle");
+                    //   parentElement.classList.add("suspended");
+                    //   $(this).parent().find(".match-status-message").text("Ball Running")
+                    // }else if(section.suspended){
+                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    //     <i class="fa-solid fa-lock"></i>
+                    //   </span>`
+                    //   this.removeAttribute("data-bs-toggle");
+                    //   parentElement.classList.add("suspended");
+                    //   $(this).parent().find(".match-status-message").text("Suspended")
+                    // }else
+                     if( section.no == "-" || section.no == "1,000.00" || section.no == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -17136,16 +17137,17 @@ socket.on('connect', () => {
                 })
                 let parentElement = this.parentNode
                 if(this.id == `${section.market_id}2` ){
-                    if(section.ball_running){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                    }else if(section.suspended){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                    }
-                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                    // if(section.ball_running){
+                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    //     <i class="fa-solid fa-lock"></i>
+                    //   </span>`
+                    // }else if(section.suspended){
+                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    //     <i class="fa-solid fa-lock"></i>
+                    //   </span>`
+                    // }
+                    // else 
+                    if( section.even == "-" || section.even == "1,000.00" || section.even == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
