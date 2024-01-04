@@ -381,6 +381,7 @@ async function mapBet(data){
                   "transactionId":`${bets[bet].transactionId}`
                 })
             }else if (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")){
+                console.log('HEREEEEE')
                 let creditDebitamount 
                         let exposure = bets[bet].exposure
                         if(bets[bet].bettype2 == "BACK"){
