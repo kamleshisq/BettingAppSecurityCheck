@@ -17137,6 +17137,7 @@ socket.on('connect', () => {
                 })
                 let parentElement = this.parentNode
                 if(this.id == `${section.market_id}2` ){
+                    console.log(section.even)
                     // if(section.ball_running){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
