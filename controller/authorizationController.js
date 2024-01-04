@@ -40,7 +40,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
         cookieOption.secure = true
         }
         console.log(req.body)
-    if(req.body.url === '/adminlogin'){
+    if(req.body.url1 === '/adminlogin'){
         res.cookie('ADMIN_JWT', token, cookieOption)
     }
     // console.log(res);
@@ -240,7 +240,7 @@ exports.login = catchAsync (async(req, res, next) => {
             })
         }
 
-        else if(req.body.url === '/adminlogin' && user.roleName !== 'Admin'){
+        else if(req.body.url1 === '/adminlogin' && user.roleName !== 'Admin'){
             res.status(404).json({
                 status:'error',
                 message:"You not have permition to login"

@@ -3,15 +3,15 @@ import { notificationsss } from "./notificationsss";
 
 export const login = async(userName, password)=>{
     try{
-        let url = window.location.pathname;
-        console.log(url)
+        let url1 = window.location.pathname;
+        console.log(url1)
         const res = await axios({
             method: 'POST',
             url: '/api/v1/auth/login',
             data:{
                 userName,
                 password,
-                url
+                url1
             }
         });
         if(res.data.status === 'success'){
