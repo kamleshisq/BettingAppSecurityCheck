@@ -327,6 +327,7 @@ async function mapBet(data){
 
             }else if ((bets[bet].secId === "odd_Even_No" && data.result === "LAY") || (bets[bet].secId === "odd_Even_Yes" && data.result === "BACK")){
                 let debitCreditAmount 
+                console.log('HEREEEEE')
                 let exposure = bets[bet].exposure
                 if(bets[bet].bettype2 == "BACK"){
                     debitCreditAmount = (bets[bet].Stake * bets[bet].oddValue)/100
@@ -381,7 +382,6 @@ async function mapBet(data){
                   "transactionId":`${bets[bet].transactionId}`
                 })
             }else if (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")){
-                console.log('HEREEEEE')
                 let creditDebitamount 
                         let exposure = bets[bet].exposure
                         if(bets[bet].bettype2 == "BACK"){
