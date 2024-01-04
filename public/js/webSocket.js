@@ -21573,6 +21573,7 @@ socket.on('connect', () => {
         // })
 
         $(document).on('click','.usernametr',function(e){
+            $('.load-more').hide()
             let data = {}
             let userName = $(this).children('td.usernametd').attr('data-username')
             let id = userName
@@ -21941,16 +21942,21 @@ socket.on('connect', () => {
 
         socket.on('userwisedownlinecommittion',async(data)=>{
             if(data.status == 'success'){
+                console.log(data,'==>data')
+                let page = data.page
                 let result = data.result
                 let adminBredcumArray = data.adminBredcumArray
-                let html = `<thead>
-                <tr>
-                  <th>
-                  User Name</th>
-                  <th>Commission</th>
-                  <th>Unclaimed Commission</th>
-                  </tr>
-              </thead><tbody class="new-body">`
+                let html;
+                if(page == 0){
+                    html = `<thead>
+                    <tr>
+                      <th>
+                      User Name</th>
+                      <th>Commission</th>
+                      <th>Unclaimed Commission</th>
+                      </tr>
+                  </thead><tbody class="new-body">`
+                }
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
                       html += `<tr style="cursor:pointer"  class="usernametr">
@@ -21959,8 +21965,16 @@ socket.on('connect', () => {
                     <td>${result[i].commissionUnclaim}</td>
                       </tr>`
                   }
+                  $('.load-more').show()
               }else{
-                html += `<tr class="empty_table"><td>No record found</td></tr>`
+                $('.load-more').hide()
+                if(page == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+              }
+
+              if(page == 0){
+                html += `</tbody>`
               }
               let html2 = "";
               for(let i = 0; i < adminBredcumArray.length; i++){
@@ -21995,24 +22009,52 @@ socket.on('connect', () => {
                 }
               }
 
-                $('#table12').html(html)
+              if(page == 0){
+                  $('#table12').html(html)
+            }else{
+                  $('.new-body').append(html)
+
+              }
                 $('.bredcum-container ul').html(html2)
             }
 
         })
 
+        $(document).on('click','.load-more',function(e){
+            let data = {}
+            let fromdate = $('#fromDate').val()
+            let todate = $('#toDate').val()
+            let page = parseInt($('.pageId').attr('data-pageid'))
+            $('.pageId').attr('data-pageid',page + 1)
+            data.fromdate = fromdate
+            data.todate = todate
+            data.page = page
+            const searchParams = new URLSearchParams(window.location.search);
+            const paramsObject = {};
+            searchParams.forEach((value, key) => {
+                paramsObject[key] = value;
+            });
+            data.query = paramsObject
+            data.LOGINUSER = LOGINDATA.LOGINUSER
+            socket.emit('userwisedownlinecommittion',{data})
+
+        })
+
         $('#fromDate,#toDate').change(async function(e){
+           
             let data = {}
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()
             data.fromdate = fromdate
             data.todate = todate
             if($('.bredcum-container li:last').hasClass('afteraddnewbredcum')){
+                $('.pageId').attr('data-pageid',"1")
                 const searchParams = new URLSearchParams(window.location.search);
                 const paramsObject = {};
                 searchParams.forEach((value, key) => {
                     paramsObject[key] = value;
                 });
+                data.page = 0
                 data.query = paramsObject
                 data.LOGINUSER = LOGINDATA.LOGINUSER
                 socket.emit('userwisedownlinecommittion',{data})
