@@ -5413,35 +5413,35 @@ async function getcommissionreport (loginuserid1){
                         if(userName.length == 0){
                             roleName[0] = 'Super-Duper-Admin'
                         }else{
-                            usernameStatus == false
+                            usernameStatus = false
                         }
                     }else if(roleName[0] == 'Super-Duper-Admin'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Admin'})
                         if(userName.length == 0){
                             roleName[0] = 'Super-Admin'
                         }else{
-                            usernameStatus == false
+                            usernameStatus = false
                         }
                     }else if(roleName[0] == 'Super-Admin'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Duper-Admin'})
                         if(userName.length == 0){
                             roleName[0] = 'Duper-Admin'
                         }else{
-                            usernameStatus == false
+                            usernameStatus = false
                         }
                     }else if(roleName[0] == 'Duper-Admin'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'AGENT'})
                         if(userName.length == 0){
                             roleName[0] = 'AGENT'
                         }else{
-                            usernameStatus == false
+                            usernameStatus = false
                         }
                     }else if(roleName[0] == 'AGENT'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'user'})
                         roleName[0] = 'user'
                     }else{
                         status = true
-                        usernameStatus == false
+                        usernameStatus = false
                     }
                 }
             }
