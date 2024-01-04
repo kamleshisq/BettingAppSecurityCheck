@@ -5407,6 +5407,7 @@ async function getcommissionreport (loginuserid1){
             }else{
                 let usernameStatus = true;
                 while(usernameStatus){
+                    console.log(roleName[0],usernameStatus,'==>roleName[0]')
                     if(roleName[0] == 'Admin'){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Duper-Admin'})
                         if(userName.length == 0){
