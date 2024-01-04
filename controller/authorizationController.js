@@ -317,6 +317,7 @@ exports.checkHouse = catchAsync(async(req, res, next) => {
         req.app.set('User', null);
         return res.redirect('/adminlogin')
     }
+    console.log(token, "tokentokentokentokentoken")
     const tokenId = await loginLogs.findOne({session_id:token})
     if( tokenId &&!tokenId.isOnline){
         // console.log('working12121')
