@@ -282,6 +282,73 @@ exports.checkPass = catchAsync(async(req, res, next) => {
     next()
 })
 
+exports.checkHouse = catchAsync(async(req, res, next) => {
+    let token 
+    let loginData
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1].split("=")[1];
+        if(!token){
+            token = req.headers.authorization.split(' ')[1]
+        }
+        if(!token){
+            token = req.headers.authorization.split('  ')[1].split("=")[1];
+        }
+    }else if(req.headers.cookie){
+        token = parseCookies(req.headers.cookie).ADMIN_JWT;
+        if(req.headers.cookie){
+            loginData.Token = req.headers.cookie.split(';')[0]
+            if(!loginData.Token.startsWith("ADMIN_JWT")){
+                loginData.Token = req.headers.cookie.split(';')[1]
+            }
+        }else{
+            loginData.Token = ""
+        }
+    }
+    if(!token){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/adminlogin')
+    }
+    const tokenId = await loginLogs.findOne({session_id:token})
+    if( tokenId &&!tokenId.isOnline){
+        // console.log('working12121')
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/adminlogin')
+    }
+    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+    const currentUser = await User.findById(decoded.A);
+    if(!currentUser){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/adminlogin')
+    }
+    let whiteLabel = process.env.whiteLabelName
+    let childrenArr = []
+    let paymentreqcount = 0
+    let WithdrawReqCount = 0
+    if(currentUser.role.roleName === "Super-Duper-Admin"){
+        childrenArr = await User.distinct('userName', { parentUsers: currentUser._id, role_type: 5 });
+        // console.log(childrenArr, "childrenArrchildrenArrchildrenArr")
+        paymentreqcount = await paymentReportModel.countDocuments({username:{$in:childrenArr},status:'pending'})
+        WithdrawReqCount = await userWithReq.countDocuments({username:currentUser.userName, reqStatus:'pending'})
+        loginData.User = currentUser
+        res.locals.loginData = loginData
+        res.locals.paymentreqcount = paymentreqcount
+        res.locals.WithdrawReqCount = WithdrawReqCount
+        req.currentUser = currentUser
+        req.token = token
+        req.app.set('token', token);
+        req.app.set('User', currentUser);
+        next()
+    }else{
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/adminlogin')
+    }
+})
+
+
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
