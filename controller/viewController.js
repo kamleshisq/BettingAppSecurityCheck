@@ -5362,7 +5362,7 @@ async function getcommissionreport (loginuserid1){
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                 },
                 loginUserId:{$exists:true},
-                userName:{$in:loginuserid1}
+                userName:loginuserid1
 
             }
         },
@@ -5384,72 +5384,24 @@ async function getcommissionreport (loginuserid1){
 
     let resultArray = [];
     for(let i = 0 ;i<loginuserid1.length;i++){
-        let status = false;
         let result
         let userName = loginuserid1[i]
         let user = await User.findOne({userName:loginuserid1[i]})
-        let userNamearra;
-        let roleName;
-        while(status == false){
-            if(!Array.isArray(userName)){
-                userNamearra = [userName]
-                roleName = await User.distinct("roleName",{userName:userName})
-            }else{
-                userNamearra = userName
-                roleName = await User.distinct("roleName",{userName:userName[0]})
-            }
-            result = await getcommissionreport(userNamearra)
-            if(result.length !== 0){
-                status = true
-                resultArray = resultArray.concat(result)
-            }else{
-                let usernameStatus = true;
-                while(usernameStatus){
-                    console.log(roleName[0],usernameStatus,userName,'==>roleName[0]')
-                    if(roleName[0] == 'Admin'){
-                        userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Duper-Admin'})
-                        if(userName.length == 0){
-                            roleName[0] = 'Super-Duper-Admin'
-                        }else{
-                            usernameStatus = false
-                        }
-                    }else if(roleName[0] == 'Super-Duper-Admin'){
-                        userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Admin'})
-                        if(userName.length == 0){
-                            roleName[0] = 'Super-Admin'
-                        }else{
-                            usernameStatus = false
-                        }
-                    }else if(roleName[0] == 'Super-Admin'){
-                        userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Duper-Admin'})
-                        if(userName.length == 0){
-                            roleName[0] = 'Duper-Admin'
-                        }else{
-                            usernameStatus = false
-                        }
-                    }else if(roleName[0] == 'Duper-Admin'){
-                        userName = await User.distinct("userName",{parentUsers:user._id,roleName:'AGENT'})
-                        if(userName.length == 0){
-                            roleName[0] = 'AGENT'
-                        }else{
-                            usernameStatus = false
-                        }
-                    }else if(roleName[0] == 'AGENT'){
-                        userName = await User.distinct("userName",{parentUsers:user._id,roleName:'user'})
-                        roleName[0] = 'user'
-                        usernameStatus = false
-                    }else{
-                        status = true
-                        usernameStatus = false
-                        
-                    }
-                }
-            }
+        result = await getcommissionreport(userName)
+        if(result.length == 0){
+            resultArray=resultArray.concat([{
+                _id:userName,
+                commissionClaim:0,
+                commissionUnclaim:0,
+                userid:(user._id).toString()
+            }])
+        }else{
+            resultArray=resultArray.concat(result)
         }
 
     }
 
-
+    console.log(resultArray,'==>resultArray')
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Downline Commission Report',
         sportdownlinecomm:resultArray,
@@ -5458,6 +5410,7 @@ async function getcommissionreport (loginuserid1){
         adminBredcumArray
     })
 })
+
 
 exports.getSportwiseuplinecommreport = catchAsync(async(req, res, next)=>{
     let loginuserid1 = req.currentUser._id

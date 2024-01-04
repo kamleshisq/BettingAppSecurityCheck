@@ -10124,7 +10124,6 @@ io.on('connection', (socket) => {
                 }
         
             }
-        
             // console.log(resultArray,"==>resultArray1")
 
             socket.emit('userwisedownlinecommittion',{status:'success',result:resultArray,adminBredcumArray})
