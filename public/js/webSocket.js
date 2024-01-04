@@ -3368,6 +3368,7 @@ socket.on('connect', () => {
             // console.log(data)
             let html = ``
             if(data.transactionId){
+                console.log(data)
                 html += `<thead>
                 <tr >
                   <th>Date</th>
