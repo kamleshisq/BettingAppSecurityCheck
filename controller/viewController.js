@@ -5258,7 +5258,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
 
     loginuserid1 = loginuserid1.toString()
     loginuserid1 = loginuserid1.split(',')
-
+    console.log(loginuserid1, "loginuserid1loginuserid1loginuserid1")
     // console.log(me, "memememememememememe")
         // console.log(currentUser, "CURR")
         
