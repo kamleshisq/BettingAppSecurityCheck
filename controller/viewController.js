@@ -5440,7 +5440,7 @@ async function getcommissionreport (loginuserid1){
                         if(userName.length == 0){
                             roleName[0] = 'user'
                         }else{
-                            usernameStatus == false
+                            usernameStatus == true
                         }
                     }else{
                         status = true
