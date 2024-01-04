@@ -6879,7 +6879,7 @@ var userLogin = /*#__PURE__*/function () {
             sessionStorage.setItem('sessionID', res.data.data.sessionId);
             setTimeout(function () {
               location.reload();
-            }, 3000);
+            }, 300);
           }
           _context.next = 13;
           break;
@@ -57041,7 +57041,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49887" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49923" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
