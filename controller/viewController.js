@@ -5399,6 +5399,7 @@ async function getcommissionreport (loginuserid1){
             }
             result = await getcommissionreport(userNamearra)
             console.log(resultArray,'-->resultArray')
+            console.log(result,'result')
             if(result.length !== 0){
                 status = true
                 resultArray = resultArray.concat(result)
