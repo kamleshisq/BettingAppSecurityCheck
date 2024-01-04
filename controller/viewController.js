@@ -5311,15 +5311,13 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
 
    
 
-if(Object.keys(req.query).length == 0){
-    me = req.currentUser
-}else{
-    me = await User.findById(req.query.id)
-}  
-loginuserid1 = await User.distinct("userName",{parent_id:me._id})
-
-async function getcommissionreport (loginuserid1){
-    if(me.userName === currentUser.userName){
+    if(Object.keys(req.query).length == 0){
+        me = req.currentUser
+    }else{
+        me = await User.findById(req.query.id)
+    }  
+    loginuserid1 = await User.distinct("userName",{parent_id:me._id})
+        if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
             role:me.roleName,
@@ -5356,6 +5354,7 @@ async function getcommissionreport (loginuserid1){
             status:false
         })
     }
+async function getcommissionreport (loginuserid1){
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
@@ -5380,7 +5379,7 @@ async function getcommissionreport (loginuserid1){
             }
         }
     ])
-    return {sportdownlinecomm,roleName:me.roleName}
+    return sportdownlinecomm
 }
 
     let resultArray = [];
