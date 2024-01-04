@@ -9232,6 +9232,7 @@ io.on('connection', (socket) => {
             })
             // console.log(result)
             if(result.data.length > 0){
+                console.log(result.data[0])
                 socket.emit('GETMarketResult', {result:result.data[0].result, status:'sucess'})
             }else{
                 socket.emit('GETMarketResult', {result:'result yet to be declared', status:'sucess'})
