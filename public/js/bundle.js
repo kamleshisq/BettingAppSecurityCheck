@@ -5551,17 +5551,17 @@ var logout = /*#__PURE__*/function () {
           });
         case 3:
           res = _context.sent;
-          if (res.data.status === 'success') {
-            location.href = '/adminlogin';
-          }
-          _context.next = 11;
+          // if(res.data.status === 'success'){
+          location.href = '/adminlogin';
+          // }
+          _context.next = 10;
           break;
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
-          alert('Error logging out! Try again.');
-        case 11:
+          // alert('Error logging out! Try again.')
+        case 10:
         case "end":
           return _context.stop();
       }
