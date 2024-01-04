@@ -5391,7 +5391,7 @@ for(let i = 0 ;i<loginuserid1.length;i++){
     let result
     let resultArray = [];
     while(status == false){
-        let user = await findOne({userName:loginuserid1[i]})
+        let user = await User.findOne({userName:loginuserid1[i]})
         result = await getcommissionreport(me,currentUser,loginuserid1[i])
         if(result.length !== 0){
             status = true
