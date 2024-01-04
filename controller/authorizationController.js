@@ -549,6 +549,8 @@ exports.checkAdmin_isLogin = catchAsync( async(req, res, next) => {
         // console.log(token)
     }
 
+    console.log(token, "tokentokentoken")
+
     if(!token){
         req.app.set('token', null);
         req.app.set('User', null);

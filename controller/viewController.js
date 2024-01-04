@@ -195,8 +195,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
               if (error) {
                 reject(error);
               } else {
-                  console.log(body)
-                // resolve(JSON.parse(body));
+                //   console.log(body)
+                resolve(JSON.parse(body));
               }
             }
           );
