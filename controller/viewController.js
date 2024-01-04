@@ -5398,7 +5398,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
                 roleName = await User.distinct("roleName",{userName:userName[0]})
             }
             result = await getcommissionreport(userNamearra)
-            console.log(result,'-->result')
+            console.log(result,roleName,'-->result')
             if(result.length !== 0){
                 status = true
                 resultArray.concat(result)
