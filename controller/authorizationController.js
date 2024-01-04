@@ -110,7 +110,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     // req.loginUser = user
     let time = Date.now()
     if(user.roleName != 'DemoLogin'){
-        await loginLogs.updateMany({userName:user.userName}, {isOnline: false})
+        // await loginLogs.updateMany({userName:user.userName}, {isOnline: false})
     }
     await loginLogs.create({user_id:user._id,
                             userName:user.userName, 
@@ -813,7 +813,7 @@ exports.admin_logOut = catchAsync( async(req, res) => {
           res.cookie(logs[i].session_id, '', { expires: new Date(0) });
           res.clearCookie(logs[i].session_id);
       }
-      await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+    //   await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
       global._loggedInToken.splice(logs.session_id, 1);
       await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
 	res.cookie('ADMIN_JWT', 'loggedout', {
@@ -840,7 +840,7 @@ exports.logOutAllUser = catchAsync(async(req, res, next) => {
     let date = Date.now();
     global._loggedInToken=[];
     global._loggedInToken.push({token:token[1],time:date})
-    await loginLogs.updateMany({isOnline:true,session_id:{$ne:token[1]}},{$set:{isOnline:false, logOut_time:date}})
+    // await loginLogs.updateMany({isOnline:true,session_id:{$ne:token[1]}},{$set:{isOnline:false, logOut_time:date}})
     await User.updateMany({role_type:{$gt:1}},{$set:{is_Online:false}})
         
     res.status(200).json({
