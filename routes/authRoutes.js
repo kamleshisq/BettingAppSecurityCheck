@@ -12,10 +12,10 @@ router.post('/userSignUp', authController.signUp);
 router.get('/logOut', Usermiddlewares,authController.isProtected_User, authController.logOut);
 
 // Admin Panal
-router.use(middlewares,authController.isProtected)
-router.get('/admin_logOut', authController.admin_logOut);  // use same routes in both
-router.get("/logOutAllUser", authController.restrictTo("allUserLogOut"), authController.logOutAllUser);
-router.post("/logOutSelectedUser", authController.logOutSelectedUser);
+router.use(middlewares)
+router.get('/admin_logOut' , authController.checkHouse, authController.admin_logOut);  // use same routes in both
+router.get("/logOutAllUser" , authController.checkHouse, authController.restrictTo("allUserLogOut"), authController.logOutAllUser);
+router.post("/logOutSelectedUser" , authController.checkHouse, authController.logOutSelectedUser);
 
 
 module.exports = router;
