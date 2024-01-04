@@ -10283,7 +10283,7 @@ socket.on('connect', () => {
                         let text = $(this).contents().filter(function() {
                             return this.nodeType === 3; // Filter out non-text nodes
                         }).text().trim();
-                        text += '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
+                        text = '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
                         $(this).append(text)
                     } 
 
