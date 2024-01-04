@@ -239,7 +239,7 @@ exports.login = catchAsync (async(req, res, next) => {
             })
         }
 
-        if(req.body.url === '/adminlogin' && user.roleName !== 'Admin'){
+        else if(req.body.url === '/adminlogin' && user.roleName !== 'Admin'){
             res.status(404).json({
                 status:'error',
                 message:"You not have permition to login"
