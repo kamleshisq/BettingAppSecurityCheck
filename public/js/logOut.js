@@ -11,6 +11,7 @@ export const logout = async() => {
         // }
     }catch(err){
         console.log(err);
+        location.href = '/adminlogin'
         // alert('Error logging out! Try again.')
     }
 }

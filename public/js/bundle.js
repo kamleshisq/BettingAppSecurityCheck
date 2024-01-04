@@ -5554,14 +5554,15 @@ var logout = /*#__PURE__*/function () {
           // if(res.data.status === 'success'){
           location.href = '/adminlogin';
           // }
-          _context.next = 10;
+          _context.next = 11;
           break;
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
+          location.href = '/adminlogin';
           // alert('Error logging out! Try again.')
-        case 10:
+        case 11:
         case "end":
           return _context.stop();
       }
