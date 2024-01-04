@@ -1046,7 +1046,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
 });
 exports.admin_logOut = catchAsync( async(req, res) => {
     try{
-
+        console.log('getHRRERRRERRERRE')
         const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
         if(!user){
             return next(new AppError('User not find with this id',404))
