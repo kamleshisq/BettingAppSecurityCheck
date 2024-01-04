@@ -21942,16 +21942,20 @@ socket.on('connect', () => {
 
         socket.on('userwisedownlinecommittion',async(data)=>{
             if(data.status == 'success'){
+                let page = data.page
                 let result = data.result
                 let adminBredcumArray = data.adminBredcumArray
-                let html = `<thead>
-                <tr>
-                  <th>
-                  User Name</th>
-                  <th>Commission</th>
-                  <th>Unclaimed Commission</th>
-                  </tr>
-              </thead><tbody class="new-body">`
+                let html;
+                if(page == 0){
+                    html = `<thead>
+                    <tr>
+                      <th>
+                      User Name</th>
+                      <th>Commission</th>
+                      <th>Unclaimed Commission</th>
+                      </tr>
+                  </thead><tbody class="new-body">`
+                }
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
                       html += `<tr style="cursor:pointer"  class="usernametr">
@@ -21960,10 +21964,12 @@ socket.on('connect', () => {
                     <td>${result[i].commissionUnclaim}</td>
                       </tr>`
                   }
-                  $('.load-more').show()
               }else{
-                $('.load-more').hide()
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+
+              if(page == 0){
+                html += `</tbody>`
               }
               let html2 = "";
               for(let i = 0; i < adminBredcumArray.length; i++){
@@ -21998,7 +22004,12 @@ socket.on('connect', () => {
                 }
               }
 
-                $('#table12').html(html)
+              if(page == 0){
+                  $('#table12').html(html)
+            }else{
+                  $('.new-body').append(html)
+
+              }
                 $('.bredcum-container ul').html(html2)
             }
 
