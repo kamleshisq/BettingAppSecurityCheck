@@ -40,7 +40,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
         cookieOption.secure = true
         }
         console.log(req.body)
-    if(req.body.url === '/adminlogin'){
+    if(req.body.url1 === '/adminlogin'){
         res.cookie('ADMIN_JWT', token, cookieOption)
     }
     // console.log(res);
@@ -198,12 +198,14 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
 exports.login = catchAsync (async(req, res, next) => {
     let {
 		userName,
-		password
+		password,
+        url1
 	} = req.body;
     console.log(req.body)
     const loginSchema = Joi.object({
 		userName: Joi.string().required(),
 		password: Joi.string().required(),
+        url1:Joi.string().required(),
 		// g_captcha: Joi.optional()
 	});
     const validate = loginSchema.validate(req.body);
@@ -240,7 +242,7 @@ exports.login = catchAsync (async(req, res, next) => {
             })
         }
 
-        else if(req.body.url === '/adminlogin' && user.roleName !== 'Admin'){
+        else if(req.body.url1 === '/adminlogin' && user.roleName !== 'Admin'){
             res.status(404).json({
                 status:'error',
                 message:"You not have permition to login"
@@ -546,6 +548,98 @@ exports.checkAdmin_isLogin = catchAsync( async(req, res, next) => {
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).ADMIN_JWT;
+        // console.log(token)
+    }
+
+    console.log(token, "tokentokentoken")
+
+    if(!token){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+    if(token == "loggedout"){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+
+    const tokenId = await loginLogs.findOne({session_id:token})
+    // console.log(tokenId, "TOKENID")
+    if(!tokenId){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+    if(!tokenId.isOnline){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return next()
+    }
+    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+    const currentUser = await User.findById(decoded.A);
+    if(!currentUser){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }
+
+    if(currentUser.roleName != "DemoLogin"){
+        if(!currentUser){
+            req.app.set('token', null);
+        req.app.set('User', null);
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.isActive){
+            req.app.set('token', null);
+        req.app.set('User', null);
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.is_Online){
+            req.app.set('token', null);
+        req.app.set('User', null);
+            return next()
+        }else if (currentUser.role.roleName !== "Admin"){
+            req.app.set('token', null);
+            req.app.set('User', null);
+            return next()
+        }
+    }
+    
+    req.currentUser = currentUser
+    req.token = token
+    let loginData = {
+        Token : token,
+        User : currentUser
+    }
+    req.app.set('token', token);
+    req.app.set('User', currentUser);
+    res.locals.loginData = loginData
+    next()
+})
+
+
+exports.checksdm_isLogin = catchAsync( async(req, res, next) => {
+    let token 
+    res.locals.loginData = undefined
+    let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
+    if(whiteLabelData){
+        res.locals.B2C_Status = whiteLabelData.B2C_Status
+    }else{
+        res.locals.B2C_Status = false
+    }
+
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1].split("=")[1];
+    }else if(req.headers.cookie){
+        token = parseCookies(req.headers.cookie).SDM_JWT;
         // console.log(token)
     }
 
@@ -951,44 +1045,49 @@ exports.logOut = catchAsync( async function logout(req, res) {
     }
 });
 exports.admin_logOut = catchAsync( async(req, res) => {
-    const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
-    if(!user){
-        return next(new AppError('User not find with this id',404))
-    }
+    try{
+        console.log('getHRRERRRERRERRE')
+        const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
+        if(!user){
+            return next(new AppError('User not find with this id',404))
+        }
+        
+        // console.log(req.headers)
+        let token
+        // console.log(req.headers)
+        if(req.headers.authorization){
+            token = req.headers.authorization.split(' ');
+        }else{
+            token = req.headers.cookie.split('=')
+        }
+        // console.log(token)
+        let date = Date.now();
+        // console.log(global._loggedInToken)
+        let findToken=global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
+        if (findToken >= 0) {
+            global._loggedInToken.splice(findToken, 1);
+        }
+          // console.log(user._id)
+          const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+          // console.log(logs)
+          for(let i = 0; i < logs.length; i++){
+              res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+              res.clearCookie(logs[i].session_id);
+          }
+        //   await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
+          global._loggedInToken.splice(logs.session_id, 1);
+          await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
+        res.cookie('ADMIN_JWT', 'loggedout', {
+            expires: new Date(date + 500),
+            httpOnly: true
+        });
     
-    // console.log(req.headers)
-	let token
-    // console.log(req.headers)
-    if(req.headers.authorization){
-        token = req.headers.authorization.split(' ');
-    }else{
-        token = req.headers.cookie.split('=')
+        res.status(200).json({
+            status:'success'
+        })
+    }catch(err){
+        console.log(err)
     }
-    // console.log(token)
-    let date = Date.now();
-    // console.log(global._loggedInToken)
-	let findToken=global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
-	if (findToken >= 0) {
-		global._loggedInToken.splice(findToken, 1);
-	}
-      // console.log(user._id)
-      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
-      // console.log(logs)
-      for(let i = 0; i < logs.length; i++){
-          res.cookie(logs[i].session_id, '', { expires: new Date(0) });
-          res.clearCookie(logs[i].session_id);
-      }
-    //   await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
-      global._loggedInToken.splice(logs.session_id, 1);
-      await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-	res.cookie('ADMIN_JWT', 'loggedout', {
-        expires: new Date(date + 500),
-        httpOnly: true
-    });
-
-    res.status(200).json({
-        status:'success'
-    })
 });
 
 
