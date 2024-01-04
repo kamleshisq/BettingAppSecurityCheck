@@ -5308,20 +5308,15 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let adminBredcumArray = []
     let me
     let currentUser = req.currentUser
-   
-
-   
-
-if(Object.keys(req.query).length == 0){
-    me = req.currentUser
-}else{
-    me = await User.findById(req.query.id)
-}  
-loginuserid1 = await User.distinct("userName",{parent_id:me._id})
+    if(Object.keys(req.query).length == 0){
+        me = req.currentUser
+    }else{
+        me = await User.findById(req.query.id)
+    }  
+    loginuserid1 = await User.distinct("userName",{parent_id:me._id})
 
 
 
-async function getcommissionreport (me,currentUser,userName){
     if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
@@ -5359,60 +5354,70 @@ async function getcommissionreport (me,currentUser,userName){
             status:false
         })
     }
-    let sportdownlinecomm = await commissionNewModel.aggregate([
-        {
-            $match:{
-                date: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                },
-                loginUserId:{$exists:true},
-                userName:userName
+    async function getcommissionreport (userName){
+        let sportdownlinecomm = await commissionNewModel.aggregate([
+            {
+                $match:{
+                    date: {
+                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    },
+                    loginUserId:{$exists:true},
+                    userName:{$in:userName}
 
+                }
+            },
+            {
+                $group:{
+                    _id:"$userName",
+                    commissionClaim:{$sum:{
+                        $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                    }},
+                    commissionUnclaim:{$sum:{
+                        $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
+                    }},
+                    userid:{$first:"$userId"}
+                }
             }
-        },
-        {
-            $group:{
-                _id:"$userName",
-                commissionClaim:{$sum:{
-                    $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
-                  }},
-                commissionUnclaim:{$sum:{
-                    $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
-                  }},
-                userid:{$first:"$userId"}
-            }
-        }
-    ])
-    return sportdownlinecomm
-}
-
-let resultArray = [];
-for(let i = 0 ;i<loginuserid1.length;i++){
-    let status = false;
-    let result
-    while(status == false){
-        let user = await User.findOne({userName:loginuserid1[i]})
-        result = await getcommissionreport(me,currentUser,loginuserid1[i])
-        console.log(result,'-->result')
-        if(result.length !== 0){
-            status = true
-            resultArray.concat(result)
-        }else{
-            if(user.roleName == 'Admin'){
-                loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'Super-Admin'})
-            }else if(user.roleName == 'Super-Admin'){
-                loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'Duper-Admin'})
-            }else if(user.roleName == 'Duper-Admin'){
-                loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'AGENT'})
-            }else if(user.roleName == 'AGENT'){
-                loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'user'})
-            }else{
-                status = true
-            }
-        }
+        ])
+        return sportdownlinecomm
     }
 
-}
+    let resultArray = [];
+    for(let i = 0 ;i<loginuserid1.length;i++){
+        let status = false;
+        let result
+        let userName = loginuserid1[i]
+        let userNamearra;
+        let roleName;
+        while(status == false){
+            if(!Array.isArray(userName)){
+                userNamearra = [userName]
+                roleName = await User.distinct("roleName",{userName:userName})
+            }else{
+                userNamearra = userName
+                roleName = await User.distinct("roleName",{userName:userName[0]})
+            }
+            result = await getcommissionreport(me,currentUser,userNamearra)
+            console.log(result,'-->result')
+            if(result.length !== 0){
+                status = true
+                resultArray.concat(result)
+            }else{
+                if(roleName[0] == 'Admin'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Super-Admin'})
+                }else if(roleName[0] == 'Super-Admin'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'Duper-Admin'})
+                }else if(roleName[0] == 'Duper-Admin'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'AGENT'})
+                }else if(roleName[0] == 'AGENT'){
+                    userName = await User.distinct("userName",{parentUsers:me._id,roleName:'user'})
+                }else{
+                    status = true
+                }
+            }
+        }
+
+    }
 
 
 
