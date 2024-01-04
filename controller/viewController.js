@@ -1526,11 +1526,65 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         // })
     }
     // console.log('START')
+    // let betsEventWise = await betModel.aggregate([
+    //     {
+    //       $match: {
+    //         eventDate: {$gte: fiveDaysAgo},
+    //         userName:{$in:childrenUsername}
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: {
+    //           betType: "$betType",
+    //           eventid: "$eventId"
+    //         },
+    //         count: { $sum: 1 },
+    //         eventdate: { $first: "$eventDate" }, 
+    //         matchName: { $first: "$match" },
+    //         series: {$first: "$event"},
+    //         count2: { 
+    //             $sum: {
+    //               $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+    //             },
+    //         },
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: "$_id.betType",
+    //         data: {
+    //           $push: {
+    //             matchName: "$matchName",
+    //             count: "$count",
+    //             eventdate : '$eventdate',
+    //             eventid : "$_id.eventid",
+    //             series : '$series',
+    //             count2: "$count2",
+    //           }
+    //         }
+    //       }
+    //     },
+    //     {
+    //       $project: {
+    //         _id: 0,
+    //         id: "$_id", 
+    //         data: 1
+    //       }
+    //     },
+    //     {
+    //         $sort:{
+    //             'data.eventdate':-1
+    //         }
+    //     }
+    //   ]);
+
+
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
-            eventDate: {$gte: fiveDaysAgo},
-            userName:{$in:childrenUsername}
+            eventDate: { $gte: fiveDaysAgo },
+            userName: { $in: childrenUsername }
           }
         },
         {
@@ -1540,14 +1594,20 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
               eventid: "$eventId"
             },
             count: { $sum: 1 },
-            eventdate: { $first: "$eventDate" }, 
+            eventdate: { $first: "$eventDate" },
             matchName: { $first: "$match" },
-            series: {$first: "$event"},
-            count2: { 
-                $sum: {
-                  $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
-                },
+            series: { $first: "$event" },
+            count2: {
+              $sum: {
+                $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+              },
             },
+          }
+        },
+        {
+          $sort: {
+            count2: -1,
+            eventdate: -1
           }
         },
         {
@@ -1557,9 +1617,9 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
               $push: {
                 matchName: "$matchName",
                 count: "$count",
-                eventdate : '$eventdate',
-                eventid : "$_id.eventid",
-                series : '$series',
+                eventdate: '$eventdate',
+                eventid: "$_id.eventid",
+                series: '$series',
                 count2: "$count2",
               }
             }
@@ -1568,16 +1628,17 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         {
           $project: {
             _id: 0,
-            id: "$_id", 
+            id: "$_id",
             data: 1
           }
         },
         {
-            $sort:{
-                'data.eventdate':-1
-            }
+          $sort: {
+            'data.eventdate': -1
+          }
         }
       ]);
+      
     //   console.log('END')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
