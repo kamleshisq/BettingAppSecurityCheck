@@ -21940,6 +21940,7 @@ socket.on('connect', () => {
         socket.on('userwisedownlinecommittion',async(data)=>{
             if(data.status == 'success'){
                 let result = data.result
+                let adminBredcumArray = data.adminBredcumArray
                 let html = `<thead>
                 <tr>
                   <th>
@@ -21959,7 +21960,41 @@ socket.on('connect', () => {
               }else{
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
+              let html2 = "";
+              for(let i = 0; i < adminBredcumArray.length; i++){
+                if(adminBredcumArray[i].role === "Admin"){
+                    html2 += `<li class="afteraddnewbredcum"> <a href="/admin/downlinecommissionReort">  ${adminBredcumArray[i].userName}</a></li>`
+        
+                }else if(adminBredcumArray[i].role === "Super-Duper-Admin"){
+                  if(adminBredcumArray[i].status){
+                    html2 += `<li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort">  ${adminBredcumArray[i].userName}</a></li>`
+                  }else{
+                    html2 += `<li class="afteraddnewbredcum"> <a href="/admin/downlinecommissionReort?id=${adminBredcumArray[i].id}">  ${adminBredcumArray[i].userName}</a></li>`
+                  }
+        
+                }else if(adminBredcumArray[i].role === "Super-Admin"){
+                  if(adminBredcumArray[i].status){
+                    html2 += `<li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort">  ${adminBredcumArray[i].userName}</a></li>`
+                  }else{
+                    html2 += `<li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort?id=${adminBredcumArray[i].id}">  ${adminBredcumArray[i].userName}</a></li>`
+                  }
+                }else if(adminBredcumArray[i].role === "Duper-Admin"){
+                  if(adminBredcumArray[i].status){
+                    html2 += `<li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort">  ${adminBredcumArray[i].userName}</a></li>`
+                  }else{
+                   html2 += ` <li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort?id=${adminBredcumArray[i].id}">  ${adminBredcumArray[i].userName}</a></li>`
+                  }
+                }else if(adminBredcumArray[i].role === "AGENT"){
+                    if(adminBredcumArray[i].status){
+                      html2 += `<li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort">  ${adminBredcumArray[i].userName}</a></li>`
+                    }else{
+                      html2 += `<li class="afteraddnewbredcum"><a href="/admin/downlinecommissionReort?id=${adminBredcumArray[i].id}">  ${adminBredcumArray[i].userName}</a></li>`
+                    }
+                }
+              }
+
                 $('#table12').html(html)
+                $('.bredcum-container ul').html(html2)
             }
 
         })
@@ -21977,8 +22012,9 @@ socket.on('connect', () => {
                     paramsObject[key] = value;
                 });
                 console.log(paramsObject,'paramsObject')
+                data.query = paramsObject
                 data.LOGINUSER = LOGINDATA.LOGINUSER
-                // socket.emit('userwisedownlinecommittion',{data})
+                socket.emit('userwisedownlinecommittion',{data})
             }else{
                 if($('.bredcum-container li:last').hasClass('marketeventcompitisionsportusername')){
                 let parentdetail = JSON.parse($('.bredcum-container li:last').attr('data-marketeventcompitisionsportusername'))
