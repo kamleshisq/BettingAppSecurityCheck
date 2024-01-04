@@ -1487,10 +1487,10 @@ io.on('connection', (socket) => {
         let page = data.page;
         let skip;
         if(data.refreshStatus){
-            limit = (10 * page) + 10
+            limit = (100 * page) + 100
             skip = 0
         }else{
-            limit = 10
+            limit = 100
             skip = limit * page
         }
         let childrenUsername = []
