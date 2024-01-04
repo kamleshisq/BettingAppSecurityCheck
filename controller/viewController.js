@@ -5393,6 +5393,7 @@ for(let i = 0 ;i<loginuserid1.length;i++){
     while(status == false){
         let user = await User.findOne({userName:loginuserid1[i]})
         result = await getcommissionreport(me,currentUser,loginuserid1[i])
+        console.log(result,'-->result')
         if(result.length !== 0){
             status = true
             resultArray.concat(result)
