@@ -21970,6 +21970,8 @@ socket.on('connect', () => {
             data.fromdate = fromdate
             data.todate = todate
             if($('.bredcum-container li').length == 0){
+                const searchParams = new URLSearchParams(window.location.search);
+                console.log(searchParams,'searchParams')
                 data.LOGINUSER = LOGINDATA.LOGINUSER
                 socket.emit('userwisedownlinecommittion',{data})
             }else{

@@ -3693,126 +3693,63 @@ io.on('connection', (socket) => {
         }
     
     
-        // let betsEventWise = await Bet.aggregate([
-        //     {
-        //         $match: {
-        //             // status:"OPEN" ,
-        //             eventDate: dataobj,
-        //             userName:{$in:childrenUsername}
-        //         }
-        //     },
-        //       {
-        //         $group: {
-        //           _id: {
-        //             betType: "$betType",
-        //             eventId1 : "$eventId",
-        //             matchName: "$match",
-        //           },
-        //           count: { $sum: 1 },
-        //           eventdate: { $first: "$eventDate" }, 
-        //           eventid: { $first: "$eventId" },
-        //           series: {$first: "$event"},
-        //           betType : {$first: '$betType'},
-        //           count2: { 
-        //               $sum: {
-        //                 $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
-        //               },
-        //           },
-        //         }
-        //       },
-        //       {
-        //         $group: {
-        //           _id: "$_id.betType",
-        //           data: {
-        //             $push: {
-        //               matchName: "$_id.matchName",
-        //               count: "$count",
-        //               eventdate : '$eventdate',
-        //               eventid : "$eventid",
-        //               series : '$series',
-        //               count2: "$count2",
-        //               betType : '$betType'
-        //             }
-        //           }
-        //         }
-        //       },
-        //       {
-        //         $project: {
-        //           _id: 0,
-        //           id: "$_id", 
-        //           data: 1
-        //         }
-        //       },
-        //       {
-        //         $sort: {
-        //             "data.eventdate": -1 
-        //         }
-        //     }
-        
-        // ])
-
         let betsEventWise = await Bet.aggregate([
             {
-              $match: {
-                eventDate: dataobj,
-                userName: { $in: childrenUsername }
-              }
+                $match: {
+                    // status:"OPEN" ,
+                    eventDate: dataobj,
+                    userName:{$in:childrenUsername}
+                }
             },
-            {
-              $group: {
-                _id: {
-                  betType: "$betType",
-                  eventId1: "$eventId",
-                  matchName: "$match",
-                },
-                count: { $sum: 1 },
-                eventdate: { $first: "$eventDate" },
-                eventid: { $first: "$eventId" },
-                series: { $first: "$event" },
-                betType: { $first: '$betType' },
-                count2: {
-                  $sum: {
-                    $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+              {
+                $group: {
+                  _id: {
+                    betType: "$betType",
+                    eventId1 : "$eventId",
+                    matchName: "$match",
                   },
-                },
-              }
-            },
-            {
-              $sort: {
-                count2: -1,
-                eventdate: -1
-              }
-            },
-            {
-              $group: {
-                _id: "$_id.betType",
-                data: {
-                  $push: {
-                    matchName: "$_id.matchName",
-                    count: "$count",
-                    eventdate: '$eventdate',
-                    eventid: "$eventid",
-                    series: '$series',
-                    count2: "$count2",
-                    betType: '$betType'
+                  count: { $sum: 1 },
+                  eventdate: { $first: "$eventDate" }, 
+                  eventid: { $first: "$eventId" },
+                  series: {$first: "$event"},
+                  betType : {$first: '$betType'},
+                  count2: { 
+                      $sum: {
+                        $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+                      },
+                  },
+                }
+              },
+              {
+                $group: {
+                  _id: "$_id.betType",
+                  data: {
+                    $push: {
+                      matchName: "$_id.matchName",
+                      count: "$count",
+                      eventdate : '$eventdate',
+                      eventid : "$eventid",
+                      series : '$series',
+                      count2: "$count2",
+                      betType : '$betType'
+                    }
                   }
                 }
-              }
-            },
-            {
-              $project: {
-                _id: 0,
-                id: "$_id",
-                data: 1
-              }
-            },
-            {
-              $sort: {
-                'data.eventdate': -1
-              }
+              },
+              {
+                $project: {
+                  _id: 0,
+                  id: "$_id", 
+                  data: 1
+                }
+              },
+              {
+                $sort: {
+                    "data.eventdate": -1 
+                }
             }
-          ]);
-          
+        
+        ])
         socket.emit('settlement',{betsEventWise,dataobj,data})
 
     })
@@ -6721,8 +6658,7 @@ io.on('connection', (socket) => {
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
                     void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}},
-                    result:{$first:'$result'}
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
                     
                 }
             },
@@ -10048,14 +9984,63 @@ io.on('connection', (socket) => {
 
     socket.on('userwisedownlinecommittion',async(data)=>{
         try{
-            let loginuserid1 = data.data.LOGINUSER._id
-            let sportdownlinecomm = await newCommissionModel.aggregate([
+            let loginuserid1
+            let adminBredcumArray = []
+            let me
+           let currentUser = data.data.LOGINUSER        
+            if(Object.keys(req.query).length == 0){
+                me = req.currentUser
+            }else{
+                me = await User.findById(req.query.id)
+            }  
+            loginuserid1 = await User.distinct("userName",{parent_id:me._id})
+                if(me.userName === currentUser.userName){
+                adminBredcumArray.push({
+                    userName:me.userName,
+                    role:me.roleName,
+                    id : me._id.toString(),
+                    status:true
+                })
+            }else{
+                for(let i = 0; i < me.parentUsers.length; i++){
+                    if(me.parentUsers[i] == currentUser._id.toString()){
+                        // console.log("WORKING")
+                        adminBredcumArray.push({
+                            userName:currentUser.userName,
+                            role:currentUser.roleName,
+                            id : currentUser._id.toString(),
+                            status:true
+                        })
+                    }else{
+                        let thatUser = await User.findById(me.parentUsers[i])
+                        if(thatUser.role_type > currentUser.role_type){
+                            adminBredcumArray.push({
+                                userName:thatUser.userName,
+                                role:thatUser.roleName,
+                                id : thatUser._id.toString(),
+                                status:false
+                            })
+        
+                        }
+                    }
+                }
+                adminBredcumArray.push({
+                    userName:me.userName,
+                    role:me.roleName,
+                    id : me._id.toString(),
+                    status:false
+                })
+            }
+        async function getcommissionreport (loginuserid1){
+            let sportdownlinecomm = await commissionNewModel.aggregate([
                 {
                     $match:{
-                        date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                        date: {
+                            $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                        },
                         loginUserId:{$exists:true},
-                        parentIdArray:{$in:[loginuserid1.toString()]}
-    
+                        userName:{$in:loginuserid1}
+        
                     }
                 },
                 {
@@ -10063,15 +10048,97 @@ io.on('connection', (socket) => {
                         _id:"$userName",
                         commissionClaim:{$sum:{
                             $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
-                        }},
+                          }},
                         commissionUnclaim:{$sum:{
                             $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
-                        }}
+                          }},
+                        userid:{$first:"$userId"}
                     }
                 }
             ])
+            return sportdownlinecomm
+        }
+        
+            let resultArray = [];
+            for(let i = 0 ;i<loginuserid1.length;i++){
+                let status = false;
+                let result
+                let userName = loginuserid1[i]
+                let user = await User.findOne({userName:loginuserid1[i]})
+                let userNamearra;
+                let roleName;
+                while(status == false){
+                    if(!Array.isArray(userName)){
+                        userNamearra = [userName]
+                        roleName = await User.distinct("roleName",{userName:userName})
+                    }else{
+                        userNamearra = userName
+                        roleName = await User.distinct("roleName",{userName:userName[0]})
+                    }
+                    result = await getcommissionreport(userNamearra)
+                    console.log(resultArray,'-->resultArray')
+                    console.log(result,roleName,'result')
+                    if(result.length !== 0){
+                        status = true
+                        resultArray = resultArray.concat(result)
+                    }else{
+                        let usernameStatus = true;
+                        while(usernameStatus){
+                            console.log(roleName[0],usernameStatus,userName,'==>roleName[0]')
+                            if(roleName[0] == 'Admin'){
+                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Duper-Admin'})
+                                if(userName.length == 0){
+                                    roleName[0] = 'Super-Duper-Admin'
+                                }else{
+                                    usernameStatus = false
+                                }
+                            }else if(roleName[0] == 'Super-Duper-Admin'){
+                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Super-Admin'})
+                                if(userName.length == 0){
+                                    roleName[0] = 'Super-Admin'
+                                }else{
+                                    usernameStatus = false
+                                }
+                            }else if(roleName[0] == 'Super-Admin'){
+                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'Duper-Admin'})
+                                if(userName.length == 0){
+                                    roleName[0] = 'Duper-Admin'
+                                }else{
+                                    usernameStatus = false
+                                }
+                            }else if(roleName[0] == 'Duper-Admin'){
+                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'AGENT'})
+                                if(userName.length == 0){
+                                    roleName[0] = 'AGENT'
+                                }else{
+                                    usernameStatus = false
+                                }
+                            }else if(roleName[0] == 'AGENT'){
+                                userName = await User.distinct("userName",{parentUsers:user._id,roleName:'user'})
+                                roleName[0] = 'user'
+                                usernameStatus = false
+                            }else{
+                                status = true
+                                usernameStatus = false
+                                
+                            }
+                        }
+                    }
+                }
+        
+            }
+        
+            console.log(resultArray,"==>resultArray1")
+        
+            res.status(200).render('./downlinecommissionreport/userwisedlcr',{
+                title:'Downline Commission Report',
+                sportdownlinecomm:resultArray,
+                currentUser:req.currentUser,
+                me:req.currentUser,
+                adminBredcumArray
+            })
 
-            socket.emit('userwisedownlinecommittion',{status:'success',result:sportdownlinecomm})
+            socket.emit('userwisedownlinecommittion',{status:'success',result:sportdownlinecomm,adminBredcumArray})
         }catch(err){
             socket.emit('userwisedownlinecommittion',{status:'fail',msg:'something went wrong'})
             console.log(err,'==>userwisedownlinecommittion')
