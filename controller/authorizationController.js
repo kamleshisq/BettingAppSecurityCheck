@@ -39,6 +39,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
     if(process.env.NODE_ENV === "production"){
         cookieOption.secure = true
         }
+        console.log(req.body)
     if(req.body.url === '/adminlogin'){
         res.cookie('ADMIN_JWT', token, cookieOption)
     }
