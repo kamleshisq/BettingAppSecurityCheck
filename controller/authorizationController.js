@@ -242,12 +242,12 @@ exports.login = catchAsync (async(req, res, next) => {
             })
         }
 
-        else if(req.body.url1 === '/adminlogin' && user.roleName !== 'Admin'){
-            res.status(404).json({
-                status:'error',
-                message:"You not have permition to login"
-            })
-        }
+        // else if(req.body.url1 === '/adminlogin' && user.roleName !== 'Admin'){
+        //     res.status(404).json({
+        //         status:'error',
+        //         message:"You not have permition to login"
+        //     })
+        // }
         // else if(user.is_Online){
         //     // console.log(user)
         //     res.status(404).json({
