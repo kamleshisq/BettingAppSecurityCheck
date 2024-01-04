@@ -199,6 +199,7 @@ exports.login = catchAsync (async(req, res, next) => {
 		userName,
 		password
 	} = req.body;
+    console.log(req.body)
     const loginSchema = Joi.object({
 		userName: Joi.string().required(),
 		password: Joi.string().required(),
