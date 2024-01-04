@@ -21960,7 +21960,7 @@ socket.on('connect', () => {
               if(result.length > 0){
                   for(let i = 0;i<result.length;i++){
                       html += `<tr style="cursor:pointer"  class="usernametr">
-                      <td class="usernametd" data-username="${result[i]._id}">${result[i]._id}</td>
+                      <td class="usernametd" data-username="${result[i].userid}">${result[i]._id}</td>
                     <td>${result[i].commissionClaim}</td>
                     <td>${result[i].commissionUnclaim}</td>
                       </tr>`

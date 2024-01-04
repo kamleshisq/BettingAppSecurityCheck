@@ -10357,7 +10357,7 @@ io.on('connection', (socket) => {
             let user = await User.findById(id)
             socket.emit('getuserdetailsforcomm',{status:'success',user})
         }catch(err){
-            socket.emit('getuserdetailsforcomm',{status:'fail',user})
+            socket.emit('getuserdetailsforcomm',{status:'fail',msg:'something went wrong'})
         }
     })
 
