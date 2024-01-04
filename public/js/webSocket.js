@@ -21942,6 +21942,7 @@ socket.on('connect', () => {
 
         socket.on('userwisedownlinecommittion',async(data)=>{
             if(data.status == 'success'){
+                console.log(data,'==>data')
                 let page = data.page
                 let result = data.result
                 let adminBredcumArray = data.adminBredcumArray
