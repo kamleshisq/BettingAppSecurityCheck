@@ -8400,7 +8400,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}1` ){
-                    console.log(section.back, "macLimitStatus", macLimitStatus,  macLimitStatus < section.back)
+                    // console.log(section.back, "macLimitStatus", macLimitStatus,  macLimitStatus < section.back)
                     if( section.back == "-" || section.back == "1,000.00" || section.back == "0" || (macLimitStatus != undefined && macLimitStatus < section.back)){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -8813,8 +8813,8 @@ socket.on('connect', () => {
                 }
             }else{
                 let odds = $(this).children("span").eq(1).text();
-                console.log($(this).children("span").eq(0), "$(this).children(")
                 let textToshow = $(this).children("span").eq(0).text();
+                console.log(textToshow, "textToshowtextToshowtextToshow")
                 let beton = $(this).closest("tr").find("td:first-child").text();
                 let secondPTag = $(this).closest("tr").next().find(".beton");
                 let secondPTag2 = $(this).closest("tr").next().find(".selection-name");
