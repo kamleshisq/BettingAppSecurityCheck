@@ -5410,7 +5410,7 @@ while(status == false){
 
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Downline Commission Report',
-        sportdownlinecomm:result,
+        sportdownlinecomm:result.sportdownlinecomm,
         currentUser:req.currentUser,
         me:req.currentUser,
         adminBredcumArray
