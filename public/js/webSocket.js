@@ -21965,7 +21965,9 @@ socket.on('connect', () => {
                       </tr>`
                   }
               }else{
-                html += `<tr class="empty_table"><td>No record found</td></tr>`
+                if(page == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
               }
 
               if(page == 0){
