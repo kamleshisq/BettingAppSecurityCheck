@@ -5249,17 +5249,14 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     if(Object.keys(req.query).length == 0){
         // let parentUser = await distinct("userName")
         loginuserid1 = await User.distinct("_id",{parent_id:req.currentUser._id})
-        loginuserid1 = loginuserid1.toString()
-        loginuserid1 = loginuserid1.split(',')
-        console.log(loginuserid1,"loginuserid1")
         me = req.currentUser
     }else{
         loginuserid1 = await User.distinct("_id",{parent_id:req.query.id})
-        loginuserid1 = loginuserid1.toString()
-        loginuserid1 = loginuserid1.split(',')
-        console.log(loginuserid1,"loginuserid1")
         me = await User.findById(req.query.id)
     }
+
+    loginuserid1 = loginuserid1.toString()
+    loginuserid1 = loginuserid1.split(',')
 
     // console.log(me, "memememememememememe")
         // console.log(currentUser, "CURR")
