@@ -40,9 +40,9 @@ const createSendToken = async (user, statuscode, res, req)=>{
         cookieOption.secure = true
         }
         console.log(req.body)
-    // if(req.body.url1 === '/adminlogin'){
-        // }
-            res.cookie('ADMIN_JWT', token, cookieOption)
+    if(req.body.url1 === '/adminlogin'){
+        res.cookie('ADMIN_JWT', token, cookieOption)
+    }
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
@@ -198,12 +198,14 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
 exports.login = catchAsync (async(req, res, next) => {
     let {
 		userName,
-		password
+		password,
+        url1
 	} = req.body;
     console.log(req.body)
     const loginSchema = Joi.object({
 		userName: Joi.string().required(),
 		password: Joi.string().required(),
+        url1:Joi.string().required(),
 		// g_captcha: Joi.optional()
 	});
     const validate = loginSchema.validate(req.body);
