@@ -5316,7 +5316,8 @@ if(Object.keys(req.query).length == 0){
 }else{
     me = await User.findById(req.query.id)
 }  
-loginuserid1 = await User.distinct("userName",{parent_id:me_id})
+loginuserid1 = await User.distinct("userName",{parent_id:me._id})
+
 async function getcommissionreport (me,currentUser,loginuserid1){
     if(me.userName === currentUser.userName){
         adminBredcumArray.push({
