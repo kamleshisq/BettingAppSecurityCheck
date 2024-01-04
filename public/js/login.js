@@ -3,6 +3,8 @@ import { notificationsss } from "./notificationsss";
 
 export const login = async(userName, password)=>{
     try{
+        let url = window.location.origin;
+        console.log(url)
         const res = await axios({
             method: 'POST',
             url: '/api/v1/auth/login',
