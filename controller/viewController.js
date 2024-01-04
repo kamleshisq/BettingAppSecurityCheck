@@ -5440,12 +5440,13 @@ async function getcommissionreport (loginuserid1){
                         userName = await User.distinct("userName",{parentUsers:user._id,roleName:'user'})
                         if(userName.length == 0){
                             roleName[0] = 'user'
-                            usernameStatus == true
+                            usernameStatus == false
                         }else{
-                            usernameStatus == true
+                            usernameStatus == false
                         }
                     }else{
                         status = true
+                        usernameStatus == false
                     }
                 }
             }
