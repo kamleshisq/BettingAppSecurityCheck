@@ -9,6 +9,7 @@ const notificationController =  require("../controller/notificationController");
 
 
 router.get('/adminLogin/',authController.checkAdmin_isLogin ,viewController.login);
+router.get('/sdmlogin/',authController.checksdm_isLogin ,viewController.login);
 router.get('/userlogin',viewController.userLogin );
 router.get('/registration',viewController.registration );
 
