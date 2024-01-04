@@ -5307,16 +5307,18 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let loginuserid1
     let adminBredcumArray = []
     let me
-    let currentUser = req.currentUser
-    if(Object.keys(req.query).length == 0){
-        me = req.currentUser
-    }else{
-        me = await User.findById(req.query.id)
-    }  
-    loginuserid1 = await User.distinct("userName",{parent_id:me._id})
+   
 
+   
 
+if(Object.keys(req.query).length == 0){
+    me = req.currentUser
+}else{
+    me = await User.findById(req.query.id)
+}  
+loginuserid1 = await User.distinct("userName",{parent_id:me._id})
 
+async function getcommissionreport (me,currentUser,loginuserid1){
     if(me.userName === currentUser.userName){
         adminBredcumArray.push({
             userName:me.userName,
@@ -5354,33 +5356,32 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
             status:false
         })
     }
-    async function getcommissionreport (userName){
-        let sportdownlinecomm = await commissionNewModel.aggregate([
-            {
-                $match:{
-                    date: {
-                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                    },
-                    loginUserId:{$exists:true},
-                    userName:{$in:userName}
+    let sportdownlinecomm = await commissionNewModel.aggregate([
+        {
+            $match:{
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                loginUserId:{$exists:true},
+                userName:{$in:loginuserid1}
 
-                }
-            },
-            {
-                $group:{
-                    _id:"$userName",
-                    commissionClaim:{$sum:{
-                        $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
-                    }},
-                    commissionUnclaim:{$sum:{
-                        $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
-                    }},
-                    userid:{$first:"$userId"}
-                }
             }
-        ])
-        return sportdownlinecomm
-    }
+        },
+        {
+            $group:{
+                _id:"$userName",
+                commissionClaim:{$sum:{
+                    $cond: [ { $eq: [ "$commissionStatus", 'Claimed' ] }, '$commission', 0 ]
+                  }},
+                commissionUnclaim:{$sum:{
+                    $cond: [ { $eq: [ "$commissionStatus", 'Unclaimed' ] }, '$commission', 0 ]
+                  }},
+                userid:{$first:"$userId"}
+            }
+        }
+    ])
+    return {sportdownlinecomm,roleName:me.roleName}
+}
 
     let resultArray = [];
     for(let i = 0 ;i<loginuserid1.length;i++){
@@ -5420,12 +5421,6 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
         }
 
     }
-
-
-
-
-
-   
 
     console.log(resultArray,"==>resultArray1")
 
