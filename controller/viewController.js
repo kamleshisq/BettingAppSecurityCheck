@@ -5307,61 +5307,54 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
     let loginuserid1
     let adminBredcumArray = []
     let me
-    if(Object.keys(req.query).length == 0){
-        // let parentUser = await distinct("userName")
-        loginuserid1 = await User.distinct("userName",{parent_id:req.currentUser._id})
-        console.log(loginuserid1, "loginuserid1")
-        me = req.currentUser
-    }else{
-        loginuserid1 = await User.distinct("userName",{parent_id:req.query.id})
-        me = await User.findById(req.query.id)
-    }
+   
 
-    // loginuserid1 = loginuserid1.toString()
-    // loginuserid1 = loginuserid1.split(',')
-    // console.log(loginuserid1, "loginuserid1loginuserid1loginuserid1")
-    // console.log(me, "memememememememememe")
-        // console.log(currentUser, "CURR")
-        
-        let currentUser = req.currentUser
-        if(me.userName === currentUser.userName){
-            adminBredcumArray.push({
-                userName:me.userName,
-                role:me.roleName,
-                id : me._id.toString(),
-                status:true
-            })
-        }else{
-            for(let i = 0; i < me.parentUsers.length; i++){
-                if(me.parentUsers[i] == currentUser._id.toString()){
-                    // console.log("WORKING")
+   
+
+if(Object.keys(req.query).length == 0){
+    me = req.currentUser
+}else{
+    me = await User.findById(req.query.id)
+}  
+loginuserid1 = await User.distinct("userName",{parent_id:me_id})
+async function getcommissionreport (me,currentUser,loginuserid1){
+    if(me.userName === currentUser.userName){
+        adminBredcumArray.push({
+            userName:me.userName,
+            role:me.roleName,
+            id : me._id.toString(),
+            status:true
+        })
+    }else{
+        for(let i = 0; i < me.parentUsers.length; i++){
+            if(me.parentUsers[i] == currentUser._id.toString()){
+                // console.log("WORKING")
+                adminBredcumArray.push({
+                    userName:currentUser.userName,
+                    role:currentUser.roleName,
+                    id : currentUser._id.toString(),
+                    status:true
+                })
+            }else{
+                let thatUser = await User.findById(me.parentUsers[i])
+                if(thatUser.role_type > currentUser.role_type){
                     adminBredcumArray.push({
-                        userName:currentUser.userName,
-                        role:currentUser.roleName,
-                        id : currentUser._id.toString(),
-                        status:true
+                        userName:thatUser.userName,
+                        role:thatUser.roleName,
+                        id : thatUser._id.toString(),
+                        status:false
                     })
-                }else{
-                    let thatUser = await User.findById(me.parentUsers[i])
-                    if(thatUser.role_type > currentUser.role_type){
-                        adminBredcumArray.push({
-                            userName:thatUser.userName,
-                            role:thatUser.roleName,
-                            id : thatUser._id.toString(),
-                            status:false
-                        })
-    
-                    }
+
                 }
             }
-            adminBredcumArray.push({
-                userName:me.userName,
-                role:me.roleName,
-                id : me._id.toString(),
-                status:false
-            })
         }
-
+        adminBredcumArray.push({
+            userName:me.userName,
+            role:me.roleName,
+            id : me._id.toString(),
+            status:false
+        })
+    }
     let sportdownlinecomm = await commissionNewModel.aggregate([
         {
             $match:{
@@ -5386,6 +5379,29 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
             }
         }
     ])
+    return {sportdownlinecomm,roleName:me.roleName}
+}
+
+
+let currentUser = req.currentUser
+let status = false;
+let result
+while(status == false){
+    result = await getcommissionreport(me,currentUser,loginuserid1)
+    if(result.sportdownlinecomm.length !== 0){
+        status = true
+    }else{
+        if(result.roleName == 'Admin'){
+            loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'Super-Admin'})
+        }else if(result.roleName == 'Super-Admin'){
+            loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'Duper-Admin'})
+        }else if(result.roleName == 'Duper-Admin'){
+            loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'AGENT'})
+        }else if(result.roleName == 'AGENT'){
+            loginuserid1 = await User.find("userName",{parentUsers:me._id,roleName:'user'})
+        }
+    }
+}
 
    
 
@@ -5393,7 +5409,7 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
 
     res.status(200).render('./downlinecommissionreport/userwisedlcr',{
         title:'Downline Commission Report',
-        sportdownlinecomm,
+        sportdownlinecomm:result,
         currentUser:req.currentUser,
         me:req.currentUser,
         adminBredcumArray
