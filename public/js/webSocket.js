@@ -16798,6 +16798,10 @@ socket.on('connect', () => {
             let search = new URLSearchParams(window.location.search);
             let eventId =  search.get('id');
             console.log(eventId, "search")
+            socket.emit('checkAdminSideOdds', {eventId, LOGINDATA})
+            setTimeout(()=>{
+                checkAdminSideOdds()
+            }, 5000)
         }
         checkAdminSideOdds()
 
