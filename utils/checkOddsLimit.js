@@ -46,12 +46,14 @@ async function checkLimit(data){
             const checkAndUpdateIfZero = async (type) => {
                 number ++
                 const tempBetLimit = await betLimitModel.findOne({ type });
-                if (tempBetLimit) {
+                if (tempBetLimit && betLimit) {
                     Object.keys(tempBetLimit._doc).forEach(field => {
                         if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
                             betLimit[field] = tempBetLimit[field];
                         }
                     });
+                }else{
+                    betLimit = tempBetLimit
                 }
             };
 
