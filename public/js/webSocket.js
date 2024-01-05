@@ -10295,10 +10295,11 @@ socket.on('connect', () => {
                     //     $(this).append(text)
                     // }
                     
+                    if(data.betDetails.some(item => item == this.id)){
                     if (!$(this).find('.site-button.fancy-book').length) {
                         let text = '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>';
                         $(this).append(text);
-                    }
+                    }}
 
                 })
             }
