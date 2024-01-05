@@ -5953,6 +5953,69 @@ io.on('connection', (socket) => {
                         secId: { $not: { $regex: /^odd_Even/i } }
                     }
                 },
+                {
+                    $group: {
+                        _id: {
+                            userName: "$userName",
+                            selectionName: "$selectionName",
+                            matchName: "$match",
+                        },
+                        totalAmount: {
+                            $sum: {
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then:{
+                                        $cond:{
+                                            if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                            then:{
+                                                $sum: {
+                                                    $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                }
+                                            },
+                                            else:{
+                                                $sum: {
+                                                    $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    else:{
+                                        $cond:{
+                                            if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                            then:{
+                                                $sum: {
+                                                   $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                                }
+                                            },
+                                            else:{
+                                                $sum: { 
+                                                    $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        Stake: {
+                            $sum: { 
+                                $cond: { 
+                                    if : {$eq: ['$bettype2', "BACK"]},
+                                    then : {
+                                        $sum: '$Stake' 
+                                    },
+                                    else : {
+                                        $multiply: ['$Stake', -1]
+                                    }
+                                }
+                            }
+                        },
+                        exposure:{
+                            $sum:'$exposure'
+                        },
+                        parentArray: { $first: "$parentArray" }
+                    },
+                },
             ])
             console.log(Bets)
         }
