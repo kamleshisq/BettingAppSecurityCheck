@@ -43,7 +43,7 @@ async function placeBet(data){
     let betLimitcheck = await betLimitModel.findOne({type : 'Sport'}) 
     console.log(betLimitcheck, "betLimitcheckbetLimitcheck")
     if(betLimitcheck && betLimitcheck.max_bet != 0){
-        if(betLimitcheck.max_bet > openBet){
+        if(betLimitcheck.max_bet <= openBet){
             return "Please try again later, Your Betlimit Limit is full"
         }
     }
