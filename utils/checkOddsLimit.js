@@ -41,33 +41,28 @@ async function checkLimit(data){
             console.log('gotHERE')
 
             let betLimit = await betLimitModel.findOne({ type: thatMatch.eventData.name });
-            console.log(betLimit)
-           let number = 1
-            const checkAndUpdateIfZero = async (type) => {
-                number ++
-                const tempBetLimit = await betLimitModel.findOne({ type });
-                if (tempBetLimit && betLimit) {
-                    console.log(Object.keys(tempBetLimit._doc))
-                    Object.keys(tempBetLimit._doc).forEach(field => {
-                        if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
-                            betLimit[field] = tempBetLimit[field];
-                        }
-                    });
-                }else{
-                    betLimit = tempBetLimit
-                }
-            };
 
-            if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 1 ) {
-                await checkAndUpdateIfZero(thatMatch.eventData.league);
-            }else if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 2) {
-                await checkAndUpdateIfZero(sport_name);
-            }else if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 3 ) {
-                await checkAndUpdateIfZero('Sport');
-            }else if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 4) {
-                await checkAndUpdateIfZero('Home');
+const checkAndUpdateIfZero = async (type) => {
+    const tempBetLimit = await betLimitModel.findOne({ type });
+    if (tempBetLimit) {
+        Object.keys(tempBetLimit._doc).forEach(field => {
+            if (betLimit[field] === 0) {
+                betLimit[field] = tempBetLimit[field];
             }
-            
+        });
+    }
+};
+
+if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+    await checkAndUpdateIfZero(thatMatch.eventData.league);
+    await checkAndUpdateIfZero(sport_name);
+    await checkAndUpdateIfZero('Sport');
+    await checkAndUpdateIfZero('Home');
+}
+
+// Now betLimit should contain the desired values with only zero fields taken from upper levels.
+
+
 // Now betLimit should contain the desired values with only zero fields taken from upper levels.
 
 // Now betLimit should contain the desired values with only zero fields taken from upper levels.
