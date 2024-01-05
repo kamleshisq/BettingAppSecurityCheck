@@ -5950,7 +5950,7 @@ io.on('connection', (socket) => {
                         status: "OPEN",
                         eventId: data.eventId,
                         userName:{$in:childrenUSer},
-                        // secId: { $not: { $regex: /^odd_Even/i } }
+                        secId: { $not: { $regex: /^odd_Even/i } }
                     }
                 },
             ])
