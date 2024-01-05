@@ -47,21 +47,22 @@ const createSendToken = async (user, statuscode, res, req)=>{
         httpOnly: true,
         // secure: true
         }
-    if(process.env.NODE_ENV === "production"){
-        cookieOption.secure = true
-    }
-    if(req.originalUrl.startsWith('/adminlogin')){
-        res.cookie('ADMIN_JWT', token, cookieOption)
-    }else if(req.originalUrl.startsWith('/sdmlogin')){
-        res.cookie('SDM_JWT', token, cookieOption)
+    // if(process.env.NODE_ENV === "production"){
+    //     cookieOption.secure = true
+    // }
+    // if(req.originalUrl.startsWith('/adminlogin')){
+    //     res.cookie('ADMIN_JWT', token, cookieOption)
+    // }else if(req.originalUrl.startsWith('/sdmlogin')){
+    //     res.cookie('SDM_JWT', token, cookieOption)
         
-    }else if(req.originalUrl.startsWith('/smlogin')){
-        res.cookie('SM_JWT', token, cookieOption)
-    }else if(req.originalUrl.startsWith('/dmlogin')){
-        res.cookie('DM_JWT', token, cookieOption)
-    }else if(req.originalUrl.startsWith('/agentlogin')){
-        res.cookie('AGENT_JWT', token, cookieOption)
-    }
+    // }else if(req.originalUrl.startsWith('/smlogin')){
+    //     res.cookie('SM_JWT', token, cookieOption)
+    // }else if(req.originalUrl.startsWith('/dmlogin')){
+    //     res.cookie('DM_JWT', token, cookieOption)
+    // }else if(req.originalUrl.startsWith('/agentlogin')){
+    //     res.cookie('AGENT_JWT', token, cookieOption)
+    // }
+    res.cookie('ADMIN_JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
@@ -237,42 +238,42 @@ exports.login = catchAsync (async(req, res, next) => {
         let whiteLabel = process.env.whiteLabelName
         console.log(req.originalUrl,'req.originalUrl')
         console.log(user,'user')
-        if(req.originalUrl.startsWith('/adminlogin')){
-            if(user.roleName != 'Admin'){
-                res.status(404).json({
-                    status:'error',
-                    message:"not a valid user login"
-                })
-            }
-        }else if(req.originalUrl.startsWith('/sdmlogin')){
-            if(user.roleName != 'Super-Duper-Admin'){
-                res.status(404).json({
-                    status:'error',
-                    message:"not a valid user login"
-                })
-            }            
-        }else if(req.originalUrl.startsWith('/smlogin')){
-            if(user.roleName != 'Super-Admin'){
-                res.status(404).json({
-                    status:'error',
-                    message:"not a valid user login"
-                })
-            }        
-        }else if(req.originalUrl.startsWith('/dmlogin')){
-            if(user.roleName != 'Duper-Admin'){
-                res.status(404).json({
-                    status:'error',
-                    message:"not a valid user login"
-                })
-            }
-        }else if(req.originalUrl.startsWith('/agentlogin')){
-            if(user.roleName != 'AGENT'){
-                res.status(404).json({
-                    status:'error',
-                    message:"not a valid user login"
-                })
-            }
-        }else if(user.whiteLabel != whiteLabel){
+        // if(req.originalUrl.startsWith('/adminlogin')){
+        //     if(user.roleName != 'Admin'){
+        //         res.status(404).json({
+        //             status:'error',
+        //             message:"not a valid user login"
+        //         })
+        //     }
+        // }else if(req.originalUrl.startsWith('/sdmlogin')){
+        //     if(user.roleName != 'Super-Duper-Admin'){
+        //         res.status(404).json({
+        //             status:'error',
+        //             message:"not a valid user login"
+        //         })
+        //     }            
+        // }else if(req.originalUrl.startsWith('/smlogin')){
+        //     if(user.roleName != 'Super-Admin'){
+        //         res.status(404).json({
+        //             status:'error',
+        //             message:"not a valid user login"
+        //         })
+        //     }        
+        // }else if(req.originalUrl.startsWith('/dmlogin')){
+        //     if(user.roleName != 'Duper-Admin'){
+        //         res.status(404).json({
+        //             status:'error',
+        //             message:"not a valid user login"
+        //         })
+        //     }
+        // }else if(req.originalUrl.startsWith('/agentlogin')){
+        //     if(user.roleName != 'AGENT'){
+        //         res.status(404).json({
+        //             status:'error',
+        //             message:"not a valid user login"
+        //         })
+        //     }
+        if(user.whiteLabel != whiteLabel){
             res.status(404).json({
                 status:'error',
                 message:"not a valid user login"
@@ -323,22 +324,22 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 exports.isProtected = catchAsync( async (req, res, next) => {
     let jwtnam;
     let redirecturl;
-    if(req.originalUrl.startsWith('/adminlogin')){
-        jwtnam = 'ADMIN_JWT'
-        redirecturl = '/adminlogin'
-    }else if(req.originalUrl.startsWith('/sdmlogin')){
-        jwtnam = 'SDM_JWT'
-        redirecturl = '/sdmlogin'
-    }else if(req.originalUrl.startsWith('/smlogin')){
-        jwtnam = 'SM_JWT'
-        redirecturl = '/smlogin'
-    }else if(req.originalUrl.startsWith('/dmlogin')){
-        jwtnam = 'DM_JWT'
-        redirecturl = '/dmlogin'
-    }else if(req.originalUrl.startsWith('/agentlogin')){
-        jwtnam = 'AGENT_JWT'
-        redirecturl = '/agentlogin'
-    }
+    // if(req.originalUrl.startsWith('/adminlogin')){
+    //     jwtnam = 'ADMIN_JWT'
+    //     redirecturl = '/adminlogin'
+    // }else if(req.originalUrl.startsWith('/sdmlogin')){
+    //     jwtnam = 'SDM_JWT'
+    //     redirecturl = '/sdmlogin'
+    // }else if(req.originalUrl.startsWith('/smlogin')){
+    //     jwtnam = 'SM_JWT'
+    //     redirecturl = '/smlogin'
+    // }else if(req.originalUrl.startsWith('/dmlogin')){
+    //     jwtnam = 'DM_JWT'
+    //     redirecturl = '/dmlogin'
+    // }else if(req.originalUrl.startsWith('/agentlogin')){
+    //     jwtnam = 'AGENT_JWT'
+    //     redirecturl = '/agentlogin'
+    // }
     let token 
     let loginData = {}
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -357,10 +358,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             token = req.headers.authorization.split('  ')[1].split("=")[1];
         }
     }else if(req.headers.cookie){
-        token = parseCookies(req.headers.cookie).jwtnam;
+        token = parseCookies(req.headers.cookie).ADMIN_JWT;
         if(req.headers.cookie){
             loginData.Token = req.headers.cookie.split(';')[0]
-            if(!loginData.Token.startsWith(jwtnam)){
+            if(!loginData.Token.startsWith('ADMIN_JWT')){
                 loginData.Token = req.headers.cookie.split(';')[1]
             }
         }else{
@@ -517,24 +518,24 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 
 exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     // console.log('adminLogin')
-    let jwtnam;
-    let redirecturl;
-    if(req.originalUrl.startsWith('/adminlogin')){
-        jwtnam = 'ADMIN_JWT'
-        redirecturl = '/adminlogin'
-    }else if(req.originalUrl.startsWith('/sdmlogin')){
-        jwtnam = 'SDM_JWT'
-        redirecturl = '/sdmlogin'
-    }else if(req.originalUrl.startsWith('/smlogin')){
-        jwtnam = 'SM_JWT'
-        redirecturl = '/smlogin'
-    }else if(req.originalUrl.startsWith('/dmlogin')){
-        jwtnam = 'DM_JWT'
-        redirecturl = '/dmlogin'
-    }else if(req.originalUrl.startsWith('/agentlogin')){
-        jwtnam = 'AGENT_JWT'
-        redirecturl = '/agentlogin'
-    }
+    // let jwtnam;
+    // let redirecturl;
+    // if(req.originalUrl.startsWith('/adminlogin')){
+    //     jwtnam = 'ADMIN_JWT'
+    //     redirecturl = '/adminlogin'
+    // }else if(req.originalUrl.startsWith('/sdmlogin')){
+    //     jwtnam = 'SDM_JWT'
+    //     redirecturl = '/sdmlogin'
+    // }else if(req.originalUrl.startsWith('/smlogin')){
+    //     jwtnam = 'SM_JWT'
+    //     redirecturl = '/smlogin'
+    // }else if(req.originalUrl.startsWith('/dmlogin')){
+    //     jwtnam = 'DM_JWT'
+    //     redirecturl = '/dmlogin'
+    // }else if(req.originalUrl.startsWith('/agentlogin')){
+    //     jwtnam = 'AGENT_JWT'
+    //     redirecturl = '/agentlogin'
+    // }
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -546,7 +547,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
-        token = parseCookies(req.headers.cookie).jwtnam;
+        token = parseCookies(req.headers.cookie).ADMIN_JWT;
         // console.log(token)
     }
     // console.log(token, "TOKEN")
@@ -860,24 +861,24 @@ exports.logOut = catchAsync( async function logout(req, res) {
     }
 });
 exports.admin_logOut = catchAsync( async(req, res) => {
-    let jwtnam;
-    let redirecturl;
-    if(req.originalUrl.startsWith('/adminlogin')){
-        jwtnam = 'ADMIN_JWT'
-        redirecturl = '/adminlogin'
-    }else if(req.originalUrl.startsWith('/sdmlogin')){
-        jwtnam = 'SDM_JWT'
-        redirecturl = '/sdmlogin'
-    }else if(req.originalUrl.startsWith('/smlogin')){
-        jwtnam = 'SM_JWT'
-        redirecturl = '/smlogin'
-    }else if(req.originalUrl.startsWith('/dmlogin')){
-        jwtnam = 'DM_JWT'
-        redirecturl = '/dmlogin'
-    }else if(req.originalUrl.startsWith('/agentlogin')){
-        jwtnam = 'AGENT_JWT'
-        redirecturl = '/agentlogin'
-    }
+    // let jwtnam;
+    // let redirecturl;
+    // if(req.originalUrl.startsWith('/adminlogin')){
+    //     jwtnam = 'ADMIN_JWT'
+    //     redirecturl = '/adminlogin'
+    // }else if(req.originalUrl.startsWith('/sdmlogin')){
+    //     jwtnam = 'SDM_JWT'
+    //     redirecturl = '/sdmlogin'
+    // }else if(req.originalUrl.startsWith('/smlogin')){
+    //     jwtnam = 'SM_JWT'
+    //     redirecturl = '/smlogin'
+    // }else if(req.originalUrl.startsWith('/dmlogin')){
+    //     jwtnam = 'DM_JWT'
+    //     redirecturl = '/dmlogin'
+    // }else if(req.originalUrl.startsWith('/agentlogin')){
+    //     jwtnam = 'AGENT_JWT'
+    //     redirecturl = '/agentlogin'
+    // }
     const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
     if(!user){
         return next(new AppError('User not find with this id',404))
@@ -908,7 +909,7 @@ exports.admin_logOut = catchAsync( async(req, res) => {
       await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
       global._loggedInToken.splice(logs.session_id, 1);
       await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-	res.cookie(jwtnam, 'loggedout', {
+	res.cookie('ADMIN_JWT', 'loggedout', {
         expires: new Date(date + 500),
         httpOnly: true
     });
