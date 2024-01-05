@@ -5940,6 +5940,10 @@ io.on('connection', (socket) => {
 
     socket.on('checkAdminSideOdds', async(data) => {
         console.log(data, 'datadatadatadata')
+        if(data.LOGINDATA.LOGINUSER){
+            let childrenUSer = await User.distinct('userName', {parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}})
+            console.log(childrenUSer)
+        }
     })
 
     socket.on('FANCYBOOK', async(data) => {
