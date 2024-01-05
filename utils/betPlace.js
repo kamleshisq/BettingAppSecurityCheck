@@ -38,6 +38,13 @@ async function placeBet(data){
     if((exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full"
     }
+    let openBet = betmodel.countDocuments({userName:data.LOGINDATA.LOGINUSER.userName, status:'OPEN'})
+    let betLimitcheck = betLimitModel.findOne({type : 'Sport'}) 
+    if(betLimitcheck && betLimitcheck.max_bet != 0){
+        if(betLimitcheck.max_bet > openBet){
+            return "Please try again later, Your Betlimit Limit is full"
+        }
+    }
     // if((check.availableBalance - check.exposure) < data.data.stake){
     //     return "You do not have sufficient balance for bet"
     // }
