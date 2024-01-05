@@ -60,17 +60,14 @@ async function checkLimit(data){
 
             if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 1 ) {
                 await checkAndUpdateIfZero(thatMatch.eventData.league);
-                if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 2) {
-                    await checkAndUpdateIfZero(sport_name);
-                    if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 3 ) {
-                        await checkAndUpdateIfZero('Sport');
-                        if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 4) {
-                            await checkAndUpdateIfZero('Home');
-                        }
-                    }
-                }
-}
-
+            }else if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 2) {
+                await checkAndUpdateIfZero(sport_name);
+            }else if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 3 ) {
+                await checkAndUpdateIfZero('Sport');
+            }else if ((!betLimit || Object.values(betLimit).some(value => value === 0)) && number === 4) {
+                await checkAndUpdateIfZero('Home');
+            }
+            
 // Now betLimit should contain the desired values with only zero fields taken from upper levels.
 
 // Now betLimit should contain the desired values with only zero fields taken from upper levels.
