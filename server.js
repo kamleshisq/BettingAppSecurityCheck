@@ -6257,6 +6257,87 @@ io.on('connection', (socket) => {
                       exposure : { $sum : "$selections2.exposure.value"}
                     }
                 },
+                {
+                    $project: {
+                      _id: 0,
+                      selection: {
+                        selectionName: "$_id",
+                        totalWinAmount: {
+                            $multiply:["$totalWinAmount", -1]
+                        },
+                        totalLossAmount:{
+                            $multiply:["$totalLossAmount", -1]
+                        },
+                        exposure:"$exposure",
+                      }
+                    }
+                },
+                {
+                    $group: {
+                      _id: null,
+                      selections: { $push: "$selection" }
+                    }
+                },
+                {
+                    $project: { 
+                        _id:0,
+                        selections: { 
+                            $map: { 
+                                input: "$selections",
+                                as: "selection",
+                                in: { 
+                                    selectionName: "$$selection.selectionName",
+                                    totalAmount: "$$selection.totalWinAmount",
+                                    exposure : {$multiply:["$$selection.exposure", -1]},
+                                    winAmount: { 
+                                        $add : [
+                                            "$$selection.totalWinAmount", 
+                                            {
+                                                $reduce: {
+                                                    input: "$selections",
+                                                    initialValue: 0,
+                                                    in: {
+                                                        $cond: {
+                                                            if: {
+                                                              $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                            },
+                                                            then: { $add: ["$$value", "$$this.totalLossAmount"] },
+                                                            else: {
+                                                                $add: ["$$value", 0] 
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    lossAmount:{ 
+                                        $add : [
+                                            "$$selection.totalLossAmount", 
+                                            {
+                                                $reduce: {
+                                                    input: "$selections",
+                                                    initialValue: 0,
+                                                    in: {
+                                                        $cond: {
+                                                            if: {
+                                                              $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                            },
+                                                            then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                            else: {
+                                                                $add: ["$$value", 0] 
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                }
+                            }
+                        }
+                    }
+                }
             ])
             // console.log(Bets[0].selections2)
             console.log(Bets)
