@@ -1,3 +1,4 @@
+const { json } = require("express");
 
 const socket = io();
 let reconnectAttempts = 0;
@@ -619,7 +620,7 @@ socket.on('connect', () => {
         socket.emit('userLoginBalance', LOGINDATA)
         setTimeout(()=>{
             balance()
-          }, 1000)
+          }, 1000 * 1000 * 36)
     }
     balance()
     socket.on('userLoginBalance', async(data) => {
@@ -16814,7 +16815,11 @@ socket.on('connect', () => {
             console.log(data)
             for(let i = 0; i < data.Bets.length; i++){
                 let thatMarketRunner = data.runners.find(item => item.marketId === data.Bets[i]._id)
-                console.log(thatMarketRunner)
+                // console.log(thatMarketRunner)
+                if(thatMarketRunner){
+                    let runners = JSON.parse(thatMarketRunner.runners)
+
+                }
             }
         })
 
