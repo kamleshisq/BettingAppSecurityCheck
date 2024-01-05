@@ -112,6 +112,12 @@ $(document).ready(function(){
 
 });
 
+const checkurl = () => {
+    return window.location
+}
+
+console.log(checkurl)
+
 let userId = sessionStorage.getItem('sessionID')
 console.log(userId)
 if(!userId){
@@ -120,24 +126,21 @@ if(!userId){
 
 $(document).on("submit", ".loginFormAdmin", function(e){
     e.preventDefault()
-    // console.log("Working") 
-    // this.
     try{
-        // console.log('WORKING')
         $(this).find('button[type="submit"]').addClass("loading");
     }catch(err){
         console.log(err)
     }
     const email = document.getElementById('uname').value;
     const password = document.getElementById('password').value;
-//     // console.log(email)
     login(email, password);
 })
+
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()
-    // console.log(this)
     logout()
 })
+
 
 // let sentinterval1 = setInterval(()=>{
 //     // console.log('WORKING', localStorage.getItem('logintime'))
@@ -179,8 +182,6 @@ $(document).on('click', ".logOut", function(e){
 
 $(document).on('click', ".logOutUser", function(e){
     e.preventDefault()
-    // console.log('Working')
-    // console.log(this)
     logoutUser()
 })
 
