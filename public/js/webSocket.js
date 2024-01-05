@@ -16796,7 +16796,7 @@ socket.on('connect', () => {
 
         function checkAdminSideOdds (){
             let search = new URLSearchParams(window.location.search);
-            console.log(search, "search")
+            console.log(search.id, "search")
         }
         checkAdminSideOdds()
 
