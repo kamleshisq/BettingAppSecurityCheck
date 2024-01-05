@@ -16812,6 +16812,10 @@ socket.on('connect', () => {
 
         socket.on('checkAdminSideOdds', data => {
             console.log(data)
+            for(let i = 0; i < data.Bets.length; i++){
+                let thatMarketRunner = data.runners.find(item => item.marketId === data.Bets[i]._id)
+                console.log(thatMarketRunner)
+            }
         })
 
         let first = true
