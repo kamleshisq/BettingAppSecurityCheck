@@ -10289,13 +10289,16 @@ socket.on('connect', () => {
         socket.on('marketIdbookDetailsFANCY', data => {
             if(data.betDetails && data.betDetails.length != 0){
                 $("td.market").each(function() {
-                    if(data.betDetails.some(item => item == this.id)){
-                        let text = $(this).contents().filter(function() {
-                            return this.nodeType === 3; // Filter out non-text nodes
-                        }).text().trim();
-                        text = '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
-                        $(this).append(text)
-                    } 
+                    // if(data.betDetails.some(item => item == this.id)){
+                       
+                    //     text = '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>'
+                    //     $(this).append(text)
+                    // }
+                    
+                    if (!$(this).find('.site-button.fancy-book').length) {
+                        let text = '<button class="site-button fancy-book" data-bs-toggle="modal" data-bs-target="#FANCTPOPUP">Book</button>';
+                        $(this).append(text);
+                    }
 
                 })
             }
