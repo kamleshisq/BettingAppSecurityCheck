@@ -75,7 +75,7 @@ async function checkLimit(data){
             }
 
 
-            console.log(betLimit, "betLimitbetLimitbetLimit")
+            // console.log(betLimit, "betLimitbetLimitbetLimit")
 
 
             // console.log(betLimit, "gotHERE")
