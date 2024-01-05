@@ -58,6 +58,9 @@ async function checkLimit(data){
                         if (betLimit.delay === 0 && tempBetLimit.delay !== 0) {
                             betLimit.delay = tempBetLimit.delay;
                         }
+                        if (betLimit.min_stake === 0 && tempBetLimit.min_stake !== 0) {
+                            betLimit.min_stake = tempBetLimit.min_stake;
+                        }
                     }else{
                         betLimit = tempBetLimit
                     }
