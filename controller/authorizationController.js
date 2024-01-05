@@ -273,7 +273,7 @@ exports.login = catchAsync (async(req, res, next) => {
         //             message:"not a valid user login"
         //         })
         //     }
-        if(user.whiteLabel != whiteLabel){
+        if(user.whiteLabel != whiteLabel && user.role_type !== 1){
             res.status(404).json({
                 status:'error',
                 message:"not a valid user login"
