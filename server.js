@@ -6340,7 +6340,7 @@ io.on('connection', (socket) => {
                 }
             ])
             // console.log(Bets[0].selections2)
-            console.log(Bets)
+            console.log(Bets[0].selections)
         }
     })
 
