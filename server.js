@@ -7348,7 +7348,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('UpdateBetLimit', async(data) => {
-        // console.log(data, "LimitData")
+        console.log(data, "LimitData")
         try{
             let check = await betLimit.findOne({type:data.data.type})
             // console.log(check)
