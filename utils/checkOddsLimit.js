@@ -42,40 +42,42 @@ async function checkLimit(data){
 
             let betLimit = await betLimitModel.findOne({ type: thatMatch.eventData.name });
 
-            const checkAndAssign = async (type) => {
-                const tempBetLimit = await betLimitModel.findOne({ type });
-                if (tempBetLimit) {
-                    Object.keys(tempBetLimit._doc).forEach(field => {
-                        if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
-                            betLimit[field] = tempBetLimit[field];
-                        }
-                    });
-                }
-            };
-
-            const checkAndAssignIfZero = async (type) => {
-                const tempBetLimit = await betLimitModel.findOne({ type });
-                if (tempBetLimit && Object.values(tempBetLimit._doc).some(value => value !== 0)) {
-                    Object.keys(tempBetLimit._doc).forEach(field => {
-                        if (betLimit[field] === 0) {
-                            betLimit[field] = tempBetLimit[field];
-                        }
-                    });
-                }
-            };
-
-            if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-                await checkAndAssignIfZero(thatMatch.eventData.league);
-                if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-                    await checkAndAssignIfZero(sport_name);
-                    if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-                        await checkAndAssignIfZero('Sport');
-                        if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-                            await checkAndAssignIfZero('Home');
-                        }
-                    }
-                }
+const checkAndAssign = async (type) => {
+    const tempBetLimit = await betLimitModel.findOne({ type });
+    if (tempBetLimit) {
+        Object.keys(tempBetLimit._doc).forEach(field => {
+            if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
+                betLimit[field] = tempBetLimit[field];
             }
+        });
+    }
+};
+
+const checkAndUpdateIfZero = async (type) => {
+    const tempBetLimit = await betLimitModel.findOne({ type });
+    if (tempBetLimit) {
+        Object.keys(tempBetLimit._doc).forEach(field => {
+            if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
+                betLimit[field] = tempBetLimit[field];
+            }
+        });
+    }
+};
+
+if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+    await checkAndUpdateIfZero(thatMatch.eventData.league);
+    if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+        await checkAndUpdateIfZero(sport_name);
+        if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+            await checkAndUpdateIfZero('Sport');
+            if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+                await checkAndUpdateIfZero('Home');
+            }
+        }
+    }
+}
+
+// Now betLimit should contain the desired values with only zero fields taken from upper levels.
 
 // Now betLimit should contain the desired values with only zero fields taken from upper levels.
 
