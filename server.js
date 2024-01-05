@@ -5948,7 +5948,7 @@ io.on('connection', (socket) => {
                 {
                     $match: {
                         status: "OPEN",
-                        marketId: data.eventId,
+                        eventId: data.eventId,
                         userName:{$in:childrenUSer},
                         // secId: { $not: { $regex: /^odd_Even/i } }
                     }
