@@ -5943,6 +5943,18 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             let childrenUSer = await User.distinct('userName', {parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}, roleName:'user'})
             console.log(childrenUSer)
+
+            let Bets = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        marketId: data.eventId,
+                        userName:{$in:childrenUSer},
+                        // secId: { $not: { $regex: /^odd_Even/i } }
+                    }
+                },
+            ])
+            console.log(Bets)
         }
     })
 
