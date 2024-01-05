@@ -47,6 +47,7 @@ async function checkLimit(data){
                 number ++
                 const tempBetLimit = await betLimitModel.findOne({ type });
                 if (tempBetLimit && betLimit) {
+                    console.log(Object.keys(tempBetLimit._doc))
                     Object.keys(tempBetLimit._doc).forEach(field => {
                         if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
                             betLimit[field] = tempBetLimit[field];
