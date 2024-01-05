@@ -41,6 +41,7 @@ async function checkLimit(data){
             console.log('gotHERE')
 
             let betLimit = await betLimitModel.findOne({ type: thatMatch.eventData.name });
+            console.log(betLimit)
            let number = 1
             const checkAndUpdateIfZero = async (type) => {
                 number ++
