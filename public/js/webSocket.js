@@ -16794,6 +16794,11 @@ socket.on('connect', () => {
             }
         })
 
+        function checkAdminSideOdds (){
+            let search = new URLSearchParams(window.location.search);
+            console.log(search, "search")
+        }
+        checkAdminSideOdds()
 
         let first = true
         socket.on("marketId", async(data) => {
