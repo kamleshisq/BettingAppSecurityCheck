@@ -39,7 +39,9 @@ async function placeBet(data){
         return "Please try again later, Your exposure Limit is full"
     }
     let openBet = betmodel.countDocuments({userName:data.LOGINDATA.LOGINUSER.userName, status:'OPEN'})
+    console.log(openBet, "openBetopenBetopenBet")
     let betLimitcheck = betLimitModel.findOne({type : 'Sport'}) 
+    console.log(betLimitcheck, "betLimitcheckbetLimitcheck")
     if(betLimitcheck && betLimitcheck.max_bet != 0){
         if(betLimitcheck.max_bet > openBet){
             return "Please try again later, Your Betlimit Limit is full"
