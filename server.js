@@ -6344,11 +6344,11 @@ io.on('connection', (socket) => {
                 }
             ])
             // console.log(Bets[0].selections2)
-            console.log(Bets)
-            // let runners = await runnerDataModel.find({eventId:data.eventId})
-            // if(Bets.length > 0){
-            //     socket.emit('checkAdminSideOdds', {Bets:Bets[0], runners})
-            // }
+            // console.log(Bets)
+            let runners = await runnerDataModel.find({eventId:data.eventId})
+            if(Bets.length > 0){
+                socket.emit('checkAdminSideOdds', {Bets, runners})
+            }
         }
     })
 
