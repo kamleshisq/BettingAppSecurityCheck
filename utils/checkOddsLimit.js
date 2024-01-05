@@ -45,15 +45,26 @@ async function checkLimit(data){
             const checkAndUpdateIfZero = async (type) => {
                 const tempBetLimit = await betLimitModel.findOne({ type });
                 if (tempBetLimit) {
-                    Object.keys(tempBetLimit._doc).forEach(field => {
-                        if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
-                            betLimit[field] = tempBetLimit[field];
+                    if(betLimit){
+                        if (betLimit.max_stake === 0 && tempBetLimit.max_stake !== 0) {
+                            betLimit.max_stake = tempBetLimit.max_stake;
                         }
-                    });
+                        if (betLimit.max_profit === 0 && tempBetLimit.max_profit !== 0) {
+                            betLimit.max_profit = tempBetLimit.max_profit;
+                        }
+                        if (betLimit.max_odd === 0 && tempBetLimit.max_odd !== 0) {
+                            betLimit.max_odd = tempBetLimit.max_odd;
+                        }
+                        if (betLimit.delay === 0 && tempBetLimit.delay !== 0) {
+                            betLimit.delay = tempBetLimit.delay;
+                        }
+                    }else{
+                        betLimit = tempBetLimit
+                    }
                 }
             };
 
-            if (!betLimit || (betLimit.max_stake === 0 && betLimit.max_profit === 0 && betLimit.max_odd === 0 && betLimit.delay === 0)) {
+            if (!betLimit || (betLimit && (betLimit.max_stake === 0 || betLimit.max_profit === 0 || betLimit.max_odd === 0 || betLimit.delay === 0 || betLimit.min_stake === 0))) {
                 await checkAndUpdateIfZero(thatMatch.eventData.league);
                 await checkAndUpdateIfZero(sport_name);
                 await checkAndUpdateIfZero('Sport');
