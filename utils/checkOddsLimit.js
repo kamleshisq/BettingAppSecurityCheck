@@ -24,8 +24,9 @@ async function checkLimit(data){
             }else if (thatMatch.eventData.sportId == 2){
                 sport_name = "Tennis"
             }
-        
+            
             let betLimit = await betLimitModel.findOne({type:thatMatch.eventData.name})
+            console.log(betLimit)
             if(!betLimit){
                 betLimit = await betLimitModel.findOne({type:thatMatch.eventData.league})
                 if(!betLimit){
