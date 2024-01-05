@@ -2478,7 +2478,6 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 
 
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
-    const runners = await runnerData.find()
     let currentUser =  req.currentUser
     let Id = req.currentUser.id
     if(currentUser.roleName === "Operator"){
@@ -2487,6 +2486,8 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     }
     let childrenUsername = await User.distinct('userName', { parentUsers : Id, role_type: 5 });
     let bets = await betModel.distinct('marketId', {userName : {$in:childrenUsername}, status: 'OPEN'})
+    const runners = await runnerData.find()
+    console.log(runners, "runnersrunnersrunners")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         runners,
