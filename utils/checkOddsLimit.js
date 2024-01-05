@@ -25,20 +25,49 @@ async function checkLimit(data){
                 sport_name = "Tennis"
             }
             
-            let betLimit = await betLimitModel.findOne({type:thatMatch.eventData.name})
-            console.log(betLimit)
-            if(!betLimit){
-                betLimit = await betLimitModel.findOne({type:thatMatch.eventData.league})
-                if(!betLimit){
-                    betLimit = await betLimitModel.findOne({type:sport_name})
-                    if(!betLimit){
-                        betLimit = await betLimitModel.findOne({type:'Sport'})
-                        if(!betLimit){
-                            betLimit = await betLimitModel.findOne({type:'Home'})
+            // let betLimit = await betLimitModel.findOne({type:thatMatch.eventData.name})
+            // if(!betLimit){
+            //     betLimit = await betLimitModel.findOne({type:thatMatch.eventData.league})
+            //     if(!betLimit){
+            //         betLimit = await betLimitModel.findOne({type:sport_name})
+            //         if(!betLimit){
+            //             betLimit = await betLimitModel.findOne({type:'Sport'})
+            //             if(!betLimit){
+            //                 betLimit = await betLimitModel.findOne({type:'Home'})
+            //             }
+            //         }
+            //     }
+            // }
+
+
+            let betLimit = await betLimitModel.findOne({ type: thatMatch.eventData.name });
+
+            const checkAndAssign = async (type) => {
+                const tempBetLimit = await betLimitModel.findOne({ type });
+                if (tempBetLimit) {
+                    Object.keys(tempBetLimit._doc).forEach(field => {
+                        if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
+                            betLimit[field] = tempBetLimit[field];
+                        }
+                    });
+                }
+            };
+
+            if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+                await checkAndAssign(thatMatch.eventData.league);
+                if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+                    await checkAndAssign(sport_name);
+                    if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+                        await checkAndAssign('Sport');
+                        if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
+                            await checkAndAssign('Home');
                         }
                     }
                 }
             }
+
+            console.log(betLimit, "betLimitbetLimitbetLimit")
+
 
             // console.log(betLimit, "gotHERE")
             let marketsDetails = await getmarketDetails(IDS)
