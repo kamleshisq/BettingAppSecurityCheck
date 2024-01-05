@@ -5941,7 +5941,7 @@ io.on('connection', (socket) => {
     socket.on('checkAdminSideOdds', async(data) => {
         console.log(data, 'datadatadatadata')
         if(data.LOGINDATA.LOGINUSER){
-            let childrenUSer = await User.distinct('userName', {parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}})
+            let childrenUSer = await User.distinct('userName', {parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}, roleName:'user'})
             console.log(childrenUSer)
         }
     })
