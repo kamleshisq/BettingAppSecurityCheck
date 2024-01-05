@@ -235,6 +235,7 @@ exports.login = catchAsync (async(req, res, next) => {
     }else{
         const user = await User.findOne({userName}).select('+password');
         let whiteLabel = process.env.whiteLabelName
+        console.log(req.originalUrl,'req.originalUrl')
         console.log(user,'user')
         if(req.originalUrl.startsWith('/adminlogin')){
             if(user.roleName != 'Admin'){
