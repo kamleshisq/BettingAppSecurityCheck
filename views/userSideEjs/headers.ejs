@@ -73,9 +73,9 @@
     <!-- AOS ANOMATION CDN  -->
 
     <!-- LOCAL CSS  -->
-    <link rel="stylesheet" href="http://ollscores.com/assets/css/style.css" />
-    <link rel="stylesheet" href="http://ollscores.com/assets/css/loggedin-page-style.css" />
-    <link rel="stylesheet" href="http://ollscores.com/assets/css/media.css" />
+    <link rel="stylesheet" href="http://dev.ollscores.com/assets/css/style.css" />
+    <link rel="stylesheet" href="http://dev.ollscores.com/assets/css/loggedin-page-style.css" />
+    <link rel="stylesheet" href="http://dev.ollscores.com/assets/css/media.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/webSocket.js"></script>
@@ -135,319 +135,154 @@
     
     <main class="main-tg-dv">
       <!-- ----= NAVBAR SECTION START =-----   -->
+      
       <%if(user){%>
-        <div class="navbar-wrp">
-          <nav class="navbar navbar-expand-lg my-nav-bg">
-            <div class="container-fluid my-nav-contnr">
-              <div class="mob-sidevar-mnu-btn-dv">
-                <span class="fa-solid fa-bars mob-offcanvas-mnu" id="offsetmenubtnn"></span>
-                
-              </div>
-              <div class="logo-col-dv">
-                <a class="navbar-brand my-navbrand" href="/">
+        <div class="site-header" >
+          <div class="navbar-wrp">
+            <nav class="navbar navbar-expand-lg my-nav-bg">
+              <div class="container-fluid my-nav-contnr">
+                <div class="mob-sidevar-mnu-btn-dv">
+                  <span class="fa-solid fa-bars mob-offcanvas-mnu" id="offsetmenubtnn"></span>
                   
-                  <%if(basicDetails.length > 0){%>
-                    <img
-                      class="my-nav-logo"
-                      src="../../logo/<%=basicDetails[0].logo1%>.png"
-                      alt="logo"
-                    />
-                  <%}else{%>
-                    <img
-                      class="my-nav-logo"
-                      src="../../logo/Royal777.png"
-                      alt="logo"
-                    />
-                  <%}%>
-                </a>
-              </div>
-              <!-- <button
-                class="navbar-toggler my-nav-togl-btnn"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span class="fa-solid fa-bars"></span>
-              </button> -->
-  
-              <div class="mbl-login-reg-btnn-dv">
-                <div class="nav-login-regstr-btn-dv dropup-center">
-                  <div class="bet-blns-nav-wrp userBalance">
-                    <div class="bet-blns-nav-wrp-amount-num">
-                      
-                      <span class="">
-                        <i class="fa-solid fa-wallet"></i>
-                        Bal : <%=user.availableBalance%> <span> &nbsp;</span></span>
-                    </div>
-                  </div>
-                  <!-- <div class="nav-login-regstr-btn-anim">
-                    <span id="setingnavbtnn" class="nav-login-regstr-btn">
-                      <i class="fa-solid fa-magnifying-glass SEarCh"></i>
-                    </span>
-                    <div class="search-sv-nav-seting-wrp" id="setingnavbtnntxt">
-                      <div class="search-sv-nav-seting-inn">
-                        <div class="search-sv-nav-seting-inn-col1">
-                          <div class="input-group flex-nowrap input-group-sm my-setting-nav-form">
-                            <input type="text" id="search_field1" class="form-control" placeholder="Search Anything" aria-label="Username" aria-describedby="addon-wrapping">
-                            <span class="input-group-text" id="addon-wrapping">
-                              <i class="fa-solid fa-magnifying-glass SEarCh"></i>
-                            </span>
-                          </div>
-                        </div>
-                        <ul id="demonames1">
-                        </ul>
-                      </div>
-                    </div>
-                  </div> -->
-                  <div class="dropdown dropup-center">
-                      <button class="btn my-nav-profiel-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <img class="nav-profile-img" src="../../assets/img/exchange/user.png" alt="">
-                          <div class="btn-header-username"><%=user.userName%></div>
-                          <svg class="MuiSvgIcon__root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>
-                         
-                      </button>
-  
-                          <div class="dropdown-menu profile-contnt-wrper dropdown-menu-end">
-                              <div class="profile-contnt-wrper-ro">
-                                  <!-- <div class="profile-contnt-amount-dv">
-                                      <span class="profile-contnt-amount">Bal : <span> 10,000.00</span></span>
-                                      <span class="profile-contnt-amount">Exp : <span> - 500.00</span></span>
-                                  </div> -->
-                                  <div class="profile-contnt-mnu-option-dv">
-                                    <ul>
-                                      <li class="profile-bord-botm">
-                                        <a href="" title="" data-bs-toggle="modal" data-bs-target="#navmod1"> Change Password</a>
-                                      </li>
-                                      <%if(check === "userP"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/profile" title=""> User Profile</a></li>
-                                      <%}else{%>
-                                        <li class="profile-bord-botm"><a  href="/profile" title=""> User Profile</a></li>
-                                      <%}%>
-                                      <%if(check === "ACCC"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/myAccountStatment" title=""> Account Statement</a></li>
-                                      <%}else{%>
-                                        <li class="profile-bord-botm"><a  href="/myAccountStatment" title=""> Account Statement</a></li>
-                                      <%}%>
-                                      <%if(check === "Kyc"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/Kyc" title=""> Kyc</a></li>
-                                      <%}else{%>
-                                        <li class="profile-bord-botm"><a  href="/Kyc" title=""> Kyc</a></li>
-                                      <%}%>
-                                      <%if(check === "plStatemenet"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/MyPlStatement" title=""> P/L Statement</a></li>
-                                        <%}else{%>
-                                        <li class="profile-bord-botm"><a href="/MyPlStatement" title=""> P/L Statement</a></li>
-                                      <%}%>
-                                      <%if(check === "My Bets"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/mybets" title=""> My Bets</a></li>
-                                        <%}else{%>
-                                        <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
-                                      <%}%>
-                                      <%if(user.roleName !== 'DemoLogin'){%>
-                                      <%if(check === "Comm"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/myCommissionReports" title="">Commission Report</a></li>
-                                        <%}else{%>
-                                        <li class="profile-bord-botm"><a href="/myCommissionReports" title="">Commission Report</a></li>
-                                      <%}%>
-                                      <%}%>
-                                      <%if(check === "My game"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/myGameReport" title=""> Game Report</a></li>
-                                        <%}else{%>
-                                        <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
-                                      <%}%>
-                                      <%if(B2C_Status){%>
-                                      <li class="profile-bord-botm">
-                                        <a href="" title="" data-bs-toggle="modal" class="paymentDepositeMenu" data-bs-target="#navmod3"> Deposit</a>
-                                      </li>
-                                      <li class="profile-bord-botm">
-                                        <a href="" title="" data-bs-toggle="modal" class="WithrowReqMenu" data-bs-target="#navmod4"> withdraw</a>
-                                      </li>
-                                      <%}%>
-                                      <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
-                                  </ul>
-                                  <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
-                                  </div>
-                              </div>
-                          </div>
-                    </div>
                 </div>
-  
-              </div>
-              
-              <div
-                class="collapse navbar-collapse my-nav-ul-dv"
-                id="navbarSupportedContent"
-              >
-              <ul class="navbar-nav m-auto mb-2 mb-lg-0 my-nav-ul">
-                <%for(let i = 0; i < verticalMenus.length; i++){%>
-                  <%if(verticalMenus[i].status){%>
-                    <%if(verticalMenus[i].menuName == "In-Play"){%>
-                    <li class="nav-item my-nav-ul-li">
-                      <a class="nav-link my-nav-ul-li-a blink-nav-mnu" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
-                    </li>
-                    <%}else if(check == verticalMenus[i].menuName){%>
-                      <li class="nav-item my-nav-ul-li">
-                        <a class="nav-link my-nav-ul-li-a active-mnu-nav" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
-                      </li>
-                    <%} else{%>
-                      <li class="nav-item my-nav-ul-li">
-                        <a class="nav-link my-nav-ul-li-a" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
-                      </li>
-                    <%}%>
-                  <%}%>
-                <%}%>
-              </ul>
-  
-                <div class="nav-login-regstr-btn-dv dropup-center">
-                  <div class="bet-blns-nav-wrp userBalance">
+                <div class="logo-col-dv">
+                  <a class="navbar-brand my-navbrand" href="/">
                     
-                    <div class="bet-blns-nav-wrp-amount-num">
-                      <span class=""><i class="fa-solid fa-wallet"></i> Bal : <%=user.availableBalance%> <span> &nbsp; </span></span>
-                    </div>
-                  </div>
-                  <!-- <div class="nav-login-regstr-btn-anim">
-                    <span id="setingnavbtnn2" class="nav-login-regstr-btn">
-                      <i class="fa-solid fa-magnifying-glass SEarCh"></i>
-                    </span>
-                    <div class="search-sv-nav-seting-wrp" id="setingnavbtnntxt2">
-                      <div class="search-sv-nav-seting-inn">
-                        <div class="search-sv-nav-seting-inn-col1">
-                          <div class="input-group flex-nowrap input-group-sm my-setting-nav-form">
-                            <input type="text" id="search_field" class="form-control" placeholder="Search Anything" aria-label="Username" aria-describedby="addon-wrapping">
-                            <span class="input-group-text" id="addon-wrapping">
-                              <i class="fa-solid fa-magnifying-glass SEarCh"></i>
-                            </span>
-                          </div>
-                        </div>
-                        <ul id="demonames">
-                        </ul>
+                    <%if(basicDetails.length > 0){%>
+                      <img
+                        class="my-nav-logo"
+                        src="../../logo/<%=basicDetails[0].logo1%>.png"
+                        alt="logo"
+                      />
+                    <%}else{%>
+                      <img
+                        class="my-nav-logo"
+                        src="../../logo/Royal777.png"
+                        alt="logo"
+                      />
+                    <%}%>
+                  </a>
+                </div>
+                <!-- <button
+                  class="navbar-toggler my-nav-togl-btnn"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="fa-solid fa-bars"></span>
+                </button> -->
+    
+                <div class="mbl-login-reg-btnn-dv">
+                  <div class="nav-login-regstr-btn-dv dropup-center">
+                    <div class="bet-blns-nav-wrp userBalance">
+                      <div class="bet-blns-nav-wrp-amount-num">
+                        
+                        <span class="">
+                          <i class="fa-solid fa-wallet"></i>
+                          Bal : <%=user.availableBalance%> <span> &nbsp;</span></span>
                       </div>
                     </div>
-                  </div> -->
-                  <div class="dropdown  dropup-center">
-                      <button class="btn my-nav-profiel-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <img class="nav-profile-img" src="../../assets/img/exchange/user.png" alt="">
-                          <div class="btn-header-username"><%=user.userName%></div>
-                          <svg class="MuiSvgIcon__root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>
-                         
-                      </button>
-  
-                          <div class="dropdown-menu profile-contnt-wrper dropdown-menu-end">
-                              <div class="profile-contnt-wrper-ro">
-                                  <!-- <div class="profile-contnt-amount-dv">
-                                      <span class="profile-contnt-amount">Bal : <span> 10,000.00</span></span>
-                                      <span class="profile-contnt-amount">Exp : <span> - 500.00</span></span>
-                                  </div> -->
-                                  <div class="profile-contnt-mnu-option-dv">
-                                    <ul>
-                                      <li class="profile-bord-botm">
-                                        <a href="" title="" data-bs-toggle="modal" data-bs-target="#navmod1"> Change Password</a>
-                                      </li>
-                                      <%if(check === "userP"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/profile" title=""> User Profile</a></li>
-                                      <%}else{%>
-                                        <li class="profile-bord-botm"><a  href="/profile" title=""> User Profile</a></li>
-                                      <%}%>
-                                      <%if(check === "ACCC"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/myAccountStatment" title=""> Account Statement</a></li>
-                                      <%}else{%>
-                                        <li class="profile-bord-botm"><a  href="/myAccountStatment" title=""> Account Statement</a></li>
-                                      <%}%>
-                                      <%if(check === "Kyc"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/Kyc" title=""> Kyc</a></li>
-                                      <%}else{%>
-                                        <li class="profile-bord-botm"><a  href="/Kyc" title=""> Kyc</a></li>
-                                      <%}%>
-                                      <%if(check === "plStatemenet"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/MyPlStatement" title=""> P/L Statement</a></li>
-                                        <%}else{%>
-                                        <li class="profile-bord-botm"><a href="/MyPlStatement" title=""> P/L Statement</a></li>
-                                      <%}%>
-                                      <%if(check === "My Bets"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/mybets" title=""> My Bets</a></li>
-                                        <%}else{%>
-                                        <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
-                                      <%}%>
-                                      <%if(user.roleName !== 'DemoLogin'){%>
-                                      <%if(check === "Comm"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/myCommissionReports" title="">Commission Report</a></li>
-                                        <%}else{%>
-                                        <li class="profile-bord-botm"><a href="/myCommissionReports" title="">Commission Report</a></li>
-                                      <%}%>
-                                      <%}%>
-                                      <%if(check === "My game"){%>
-                                        <li class="profile-bord-botm"><a class="c-activee" href="/myGameReport" title=""> Game Report</a></li>
-                                        <%}else{%>
-                                        <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
-                                      <%}%>
-                                      <%if(B2C_Status){%>
-                                      <li class="profile-bord-botm">
-                                        <a href="" title="" data-bs-toggle="modal" class="paymentDepositeMenu" data-bs-target="#navmod3"> Deposit</a>
-                                      </li>
-                                      <li class="profile-bord-botm">
-                                        <a href="" title="" data-bs-toggle="modal" class="WithrowReqMenu" data-bs-target="#navmod4"> withdraw</a>
-                                      </li>
-                                      <%}%>
-                                      <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
-                                  </ul>
-                                  <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
-                                  </div>
-                              </div>
+                    <!-- <div class="nav-login-regstr-btn-anim">
+                      <span id="setingnavbtnn" class="nav-login-regstr-btn">
+                        <i class="fa-solid fa-magnifying-glass SEarCh"></i>
+                      </span>
+                      <div class="search-sv-nav-seting-wrp" id="setingnavbtnntxt">
+                        <div class="search-sv-nav-seting-inn">
+                          <div class="search-sv-nav-seting-inn-col1">
+                            <div class="input-group flex-nowrap input-group-sm my-setting-nav-form">
+                              <input type="text" id="search_field1" class="form-control" placeholder="Search Anything" aria-label="Username" aria-describedby="addon-wrapping">
+                              <span class="input-group-text" id="addon-wrapping">
+                                <i class="fa-solid fa-magnifying-glass SEarCh"></i>
+                              </span>
+                            </div>
                           </div>
-                    </div>
+                          <ul id="demonames1">
+                          </ul>
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="dropdown dropup-center">
+                        <button class="btn my-nav-profiel-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="nav-profile-img" src="../../assets/img/exchange/user.png" alt="">
+                            <div class="btn-header-username"><%=user.userName%></div>
+                            <svg class="MuiSvgIcon__root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>
+                           
+                        </button>
+    
+                            <div class="dropdown-menu profile-contnt-wrper dropdown-menu-end">
+                                <div class="profile-contnt-wrper-ro">
+                                    <!-- <div class="profile-contnt-amount-dv">
+                                        <span class="profile-contnt-amount">Bal : <span> 10,000.00</span></span>
+                                        <span class="profile-contnt-amount">Exp : <span> - 500.00</span></span>
+                                    </div> -->
+                                    <div class="profile-contnt-mnu-option-dv">
+                                      <ul>
+                                        <li class="profile-bord-botm">
+                                          <a href="" title="" data-bs-toggle="modal" data-bs-target="#navmod1"> Change Password</a>
+                                        </li>
+                                        <%if(check === "userP"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/profile" title=""> User Profile</a></li>
+                                        <%}else{%>
+                                          <li class="profile-bord-botm"><a  href="/profile" title=""> User Profile</a></li>
+                                        <%}%>
+                                        <%if(check === "ACCC"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/myAccountStatment" title=""> Account Statement</a></li>
+                                        <%}else{%>
+                                          <li class="profile-bord-botm"><a  href="/myAccountStatment" title=""> Account Statement</a></li>
+                                        <%}%>
+                                        <%if(check === "Kyc"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/Kyc" title=""> Kyc</a></li>
+                                        <%}else{%>
+                                          <li class="profile-bord-botm"><a  href="/Kyc" title=""> Kyc</a></li>
+                                        <%}%>
+                                        <%if(check === "plStatemenet"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/MyPlStatement" title=""> P/L Statement</a></li>
+                                          <%}else{%>
+                                          <li class="profile-bord-botm"><a href="/MyPlStatement" title=""> P/L Statement</a></li>
+                                        <%}%>
+                                        <%if(check === "My Bets"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/mybets" title=""> My Bets</a></li>
+                                          <%}else{%>
+                                          <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
+                                        <%}%>
+                                        <%if(user.roleName !== 'DemoLogin'){%>
+                                        <%if(check === "Comm"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/myCommissionReports" title="">Commission Report</a></li>
+                                          <%}else{%>
+                                          <li class="profile-bord-botm"><a href="/myCommissionReports" title="">Commission Report</a></li>
+                                        <%}%>
+                                        <%}%>
+                                        <%if(check === "My game"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/myGameReport" title=""> Game Report</a></li>
+                                          <%}else{%>
+                                          <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
+                                        <%}%>
+                                        <%if(B2C_Status){%>
+                                        <li class="profile-bord-botm">
+                                          <a href="" title="" data-bs-toggle="modal" class="paymentDepositeMenu" data-bs-target="#navmod3"> Deposit</a>
+                                        </li>
+                                        <li class="profile-bord-botm">
+                                          <a href="" title="" data-bs-toggle="modal" class="WithrowReqMenu" data-bs-target="#navmod4"> withdraw</a>
+                                        </li>
+                                        <%}%>
+                                        <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
+                                    </ul>
+                                    <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                  </div>
+    
                 </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-      <%}else{%>
-        <div class="navbar-wrp">
-          <nav class="navbar navbar-expand-lg my-nav-bg">
-            <div class="container-fluid my-nav-contnr">
-              <div class="mob-sidevar-mnu-btn-dv">
-                <span class="fa-solid fa-bars mob-offcanvas-mnu" id="offsetmenubtnn"></span>
                 
-              </div>
-              <div class="logo-col-dv">
-                <a class="navbar-brand my-navbrand" href="/">
-                  <%if(basicDetails.length > 0){%>
-                    <img
-                      class="my-nav-logo"
-                      src="../../logo/<%=basicDetails[0].logo1%>.png"
-                      alt="logo"
-                    />
-                  <%}else{%>
-                    <img
-                      class="my-nav-logo"
-                      src="../../logo/Royal777.png"
-                      alt="logo"
-                    />
-                  <%}%>
-                </a>
-              </div>
-              <!-- <button
-                class="navbar-toggler my-nav-togl-btnn"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span class="fa-solid fa-bars"></span>
-              </button> -->
-  
-              <div class="mbl-login-reg-btnn-dv">
-                <button class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">SIGN IN / REGISTER</button>
-              </div>
-              
-              <div
-                class="collapse navbar-collapse my-nav-ul-dv"
-                id="navbarSupportedContent"
-              >
+                <div
+                  class="collapse navbar-collapse my-nav-ul-dv"
+                  id="navbarSupportedContent"
+                >
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0 my-nav-ul">
                   <%for(let i = 0; i < verticalMenus.length; i++){%>
                     <%if(verticalMenus[i].status){%>
@@ -455,11 +290,6 @@
                       <li class="nav-item my-nav-ul-li">
                         <a class="nav-link my-nav-ul-li-a blink-nav-mnu" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
                       </li>
-                      <%}else if(verticalMenus[i].menuName == "Sportsbook"){%>
-                        <li class="nav-item my-nav-ul-li">
-                          <a class="nav-link my-nav-ul-li-a " data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><%=verticalMenus[i].menuName%> </a>
-                        </li>
-                      
                       <%}else if(check == verticalMenus[i].menuName){%>
                         <li class="nav-item my-nav-ul-li">
                           <a class="nav-link my-nav-ul-li-a active-mnu-nav" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
@@ -472,52 +302,242 @@
                     <%}%>
                   <%}%>
                 </ul>
-  
-                <div class="nav-login-regstr-btn-dv d-flex-gap">
-                  <a class="nav-login-regstr-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#">SIGN IN </a>
-                  <!-- <div class="nav-login-regstr-btn-anim">
-                    <span id="setingnavbtnn2" class="nav-login-regstr-btn">
-                      <i class="fa-solid fa-magnifying-glass SEarCh"></i>
-                    </span>
-                    <div class="search-sv-nav-seting-wrp" id="setingnavbtnntxt2">
-                      <div class="search-sv-nav-seting-inn">
-                        <div class="search-sv-nav-seting-inn-col1">
-                          <div class="input-group flex-nowrap input-group-sm my-setting-nav-form">
-                            <input type="text" id="search_field" class="form-control" placeholder="Search Anything" aria-label="Username" aria-describedby="addon-wrapping">
-                            <span class="input-group-text" id="addon-wrapping">
-                              <i class="fa-solid fa-magnifying-glass SEarCh"></i>
-                            </span>
-                          </div>
-                        </div>
-                        <ul id="demonames">
-                          
-                        </ul>
+    
+                  <div class="nav-login-regstr-btn-dv dropup-center">
+                    <div class="bet-blns-nav-wrp userBalance">
+                      
+                      <div class="bet-blns-nav-wrp-amount-num">
+                        <span class=""><i class="fa-solid fa-wallet"></i> Bal : <%=user.availableBalance%> <span> &nbsp; </span></span>
                       </div>
                     </div>
-                  </div> -->
+                    <!-- <div class="nav-login-regstr-btn-anim">
+                      <span id="setingnavbtnn2" class="nav-login-regstr-btn">
+                        <i class="fa-solid fa-magnifying-glass SEarCh"></i>
+                      </span>
+                      <div class="search-sv-nav-seting-wrp" id="setingnavbtnntxt2">
+                        <div class="search-sv-nav-seting-inn">
+                          <div class="search-sv-nav-seting-inn-col1">
+                            <div class="input-group flex-nowrap input-group-sm my-setting-nav-form">
+                              <input type="text" id="search_field" class="form-control" placeholder="Search Anything" aria-label="Username" aria-describedby="addon-wrapping">
+                              <span class="input-group-text" id="addon-wrapping">
+                                <i class="fa-solid fa-magnifying-glass SEarCh"></i>
+                              </span>
+                            </div>
+                          </div>
+                          <ul id="demonames">
+                          </ul>
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="dropdown  dropup-center">
+                        <button class="btn my-nav-profiel-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="nav-profile-img" src="../../assets/img/exchange/user.png" alt="">
+                            <div class="btn-header-username"><%=user.userName%></div>
+                            <svg class="MuiSvgIcon__root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>
+                           
+                        </button>
+    
+                            <div class="dropdown-menu profile-contnt-wrper dropdown-menu-end">
+                                <div class="profile-contnt-wrper-ro">
+                                    <!-- <div class="profile-contnt-amount-dv">
+                                        <span class="profile-contnt-amount">Bal : <span> 10,000.00</span></span>
+                                        <span class="profile-contnt-amount">Exp : <span> - 500.00</span></span>
+                                    </div> -->
+                                    <div class="profile-contnt-mnu-option-dv">
+                                      <ul>
+                                        <li class="profile-bord-botm">
+                                          <a href="" title="" data-bs-toggle="modal" data-bs-target="#navmod1"> Change Password</a>
+                                        </li>
+                                        <%if(check === "userP"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/profile" title=""> User Profile</a></li>
+                                        <%}else{%>
+                                          <li class="profile-bord-botm"><a  href="/profile" title=""> User Profile</a></li>
+                                        <%}%>
+                                        <%if(check === "ACCC"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/myAccountStatment" title=""> Account Statement</a></li>
+                                        <%}else{%>
+                                          <li class="profile-bord-botm"><a  href="/myAccountStatment" title=""> Account Statement</a></li>
+                                        <%}%>
+                                        <%if(check === "Kyc"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/Kyc" title=""> Kyc</a></li>
+                                        <%}else{%>
+                                          <li class="profile-bord-botm"><a  href="/Kyc" title=""> Kyc</a></li>
+                                        <%}%>
+                                        <%if(check === "plStatemenet"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/MyPlStatement" title=""> P/L Statement</a></li>
+                                          <%}else{%>
+                                          <li class="profile-bord-botm"><a href="/MyPlStatement" title=""> P/L Statement</a></li>
+                                        <%}%>
+                                        <%if(check === "My Bets"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/mybets" title=""> My Bets</a></li>
+                                          <%}else{%>
+                                          <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
+                                        <%}%>
+                                        <%if(user.roleName !== 'DemoLogin'){%>
+                                        <%if(check === "Comm"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/myCommissionReports" title="">Commission Report</a></li>
+                                          <%}else{%>
+                                          <li class="profile-bord-botm"><a href="/myCommissionReports" title="">Commission Report</a></li>
+                                        <%}%>
+                                        <%}%>
+                                        <%if(check === "My game"){%>
+                                          <li class="profile-bord-botm"><a class="c-activee" href="/myGameReport" title=""> Game Report</a></li>
+                                          <%}else{%>
+                                          <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
+                                        <%}%>
+                                        <%if(B2C_Status){%>
+                                        <li class="profile-bord-botm">
+                                          <a href="" title="" data-bs-toggle="modal" class="paymentDepositeMenu" data-bs-target="#navmod3"> Deposit</a>
+                                        </li>
+                                        <li class="profile-bord-botm">
+                                          <a href="" title="" data-bs-toggle="modal" class="WithrowReqMenu" data-bs-target="#navmod4"> withdraw</a>
+                                        </li>
+                                        <%}%>
+                                        <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
+                                    </ul>
+                                    <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                  </div>
                 </div>
               </div>
+            </nav>
+          </div>
+          <div class="exchange-pg-inn-tbl-marqq-dv2 natification-bar">
+            <div class="exchange-pg-inn-tbl-marqq-dv-wrp2">
+              <button data-bs-toggle="modal" data-bs-target="#latest-notifiction-popup"><i class="fa-solid fa-bell"></i>Latest</button>
+                <marquee>
+                  <%for(let i = 0; i < notifications.length; i++){%>
+                    <%if(notifications[i].status){%>
+                    &nbsp; &nbsp;
+                    <%=notifications[i].message%> 
+                    &nbsp; &nbsp;
+                    <%}%>
+                    <%}%>
+                </marquee>
             </div>
-          </nav>
+          </div>
+        </div>
+      <%}else{%>
+        <div class="site-header" >
+          <div class="navbar-wrp">
+            <nav class="navbar navbar-expand-lg my-nav-bg">
+              <div class="container-fluid my-nav-contnr">
+                <div class="mob-sidevar-mnu-btn-dv">
+                  <span class="fa-solid fa-bars mob-offcanvas-mnu" id="offsetmenubtnn"></span>
+                  
+                </div>
+                <div class="logo-col-dv">
+                  <a class="navbar-brand my-navbrand" href="/">
+                    <%if(basicDetails.length > 0){%>
+                      <img
+                        class="my-nav-logo"
+                        src="../../logo/<%=basicDetails[0].logo1%>.png"
+                        alt="logo"
+                      />
+                    <%}else{%>
+                      <img
+                        class="my-nav-logo"
+                        src="../../logo/Royal777.png"
+                        alt="logo"
+                      />
+                    <%}%>
+                  </a>
+                </div>
+                <!-- <button
+                  class="navbar-toggler my-nav-togl-btnn"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="fa-solid fa-bars"></span>
+                </button> -->
+    
+                <div class="mbl-login-reg-btnn-dv">
+                  <button class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">SIGN IN / REGISTER</button>
+                </div>
+                
+                <div
+                  class="collapse navbar-collapse my-nav-ul-dv"
+                  id="navbarSupportedContent"
+                >
+                  <ul class="navbar-nav m-auto mb-2 mb-lg-0 my-nav-ul">
+                    <%for(let i = 0; i < verticalMenus.length; i++){%>
+                      <%if(verticalMenus[i].status){%>
+                        <%if(verticalMenus[i].menuName == "In-Play"){%>
+                        <li class="nav-item my-nav-ul-li">
+                          <a class="nav-link my-nav-ul-li-a blink-nav-mnu" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
+                        </li>
+                        <%}else if(verticalMenus[i].menuName == "Sportsbook"){%>
+                          <li class="nav-item my-nav-ul-li">
+                            <a class="nav-link my-nav-ul-li-a " data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><%=verticalMenus[i].menuName%> </a>
+                          </li>
+                        
+                        <%}else if(check == verticalMenus[i].menuName){%>
+                          <li class="nav-item my-nav-ul-li">
+                            <a class="nav-link my-nav-ul-li-a active-mnu-nav" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
+                          </li>
+                        <%} else{%>
+                          <li class="nav-item my-nav-ul-li">
+                            <a class="nav-link my-nav-ul-li-a" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
+                          </li>
+                        <%}%>
+                      <%}%>
+                    <%}%>
+                  </ul>
+    
+                  <div class="nav-login-regstr-btn-dv d-flex-gap">
+                    <a class="nav-login-regstr-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#">SIGN IN </a>
+                    <!-- <div class="nav-login-regstr-btn-anim">
+                      <span id="setingnavbtnn2" class="nav-login-regstr-btn">
+                        <i class="fa-solid fa-magnifying-glass SEarCh"></i>
+                      </span>
+                      <div class="search-sv-nav-seting-wrp" id="setingnavbtnntxt2">
+                        <div class="search-sv-nav-seting-inn">
+                          <div class="search-sv-nav-seting-inn-col1">
+                            <div class="input-group flex-nowrap input-group-sm my-setting-nav-form">
+                              <input type="text" id="search_field" class="form-control" placeholder="Search Anything" aria-label="Username" aria-describedby="addon-wrapping">
+                              <span class="input-group-text" id="addon-wrapping">
+                                <i class="fa-solid fa-magnifying-glass SEarCh"></i>
+                              </span>
+                            </div>
+                          </div>
+                          <ul id="demonames">
+                            
+                          </ul>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+          <div class="exchange-pg-inn-tbl-marqq-dv2 natification-bar">
+            <div class="exchange-pg-inn-tbl-marqq-dv-wrp2">
+              <button data-bs-toggle="modal" data-bs-target="#latest-notifiction-popup"><i class="fa-solid fa-bell"></i>Latest</button>
+                <marquee>
+                  <%for(let i = 0; i < notifications.length; i++){%>
+                    <%if(notifications[i].status){%>
+                    &nbsp; &nbsp;
+                    <%=notifications[i].message%> 
+                    &nbsp; &nbsp;
+                    <%}%>
+                    <%}%>
+                </marquee>
+            </div>
+          </div>
         </div>
         <!-- ----= NAVBAR SECTION END =-----   -->
       <%}%>
 
 
-      <div class="exchange-pg-inn-tbl-marqq-dv2 natification-bar">
-        <div class="exchange-pg-inn-tbl-marqq-dv-wrp2">
-          <button data-bs-toggle="modal" data-bs-target="#latest-notifiction-popup"><i class="fa-solid fa-bell"></i>Latest</button>
-            <marquee>
-              <%for(let i = 0; i < notifications.length; i++){%>
-                <%if(notifications[i].status){%>
-                &nbsp; &nbsp;
-                <%=notifications[i].message%> 
-                &nbsp; &nbsp;
-                <%}%>
-                <%}%>
-            </marquee>
-        </div>
-      </div>
+      
 
 
       <div id="latest-notifiction-popup"  class="modal fade latest-notifiction-popup" role="dialog" aria-modal="true">
