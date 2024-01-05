@@ -16809,6 +16809,11 @@ socket.on('connect', () => {
         }
         checkAdminSideOdds()
 
+
+        socket.on('checkAdminSideOdds', data => {
+            console.log(data)
+        })
+
         let first = true
         socket.on("marketId", async(data) => {
             // console.log(data)
