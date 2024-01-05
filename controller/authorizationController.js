@@ -374,21 +374,21 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         // console.log('WORKING1')
         req.app.set('token', null);
         req.app.set('User', null);
-        return res.redirect(redirecturl)
+        return res.redirect('/adminlogin')
     }
     const tokenId = await loginLogs.findOne({session_id:token})
     if( tokenId &&!tokenId.isOnline){
         // console.log('working12121')
         req.app.set('token', null);
         req.app.set('User', null);
-        return res.redirect(redirecturl)
+        return res.redirect('/adminlogin')
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     if(!currentUser){
         req.app.set('token', null);
         req.app.set('User', null);
-        return res.redirect(redirecturl)
+        return res.redirect('/adminlogin')
     }
     let whiteLabel = process.env.whiteLabelName
     let childrenArr = []
