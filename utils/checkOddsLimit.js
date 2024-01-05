@@ -108,9 +108,41 @@ async function checkLimit(data){
                             // console.log(thatMarketLimit)
                             if(!thatMarketLimit){
                                 thatMarketLimit = betLimit
+                            }else{
+                                if (thatMarketLimit.max_stake === 0 && betLimit.max_stake !== 0) {
+                                    thatMarketLimit.max_stake = betLimit.max_stake;
+                                }
+                                if (thatMarketLimit.max_profit === 0 && betLimit.max_profit !== 0) {
+                                    thatMarketLimit.max_profit = betLimit.max_profit;
+                                }
+                                if (thatMarketLimit.max_odd === 0 && betLimit.max_odd !== 0) {
+                                    thatMarketLimit.max_odd = betLimit.max_odd;
+                                }
+                                if (thatMarketLimit.delay === 0 && betLimit.delay !== 0) {
+                                    thatMarketLimit.delay = betLimit.delay;
+                                }
+                                if (thatMarketLimit.min_stake === 0 && betLimit.min_stake !== 0) {
+                                    thatMarketLimit.min_stake = betLimit.min_stake;
+                                }
                             }
                         }else{
                             thatMarketLimit = betLimit
+                        }
+                    }else{
+                        if (thatMarketLimit.max_stake === 0 && betLimit.max_stake !== 0) {
+                            thatMarketLimit.max_stake = betLimit.max_stake;
+                        }
+                        if (thatMarketLimit.max_profit === 0 && betLimit.max_profit !== 0) {
+                            thatMarketLimit.max_profit = betLimit.max_profit;
+                        }
+                        if (thatMarketLimit.max_odd === 0 && betLimit.max_odd !== 0) {
+                            thatMarketLimit.max_odd = betLimit.max_odd;
+                        }
+                        if (thatMarketLimit.delay === 0 && betLimit.delay !== 0) {
+                            thatMarketLimit.delay = betLimit.delay;
+                        }
+                        if (thatMarketLimit.min_stake === 0 && betLimit.min_stake !== 0) {
+                            thatMarketLimit.min_stake = betLimit.min_stake;
                         }
                     }
                     pushData.Limits = thatMarketLimit
