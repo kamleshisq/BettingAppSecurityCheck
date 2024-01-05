@@ -6246,6 +6246,17 @@ io.on('connection', (socket) => {
                         }
                     }
                 },
+                {
+                    $unwind: "$selections2"
+                },
+                {
+                    $group: {
+                      _id:"$selections2.selectionName",
+                      totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                      totalLossAmount: { $sum: "$selections2.lossAmount2.value" },
+                      exposure : { $sum : "$selections2.exposure.value"}
+                    }
+                },
             ])
             console.log(Bets[0].selections2)
         }
