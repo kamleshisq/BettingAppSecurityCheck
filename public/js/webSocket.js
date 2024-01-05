@@ -16818,7 +16818,7 @@ socket.on('connect', () => {
                 // console.log(thatMarketRunner)
                 if(thatMarketRunner){
                     let runners = JSON.parse(thatMarketRunner.runners)
-
+                    console.log(runners)
                 }
             }
         })
