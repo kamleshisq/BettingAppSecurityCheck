@@ -5960,6 +5960,7 @@ io.on('connection', (socket) => {
                             userName: "$userName",
                             selectionName: "$selectionName",
                             matchName: "$match",
+                            marketId:'$marketId'
                         },
                         totalAmount: {
                             $sum: {
@@ -6019,7 +6020,9 @@ io.on('connection', (socket) => {
                 },
                 {
                     $group: {
-                        _id: "$_id.userName",
+                        _id: {
+                            marketId:'$_id.marketId',
+                            userName:"$_id.userName"},
                         parentArray: { $first: "$parentArray" },
                         selections: {
                             $push: {
@@ -6034,8 +6037,8 @@ io.on('connection', (socket) => {
                 },
                 {
                     $project: { 
-                        _id:0,
-                        userName: "$_id",
+                        _id:"$_id.marketId",
+                        userName: "$_id.userName",
                         parentArray:"$parentArray",
                         selections: { 
                             $map: { 
@@ -6061,7 +6064,7 @@ io.on('connection', (socket) => {
                 },
                 {
                     $project: { 
-                        _id:0,
+                        _id:'$_id',
                         userName: "$userName",
                         parentArray:"$parentArray",
                         selections2:{ 
@@ -6251,7 +6254,8 @@ io.on('connection', (socket) => {
                 },
                 {
                     $group: {
-                      _id:"$selections2.selectionName",
+                      _id:{id:'$_id',
+                      selectionName :"$selections2.selectionName"},
                       totalWinAmount: { $sum: "$selections2.winAmount2.value" },
                       totalLossAmount: { $sum: "$selections2.lossAmount2.value" },
                       exposure : { $sum : "$selections2.exposure.value"}
@@ -6259,9 +6263,9 @@ io.on('connection', (socket) => {
                 },
                 {
                     $project: {
-                      _id: 0,
+                      _id: '$_id.id',
                       selection: {
-                        selectionName: "$_id",
+                        selectionName: "$_id.selectionName",
                         totalWinAmount: {
                             $multiply:["$totalWinAmount", -1]
                         },
@@ -6274,13 +6278,13 @@ io.on('connection', (socket) => {
                 },
                 {
                     $group: {
-                      _id: null,
+                      _id: '$_id',
                       selections: { $push: "$selection" }
                     }
                 },
                 {
                     $project: { 
-                        _id:0,
+                        _id:"$_id",
                         selections: { 
                             $map: { 
                                 input: "$selections",
@@ -6340,11 +6344,11 @@ io.on('connection', (socket) => {
                 }
             ])
             // console.log(Bets[0].selections2)
-            // console.log(Bets[0].selections)
-            let runners = await runnerDataModel.find({eventId:data.eventId})
-            if(Bets.length > 0){
-                socket.emit('checkAdminSideOdds', {Bets:Bets[0], runners})
-            }
+            console.log(Bets)
+            // let runners = await runnerDataModel.find({eventId:data.eventId})
+            // if(Bets.length > 0){
+            //     socket.emit('checkAdminSideOdds', {Bets:Bets[0], runners})
+            // }
         }
     })
 
