@@ -8467,7 +8467,13 @@ socket.on('connect', () => {
                     }else if(check){
                         parentElement.classList.add("suspended");
                           $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0" || (macLimitStatus != undefined && macLimitStatus < section.lay)){
+                    }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0" ){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      parentElement.classList.add("suspended");
+                          $(this).parent().find(".match-status-message").text("Suspended")
+                    }else if ((macLimitStatus != undefined && macLimitStatus < section.lay)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
