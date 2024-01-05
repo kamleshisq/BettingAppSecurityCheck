@@ -5939,11 +5939,11 @@ io.on('connection', (socket) => {
 
 
     socket.on('checkAdminSideOdds', async(data) => {
-        console.log(data, 'datadatadatadata')
+        // console.log(data, 'datadatadatadata')
         if(data.LOGINDATA.LOGINUSER){
             let childrenUSer = await User.distinct('userName', {parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}, roleName:'user'})
             let loginId = data.LOGINDATA.LOGINUSER._id
-            console.log(childrenUSer)
+            // console.log(childrenUSer)
 
             let Bets = await Bet.aggregate([
                 {
@@ -6247,7 +6247,7 @@ io.on('connection', (socket) => {
                     }
                 },
             ])
-            console.log(Bets)
+            console.log(Bets[0].selections2)
         }
     })
 
