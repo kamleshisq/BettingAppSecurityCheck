@@ -42,30 +42,23 @@ async function checkLimit(data){
 
             let betLimit = await betLimitModel.findOne({ type: thatMatch.eventData.name });
 
-const checkAndUpdateIfZero = async (type) => {
-    const tempBetLimit = await betLimitModel.findOne({ type });
-    if (tempBetLimit) {
-        Object.keys(tempBetLimit._doc).forEach(field => {
-            if (betLimit[field] === 0) {
-                betLimit[field] = tempBetLimit[field];
+            const checkAndUpdateIfZero = async (type) => {
+                const tempBetLimit = await betLimitModel.findOne({ type });
+                if (tempBetLimit) {
+                    Object.keys(tempBetLimit._doc).forEach(field => {
+                        if (betLimit[field] === 0 && tempBetLimit[field] !== 0) {
+                            betLimit[field] = tempBetLimit[field];
+                        }
+                    });
+                }
+            };
+
+            if (!betLimit || (betLimit.max_stake === 0 && betLimit.max_profit === 0 && betLimit.max_odd === 0 && betLimit.delay === 0)) {
+                await checkAndUpdateIfZero(thatMatch.eventData.league);
+                await checkAndUpdateIfZero(sport_name);
+                await checkAndUpdateIfZero('Sport');
+                await checkAndUpdateIfZero('Home');
             }
-        });
-    }
-};
-
-if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-    await checkAndUpdateIfZero(thatMatch.eventData.league);
-    await checkAndUpdateIfZero(sport_name);
-    await checkAndUpdateIfZero('Sport');
-    await checkAndUpdateIfZero('Home');
-}
-
-// Now betLimit should contain the desired values with only zero fields taken from upper levels.
-
-
-// Now betLimit should contain the desired values with only zero fields taken from upper levels.
-
-// Now betLimit should contain the desired values with only zero fields taken from upper levels.
 
 
             console.log(betLimit, "betLimitbetLimitbetLimit")
