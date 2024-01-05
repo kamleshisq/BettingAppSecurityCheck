@@ -38,7 +38,7 @@ async function checkLimit(data){
             //         }
             //     }
             // }
-            console.log('gotHERE')
+            // console.log('gotHERE')
 
             let betLimit = await betLimitModel.findOne({ type: thatMatch.eventData.name });
 
