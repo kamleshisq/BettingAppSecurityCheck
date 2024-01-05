@@ -5938,7 +5938,7 @@ io.on('connection', (socket) => {
     })
 
 
-    socket.on('UerBook', async(data) => {
+    socket.on('checkAdminSideOdds', async(data) => {
         console.log(data, 'datadatadatadata')
     })
 
