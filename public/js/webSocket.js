@@ -7830,7 +7830,7 @@ socket.on('connect', () => {
               }else{
                   setTimeout(()=>{
                     marketId()
-                  }, 5000)
+                  }, 1000)
               }
         }
         marketId()
