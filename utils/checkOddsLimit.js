@@ -53,18 +53,32 @@ async function checkLimit(data){
                 }
             };
 
+            const checkAndAssignIfZero = async (type) => {
+                const tempBetLimit = await betLimitModel.findOne({ type });
+                if (tempBetLimit && Object.values(tempBetLimit._doc).some(value => value !== 0)) {
+                    Object.keys(tempBetLimit._doc).forEach(field => {
+                        if (betLimit[field] === 0) {
+                            betLimit[field] = tempBetLimit[field];
+                        }
+                    });
+                }
+            };
+
             if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-                await checkAndAssign(thatMatch.eventData.league);
+                await checkAndAssignIfZero(thatMatch.eventData.league);
                 if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-                    await checkAndAssign(sport_name);
+                    await checkAndAssignIfZero(sport_name);
                     if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-                        await checkAndAssign('Sport');
+                        await checkAndAssignIfZero('Sport');
                         if (!betLimit || Object.values(betLimit).some(value => value === 0)) {
-                            await checkAndAssign('Home');
+                            await checkAndAssignIfZero('Home');
                         }
                     }
                 }
             }
+
+// Now betLimit should contain the desired values with only zero fields taken from upper levels.
+
 
             console.log(betLimit, "betLimitbetLimitbetLimit")
 
