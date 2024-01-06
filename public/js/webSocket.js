@@ -16839,7 +16839,9 @@ socket.on('connect', () => {
                             html = `<td class='red'>${data2}</td>`
                         }
                         console.log($(`#${runners.secId}1`))
-                        $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html);
+                        if($(`#${runners[j].secId}1`).closest('tr').find('td').length === 2){
+                            $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html);
+                        }
                     }
                 }
             }
