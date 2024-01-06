@@ -16824,7 +16824,11 @@ socket.on('connect', () => {
                 // console.log(thatMarketRunner)
                 if(thatMarketRunner){
                     let runners = JSON.parse(thatMarketRunner.runners)
-                    console.log(runners)
+                    // console.log(runners)
+                    for(let j = 0; j < runners.length; j++){
+                        let tahtMarketRealData = data.Bets[i].selections.find(item => item.selectionName === runners[j].runner)
+                        console.log(tahtMarketRealData, "tahtMarketRealDatatahtMarketRealDatatahtMarketRealData")
+                    }
                 }
             }
         })
