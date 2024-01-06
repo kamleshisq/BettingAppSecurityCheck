@@ -16844,6 +16844,8 @@ socket.on('connect', () => {
                                 $(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th:first").after('<th>My Share</th>')
                             }
                             $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html);
+                        }else{
+                            $(`#${runners[j].secId}1`).closest('tr').find("td").eq(1).replaceWith(html);
                         }
                     }
                 }
