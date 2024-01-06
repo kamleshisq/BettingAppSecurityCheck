@@ -16820,12 +16820,13 @@ socket.on('connect', () => {
         socket.on('checkAdminSideOdds', data => {
             console.log(data)
             for(let i = 0; i < data.Bets.length; i++){
+                console.log(data.Bets[i])
                 let thatMarketRunner = data.runners.find(item => item.marketId === data.Bets[i]._id)
                 if(thatMarketRunner){
                     let runners = JSON.parse(thatMarketRunner.runners)
                     for(let j = 0; j < runners.length; j++){
                         let data = 0
-                        data.Bets[i]
+                        
                         let tahtMarketRealData = data.Bets[i].selections.find(item => item.selectionName === runners[j].runner)
                         if(tahtMarketRealData){
                              data = tahtMarketRealData.winAmount
