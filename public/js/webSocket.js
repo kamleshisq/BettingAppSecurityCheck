@@ -16834,13 +16834,13 @@ socket.on('connect', () => {
                         }
                         let html=''
                         if(data2 > 0){
-                            html = `<td class='greeb'>${data2}</td>`
+                            html = `<td class='greeb'>${data2.toFixed(2)}</td>`
                         }else{
-                            html = `<td class='red'>${data2}</td>`
+                            html = `<td class='red'>${data2.toFixed(2)}</td>`
                         }
                         console.log($(`#${runners.secId}1`))
                         if($(`#${runners[j].secId}1`).closest('tr').find('td').length === 2){
-                            $(`#${runners[j].secId}1`).closest('table').find('tr:first').find("td:first").after('<th>My Share</th>')
+                            $(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th:first").after('<th>My Share</th>')
                             $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html);
                         }
                     }
