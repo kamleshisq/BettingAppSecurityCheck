@@ -16821,13 +16821,17 @@ socket.on('connect', () => {
             console.log(data)
             for(let i = 0; i < data.Bets.length; i++){
                 let thatMarketRunner = data.runners.find(item => item.marketId === data.Bets[i]._id)
-                // console.log(thatMarketRunner)
                 if(thatMarketRunner){
                     let runners = JSON.parse(thatMarketRunner.runners)
-                    // console.log(runners)
                     for(let j = 0; j < runners.length; j++){
+                        let data = 0
                         let tahtMarketRealData = data.Bets[i].selections.find(item => item.selectionName === runners[j].runner)
-                        console.log(tahtMarketRealData, "tahtMarketRealDatatahtMarketRealDatatahtMarketRealData")
+                        if(tahtMarketRealData){
+                             data = tahtMarketRealData.winAmount
+                        }else{
+                            data = data.Bets[i].selections.reduce((accumulator, currentBet) => accumulator + currentBet.winamount, 0);
+                        }
+                        console.log(data)
                     }
                 }
             }
