@@ -16818,7 +16818,6 @@ socket.on('connect', () => {
 
 
         socket.on('checkAdminSideOdds', data => {
-            console.log(data)
             for(let i = 0; i < data.Bets.length; i++){
                 let thatMarketRunner = data.runners.find(item => item.marketId === data.Bets[i]._id)
                 if(thatMarketRunner){
@@ -16826,7 +16825,6 @@ socket.on('connect', () => {
                     for(let j = 0; j < runners.length; j++){
                         let data2 = 0
                         let tahtMarketRealData = data.Bets[i].selections.find(item => item.selectionName === runners[j].runner)
-                        console.log(tahtMarketRealData, "tahtMarketRealDatatahtMarketRealDatatahtMarketRealData")
                         if(tahtMarketRealData){
                             data2 = tahtMarketRealData.winAmount
                         }else{
@@ -16834,7 +16832,6 @@ socket.on('connect', () => {
                                 data2 += -item.exposure
                             })
                         }
-                        // console.log(data2, "data2")
                         let html=''
                         if(data2 > 0){
                             html = `<td class='greeb'>${data2}</td>`
