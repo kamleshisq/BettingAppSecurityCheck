@@ -16840,7 +16840,9 @@ socket.on('connect', () => {
                         }
                         console.log($(`#${runners.secId}1`))
                         if($(`#${runners[j].secId}1`).closest('tr').find('td').length === 2){
-                            $(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th:first").after('<th>My Share</th>')
+                            if($(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th").length === 2){
+                                $(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th:first").after('<th>My Share</th>')
+                            }
                             $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html);
                         }
                     }
