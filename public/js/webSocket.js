@@ -18119,7 +18119,7 @@ socket.on('connect', () => {
                                         let amount = 0
                                         for(const select in data.Bets[i].Bets[0].selections){
                                             console.log(data.Bets[i].Bets[0].selections[select].exposure, "data.Bets[i].Bets[0].selections[select].exposure")
-                                            amount += (data.Bets[i].Bets[0].selections[select].lossAmount)
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
                                         }
                                         winAmountForThatRUn = amount
                                     }
@@ -18153,7 +18153,7 @@ socket.on('connect', () => {
                                     }else{
                                         let amount = 0
                                         for(const select in data.Bets[i].Bets[0].selections){
-                                            amount += (data.Bets[i].Bets[0].selections[select].lossAmount)
+                                            amount += -(data.Bets[i].Bets[0].selections[select].exposure)
                                         }
                                         winAmountForThatRUn = amount
                                     }
