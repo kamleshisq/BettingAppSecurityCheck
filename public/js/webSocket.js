@@ -16834,7 +16834,14 @@ socket.on('connect', () => {
                                 data2 += -item.exposure
                             })
                         }
-                        console.log(data2, "data2")
+                        // console.log(data2, "data2")
+                        let html=''
+                        if(data2 > 0){
+                            html = `<td class='greeb'>${data2}</td>`
+                        }else{
+                            html = `<td class='red'>${data2}</td>`
+                        }
+                        $(`#${runners.secId}1`).closest('tr').find("td:first").after(html);
                     }
                 }
             }
