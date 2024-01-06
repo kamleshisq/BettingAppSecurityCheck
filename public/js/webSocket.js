@@ -16839,7 +16839,7 @@ socket.on('connect', () => {
                             html = `<td class='red'>${data2}</td>`
                         }
                         console.log($(`#${runners.secId}1`))
-                        $(`#${runners.secId}1`).closest('tr').find("td:first").after(html);
+                        $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html);
                     }
                 }
             }
