@@ -16831,7 +16831,7 @@ socket.on('connect', () => {
                             data2 = tahtMarketRealData.winAmount
                         }else{
                             data.Bets[i].selections.forEach(item => {
-                                data2 -= item.lossAmount
+                                data2 += item.lossAmount
                             })
                         }
                         console.log(data2, "data2")
