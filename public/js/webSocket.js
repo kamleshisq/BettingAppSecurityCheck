@@ -16825,6 +16825,7 @@ socket.on('connect', () => {
                     let runners = JSON.parse(thatMarketRunner.runners)
                     for(let j = 0; j < runners.length; j++){
                         let data = 0
+                        data.Bets[i]
                         let tahtMarketRealData = data.Bets[i].selections.find(item => item.selectionName === runners[j].runner)
                         if(tahtMarketRealData){
                              data = tahtMarketRealData.winAmount
