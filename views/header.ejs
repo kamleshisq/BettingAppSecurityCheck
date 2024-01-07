@@ -37,7 +37,7 @@
   $(document).ready(function(){
     let elements = $('a').each(function(index,ele){
       if($(this).attr('href')){
-        console($(this).attr('href'))
+        console.log($(this).attr('href'))
         if($(this).attr('href').startsWith('/admin')){
           $(this).attr('href',$(this).attr('href') + sessionStorage.getItem('sessiontoken'))
         }
