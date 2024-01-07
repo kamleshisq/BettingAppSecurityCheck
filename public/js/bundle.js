@@ -5490,6 +5490,7 @@ var login = /*#__PURE__*/function () {
             sessionStorage.setItem('logintime', Date.now());
             localStorage.setItem('logintimeAdmin', Date.now());
             sessionStorage.setItem('notiCount', JSON.stringify(res.data.data.paymentreqcount));
+            sessionStorage.setItem('sessiontoken', res.data.token);
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
             if (res.data.count) {
@@ -57038,7 +57039,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56362" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54696" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
