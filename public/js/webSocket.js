@@ -15424,7 +15424,12 @@ socket.on('connect', () => {
             filterData.fromDate = fromDate,
             filterData.toDate = toDate
             filterData.type = type
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;}
+            let id = paramsObject.id
             socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
         })
 
@@ -15444,7 +15449,13 @@ socket.on('connect', () => {
             filterData.type = type
             page = 0
             $('.pageIdACC').attr('data-pageid',1)
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;}
+            let id = paramsObject.id
+
             socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
           }
 
