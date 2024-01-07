@@ -350,9 +350,9 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         token = req.query.sessiontoken
     }else if(req.method == 'POST'){
         token = req.body.sessiontoken
+        delete req.body['sessiontoken']
     }
 
-    delete req.body['sessiontoken']
 
     console.log(token,'==>token')
     if(!token){
