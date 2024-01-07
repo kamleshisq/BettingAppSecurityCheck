@@ -52,7 +52,7 @@ let separator = currentURL.includes('?') ? '&' : '?';
 let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem('sessiontoken')}`;
 
 // Update the browser's address bar
-window.history.replaceState({}, '', updatedURL);
+// window.history.replaceState({}, '', updatedURL);
 </script>
 <script src="/js/main.js"></script>
 <script src="/socket.io/socket.io.js"></script>
