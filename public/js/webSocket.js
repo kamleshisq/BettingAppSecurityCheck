@@ -9877,7 +9877,9 @@ socket.on('connect', () => {
                     }
                 }else{
                     // togglePopupMain('popup-2', "redPopUP2", "Odds out of range")
-                    console.log(data, "datadatadatadata")
+                    // console.log(data, "datadatadatadata")
+                            showLoader();
+                            socket.emit("betDetails", {data, LOGINDATA})
                 }
             }
             });
