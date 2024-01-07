@@ -5757,7 +5757,9 @@ socket.on('connect', () => {
         $(".logout").click(function(){
             let id = $(this).attr("id")
             // console.log(id,'frontend id')
-            socket.emit("SelectLogoutUserId", id)
+            let sessiontoken = sessionStorage.getItem('sessiontoken')
+
+            socket.emit("SelectLogoutUserId", {id,sessiontoken})
         })
 
         socket.on("SelectLogoutUserId", (data) => {
@@ -7101,7 +7103,7 @@ socket.on('connect', () => {
             if(data.status === 'success'){
                 alert("Deleted successfully")
                 window.setTimeout(()=>{
-                    window.location = '/admin/Notification'
+                    window.location.reload(true)
                 },500)
             }else{
                 alert(data.message)

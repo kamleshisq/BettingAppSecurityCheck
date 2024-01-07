@@ -469,11 +469,12 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on("SelectLogoutUserId",async(id)=>{
+    socket.on("SelectLogoutUserId",async(data)=>{
         // console.log(id,'back end id')
         // let data = {userId:`${id}`}
         try{
-            let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser?userId=`+id
+            let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser?userId=${data.id}&sessiontoken=${data.sessiontoken}
+            `
             fetch(fullUrl, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ` + loginData.Token }
