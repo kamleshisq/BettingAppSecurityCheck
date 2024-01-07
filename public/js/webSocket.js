@@ -15298,6 +15298,7 @@ socket.on('connect', () => {
                
             }else{
                 // console.log("working")
+                let html;
                 if(data.page == 0){
                     if(data.bets.length == 0){
                         html += `<tr class="empty_table">
