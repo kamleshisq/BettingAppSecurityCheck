@@ -16853,7 +16853,7 @@ socket.on('connect', () => {
                             $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html2 + html);
                         }else{
                             $(`#${runners[j].secId}1`).closest('tr').find("td").eq(1).replaceWith(html2);
-                            $(`#${runners[j].secId}1`).closest('tr').find("td").eq(1).replaceWith(html);
+                            $(`#${runners[j].secId}1`).closest('tr').find("td").eq(2).replaceWith(html);
                         }
                     }
                 }
