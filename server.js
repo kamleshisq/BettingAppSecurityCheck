@@ -481,13 +481,13 @@ io.on('connection', (socket) => {
                     'Content-Type': 'application/json',
                     'accept': 'application/json' },
                 body:JSON.stringify({'sessiontoken':data.sessiontoken,'userId':data.id})
-            }).then(res => console.log(res.json(),'response'))
-            // .then(json =>{
-            //     // console.log(json.status)
-            //     if(json.status == "success"){
-            //         socket.emit("SelectLogoutUserId", "success")
-            //     }
-            // })
+            }).then(res => res.json())
+            .then(json =>{
+                // console.log(json.status)
+                if(json.status == "success"){
+                    socket.emit("SelectLogoutUserId", "success")
+                }
+            })
         }catch(err){
             console.log(err)
         }
