@@ -2217,7 +2217,8 @@ io.on('connection', (socket) => {
 
     socket.on("deleteNotification", async(data) => {
         let id = data.id.slice(0, -1);
-        const fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/deleteNotification?id=` + `${id}`
+        const fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/deleteNotification?id=` + `${id}&sessiontoken=${data.sessionStorage}
+        `
         fetch(fullUrl, {
             method: 'GET',
             headers: { 

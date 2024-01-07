@@ -7076,7 +7076,8 @@ socket.on('connect', () => {
         $(document).on('click', '.delete', async function(){
             let id = $(this).attr('id')
             if(confirm('do you want to delte this notification')){
-                socket.emit('deleteNotification', {id, LOGINDATA})
+                socket.emit('deleteNotification', {id, LOGINDATA,sessiontoken:sessionStorage.getItem('sessiontoken')
+            })
             }
         })
 
