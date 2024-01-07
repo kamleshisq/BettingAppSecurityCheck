@@ -159,11 +159,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}?sessiontoken=${req.query.sessiontoken}`,
                 name:'user'
             },
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle?sessiontoken=${req.query.sessiontoken}`,
                 name:'role'
             }
         ]
@@ -171,11 +171,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?sessiontoken=${req.query.sessiontoken}`,
                 name:'user'
             },
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle?sessiontoken=${req.query.sessiontoken}`,
                 name:'role'
             }
         ]
