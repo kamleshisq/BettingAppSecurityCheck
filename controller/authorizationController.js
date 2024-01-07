@@ -352,6 +352,8 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         token = req.body.sessiontoken
     }
 
+    delete req.body['sessiontoken']
+
     console.log(token,'==>token')
     if(!token){
         // console.log('WORKING1')

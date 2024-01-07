@@ -37,6 +37,7 @@ import session from "express-session";
 // import { func } from "joi";
 
 
+
 // console.log(document.querySelector('.loginForm'))
 // console.log(document.getElementById('uname').textContent)
 // if(document.querySelector('.loginForm')){
@@ -217,6 +218,7 @@ if(formDataObj.role == "650bccdbb3fdc8c922c34bbe"){
     }
 }
 formDataObj.OperatorAuthorization = checkedValues
+formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
 // console.log(formDataObj, "+==> data")
 // console.log(formDataObj);
 createUser(formDataObj)
@@ -231,6 +233,7 @@ $(document).on('submit','.passReset-form',function(e){
     const formDataObj = Object.fromEntries(fd.entries())
     let id = form.id
     formDataObj.id = id
+    formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
     // console.log(formDataObj)
     reset(formDataObj);
 });
@@ -243,6 +246,7 @@ $(document).on('submit','#edit-form',async function(e){
     let formDataObj = Object.fromEntries(fd.entries());
     // console.log(formDataObj);
     let rowId = $('.rowId').attr('data-rowid')
+    formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
     const user = await editUser(formDataObj)
     // console.log(user)
     let currentUser = $('#currentUserDetails').data('currentuser')
@@ -271,6 +275,7 @@ $(document).on('submit','.acc-form',async function(e) {
     if(formDataObj.amount == 0){
         alert('please enter amount greater than 0')
     }else{
+        formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
         await debitCredit(formDataObj)
         // var trElements = document.querySelectorAll('tr.trtable');
         // console.log(trElements)
@@ -302,6 +307,7 @@ $(document).on('submit','.Settlement-form',async function(e) {
     if(formDataObj.amount == 0){
         alert('please enter amount greater than 0')
     }else{
+        formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
         creditDebitSettle(formDataObj)
     }
     // console.log(formDataObj)
@@ -383,6 +389,7 @@ if(document.querySelector('.ChangeFORM')){
     let data = new FormData(form) 
     const formDataObj = Object.fromEntries(data.entries());
     // console.log(formDataObj)
+    formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
     updatePassword(formDataObj);
 })};
 
@@ -445,6 +452,7 @@ $(document).on('submit','.userStatus',function(e) {
     // let rowId = trElement.id
     // console.log(rowId)
     // console.log(formDataObj)
+    formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
     userStatus(formDataObj, rowId)
 });
 
@@ -515,7 +523,8 @@ $('.createRole-form1').submit(function(e) {
         operationAuthorization:authorization,
         AdminController:roleAuthorization,
         roleName,
-        name:roleName
+        name:roleName,
+        sessiontoken : sessionStorage.getItem('sessiontoken')
     }
     // console.log(data)
     createRole(data)
@@ -586,7 +595,8 @@ $(document).on("submit", ".UpdateRole-form", function(e){
         // userAuthorization:roleAuthorization,
         roleName,
         operationAuthorization,
-        AdminController
+        AdminController,
+        sessiontoken : sessionStorage.getItem('sessiontoken')
         }
     // console.log(data)
     updateRole(data)
@@ -594,7 +604,7 @@ $(document).on("submit", ".UpdateRole-form", function(e){
 $(document).on('click','.deleteRole',function(e){
     let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
     if(confirm('do you want to delete this role')){
-        deleteRole({"id":roledata._id})
+        deleteRole({"id":roledata._id,'sessiontoken' :sessionStorage.getItem('sessiontoken')})
     }
 })
 
@@ -606,6 +616,7 @@ $(document).on('submit', ".form-data1", function(e){
     form.append('Id', id)
     form.append('position',document.getElementById('name').value)
     form.append("link", document.getElementById('link').value)
+    form.append('sessiontoken' ,sessionStorage.getItem('sessiontoken'))
     if(check.checked == true){
         form.append('status',"on")
     }else{
@@ -623,12 +634,15 @@ $(document).on('submit', '.form-data2', function(e){
     form.append('position', document.getElementById('name1').value)
     form.append('link', document.getElementById('url1').value)
     form.append('image', document.getElementById('file1').files[0])
+    form.append('sessiontoken' ,sessionStorage.getItem('sessiontoken'))
     createPromotion(form)
 });
 
 $(document).on('click', ".Delete", function(){
     let data = {}
     data.id = $(this).attr('id')
+    data.sessiontoken = sessionStorage.getItem('sessiontoken')
+
     deletePromotion(data)
 })
 
@@ -639,6 +653,8 @@ $(document).on('submit', '.form-data22', function(e){
     form.append('url', document.getElementById('url').value)
     form.append('page', document.getElementById('page').value)
     form.append('Icon', document.getElementById('Icon').files[0])
+    form.append('sessiontoken' ,sessionStorage.getItem('sessiontoken')
+    )
     createHorizontalMenu(form)
 });
 
@@ -648,7 +664,10 @@ $(document).on('submit', ".form-data23", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
+    fd.append('sessiontoken',sessionStorage.getItem('sessiontoken')
+    )
     let data = Object.fromEntries(fd.entries());
+    
     // console.log(data)
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
@@ -659,6 +678,8 @@ $(document).on('submit', ".form-data24", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
+    fd.append('sessiontoken' ,sessionStorage.getItem('sessiontoken')
+    )
     // console.log(fd)
     createBanner(fd)
 })
@@ -669,6 +690,8 @@ $(document).on("submit", ".form-data25",function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
+    fd.append('sessiontoken' , sessionStorage.getItem('sessiontoken')
+    )
     // console.log(fd,'==>fd')
     updateBanner(fd)
 })
@@ -678,6 +701,8 @@ $(document).on('submit', ".uploadEJS", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
+    fd.append(sessiontoken , sessionStorage.getItem('sessiontoken')
+    )
     createPage(fd)
 })
 
@@ -689,6 +714,8 @@ $(document).on('submit', ".form-data26", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
+    fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
+
     addImage(fd)
 })
 
@@ -698,6 +725,7 @@ $(document).on('submit', ".editImageSportForm", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
+    fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
     editSliderInImage(fd)
 })
  
@@ -707,6 +735,7 @@ $(document).on('submit', ".slider-form", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
+    fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
     updateSlider(fd )
 })
 
@@ -714,6 +743,7 @@ $(document).on('submit', ".addSlider-form", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
+    fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
     createSlider(fd)
 });
 
@@ -723,6 +753,7 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
+    fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
     userLogin(data)
 })
 
@@ -732,6 +763,8 @@ $(document).on('submit', ".regestermodl-form", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
+    data.sessiontoken = sessionStorage.getItem('sessiontoken')
+
     // console.log(data)
     createAndLoginUser(data)
 })
