@@ -62,6 +62,7 @@
         if($(this).attr('href')){
           if($(this).attr('href').startsWith('/admin')){
             if(findQueryParam($(this).attr('href'))){
+              console.log($(this).attr('href'),'in true condition')
               $(this).attr('href',$(this).attr('href') + '&sessiontoken=' +sessionStorage.getItem('sessiontoken'))
             }else{
               $(this).attr('href',$(this).attr('href') + '?sessiontoken=' +sessionStorage.getItem('sessiontoken'))
