@@ -15538,7 +15538,12 @@ socket.on('connect', () => {
             // console.log("Working")
             let page = parseInt($('.pageIdHistory').attr('data-pageid'));
             $('.pageIdHistory').attr('data-pageid',page + 1)
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;}
+            let id = paramsObject.id
             socket.emit("loadMorediveHistory", {page, id})
         })
 
@@ -15591,6 +15596,7 @@ socket.on('connect', () => {
                 }
 
             }else{
+                let html;
                 if(data.page){
                     html += `<tr class="empty_table">
                     <td>No record found</td>
