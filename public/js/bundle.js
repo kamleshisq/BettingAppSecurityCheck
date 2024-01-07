@@ -6010,7 +6010,7 @@ var updateRole = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Updated successfully successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/admin/roleManagement');
+              location.reload(true);
             }, 100);
           }
           _context.next = 11;
