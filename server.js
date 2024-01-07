@@ -473,11 +473,12 @@ io.on('connection', (socket) => {
         // console.log(id,'back end id')
         // let data = {userId:`${id}`}
         try{
-            let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser?userId=${data.id}&sessiontoken=${data.sessiontoken}
+            let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser?userId=${data.id}
             `
             fetch(fullUrl, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ` + loginData.Token }
+                headers: { 'Authorization': `Bearer ` + loginData.Token },
+                body:JSON.stringify({sessiontoken:data.sessiontoken})
             }).then(res => res.json())
             .then(json =>{
                 // console.log(json.status)
