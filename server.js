@@ -478,13 +478,13 @@ io.on('connection', (socket) => {
             fetch(fullUrl, {
                 method: 'POST',
                 body:JSON.stringify({'sessiontoken':data.sessiontoken,'userId':data.id})
-            }).then(res => res.json())
-            .then(json =>{
-                // console.log(json.status)
-                if(json.status == "success"){
-                    socket.emit("SelectLogoutUserId", "success")
-                }
-            })
+            }).then(res => console.log(res,'response'))
+            // .then(json =>{
+            //     // console.log(json.status)
+            //     if(json.status == "success"){
+            //         socket.emit("SelectLogoutUserId", "success")
+            //     }
+            // })
         }catch(err){
             console.log(err)
         }
