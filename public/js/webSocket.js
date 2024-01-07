@@ -5766,7 +5766,7 @@ socket.on('connect', () => {
             // console.log(data)
             alert("User Logout")
                 window.setTimeout(()=>{
-                    window.location = '/admin/onlineUsers '
+                    window.location.reload(true)
                 },500)
         });
 
