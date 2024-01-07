@@ -159,7 +159,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}?sessiontoken=${req.query.sessiontoken}`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}&sessiontoken=${req.query.sessiontoken}`,
                 name:'user'
             },
             {
