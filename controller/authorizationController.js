@@ -932,7 +932,6 @@ exports.logOutAllUser = catchAsync(async(req, res, next) => {
 
 exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     // console.log(req.query)
-    req.body = req.query
     const user = await User.findOne({_id:req.body.userId,is_Online:true});
     // console.log(user,'==>user')
 
