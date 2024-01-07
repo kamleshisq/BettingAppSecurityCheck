@@ -16824,28 +16824,35 @@ socket.on('connect', () => {
                     let runners = JSON.parse(thatMarketRunner.runners)
                     for(let j = 0; j < runners.length; j++){
                         let data2 = 0
+                        let data3 = 0
                         let tahtMarketRealData = data.Bets[i].selections.find(item => item.selectionName === runners[j].runner)
                         console.log(tahtMarketRealData, "tahtMarketRealDatatahtMarketRealDatatahtMarketRealData")
                         if(tahtMarketRealData){
                             data2 = tahtMarketRealData.winAmount
+                            data3 = tahtMarketRealData.winAmount2
                         }else{
                             data.Bets[i].selections.forEach(item => {
                                 data2 += -item.exposure
+                                data3 += -item.exposure2
                             })
                         }
                         let html=''
+                        let html2=''
                         if(data2 > 0){
-                            html = `<td class='greeb'>${data2.toFixed(2)}</td>`
+                            html = `<td class='green'>${data2.toFixed(2)}</td>`
+                            html2 = `<td class='green'>${data3.toFixed(2)}</td>`
                         }else{
                             html = `<td class='red'>${data2.toFixed(2)}</td>`
+                            html2 = `<td class='red'>${data3.toFixed(2)}</td>`
                         }
                         console.log($(`#${runners.secId}1`))
                         if($(`#${runners[j].secId}1`).closest('tr').find('td').length === 2){
                             if($(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th").length === 2){
-                                $(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th:first").after('<th>My Share</th>')
+                                $(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th:first").after('<th>Total Book</th><th>My Share</th>')
                             }
-                            $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html);
+                            $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html2 + html);
                         }else{
+                            $(`#${runners[j].secId}1`).closest('tr').find("td").eq(1).replaceWith(html2);
                             $(`#${runners[j].secId}1`).closest('tr').find("td").eq(1).replaceWith(html);
                         }
                     }
