@@ -7062,7 +7062,7 @@ socket.on('connect', () => {
                 alert(data.message)
             }else{
                 alert("Notification added successfully")
-                window.location.href = '/admin/Notification'
+                window.location.reload(true)
             }
         })
 
