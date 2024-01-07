@@ -23,20 +23,28 @@
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css"> -->
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css"> -->
 <script>
-    let currentURL = window.location.href;
-
-    // Check if the URL already has query parameters
-    let separator = currentURL.includes('?') ? '&' : '?';
-
-    // Add or update a query parameter
-    let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem('sessiontoken')}`;
-
-    // Update the browser's address bar
-    window.history.replaceState({}, '', updatedURL);
+    
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js" integrity="sha256-6ec2OYfOEVNM4UoRBRGoUP5SRgKyf/FhNoOjTwtqD3k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+
+  $('a').click(function(e){
+    e.preventDefault();
+    console.log($(this).attr('href'))
+  })
+  let currentURL = window.location.href;
+
+// Check if the URL already has query parameters
+let separator = currentURL.includes('?') ? '&' : '?';
+
+// Add or update a query parameter
+let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem('sessiontoken')}`;
+
+// Update the browser's address bar
+window.history.replaceState({}, '', updatedURL);
+</script>
 <script src="/js/main.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/webSocket.js"></script>
