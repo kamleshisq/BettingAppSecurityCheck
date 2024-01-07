@@ -6123,7 +6123,8 @@ var userStatus = function userStatus(data, rawId) {
     data: {
       id: data.id,
       status: data.status,
-      Password: data.Password
+      Password: data.Password,
+      sessiontoken: sessionStorage.getItem('sessiontoken')
     },
     success: function success(data) {
       if (data.status === 'success') {
@@ -56706,7 +56707,6 @@ $(document).on('submit', '.userStatus', function (e) {
   // let rowId = trElement.id
   // console.log(rowId)
   // console.log(formDataObj)
-  formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken');
   (0, _userStatus.userStatus)(formDataObj, rowId);
 });
 $(document).on('click', '.Withdraw', function () {
