@@ -35,15 +35,21 @@
   //   console.log($(this).attr('href'))
   // })
   $(document).ready(function(){
-    let elements = $('a').each(function(index,ele){
-      if($(this).attr('href')){
-        console.log($(this).attr('href'))
-        if($(this).attr('href').startsWith('/admin')){
-          $(this).attr('href',$(this).attr('href') + '?sessiontoken=' +sessionStorage.getItem('sessiontoken'))
-        }
-      }
+    function appendquerttourl(){
 
-    })
+      let elements = $('a').each(function(index,ele){
+        if($(this).attr('href')){
+          if($(this).attr('href').startsWith('/admin')){
+            $(this).attr('href',$(this).attr('href') + '?sessiontoken=' +sessionStorage.getItem('sessiontoken'))
+          }
+        }
+  
+      })
+    }
+
+    setInterval(()=>{
+      appendquerttourl
+    },100)
     
   })
   let currentURL = window.location.href;
