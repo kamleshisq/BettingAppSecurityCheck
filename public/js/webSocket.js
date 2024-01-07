@@ -15186,7 +15186,14 @@ socket.on('connect', () => {
 
         $(document).on("click", ".loadMoredive", function(e){
             e.preventDefault()
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;
+            }
+
+            let id = paramsObject.id
             let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#FdateBet').val()
@@ -15215,7 +15222,15 @@ socket.on('connect', () => {
             filterData.type = type
             page = 0
             $('.pageId').attr('data-pageid', 1)
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;
+            }
+
+            let id = paramsObject.id
+
             // console.log(filterData)
             socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
           }
