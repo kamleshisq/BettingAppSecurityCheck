@@ -2186,6 +2186,8 @@ io.on('connection', (socket) => {
 
     socket.on('createNotification', async(data) => {
         data.data.userId = data.LOGINDATA.LOGINUSER._id
+        
+
         let bodyData = JSON.stringify(data.data)
         const fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/createNotification`
         fetch(fullUrl, {

@@ -7052,6 +7052,7 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            data.sessiontoken = sessionStorage.getItem('sessiontoken')
             // console.log(LOGINDATA)
             socket.emit("createNotification", {data, LOGINDATA})
         })
