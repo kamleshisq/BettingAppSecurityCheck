@@ -3395,17 +3395,23 @@ socket.on('connect', () => {
                 }else{
                     html += `<td>-</td>`
                 }
-
                 if(data.selectionName){
-                    html += `<td>${data.selectionName}</td>`
+                    if(data.selectionName.includes('@')){
+                        let odds2 = data.selectionName.split('@')[1]
+                        let selectionName2 = data.selectionName.split('@')[0]
+                        html += `<td>${selectionName2}@${data.oddValue}</td>`
+                        html += `<td>${odds2}</td>`
+                    }else{
+                        html += `<td>${data.selectionName}</td>`
+                        html += `<td>${data.oddValue}</td>`
+                    }
                 }else{
                     html += `<td>-</td>`
-                }
-                if(data.oddValue){
-                    html += `<td>${data.oddValue}</td>`
-                }else{
                     html += `<td>-</td>`
                 }
+                // if(data.oddValue){
+                // }else{
+                // }
 
                 html += `
                 <td>${data.Stake}</td>
