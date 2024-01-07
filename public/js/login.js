@@ -28,7 +28,7 @@ export const login = async(userName, password)=>{
                 }, 100)
             }else{
                 window.setTimeout(()=>{
-                    location.assign('/admin/dashboard')
+                    location.assign(`/admin/dashboard?sessiontoken=${sessionStorage.setItem('sessiontoken')}`)
                 }, 100)
             }
         }
