@@ -15696,7 +15696,8 @@ socket.on('connect', () => {
                       <td>${betsEventWiseData[i].matchName}</td>
                       <td>${betsEventWiseData[i].count}</td>
                       <td>${betsEventWiseData[i].count2}</td>
-                      <td><a href="/admin/settlementIn?id=${betsEventWiseData[i].eventid}" class="btn-green">settle</a></td>
+                      <td><a href="/admin/settlementIn?id=${betsEventWiseData[i].eventid}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
+                      " class="btn-green">settle</a></td>
                     </tr>`
                     }
                     $('#cricket-tbody').html(htmlC)
