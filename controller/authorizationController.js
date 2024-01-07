@@ -414,6 +414,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     res.locals.paymentreqcount = paymentreqcount
     res.locals.WithdrawReqCount = WithdrawReqCount
+    req.locals.sessiontoken = token
     req.currentUser = currentUser
     req.token = token
     req.app.set('token', token);
