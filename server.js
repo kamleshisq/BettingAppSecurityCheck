@@ -6322,7 +6322,7 @@ io.on('connection', (socket) => {
                                                                 if : { $eq : ["$$value.value" , 0]},
                                                                 then : {
                                                                     $cond:{
-                                                                        if : {$eq : ["$parentId", ele.id]},
+                                                                        if : {$eq : ["$parentId", loginId]},
                                                                         then:"$$selection.winAmount",
                                                                         else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                     }
@@ -6369,7 +6369,7 @@ io.on('connection', (socket) => {
                                                                 if : { $eq : ["$$value.value" , 0]},
                                                                 then : {
                                                                     $cond:{
-                                                                        if : {$eq : ["$parentId", ele.id]},
+                                                                        if : {$eq : ["$parentId", loginId]},
                                                                         then:"$$selection.lossAmount",
                                                                         else:{$subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                     }
@@ -6416,7 +6416,7 @@ io.on('connection', (socket) => {
                                                                 if : { $eq : ["$$value.value" , 0]},
                                                                 then : {
                                                                     $cond:{
-                                                                        if : {$eq : ["$parentId", ele.id]},
+                                                                        if : {$eq : ["$parentId", loginId]},
                                                                         then:"$$selection.exposure",
                                                                         else:{$subtract:["$$selection.exposure", {$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                     }
