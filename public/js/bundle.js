@@ -5499,7 +5499,7 @@ var login = /*#__PURE__*/function () {
               }, 100);
             } else {
               window.setTimeout(function () {
-                location.assign("/admin/dashboard?sessiontoken=".concat(sessionStorage.setItem('sessiontoken')));
+                location.assign("/admin/dashboard?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')));
               }, 100);
             }
           }
