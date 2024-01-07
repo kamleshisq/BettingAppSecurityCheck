@@ -9852,26 +9852,11 @@ socket.on('connect', () => {
             console.log(specificSpan, data.odds, "data.oddsdata.oddsdata.odds")
             if(specificSpan == data.odds){
                 if(data.stake === "" || data.stake == 0){
-                    // alert("Please select stake")
                     togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                 }else{
                     if(data.odds != '\n                        \n                      '){
-                        // alert('132456')
-                        // if(checkTime){
-                        //     if(checkTime < Date.now()){
-                        //         // console.log('WORKING')
-                        //         togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
-                        //     }else{
-                        //         // console.log(data)
-                        //             showLoader();
-                        //             socket.emit("betDetails", {data, LOGINDATA})
-                        //     }
-                        // }else{
-                        //     // console.log(data)
-                        // }
                         showLoader();
                         socket.emit("betDetails", {data, LOGINDATA})
-                        // console.log(data)
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                     }
@@ -9881,22 +9866,9 @@ socket.on('connect', () => {
                     data.oldOdds = data.odds
                     data.odds = specificSpan
                     if(data.stake === ""){
-                        // alert("Please select stake")
                         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                     }else{
                         if(data.odds != '\n                        \n                      '){
-                            // alert('132456')
-                            // if(checkTime){
-                            //     if(checkTime < Date.now()){
-                            //         togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
-                            //     }else{
-                            //         // console.log(data)
-                            //         showLoader();
-                            //         socket.emit("betDetails", {data, LOGINDATA})
-                            //     }
-                            // }else{
-                            //     // console.log(data)
-                            // }
                             showLoader();
                             socket.emit("betDetails", {data, LOGINDATA})
                         }else{
@@ -9904,7 +9876,8 @@ socket.on('connect', () => {
                         }
                     }
                 }else{
-                    togglePopupMain('popup-2', "redPopUP2", "Odds out of range")
+                    // togglePopupMain('popup-2', "redPopUP2", "Odds out of range")
+                    console.log(data, "datadatadatadata")
                 }
             }
             });
