@@ -2317,7 +2317,7 @@ socket.on('connect', () => {
                         }
 
                         if(response[i].roleName != 'user'){
-                            html+= `<a href='/admin/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
+                            html+= `<a href='/admin/userManagement?id=${response[i]._id}?sessiontoken=${sessionStorage.getItem('sessiontoken')}'>${response[i].userName}</a>`
                         }else{
                             html+= `${response[i].userName}`
                         }
