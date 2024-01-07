@@ -16825,6 +16825,7 @@ socket.on('connect', () => {
                     for(let j = 0; j < runners.length; j++){
                         let data2 = 0
                         let tahtMarketRealData = data.Bets[i].selections.find(item => item.selectionName === runners[j].runner)
+                        console.log(tahtMarketRealData, "tahtMarketRealDatatahtMarketRealDatatahtMarketRealData")
                         if(tahtMarketRealData){
                             data2 = tahtMarketRealData.winAmount
                         }else{
