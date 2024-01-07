@@ -2041,10 +2041,8 @@ io.on('connection', (socket) => {
                     data.data.bettype2 = 'LAY'
                 }
             }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
-                // console.log(thatMarket, 45454545454)
                 let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
                 let name
-                // let bettype2
                 if(data.data.secId.slice(-1) > 3){
                     name = `layPrice${data.data.secId.slice(-1) - 3}`
                     data.data.bettype2 = 'LAY'
@@ -2052,14 +2050,12 @@ io.on('connection', (socket) => {
                     name = `backPrice${data.data.secId.slice(-1)}`
                     data.data.bettype2 = 'BACK'
                 }
-                // let odds = realodd[name];
-                // data.data.odds = odds
+                let odds = realodd[name];
+                data.data.odds2 = odds
                 data.data.secId = data.data.secId.slice(0,-1)
             }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
-                // console.log(thatMarket, 4545454)
                 let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
                 let name
-                // console.log(data)
                 if(data.data.secId.slice(-1) == 2){
                     name = `layPrice${data.data.secId.slice(-1) - 3}`
                     name =  name.slice(0, -2)
@@ -2070,11 +2066,8 @@ io.on('connection', (socket) => {
                     name = name.slice(0, -1)
                     data.data.bettype2 = 'BACK'
                 }
-                // console.log(name)
-                // console.log(name)
-                // console.log(realodd[name], realodd, "realodds")
-                // let odds = realodd[name];
-                // data.data.odds = odds
+                let odds = realodd[name];
+                data.data.odds2 = odds
                 data.data.secId = data.data.secId.slice(0,-1)
             }
             console.log(data ,'++++++==>DATA', multimarketstatus)
