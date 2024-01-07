@@ -61,8 +61,7 @@
       let elements = $('a').each(function(index,ele){
         if($(this).attr('href')){
           if($(this).attr('href').startsWith('/admin')){
-            console.log($(this).attr('href'),findQueryParam($(this).attr('href')))
-            if(findQueryParam($(this).attr('href'))){
+            if($(this).attr('href').includes('?')){
               $(this).attr('href',$(this).attr('href') + '&sessiontoken=' +sessionStorage.getItem('sessiontoken'))
             }else{
               $(this).attr('href',$(this).attr('href') + '?sessiontoken=' +sessionStorage.getItem('sessiontoken'))
