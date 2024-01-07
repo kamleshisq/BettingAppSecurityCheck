@@ -30,17 +30,42 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
 
-  $('a').click(function(e){
-    e.preventDefault();
-    console.log($(this).attr('href'))
-  })
+  // $('a').click(function(e){
+  //   e.preventDefault();
+  //   console.log($(this).attr('href'))
+  // })
   $(document).ready(function(){
-    function appendquerttourl(){
+      function findQueryParam(href) {
 
+      // Get the href attribute value
+      var href = href;
+
+      // Use a regular expression to extract the value of the 'param1' query parameter
+      var param1Value = getQueryParamValue(href, 'param1');
+
+      if (param1Value !== null) {
+        return true
+      } else {
+        return false
+      }
+    }
+
+    function getQueryParamValue(url, param) {
+      // Use a regular expression to match the query parameter and extract its value
+      var regex = new RegExp('[?&]' + param + '=([^&#]*)');
+      var results = regex.exec(url);
+
+      return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+    function appendquerttourl(){
       let elements = $('a').each(function(index,ele){
         if($(this).attr('href')){
           if($(this).attr('href').startsWith('/admin')){
-            $(this).attr('href',$(this).attr('href') + '?sessiontoken=' +sessionStorage.getItem('sessiontoken'))
+            if(findQueryParam($(this).attr('href'))){
+              $(this).attr('href',$(this).attr('href') + '&sessiontoken=' +sessionStorage.getItem('sessiontoken'))
+            }else{
+              $(this).attr('href',$(this).attr('href') + '?sessiontoken=' +sessionStorage.getItem('sessiontoken'))
+            }
           }
         }
   
