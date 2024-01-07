@@ -477,7 +477,6 @@ io.on('connection', (socket) => {
             `
             fetch(fullUrl, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ` + loginData.Token },
                 body:JSON.stringify({sessiontoken:data.sessiontoken})
             }).then(res => res.json())
             .then(json =>{
