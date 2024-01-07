@@ -952,8 +952,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
 
     res.status(200).json({
-        status:'success',
-
+        status:'success'
     })
 
 });
