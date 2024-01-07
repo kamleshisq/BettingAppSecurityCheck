@@ -19,6 +19,7 @@ export const login = async(userName, password)=>{
             sessionStorage.setItem('logintime',Date.now())
             localStorage.setItem('logintimeAdmin', Date.now());
             sessionStorage.setItem('notiCount',JSON.stringify(res.data.data.paymentreqcount))
+            sessionStorage.setItem('sessiontoken',res.data.token)
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
             if(res.data.count){
