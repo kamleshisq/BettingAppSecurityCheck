@@ -2717,7 +2717,7 @@ socket.on('connect', () => {
             formDataObj.OperatorAuthorization = OperatorAuthorization
             delete formDataObj['operator']
 
-            // console.log(formDataObj)
+            console.log(formDataObj)
             let data = {}
             data.data = formDataObj;
             data.LOGINDATA = LOGINDATA
