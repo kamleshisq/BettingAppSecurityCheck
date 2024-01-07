@@ -222,9 +222,9 @@ if(data.data.spoetId == 1){
 // FOR ODDS LIMIT
 if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
     if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.oldOdds * 1) + (0.10) 
+        let OddChake = (data.data.odds * 1) + (0.15) 
         // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
-        if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
+        if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
             return 'Odds out of range back'
         }
 
@@ -232,8 +232,8 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
             return 'Odds out of range'
         }
     }else{
-        let OddChake = (data.data.oldOdds * 1) - (0.10)  
-        if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
+        let OddChake = (data.data.odds * 1) - (0.15)  
+        if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
             return 'Odds out of range'
         }
     }
@@ -241,19 +241,19 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 
 if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
     if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.oldOdds * 1) + (10) 
-        if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
+        let OddChake = (data.data.oldOdds * 1) + (15) 
+        if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
             return 'Odds out of range back'
         }
     }else{
-        let OddChake = (data.data.oldOdds * 1) - (10)  
-        if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
+        let OddChake = (data.data.oldOdds * 1) - (15)  
+        if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
             return 'Odds out of range'
         }
     }
 }
 
-
+data.data.odds = data.data.odds2
 
 // // FOR LAY BACK DIFF
 
