@@ -129,7 +129,7 @@
                               <%}%>
                               <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
                               <button class="min-max-modal BookList" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Book</button>
-                              <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.winner.marketId%>">Bets</button>
+                              <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.winner.marketId%>&sessiontoken=<%=sessiontoken%>">Bets</button>
                           </div>
                           </div>
                           <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.winner.marketId%>">Bets</button></div> -->
@@ -213,7 +213,7 @@
                             <!-- <button class="min-max-modal Suspend-Resume" id="<%=match.marketList.bookmaker[0].marketId%>" >Suspend</button> -->
                             <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
                             <button class="min-max-modal BookList" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Book</button>
-                            <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button>
+                            <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>&sessiontoken=<%=sessiontoken%>">Bets</button>
                         </div>
                         <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div> -->
                     </div>
