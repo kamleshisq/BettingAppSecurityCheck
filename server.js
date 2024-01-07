@@ -477,6 +477,9 @@ io.on('connection', (socket) => {
             `
             fetch(fullUrl, {
                 method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json' },
                 body:JSON.stringify({'sessiontoken':data.sessiontoken,'userId':data.id})
             }).then(res => console.log(res.json(),'response'))
             // .then(json =>{
