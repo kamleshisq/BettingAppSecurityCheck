@@ -5754,7 +5754,7 @@ socket.on('connect', () => {
             }
         })
 
-        $(".logout").click(function(){
+        $(document).on('click',".logout",function(){
             let id = $(this).attr("id")
             // console.log(id,'frontend id')
             let sessiontoken = sessionStorage.getItem('sessiontoken')
