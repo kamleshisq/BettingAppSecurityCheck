@@ -8371,7 +8371,7 @@ io.on('connection', (socket) => {
                         status: "OPEN",
                         userName:userData.userName,
                         marketName: {
-                            $regex: /^(match|book|winn)/i
+                            $regex: /^(match|book|winn|toss)/i
                         }
                         
                     }
