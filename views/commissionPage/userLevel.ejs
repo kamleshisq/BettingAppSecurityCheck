@@ -23,7 +23,7 @@
       <tbody class="new-body" id="userLevel-tbody">
         <%if(userWiseData.length > 0){%>
         <%for(let i = 0; i < userWiseData.length; i++){%>
-            <tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=<%=userWiseData[i]._id%>">
+            <tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=<%=userWiseData[i]._id%>&sessiontoken=<%=sessiontoken%>">
                 <td><%=userWiseData[i]._id%></td>
                 <td><%=(userWiseData[i].totalCommission).toFixed(2)%></td>
                 <td><%=(userWiseData[i].totalUPline).toFixed(2)%></td>

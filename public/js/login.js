@@ -13,12 +13,13 @@ export const login = async(userName, password)=>{
         });
         if(res.data.status === 'success'){
             notificationsss({message:'Logged in successfully!!!!', status:"success"});
-            sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
-            sessionStorage.setItem('token',JSON.stringify(res.data.token));
-            sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
+            sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.user));
+            // sessionStorage.setItem('token',JSON.stringify(res.data.token));
+            // sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
             sessionStorage.setItem('logintime',Date.now())
             localStorage.setItem('logintimeAdmin', Date.now());
-            sessionStorage.setItem('notiCount',JSON.stringify(res.data.data.paymentreqcount))
+            // sessionStorage.setItem('notiCount',JSON.stringify(res.data.data.paymentreqcount))
+            sessionStorage.setItem('sessiontoken',res.data.token)
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
             if(res.data.count){
@@ -27,7 +28,7 @@ export const login = async(userName, password)=>{
                 }, 100)
             }else{
                 window.setTimeout(()=>{
-                    location.assign('/admin/dashboard')
+                    location.assign(`/admin/dashboard?sessiontoken=${sessionStorage.getItem('sessiontoken')}`)
                 }, 100)
             }
         }

@@ -9,6 +9,9 @@ const Role = require("../model/roleModel");
 const paymentReportModel = require('../model/paymentreport')
 const userWithReq = require('../model/withdrowReqModel');
 const whiteLabelMOdel = require('../model/whitelableModel');
+const bycrypt = require('bcrypt');
+const logindatauser = require('../model/loginuserdata')
+
 // const sessionStorage = require('sessionstorage-for-nodejs');
 const axios = require('axios')
 
@@ -236,43 +239,7 @@ exports.login = catchAsync (async(req, res, next) => {
     }else{
         const user = await User.findOne({userName}).select('+password');
         let whiteLabel = process.env.whiteLabelName
-        console.log(req.originalUrl,'req.originalUrl')
-        console.log(user,'user')
-        // if(req.originalUrl.startsWith('/adminlogin')){
-        //     if(user.roleName != 'Admin'){
-        //         res.status(404).json({
-        //             status:'error',
-        //             message:"not a valid user login"
-        //         })
-        //     }
-        // }else if(req.originalUrl.startsWith('/sdmlogin')){
-        //     if(user.roleName != 'Super-Duper-Admin'){
-        //         res.status(404).json({
-        //             status:'error',
-        //             message:"not a valid user login"
-        //         })
-        //     }            
-        // }else if(req.originalUrl.startsWith('/smlogin')){
-        //     if(user.roleName != 'Super-Admin'){
-        //         res.status(404).json({
-        //             status:'error',
-        //             message:"not a valid user login"
-        //         })
-        //     }        
-        // }else if(req.originalUrl.startsWith('/dmlogin')){
-        //     if(user.roleName != 'Duper-Admin'){
-        //         res.status(404).json({
-        //             status:'error',
-        //             message:"not a valid user login"
-        //         })
-        //     }
-        // }else if(req.originalUrl.startsWith('/agentlogin')){
-        //     if(user.roleName != 'AGENT'){
-        //         res.status(404).json({
-        //             status:'error',
-        //             message:"not a valid user login"
-        //         })
-        //     }
+        
         if(user.whiteLabel != whiteLabel && user.role_type !== 1){
             res.status(404).json({
                 status:'error',
@@ -297,7 +264,33 @@ exports.login = catchAsync (async(req, res, next) => {
         }
         else{
             await User.findOneAndUpdate({_id:user._id}, {is_Online:true});
-            createSendToken(user, 200, res, req);
+            // createSendToken(user, 200, res, req);
+            function randomString(length, chars) {
+                var result = '';
+                for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+                return result;
+            }
+            var token = randomString(10, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'); 
+            token += Date.now().toString()
+            token = await bycrypt.hash(token, 12)
+            console.log(token,'token')
+            let time = Date.now()
+            await loginLogs.create({user_id:user._id,
+                                    userName:user.userName, 
+                                    role_Type:user.role_type,
+                                    login_time:time, 
+                                    isOnline: true, 
+                                    ip_address:global.ip, 
+                                    session_id:token, 
+                                    device_info:req.headers['user-agent']})
+            global._loggedInToken.push({token:token,time:time})
+            await logindatauser.create({userId:user._id,date:time,token})
+            res.status(200).json({
+                status:'success',
+                token,
+                user
+            })
+
         }
     }
 })
@@ -322,24 +315,6 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 })
 
 exports.isProtected = catchAsync( async (req, res, next) => {
-    let jwtnam;
-    let redirecturl;
-    // if(req.originalUrl.startsWith('/adminlogin')){
-    //     jwtnam = 'ADMIN_JWT'
-    //     redirecturl = '/adminlogin'
-    // }else if(req.originalUrl.startsWith('/sdmlogin')){
-    //     jwtnam = 'SDM_JWT'
-    //     redirecturl = '/sdmlogin'
-    // }else if(req.originalUrl.startsWith('/smlogin')){
-    //     jwtnam = 'SM_JWT'
-    //     redirecturl = '/smlogin'
-    // }else if(req.originalUrl.startsWith('/dmlogin')){
-    //     jwtnam = 'DM_JWT'
-    //     redirecturl = '/dmlogin'
-    // }else if(req.originalUrl.startsWith('/agentlogin')){
-    //     jwtnam = 'AGENT_JWT'
-    //     redirecturl = '/agentlogin'
-    // }
     let token 
     let loginData = {}
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -349,33 +324,44 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         res.locals.B2C_Status = false
     }
     // console.log('isProtectedisProtectedisProtectedisProtected')
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        token = req.headers.authorization.split(' ')[1].split("=")[1];
-        if(!token){
-            token = req.headers.authorization.split(' ')[1]
-        }
-        if(!token){
-            token = req.headers.authorization.split('  ')[1].split("=")[1];
-        }
-    }else if(req.headers.cookie){
-        token = parseCookies(req.headers.cookie).ADMIN_JWT;
-        if(req.headers.cookie){
-            loginData.Token = req.headers.cookie.split(';')[0]
-            if(!loginData.Token.startsWith('ADMIN_JWT')){
-                loginData.Token = req.headers.cookie.split(';')[1]
-            }
-        }else{
-            loginData.Token = ""
-        }
+    // if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+    //     token = req.headers.authorization.split(' ')[1].split("=")[1];
+    //     if(!token){
+    //         token = req.headers.authorization.split(' ')[1]
+    //     }
+    //     if(!token){
+    //         token = req.headers.authorization.split('  ')[1].split("=")[1];
+    //     }
+    // }else if(req.headers.cookie){
+    //     token = parseCookies(req.headers.cookie).ADMIN_JWT;
+    //     if(req.headers.cookie){
+    //         loginData.Token = req.headers.cookie.split(';')[0]
+    //         if(!loginData.Token.startsWith('ADMIN_JWT')){
+    //             loginData.Token = req.headers.cookie.split(';')[1]
+    //         }
+    //     }else{
+    //         loginData.Token = ""
+    //     }
         
         
+    // }
+
+    if(req.method == 'GET'){
+        token = req.query.sessiontoken
+    }else if(req.method == 'POST'){
+        token = req.body.sessiontoken
+        delete req.body['sessiontoken']
     }
+
+
+    console.log(token,'==>token')
     if(!token){
         // console.log('WORKING1')
         req.app.set('token', null);
         req.app.set('User', null);
         return res.redirect('/adminlogin')
     }
+    loginData.Token = token
     const tokenId = await loginLogs.findOne({session_id:token})
     if( tokenId &&!tokenId.isOnline){
         // console.log('working12121')
@@ -383,8 +369,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
         return res.redirect('/adminlogin')
     }
-    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
-    const currentUser = await User.findById(decoded.A);
+
+
+    const decoded = await logindatauser.findOne({token});
+    const currentUser = await User.findById(decoded.userId);
     if(!currentUser){
         req.app.set('token', null);
         req.app.set('User', null);
@@ -426,6 +414,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     res.locals.loginData = loginData
     res.locals.paymentreqcount = paymentreqcount
     res.locals.WithdrawReqCount = WithdrawReqCount
+    res.locals.sessiontoken = token
     req.currentUser = currentUser
     req.token = token
     req.app.set('token', token);
@@ -944,7 +933,6 @@ exports.logOutAllUser = catchAsync(async(req, res, next) => {
 
 exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     // console.log(req.query)
-    req.body = req.query
     const user = await User.findOne({_id:req.body.userId,is_Online:true});
     // console.log(user,'==>user')
 
@@ -965,8 +953,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
 
     res.status(200).json({
-        status:'success',
-
+        status:'success'
     })
 
 });

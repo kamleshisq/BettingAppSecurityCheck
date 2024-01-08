@@ -24,7 +24,7 @@ socket.on('connect', () => {
         //     for (let i = 0; i < styleSheets.length; i++) {
         //       const styleSheet = styleSheets[i];
         //       if (styleSheet.href) {
-        //         if(styleSheet.href == "http://ollscores.com/assets/css/style.css" || styleSheet.href == "http://ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://ollscores.com/assets/css/media.css"){
+        //         if(styleSheet.href == "http://dev.ollscores.com/assets/css/style.css" || styleSheet.href == "http://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://dev.ollscores.com/assets/css/media.css"){
 
         //             // console.log('Processing stylesheet:', styleSheet.href, data);
         //             try {
@@ -93,7 +93,7 @@ socket.on('connect', () => {
         // }
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //dev.ollscores.com dev.ollscores.com http://ollscores.com/admin/userManagement http://ollscores.com  http: 
+        //dev.ollscores.com dev.ollscores.com http://dev.ollscores.com/admin/userManagement http://dev.ollscores.com  http: 
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
@@ -1676,7 +1676,8 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             // var id = row.id;
             var dataId = row.getAttribute("data-id");
-            window.location.href = `/admin/userdetails?id=${dataId}`
+            window.location.href = `/admin/userdetails?id=${dataId}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
+            `
         })
 
         function downloadCSV(csvContent, fileName) {
@@ -2317,7 +2318,7 @@ socket.on('connect', () => {
                         }
 
                         if(response[i].roleName != 'user'){
-                            html+= `<a href='/admin/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
+                            html+= `<a href='/admin/userManagement?id=${response[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}'>${response[i].userName}</a>`
                         }else{
                             html+= `${response[i].userName}`
                         }
@@ -2717,7 +2718,7 @@ socket.on('connect', () => {
             formDataObj.OperatorAuthorization = OperatorAuthorization
             delete formDataObj['operator']
 
-            // console.log(formDataObj)
+            console.log(formDataObj)
             let data = {}
             data.data = formDataObj;
             data.LOGINDATA = LOGINDATA
@@ -3395,17 +3396,23 @@ socket.on('connect', () => {
                 }else{
                     html += `<td>-</td>`
                 }
-
                 if(data.selectionName){
-                    html += `<td>${data.selectionName}</td>`
+                    if(data.selectionName.includes('@')){
+                        let odds2 = data.selectionName.split('@')[1]
+                        let selectionName2 = data.selectionName.split('@')[0]
+                        html += `<td>${selectionName2}@${data.oddValue}</td>`
+                        html += `<td>${odds2}</td>`
+                    }else{
+                        html += `<td>${data.selectionName}</td>`
+                        html += `<td>${data.oddValue}</td>`
+                    }
                 }else{
                     html += `<td>-</td>`
-                }
-                if(data.oddValue){
-                    html += `<td>${data.oddValue}</td>`
-                }else{
                     html += `<td>-</td>`
                 }
+                // if(data.oddValue){
+                // }else{
+                // }
 
                 html += `
                 <td>${data.Stake}</td>
@@ -4029,8 +4036,10 @@ socket.on('connect', () => {
                 }else{
                     data.Tdate = Tdate
                 }                 
-                
+                data.sessiontoken = sessionStorage.getItem('sessiontoken')
+
                 data.LOGINDATA = LOGINDATA
+
             }
             socket.emit('AccountScroll1',data)        
         })
@@ -4061,6 +4070,8 @@ socket.on('connect', () => {
                     data.Tdate = Tdate
                 }                
                 data.LOGINDATA = LOGINDATA
+                data.sessiontoken = sessionStorage.getItem('sessiontoken')
+
            }
         //    console.log(data)
             
@@ -4896,6 +4907,7 @@ socket.on('connect', () => {
         }
 
         socket.on('userPLDetail',(data)=>{
+            console.log(data,'data')
             let page = data.page;
             let games = data.games;
             let html = '';
@@ -5378,7 +5390,7 @@ socket.on('connect', () => {
                 }
                   html += `<td>${count + i}</td>
                   <td>${formattedTime}</td>
-                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&market=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
+                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&market=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].won}</td>
                   <td>${games[i].loss}</td>
@@ -5578,7 +5590,7 @@ socket.on('connect', () => {
                   html += `<tr style="text-align: center;" class="blue"  style="cursor: pointer;">`
                 }
                   html += ` 
-                  <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
+                  <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
                   <td>${games[i].won}</td>
@@ -5674,7 +5686,7 @@ socket.on('connect', () => {
                 }
                   html += `<td>${count + i}</td>
                   <td>${formattedTime}</td>
-                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
+                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
                   <td>${games[i].won}</td>
@@ -5747,17 +5759,19 @@ socket.on('connect', () => {
             }
         })
 
-        $(".logout").click(function(){
+        $(document).on('click',".logout",function(){
             let id = $(this).attr("id")
             // console.log(id,'frontend id')
-            socket.emit("SelectLogoutUserId", id)
+            let sessiontoken = sessionStorage.getItem('sessiontoken')
+
+            socket.emit("SelectLogoutUserId", {id,sessiontoken})
         })
 
         socket.on("SelectLogoutUserId", (data) => {
             // console.log(data)
             alert("User Logout")
                 window.setTimeout(()=>{
-                    window.location = '/admin/onlineUsers '
+                    window.location.reload(true)
                 },500)
         });
 
@@ -7045,6 +7059,7 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            data.sessiontoken = sessionStorage.getItem('sessiontoken')
             // console.log(LOGINDATA)
             socket.emit("createNotification", {data, LOGINDATA})
         })
@@ -7054,7 +7069,7 @@ socket.on('connect', () => {
                 alert(data.message)
             }else{
                 alert("Notification added successfully")
-                window.location.href = '/admin/Notification'
+                window.location.reload(true)
             }
         })
 
@@ -7068,7 +7083,8 @@ socket.on('connect', () => {
         $(document).on('click', '.delete', async function(){
             let id = $(this).attr('id')
             if(confirm('do you want to delte this notification')){
-                socket.emit('deleteNotification', {id, LOGINDATA})
+                socket.emit('deleteNotification', {id, LOGINDATA,sessiontoken:sessionStorage.getItem('sessiontoken')
+            })
             }
         })
 
@@ -7092,7 +7108,7 @@ socket.on('connect', () => {
             if(data.status === 'success'){
                 alert("Deleted successfully")
                 window.setTimeout(()=>{
-                    window.location = '/admin/Notification'
+                    window.location.reload(true)
                 },500)
             }else{
                 alert(data.message)
@@ -9846,26 +9862,11 @@ socket.on('connect', () => {
             console.log(specificSpan, data.odds, "data.oddsdata.oddsdata.odds")
             if(specificSpan == data.odds){
                 if(data.stake === "" || data.stake == 0){
-                    // alert("Please select stake")
                     togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                 }else{
                     if(data.odds != '\n                        \n                      '){
-                        // alert('132456')
-                        // if(checkTime){
-                        //     if(checkTime < Date.now()){
-                        //         // console.log('WORKING')
-                        //         togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
-                        //     }else{
-                        //         // console.log(data)
-                        //             showLoader();
-                        //             socket.emit("betDetails", {data, LOGINDATA})
-                        //     }
-                        // }else{
-                        //     // console.log(data)
-                        // }
                         showLoader();
                         socket.emit("betDetails", {data, LOGINDATA})
-                        // console.log(data)
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
                     }
@@ -9875,22 +9876,9 @@ socket.on('connect', () => {
                     data.oldOdds = data.odds
                     data.odds = specificSpan
                     if(data.stake === ""){
-                        // alert("Please select stake")
                         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                     }else{
                         if(data.odds != '\n                        \n                      '){
-                            // alert('132456')
-                            // if(checkTime){
-                            //     if(checkTime < Date.now()){
-                            //         togglePopupMain("popup-2", "redPopUP2", "Odds out of range")
-                            //     }else{
-                            //         // console.log(data)
-                            //         showLoader();
-                            //         socket.emit("betDetails", {data, LOGINDATA})
-                            //     }
-                            // }else{
-                            //     // console.log(data)
-                            // }
                             showLoader();
                             socket.emit("betDetails", {data, LOGINDATA})
                         }else{
@@ -9898,7 +9886,10 @@ socket.on('connect', () => {
                         }
                     }
                 }else{
-                    togglePopupMain('popup-2', "redPopUP2", "Odds out of range")
+                    // togglePopupMain('popup-2', "redPopUP2", "Odds out of range")
+                    // console.log(data, "datadatadatadata")
+                            showLoader();
+                            socket.emit("betDetails", {data, LOGINDATA})
                 }
             }
             });
@@ -14479,7 +14470,7 @@ socket.on('connect', () => {
               };
               var formattedTime = date.toLocaleString('en-US', options);
 
-              html += `<tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=${data.eventData[i]._id.id}">
+              html += `<tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=${data.eventData[i]._id.id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}              ">
               <td>${formattedTime}</td>
               <td>${data.eventData[i]._id.eventName}</td>
               <td>${data.eventData[i].totalCommission}</td>
@@ -14665,7 +14656,8 @@ socket.on('connect', () => {
 
             let html = ''
             for(let i = 0; i < data.userWiseData.length; i++){
-                html += `<tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=${data.userWiseData[i]._id}">
+                html += `<tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=${data.userWiseData[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
+                ">
                 <td>${data.userWiseData[i]._id}</td>
                 <td>${(data.userWiseData[i].totalCommission).toFixed(2)}</td>
                 <td>${(data.userWiseData[i].totalUPline).toFixed(2)}</td>
@@ -15204,7 +15196,14 @@ socket.on('connect', () => {
 
         $(document).on("click", ".loadMoredive", function(e){
             e.preventDefault()
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;
+            }
+
+            let id = paramsObject.id
             let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#FdateBet').val()
@@ -15233,14 +15232,22 @@ socket.on('connect', () => {
             filterData.type = type
             page = 0
             $('.pageId').attr('data-pageid', 1)
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;
+            }
+
+            let id = paramsObject.id
+
             // console.log(filterData)
             socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
           }
 
           let count = 11
           socket.on("BETSFORUSERAdminSide", async(data) => {
-            // console.log(data)
+            console.log(data)
             if(data.bets.length > 0){
                 // console.log(data.page)
                 if(data.page === 0){
@@ -15301,8 +15308,9 @@ socket.on('connect', () => {
                
             }else{
                 // console.log("working")
+                let html;
                 if(data.page == 0){
-                    if(bets.length == 0){
+                    if(data.bets.length == 0){
                         html += `<tr class="empty_table">
                         <td>No record found</td>
                       </tr>`
@@ -15426,7 +15434,12 @@ socket.on('connect', () => {
             filterData.fromDate = fromDate,
             filterData.toDate = toDate
             filterData.type = type
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;}
+            let id = paramsObject.id
             socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
         })
 
@@ -15446,7 +15459,13 @@ socket.on('connect', () => {
             filterData.type = type
             page = 0
             $('.pageIdACC').attr('data-pageid',1)
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;}
+            let id = paramsObject.id
+
             socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
           }
 
@@ -15529,7 +15548,12 @@ socket.on('connect', () => {
             // console.log("Working")
             let page = parseInt($('.pageIdHistory').attr('data-pageid'));
             $('.pageIdHistory').attr('data-pageid',page + 1)
-            let id = search.split("=")[1]
+            const queryString = window.location.search;
+            const queryParams = new URLSearchParams(queryString);
+            const paramsObject = {};
+            for (const [key, value] of queryParams) {
+            paramsObject[key] = value;}
+            let id = paramsObject.id
             socket.emit("loadMorediveHistory", {page, id})
         })
 
@@ -15582,6 +15606,7 @@ socket.on('connect', () => {
                 }
 
             }else{
+                let html;
                 if(data.page){
                     html += `<tr class="empty_table">
                     <td>No record found</td>
@@ -15681,7 +15706,8 @@ socket.on('connect', () => {
                       <td>${betsEventWiseData[i].matchName}</td>
                       <td>${betsEventWiseData[i].count}</td>
                       <td>${betsEventWiseData[i].count2}</td>
-                      <td><a href="/admin/settlementIn?id=${betsEventWiseData[i].eventid}" class="btn-green">settle</a></td>
+                      <td><a href="/admin/settlementIn?id=${betsEventWiseData[i].eventid}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
+                      " class="btn-green">settle</a></td>
                     </tr>`
                     }
                     $('#cricket-tbody').html(htmlC)
@@ -16818,13 +16844,44 @@ socket.on('connect', () => {
 
 
         socket.on('checkAdminSideOdds', data => {
-            console.log(data)
             for(let i = 0; i < data.Bets.length; i++){
                 let thatMarketRunner = data.runners.find(item => item.marketId === data.Bets[i]._id)
-                // console.log(thatMarketRunner)
                 if(thatMarketRunner){
                     let runners = JSON.parse(thatMarketRunner.runners)
-                    console.log(runners)
+                    for(let j = 0; j < runners.length; j++){
+                        let data2 = 0
+                        let data3 = 0
+                        let tahtMarketRealData = data.Bets[i].selections.find(item => item.selectionName === runners[j].runner)
+                        console.log(tahtMarketRealData, "tahtMarketRealDatatahtMarketRealDatatahtMarketRealData")
+                        if(tahtMarketRealData){
+                            data2 = tahtMarketRealData.winAmount
+                            data3 = tahtMarketRealData.winAmount2
+                        }else{
+                            data.Bets[i].selections.forEach(item => {
+                                data2 += -item.exposure
+                                data3 += -item.exposure2
+                            })
+                        }
+                        let html=''
+                        let html2=''
+                        if(data2 > 0){
+                            html = `<td class='green'>${data2.toFixed(2)}</td>`
+                            html2 = `<td class='green'>${data3.toFixed(2)}</td>`
+                        }else{
+                            html = `<td class='red'>${data2.toFixed(2)}</td>`
+                            html2 = `<td class='red'>${data3.toFixed(2)}</td>`
+                        }
+                        console.log($(`#${runners.secId}1`))
+                        if($(`#${runners[j].secId}1`).closest('tr').find('td').length === 2){
+                            if($(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th").length === 2){
+                                $(`#${runners[j].secId}1`).closest('table').find('tr:first').find("th:first").after('<th>Total Book</th><th>My Share</th>')
+                            }
+                            $(`#${runners[j].secId}1`).closest('tr').find("td:first").after(html2 + html);
+                        }else{
+                            $(`#${runners[j].secId}1`).closest('tr').find("td").eq(1).replaceWith(html2);
+                            $(`#${runners[j].secId}1`).closest('tr').find("td").eq(2).replaceWith(html);
+                        }
+                    }
                 }
             }
         })
@@ -18107,6 +18164,7 @@ socket.on('connect', () => {
                                     }else{
                                         let amount = 0
                                         for(const select in data.Bets[i].Bets[0].selections){
+                                            console.log(data.Bets[i].Bets[0].selections[select].exposure, "data.Bets[i].Bets[0].selections[select].exposure")
                                             amount += -(data.Bets[i].Bets[0].selections[select].exposure)
                                         }
                                         winAmountForThatRUn = amount

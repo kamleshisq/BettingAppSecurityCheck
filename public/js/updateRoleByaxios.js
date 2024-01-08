@@ -11,7 +11,7 @@ export const updateRole = async(data)=>{
         if(res.data.status === 'success'){
             alert('Updated successfully successfully!!!!');
             window.setTimeout(()=>{
-                location.assign('/admin/roleManagement')
+                location.reload(true)
             }, 100)
         }
 

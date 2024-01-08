@@ -159,11 +159,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?id=${id}&sessiontoken=${req.query.sessiontoken}`,
                 name:'user'
             },
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle?sessiontoken=${req.query.sessiontoken}`,
                 name:'role'
             }
         ]
@@ -171,11 +171,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/users/getOwnChild?sessiontoken=${req.query.sessiontoken}`,
                 name:'user'
             },
             {
-                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1:${process.env.port}/api/v1/role/getAuthROle?sessiontoken=${req.query.sessiontoken}`,
                 name:'role'
             }
         ]
@@ -195,7 +195,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
               if (error) {
                 reject(error);
               } else {
-                //   console.log(body)
+                //   console.log(body,'body')
                 resolve(JSON.parse(body));
               }
             }
@@ -429,7 +429,7 @@ exports.getUpdateRolePage = catchAsync(async(req, res, next) => {
 });
 
 exports.dashboard = catchAsync(async(req, res, nex) => {
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/deshBoard/getDeshboardUserManagement'
+    var fullUrl = req.protocol + '://' + req.get('host') + `/api/v1/deshBoard/getDeshboardUserManagement?sessiontoken=${req.query.sessiontoken}`
     let me;
     const currentUser = req.currentUser
     if(currentUser.role.roleName === 'Operator'){
@@ -1221,9 +1221,10 @@ exports.adminaccount = catchAsync(async(req, res, next) => {
     }else{
         operatorId = req.currentUser._id
     }
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement1?id=' + operatorId 
+    var fullUrl = req.protocol + '://' + req.get('host') + `/api/v1/Account/getUserAccStatement1?id=${operatorId}&sessiontoken=${req.query.sessiontoken}
+    ` 
     fetch(fullUrl, {
-        method: 'POST',
+        method: 'GET',
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json())
     .then(json =>{ 
@@ -1895,7 +1896,8 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let notifications
-    var fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/myNotifications`
+    var fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/notification/myNotifications?sessiontoken=${req.query.sessiontoken}
+    `
     await fetch(fullUrl, {
         method:"GET",
         headers: {
@@ -2317,8 +2319,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://ollscores.com/",
-            "Referer":"http://ollscores.com/"},
+            "Origin":"http://dev.ollscores.com/",
+            "Referer":"http://dev.ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -5311,8 +5313,8 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
    let limit = 10
 
    
-
-    if(Object.keys(req.query).length == 0){
+console.log(req.query.id)
+    if(!req.query.id){
         me = req.currentUser
     }else{
         me = await User.findById(req.query.id)
