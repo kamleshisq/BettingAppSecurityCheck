@@ -1504,11 +1504,20 @@ socket.on('connect', () => {
                 let trID = $(this).data('id')
                 let thatDATA = data.find(item => item.id === trID)
                 if(thatDATA){
-                    if(thatDATA.totalExposure === -0){
-                        $(this).find('td:eq(9)').text(0)
+                    if(LOGINDATA.LOGINUSER.roleName == "Admin"){
+                        if(thatDATA.totalExposure === -0){
+                            $(this).find('td:eq(9)').text(0)
+                        }else{
+                            $(this).find('td:eq(9)').text(thatDATA.totalExposure)
+    
+                        }
                     }else{
-                        $(this).find('td:eq(9)').text(thatDATA.totalExposure)
-
+                        if(thatDATA.totalExposure === -0){
+                            $(this).find('td:eq(8)').text(0)
+                        }else{
+                            $(this).find('td:eq(8)').text(thatDATA.totalExposure)
+    
+                        }
                     }
                 }
               });
