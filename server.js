@@ -10650,9 +10650,10 @@ io.on('connection', (socket) => {
             let me
             let currentUser = data.data.LOGINUSER
             let query = data.data.query
+            // console.log()
             let limit = 10
             let page = data.data.page
-            if(Object.keys(query).length == 0){
+            if(Object.keys(query).length == 1){
                 me = currentUser
             }else{
                 me = await User.findById(query.id)
