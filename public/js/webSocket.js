@@ -5587,7 +5587,7 @@ socket.on('connect', () => {
                 }
                   html += ` 
                   <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
-                  " data-parent="${games[i]._id}">${games[i]._id}</td>
+                  "data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
                   <td>${games[i].won}</td>
