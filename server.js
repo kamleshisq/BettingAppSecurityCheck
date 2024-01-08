@@ -3003,114 +3003,117 @@ io.on('connection', (socket) => {
 
     socket.on("FIlterDashBoard", async(data) => {
         // console.log('WORKING')
-        let filter;
-        let filter2;
-        let result = {}
-        if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
-            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
-            data.LOGINDATA.LOGINUSER = parentUser
-        }
-        let childrenUsername = []
-        childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
-        var today = new Date();
-        var todayFormatted = formatDate(today);
-        var tomorrow = new Date();
-        tomorrow.setDate(today.getDate() - 1);
-        var tomorrowFormatted = formatDate(tomorrow);
-        var thirdDay = new Date();
-        thirdDay.setDate(today.getDate() - 2);
-        var thirdDayFormatted = formatDate(thirdDay);
-        function formatDate(date) {
-            var year = date.getFullYear();
-            var month = (date.getMonth() + 1).toString().padStart(2, '0');
-            var day = date.getDate().toString().padStart(2, '0');
-            return year + "-" + month + "-" + day;
-        }
-        if (data.value === "today") {
-            filter = {
-                $or:[{login_time: {$gte:new Date(todayFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time: {$exists:false}}],
-                userName:{$in:childrenUsername}
-                
-            };
-            filter2 = {$gte:new Date(todayFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
-        } else if (data.value === "yesterday") {
-            filter = {
-                $or:[{login_time: {$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                userName:{$in:childrenUsername}
-                
-            };
-            filter2 = {$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}
-
-        } else if (data.value === "all") {
-            filter = {
-                userName:{$in:childrenUsername}
-            };
-            filter2 = {$exists:true}
-
-        } else {
-            filter = {
-                $or:[{login_time: {$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time:{$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                userName:{$in:childrenUsername}
-            };
-            filter2 = {$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}
-
-        }
-        filter.role_Type = 5
-        const userCount = await loginLogs.aggregate([
-            {
-                $match:filter
-            },
-            {
-                $group: {
-                    _id: '$userName'
-                }
+        if(data.LOGINDATA.LOGINUSER){
+            let filter;
+            let filter2;
+            let result = {}
+            if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
+                let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+                data.LOGINDATA.LOGINUSER = parentUser
             }
-        ])
-
-       
-        result.userCount = userCount.length > 0?userCount.length : 0;
-
-        filter.role_Type = {$ne:5}
-        const adminCount = await loginLogs.aggregate([
-            {
-                $match:filter
-            },
-            {
-                $group: {
-                    _id: '$userName'
-                }
+            let childrenUsername = []
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            var today = new Date();
+            var todayFormatted = formatDate(today);
+            var tomorrow = new Date();
+            tomorrow.setDate(today.getDate() - 1);
+            var tomorrowFormatted = formatDate(tomorrow);
+            var thirdDay = new Date();
+            thirdDay.setDate(today.getDate() - 2);
+            var thirdDayFormatted = formatDate(thirdDay);
+            function formatDate(date) {
+                var year = date.getFullYear();
+                var month = (date.getMonth() + 1).toString().padStart(2, '0');
+                var day = date.getDate().toString().padStart(2, '0');
+                return year + "-" + month + "-" + day;
             }
-        ])
-
-      
-        result.adminCount = adminCount.length > 0?adminCount.length : 0;
-
-        let turnOver = await AccModel.aggregate([
-            {
-                $match:{
-                    userName:data.LOGINDATA.LOGINUSER.userName,
-                    date:filter2
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    totalAmount: { $sum: { $abs: "$creditDebitamount" } },
-                    Income : {$sum: '$creditDebitamount'},
-                }
+            if (data.value === "today") {
+                filter = {
+                    $or:[{login_time: {$gte:new Date(todayFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time: {$exists:false}}],
+                    userName:{$in:childrenUsername}
+                    
+                };
+                filter2 = {$gte:new Date(todayFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+            } else if (data.value === "yesterday") {
+                filter = {
+                    $or:[{login_time: {$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                    userName:{$in:childrenUsername}
+                    
+                };
+                filter2 = {$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}
+    
+            } else if (data.value === "all") {
+                filter = {
+                    userName:{$in:childrenUsername}
+                };
+                filter2 = {$exists:true}
+    
+            } else {
+                filter = {
+                    $or:[{login_time: {$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time:{$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                    userName:{$in:childrenUsername}
+                };
+                filter2 = {$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+    
             }
-        ])
-        if(turnOver.length > 0){
-            result.turnOver = turnOver[0].totalAmount
-            result.Income = turnOver[0].Income
-        }else{
-            result.turnOver = 0
-            result.Income = 0
+            filter.role_Type = 5
+            const userCount = await loginLogs.aggregate([
+                {
+                    $match:filter
+                },
+                {
+                    $group: {
+                        _id: '$userName'
+                    }
+                }
+            ])
+    
+           
+            result.userCount = userCount.length > 0?userCount.length : 0;
+    
+            filter.role_Type = {$ne:5}
+            const adminCount = await loginLogs.aggregate([
+                {
+                    $match:filter
+                },
+                {
+                    $group: {
+                        _id: '$userName'
+                    }
+                }
+            ])
+    
+          
+            result.adminCount = adminCount.length > 0?adminCount.length : 0;
+    
+            let turnOver = await AccModel.aggregate([
+                {
+                    $match:{
+                        userName:data.LOGINDATA.LOGINUSER.userName,
+                        date:filter2
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        totalAmount: { $sum: { $abs: "$creditDebitamount" } },
+                        Income : {$sum: '$creditDebitamount'},
+                    }
+                }
+            ])
+            if(turnOver.length > 0){
+                result.turnOver = turnOver[0].totalAmount
+                result.Income = turnOver[0].Income
+            }else{
+                result.turnOver = 0
+                result.Income = 0
+            }
+            let  betcount = await Bet.countDocuments({date:filter2,userName : {$in:childrenUsername}})
+            result.betCount = betcount
+            // console.log('WORKING2')
+            socket.emit("FIlterDashBoard", {result})
+
         }
-        let  betcount = await Bet.countDocuments({date:filter2,userName : {$in:childrenUsername}})
-        result.betCount = betcount
-        // console.log('WORKING2')
-        socket.emit("FIlterDashBoard", {result})
 
     })
 
