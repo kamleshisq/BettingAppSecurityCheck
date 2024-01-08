@@ -4282,6 +4282,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('BETONEVENT', async(data) => {
+        console.log(data, "BETONEVENT")
         try{
             if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
                 let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
