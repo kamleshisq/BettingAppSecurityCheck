@@ -2394,6 +2394,12 @@ socket.on('connect', () => {
                     $('#table12 tbody').append(html)
 
                 }
+
+                $(".trtable").each(function() {
+                    ids.push($(this).data('id'));
+                  });
+                  // console.log(ids)
+                  socket.emit("exposureadmin", {ids})
             
                 // html = '';
                 // for(let i=0;i<data.Rows;i++){
