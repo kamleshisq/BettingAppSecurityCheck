@@ -173,6 +173,12 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     // if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
     //     return next(new AppError("You do not have permission to perform this action", 404))
     // }
+
+    if(user_type.role_level === 5){
+        if(req.currentUser.maxLimitForChildUser && req.currentUser.maxLimitForChildUser < req.body.Credit){
+            return next(new AppError(`Your limit for user credit Reference is less then ${req.currentUser.maxLimitForChildUser}`, 404))
+        }
+    }
     if(!req.body.whiteLabel){
         return next(new AppError("please provide a white lable for user", 404))
     }
@@ -202,14 +208,16 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     if(checkUserExist){
         return next(new AppError("Ops, User Name is already exists", 500))
     }
+    if(req.body.Credit != '' && req.currentUser.availableBalance < req.body.Credit){
+        return next(new AppError("Insufficient Credit Limit !"))
+    }
+
+
     const newUser = await User.create(req.body);
     // if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
     //    await settlementModel.create({userId:newUser.id})
     // }
     if(req.body.Credit != ''){
-        if(req.currentUser.availableBalance < req.body.Credit){
-            return next(new AppError("Insufficient Credit Limit !"))
-        }
         newUser.balance = parseFloat(req.body.Credit);
         newUser.availableBalance = parseFloat(req.body.Credit);
         newUser.creditReference = parseFloat(req.body.Credit);
