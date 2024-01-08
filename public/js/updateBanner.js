@@ -15,7 +15,7 @@ export const updateBanner = async(data)=>{
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{
-                location.assign('/admin/cms')
+                location.reload();
             }, 200)
         }
 

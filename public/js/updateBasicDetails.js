@@ -12,7 +12,7 @@ export const updateBasicDetails = async(data)=>{
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{
-                location.assign('/admin/globalSettings')
+                location.reload();
             }, 200)
         }
 

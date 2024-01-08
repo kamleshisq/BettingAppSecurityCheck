@@ -11,7 +11,7 @@ export const createPromotion = async(data)=>{
         if(res.data.status === 'success'){
             alert('Created successfully!!!!');
                 window.setTimeout(()=>{
-                    location.assign('/admin/promotion')
+                    location.reload();
                 }, 100)
         }
 

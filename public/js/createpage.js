@@ -12,7 +12,7 @@ export const createPage = async(data)=>{
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{
-                location.assign('/admin/pageManager')
+                location.reload();
             }, 200)
         }else{
             alert(res.data.message)

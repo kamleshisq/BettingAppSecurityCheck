@@ -11,7 +11,7 @@ export const updatePassword = async(data)=>{
         if(res.data.status === 'success'){
             alert('updated successfully!!!!');
             window.setTimeout(()=>{
-                location.href = '/admin/userManagement'
+                location.reload();
             }, 100)
         }
 
