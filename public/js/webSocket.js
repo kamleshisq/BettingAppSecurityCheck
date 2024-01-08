@@ -15897,7 +15897,7 @@ socket.on('connect', () => {
                 // ids.push(this.id);
                 id = this.id
               });
-
+    
             socket.emit('WINNERMARKET', id)
         }
         winnerMarketOPtion()
@@ -15911,6 +15911,8 @@ socket.on('connect', () => {
         })
             function getinProgressData(){
                 $(document).ready(function() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    let id = urlParams.get('id')
                     socket.emit("getinProgressData", search.split('=')[1])
                     socket.emit('getRefresh', search.split('=')[1])
                   });
@@ -15952,8 +15954,8 @@ socket.on('connect', () => {
                 }
             }
         })
-
-
+    
+    
         socket.on('getRefresh', async(data) => {
             // console.log(data, "datadatdatda")
             if(data.getMapBetData && data.getMapBetData.length > 0){
@@ -15978,9 +15980,9 @@ socket.on('connect', () => {
             }else{
                 $('#mapMarket').html('<tr class="empty_table"><td>No MAPPED Markets! </td></tr>')
             }
-
+    
             if( data.settledeBetData && data.settledeBetData.length > 0){
-
+    
                 var allRowssettle = $('#settle-market-table tbody tr');
                 for (let i = 0; i < data.settledeBetData.length; i++) {
                     var targetId = data.settledeBetData[i]._id.replace(/\./g, '\\.');
@@ -16002,7 +16004,7 @@ socket.on('connect', () => {
             }else{
                 $('#settle-market-table tbody').html('<tr class="empty_table"><td>No SETTLED Markets! </td></tr>')
             }
-
+    
             if(data.cancelledBetData && data.cancelledBetData.length > 0){
                 var allRowsvoid = $('#void-market-table tbody tr');
                 for (let i = 0; i < data.cancelledBetData.length; i++) {
@@ -16025,7 +16027,7 @@ socket.on('connect', () => {
                 $('#void-market-table tbody').html('<tr class="empty_table"><td>No VOIDED Markets! </td></tr>')
             }
         })
-
+    
         $(document).on('click', '.voidBet2', function(e){
             e.preventDefault()
             let id = $(this).closest('tr').attr('id')
@@ -16033,7 +16035,7 @@ socket.on('connect', () => {
             let form = $(modleName).find('.voidbet-form2')
             form.attr('id', id);
         })
-
+    
         $(document).on('click', '.ROLLBACK', function(e){
             e.preventDefault()
             let id = $(this).closest('tr').attr('id')
@@ -16041,7 +16043,7 @@ socket.on('connect', () => {
             let form = $(modleName).find('.rollBack-form')
             form.attr('id', id);
         })
-
+    
         $(document).on('submit', ".voidbet-form2", function(e){
             e.preventDefault();
             let id = this.id
@@ -16051,7 +16053,7 @@ socket.on('connect', () => {
             // console.log(data, id)
             socket.emit("VoidBetIn2", {LOGINDATA, id, data})
         })
-
+    
         socket.on('VoidBetIn2', data => {
             if(data.status === "error"){
                 alert("Please try again later")
@@ -16089,8 +16091,8 @@ socket.on('connect', () => {
                 // window.location.reload()
             }
         })
-
-
+    
+    
         $(document).on('submit', '.rollBack-form', function(e){
             e.preventDefault()
             let id = this.id
@@ -16100,7 +16102,7 @@ socket.on('connect', () => {
             // console.log(data, id)
             socket.emit("ROLLBACKDETAILS", {LOGINDATA, id, data})
         })
-
+    
         socket.on('ROLLBACKDETAILS', data => {
             if(data.status === "error"){
                 alert("Please try again later")
@@ -16187,7 +16189,7 @@ socket.on('connect', () => {
             }
         })
        
-
+    
         $(document).on("click", ".voidBet", function(e){
             e.preventDefault()
             let id =  this.id
@@ -16199,7 +16201,7 @@ socket.on('connect', () => {
             form.attr('id', id);
             // socket.emit("VoidBetIn", {LOGINDATA, id})
         })
-
+    
         $(document).on('submit', ".voidbet-form", function(e){
             e.preventDefault();
             let id = this.id
@@ -16208,7 +16210,7 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             socket.emit("VoidBetIn", {LOGINDATA, id, data})
         })
-
+    
         socket.on("VoidBetIn", async(data) => {
             if(data.status === "error"){
                 if(data.message){
@@ -16256,13 +16258,13 @@ socket.on('connect', () => {
                 }
             }
         })
-
+    
         $(document).on('click', ".Unmap", function(e){
             e.preventDefault()
             let id = $(this).closest('tr').attr('id')
             socket.emit('unmapBet', {LOGINDATA, id})
         })
-
+    
         socket.on('unmapBet', data => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
@@ -16323,7 +16325,7 @@ socket.on('connect', () => {
                         html  += `</select>
                     </td>`
                     }else{
-
+    
                         html += `<td>
                                     <select class="selectOption">
                                     <option value="" selected></option>
@@ -16342,7 +16344,7 @@ socket.on('connect', () => {
                 </td>
                 </tr>
                 </tbody>   `
-
+    
                 if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length === 0){
                     document.getElementById('openmarket').insertAdjacentHTML('beforeend', html);
                 }else{
@@ -16351,7 +16353,7 @@ socket.on('connect', () => {
                 alert('Bet Unmaped Successfully')
             }
         })
-
+    
         $(document).on('click', ".Settle", function(e){
             e.preventDefault()
             let id = $(this).closest('tr').attr('id')
@@ -16359,7 +16361,7 @@ socket.on('connect', () => {
             let result = resultTag.text()
             socket.emit('Settle', {LOGINDATA, id, result})
         })
-
+    
         socket.on('Settle', data => {
             // console.log(data)
             if(data.status === "error"){
@@ -16397,7 +16399,7 @@ socket.on('connect', () => {
                   $('#settle-market-table tbody').find('.empty_table').remove()
                   }
                 }
-
+    
                 // if (row) {
                 //     const rowIndex = Array.from(table.rows).indexOf(row);
                 //     row.remove(); 
@@ -16408,7 +16410,7 @@ socket.on('connect', () => {
                 }
             }
         })
-
+    
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
             let id =  this.id
@@ -16416,7 +16418,7 @@ socket.on('connect', () => {
             let result = newColumnCell.val()
             socket.emit("VoidBetIn22", {LOGINDATA, id, result})
         })
-
+    
         socket.on("VoidBetIn22", async(data) => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
@@ -16470,19 +16472,19 @@ socket.on('connect', () => {
                 alert('Bets Maped Successfully')
             }
         })
-
+    
         $(document).on('click', ".result", function(){
             let id = this.id
             let div = $('#myModalre')
             $(div).find('.payment-method-data').html(`<div class="title">wait for the moment</div>`)
             socket.emit('GETMarketResult', id)
         })
-
+    
         socket.on('GETMarketResult', data => {
             let div = $('#myModalre')
             $(div).find('.payment-method-data').html(`<div class="title">${data.result}</div>`)
         })
-
+    
         // socket.on("Settle", async(data) => {
         //     if(data.status === "error"){
         //         alert(data.message.toUpperCase())
