@@ -4907,6 +4907,7 @@ socket.on('connect', () => {
         }
 
         socket.on('userPLDetail',(data)=>{
+            console.log(data,'data')
             let page = data.page;
             let games = data.games;
             let html = '';
