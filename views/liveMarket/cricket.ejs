@@ -47,6 +47,43 @@
       </section>
     <%}%>
   <%}%>
+
+  <%for(let i = 0; i < forFancy.length; i++){%>
+    <section id="<%=forFancy[i].eventId%>">
+      <div class="container-fluid">
+        <div class="new-head">
+          <h3 class="head-hr"><%=  forFancy[i].eventName  %></h3>
+          <a class="btn-filter" href="/admin/riskAnalysis?id=<%= forFancy[i].eventId %>" >View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+        <div class="video-section-1">
+          <div class="video-play">
+            <div class="hed-data">
+              <h3 class="live-head"> <%=forFancy[i].marketName%> </h3>
+            </div>
+            <div class="full-adta">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Market</th>
+                    <th>EXPOSURE</th>
+                    <th>TOTAL BETS</th>
+                  </tr>
+                </thead>
+                <tbody id="<%=forFancy[i]._id%>" class="MarketIdsR">
+                    <tr>
+                      <td><%=forFancy[i].marketName%></td>
+                        <td><%=forFancy[i].exposure%></td>
+                        <td><%=forFancy[i].count%></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+  <%}%>
   <%if(!checkC){%>
     No data to display
   <%}%>

@@ -2505,7 +2505,9 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 exposure:{
                     $sum:'$exposure'
                 },
-                marketName:{ $first:'$marketName'}
+                marketName:{ $first:'$marketName'},
+                eventName:{$first : '$match'},
+                count: { $sum: 1 } 
             }
         }
     ])
@@ -2515,7 +2517,8 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         runners,
         bets,
         currentUser,
-        me: currentUser
+        me: currentUser,
+        forFancy
     })
 })
 
