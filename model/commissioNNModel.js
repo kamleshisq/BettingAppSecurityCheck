@@ -76,6 +76,10 @@ const commissionNew = mongoose.Schema({
     uniqueId:String
 })
 
+commissionNew.pre('find', function (next) {
+    this.where({ commissionStatus: { $ne: 'cancel' } });
+    next();
+});
 
 
 const commissionNewModel = mongoose.model('commissionNewModel', commissionNew)

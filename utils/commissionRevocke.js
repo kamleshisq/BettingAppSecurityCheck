@@ -9,7 +9,6 @@ let Decimal = require('decimal.js');
 
 async function revokeCommission(data){
     // console.log(data)
-    await commissionNewModel.updateMany({commissionStatus:'Unclaimed', marketId:data.id}, {commissionStatus:'cancel'})
     let claimedCommission = await commissionNewModel.find({commissionStatus:'Claimed', marketId:data.id})
     if(claimedCommission.length > 0){
         for(const i in claimedCommission){
@@ -42,6 +41,8 @@ async function revokeCommission(data){
             await commissionNewModel.findByIdAndUpdate(claimedCommission[i]._id, {commissionStatus:'cancel'})
         }
     }
+
+    await commissionNewModel.updateMany({marketId:data.id}, {commissionStatus:'cancel'})
 }
 
 module.exports = revokeCommission
