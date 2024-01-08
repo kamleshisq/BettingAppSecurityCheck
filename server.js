@@ -77,6 +77,17 @@ const commissionNewModel = require('./model/commissioNNModel');
 
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
+io.use((socket, next) => {
+    // Access the request object from the socket handshake
+    const req = socket.handshake.auth.req;
+  
+    console.log(req, "retdyfyghf")
+    // Set values on the socket
+    // socket.currentUserUnique = req.currentUserUnique; // Use the same variable name as in the middleware
+  
+    // Continue with the connection
+    next();
+  });
 io.on('connection', (socket) => {
     // console.log('connected to client')
     // console.log(socket.request, socket.request.app,"21212")
