@@ -14191,6 +14191,7 @@ socket.on('connect', () => {
                 socket.emit('chartMain', LOGINDATA) 
                 socket.emit("FIlterDashBoard", { LOGINDATA, value });
                 socket.emit('dashboardrefresh',LOGINDATA)
+                console.log(LOGINDATA)
             },1000 * 15)
             socket.emit('chartMain', LOGINDATA) 
 
