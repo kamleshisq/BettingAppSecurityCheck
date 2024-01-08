@@ -87,7 +87,7 @@ io.on('connection', (socket) => {
         const myVariable = socket.request.app.get('User');
         const myVariable2 = socket.request.app.get('token');
         let user = socket.request.res.locals
-        console.log(user, myVariable, "tyttftftf")
+        console.log(user, myVariable, "tyttftftf", socket.request.res.locals)
         const ip = socket.request.app.get('Ip');
         socket.emit("loginUser", {
             loginData:myVariable,
