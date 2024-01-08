@@ -4068,6 +4068,8 @@ socket.on('connect', () => {
                     data.Tdate = Tdate
                 }                
                 data.LOGINDATA = LOGINDATA
+                data.sessiontoken = sessionStorage.getItem('sessiontoken')
+
            }
         //    console.log(data)
             
