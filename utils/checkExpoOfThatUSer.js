@@ -129,144 +129,144 @@ async function checkExposure(data){
                     
                 }
             },
-            // {
-            //     $group:{
-            //         _id: {
-            //             selectionName: "$selectionName",
-            //             marketId : "$marketId",
-            //             matchName: "$match"
-            //         },
-            //         totalAmount: {
-            //             $sum: {
-            //             $cond: { 
-            //                 if : {$eq: ['$bettype2', "BACK"]},
-            //                 then:{
-            //                     $cond:{
-            //                         if: {
-            //                                 $or: [
-            //                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-            //                                     { $regexMatch: { input: "$marketName", regex: /^winner/i } }
-            //                                 ]
-            //                             },
-            //                         then:{
-            //                             $sum: {
-            //                                 $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
-            //                             }
-            //                         },
-            //                         else:{
-            //                             $sum: {
-            //                                 $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
-            //                             }
-            //                         }
-            //                     }
-            //                 },
-            //                 else:{
-            //                     $cond:{
-            //                         if: {
-            //                                 $or: [
-            //                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-            //                                     { $regexMatch: { input: "$marketName", regex: /^winner/i } }
-            //                                 ]
-            //                             },
-            //                         then:{
-            //                             $sum: {
-            //                                 $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
-            //                             }
-            //                         },
-            //                         else:{
-            //                             $sum: { 
-            //                                 $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
-            //                             }
-            //                         }
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     },
-            //     Stake: {
-            //         $sum: { 
-            //            $cond: { 
-            //                if : {$eq: ['$bettype2', "BACK"]},
-            //                then : {
-            //                    $sum: '$Stake' 
-            //                },
-            //                else : {
-            //                    $multiply: ['$Stake', -1]
-            //                }
-            //            }
-            //        }
-            //    },
-            //    exposure:{
-            //     // $sum:'$exposure'
-            //     $sum: { 
-            //         $cond: { 
-            //             if : {$eq: ['$bettype2', "BACK"]},
-            //             then : {
-            //                 $sum: '$exposure' 
-            //             },
-            //             else : {
-            //                 $multiply: ['$Stake', -1]
-            //             }
-            //         }
-            //     }
-            // }
-            // }
-            // },
-            // {
-            //     $group: {
-            //         _id: "$_id.marketId",
-            //         selections: {
-            //             $push: {
-            //                 selectionName: "$_id.selectionName",
-            //                 totalAmount: '$totalAmount',
-            //                 exposure:'$exposure',
-            //                 matchName: "$_id.matchName",
-            //                 Stake: { $multiply: ["$Stake", -1] },
-            //             },
-            //         },
-            //     },
-            // },
-            // {
-            //     $project: {
-            //       _id: "$_id",
-            //       data: {
-            //         $map: {
-            //           input: "$selections",
-            //           as: "item",
-            //           in: {
-            //             selectionName: "$$item.selectionName",
-            //             totalAmount: "$$item.totalAmount",
-            //             exposure : "$$item.exposure",
-            //             Stake : "$$item.Stake",
-            //             totalLossAmount: {
-            //               $add: [
-            //                 "$$item.totalAmount",
-            //                 {
-            //                     $sum:{
-            //                         $reduce: { 
-            //                             input: "$selections",
-            //                             initialValue: 0,
-            //                             in: { 
-            //                                 $cond: { 
-            //                                     if: {
-            //                                         $ne: ["$$this.selectionName", "$$item.selectionName"] 
-            //                                       },
-            //                                       then: { $add: ["$$value", "$$this.Stake"]  },
-            //                                       else: {
-            //                                           $add: ["$$value", 0] 
-            //                                       }
-            //                                 }
-            //                             }
-            //                         }
-            //                     }
-            //                 }
-            //               ]
-            //             }
-            //           }
-            //         }
-            //       }
-            //     }
-            //   },
+            {
+                $group:{
+                    _id: {
+                        selectionName: "$selectionName",
+                        marketId : "$marketId",
+                        matchName: "$match"
+                    },
+                    totalAmount: {
+                        $sum: {
+                        $cond: { 
+                            if : {$eq: ['$bettype2', "BACK"]},
+                            then:{
+                                $cond:{
+                                    if: {
+                                            $or: [
+                                                { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                            ]
+                                        },
+                                    then:{
+                                        $sum: {
+                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                        }
+                                    },
+                                    else:{
+                                        $sum: {
+                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                        }
+                                    }
+                                }
+                            },
+                            else:{
+                                $cond:{
+                                    if: {
+                                            $or: [
+                                                { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                            ]
+                                        },
+                                    then:{
+                                        $sum: {
+                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                        }
+                                    },
+                                    else:{
+                                        $sum: { 
+                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                Stake: {
+                    $sum: { 
+                       $cond: { 
+                           if : {$eq: ['$bettype2', "BACK"]},
+                           then : {
+                               $sum: '$Stake' 
+                           },
+                           else : {
+                               $multiply: ['$Stake', -1]
+                           }
+                       }
+                   }
+               },
+               exposure:{
+                // $sum:'$exposure'
+                $sum: { 
+                    $cond: { 
+                        if : {$eq: ['$bettype2', "BACK"]},
+                        then : {
+                            $sum: '$exposure' 
+                        },
+                        else : {
+                            $multiply: ['$Stake', -1]
+                        }
+                    }
+                }
+            }
+            }
+            },
+            {
+                $group: {
+                    _id: "$_id.marketId",
+                    selections: {
+                        $push: {
+                            selectionName: "$_id.selectionName",
+                            totalAmount: '$totalAmount',
+                            exposure:'$exposure',
+                            matchName: "$_id.matchName",
+                            Stake: { $multiply: ["$Stake", -1] },
+                        },
+                    },
+                },
+            },
+            {
+                $project: {
+                  _id: "$_id",
+                  data: {
+                    $map: {
+                      input: "$selections",
+                      as: "item",
+                      in: {
+                        selectionName: "$$item.selectionName",
+                        totalAmount: "$$item.totalAmount",
+                        exposure : "$$item.exposure",
+                        Stake : "$$item.Stake",
+                        totalLossAmount: {
+                          $add: [
+                            "$$item.totalAmount",
+                            {
+                                $sum:{
+                                    $reduce: { 
+                                        input: "$selections",
+                                        initialValue: 0,
+                                        in: { 
+                                            $cond: { 
+                                                if: {
+                                                    $ne: ["$$this.selectionName", "$$item.selectionName"] 
+                                                  },
+                                                  then: { $add: ["$$value", "$$this.Stake"]  },
+                                                  else: {
+                                                      $add: ["$$value", 0] 
+                                                  }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
         ])
 
         console.log(exposure3, "exposure3exposure3exposure3")
