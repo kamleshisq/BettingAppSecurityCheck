@@ -2343,7 +2343,7 @@ socket.on('connect', () => {
 
                         html += `<td> ${response[i].uplinePL}</td>`
                         // <td> 0</td>
-                        let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text()
+                        let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text().trim()
                         console.log( trtdexp, "trtdexptrtdexptrtdexptrtdexp")
                         html += `<td>
                         <div class="btn-group">
@@ -2396,7 +2396,7 @@ socket.on('connect', () => {
                     $('#table12 tbody').append(html)
 
                 }
-
+                let ids = []
                 $(".trtable").each(function() {
                     ids.push($(this).data('id'));
                   });
