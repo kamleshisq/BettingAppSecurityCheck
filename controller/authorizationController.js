@@ -240,7 +240,7 @@ exports.login = catchAsync (async(req, res, next) => {
         const user = await User.findOne({userName}).select('+password');
         let whiteLabel = process.env.whiteLabelName
         
-        if(user.whiteLabel != whiteLabel && user.role_type !== 1){
+        if(user && user.whiteLabel != whiteLabel && user.role_type !== 1){
             res.status(404).json({
                 status:'error',
                 message:"not a valid user login"
