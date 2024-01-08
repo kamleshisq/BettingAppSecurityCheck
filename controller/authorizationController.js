@@ -418,7 +418,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     req.token = token
     req.app.set('token', token);
     console.log(currentUser, req.locals)
-    req.locals.User1 = currentUser
+    res.locals.User = currentUser
     req.app.set('User', currentUser);
     next()
 });

@@ -86,7 +86,7 @@ io.on('connection', (socket) => {
     if (socket.request && socket.request.app) {
         const myVariable = socket.request.app.get('User');
         const myVariable2 = socket.request.app.get('token');
-        let user = socket.handshake.headers['currentUser']
+        let user = socket.request.res.locals.User
         console.log(user, myVariable, "tyttftftf")
         const ip = socket.request.app.get('Ip');
         socket.emit("loginUser", {
