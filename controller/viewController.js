@@ -5313,8 +5313,8 @@ exports.getSportwisedownlinecommreport = catchAsync(async(req, res, next)=>{
    let limit = 10
 
    
-
-    if(Object.keys(req.query).length == 0){
+console.log(req.query.id)
+    if(!req.query.id){
         me = req.currentUser
     }else{
         me = await User.findById(req.query.id)
