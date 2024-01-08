@@ -14195,7 +14195,7 @@ socket.on('connect', () => {
             socket.emit('chartMain', LOGINDATA) 
 
             socket.on("chartMain", data => {
-    
+                console.log(data, "datadatadata")
                 var options = {
                     series: [{
                     name: 'Income',
