@@ -11296,7 +11296,7 @@ io.on('connection', (socket) => {
 
     socket.on('exposureadmin', async(data) => {
         // console.log(data)
-        let sendDATA = await checkExposureARRAY(data)
+        let sendDATA = await checkExposureARRAY(data.ids)
         console.log(sendDATA, "sendDATAsendDATAsendDATA")
     })
 
