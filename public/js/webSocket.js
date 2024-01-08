@@ -1499,11 +1499,30 @@ socket.on('connect', () => {
 
         exposureadmin()
 
+        socket.on('exposureadmin', data => {
+            $(".trtable").each(function() {
+                let trID = $(this).data('id')
+                let thatDATA = data.find(item => item.id === trID)
+                if(thatDATA){
+                    if(thatDATA.totalExposure === -0){
+                        $(this).find('td:eq(9)').text(0)
+                    }else{
+                        $(this).find('td:eq(9)').text(thatDATA.totalExposure)
+
+                    }
+                }
+              });
+        })
+
+
+
         num2Input1.addEventListener('input', () => {
             const num21 = parseFloat(num2Input1.value);
             const num11 = 100 - num21;
             num1Input1.value = num11;
         });
+
+
 
         $(document).on("click", ".CreaditChange", function(e){
             e.preventDefault()
