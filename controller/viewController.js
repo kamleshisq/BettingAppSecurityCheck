@@ -1221,9 +1221,10 @@ exports.adminaccount = catchAsync(async(req, res, next) => {
     }else{
         operatorId = req.currentUser._id
     }
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement1?id=' + operatorId 
+    var fullUrl = req.protocol + '://' + req.get('host') + `/api/v1/Account/getUserAccStatement1?id=${operatorId}&sessiontoken=${req.query.sessiontoken}
+    ` 
     fetch(fullUrl, {
-        method: 'POST',
+        method: 'GET',
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json())
     .then(json =>{ 
