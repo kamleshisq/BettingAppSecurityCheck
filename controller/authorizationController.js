@@ -219,6 +219,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
 }))
 
 exports.login = catchAsync (async(req, res, next) => {
+    console.log(req.body)
     let {
 		userName,
 		password
