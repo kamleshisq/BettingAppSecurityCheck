@@ -21708,8 +21708,7 @@ socket.on('connect', () => {
                     console.log(data)
                     socket.emit('getgamewisedownlinecommitssion',{data})
                 }else{
-                    location.href = `/admin/downlinecommissionReort?id=${data.user._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
-                    `
+                    location.href = `/admin/downlinecommissionReort?id=${data.user._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}`
                 }
             }
         })
