@@ -22146,6 +22146,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.load-more',function(e){
+            console.log('WORKING')
             let data = {}
             let fromdate = $('#fromDate').val()
             let todate = $('#toDate').val()

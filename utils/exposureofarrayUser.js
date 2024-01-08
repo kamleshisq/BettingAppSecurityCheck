@@ -128,7 +128,7 @@ async function checkExposure123(data){
                             status: "OPEN",
                             userName:userData.userName,
                             marketName: {
-                                $regex: /^(match|book|winn)/i
+                                $regex: /^(match|book|winn|toss)/i
                             }
                             
                         }
