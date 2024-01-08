@@ -792,6 +792,7 @@ $(document).on('submit', '.basicDetailsFOrm', function(e){
     let table = $(this).closest('.fade').attr('id')
     fd.append('id', id)
     fd.append('table', table)
+    fd.append('sessiontoken',sessionStorage.getItem('sessiontoken'))
     updateBasicDetails(fd)
     // console.log(data, "DATA23232")
 })
