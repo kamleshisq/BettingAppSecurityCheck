@@ -10978,7 +10978,7 @@ io.on('connection', (socket) => {
             }else{  
                 let checking123 = await commissionNewModel.find({userName:{$in:usernameArr}, sportId:data.data.sportId, marketName:data.data.marketName, eventName:data.data.eventName})
                 let betId = await commissionNewModel.distinct('betId', {userName:{$in:usernameArr}, sportId:data.data.sportId, marketName:data.data.marketName, eventName:data.data.eventName})
-                console.log(checking123, 123)
+                console.log(checking123, 123, betId)
                 let newBetIds = []
                 betId.map(id => {
                     let newId = new ObjectId(id)
