@@ -1499,29 +1499,29 @@ socket.on('connect', () => {
 
         exposureadmin()
 
-        socket.on('exposureadmin', data => {
-            $(".trtable").each(function() {
-                let trID = $(this).data('id')
-                let thatDATA = data.find(item => item.id === trID)
-                if(thatDATA){
-                    if(LOGINDATA.LOGINUSER.roleName == "Admin"){
-                        if(thatDATA.totalExposure === -0){
-                            $(this).find('td:eq(9)').text(0)
-                        }else{
-                            $(this).find('td:eq(9)').text(thatDATA.totalExposure)
+        // socket.on('exposureadmin', data => {
+        //     $(".trtable").each(function() {
+        //         let trID = $(this).data('id')
+        //         let thatDATA = data.find(item => item.id === trID)
+        //         if(thatDATA){
+        //             if(LOGINDATA.LOGINUSER.roleName == "Admin"){
+        //                 if(thatDATA.totalExposure === -0){
+        //                     $(this).find('td:eq(9)').text(0)
+        //                 }else{
+        //                     $(this).find('td:eq(9)').text(thatDATA.totalExposure)
     
-                        }
-                    }else{
-                        if(thatDATA.totalExposure === -0){
-                            $(this).find('td:eq(8)').text(0)
-                        }else{
-                            $(this).find('td:eq(8)').text(thatDATA.totalExposure)
+        //                 }
+        //             }else{
+        //                 if(thatDATA.totalExposure === -0){
+        //                     $(this).find('td:eq(8)').text(0)
+        //                 }else{
+        //                     $(this).find('td:eq(8)').text(thatDATA.totalExposure)
     
-                        }
-                    }
-                }
-              });
-        })
+        //                 }
+        //             }
+        //         }
+        //       });
+        // })
 
 
 
