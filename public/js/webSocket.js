@@ -21885,12 +21885,12 @@ socket.on('connect', () => {
             data.fromdate = fromdate;
             data.todate = todate;
             data.bredcum = bredcum;
-            console.log(data)
+            // console.log(data)
             socket.emit('geteventwisedownlinecommitssion',{data})
         })
 
         socket.on('geteventwisedownlinecommitssion',async(data)=>{
-            console.log(data)
+            console.log(data, "WORKING1231321")
             if(data.status == 'success'){
                 let result = data.result
                 let parentdata = data.parentdata
