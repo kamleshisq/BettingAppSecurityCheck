@@ -7,7 +7,7 @@ export const login = async(userName, password)=>{
             method: 'POST',
             url: '/api/v1/auth/login',
             data:{
-                userName,
+                userName:userName.toLowerCase() ,
                 password
             }
         });

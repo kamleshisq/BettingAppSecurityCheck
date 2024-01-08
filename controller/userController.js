@@ -198,6 +198,10 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     }
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
     // console.log(req.body, 'req.bodyreq.bodyreq.body')
+    let checkUserExist = await User.findOne({userName:req.body.userName})
+    if(checkUserExist){
+        return next(new AppError("Ops, User Name is already exists", 500))
+    }
     const newUser = await User.create(req.body);
     // if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
     //    await settlementModel.create({userId:newUser.id})
