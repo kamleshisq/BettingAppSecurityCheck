@@ -37,7 +37,7 @@
               var formattedTime = date.toLocaleString('en-US', options);
                
             %>
-            <tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=<%=eventWiseData[i]._id.id%>">
+            <tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=<%=eventWiseData[i]._id.id%>&sessiontoken=<%=sessionStorage%>">
                 <td><%=formattedTime%></td>
                 <td><%=eventWiseData[i]._id.eventName%></td>
                 <td><%=eventWiseData[i].totalCommission%></td>
