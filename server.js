@@ -73,6 +73,7 @@ const colorCodeModel = require('./model/colorcodeModel');
 const oddsLimitCHeck = require('./utils/checkOddsLimit');
 const { ObjectId } = require('mongodb');
 const commissionNewModel = require('./model/commissioNNModel');
+const checkExposureARRAY = require('./utils/exposureofarrayUser');
 // const checkLimit = require('./utils/checkOddsLimit');
 
 // const { date } = require('joi');
@@ -4282,6 +4283,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('BETONEVENT', async(data) => {
+        console.log(data, "BETONEVENT")
         try{
             if(data.LOGINDATA.LOGINUSER.role.roleName == 'Operator'){
                 let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
@@ -11289,6 +11291,14 @@ io.on('connection', (socket) => {
         let response = await oddsLimitCHeck(data)
         // console.log(response)
         socket.emit('OddsCheck', response)
+    })
+
+
+    socket.on('exposureadmin', async(data) => {
+        // console.log(data)
+        let sendDATA = await checkExposureARRAY(data.ids)
+        console.log(sendDATA, "sendDATAsendDATAsendDATA")
+        socket.emit('exposureadmin', sendDATA)
     })
 
 })

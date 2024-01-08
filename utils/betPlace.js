@@ -252,8 +252,9 @@ if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.t
         }
     }
 }
-
-data.data.odds = data.data.odds2
+if(data.data.odds2){
+    data.data.odds = data.data.odds2
+}
 
 // // FOR LAY BACK DIFF
 
@@ -267,6 +268,7 @@ data.data.odds = data.data.odds2
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
             WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }else{
+            console.log("gethere", data.data.stake , data.data.odds, )
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
             WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
@@ -280,7 +282,7 @@ data.data.odds = data.data.odds2
         }
         WinAmount = (parseFloat(data.data.stake)).toFixed(2)
     }
-
+    console.log(WinAmount, "WinAmountWinAmountWinAmount")
     if(WinAmount > limitData.max_profit){
         return 'Win Amount out of range'
     }

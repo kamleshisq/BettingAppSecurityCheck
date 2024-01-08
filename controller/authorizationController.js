@@ -354,7 +354,6 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     }
 
 
-    console.log(token,'==>token')
     if(!token){
         // console.log('WORKING1')
         req.app.set('token', null);
@@ -393,23 +392,23 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         // console.log(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1)
         if(currentUser.whiteLabel !== whiteLabel && currentUser.role_type !== 1){
             req.app.set('token', null);
-        req.app.set('User', null);
-        return res.redirect('/adminlogin')
+            req.app.set('User', null);
+            return res.redirect('/adminlogin')
         }else if(!currentUser){
             req.app.set('token', null);
-        req.app.set('User', null);
-        return res.redirect('/adminlogin')
+            req.app.set('User', null);
+            return res.redirect('/adminlogin')
         }else if(!currentUser.isActive){
             req.app.set('token', null);
-        req.app.set('User', null);
-        return res.redirect('/adminlogin')
+            req.app.set('User', null);
+            return res.redirect('/adminlogin')
         }else if(!currentUser.is_Online){
             req.app.set('token', null);
-        req.app.set('User', null);
-        return res.redirect('/adminlogin')
+            req.app.set('User', null);
+            return res.redirect('/adminlogin')
         }
     }
-
+    
     loginData.User = currentUser
     res.locals.loginData = loginData
     res.locals.paymentreqcount = paymentreqcount
@@ -418,6 +417,8 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     req.currentUser = currentUser
     req.token = token
     req.app.set('token', token);
+    // console.log(currentUser, req.locals)
+    req.currentUserUnique = currentUser
     req.app.set('User', currentUser);
     next()
 });

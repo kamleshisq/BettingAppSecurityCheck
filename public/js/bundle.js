@@ -56970,11 +56970,12 @@ $(document).on('submit', ".addSlider-form", function (e) {
   (0, _addSlider.createSlider)(fd);
 });
 $(document).on('submit', ".myloginmodl-form-dv", function (e) {
+  console.log("myloginmodl-form-dv working");
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
-  fd.append(sessiontoken, sessionStorage.getItem('sessiontoken'));
+  // fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
   (0, _userLogin.userLogin)(data);
 });
 $(document).on('submit', ".regestermodl-form", function (e) {
@@ -57065,7 +57066,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53524" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49943" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

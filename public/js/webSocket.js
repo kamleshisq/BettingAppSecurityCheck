@@ -14,59 +14,18 @@ socket.on('connect', () => {
     console.log("websocket Connected")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
-        console.log(data, "datadatadata")
+        console.log(data, "datadatadata123456")
         const {
             host, hostname, href, origin, pathname, port, protocol, search
         } = window.location
         socket.emit('hostname1ColoreCOde', hostname)
-        // socket.on('hostname1ColoreCOde', data => {
-        //     const styleSheets = document.styleSheets;
-        //     for (let i = 0; i < styleSheets.length; i++) {
-        //       const styleSheet = styleSheets[i];
-        //       if (styleSheet.href) {
-        //         if(styleSheet.href == "http://dev.ollscores.com/assets/css/style.css" || styleSheet.href == "http://dev.ollscores.com/assets/css/loggedin-page-style.css" || styleSheet.href =="http://dev.ollscores.com/assets/css/media.css"){
-
-        //             // console.log('Processing stylesheet:', styleSheet.href, data);
-        //             try {
-        //               document.documentElement.style.setProperty('--color6', `linear-gradient(135deg, ${data.color6_1} 0%, ${data.color6_2} 100%)`);
-        //               document.documentElement.style.setProperty('--color1', `linear-gradient(136deg, ${data.color1_1} 0%, ${data.color1_2} 100%)`);
-        //               document.documentElement.style.setProperty('--color2', `${data.color2}`);
-        //               document.documentElement.style.setProperty('--color7', `${data.color7}`);
-        //               document.documentElement.style.setProperty('--color14', `${data.color14}`);
-        //               document.documentElement.style.setProperty('--color15', `${data.color15}`);
-        //               document.documentElement.style.setProperty('--color13', `${data.color13}`);
-        //               document.documentElement.style.setProperty('--color5', `${data.color5}`);
-        //               document.documentElement.style.setProperty('--color3', `${data.color3}`);
-        //             } catch (err) {
-        //               console.error('Error setting styles:', err);
-        //             }
-        //         }
-        //       }
-        //     }
-        //   });
-        // console.log('WORKING45654', data)
 
         let loginData = {
             User : data.loginData,
             Token : data.socket,
             ip:data.Ip
         }
-        // if(data.data)
-
-        // if(pathname.startsWith('/admin')){
-        //     if($('body header').attr('data-logindata')){
-        //         loginData = JSON.parse($('body header').attr('data-logindata'))
-        //     }
-        // }else{
-        //     if($('body').attr('data-logindata')){
-
-        //         loginData = JSON.parse($('body').attr('data-logindata')) 
-        //     }
-        // }
-        // console.log('loginData',loginData)
-        // if(!loginData){
-        // location.reload(true)
-        // }
+       
         if(loginData){
             LOGINDATA.LOGINUSER = loginData.User
             LOGINDATA.LOGINTOKEN = loginData.Token
@@ -620,7 +579,7 @@ socket.on('connect', () => {
         socket.emit('userLoginBalance', LOGINDATA)
         setTimeout(()=>{
             balance()
-          }, 1000 * 1000 * 36)
+          }, 1000)
     }
     balance()
     socket.on('userLoginBalance', async(data) => {
@@ -1523,11 +1482,47 @@ socket.on('connect', () => {
             num2Input1.value = num21;
         });
 
+        async function exposureadmin(){
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".trtable").each(function() {
+                  ids.push($(this).data('id'));
+                });
+                // console.log(ids)
+                socket.emit("exposureadmin", {ids})
+              });
+              setTimeout(()=>{
+                exposureadmin()
+              }, 1000 * 10)
+        }
+
+        exposureadmin()
+
+        socket.on('exposureadmin', data => {
+            $(".trtable").each(function() {
+                let trID = $(this).data('id')
+                let thatDATA = data.find(item => item.id === trID)
+                if(thatDATA){
+                    if(thatDATA.totalExposure === -0){
+                        $(this).find('td:eq(9)').text(0)
+                    }else{
+                        $(this).find('td:eq(9)').text(thatDATA.totalExposure)
+
+                    }
+                }
+              });
+        })
+
+
+
         num2Input1.addEventListener('input', () => {
             const num21 = parseFloat(num2Input1.value);
             const num11 = 100 - num21;
             num1Input1.value = num11;
         });
+
+
 
         $(document).on("click", ".CreaditChange", function(e){
             e.preventDefault()
@@ -2346,9 +2341,15 @@ socket.on('connect', () => {
 
                         }
 
-                        html += `<td> ${response[i].uplinePL}</td>
-                        <td> ${response[i].exposure}</td>
-                        <td>
+                        html += `<td> ${response[i].uplinePL}</td>`
+                        // <td> 0</td>
+                        let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text().trim()
+                        if(trtdexp){
+                            html += `<td> ${trtdexp}</td>`
+                        }else{
+                            html += `<td> 0</td>`
+                        }
+                        html += `<td>
                         <div class="btn-group">
                         `
                             // if(data.currentUser.role.authorization.includes('accountControl')){
@@ -2399,6 +2400,12 @@ socket.on('connect', () => {
                     $('#table12 tbody').append(html)
 
                 }
+                let ids = []
+                $(".trtable").each(function() {
+                    ids.push($(this).data('id'));
+                  });
+                  // console.log(ids)
+                  socket.emit("exposureadmin", {ids})
             
                 // html = '';
                 // for(let i=0;i<data.Rows;i++){
@@ -14191,11 +14198,12 @@ socket.on('connect', () => {
                 socket.emit('chartMain', LOGINDATA) 
                 socket.emit("FIlterDashBoard", { LOGINDATA, value });
                 socket.emit('dashboardrefresh',LOGINDATA)
+                console.log(LOGINDATA)
             },1000 * 15)
             socket.emit('chartMain', LOGINDATA) 
 
             socket.on("chartMain", data => {
-    
+                console.log(data, "datadatadata")
                 var options = {
                     series: [{
                     name: 'Income',
@@ -16807,7 +16815,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 1000)
+              }, 1000 * 100)
         }
         marketId()
 
@@ -17278,10 +17286,12 @@ socket.on('connect', () => {
             function eventID(){
                 let type = 'loop'
                 let page = parseInt($('.rowId').attr('data-rowid'))
+                let id1 = new URLSearchParams(window.location.search);
+                let id =  id1.get('id');
                 socket.emit("BETONEVENT", {id ,type,page, LOGINDATA})
                 setTimeout(()=>{
                     eventID()
-                }, 50000)
+                }, 5000)
 
             }
             eventID()
