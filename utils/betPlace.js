@@ -252,8 +252,9 @@ if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.t
         }
     }
 }
-
-data.data.odds = data.data.odds2
+if(data.data.odds2){
+    data.data.odds = data.data.odds2
+}
 
 // // FOR LAY BACK DIFF
 
