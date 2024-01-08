@@ -2489,21 +2489,27 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let childrenUsername = await User.distinct('userName', { parentUsers : Id, role_type: 5 });
     let bets = await betModel.distinct('marketId', {userName : {$in:childrenUsername}, status: 'OPEN'})
     const runners = await runnerData.find({marketId:{$in:bets}})
-    // let forFancy = await betModel.aggregate([
-    //     {
-    //         $match:{
-    //             userName : {$in:childrenUsername}, 
-    //             status: 'OPEN',
-    //             marketId:{$regex: /(OE|F2)$/}
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:
-    //         }
-    //     }
-    // ])
-    // console.log(forFancy, "forFancyforFancyforFancyforFancy")
+    let forFancy = await betModel.aggregate([
+        {
+            $match:{
+                userName : {$in:childrenUsername}, 
+                status: 'OPEN',
+                marketId:{$regex: /(OE|F2)$/}
+            }
+        },
+        {
+            $group:{
+                _id:'$marketId',
+                marketName:{$first:'$marketName'},
+                eventId:{ $first:'$eventId'},
+                exposure:{
+                    $sum:'$exposure'
+                },
+                marketName:{ $first:'$marketName'}
+            }
+        }
+    ])
+    console.log(forFancy, "forFancyforFancyforFancyforFancy")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         runners,
