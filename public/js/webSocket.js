@@ -15913,8 +15913,8 @@ socket.on('connect', () => {
                 $(document).ready(function() {
                     const urlParams = new URLSearchParams(window.location.search);
                     let id = urlParams.get('id')
-                    socket.emit("getinProgressData", search.split('=')[1])
-                    socket.emit('getRefresh', search.split('=')[1])
+                    socket.emit("getinProgressData", id)
+                    socket.emit('getRefresh', id)
                   });
                   setTimeout(()=>{
                     getinProgressData()
