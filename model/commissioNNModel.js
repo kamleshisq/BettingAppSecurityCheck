@@ -81,6 +81,11 @@ commissionNew.pre('find', function (next) {
     next();
 });
 
+commissionNew.pre('aggregate', function (next) {
+    this.pipeline().unshift({ $match: { commissionStatus: { $ne: 'cancel' } } });
+    next();
+});
+
 
 const commissionNewModel = mongoose.model('commissionNewModel', commissionNew)
 
