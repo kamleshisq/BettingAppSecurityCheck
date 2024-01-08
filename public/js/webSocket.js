@@ -4036,8 +4036,10 @@ socket.on('connect', () => {
                 }else{
                     data.Tdate = Tdate
                 }                 
-                
+                data.sessiontoken = sessionStorage.getItem('sessiontoken')
+
                 data.LOGINDATA = LOGINDATA
+
             }
             socket.emit('AccountScroll1',data)        
         })
