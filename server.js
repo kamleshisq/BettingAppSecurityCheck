@@ -73,6 +73,7 @@ const colorCodeModel = require('./model/colorcodeModel');
 const oddsLimitCHeck = require('./utils/checkOddsLimit');
 const { ObjectId } = require('mongodb');
 const commissionNewModel = require('./model/commissioNNModel');
+const checkExposureARRAY = require('./utils/exposureofarrayUser');
 // const checkLimit = require('./utils/checkOddsLimit');
 
 // const { date } = require('joi');
@@ -11294,7 +11295,9 @@ io.on('connection', (socket) => {
 
 
     socket.on('exposureadmin', async(data) => {
-        console.log(data)
+        // console.log(data)
+        let sendDATA = await checkExposureARRAY(data)
+        console.log(sendDATA, "sendDATAsendDATAsendDATA")
     })
 
 })

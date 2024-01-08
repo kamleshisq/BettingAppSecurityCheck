@@ -1494,7 +1494,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 exposureadmin()
-              }, 1000)
+              }, 1000 * 10)
         }
 
         exposureadmin()
