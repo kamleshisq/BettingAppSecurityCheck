@@ -2344,7 +2344,11 @@ socket.on('connect', () => {
                         html += `<td> ${response[i].uplinePL}</td>`
                         // <td> 0</td>
                         let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text().trim()
-                        html += `<td> ${trtdexp}</td>`
+                        if(trtdexp){
+                            html += `<td> ${trtdexp}</td>`
+                        }else{
+                            html += `<td> 0</td>`
+                        }
                         html += `<td>
                         <div class="btn-group">
                         `
