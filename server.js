@@ -10965,7 +10965,7 @@ io.on('connection', (socket) => {
                 usernameArr = await User.distinct("userName",{parentUsers:user._id})
             }
             let filter = {
-                date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
+                // date:{$gte:new Date(data.data.fromdate),$lte:new Date(new Date(data.data.todate).getTime() + ((24 * 60 * 60 * 1000) -1))},
                 userName:{$in:usernameArr},
                 gameId:data.data.sportId,
                 event:data.data.seriesName,
