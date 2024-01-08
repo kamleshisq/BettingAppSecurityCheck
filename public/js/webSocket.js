@@ -17243,7 +17243,7 @@ socket.on('connect', () => {
                 socket.emit("BETONEVENT", {id ,type,page, LOGINDATA})
                 setTimeout(()=>{
                     eventID()
-                }, 50000)
+                }, 5000)
 
             }
             eventID()
