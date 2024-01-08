@@ -17239,7 +17239,7 @@ socket.on('connect', () => {
                 let type = 'loop'
                 let page = parseInt($('.rowId').attr('data-rowid'))
                 let id1 = new URLSearchParams(window.location.search);
-                let id =  search.get('id');
+                let id =  id1.get('id');
                 socket.emit("BETONEVENT", {id ,type,page, LOGINDATA})
                 setTimeout(()=>{
                     eventID()
