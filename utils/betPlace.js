@@ -280,7 +280,7 @@ data.data.odds = data.data.odds2
         }
         WinAmount = (parseFloat(data.data.stake)).toFixed(2)
     }
-
+    console.log(WinAmount, "WinAmountWinAmountWinAmount")
     if(WinAmount > limitData.max_profit){
         return 'Win Amount out of range'
     }
