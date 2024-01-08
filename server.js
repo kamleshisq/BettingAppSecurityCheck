@@ -649,9 +649,11 @@ io.on('connection', (socket) => {
         // console.log(fullUrl)
         fetch(fullUrl, {
             method: 'GET',
-            headers: { 'Authorization': `Bearer ` + loginData.Token },
-        }).then(res => res.json())
-        .then(json =>{ 
+            headers: { 
+                'Content-Type': 'application/json',
+                'accept': 'application/json' },
+            }).then(res => res.json())
+            .then(json =>{ 
             // console.log(json)
             socket.emit('Acc1', {json,page:data.page})
             // const data = json.userAcc
