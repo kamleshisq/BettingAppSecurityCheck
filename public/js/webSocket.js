@@ -2342,7 +2342,7 @@ socket.on('connect', () => {
                         }
 
                         html += `<td> ${response[i].uplinePL}</td>
-                        <td> ${response[i].exposure}</td>
+                        <td> 0</td>
                         <td>
                         <div class="btn-group">
                         `
