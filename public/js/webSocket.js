@@ -1482,6 +1482,23 @@ socket.on('connect', () => {
             num2Input1.value = num21;
         });
 
+        async function exposureadmin(){
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".trtable").each(function() {
+                  ids.push($(this).data('id'));
+                });
+                // console.log(ids)
+                socket.emit("exposureadmin", {ids})
+              });
+              setTimeout(()=>{
+                exposureadmin()
+              }, 1000)
+        }
+
+        exposureadmin()
+
         num2Input1.addEventListener('input', () => {
             const num21 = parseFloat(num2Input1.value);
             const num11 = 100 - num21;

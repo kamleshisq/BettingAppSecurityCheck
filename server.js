@@ -11292,6 +11292,11 @@ io.on('connection', (socket) => {
         socket.emit('OddsCheck', response)
     })
 
+
+    socket.on('exposureadmin', async(data) => {
+        console.log(data)
+    })
+
 })
 
 http.listen(process.env.port,()=> {
