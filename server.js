@@ -1,8 +1,11 @@
 const app = require('./app');
 const mongoose = require('mongoose')
 const util = require('util');
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const http = require('http')
+const socketIO = require('socket.io');
+const httpServer = http.createServer(app);
+const io = socketIO(httpServer)
+// const io = require('socket.io')(http);
 const fetch = require('node-fetch');
 const gameAPI = require('./utils/gameAPI');
 const Role = require('./model/roleModel');
@@ -87,7 +90,7 @@ io.on('connection', (socket) => {
     if (socket.request && socket.request.app) {
         const myVariable = socket.request.app.get('User');
         const myVariable2 = socket.request.app.get('token');
-        let user = socket.handshake.req;
+        let user = socket.handshake.headers;
         console.log(user, myVariable, "tyttftftf")
         const ip = socket.request.app.get('Ip');
         socket.emit("loginUser", {
@@ -11296,6 +11299,6 @@ io.on('connection', (socket) => {
 
 })
 
-http.listen(process.env.port,()=> {
+httpServer.listen(process.env.port,()=> {
     console.log(`app is running on port ${process.env.port}`)
 })
