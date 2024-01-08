@@ -219,7 +219,7 @@ exports.createAndLoginUser = catchAsync( (async(req, res, next) => {
 }))
 
 exports.login = catchAsync (async(req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     let {
 		userName,
 		password
@@ -229,6 +229,7 @@ exports.login = catchAsync (async(req, res, next) => {
 		password: Joi.string().required(),
 		// g_captcha: Joi.optional()
 	});
+    userName = userName.toLowerCase()
     const validate = loginSchema.validate(req.body);
     // console.log(validate)
     if(validate.error){
