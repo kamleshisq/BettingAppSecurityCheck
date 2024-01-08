@@ -7237,7 +7237,8 @@ socket.on('connect', () => {
             if(data.status === "success"){
                 alert("Menu Added Successfully")
                     window.setTimeout(()=>{
-                        window.location = '/admin/cms'
+                        // window.location = '/admin/cms'
+                        Window.location.reload()
                     },500)
             }else{
                 alert(`${data.err.message}`)
@@ -7291,7 +7292,7 @@ socket.on('connect', () => {
         socket.on("updateVerticalMenu", async(data)=>{
             alert(`${data}`)
             window.setTimeout(()=>{
-                window.location = '/admin/cms'
+                Window.location.reload()
             },500)
         })
 
@@ -7308,7 +7309,7 @@ socket.on('connect', () => {
         socket.on("deleteVerticalMenu", async(data) => {
             alert("Menu Deleted Successfully")
             window.setTimeout(()=>{
-                window.location = '/admin/cms'
+                Window.location.reload()
             },500)
         })
 
@@ -7383,7 +7384,7 @@ socket.on('connect', () => {
         socket.on("deleteBanner", data =>{
             alert(data)
             window.setTimeout(()=>{
-                window.location = '/admin/cms'
+                Window.location.reload()
             },200)
         })
 
@@ -7422,7 +7423,7 @@ socket.on('connect', () => {
         socket.on("dleteImageSport", async(data)=>{
             alert(data)
             window.setTimeout(()=>{
-                window.location = '/admin/cms'
+                Window.location.reload()
             },200)
         })
 
@@ -7453,7 +7454,7 @@ socket.on('connect', () => {
         socket.on('UpdateSport', async(data) => {
             alert(data)
             window.setTimeout(()=>{
-                window.location = '/admin/cms'
+                Window.location.reload()
             },200)
         })
 
@@ -7471,7 +7472,7 @@ socket.on('connect', () => {
         socket.on('deleteSlider', async(data) => {
             alert(data)
             window.setTimeout(()=>{
-                window.location = '/admin/cms'
+                Window.location.reload()
             },200)
         })
     }
@@ -10421,7 +10422,7 @@ socket.on('connect', () => {
             if(data === "success"){
                 alert("Page updates")
                 setTimeout(()=>{
-                    window.location = '/admin/pageManager'
+                    Window.location.reload()
                   }, 500)
             }else{
                 alert("Something Went Wrong Please try again later")
@@ -18855,7 +18856,7 @@ socket.on('connect', () => {
             }else{
                 togglePopupMain('popup-1', "redPopUP", "updated!")
                 setTimeout(()=>{
-                    window.location = '/profile'
+                    Window.location.reload()
                   }, 500)
             }
         })
