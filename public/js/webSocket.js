@@ -22066,6 +22066,7 @@ socket.on('connect', () => {
 
 
         socket.on('userwisedownlinecommittion',async(data)=>{
+            console.log('working222')
             if(data.status == 'success'){
                 console.log(data,'==>data')
                 let page = data.page
