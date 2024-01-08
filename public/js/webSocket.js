@@ -2341,9 +2341,11 @@ socket.on('connect', () => {
 
                         }
 
-                        html += `<td> ${response[i].uplinePL}</td>
-                        <td> 0</td>
-                        <td>
+                        html += `<td> ${response[i].uplinePL}</td>`
+                        // <td> 0</td>
+                        let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text()
+                        console.log( trtdexp)
+                        html += `<td>
                         <div class="btn-group">
                         `
                             // if(data.currentUser.role.authorization.includes('accountControl')){
