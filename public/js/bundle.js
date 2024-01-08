@@ -56970,6 +56970,7 @@ $(document).on('submit', ".addSlider-form", function (e) {
   (0, _addSlider.createSlider)(fd);
 });
 $(document).on('submit', ".myloginmodl-form-dv", function (e) {
+  console.log("myloginmodl-form-dv working");
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);

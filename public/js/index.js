@@ -748,6 +748,7 @@ $(document).on('submit', ".addSlider-form", function(e){
 
 
 $(document).on('submit', ".myloginmodl-form-dv", function(e){
+    console.log("myloginmodl-form-dv working")
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
