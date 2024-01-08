@@ -5385,8 +5385,7 @@ socket.on('connect', () => {
                 }
                   html += `<td>${count + i}</td>
                   <td>${formattedTime}</td>
-                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&market=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
-                  " data-parent="${games[i]._id}">${games[i]._id}</td>
+                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&market=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].won}</td>
                   <td>${games[i].loss}</td>
@@ -5586,8 +5585,7 @@ socket.on('connect', () => {
                   html += `<tr style="text-align: center;" class="blue"  style="cursor: pointer;">`
                 }
                   html += ` 
-                  <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
-                  "data-parent="${games[i]._id}">${games[i]._id}</td>
+                  <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
                   <td>${games[i].won}</td>
@@ -5683,8 +5681,7 @@ socket.on('connect', () => {
                 }
                   html += `<td>${count + i}</td>
                   <td>${formattedTime}</td>
-                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}
-                  " data-parent="${games[i]._id}">${games[i]._id}</td>
+                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id}">${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
                   <td>${games[i].won}</td>
