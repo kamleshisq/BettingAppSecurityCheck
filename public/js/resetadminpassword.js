@@ -10,7 +10,9 @@ export const resetadminpassword = async(data) =>{
         if(res.data.status === 'success'){
             alert("Password Changed Successfully!!!!!")
             location.href = `/admin/dashboard?sessiontoken=${sessionStorage.getItem('sessiontoken')}`
-            return res.data.user;
+            
+        }else {
+            alert(res.data.message)
         }
 
     }catch(err){

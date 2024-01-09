@@ -5703,26 +5703,24 @@ var resetadminpassword = /*#__PURE__*/function () {
           });
         case 3:
           res = _context.sent;
-          if (!(res.data.status === 'success')) {
-            _context.next = 8;
-            break;
+          if (res.data.status === 'success') {
+            alert("Password Changed Successfully!!!!!");
+            location.href = "/admin/dashboard?sessiontoken=".concat(sessionStorage.getItem('sessiontoken'));
+          } else {
+            alert(res.data.message);
           }
-          alert("Password Changed Successfully!!!!!");
-          location.href = "/admin/dashboard?sessiontoken=".concat(sessionStorage.getItem('sessiontoken'));
-          return _context.abrupt("return", res.data.user);
-        case 8:
-          _context.next = 14;
+          _context.next = 11;
           break;
-        case 10:
-          _context.prev = 10;
+        case 7:
+          _context.prev = 7;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 14:
+        case 11:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 10]]);
+    }, _callee, null, [[0, 7]]);
   }));
   return function resetadminpassword(_x) {
     return _ref.apply(this, arguments);

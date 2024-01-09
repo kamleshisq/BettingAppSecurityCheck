@@ -510,21 +510,21 @@ exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
     }
     if(!await user.correctPassword(req.body.oldpsw, user.password)){
         res.status(404).json({
-            status:'error',
+            status:'fail',
             message:"your old password is wrong"
         })
     }
 
     if(req.body.psw !== req.body.cpsw){
         res.status(404).json({
-            status:'error',
+            status:'fail',
             message:"your new password and confirm password is not match"
         })
     }
 
      if(req.body.oldpsw == req.body.psw){
         res.status(404).json({
-            status:'error',
+            status:'fail',
             message:"Please eneter different password"
         })
     }
