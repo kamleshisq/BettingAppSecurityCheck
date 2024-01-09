@@ -117,11 +117,8 @@ $(document).ready(function(){
 
 });
 
-const checkurl = () => {
-    return window.location
-}
 
-console.log(checkurl)
+
 
 let userId = sessionStorage.getItem('sessionID')
 console.log(userId)

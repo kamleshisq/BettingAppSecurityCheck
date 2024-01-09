@@ -47,6 +47,7 @@ const featureEventModel = require('./model/featureEventModel')
 const InPlayEvent = require('./model/inPlayModel')
 const PaymentMethodModel = require('./model/paymentmethodmodel')
 const paymentReportModel = require('./model/paymentreport')
+const loginuserdata = require('./model/loginuserdata')
 
 const { error } = require('console');
 const checkPass = require("./websocketController/checkPassUser");
@@ -74,6 +75,7 @@ const oddsLimitCHeck = require('./utils/checkOddsLimit');
 const { ObjectId } = require('mongodb');
 const commissionNewModel = require('./model/commissioNNModel');
 const checkExposureARRAY = require('./utils/exposureofarrayUser');
+const { Socket } = require('engine.io');
 // const checkLimit = require('./utils/checkOddsLimit');
 
 // const { date } = require('joi');
@@ -139,6 +141,36 @@ io.on('connection', (socket) => {
 
         return whiteLabel
     }
+
+    socket.on('checklogintimeout',async(data)=>{
+        try{
+            let loginuser = await loginuserdata.findOne({userId:data._id})
+            let loginstatus = true
+            console.log((Date.now() - new Date(loginuser.date).getTime())/(1000 * 60),'Date.now() - new Date(loginuser.date).getTime())/(1000 * 60)')
+            if((Date.now() - new Date(loginuser.date).getTime())/(1000 * 60) >= 2){
+                loginstatus = false
+                let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser
+                `
+                fetch(fullUrl, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'accept': 'application/json' },
+                    body:JSON.stringify({'sessiontoken':data.sessiontoken,'userId':data.id})
+                }).then(res => res.json())
+                .then(json =>{
+                    // console.log(json.status)
+                    if(json.status == "success"){
+                        socket.on('checklogintimeout',{status:'success',loginstatus})
+                    }
+                })
+            }
+                
+        }catch(err){
+            console.log(err)
+        }
+
+    })
 
 
 //.........................for update role................//

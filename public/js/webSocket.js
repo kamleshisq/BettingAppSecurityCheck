@@ -1373,6 +1373,16 @@ socket.on('connect', () => {
                 console.log(data.msg)
             }
         })
+
+        setInterval(()=>{
+            socket.emit('checklogintimeout',{id:LOGINDATA.LOGINUSER._id,sessiontoken:sessionStorage.getItem('sessiontoken')})
+        },1000)
+
+        socket.on('checklogintimeout',async(data)=>{
+            if(!data){
+                location.href = '/adminlogin'
+            }
+        })
     }
     socket.on('loginuserbalance',async(data)=>{
         // console.log('refresh login data')

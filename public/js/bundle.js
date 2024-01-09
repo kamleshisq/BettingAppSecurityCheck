@@ -56366,10 +56366,6 @@ $(document).ready(function () {
     }
   });
 });
-var checkurl = function checkurl() {
-  return window.location;
-};
-console.log(checkurl);
 var userId = sessionStorage.getItem('sessionID');
 console.log(userId);
 if (!userId) {
