@@ -63,6 +63,7 @@ $(document).ready(function(){
 	function colorLink(){
         if(linkColor){
         linkColor.forEach(l=> l.classList.remove('active'))
+        console.log(pathname,'pathname')
         $("a[href='"+pathname+"'").addClass('active')
         if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname) || patmentArr.includes(pathname)){
             $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')

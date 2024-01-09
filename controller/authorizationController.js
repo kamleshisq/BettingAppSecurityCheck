@@ -373,6 +373,14 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 
 
     const decoded = await logindatauser.findOne({token});
+    if(!decoded){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }
     const currentUser = await User.findById(decoded.userId);
     if(!currentUser){
         req.app.set('token', null);
@@ -509,25 +517,6 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 });
 
 exports.isLogin_Admin = catchAsync( async (req, res, next) => {
-    // console.log('adminLogin')
-    // let jwtnam;
-    // let redirecturl;
-    // if(req.originalUrl.startsWith('/adminlogin')){
-    //     jwtnam = 'ADMIN_JWT'
-    //     redirecturl = '/adminlogin'
-    // }else if(req.originalUrl.startsWith('/sdmlogin')){
-    //     jwtnam = 'SDM_JWT'
-    //     redirecturl = '/sdmlogin'
-    // }else if(req.originalUrl.startsWith('/smlogin')){
-    //     jwtnam = 'SM_JWT'
-    //     redirecturl = '/smlogin'
-    // }else if(req.originalUrl.startsWith('/dmlogin')){
-    //     jwtnam = 'DM_JWT'
-    //     redirecturl = '/dmlogin'
-    // }else if(req.originalUrl.startsWith('/agentlogin')){
-    //     jwtnam = 'AGENT_JWT'
-    //     redirecturl = '/agentlogin'
-    // }
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
@@ -536,12 +525,14 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     }else{
         res.locals.B2C_Status = false
     }
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        token = req.headers.authorization.split(' ')[1].split("=")[1];
-    }else if(req.headers.cookie){
-        token = parseCookies(req.headers.cookie).ADMIN_JWT;
-        // console.log(token)
+  
+    if(req.method == 'GET'){
+        token = req.query.sessiontoken
+    }else if(req.method == 'POST'){
+        token = req.body.sessiontoken
+        delete req.body['sessiontoken']
     }
+
     // console.log(token, "TOKEN")
     if(!token){
         req.app.set('token', null);
@@ -567,8 +558,17 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
         return next()
     }
     // console.log(token)
-    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
-    const currentUser = await User.findById(decoded.A);
+    const decoded = await logindatauser.findOne({token});
+    if(!decoded){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }
+
+    const currentUser = await User.findById(decoded.userId);
     if(!currentUser){
         req.app.set('token', null);
         req.app.set('User', null);
@@ -853,24 +853,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
     }
 });
 exports.admin_logOut = catchAsync( async(req, res) => {
-    // let jwtnam;
-    // let redirecturl;
-    // if(req.originalUrl.startsWith('/adminlogin')){
-    //     jwtnam = 'ADMIN_JWT'
-    //     redirecturl = '/adminlogin'
-    // }else if(req.originalUrl.startsWith('/sdmlogin')){
-    //     jwtnam = 'SDM_JWT'
-    //     redirecturl = '/sdmlogin'
-    // }else if(req.originalUrl.startsWith('/smlogin')){
-    //     jwtnam = 'SM_JWT'
-    //     redirecturl = '/smlogin'
-    // }else if(req.originalUrl.startsWith('/dmlogin')){
-    //     jwtnam = 'DM_JWT'
-    //     redirecturl = '/dmlogin'
-    // }else if(req.originalUrl.startsWith('/agentlogin')){
-    //     jwtnam = 'AGENT_JWT'
-    //     redirecturl = '/agentlogin'
-    // }
+   
     const user = await User.findOne({_id:req.currentUser._id,is_Online:true});
     if(!user){
         return next(new AppError('User not find with this id',404))
@@ -879,10 +862,11 @@ exports.admin_logOut = catchAsync( async(req, res) => {
     // console.log(req.headers)
 	let token
     // console.log(req.headers)
-    if(req.headers.authorization){
-        token = req.headers.authorization.split(' ');
-    }else{
-        token = req.headers.cookie.split('=')
+    if(req.method == 'GET'){
+        token = req.query.sessiontoken
+    }else if(req.method == 'POST'){
+        token = req.body.sessiontoken
+        delete req.body['sessiontoken']
     }
     // console.log(token)
     let date = Date.now();
@@ -901,10 +885,7 @@ exports.admin_logOut = catchAsync( async(req, res) => {
       await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
       global._loggedInToken.splice(logs.session_id, 1);
       await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-	res.cookie('ADMIN_JWT', 'loggedout', {
-        expires: new Date(date + 500),
-        httpOnly: true
-    });
+      await logindatauser.deleteMany({userId:user._id})
 
     res.status(200).json({
         status:'success'
@@ -954,7 +935,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
     global._loggedInToken.splice(logs.session_id, 1);
     await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-
+    await logindatauser.deleteMany({userId:user._id})
     res.status(200).json({
         status:'success'
     })
