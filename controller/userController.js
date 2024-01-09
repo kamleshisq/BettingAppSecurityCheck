@@ -529,14 +529,21 @@ exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
         })
     }
     // if(await User.passwordConfirm(req.bod))
-                                                                                                                                                                                                                            
+    function randomString(length, chars) {
+        var result = '';
+        for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+        return result;
+    }
+    var passcode = randomString(12, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');          
+    user.passcode = await bycrypt.hash(passcode, 12)            
     user.password = req.body.psw
     user.passwordConfirm = req.body.cpsw
     user.passwordchanged = false
     await user.save();
     res.status(200).json({
         status:'success',
-        user
+        user,
+        passcode
     })
 });
 

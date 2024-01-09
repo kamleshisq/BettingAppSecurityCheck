@@ -381,8 +381,8 @@ io.on('connection', (socket) => {
     socket.on('editOperatorPermission',async(data)=>{
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
-                socket.emit("editOperatorPermission",{status:'fail',msg:"please provide a valid password"})
+            if(!loginUser || !(await loginUser.correctPasscode(data.data.password, loginUser.passcode))){
+                socket.emit("editOperatorPermission",{status:'fail',msg:"please provide a valid passcode"})
             }else{
                 await User.findByIdAndUpdate(data.data.id,{OperatorAuthorization:data.data.OperatorAuthorization})
                 socket.emit('editOperatorPermission',{status:'success',msg:'permission updated successfully'})
@@ -2135,7 +2135,7 @@ io.on('connection', (socket) => {
     socket.on('voidBet', async(data) => {
         try{
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-            const passcheck = await user.correctPassword(data.data.password, user.password)
+            const passcheck = await user.correctPasscode(data.data.password, user.passcode)
             if(passcheck){
                 let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",alertStatus:"CANCEL",remark:data.data.Remark,returns:0});
                 let DebitCreditAmount 
@@ -3425,7 +3425,7 @@ io.on('connection', (socket) => {
     socket.on("alertBet", async(data) => {
         try{
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-            const passcheck = await user.correctPassword(data.data.password, user.password)
+            const passcheck = await user.correctPasscode(data.data.password, user.passcode)
             if(passcheck){
                 let bet = await Bet.findOne({_id:data.id});
                 if(bet.alertStatus == 'CANCEL'){
@@ -3862,7 +3862,7 @@ io.on('connection', (socket) => {
     socket.on("VoidBetIn", async(data) => {
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+            if(!loginUser || !(await loginUser.correctPasscode(data.data.password, loginUser.passcode))){
                 socket.emit("VoidBetIn",{message:"please provide a valid password", status:"error"})
             }else{
                 let betdata = await Bet.findOne({marketId:data.id})
@@ -3879,7 +3879,7 @@ io.on('connection', (socket) => {
     socket.on('VoidBetIn2', async(data) => {
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password'); 
-            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+            if(!loginUser || !(await loginUser.correctPasscode(data.data.password, loginUser.passcode))){
                 socket.emit('VoidBetIn2', 'please provide a valid password') 
             }else{
                 let betdata = await Bet.findOne({marketId : data.id})
@@ -7787,7 +7787,7 @@ io.on('connection', (socket) => {
         try{
             
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+            if(!loginUser || !(await loginUser.correctPasscode(data.data.password, loginUser.passcode))){
                 socket.emit('ROLLBACKDETAILS', {msg:'please provide a valid password', status:'err'}) 
             }else{ 
                 let betdata = await Bet.findOne({marketId:data.id})
@@ -8179,7 +8179,7 @@ io.on('connection', (socket) => {
         // console.log(data)
         try{
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-            const passcheck = await user.correctPassword(data.data.password, user.password)
+            const passcheck = await user.correctPasscode(data.data.password, user.passcode)
             // console.log(passcheck, "PASSWORD CHECK")
             if(passcheck){
             let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark,alertStatus:'CANCEL',returns:0});
@@ -9257,7 +9257,7 @@ io.on('connection', (socket) => {
 
         if(!errorEmitted){
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-            const passcheck = await user.correctPassword(data.data.password, user.password)
+            const passcheck = await user.correctPasscode(data.data.password, user.passcode)
             if(passcheck){
                 try{
                 let NewDATA = {}
@@ -9426,7 +9426,7 @@ io.on('connection', (socket) => {
             if(reqData && reqData.reqStatus === "pending"){
                 // console.log(reqData, "reqDatareqDatareqData")
                 let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-                const passcheck = await userCe.correctPassword(data.data.password, userCe.password)
+                const passcheck = await userCe.correctPasscode(data.data.password, userCe.passcode)
                 if(passcheck){
                     let date123 = Date.now()
                     let user = await User.findOne({userName:reqData.userName})
@@ -9482,7 +9482,7 @@ io.on('connection', (socket) => {
             let reqData = await withdowReqModel.findById(data.data.id)
             if(reqData){
                 let userCe = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-                const passcheck = await userCe.correctPassword(data.data.password, userCe.password)
+                const passcheck = await userCe.correctPasscode(data.data.password, userCe.passcode)
                 if(passcheck){
                     let date1234 = Date.now()
                     let cancelUpdate  = await  withdowReqModel.findByIdAndUpdate(data.data.id, {reqStatus:'cancel', sdmRemark:data.data.remark, approvalDate:date1234})
@@ -9565,7 +9565,7 @@ io.on('connection', (socket) => {
 
                 if(!errorEmitted){
                     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-                    const passcheck = await user.correctPassword(data.data.password, user.password)
+                    const passcheck = await user.correctPasscode(data.data.password, user.passcode)
                     if(passcheck){
                         let data1 = await manageAccountsUser.findByIdAndUpdate(data.data.id, data.data)
                         if(data1){
@@ -10603,7 +10603,7 @@ io.on('connection', (socket) => {
             try{
                 let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
                 // console.log(loginUser, "loginUserloginUserloginUser")
-                if(loginUser && (await loginUser.correctPassword(data.data.Password, loginUser.password))){
+                if(loginUser && (await loginUser.correctPasscode(data.data.Password, loginUser.passcode))){
                     let user = await User.findByIdAndUpdate(data.data.id, {exposureLimit:data.data.NewEXP})
                     if(user){
                         socket.emit('changeExp', {message:'Updated!', status:'success'})

@@ -209,6 +209,9 @@ const userSchema = mongoose.Schema({
     passwordchanged:{
         type:Boolean,
         default:true,
+    },
+    passcode:{
+        type:String,
     }
 })
 
@@ -330,6 +333,10 @@ userSchema.post(/^find/, function (docs) {
 
 
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
+    return await bycrypt.compare(candidatePassword, userPassword)
+};
+
+userSchema.methods.correctPasscode = async function(candidatePassword, userPassword){
     return await bycrypt.compare(candidatePassword, userPassword)
 };
 
