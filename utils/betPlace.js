@@ -322,6 +322,12 @@ if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.titl
 
 
 //FOR BET PLACE DATA 
+let commionstatus;
+if(await commissionMarketModel.findOne({marketId:data.data.market})){
+    commionstatus = true
+}else{
+    commionstatus = false
+}
 
     if(!marketDetails.runners){
         betPlaceData = {
@@ -349,7 +355,8 @@ if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.titl
             parentArray:parentArray,
             parentId:data.LOGINDATA.LOGINUSER.parent_id,
             exposure:creditDebitamount,
-            WinAmount
+            WinAmount,
+            commionstatus
         }
     }else{
         let runnersData = JSON.parse(marketDetails.runners)
@@ -382,7 +389,8 @@ if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.titl
                 parentArray:parentArray,
                 parentId:data.LOGINDATA.LOGINUSER.parent_id,
                 exposure:creditDebitamount,
-                WinAmount
+                WinAmount,
+                commionstatus
 
             }
     }
