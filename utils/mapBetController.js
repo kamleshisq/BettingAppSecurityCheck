@@ -92,29 +92,31 @@ async function mapBet(data){
                     }
                     let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                     // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-                    if(commissionPer > 0){
-                        let commissiondata = {
-                            userName : user.userName,
-                            userId : user.id,
-                            eventId : bets[bet].eventId,
-                            sportId : bets[bet].gameId,
-                            seriesName : bets[bet].event,
-                            marketId : bets[bet].marketId,
-                            eventDate : new Date(bets[bet].date),
-                            eventName : bets[bet].match,
-                            commission : commissionCoin,
-                            upline : 100,
-                            commissionType: 'Entry Wise Commission',
-                            commissionPercentage:commissionPer,
-                            date:Date.now(),
-                            marketName:bets[bet].marketName,
-                            loginUserId:user.id,
-                            parentIdArray:user.parentUsers,
-                            betId:bets[bet].id
-                            
-                        }
-                        usercommissiondata = await newCommissionModel.create(commissiondata)
-                    }}
+                    if(await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
+                        if(commissionPer > 0){
+                            let commissiondata = {
+                                userName : user.userName,
+                                userId : user.id,
+                                eventId : bets[bet].eventId,
+                                sportId : bets[bet].gameId,
+                                seriesName : bets[bet].event,
+                                marketId : bets[bet].marketId,
+                                eventDate : new Date(bets[bet].date),
+                                eventName : bets[bet].match,
+                                commission : commissionCoin,
+                                upline : 100,
+                                commissionType: 'Entry Wise Commission',
+                                commissionPercentage:commissionPer,
+                                date:Date.now(),
+                                marketName:bets[bet].marketName,
+                                loginUserId:user.id,
+                                parentIdArray:user.parentUsers,
+                                betId:bets[bet].id
+                                
+                            }
+                            usercommissiondata = await newCommissionModel.create(commissiondata)
+                        }}
+                    }
                 
                     try{
                         for(let i = user.parentUsers.length - 1; i >= 1; i--){
@@ -132,7 +134,7 @@ async function mapBet(data){
                             
                             let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                             // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-                            if(commissionPer > 0){
+                            if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
                                 let commissiondata = {
                                     userName : childUser.userName,
                                     userId : childUser.id,
@@ -261,7 +263,7 @@ async function mapBet(data){
                     }
                     // console.log(commissionPer, "commissionPercommissionPercommissionPer")
                     let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                    if(commissionPer > 0){
+                    if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
                         let commissiondata = {
                             userName : user.userName,
                             userId : user.id,
@@ -298,7 +300,7 @@ async function mapBet(data){
                                 commissionPer = commissionChild[0].matchOdd.percentage
                             }
                             let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                            if(commissionPer > 0){
+                            if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
                                 let commissiondata = {
                                     userName : childUser.userName,
                                     userId : childUser.id,
@@ -505,7 +507,7 @@ async function mapBet(data){
                           commissionPer = commission[0].Bookmaker.percentage
                       }
                       let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                      if(commissionPer > 0){
+                      if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
                           let commissiondata = {
                               userName : user.userName,
                               userId : user.id,
@@ -541,7 +543,7 @@ async function mapBet(data){
                               commissionPer = commissionChild[0].Bookmaker.percentage
                               }
                               let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                              if(commissionPer > 0){
+                              if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
                                   let commissiondata = {
                                       userName : childUser.userName,
                                       userId : childUser.id,
