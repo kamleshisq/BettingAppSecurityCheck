@@ -173,7 +173,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('checkpasswordreset',async(data)=>{
-        if(data.passwordchanged){
+        if(data.LOGINUSER.passwordchanged){
             socket.emit('checkpasswordreset',{status:'success'})
         }else{
             socket.emit('checkpasswordreset',{status:'fail'})

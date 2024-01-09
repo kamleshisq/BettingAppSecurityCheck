@@ -1389,6 +1389,7 @@ socket.on('connect', () => {
         },500)
 
         socket.on('checkpasswordreset',async(data)=>{
+            console.log(data)
             if(data.status == 'success'){
                 $('#navmod1').modal()
             }
