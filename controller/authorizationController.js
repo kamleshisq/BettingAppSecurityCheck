@@ -875,7 +875,7 @@ exports.admin_logOut = catchAsync( async(req, res) => {
 		global._loggedInToken.splice(findToken, 1);
 	}
       // console.log(user._id)
-      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+      const logs = await loginLogs.findOne({user_id:user._id,isOnline:true})
       // console.log(logs)
       await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
       global._loggedInToken.splice(logs.session_id, 1);
@@ -921,7 +921,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     if(user.role.role_level < req.currentUser.role.role_level){
         return next(new AppError('You do not have permission to perform this action',404))
     }
-    const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+    const logs = await loginLogs.findOne({user_id:user._id,isOnline:true})
     // console.log(logs,'==>logs')
     // for(let i = 0; i < logs.length; i++){
     //     res.cookie(logs[i].session_id, '', { expires: new Date(0) });
