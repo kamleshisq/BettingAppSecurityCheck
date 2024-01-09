@@ -161,7 +161,7 @@ io.on('connection', (socket) => {
                 .then(json =>{
                     // console.log(json.status)
                     if(json.status == "success"){
-                        socket.on('checklogintimeout',{status:'success',loginstatus})
+                        socket.emit('checklogintimeout',{status:'success',loginstatus})
                     }
                 })
             }
