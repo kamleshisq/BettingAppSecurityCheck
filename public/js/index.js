@@ -120,6 +120,7 @@ $(document).ready(function(){
 
 
 $(document).on('click','.passcodemsgbox',function(e){
+    console.log('hewr')
     function copyElementTextToClipboard(elementId) {
         // Find the element by its ID
         var element = document.getElementById(elementId);
