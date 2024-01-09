@@ -16819,6 +16819,7 @@ socket.on('connect', () => {
           $(document).on("change", ".checkbox", function(e) {
               e.preventDefault()
               const isChecked = $(this).prop("checked");
+              console.log(isChecked,'isChecked')
               if(isChecked){
                 $(this).parents('.switch').addClass("on");
                 }else{

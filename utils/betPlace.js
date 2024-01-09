@@ -320,6 +320,7 @@ if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.titl
 }
 }
 
+
 //FOR BET PLACE DATA 
 
     if(!marketDetails.runners){
