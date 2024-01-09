@@ -97,6 +97,7 @@ router.get("/admin/paymentmethods", authController.isProtected, authController.i
 router.get("/admin/paymentapproval", authController.isProtected, authController.isAdmin,viewController.paymentApprovalPage);
 router.get("/admin/withdrawalRequest", authController.isProtected, authController.isAdmin,viewController.getWithrowReqPage);
 router.get("/admin/globalSettings", authController.isProtected, authController.isAdmin,viewController.getGlobalSetting);
+router.get('/resetpassword',viewController.login)
 
 //User Panal
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);

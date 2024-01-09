@@ -495,6 +495,7 @@ exports.changePassword = catchAsync(async(req, res, next) => {
     
     user.password = req.body.password
     user.passwordConfirm = req.body.passwordConfirm
+    user.passwordchanged = true
     await user.save();
     res.status(200).json({
         status:'success',
@@ -697,6 +698,7 @@ exports.currentUserPasswordupdate = catchAsync(async(req, res, next) => {
     }
     user.password = req.body.newPass
     user.passwordConfirm = req.body.confPass
+    user.passwordchanged = true
     if(req.body.newPass != req.body.confPass){
         return next(new AppError("Please Provide a same passwords"))
     }

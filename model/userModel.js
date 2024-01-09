@@ -205,6 +205,10 @@ const userSchema = mongoose.Schema({
         }],
     maxLimitForChildUser:{
         type:Number
+    },
+    passwordchanged:{
+        type:Boolean,
+        default:true,
     }
 })
 

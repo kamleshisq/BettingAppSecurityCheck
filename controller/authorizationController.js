@@ -576,7 +576,9 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-
+    if(currentUser.passwordchanged){
+        res.render('/')
+    }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             req.app.set('token', null);
