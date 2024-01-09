@@ -56313,16 +56313,17 @@ $(document).ready(function () {
   var reportsPathnameArr = ['/admin/gamereport', '/admin/myaccount', '/admin/adminaccount', '/admin/useraccount', '/admin/settlementHistory', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport', '/admin/commissionReport', '/admin/uplinecommissionReport', '/admin/downlinecommissionReort'];
   var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules', '/admin/promotion', '/admin/globalSettings'];
   var patmentArr = ['/admin/paymentapproval', '/admin/paymentmethods', '/admin/withdrawalRequest'];
+  var newpathname = pathname + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken'));
   function colorLink() {
     if (linkColor) {
       linkColor.forEach(function (l) {
         return l.classList.remove('active');
       });
-      console.log(pathname, 'pathname');
-      $("a[href='" + pathname + "'").addClass('active');
+      console.log(newpathname, 'pathname');
+      $("a[href='" + newpathname + "'").addClass('active');
       if (operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname) || patmentArr.includes(pathname)) {
-        $("a[href='" + pathname + "'").parent().parent().siblings('a').addClass('active');
-        $("a[href='" + pathname + "'").parent().parent().addClass('open');
+        $("a[href='" + newpathname + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + newpathname + "'").parent().parent().addClass('open');
       }
       if (pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events') {
         $("a[href='" + '/admin/catalogcontrol' + "'").addClass('active');
@@ -57068,7 +57069,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49928" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50441" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
