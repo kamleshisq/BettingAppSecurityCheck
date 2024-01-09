@@ -388,7 +388,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         return res.redirect('/adminlogin')
     }
     if(currentUser.passwordchanged){
-        res.render(`/resetPassword?sessiontoken=${token}`)
+        res.redirect(`/resetPassword?sessiontoken=${token}`)
     }
     let whiteLabel = process.env.whiteLabelName
     let childrenArr = []
