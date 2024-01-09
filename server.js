@@ -4237,9 +4237,9 @@ io.on('connection', (socket) => {
         // console.log(data)
         try{
             if(data.isChecked){
-                let data1 = await commissionMarketModel.create({marketId:data.marketId})
+                await commissionMarketModel.create({marketId:data.marketId,date:new Date()})
             }else{
-                let data1 = await commissionMarketModel.findOneAndDelete({marketId:data.marketId})
+                await commissionMarketModel.findOneAndDelete({marketId:data.marketId})
             }
             socket.emit("commissionMarketbyId", {status:'success',msg:'market status changed successfully'})
         }catch(err){
