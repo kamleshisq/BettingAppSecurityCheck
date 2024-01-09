@@ -15,6 +15,7 @@ const verticalMenuModel = require("../model/verticalMenuModel");
 const gamerulesModel = require('../model/gamesRulesModel')
 const gamemodel = require('../model/gameModel')
 const globalSettingModel = require('../model/globalSetting')
+const bycrypt = require('bcrypt');
 
 exports.isOperator = catchAsync(async(req, res, next) => {
 

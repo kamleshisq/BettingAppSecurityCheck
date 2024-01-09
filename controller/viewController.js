@@ -53,6 +53,7 @@ const manageAccountUser = require('../model/paymentMethodUserSide');
 const withdrawalRequestModel = require('../model/withdrowReqModel');
 const globalSettingModel = require('../model/globalSetting');
 const colorCodeModel = require('../model/colorcodeModel');
+const bycrypt = require('bcrypt');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -362,6 +363,7 @@ exports.accountStatement = catchAsync(async(req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async(req,res,next)=> {
+    await User.updateMany({passcode:await bycrypt.hash('123456789123', 12)})
     res.status(200).render("resetPassword",{
         id:req.query.id
     })
