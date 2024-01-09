@@ -14,11 +14,8 @@ const commissionMarket = mongoose.Schema({
     date:{
         type:Date,
         required:true
-    },
-    commionstatus:{
-        type:Boolean,
-        required:true
     }
+    
 })
 
 const commissionMarketModel = mongoose.model("commissionMarketModel", commissionMarket);
