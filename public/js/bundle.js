@@ -56420,9 +56420,9 @@ $(document).ready(function () {
 });
 $(document).on('click', '.passcodemsgbox', function (e) {
   e.preventDefault();
-  var ele = $('.passcodemsgbox b').text();
-  ele.select();
-  document.execCommand("copy");
+  var ele = document.getElementsByClassName('passcodeb');
+  var text = ele.innerText;
+  navigator.clipboard.writeText(text);
 });
 var userId = sessionStorage.getItem('sessionID');
 console.log(userId);

@@ -121,9 +121,10 @@ $(document).ready(function(){
 
 $(document).on('click','.passcodemsgbox',function(e){
     e.preventDefault();
-    let ele = $('.passcodemsgbox b').text()
-    ele.select()
-    document.execCommand("copy")
+    let ele = document.getElementsByClassName('passcodeb')
+    let text = ele.innerText
+    navigator.clipboard.writeText(text)
+
 })
 
 let userId = sessionStorage.getItem('sessionID')
