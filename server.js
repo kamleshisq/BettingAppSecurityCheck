@@ -144,7 +144,7 @@ io.on('connection', (socket) => {
 
     socket.on('checklogintimeout',async(data)=>{
         try{
-            let loginuser = await loginuserdata.findOne({userId:data._id})
+            let loginuser = await loginuserdata.findOne({userId:data.id})
             let loginstatus = true
             console.log(Date.now() , new Date(loginuser.date).getTime(),'Date.now() - new Date(loginuser.date).getTime())/(1000 * 60)')
             if((Date.now() - new Date(loginuser.date).getTime())/(1000 * 60) >= 10){
