@@ -146,8 +146,8 @@ io.on('connection', (socket) => {
         try{
             let loginuser = await loginuserdata.findOne({userId:data._id})
             let loginstatus = true
-            console.log((Date.now() - new Date(loginuser.date).getTime())/(1000 * 60),'Date.now() - new Date(loginuser.date).getTime())/(1000 * 60)')
-            if((Date.now() - new Date(loginuser.date).getTime())/(1000 * 60) >= 2){
+            console.log(Date.now() , new Date(loginuser.date).getTime(),'Date.now() - new Date(loginuser.date).getTime())/(1000 * 60)')
+            if((Date.now() - new Date(loginuser.date).getTime())/(1000 * 60) >= 10){
                 loginstatus = false
                 let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser
                 `
