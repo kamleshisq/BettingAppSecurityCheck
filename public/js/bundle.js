@@ -56419,16 +56419,39 @@ $(document).ready(function () {
   });
 });
 $(document).on('click', '.passcodemsgbox', function (e) {
-  e.preventDefault();
-  var ele = document.getElementsByClassName('passcodeb');
-  var text = ele.textContent || ele.innerText;
-  console.log(text);
-  var tempInput = document.createElement("textarea");
-  tempInput.value = text;
-  document.body.appendChild(tempInput);
-  tempInput.select();
-  document.execCommand("copy");
-  document.body.removeChild(tempInput);
+  function copyElementTextToClipboard(elementId) {
+    // Find the element by its ID
+    var element = document.getElementById(elementId);
+
+    // Check if the element exists
+    if (element) {
+      // Get the text content of the element
+      var textToCopy = element.textContent || element.innerText;
+
+      // Copy the text to the clipboard using the Clipboard API or document.execCommand()
+      if (navigator.clipboard) {
+        // Use Clipboard API
+        navigator.clipboard.writeText(textToCopy).then(function () {
+          console.log("Text copied to clipboard");
+        }).catch(function (err) {
+          console.error("Error copying text to clipboard: ", err);
+        });
+      } else {
+        // Fallback for browsers that do not support the Clipboard API
+        var tempInput = document.createElement("textarea");
+        tempInput.value = textToCopy;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+      }
+    } else {
+      console.error("Element with ID '" + elementId + "' not found.");
+    }
+  }
+
+  // Example usage:
+  copyElementTextToClipboard("passcodeb");
 });
 var userId = sessionStorage.getItem('sessionID');
 console.log(userId);
