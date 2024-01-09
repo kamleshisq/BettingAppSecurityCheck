@@ -54,19 +54,23 @@ const {
     host, hostname, href, origin, pathname, port, protocol, search
   } = window.location
 
+
+
 $(document).ready(function(){ 
     const linkColor = document.querySelectorAll('.nav_link')
 	const operationPathnameArr = ['/admin/houseManagement','/admin/streammanagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
     const reportsPathnameArr = ['/admin/gamereport','/admin/myaccount','/admin/adminaccount','/admin/useraccount','/admin/settlementHistory','/admin/reports','/admin/userhistoryreport','/admin/plreport','/admin/commissionReport','/admin/uplinecommissionReport','/admin/downlinecommissionReort']
     const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules','/admin/promotion','/admin/globalSettings']
     const patmentArr = ['/admin/paymentapproval','/admin/paymentmethods','/admin/withdrawalRequest']
+    let newpathname = pathname + `?sessiontoken=${sessionStorage.getItem('sessiontoken')}`
 	function colorLink(){
         if(linkColor){
         linkColor.forEach(l=> l.classList.remove('active'))
-        $("a[href='"+pathname+"'").addClass('active')
+        console.log(newpathname,'pathname')
+        $("a[href='"+newpathname+"'").addClass('active')
         if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname) || patmentArr.includes(pathname)){
-            $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
-            $("a[href='"+pathname+"'").parent().parent().addClass('open')
+            $("a[href='"+newpathname+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+newpathname+"'").parent().parent().addClass('open')
         }
         if(pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events'){
             $("a[href='"+'/admin/catalogcontrol'+"'").addClass('active')
@@ -113,11 +117,8 @@ $(document).ready(function(){
 
 });
 
-const checkurl = () => {
-    return window.location
-}
 
-console.log(checkurl)
+
 
 let userId = sessionStorage.getItem('sessionID')
 console.log(userId)
