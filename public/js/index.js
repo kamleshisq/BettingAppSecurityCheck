@@ -119,7 +119,12 @@ $(document).ready(function(){
 });
 
 
-
+$(document).on('click','.passcodemsgbox',function(e){
+    e.preventDefault();
+    let ele = $('.passcodemsgbox b').text()
+    ele.select()
+    document.execCommand("copy")
+})
 
 let userId = sessionStorage.getItem('sessionID')
 console.log(userId)

@@ -56418,6 +56418,12 @@ $(document).ready(function () {
     }
   });
 });
+$(document).on('click', '.passcodemsgbox', function (e) {
+  e.preventDefault();
+  var ele = $('.passcodemsgbox b').text();
+  ele.select();
+  document.execCommand("copy");
+});
 var userId = sessionStorage.getItem('sessionID');
 console.log(userId);
 if (!userId) {
