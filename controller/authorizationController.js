@@ -316,6 +316,24 @@ exports.checkPass = catchAsync(async(req, res, next) => {
     next()
 })
 
+exports.checkPasscode = catchAsync(async(req, res, next) => {
+    const user = await User.findOne({userName:req.currentUser.userName}).select('+password');
+    if(!req.body.Password){
+       return res.status(404).json({
+            status:'error',
+            message:"Please provide valid password"
+        })
+    }
+    const passcheck = await user.correctPasscode(req.body.Password, user.passcode)
+    if(!user || !(passcheck)){
+       return res.status(404).json({
+            status:'error',
+            message:"Please provide valide password"
+        })
+    }
+    next()
+})
+
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
