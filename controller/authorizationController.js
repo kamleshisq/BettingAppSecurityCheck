@@ -387,7 +387,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
         return res.redirect('/adminlogin')
     }
-    if(currentUser.passwordchanged){
+    if(currentUser.passwordchanged && req.originalUrl !== '/api/v1/users/changeUserPasswordAdmin'){
         return res.redirect(`/resetPassword?sessiontoken=${token}`)
     }
     let whiteLabel = process.env.whiteLabelName
@@ -579,7 +579,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-    if(currentUser.passwordchanged){
+    if(currentUser.passwordchanged && req.originalUrl !== '/api/v1/users/changeUserPasswordAdmin'){
         res.render(`/resetPassword?sessiontoken=${token}`)
     }
     if(currentUser.roleName != "DemoLogin"){
