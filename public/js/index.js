@@ -123,6 +123,7 @@ $(document).on('click','.passcodemsgbox',function(e){
     e.preventDefault();
     let ele = document.getElementsByClassName('passcodeb')
     let text = ele.textContent || ele.innerText
+    console.log(text)
     var tempInput = document.createElement("textarea");
     tempInput.value = text;
     document.body.appendChild(tempInput);

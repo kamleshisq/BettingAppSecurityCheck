@@ -56422,6 +56422,7 @@ $(document).on('click', '.passcodemsgbox', function (e) {
   e.preventDefault();
   var ele = document.getElementsByClassName('passcodeb');
   var text = ele.textContent || ele.innerText;
+  console.log(text);
   var tempInput = document.createElement("textarea");
   tempInput.value = text;
   document.body.appendChild(tempInput);
