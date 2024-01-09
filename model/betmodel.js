@@ -108,6 +108,10 @@ const betSchema = mongoose.Schema({
     },
     WinAmount : {
         type:Number
+    },
+    commionstatus:{
+        type:Boolean,
+        required:true
     }
 })
 
