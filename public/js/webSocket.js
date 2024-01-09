@@ -1439,12 +1439,14 @@ socket.on('connect', () => {
         $('.welcome-info-btn').html(html1)
     })
 
-    setInterval(()=>{
-        socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
-    },500)
+    if(!pathname.startsWith('/admin')){
+        setInterval(()=>{
+            socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
+        },500)
+    }
 
     socket.on('checkpasswordreset',async(data)=>{
-        console.log(data)
+        // console.log(data)
         if(data.status == 'success'){
             $('#navmod1').modal('show')
         }
