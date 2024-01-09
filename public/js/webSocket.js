@@ -1320,7 +1320,7 @@ socket.on('connect', () => {
         }
     })
     
-    if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && !pathname.startsWith('/admin/betlimit')){
+    if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/adminlogin' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && !pathname.startsWith('/admin/betlimit')){
         setInterval(()=>{
             // console.log("loginuserbalance")
             socket.emit('loginuserbalance',LOGINDATA)
@@ -1328,7 +1328,7 @@ socket.on('connect', () => {
         
     }
 
-    if(pathname.startsWith('/admin')){
+    if(pathname.startsWith('/admin') && pathname != '/adminlogin'){
         let oldcount = 0 
         if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Admin'){
             setInterval(()=>{
