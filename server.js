@@ -1911,37 +1911,42 @@ io.on('connection', (socket) => {
                 }
             }
             // console.log(forFancy)
-            let allData =  await getCrkAndAllData()
-            const cricket = allData[0].gameList[0].eventList
-            let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
-            let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
-            footBall = footBall.eventList
-            Tennis = Tennis.eventList
-            const resultSearch = cricket.concat(footBall, Tennis);
-            let status;
-            // console.log(data,"==>marketId eventId error")
-            if(data.eventId){
-                let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
-                // console.log(event,data.eventId,"==>Event")
-                if(await InPlayEvent.findOne({Id:event.eventData.eventId})){
-                    status = true
-                }else{
-                    if(event.eventData.type == "IN_PLAY"){
+            try{
+                
+                let allData =  await getCrkAndAllData()
+                const cricket = allData[0].gameList[0].eventList
+                let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+                let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+                footBall = footBall.eventList
+                Tennis = Tennis.eventList
+                const resultSearch = cricket.concat(footBall, Tennis);
+                let status;
+                // console.log(data,"==>marketId eventId error")
+                if(data.eventId){
+                    let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
+                    // console.log(event,data.eventId,"==>Event")
+                    if(await InPlayEvent.findOne({Id:event.eventData.eventId})){
                         status = true
                     }else{
-                        status = false
+                        if(event.eventData.type == "IN_PLAY"){
+                            status = true
+                        }else{
+                            status = false
+                        }
+                    }
+        
+                }else{
+                    // console.log(finalResult)
+                    for(let i = 0; i < finalResult.items.length; i++){
+                        // console.log(finalResult.items[i])
                     }
                 }
-    
-            }else{
-                // console.log(finalResult)
-                for(let i = 0; i < finalResult.items.length; i++){
-                    // console.log(finalResult.items[i])
-                }
+        
+                // console.log(resumeSuspendMarkets)
+                socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
+            }catch(err){
+                console.log(err)
             }
-    
-            // console.log(resumeSuspendMarkets)
-            socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
         }else{
             socket.emit('marketId', {Message:'please Provide array'})
         }
