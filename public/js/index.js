@@ -239,6 +239,16 @@ $(document).on('submit','.passReset-form',function(e){
     reset(formDataObj);
 });
 
+$(document).on('submit','.resetpasswordAdmin',function(e){
+    e.preventDefault();
+    let form = $(this)[0];
+    let fd = new FormData(form)
+    const formDataObj = Object.fromEntries(fd.entries())
+    formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
+    // console.log(formDataObj)
+    reset(formDataObj);
+});
+
 
 $(document).on('submit','#edit-form',async function(e){
     e.preventDefault();

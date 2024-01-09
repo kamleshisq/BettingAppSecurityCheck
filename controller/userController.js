@@ -502,6 +502,42 @@ exports.changePassword = catchAsync(async(req, res, next) => {
         user
     })
 });
+exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
+    let user = await User.findOne({_id:req.currentUser._id}).select('+password')
+    // // console.log(req.body.password)
+    if(!user){
+        return next(new AppError("User not found", 404))
+    }
+    if(!await user.correctPassword(req.body.oldpsw, user.password)){
+        res.status(404).json({
+            status:'error',
+            message:"your old password is wrong"
+        })
+    }
+
+    if(req.body.psw !== req.body.cpsw){
+        res.status(404).json({
+            status:'error',
+            message:"your new password and confirm password is not match"
+        })
+    }
+
+     if(req.body.oldpsw == req.body.psw){
+        res.status(404).json({
+            status:'error',
+            message:"Please eneter different password"
+        })
+    }
+    // if(await User.passwordConfirm(req.bod))
+    user.password = req.body.psw
+    user.passwordConfirm = req.body.cpsw
+    user.passwordchanged = false
+    await user.save();
+    res.status(200).json({
+        status:'success',
+        user
+    })
+});
 
 exports.onLineUsers = catchAsync(async(req, res, next) => {
     let onlineuser

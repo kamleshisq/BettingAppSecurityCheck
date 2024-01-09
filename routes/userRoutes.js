@@ -32,6 +32,7 @@ router.post('/updateUserStatusBettingUnlock', userController.isOperator ,authCon
 
 //changeUserPassword//
 router.post('/changeUserPassword', userController.isOperator ,authController.restrictTo("changeUserPassword"), authController.checkPass,userController.changePassword);
+router.post('/changeUserPasswordAdmin', userController.isOperator ,authController.restrictTo("changeUserPassword"), authController.checkPass,userController.changePasswordAdmin);
 
 
 //userName//

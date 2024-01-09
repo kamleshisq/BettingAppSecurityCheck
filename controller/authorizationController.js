@@ -387,6 +387,9 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
         return res.redirect('/adminlogin')
     }
+    if(currentUser.passwordchanged){
+        res.render(`/resetPassword?sessiontoken=${token}`)
+    }
     let whiteLabel = process.env.whiteLabelName
     let childrenArr = []
     let paymentreqcount = 0
@@ -577,7 +580,7 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
         })
     }
     if(currentUser.passwordchanged){
-        res.render('/')
+        res.render(`/resetPassword?sessiontoken=${token}`)
     }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
