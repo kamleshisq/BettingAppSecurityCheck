@@ -506,7 +506,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
         return res.redirect('/')
     }
-
+    
     if(currentUser.roleName != "DemoLogin"){
         if(currentUser.whiteLabel !== process.env.whiteLabelName && currentUser.role_type !== 1){
             req.app.set('token', null);

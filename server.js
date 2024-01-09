@@ -172,6 +172,14 @@ io.on('connection', (socket) => {
 
     })
 
+    socket.on('checkpasswordreset',async(data)=>{
+        if(data.passwordchanged){
+            socket.emit('checkpasswordreset',{status:'success'})
+        }else{
+            socket.emit('checkpasswordreset',{status:'fail'})
+        }
+    })
+
 
 //.........................for update role................//
 

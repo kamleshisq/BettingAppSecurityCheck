@@ -1383,6 +1383,16 @@ socket.on('connect', () => {
                 location.href = '/adminlogin'
             }
         })
+
+        setInterval(()=>{
+            socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
+        },500)
+
+        socket.on('checkpasswordreset',async(data)=>{
+            if(data.status == 'success'){
+                $('#navmod1').modal()
+            }
+        })
     }
     socket.on('loginuserbalance',async(data)=>{
         // console.log('refresh login data')
