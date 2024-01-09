@@ -5473,7 +5473,7 @@ var login = /*#__PURE__*/function () {
             method: 'POST',
             url: '/api/v1/auth/login',
             data: {
-              userName: userName,
+              userName: userName.toLowerCase(),
               password: password
             }
           });
@@ -5708,7 +5708,7 @@ var createUser = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/userManagement');
+              location.reload();
             }, 100);
           }
           _context.next = 11;
@@ -6086,7 +6086,7 @@ var updatePassword = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('updated successfully!!!!');
             window.setTimeout(function () {
-              location.href = '/admin/userManagement';
+              location.reload();
             }, 100);
           }
           _context.next = 11;
@@ -6225,7 +6225,7 @@ var updatePromotion = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Updated successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/admin/promotion');
+              location.reload();
             }, 100);
           }
           _context.next = 11;
@@ -6278,7 +6278,7 @@ var createPromotion = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Created successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/admin/promotion');
+              location.reload();
             }, 100);
           }
           _context.next = 10;
@@ -6331,7 +6331,7 @@ var deletePromotion = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('deleted successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/admin/promotion');
+              location.reload();
             }, 100);
           }
           _context.next = 11;
@@ -6439,7 +6439,7 @@ var updateHorizontalMenu = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/cms');
+              location.reload();
             }, 200);
           }
           _context.next = 11;
@@ -6493,7 +6493,7 @@ var createBanner = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/cms');
+              location.reload();
             }, 200);
           }
           _context.next = 11;
@@ -6548,7 +6548,7 @@ var updateBanner = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/cms');
+              location.reload();
             }, 200);
           }
           _context.next = 11;
@@ -6602,7 +6602,7 @@ var createPage = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/pageManager');
+              location.reload();
             }, 200);
           } else {
             alert(res.data.message);
@@ -6658,7 +6658,7 @@ var addImage = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/cms');
+              location.reload();
             }, 200);
           }
           _context.next = 11;
@@ -6712,7 +6712,7 @@ var editSliderInImage = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/cms');
+              location.reload();
             }, 200);
           }
           _context.next = 11;
@@ -6766,7 +6766,7 @@ var updateSlider = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/cms');
+              location.reload();
             }, 200);
           }
           _context.next = 11;
@@ -6820,7 +6820,7 @@ var createSlider = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/cms');
+              location.reload();
             }, 200);
           }
           _context.next = 11;
@@ -7125,7 +7125,7 @@ var updateBasicDetails = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/admin/globalSettings');
+              location.reload();
             }, 200);
           }
           _context.next = 11;
@@ -57011,6 +57011,7 @@ $(document).on('submit', '.basicDetailsFOrm', function (e) {
   var table = $(this).closest('.fade').attr('id');
   fd.append('id', id);
   fd.append('table', table);
+  fd.append('sessiontoken', sessionStorage.getItem('sessiontoken'));
   (0, _updateBasicDetails.updateBasicDetails)(fd);
   // console.log(data, "DATA23232")
 });
@@ -57066,7 +57067,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49943" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49928" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
