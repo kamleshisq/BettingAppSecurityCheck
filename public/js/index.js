@@ -122,8 +122,13 @@ $(document).ready(function(){
 $(document).on('click','.passcodemsgbox',function(e){
     e.preventDefault();
     let ele = document.getElementsByClassName('passcodeb')
-    let text = ele.innerText
-    navigator.clipboard.writeText(text)
+    let text = ele.textContent || ele.innerText
+    var tempInput = document.createElement("textarea");
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
 
 })
 

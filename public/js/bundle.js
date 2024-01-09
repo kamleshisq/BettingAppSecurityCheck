@@ -56421,8 +56421,13 @@ $(document).ready(function () {
 $(document).on('click', '.passcodemsgbox', function (e) {
   e.preventDefault();
   var ele = document.getElementsByClassName('passcodeb');
-  var text = ele.innerText;
-  navigator.clipboard.writeText(text);
+  var text = ele.textContent || ele.innerText;
+  var tempInput = document.createElement("textarea");
+  tempInput.value = text;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempInput);
 });
 var userId = sessionStorage.getItem('sessionID');
 console.log(userId);
