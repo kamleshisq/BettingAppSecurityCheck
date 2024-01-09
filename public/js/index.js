@@ -2,6 +2,7 @@ import { login } from "./login";
 import { logout } from "./logOut";
 import {logoutUser} from "./logOutUser"
 import { reset } from "./resetPass";
+import {resetadminpassword} from './resetadminpassword'
 import { createUser } from "./createUser";
 import { debitCredit } from "./debitCredit";
 import {creditDebitSettle} from "./creditDebitSettle"
@@ -246,7 +247,7 @@ $(document).on('submit','.resetpasswordAdmin',function(e){
     const formDataObj = Object.fromEntries(fd.entries())
     formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
     // console.log(formDataObj)
-    reset(formDataObj);
+    resetadminpassword(formDataObj);
 });
 
 
