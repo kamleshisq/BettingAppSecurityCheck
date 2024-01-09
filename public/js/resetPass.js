@@ -1,5 +1,5 @@
 import axios from "axios"
-export const resetadminpassword = async(data) =>{
+export const reset = async(data) =>{
     // console.log(data)
     try{
         const res = await axios({
