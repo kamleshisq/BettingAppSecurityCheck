@@ -92,7 +92,7 @@ async function mapBet(data){
                     }
                     let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                     // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-                    if(await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
+                    if(bets[bet].commionstatus){
                         if(commissionPer > 0){
                             let commissiondata = {
                                 userName : user.userName,
@@ -134,7 +134,7 @@ async function mapBet(data){
                             
                             let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                             // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-                            if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
+                            if(commissionPer > 0 && bets[bet].commionstatus){
                                 let commissiondata = {
                                     userName : childUser.userName,
                                     userId : childUser.id,
@@ -263,7 +263,7 @@ async function mapBet(data){
                     }
                     // console.log(commissionPer, "commissionPercommissionPercommissionPer")
                     let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                    if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
+                    if(commissionPer > 0 && bets[bet].commionstatus){
                         let commissiondata = {
                             userName : user.userName,
                             userId : user.id,
@@ -300,7 +300,7 @@ async function mapBet(data){
                                 commissionPer = commissionChild[0].matchOdd.percentage
                             }
                             let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                            if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
+                            if(commissionPer > 0 && bets[bet].commionstatus){
                                 let commissiondata = {
                                     userName : childUser.userName,
                                     userId : childUser.id,
@@ -507,7 +507,7 @@ async function mapBet(data){
                           commissionPer = commission[0].Bookmaker.percentage
                       }
                       let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                      if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
+                      if(commissionPer > 0 && bets[bet].commionstatus){
                           let commissiondata = {
                               userName : user.userName,
                               userId : user.id,
@@ -543,7 +543,7 @@ async function mapBet(data){
                               commissionPer = commissionChild[0].Bookmaker.percentage
                               }
                               let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                              if(commissionPer > 0 && await commissionMarketModel.findOne({marketId:bets[bet].marketId})){
+                              if(commissionPer > 0 && bets[bet].commionstatus){
                                   let commissiondata = {
                                       userName : childUser.userName,
                                       userId : childUser.id,
