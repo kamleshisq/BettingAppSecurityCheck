@@ -535,7 +535,15 @@ exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
         for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
         return result;
     }
-    var passcode = randomString(12, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');          
+    let passcode = randomString(6, '0123456789');  
+    let passcodeexist = true
+    while(passcodeexist){
+        if(await User.findOne({passcode})){
+            passcode = randomString(6, '0123456789');
+            passcodeexist = false
+        }
+        
+    }     
     user.passcode = await bycrypt.hash(passcode, 12)            
     user.password = req.body.psw
     user.passwordConfirm = req.body.cpsw
