@@ -5704,8 +5704,7 @@ var resetadminpassword = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            alert("Password Changed Successfully!!!!! Your passcode is ".concat(res.data.passcode));
-            location.href = "/admin/dashboard?sessiontoken=".concat(sessionStorage.getItem('sessiontoken'));
+            location.href = "/passcodeview?sessiontoken=".concat(sessionStorage.getItem('sessiontoken'));
           } else {
             alert(res.data.message);
           }
