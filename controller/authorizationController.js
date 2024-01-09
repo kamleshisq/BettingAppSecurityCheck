@@ -877,14 +877,10 @@ exports.admin_logOut = catchAsync( async(req, res) => {
       // console.log(user._id)
       const logs = await loginLogs.find({user_id:user._id,isOnline:true})
       // console.log(logs)
-      for(let i = 0; i < logs.length; i++){
-          res.cookie(logs[i].session_id, '', { expires: new Date(0) });
-          res.clearCookie(logs[i].session_id);
-      }
       await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
       global._loggedInToken.splice(logs.session_id, 1);
       await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-      await logindatauser.deleteMany({userId:user._id})
+      await logindatauser.deleteMany({token:logs.session_id})
 
     res.status(200).json({
         status:'success'
@@ -927,14 +923,14 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     }
     const logs = await loginLogs.find({user_id:user._id,isOnline:true})
     // console.log(logs,'==>logs')
-    for(let i = 0; i < logs.length; i++){
-        res.cookie(logs[i].session_id, '', { expires: new Date(0) });
-        res.clearCookie(logs[i].session_id);
-    }
+    // for(let i = 0; i < logs.length; i++){
+    //     res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+    //     res.clearCookie(logs[i].session_id);
+    // }
     await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
     global._loggedInToken.splice(logs.session_id, 1);
     await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-    await logindatauser.deleteMany({userId:user._id})
+    await logindatauser.deleteMany({token:logs.session_id})
     res.status(200).json({
         status:'success'
     })
