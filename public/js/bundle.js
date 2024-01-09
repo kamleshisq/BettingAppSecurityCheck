@@ -56371,7 +56371,6 @@ $(document).ready(function () {
       linkColor.forEach(function (l) {
         return l.classList.remove('active');
       });
-      console.log(newpathname, 'pathname');
       $("a[href='" + newpathname + "'").addClass('active');
       if (operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname) || patmentArr.includes(pathname)) {
         $("a[href='" + newpathname + "'").parent().parent().siblings('a').addClass('active');
