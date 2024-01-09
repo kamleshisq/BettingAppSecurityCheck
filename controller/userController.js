@@ -529,6 +529,7 @@ exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
         })
     }
     // if(await User.passwordConfirm(req.bod))
+                                                                                                                                                                                                                            
     user.password = req.body.psw
     user.passwordConfirm = req.body.cpsw
     user.passwordchanged = false
