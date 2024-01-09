@@ -8,7 +8,7 @@ export const resetadminpassword = async(data) =>{
             data
         });
         if(res.data.status === 'success'){
-            location.href = `/passcodeview?sessiontoken=${sessionStorage.getItem('sessiontoken')}`
+            location.href = `/passcodeview?sessiontoken=${sessionStorage.getItem('sessiontoken')}&passcode=${res.data.passcode}`
             
         }else {
             alert(res.data.message)

@@ -371,7 +371,8 @@ exports.resetPassword = catchAsync(async(req,res,next)=> {
 exports.passcodeview = catchAsync(async(req,res,next)=> {
     // await User.updateMany({passcode:await bycrypt.hash('123456789123', 12)})
     res.status(200).render("passcodeview",{
-        title:'PassCode Page'
+        title:'PassCode Page',
+        passcode:req.query.passcode
     })
 })
 
