@@ -860,6 +860,7 @@ socket.on('connect', () => {
         $('#navmod1').modal('show');
         setTimeout(function () {
             $('#navmod1').modal('hide');
+            location.reload(true)
         }, 1000);
     });
     }else{
