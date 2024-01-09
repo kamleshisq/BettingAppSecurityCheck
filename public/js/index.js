@@ -129,11 +129,9 @@ $(document).on('click','.passcodemsgbox',function(e){
         if (element) {
           // Get the text content of the element
           var textToCopy = element.textContent || element.innerText;
-            console.log(textToCopy,'textToCopy')
           // Copy the text to the clipboard using the Clipboard API or document.execCommand()
           if (navigator.clipboard) {
             // Use Clipboard API
-            console.log('innavigator')
             navigator.clipboard.writeText(textToCopy)
               .then(function() {
                 console.log("Text copied to clipboard");
