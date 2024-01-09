@@ -429,7 +429,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     req.currentUserUnique = currentUser
     req.app.set('token', token);
     req.app.set('User', currentUser);
-    process.nextTick(next);
+    next()
 });
 
 
