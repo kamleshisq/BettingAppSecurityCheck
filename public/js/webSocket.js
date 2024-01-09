@@ -1384,16 +1384,7 @@ socket.on('connect', () => {
             }
         })
 
-        setInterval(()=>{
-            socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
-        },500)
-
-        socket.on('checkpasswordreset',async(data)=>{
-            console.log(data)
-            if(data.status == 'success'){
-                $('#navmod1').modal()
-            }
-        })
+      
     }
     socket.on('loginuserbalance',async(data)=>{
         // console.log('refresh login data')
@@ -1445,6 +1436,17 @@ socket.on('connect', () => {
             <h6> ${data.lifetimePL.toFixed(2)}</h6>
         </div>`
         $('.welcome-info-btn').html(html1)
+    })
+
+    setInterval(()=>{
+        socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
+    },500)
+
+    socket.on('checkpasswordreset',async(data)=>{
+        console.log(data)
+        if(data.status == 'success'){
+            $('#navmod1').modal()
+        }
     })
 
     //..................FOR User Profile Page...........//
