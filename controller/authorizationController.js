@@ -880,7 +880,7 @@ exports.admin_logOut = catchAsync( async(req, res) => {
       await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
       global._loggedInToken.splice(logs.session_id, 1);
       await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-      await logindatauser.deleteMany({token:logs.session_id})
+      await logindatauser.deleteMany({userId:user._id})
 
     res.status(200).json({
         status:'success'
@@ -930,7 +930,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
     global._loggedInToken.splice(logs.session_id, 1);
     await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-    await logindatauser.deleteMany({token:logs.session_id})
+    await logindatauser.deleteMany({userId:user._id})
     res.status(200).json({
         status:'success'
     })
