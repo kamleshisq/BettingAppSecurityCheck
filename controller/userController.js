@@ -538,7 +538,7 @@ exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
     let passcode = randomString(6, '0123456789');  
     let passcodeexist = true
     while(passcodeexist){
-        if(await User.findOne({passcode})){
+        if(!await user.correctPasscode(passcode, user.passcode)){
             passcode = randomString(6, '0123456789');
             passcodeexist = false
         }
