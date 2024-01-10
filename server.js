@@ -86,7 +86,7 @@ io.on('connection', (socket) => {
         let tokenFORUSER = data
         if(tokenFORUSER){
             // await loginlogs.findOne({session_id:tokenFORUSER})
-            console.log(await loginlogs.findOne({session_id:tokenFORUSER}))
+            console.log(await loginlogs.findOne({session_id:tokenFORUSER}),{session_id:tokenFORUSER})
             // if(logsDATA){
             //     let thatUser = await User.findOne({userName:logsDATA.userName})
             //     if(thatUser){
@@ -100,19 +100,19 @@ io.on('connection', (socket) => {
         }
     })
     
-    // if (!socket.request.app) {
-    //     socket.request.app = app;
-    //   }
-    // if (socket.request && socket.request.app) {
-    //     const myVariable = socket.request.app.get('User');
-    //     const myVariable2 = socket.request.app.get('token');
-    //     const ip = socket.request.app.get('Ip');
-    //     socket.emit("loginUser", {
-    //         loginData:myVariable,
-    //         socket:myVariable2,
-    //         Ip:ip
-    //     })
-    // }
+    if (!socket.request.app) {
+        socket.request.app = app;
+      }
+    if (socket.request && socket.request.app) {
+        const myVariable = socket.request.app.get('User');
+        const myVariable2 = socket.request.app.get('token');
+        const ip = socket.request.app.get('Ip');
+        socket.emit("loginUser", {
+            loginData:myVariable,
+            socket:myVariable2,
+            Ip:ip
+        })
+    }
     // console.log('connected to client')
     // console.log(socket.request, socket.request.app,"21212")
     // console.log(loginData.Token)
