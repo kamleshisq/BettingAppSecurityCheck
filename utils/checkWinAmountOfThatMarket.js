@@ -198,7 +198,7 @@ async function checkExpoOfThatMarket( bet ){
                 betDetails[0].uniqueRuns.push(runtopush)
                 betDetails[0].data[0].push(objectPUsh)
             }else{
-                letnewDATA = betDetails[0].data[0].findIndex(item => item.secId === bet.secId && item.runs == runs)
+                letnewDATA = betDetails[0].data[0].findIndex(item => item.secId === bet.secId && item.runs == runtopush)
                 if(letnewDATA !== -1){
                     betDetails[0].data[0][letnewDATA].totalAmount = betDetails[0].data[0][letnewDATA].totalAmount - parseFloat(bet.exposure)
                     betDetails[0].data[0][letnewDATA].totalWinAmount = betDetails[0].data[0][letnewDATA].totalWinAmount - parseFloat(bet.WinAmount)
