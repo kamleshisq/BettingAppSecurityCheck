@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <script>
-    console.log(<%= loginData.Token %>, 13254)
-    localStorage.setItem('JWT', JSON.stringify(loginData.Token));
+    // console.log(, 13254)
+    localStorage.setItem('JWT', <%= loginData.Token %>);
   </script>
   <head>
     <meta charset="utf-8" />
