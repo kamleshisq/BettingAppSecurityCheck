@@ -96,7 +96,8 @@ io.on('connection', (socket) => {
             }else{
                 socket.emit('LOGIN23', 'reaload')
             }
-        }})
+        }
+    })
     
     if (!socket.request.app) {
         socket.request.app = app;
