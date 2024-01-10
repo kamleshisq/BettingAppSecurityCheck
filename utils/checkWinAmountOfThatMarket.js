@@ -428,7 +428,7 @@ async function checkExpoOfThatMarket( bet ){
         ])
 
 
-        console.log(betsMarketIdWise, "betsMarketIdWisebetsMarketIdWisebetsMarketIdWise")
+        console.log(betsMarketIdWise[0].selections, "betsMarketIdWisebetsMarketIdWisebetsMarketIdWise")
     }
 
     console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
