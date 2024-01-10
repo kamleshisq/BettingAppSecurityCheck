@@ -105,6 +105,91 @@ async function checkExpoOfThatMarket( bet ){
               WinAmount = WinAmount.totalWinAmount2
             }
            
+        }else{
+            let betDetails = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        userName:bet.userName,
+                        marketId:bet.marketId   
+                    }
+                },
+                {
+                    $addFields: {
+                      runs: {
+                        $toInt: {
+                          $arrayElemAt: [
+                            { $split: ["$selectionName", "@"] },
+                            1 
+                          ]
+                        }
+                      }
+                    }
+                },
+                {
+                    $group: { 
+                        _id: {
+                            "secId":"$secId",
+                            "runs":"$runs"
+                        },
+                        totalAmount: { 
+                            $sum: '$returns'
+                        },
+                        totalWinAmount:{
+                            $sum: { 
+                                $cond : {
+                                    if : {$eq: ["$secId", "odd_Even_Yes"]},
+                                then:{
+                                    $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                },
+                                else:"$Stake"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    $project:{
+                        _id:0,
+                        secId: "$_id.secId",
+                        runs: "$_id.runs",
+                        totalAmount:"$totalAmount",
+                        totalWinAmount:"$totalWinAmount",
+                    }
+                },
+                {
+                    $group: {
+                      _id: null,
+                      uniqueRuns: { $addToSet: "$runs" },
+                      data: { $push: "$$ROOT" } 
+                    }
+                },
+                {
+                    $project: {
+                      _id: 0, 
+                      uniqueRuns: 1,
+                      data: 1 
+                    }
+                  },
+                  {
+                    $unwind: "$uniqueRuns" 
+                  },
+                  {
+                    $sort: {
+                      "uniqueRuns": 1 
+                    }
+                  },
+                  {
+                    $group: {
+                      _id: null,
+                      uniqueRuns: { $push: "$uniqueRuns" },
+                      data: { $push: "$data" }
+                    }
+                  },
+            ])
+
+
+            console.log(betDetails)
         }
     }else{
 
