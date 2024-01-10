@@ -91,8 +91,9 @@ async function mapBet(data){
                       commissionPer = commission[0].fency.percentage
                     }
                     let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                    // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
+                    console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
                     if(bets[bet].commionstatus){
+                        console.log('WORKING')
                         if(commissionPer > 0){
                             let commissiondata = {
                                 userName : user.userName,
