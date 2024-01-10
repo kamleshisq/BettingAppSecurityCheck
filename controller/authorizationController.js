@@ -112,7 +112,9 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
         httpOnly: true,
-        // secure: true
+        secure: false,
+        sameSite: 'None', 
+        path: '/'
         }
         // const sessionId = user.id
     res.cookie('JWT', token, cookieOption)
