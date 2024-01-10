@@ -92,7 +92,7 @@ async function checkExpoOfThatMarket( bet ){
             ])
 
 
-            console.log(exposure1, "exposure1exposure1exposure1")
+            console.log(exposure1[0].data, "exposure1exposure1exposure1")
         }
     }else{
 
