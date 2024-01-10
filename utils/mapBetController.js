@@ -506,13 +506,13 @@ async function mapBet(data){
                       let commission = await commissionModel.find({userId:user.id})
                       if(commission.length > 0){
                       let commissionPer = 0
-                      console.log(commission[0])
-                      console.log(((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status),bets[bet].marketName.toLowerCase().startsWith('book'),  commission[0].Bookmaker.type == "ENTRY_LOSS_")
+                    //   console.log(commission[0])
+                    //   console.log(((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status),bets[bet].marketName.toLowerCase().startsWith('book'),  commission[0].Bookmaker.type == "ENTRY_LOSS_")
                       if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status){
                           commissionPer = commission[0].Bookmaker.percentage
                       }
                       let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                      console.log(commissionCoin, commissionPer)
+                    //   console.log(commissionCoin, commissionPer)
                       if(commissionPer > 0 ){
                           let commissiondata = {
                               userName : user.userName,
@@ -546,7 +546,7 @@ async function mapBet(data){
                               console.log(commissionChild)
                               if(commissionChild.length > 0){
                               let commissionPer = 0
-                              console.log(((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status), ommissionChild[0].Bookmaker.type == "ENTRY_LOSS_")
+                              console.log(((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status), commissionChild[0].Bookmaker.type == "ENTRY_LOSS_")
                               if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status){
                               commissionPer = commissionChild[0].Bookmaker.percentage
                               }
