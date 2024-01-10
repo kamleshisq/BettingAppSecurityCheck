@@ -549,7 +549,7 @@ async function mapBet(data){
                               commissionPer = commissionChild[0].Bookmaker.percentage
                               }
                               let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                              if(commissionPer > 0 && bets[bet].commionstatus){
+                              if(commissionPer > 0 ){
                                   let commissiondata = {
                                       userName : childUser.userName,
                                       userId : user.parentUsers[i],
