@@ -460,6 +460,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
+    res.locals.loginData = undefined
     res.locals.whiteLabel = process.env.whiteLabelName
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
     if(whiteLabelData){
@@ -469,34 +470,28 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
-        if(!token){
-            token = req.headers.authorization.split(' ')[1]
-        }
-        if(!token){
-            token = req.headers.authorization.split('  ')[1].split("=")[1];
-        }
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
-            if(req.headers.cookie){
-                loginData.Token = req.headers.cookie.split(';')[0]
-                if(!loginData.Token.startsWith("ADMIN_JWT")){
-                    loginData.Token = req.headers.cookie.split(';')[1]
-                }
-            }else{
-                loginData.Token = ""
-            }
-
-       
     }
-    console.log(loginData.Token, "hfhfghfhfhfhf")
+    // console.log(loginData.Token, "hfhfghfhfhfhf")
     if(!token){
         req.app.set('token', null);
         req.app.set('User', null);
         return res.redirect('/')
         // return next(new AppError('Please log in to access', 404))
     }
+    if(token == "loggedout"){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/')
+    }
 
     const tokenId = await loginLogs.findOne({session_id:token})
+    if(!tokenId){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/')
+    }
     if(!tokenId.isOnline){
         req.app.set('token', null);
         req.app.set('User', null);
@@ -530,6 +525,10 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
         }
     }
     // console.log('working')
+    loginData = {
+        Token : token,
+        User : currentUser
+    }
     loginData.User = currentUser
     res.locals.loginData = loginData
     req.currentUser = currentUser
