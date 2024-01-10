@@ -98,7 +98,10 @@ async function checkExpoOfThatMarket( bet ){
                         exposure1[0].data[i].totalWinAmount2 =  parseFloat(exposure1[0].data[i].totalWinAmount2) - parseFloat(bet.exposure)
                     }
                 }
-                WinAmount = Math.max(...exposure1[0].data);
+                WinAmount = exposure1[0].data.reduce((max, current) => 
+                current.totalWinAmount2 > max.totalWinAmount2 ? current : max,
+                { totalWinAmount2: -Infinity }
+              );
             }
            
         }
