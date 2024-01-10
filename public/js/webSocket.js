@@ -16,7 +16,7 @@ socket.on('connect', () => {
     // if(jwtToken12 === undefined){
     // }
 
-    console.log("websocket Connected", jwtToken12)
+    // console.log("websocket Connected", jwtToken12)
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         console.log(data, "datadatadata123456")
