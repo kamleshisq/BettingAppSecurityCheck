@@ -102,6 +102,7 @@ async function checkExpoOfThatMarket( bet ){
                 current.totalWinAmount2 > max.totalWinAmount2 ? current : max,
                 { totalWinAmount2: -Infinity }
               );
+              WinAmount = WinAmount.totalWinAmount2
             }
            
         }
