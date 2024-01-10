@@ -82,6 +82,7 @@ const { Socket } = require('engine.io');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     socket.on('LOGIN23', async(data) => {
+        console.log(data)
         if(data){
             let logsDATA = await loginLogs.findOne({session_id:data})
             if(logsDATA){
