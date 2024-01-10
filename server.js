@@ -85,7 +85,9 @@ io.on('connection', (socket) => {
         console.log(data, 123456)
         let tokenFORUSER = data
         if(tokenFORUSER){
-            // await loginlogs.findOne({session_id:tokenFORUSER})
+            if (tokenFORUSER.startsWith('"') && tokenFORUSER.endsWith('"')) {
+                tokenFORUSER = tokenFORUSER.slice(1, -1);
+              }
             console.log(await loginlogs.findOne({session_id:tokenFORUSER}),{session_id:tokenFORUSER})
             // if(logsDATA){
             //     let thatUser = await User.findOne({userName:logsDATA.userName})
