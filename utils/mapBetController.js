@@ -87,6 +87,7 @@ async function mapBet(data){
                     let commissionPer = 0
                     if ((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
                       commissionPer = commission[0].Bookmaker.percentage
+                      console.log(commissionPer, "commissionPer")
                     }else if (commission[0].fency.type == "ENTRY" && !(bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss') || bets[bet].marketName.toLowerCase().startsWith('match')) && commission[0].fency.status){
                       commissionPer = commission[0].fency.percentage
                     }
