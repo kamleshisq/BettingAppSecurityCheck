@@ -7590,6 +7590,11 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'  ){
 
+
+        $(".live-stream-match-dropdown .exchange-pg-rit-ro-livetv-titl").click(function(){
+            $(this).siblings(".exchange-pg-rit-ro-livetv-dv-wrp").slideToggle();
+          });
+
         function fencyDetails( status ){
             let eventId = search.split('=')[1]
             socket.emit("marketIdbookDetailsFANCY", {LOGINDATA, eventId, status})
