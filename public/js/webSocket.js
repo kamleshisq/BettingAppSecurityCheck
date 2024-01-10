@@ -10,9 +10,9 @@ socket.on('disconnect', () => {
 });
 let c = 0
 socket.on('connect', () => {
-    let tokenCHECK = document.cookie;
+    var jwtToken12 = localStorage.getItem('JWT');
 
-    console.log("websocket Connected", tokenCHECK)
+    console.log("websocket Connected", jwtToken12)
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         console.log(data, "datadatadata123456")
