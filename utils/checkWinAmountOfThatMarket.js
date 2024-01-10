@@ -98,13 +98,16 @@ async function checkExpoOfThatMarket( bet ){
                         exposure1[0].data[i].totalWinAmount2 =  parseFloat(exposure1[0].data[i].totalWinAmount2) - parseFloat(bet.exposure)
                     }
                 }
+                WinAmount = Math.max(...exposure1[0].data);
             }
-
-            console.log(exposure1[0].data, "exposure1exposure1exposure1")
+           
         }
     }else{
 
     }
+
+    console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
+    return WinAmount
 }
 
 
