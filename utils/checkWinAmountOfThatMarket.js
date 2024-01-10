@@ -90,7 +90,15 @@ async function checkExpoOfThatMarket( bet ){
                     }
                   }
             ])
-
+            if(exposure1.length > 0){
+                for(let i = 0; i < exposure1[0].data.length; i++){
+                    if(exposure1[0].data[i]._id === bet.secId){
+                        exposure1[0].data[i].totalWinAmount2 =  parseFloat(exposure1[0].data[i].totalWinAmount2) + parseFloat(bet.WinAmount)
+                    }else{
+                        exposure1[0].data[i].totalWinAmount2 =  parseFloat(exposure1[0].data[i].totalWinAmount2) - parseFloat(bet.exposure)
+                    }
+                }
+            }
 
             console.log(exposure1[0].data, "exposure1exposure1exposure1")
         }
