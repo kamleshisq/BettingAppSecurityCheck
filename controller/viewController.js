@@ -3305,7 +3305,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         const commissionmarkerarr = await commissionMarketModel.distinct('marketId');
         // console.log(betLimit)
         // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
-
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         let notification = await eventNotification.findOne({id:req.query.id})
         res.status(200).render("./userSideEjs/userMatchDetails/main",{

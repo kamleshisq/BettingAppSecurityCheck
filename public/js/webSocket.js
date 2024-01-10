@@ -7601,7 +7601,7 @@ socket.on('connect', () => {
             socket.emit('channelId', {channelId, search, LOGINDATA})
     
             socket.on('channelId', data => {
-                // console.log(data)
+                console.log(data, "WORKING")
                 try{
                     function xorEncrypt(input, key) {
                         let output = '';
