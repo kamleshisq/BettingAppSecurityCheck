@@ -12,6 +12,7 @@ const Decimal = require('decimal.js');
 const runnerDataModel = require('../model/runnersData');
 const exposurecheck = require('./checkExpoOfThatUSer');
 const checkLimit = require('./checkOddsLimit');
+const checkMarketWinAmount = require('./checkWinAmountOfThatMarket');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -282,10 +283,11 @@ if(data.data.odds2){
         }
         WinAmount = (parseFloat(data.data.stake)).toFixed(2)
     }
-    console.log(WinAmount, "WinAmountWinAmountWinAmount")
-    if(WinAmount > limitData.max_profit){
-        return 'Win Amount out of range'
-    }
+    // console.log(WinAmount, "WinAmountWinAmountWinAmount")
+
+    // if(WinAmount > limitData.max_profit){
+    //     return 'Win Amount out of range'
+    // }
 
     // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
 //FOR BETPLACE PARENTSID ARRAY DATA
@@ -396,6 +398,9 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     }
     let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
     
+
+    let data = await checkMarketWinAmount(betPlaceData)
+    return 'Please try again leter market SUSPENDED'
     // console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
 // FOR ACC STATEMENTS DATA 
     // let Acc = {
