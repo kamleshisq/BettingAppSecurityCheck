@@ -113,7 +113,7 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
         httpOnly: true,
         secure: false,
-        sameSite: 'None', 
+        // sameSite: 'None', 
         path: '/'
         }
         // const sessionId = user.id
