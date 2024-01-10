@@ -155,7 +155,7 @@ async function mapBet(data){
                                     marketName:bets[bet].marketName,
                                     loginUserId:user.id,
                                     parentIdArray:childUser.parentUsers,
-                                    uniqueId:usercommissiondata._id,
+                                    uniqueId:usercommissiondata.id,
                                     betId:bets[bet].id
                                 }
                                 let commissionData = await newCommissionModel.create(commissiondata)
