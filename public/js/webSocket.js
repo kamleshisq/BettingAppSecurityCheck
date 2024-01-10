@@ -15,8 +15,9 @@ socket.on('connect', () => {
     if(!jwtToken12){
         var jwtToken12 = localStorage.getItem('JWT');
     }
+    socket.emit('LOGIN23', jwtToken12)
 
-    console.log("websocket Connected", jwtToken12)
+    // console.log("websocket Connected", jwtToken12)
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         console.log(data, "datadatadata123456")

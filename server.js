@@ -81,29 +81,41 @@ const { Socket } = require('engine.io');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
+    socket.on('LOGIN23', async(data) => {
+        if(data){
+            let logsDATA = await loginLogs.findOne({session_id:data})
+            if(logsDATA){
+                let thatUser = await User.findOne({userName:logsDATA.userName})
+                if(thatUser){
+                    socket.emit("loginUser", {
+                        loginData:thatUser,
+                        socket:data,
+                        Ip:ip
+                    })
+                }else{
+                    socket.emit('LOGIN23', 'reaload')
+                }
+            }else{
+                socket.emit('LOGIN23', 'reaload')
+            }
+        }else{
+            if (!socket.request.app) {
+                socket.request.app = app;
+              }
+            if (socket.request && socket.request.app) {
+                const myVariable = socket.request.app.get('User');
+                const myVariable2 = socket.request.app.get('token');
+                const ip = socket.request.app.get('Ip');
+                socket.emit("loginUser", {
+                    loginData:myVariable,
+                    socket:myVariable2,
+                    Ip:ip
+                })
+            }
+        }
+    })
     // console.log('connected to client')
     // console.log(socket.request, socket.request.app,"21212")
-    if (!socket.request.app) {
-        socket.request.app = app;
-      }
-    if (socket.request && socket.request.app) {
-        const myVariable = socket.request.app.get('User');
-        const myVariable2 = socket.request.app.get('token');
-        const ip = socket.request.app.get('Ip');
-        socket.emit("loginUser", {
-            loginData:myVariable,
-            socket:myVariable2,
-            Ip:ip
-        })
-        function myFunctionsendDATA(){
-            socket.emit('customEvent', {message:"Hey there!, what's up"})
-        }
-        setInterval(myFunctionsendDATA, 1000);
-
-        socket.on('customEvent', data => {
-            // console.log(data, "ADroid socket")
-        })
-    }
     // console.log(loginData.Token)
     // console.log(global._token)
 
