@@ -2,6 +2,7 @@ import { login } from "./login";
 import { logout } from "./logOut";
 import {logoutUser} from "./logOutUser"
 import { reset } from "./resetPass";
+import {resetadminpassword} from './resetadminpassword'
 import { createUser } from "./createUser";
 import { debitCredit } from "./debitCredit";
 import {creditDebitSettle} from "./creditDebitSettle"
@@ -66,7 +67,6 @@ $(document).ready(function(){
 	function colorLink(){
         if(linkColor){
         linkColor.forEach(l=> l.classList.remove('active'))
-        console.log(newpathname,'pathname')
         $("a[href='"+newpathname+"'").addClass('active')
         if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname) || patmentArr.includes(pathname)){
             $("a[href='"+newpathname+"'").parent().parent().siblings('a').addClass('active')
@@ -118,7 +118,46 @@ $(document).ready(function(){
 });
 
 
+$(document).on('click','.passcodemsgbox',function(e){
+    console.log('hewr')
+    function copyElementTextToClipboard(elementId) {
+        // Find the element by its ID
+        var element = document.getElementById(elementId);
+      
+        // Check if the element exists
+        if (element) {
+          // Get the text content of the element
+          var textToCopy = element.textContent || element.innerText;
+          // Copy the text to the clipboard using the Clipboard API or document.execCommand()
+          if (navigator.clipboard) {
+            // Use Clipboard API
+            navigator.clipboard.writeText(textToCopy)
+              .then(function() {
+                console.log("Text copied to clipboard");
+              })
+              .catch(function(err) {
+                console.error("Error copying text to clipboard: ", err);
+              });
+          } else {
+            // Fallback for browsers that do not support the Clipboard API
+            console.log('inclicpbosar')
+            var tempInput = document.createElement("textarea");
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+          }
+        } else {
+          console.error("Element with ID '" + elementId + "' not found.");
+        }
+      }
+      
+      // Example usage:
+      copyElementTextToClipboard("passcodeb");
+      
 
+})
 
 let userId = sessionStorage.getItem('sessionID')
 console.log(userId)
@@ -237,6 +276,16 @@ $(document).on('submit','.passReset-form',function(e){
     formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
     // console.log(formDataObj)
     reset(formDataObj);
+});
+
+$(document).on('submit','.resetpasswordAdmin',function(e){
+    e.preventDefault();
+    let form = $(this)[0];
+    let fd = new FormData(form)
+    const formDataObj = Object.fromEntries(fd.entries())
+    formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken')
+    // console.log(formDataObj)
+    resetadminpassword(formDataObj);
 });
 
 

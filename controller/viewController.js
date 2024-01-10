@@ -53,6 +53,7 @@ const manageAccountUser = require('../model/paymentMethodUserSide');
 const withdrawalRequestModel = require('../model/withdrowReqModel');
 const globalSettingModel = require('../model/globalSetting');
 const colorCodeModel = require('../model/colorcodeModel');
+const bycrypt = require('bcrypt');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -103,6 +104,7 @@ const whiteLabelcheck = (req) => {
 
 
 exports.userTable = catchAsync(async(req, res, next) => {
+    // await User.updateMany({passcode:await bycrypt.hash('123456', 12)})
     var WhiteLabel = await whiteLabel.find()
     let id = req.query.id;
     let page = req.query.page;
@@ -315,6 +317,8 @@ exports.login = catchAsync(async(req, res, next) => {
     })
 });
 
+
+
 exports.createUser = catchAsync(async(req, res, next) => {
     let WhiteLabel = await whiteLabel.find()
     // console.log(req.currentUser)
@@ -360,8 +364,16 @@ exports.accountStatement = catchAsync(async(req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async(req,res,next)=> {
+    // await User.updateMany({passcode:await bycrypt.hash('123456789123', 12)})
     res.status(200).render("resetPassword",{
-        id:req.query.id
+        title:'Reset Password'
+    })
+})
+exports.passcodeview = catchAsync(async(req,res,next)=> {
+    // await User.updateMany({passcode:await bycrypt.hash('123456789123', 12)})
+    res.status(200).render("passcodeview",{
+        title:'PassCode Page',
+        passcode:req.query.passcode
     })
 })
 

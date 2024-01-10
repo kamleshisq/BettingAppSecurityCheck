@@ -14,11 +14,11 @@ router.post("/paymentDeposite", authController.isProtected_User,accountControlle
 // Admin Panal
 router.use(authController.isProtected, authController.restrictTo('accountControl'))
 
-router.post("/deposit", authController.checkPass ,accountController.deposit);
+router.post("/deposit", authController.checkPasscode ,accountController.deposit);
 router.get("/getAllStatement", accountController.getAllAccStatement);
-router.post("/withdrawl", authController.checkPass ,accountController.withdrawl);
-router.post("/withdrawlSettle", authController.checkPass ,accountController.withdrawSettle);
-router.post("/depositSettle", authController.checkPass ,accountController.depositSettle);
+router.post("/withdrawl", authController.checkPasscode ,accountController.withdrawl);
+router.post("/withdrawlSettle", authController.checkPasscode ,accountController.withdrawSettle);
+router.post("/depositSettle", authController.checkPasscode ,accountController.depositSettle);
 router.post("/getUserAccStatement", accountController.getUserAccountStatement);
 router.get("/getUserAccStatement1", accountController.getUserAccountStatement1);
 

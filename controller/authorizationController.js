@@ -316,6 +316,24 @@ exports.checkPass = catchAsync(async(req, res, next) => {
     next()
 })
 
+exports.checkPasscode = catchAsync(async(req, res, next) => {
+    const user = await User.findOne({userName:req.currentUser.userName}).select('+password');
+    if(!req.body.Password){
+       return res.status(404).json({
+            status:'error',
+            message:"Please provide valid password"
+        })
+    }
+    const passcheck = await user.correctPasscode(req.body.Password, user.passcode)
+    if(!user || !(passcheck)){
+       return res.status(404).json({
+            status:'error',
+            message:"Please provide valide password"
+        })
+    }
+    next()
+})
+
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
@@ -386,6 +404,9 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         req.app.set('token', null);
         req.app.set('User', null);
         return res.redirect('/adminlogin')
+    }
+    if(currentUser.passwordchanged && req.originalUrl !== '/api/v1/users/changeUserPasswordAdmin'){
+        return res.redirect(`/resetPassword?sessiontoken=${token}`)
     }
     let whiteLabel = process.env.whiteLabelName
     let childrenArr = []
@@ -485,7 +506,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
         req.app.set('User', null);
         return res.redirect('/')
     }
-
+    
     if(currentUser.roleName != "DemoLogin"){
         if(currentUser.whiteLabel !== process.env.whiteLabelName && currentUser.role_type !== 1){
             req.app.set('token', null);
@@ -576,7 +597,9 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-
+    if(currentUser.passwordchanged && req.originalUrl !== '/api/v1/users/changeUserPasswordAdmin'){
+        res.render(`/resetPassword?sessiontoken=${token}`)
+    }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             req.app.set('token', null);
@@ -875,12 +898,12 @@ exports.admin_logOut = catchAsync( async(req, res) => {
 		global._loggedInToken.splice(findToken, 1);
 	}
       // console.log(user._id)
-      const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+      const logs = await loginLogs.findOne({user_id:user._id,isOnline:true})
       // console.log(logs)
       await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
       global._loggedInToken.splice(logs.session_id, 1);
       await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-      await logindatauser.deleteMany({token:logs.session_id})
+      await logindatauser.deleteMany({userId:user._id})
 
     res.status(200).json({
         status:'success'
@@ -921,7 +944,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     if(user.role.role_level < req.currentUser.role.role_level){
         return next(new AppError('You do not have permission to perform this action',404))
     }
-    const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+    const logs = await loginLogs.findOne({user_id:user._id,isOnline:true})
     // console.log(logs,'==>logs')
     // for(let i = 0; i < logs.length; i++){
     //     res.cookie(logs[i].session_id, '', { expires: new Date(0) });
@@ -930,7 +953,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
     global._loggedInToken.splice(logs.session_id, 1);
     await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
-    await logindatauser.deleteMany({token:logs.session_id})
+    await logindatauser.deleteMany({userId:user._id})
     res.status(200).json({
         status:'success'
     })

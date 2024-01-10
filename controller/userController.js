@@ -15,6 +15,7 @@ const verticalMenuModel = require("../model/verticalMenuModel");
 const gamerulesModel = require('../model/gamesRulesModel')
 const gamemodel = require('../model/gameModel')
 const globalSettingModel = require('../model/globalSetting')
+const bycrypt = require('bcrypt');
 
 exports.isOperator = catchAsync(async(req, res, next) => {
 
@@ -495,10 +496,63 @@ exports.changePassword = catchAsync(async(req, res, next) => {
     
     user.password = req.body.password
     user.passwordConfirm = req.body.passwordConfirm
+    user.passwordchanged = true
     await user.save();
     res.status(200).json({
         status:'success',
         user
+    })
+});
+exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
+    let user = await User.findOne({_id:req.currentUser._id}).select('+password')
+    console.log(req.body)
+    if(!user){
+        return next(new AppError("User not found", 404))
+    }
+    if(!await user.correctPassword(req.body.oldpsw, user.password)){
+        res.status(404).json({
+            status:'fail',
+            message:"your old password is wrong"
+        })
+    }
+
+    if(req.body.psw !== req.body.cpsw){
+        res.status(404).json({
+            status:'fail',
+            message:"your new password and confirm password is not match"
+        })
+    }
+
+     if(req.body.oldpsw == req.body.psw){
+        res.status(404).json({
+            status:'fail',
+            message:"Please eneter different password"
+        })
+    }
+    // if(await User.passwordConfirm(req.bod))
+    function randomString(length, chars) {
+        var result = '';
+        for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+        return result;
+    }
+    let passcode = randomString(6, '0123456789');  
+    let passcodeexist = true
+    while(passcodeexist){
+        if(!await user.correctPasscode(passcode, user.passcode)){
+            passcode = randomString(6, '0123456789');
+            passcodeexist = false
+        }
+        
+    }     
+    user.passcode = await bycrypt.hash(passcode, 12)            
+    user.password = req.body.psw
+    user.passwordConfirm = req.body.cpsw
+    user.passwordchanged = false
+    await user.save();
+    res.status(200).json({
+        status:'success',
+        user,
+        passcode
     })
 });
 
@@ -697,6 +751,7 @@ exports.currentUserPasswordupdate = catchAsync(async(req, res, next) => {
     }
     user.password = req.body.newPass
     user.passwordConfirm = req.body.confPass
+    user.passwordchanged = false
     if(req.body.newPass != req.body.confPass){
         return next(new AppError("Please Provide a same passwords"))
     }

@@ -860,6 +860,7 @@ socket.on('connect', () => {
         $('#navmod1').modal('show');
         setTimeout(function () {
             $('#navmod1').modal('hide');
+            location.reload(true)
         }, 1000);
     });
     }else{
@@ -1320,7 +1321,7 @@ socket.on('connect', () => {
         }
     })
     
-    if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && !pathname.startsWith('/admin/betlimit')){
+    if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/adminlogin' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && !pathname.startsWith('/admin/betlimit')){
         setInterval(()=>{
             // console.log("loginuserbalance")
             socket.emit('loginuserbalance',LOGINDATA)
@@ -1328,7 +1329,7 @@ socket.on('connect', () => {
         
     }
 
-    if(pathname.startsWith('/admin')){
+    if(pathname.startsWith('/admin') && pathname != '/adminlogin'){
         let oldcount = 0 
         if(LOGINDATA.LOGINUSER.role.roleName == 'Super-Duper-Admin'){
             setInterval(()=>{
@@ -1383,6 +1384,8 @@ socket.on('connect', () => {
                 location.href = '/adminlogin'
             }
         })
+
+      
     }
     socket.on('loginuserbalance',async(data)=>{
         // console.log('refresh login data')
@@ -1434,6 +1437,19 @@ socket.on('connect', () => {
             <h6> ${data.lifetimePL.toFixed(2)}</h6>
         </div>`
         $('.welcome-info-btn').html(html1)
+    })
+
+    if(!pathname.startsWith('/admin')){
+        setInterval(()=>{
+            socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
+        },500)
+    }
+
+    socket.on('checkpasswordreset',async(data)=>{
+        // console.log(data)
+        if(data.status == 'success'){
+            $('#navmod1').modal('show')
+        }
     })
 
     //..................FOR User Profile Page...........//
@@ -16819,6 +16835,7 @@ socket.on('connect', () => {
           $(document).on("change", ".checkbox", function(e) {
               e.preventDefault()
               const isChecked = $(this).prop("checked");
+              console.log(isChecked,'isChecked')
               if(isChecked){
                 $(this).parents('.switch').addClass("on");
                 }else{

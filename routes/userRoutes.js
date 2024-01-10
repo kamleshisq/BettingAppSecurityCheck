@@ -15,13 +15,13 @@ router.get("/createuser10000" , userController.isOperator ,userController.create
 
 router.post("/admin_updateCurrentUserPass", userController.isOperator ,userController.currentUserPasswordupdate); // use in both side
 //createDeleteUser//
-router.post('/createUser', userController.isOperator ,authController.restrictTo("createDeleteUser"), authController.checkPass, userController.createUser);
+router.post('/createUser', userController.isOperator ,authController.restrictTo("createDeleteUser"), authController.checkPasscode, userController.createUser);
 router.post('/deleteUser', userController.isOperator ,authController.restrictTo("createDeleteUser"), userController.deletUser);
 
 
 //userStatus//
-router.post('/updateUserStatusInactive', userController.isOperator ,authController.restrictTo("userStatus"), authController.checkPass,userController.updateUserStatusCodeInactive );
-router.post('/updateUserStatusActive', userController.isOperator ,authController.restrictTo("userStatus"),authController.checkPass, userController.updateUserStatusCodeActive);
+router.post('/updateUserStatusInactive', userController.isOperator ,authController.restrictTo("userStatus"), authController.checkPasscode,userController.updateUserStatusCodeInactive );
+router.post('/updateUserStatusActive', userController.isOperator ,authController.restrictTo("userStatus"),authController.checkPasscode, userController.updateUserStatusCodeActive);
 
 
 
@@ -31,7 +31,8 @@ router.post('/updateUserStatusBettingUnlock', userController.isOperator ,authCon
 
 
 //changeUserPassword//
-router.post('/changeUserPassword', userController.isOperator ,authController.restrictTo("changeUserPassword"), authController.checkPass,userController.changePassword);
+router.post('/changeUserPassword', userController.isOperator ,authController.restrictTo("changeUserPassword"), authController.checkPasscode,userController.changePassword);
+router.post('/changeUserPasswordAdmin', userController.isOperator ,authController.restrictTo("changeUserPassword"),userController.changePasswordAdmin);
 
 
 //userName//
