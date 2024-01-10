@@ -15332,7 +15332,13 @@ socket.on('connect', () => {
                         hour12: true
                     };
                     var formattedTime = date.toLocaleString('en-US', options);
-                    html += `<tr class="acount-stat-tbl-body-tr">
+                    if(bets[i].bettype2=='BACK'){
+                        html += `<tr class="back">`
+                    }else{
+                        html += `<tr class="lay">`
+
+                    }
+                    html += `
                         <td>${i+count}</td>
                         <td class="date-time">${formattedTime}</td>
                         <td>${bets[i].userName}</td>
