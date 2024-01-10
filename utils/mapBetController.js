@@ -83,19 +83,19 @@ async function mapBet(data){
                     let commission = await commissionModel.find({userId:bets[bet].userId})
                     let user = await userModel.findById(bets[bet].userId)
                     if(commission.length > 0){
-                    console.log(commission, 456)
+                    // console.log(commission, 456)
                     let commissionPer = 0
-                    console.log(((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status), bets[bet].marketName.toLowerCase().startsWith('book'), commission[0].Bookmaker.type == "ENTRY")
+                    // console.log(((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status), bets[bet].marketName.toLowerCase().startsWith('book'), commission[0].Bookmaker.type == "ENTRY")
                     if ((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
                       commissionPer = commission[0].Bookmaker.percentage
-                      console.log(commissionPer, "commissionPer")
+                    //   console.log(commissionPer, "commissionPer")
                     }else if (commission[0].fency.type == "ENTRY" && !(bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss') || bets[bet].marketName.toLowerCase().startsWith('match')) && commission[0].fency.status){
                       commissionPer = commission[0].fency.percentage
                     }
                     let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                    console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
+                    // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
                     if(bets[bet].commionstatus){
-                        console.log('WORKING')
+                        // console.log('WORKING')
                         if(commissionPer > 0){
                             let commissiondata = {
                                 userName : user.userName,
@@ -506,10 +506,13 @@ async function mapBet(data){
                       let commission = await commissionModel.find({userId:user.id})
                       if(commission.length > 0){
                       let commissionPer = 0
+                      console.log(commission[0])
+                      console.log(((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status),bets[bet].marketName.toLowerCase().startsWith('book'),  commission[0].Bookmaker.type == "ENTRY_LOSS_")
                       if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status){
                           commissionPer = commission[0].Bookmaker.percentage
                       }
                       let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
+                      console.log(commissionCoin, commissionPer)
                       if(commissionPer > 0 && bets[bet].commionstatus){
                           let commissiondata = {
                               userName : user.userName,
