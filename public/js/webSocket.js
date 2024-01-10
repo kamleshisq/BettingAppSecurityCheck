@@ -10902,11 +10902,11 @@ socket.on('connect', () => {
                     <td title="SR No." >${i+count}</td>
                     <td title="Date & Time" >${formattedTime}</td>`
                     if(userAcc[i].creditDebitamount > 0){
-                        html += `<td title="Credit" >${userAcc[i].creditDebitamount}</td>
+                        html += `<td title="Credit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
                         <td title="Debit" >0</td>`
                     }else{
                         html += ` <td title="Credit" >0</td>
-                        <td title="Debit" >${userAcc[i].creditDebitamount}</td>`
+                        <td title="Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
                     }
 
                     if(userAcc[i].stake){
