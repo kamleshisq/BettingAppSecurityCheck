@@ -513,7 +513,7 @@ async function mapBet(data){
                       }
                       let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                       console.log(commissionCoin, commissionPer)
-                      if(commissionPer > 0 && bets[bet].commionstatus){
+                      if(commissionPer > 0 ){
                           let commissiondata = {
                               userName : user.userName,
                               userId : user.id,
