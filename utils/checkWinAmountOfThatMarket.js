@@ -189,7 +189,7 @@ async function checkExpoOfThatMarket( bet ){
             ])
 
 
-            console.log(betDetails)
+            console.log(betDetails, "betDetailsbetDetailsbetDetails")
         }
     }else{
 
