@@ -85,7 +85,7 @@ io.on('connection', (socket) => {
         socket.request.app = app;
       }
     socket.on('LOGIN23', async(data) => {
-        // console.log(data, 123456)
+        console.log(data, 123456)
         const ip = socket.request.app.get('Ip');
         let tokenFORUSER = data
         if(tokenFORUSER){
