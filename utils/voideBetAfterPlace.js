@@ -10,7 +10,7 @@ const revokeCommission = require('./commissionRevocke');
 async function voidBET(data){
 //  console.log(data, 444)  
  let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password'); 
- if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+ if(!loginUser || !(await loginUser.correctPasscode(data.data.password, loginUser.passcode))){
     return 'please provide a valid password'
 }else{
     revokeCommission(data)

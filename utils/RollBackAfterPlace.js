@@ -11,8 +11,8 @@ const revokeCommission = require('./commissionRevocke');
 async function rollBack(data){
     // console.log(data, "rollBack Data")
     let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-    if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
-        return 'please provide a valid password iiiuiuiuiu'
+    if(!loginUser || !(await loginUser.correctPassword(data.data.correctPasscode, loginUser.passcode))){
+        return 'please provide a valid password '
     }else{ 
         let allBetWithMarketId = await Bet.find({marketId:data.id})
         revokeCommission(data)
