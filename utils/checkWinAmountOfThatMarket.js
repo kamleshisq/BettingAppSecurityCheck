@@ -4,7 +4,7 @@ const runnerDataModel = require('../model/runnersData');
 
 
 async function checkExpoOfThatMarket( bet ){
-    console.log(bet, 123456789)
+    // console.log(bet, 123456789)
     let WinAmount = parseFloat(bet.WinAmount)
     if(bet.secId.toLowerCase().startsWith('odd_even')){
         if(bet.marketId.endsWith('OE')){
@@ -473,7 +473,7 @@ async function checkExpoOfThatMarket( bet ){
         }
     }
 
-    console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
+    // console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
     return WinAmount
 }
 

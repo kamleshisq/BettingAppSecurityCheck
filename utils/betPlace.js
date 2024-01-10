@@ -400,6 +400,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     
 
     let data23 = await checkMarketWinAmount(betPlaceData)
+    console.log(data23, "data23data23data23data23")
     return 'Please try again leter market SUSPENDED'
     // console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
 // FOR ACC STATEMENTS DATA 
