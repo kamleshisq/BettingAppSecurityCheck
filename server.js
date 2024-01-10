@@ -81,15 +81,16 @@ const { Socket } = require('engine.io');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
-    socket.on('LOGIN23', async(dataToken) => {
-        console.log(dataToken, 123456)
-        if(dataToken){
-            let logsDATA = await loginlogs.find({session_id:`${dataToken}`})
+    socket.on('LOGIN23', async(data) => {
+        console.log(data, 123456)
+        let tokenFORUSER = data
+        if(tokenFORUSER){
+            let logsDATA = await loginlogs.findOne({session_id:tokenFORUSER})
             console.log(logsDATA)
             if(logsDATA){
                 let thatUser = await User.findOne({userName:logsDATA.userName})
                 if(thatUser){
-                   console.log(thatUser, dataToken, "datadatadatadata")
+                   console.log(thatUser, tokenFORUSER, "datadatadatadata")
                 }else{
                     socket.emit('LOGIN23', 'reaload')
                 }
