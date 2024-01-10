@@ -2,7 +2,7 @@
 <html lang="en">
   <%if(loginData){%>
   <script>
-    // console.log(, 13254)
+    console.log('<%= loginData.Token %>', 13254)
     localStorage.setItem('JWTUSER', JSON.stringify('<%= loginData.Token %>'));
   </script>
     <%}else{%>
