@@ -92,6 +92,9 @@ io.on('connection', (socket) => {
             if (tokenFORUSER.startsWith('"') && tokenFORUSER.endsWith('"')) {
                 tokenFORUSER = tokenFORUSER.slice(1, -1);
               }
+              if(tokenFORUSER.startsWith('JWT')){
+                tokenFORUSER = tokenFORUSER.split('=')[1]
+              }
             let logsDATA = await loginlogs.findOne({session_id:tokenFORUSER})
             if(logsDATA){
                 let thatUser = await User.findOne({userName:logsDATA.userName})
