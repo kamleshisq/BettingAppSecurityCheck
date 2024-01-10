@@ -10,7 +10,15 @@ socket.on('disconnect', () => {
 });
 let c = 0
 socket.on('connect', () => {
+    let tokenCHECK
+    var myCookie = document.cookie.split(';').find(cookie => cookie.includes('JWT'));
     reconnectAttempts = 0;
+    if (myCookie) {
+        tokenCHECK = myCookie.split('=')[1].trim();
+        console.log(tokenCHECK);
+    } else {
+        console.log("Cookie not found");
+    }
     console.log("websocket Connected")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
