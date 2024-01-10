@@ -13,7 +13,7 @@ socket.on('connect', () => {
     const urlParams = new URLSearchParams(window.location.search);
     jwtToken12 = urlParams.get('sessiontoken')
     if(!jwtToken12){
-        var jwtToken12 = localStorage.getItem('JWT');
+        var jwtToken12 = localStorage.getItem('JWTUSER');
     }
     socket.emit('LOGIN23', jwtToken12)
 

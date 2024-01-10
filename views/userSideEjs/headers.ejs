@@ -3,11 +3,11 @@
   <%if(loginData){%>
   <script>
     // console.log(, 13254)
-    localStorage.setItem('JWT', JSON.stringify('<%= loginData.Token %>'));
+    localStorage.setItem('JWTUSER', JSON.stringify('<%= loginData.Token %>'));
   </script>
     <%}else{%>
       <script>
-        localStorage.setItem('JWT', undefined);
+        localStorage.setItem('JWTUSER', undefined);
       </script>
 
     <%}%>
