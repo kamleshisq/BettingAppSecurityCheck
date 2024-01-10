@@ -10,10 +10,7 @@ const revokeCommission = require('./commissionRevocke');
 
 async function rollBack(data){
     // console.log(data, "rollBack Data")
-    let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-    if(!loginUser || !(await loginUser.correctPassword(data.data.correctPasscode, loginUser.passcode))){
-        return 'please provide a valid password '
-    }else{ 
+   
         let allBetWithMarketId = await Bet.find({marketId:data.id})
         revokeCommission(data)
         // await commissionNewModel.updateMany({marketId:data.id, commissionType: 'Win Commission', commissionStatus : 'Unclaimed'}, {commissionStatus : 'Unclaimed'})
@@ -178,7 +175,7 @@ async function rollBack(data){
             console.log(err)
             return 'Please try again leter'
         }
-    } 
+
 }
 
 

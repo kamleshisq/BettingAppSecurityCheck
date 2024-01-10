@@ -9,10 +9,6 @@ const revokeCommission = require('./commissionRevocke');
 
 async function voidBET(data){
 //  console.log(data, 444)  
- let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password'); 
- if(!loginUser || !(await loginUser.correctPasscode(data.data.password, loginUser.passcode))){
-    return 'please provide a valid password'
-}else{
     revokeCommission(data)
     let allBetWithMarketId = await Bet.find({marketId:data.id})
     await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
@@ -174,7 +170,7 @@ async function voidBET(data){
         console.log(err)
         return 'Please try again leter'
     }
-}
+
 //  return "WORKING"
 }
 
