@@ -543,12 +543,15 @@ async function mapBet(data){
                               let childUser = await userModel.findById(user.parentUsers[i])
                               let parentUser = await userModel.findById(user.parentUsers[i - 1])
                               let commissionChild = await commissionModel.find({userId:user.parentUsers[i]})
+                              console.log(commissionChild)
                               if(commissionChild.length > 0){
                               let commissionPer = 0
+                              console.log(((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status), ommissionChild[0].Bookmaker.type == "ENTRY_LOSS_")
                               if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status){
                               commissionPer = commissionChild[0].Bookmaker.percentage
                               }
                               let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
+                              console.log(commissionCoin,commissionPer )
                               if(commissionPer > 0 ){
                                   let commissiondata = {
                                       userName : childUser.userName,
