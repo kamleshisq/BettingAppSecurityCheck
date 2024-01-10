@@ -428,7 +428,6 @@ async function checkExpoOfThatMarket( bet ){
         ])
 
 
-        console.log(betsMarketIdWise[0].selections, "betsMarketIdWisebetsMarketIdWisebetsMarketIdWise")
         let index = betsMarketIdWise[0].selections.findIndex(item => item.selectionName === bet.selectionName)
         if(index !== -1){
             let objectTopush = {
@@ -444,7 +443,7 @@ async function checkExpoOfThatMarket( bet ){
             betsMarketIdWise[0].selections[index].exposure = betsMarketIdWise[0].selections[index].exposure + parseFloat(bet.exposure)
             betsMarketIdWise[0].selections[index].Stake = betsMarketIdWise[0].selections[index].Stake - bet.Stake
         }
-
+        console.log(betsMarketIdWise[0].selections, "betsMarketIdWise[0].selectionsbetsMarketIdWise[0].selectionsbetsMarketIdWise[0].selections")
         let runnerData = await runnerDataModel.findOne({marketId:bet.marketId})
         if(runnerData){
             betsMarketIdWise[0].runnersData = JSON.parse(runnerData.runners)
