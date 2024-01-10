@@ -83,8 +83,9 @@ async function mapBet(data){
                     let commission = await commissionModel.find({userId:bets[bet].userId})
                     let user = await userModel.findById(bets[bet].userId)
                     if(commission.length > 0){
-                    // console.log(commission, 456)
+                    console.log(commission, 456)
                     let commissionPer = 0
+                    console.log(((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status), bets[bet].marketName.toLowerCase().startsWith('book'), commission[0].Bookmaker.type == "ENTRY")
                     if ((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
                       commissionPer = commission[0].Bookmaker.percentage
                       console.log(commissionPer, "commissionPer")
