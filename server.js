@@ -83,6 +83,7 @@ const { Socket } = require('engine.io');
 io.on('connection', (socket) => {
     socket.on('LOGIN23', async(data) => {
         if(data){
+            const ip = socket.request.app.get('Ip');
             let logsDATA = await loginLogs.findOne({session_id:data})
             if(logsDATA){
                 let thatUser = await User.findOne({userName:logsDATA.userName})
