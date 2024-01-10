@@ -119,16 +119,16 @@ io.on('connection', (socket) => {
     })
     
     
-    if (socket.request && socket.request.app) {
-        const myVariable = socket.request.app.get('User');
-        const myVariable2 = socket.request.app.get('token');
-        const ip = socket.request.app.get('Ip');
-        socket.emit("loginUser", {
-            loginData:myVariable,
-            socket:myVariable2,
-            Ip:ip
-        })
-    }
+    // if (socket.request && socket.request.app) {
+    //     const myVariable = socket.request.app.get('User');
+    //     const myVariable2 = socket.request.app.get('token');
+    //     const ip = socket.request.app.get('Ip');
+    //     socket.emit("loginUser", {
+    //         loginData:myVariable,
+    //         socket:myVariable2,
+    //         Ip:ip
+    //     })
+    // }
     // console.log('connected to client')
     // console.log(socket.request, socket.request.app,"21212")
     // console.log(loginData.Token)

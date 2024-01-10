@@ -20,7 +20,7 @@ socket.on('connect', () => {
     // console.log("websocket Connected", jwtToken12)
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
-        console.log(data, "datadatadata123456")
+        // console.log(data, "datadatadata123456")
         const {
             host, hostname, href, origin, pathname, port, protocol, search
         } = window.location
