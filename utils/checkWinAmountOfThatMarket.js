@@ -187,9 +187,116 @@ async function checkExpoOfThatMarket( bet ){
                     }
                   },
             ])
-
-
-            console.log(betDetails, betDetails[0].data, "betDetailsbetDetailsbetDetails")
+            let runtopush = parseFloat(bet.selectionName.split('@')[1])
+            let objectPUsh = {
+                secId : bet.secId,
+                runs : parseFloat(bet.selectionName.split('@')[1]),
+                totalAmount : parseFloat(bet.exposure),
+                totalWinAmount:parseFloat(bet.WinAmount)
+            }
+            betDetails[0].uniqueRuns.push(runtopush)
+            betDetails[0].data[0].push(objectPUsh)
+            let dataToshow = []
+                if(betDetails.length != 0){
+                    betDetails = betDetails[0]
+                    for(let i = 0; i < betDetails.uniqueRuns.length; i++){ 
+                        if(betDetails.uniqueRuns.length === 1){
+                            let data1 = {}
+                            data1.message = `${betDetails.uniqueRuns[i] - 1} or less`
+                            let sum = 0
+                            for(let j = 0; j < betDetails.data[0].length; j++){
+                                if(betDetails.data[0][j].secId === "odd_Even_No"){
+                                    sum += betDetails.data[0][j].totalWinAmount
+                                }else{
+                                    sum += betDetails.data[0][j].totalAmount
+                                }
+                            }
+                            data1.sum = sum
+                            dataToshow.push(data1)
+                            let data2 = {}
+                            let sum2 = 0
+                            data2.message = `${betDetails.uniqueRuns[i]} or more`
+                            for(let j = 0; j < betDetails.data[0].length; j++){
+                                if(betDetails.data[0][j].secId === "odd_Even_Yes"){
+                                    sum2 += betDetails.data[0][j].totalWinAmount
+                                }else{
+                                    sum2 += betDetails.data[0][j].totalAmount
+                                }
+                            }
+                            data2.sum = sum2
+                            dataToshow.push(data2)
+                        }else{
+                            if(i === 0){
+                                let data = {}
+                                data.message = `${betDetails.uniqueRuns[i] - 1} or less`
+                                let sum = 0
+                                for(let j = 0; j < betDetails.data[0].length; j++){
+                                    if(betDetails.data[0][j].secId === "odd_Even_No" && betDetails.data[0][j].runs >= (betDetails.uniqueRuns[i])){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }else{
+                                        sum += betDetails.data[0][j].totalAmount
+                                    }
+                                }
+                                data.sum = sum
+                                dataToshow.push(data)
+                            }else if (i === (betDetails.uniqueRuns.length - 1)){
+                                let data = {}
+                                let data1 = {}
+                                if(betDetails.uniqueRuns[i - 1] == (betDetails.uniqueRuns[i] - 1)){
+                                    data.message = `${betDetails.uniqueRuns[i - 1]}`
+                                }else{
+                                    data.message = `between ${betDetails.uniqueRuns[i - 1]} and ${betDetails.uniqueRuns[i] - 1}`
+                                }
+                                let sum = 0
+                                for(let j = 0; j < betDetails.data[0].length; j++){
+                                    if(betDetails.data[0][j].secId === "odd_Even_No" && betDetails.data[0][j].runs == betDetails.uniqueRuns[i]){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }else if (betDetails.data[0][j].secId === "odd_Even_Yes" && betDetails.data[0][j].runs == betDetails.uniqueRuns[i - 1]){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }
+                                    else{
+                                        sum += betDetails.data[0][j].totalAmount
+                                    }
+                                }
+                                data.sum = sum
+                                dataToshow.push(data)
+                                let sum2 = 0
+                                data1.message = `${betDetails.uniqueRuns[i]} or more`
+                                for(let j = 0; j < betDetails.data[0].length; j++){
+                                    if(betDetails.data[0][j].secId === "odd_Even_Yes" && betDetails.data[0][j].runs <= betDetails.uniqueRuns[i]){
+                                        sum2 += betDetails.data[0][j].totalWinAmount
+                                    }
+                                    else{
+                                        sum2 += betDetails.data[0][j].totalAmount
+                                    }
+                                }
+                                data1.sum = sum2
+                                dataToshow.push(data1)
+                            }else{
+                                let data = {}
+                                if(betDetails.uniqueRuns[i - 1] == (betDetails.uniqueRuns[i] - 1)){
+                                    data.message = `${betDetails.uniqueRuns[i] - 1}`
+                                }else{
+                                    data.message = `between ${betDetails.uniqueRuns[i - 1]} and ${betDetails.uniqueRuns[i] - 1}`
+                                }
+                                let sum = 0
+                                for(let j = 0; j < betDetails.data[0].length; j++){
+                                    if(betDetails.data[0][j].secId === "odd_Even_No" && betDetails.data[0][j].runs == betDetails.uniqueRuns[i]){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }else if (betDetails.data[0][j].secId === "odd_Even_Yes" && betDetails.data[0][j].runs == betDetails.uniqueRuns[i - 1]){
+                                        sum += betDetails.data[0][j].totalWinAmount
+                                    }
+                                    else{
+                                        sum += betDetails.data[0][j].totalAmount
+                                    }
+                                }
+                                data.sum = sum
+                                dataToshow.push(data)
+                            }
+                        }
+                    }
+                }
+            console.log(dataToshow)
         }
     }else{
 
