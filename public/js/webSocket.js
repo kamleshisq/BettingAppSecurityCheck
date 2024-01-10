@@ -10,7 +10,11 @@ socket.on('disconnect', () => {
 });
 let c = 0
 socket.on('connect', () => {
-    var jwtToken12 = localStorage.getItem('JWT');
+    // const urlParams = new URLSearchParams(window.location.search);
+    // jwtToken12 = urlParams.get('sessiontoken')
+    // var jwtToken12 = localStorage.getItem('JWT');
+    // if(jwtToken12 === undefined){
+    // }
 
     console.log("websocket Connected", jwtToken12)
     let LOGINDATA = {}
