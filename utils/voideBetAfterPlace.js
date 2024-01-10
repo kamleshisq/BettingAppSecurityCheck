@@ -57,6 +57,7 @@ async function voidBET(data){
     // console.log(dataForHistory, 121212)
     try{
         for(const bets in allBetWithMarketId){
+            console.log('WORKING wwwwwwwww')
             if(allBetWithMarketId[bets].status === 'WON'){
                 let debitCreditAmount = allBetWithMarketId[bets].returns
                 let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -debitCreditAmount, myPL: -debitCreditAmount, uplinePL: debitCreditAmount, pointsWL:-debitCreditAmount}})
