@@ -81,40 +81,54 @@ const { Socket } = require('engine.io');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
+    if (!socket.request.app) {
+        socket.request.app = app;
+      }
     socket.on('LOGIN23', async(data) => {
         console.log(data, 123456)
+        const ip = socket.request.app.get('Ip');
         let tokenFORUSER = data
         if(tokenFORUSER){
             if (tokenFORUSER.startsWith('"') && tokenFORUSER.endsWith('"')) {
                 tokenFORUSER = tokenFORUSER.slice(1, -1);
               }
-            console.log(await loginlogs.findOne({session_id:tokenFORUSER}),{session_id:tokenFORUSER})
-            // if(logsDATA){
-            //     let thatUser = await User.findOne({userName:logsDATA.userName})
-            //     if(thatUser){
-            //        console.log(thatUser, tokenFORUSER, "datadatadatadata")
-            //     }else{
-            //         socket.emit('LOGIN23', 'reaload')
-            //     }
-            // }else{
-            //     socket.emit('LOGIN23', 'reaload')
-            // }
+            let logsDATA = await loginlogs.findOne({session_id:tokenFORUSER})
+            if(logsDATA){
+                let thatUser = await User.findOne({userName:logsDATA.userName})
+                if(thatUser){
+                    socket.emit("loginUser", {
+                        loginData:thatUser,
+                        socket:tokenFORUSER,
+                        Ip:ip
+                    })
+                }else{
+                    socket.emit("loginUser", {
+                        loginData:undefined,
+                        socket:undefined,
+                        Ip:ip
+                    })
+                }
+            }else{
+                socket.emit("loginUser", {
+                    loginData:undefined,
+                    socket:undefined,
+                    Ip:ip
+                })
+            }
         }
     })
     
-    if (!socket.request.app) {
-        socket.request.app = app;
-      }
-    if (socket.request && socket.request.app) {
-        const myVariable = socket.request.app.get('User');
-        const myVariable2 = socket.request.app.get('token');
-        const ip = socket.request.app.get('Ip');
-        socket.emit("loginUser", {
-            loginData:myVariable,
-            socket:myVariable2,
-            Ip:ip
-        })
-    }
+    
+    // if (socket.request && socket.request.app) {
+    //     const myVariable = socket.request.app.get('User');
+    //     const myVariable2 = socket.request.app.get('token');
+    //     const ip = socket.request.app.get('Ip');
+    //     socket.emit("loginUser", {
+    //         loginData:myVariable,
+    //         socket:myVariable2,
+    //         Ip:ip
+    //     })
+    // }
     // console.log('connected to client')
     // console.log(socket.request, socket.request.app,"21212")
     // console.log(loginData.Token)
