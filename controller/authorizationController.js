@@ -488,6 +488,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 
        
     }
+    console.log(loginData.Token, "hfhfghfhfhfhf")
     if(!token){
         req.app.set('token', null);
         req.app.set('User', null);
