@@ -1,6 +1,6 @@
 const User = require('../model/userModel');
 const Bet = require('../model/betmodel');
-const runnerData = require('../model/runnersData');
+const runnerDataModel = require('../model/runnersData');
 
 
 async function checkExpoOfThatMarket( bet ){
@@ -429,6 +429,49 @@ async function checkExpoOfThatMarket( bet ){
 
 
         console.log(betsMarketIdWise[0].selections, "betsMarketIdWisebetsMarketIdWisebetsMarketIdWise")
+        let index = betsMarketIdWise[0].selections.findIndex(item => item.selectionName === bet.selectionName)
+        if(index !== -1){
+            let objectTopush = {
+                selectionName : bet.selectionName,
+                totalAmount : parseFloat(bet.WinAmount),
+                exposure : parseFloat(bet.exposure),
+                matchName : bet.match,
+                Stake : -bet.Stake
+            }
+            betsMarketIdWise[0].selections.push(objectTopush)
+        }else{
+            betsMarketIdWise[0].selections[index].totalAmount = betsMarketIdWise[0].selections[index].totalAmount + parseFloat(bet.WinAmount)
+            betsMarketIdWise[0].selections[index].exposure = betsMarketIdWise[0].selections[index].exposure + parseFloat(bet.exposure)
+            betsMarketIdWise[0].selections[index].Stake = betsMarketIdWise[0].selections[index].Stake - bet.Stake
+        }
+
+        let runnerData = await runnerDataModel.findOne({marketId:bet.marketId})
+        if(runnerData){
+            betsMarketIdWise[0].runnersData = JSON.parse(runnerData.runners)
+        }
+
+        let showData = []
+        for(let j = 0; j < data.betsMarketIdWise[0].runnersData.length; j++){
+                console.log("got here")
+                let checkRunn = data.betsMarketIdWise[0].selections.find(item => item.selectionName == data.betsMarketIdWise[0].runnersData[j].runner)
+                // console.log(checkRunn, 123456789)
+                let amount = 0
+                if(checkRunn){
+                    amount = checkRunn.totalAmount
+                    for(const run in data.betsMarketIdWise[0].selections){
+                        if(data.betsMarketIdWise[0].selections[run].selectionName !== checkRunn.selectionName){
+                            amount = amount - data.betsMarketIdWise[0].selections[run].exposure
+                        }
+                    }
+                }else{
+                    for(const run in data.betsMarketIdWise[0].selections){
+                        amount = amount - data.betsMarketIdWise[0].selections[run].exposure
+                    }
+                }
+                // console.log(amount)
+                showData.push(amount)
+            }
+            console.log(showData, "showDatashowDatashowData")
     }
 
     console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
