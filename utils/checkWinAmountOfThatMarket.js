@@ -427,51 +427,50 @@ async function checkExpoOfThatMarket( bet ){
             },
         ])
 
-
-        let index = betsMarketIdWise[0].selections.findIndex(item => item.selectionName === bet.selectionName)
-        console.log(index, "indexindexindex")
-        if(index === -1){
-            let objectTopush = {
-                selectionName : bet.selectionName,
-                totalAmount : parseFloat(bet.WinAmount),
-                exposure : parseFloat(bet.exposure),
-                matchName : bet.match,
-                Stake : -bet.Stake
+        if(betsMarketIdWise.length > 0){
+            let index = betsMarketIdWise[0].selections.findIndex(item => item.selectionName === bet.selectionName)
+            if(index === -1){
+                let objectTopush = {
+                    selectionName : bet.selectionName,
+                    totalAmount : parseFloat(bet.WinAmount),
+                    exposure : parseFloat(bet.exposure),
+                    matchName : bet.match,
+                    Stake : -bet.Stake
+                }
+                betsMarketIdWise[0].selections.push(objectTopush)
+            }else{
+                betsMarketIdWise[0].selections[index].totalAmount = betsMarketIdWise[0].selections[index].totalAmount + parseFloat(bet.WinAmount)
+                betsMarketIdWise[0].selections[index].exposure = betsMarketIdWise[0].selections[index].exposure + parseFloat(bet.exposure)
+                betsMarketIdWise[0].selections[index].Stake = betsMarketIdWise[0].selections[index].Stake - bet.Stake
             }
-            betsMarketIdWise[0].selections.push(objectTopush)
-        }else{
-            betsMarketIdWise[0].selections[index].totalAmount = betsMarketIdWise[0].selections[index].totalAmount + parseFloat(bet.WinAmount)
-            betsMarketIdWise[0].selections[index].exposure = betsMarketIdWise[0].selections[index].exposure + parseFloat(bet.exposure)
-            betsMarketIdWise[0].selections[index].Stake = betsMarketIdWise[0].selections[index].Stake - bet.Stake
-        }
-        console.log(betsMarketIdWise[0].selections, "betsMarketIdWise[0].selectionsbetsMarketIdWise[0].selectionsbetsMarketIdWise[0].selections")
-        let runnerData = await runnerDataModel.findOne({marketId:bet.marketId})
-        if(runnerData){
-            betsMarketIdWise[0].runnersData = JSON.parse(runnerData.runners)
-        }
-
-        let showData = []
-        for(let j = 0; j < betsMarketIdWise[0].runnersData.length; j++){
-                console.log("got here")
-                let checkRunn = betsMarketIdWise[0].selections.find(item => item.selectionName == betsMarketIdWise[0].runnersData[j].runner)
-                // console.log(checkRunn, 123456789)
-                let amount = 0
-                if(checkRunn){
-                    amount = checkRunn.totalAmount
-                    for(const run in betsMarketIdWise[0].selections){
-                        if(betsMarketIdWise[0].selections[run].selectionName !== checkRunn.selectionName){
+            let runnerData = await runnerDataModel.findOne({marketId:bet.marketId})
+            if(runnerData){
+                betsMarketIdWise[0].runnersData = JSON.parse(runnerData.runners)
+            }
+    
+            let showData = []
+            for(let j = 0; j < betsMarketIdWise[0].runnersData.length; j++){
+                    let checkRunn = betsMarketIdWise[0].selections.find(item => item.selectionName == betsMarketIdWise[0].runnersData[j].runner)
+                    // console.log(checkRunn, 123456789)
+                    let amount = 0
+                    if(checkRunn){
+                        amount = checkRunn.totalAmount
+                        for(const run in betsMarketIdWise[0].selections){
+                            if(betsMarketIdWise[0].selections[run].selectionName !== checkRunn.selectionName){
+                                amount = amount - betsMarketIdWise[0].selections[run].exposure
+                            }
+                        }
+                    }else{
+                        for(const run in betsMarketIdWise[0].selections){
                             amount = amount - betsMarketIdWise[0].selections[run].exposure
                         }
                     }
-                }else{
-                    for(const run in betsMarketIdWise[0].selections){
-                        amount = amount - betsMarketIdWise[0].selections[run].exposure
-                    }
+                    // console.log(amount)
+                    showData.push(amount)
                 }
-                // console.log(amount)
-                showData.push(amount)
-            }
-            console.log(showData, "showDatashowDatashowData")
+                // console.log(showData, "showDatashowDatashowData")
+                WinAmount = Math.max(...showData);
+        }
     }
 
     console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
