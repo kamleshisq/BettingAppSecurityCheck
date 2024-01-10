@@ -2157,9 +2157,9 @@ io.on('connection', (socket) => {
             console.log(`The 'placeBet' function took ${elapsedTimeInSeconds} seconds to complete.`);
             let openBet = []
             if(multimarketstatus){
-                openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
+                openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"}).sort({ date: -1 })
             }else{
-                openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
+                openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title}).sort({ date: -1 })
             }
             // console.log(openBet, "openBet")
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
