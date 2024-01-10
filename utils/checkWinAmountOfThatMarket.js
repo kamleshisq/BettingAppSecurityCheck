@@ -451,21 +451,21 @@ async function checkExpoOfThatMarket( bet ){
         }
 
         let showData = []
-        for(let j = 0; j < data.betsMarketIdWise[0].runnersData.length; j++){
+        for(let j = 0; j < betsMarketIdWise[0].runnersData.length; j++){
                 console.log("got here")
-                let checkRunn = data.betsMarketIdWise[0].selections.find(item => item.selectionName == data.betsMarketIdWise[0].runnersData[j].runner)
+                let checkRunn = betsMarketIdWise[0].selections.find(item => item.selectionName == betsMarketIdWise[0].runnersData[j].runner)
                 // console.log(checkRunn, 123456789)
                 let amount = 0
                 if(checkRunn){
                     amount = checkRunn.totalAmount
-                    for(const run in data.betsMarketIdWise[0].selections){
-                        if(data.betsMarketIdWise[0].selections[run].selectionName !== checkRunn.selectionName){
-                            amount = amount - data.betsMarketIdWise[0].selections[run].exposure
+                    for(const run in betsMarketIdWise[0].selections){
+                        if(betsMarketIdWise[0].selections[run].selectionName !== checkRunn.selectionName){
+                            amount = amount - betsMarketIdWise[0].selections[run].exposure
                         }
                     }
                 }else{
-                    for(const run in data.betsMarketIdWise[0].selections){
-                        amount = amount - data.betsMarketIdWise[0].selections[run].exposure
+                    for(const run in betsMarketIdWise[0].selections){
+                        amount = amount - betsMarketIdWise[0].selections[run].exposure
                     }
                 }
                 // console.log(amount)
