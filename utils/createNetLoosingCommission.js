@@ -91,7 +91,7 @@ async function commisiion(data){
               for(let j = user.parentUsers.length - 1; j >= 1; j--){
                   let childUser = await userModel.findById(user.parentUsers[j])
                   let parentUser = await userModel.findById(user.parentUsers[j - 1])
-                  let commissionChild = await commissionModel.find({userId:childUser.id})
+                  let commissionChild = await commissionModel.find({userId:user.parentUsers[j]})
                   let commissionPer = 0
                   if (commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
                       commissionPer = commissionChild[0].Bookmaker.percentage
@@ -100,7 +100,7 @@ async function commisiion(data){
                   if(commissionPer > 0 && commissionCoin < 0){
                       let commissiondata = {
                           userName : childUser.userName,
-                          userId : childUser.id,
+                          userId : user.parentUsers[j],
                           eventId : netLossingCommission[i].eventId,
                           sportId : netLossingCommission[i].gameId,
                           seriesName : netLossingCommission[i].event,

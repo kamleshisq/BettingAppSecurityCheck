@@ -122,7 +122,7 @@ async function mapBet(data){
                         for(let i = user.parentUsers.length - 1; i >= 1; i--){
                             let childUser = await userModel.findById(user.parentUsers[i])
                             let parentUser = await userModel.findById(user.parentUsers[i - 1])
-                            let commissionChild = await commissionModel.find({userId:childUser.id})
+                            let commissionChild = await commissionModel.find({userId:user.parentUsers[i]})
                             if(commissionChild.length > 0){
                             let commissionPer = 0
                             if ((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
@@ -137,7 +137,7 @@ async function mapBet(data){
                             if(commissionPer > 0 && bets[bet].commionstatus){
                                 let commissiondata = {
                                     userName : childUser.userName,
-                                    userId : childUser.id,
+                                    userId : user.parentUsers[i],
                                     eventId : bets[bet].eventId,
                                     sportId : bets[bet].gameId,
                                     seriesName : bets[bet].event,
@@ -536,7 +536,7 @@ async function mapBet(data){
                           for(let i = user.parentUsers.length - 1; i >= 1; i--){
                               let childUser = await userModel.findById(user.parentUsers[i])
                               let parentUser = await userModel.findById(user.parentUsers[i - 1])
-                              let commissionChild = await commissionModel.find({userId:childUser.id})
+                              let commissionChild = await commissionModel.find({userId:user.parentUsers[i]})
                               if(commissionChild.length > 0){
                               let commissionPer = 0
                               if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status){
@@ -546,7 +546,7 @@ async function mapBet(data){
                               if(commissionPer > 0 && bets[bet].commionstatus){
                                   let commissiondata = {
                                       userName : childUser.userName,
-                                      userId : childUser.id,
+                                      userId : user.parentUsers[i],
                                       eventId : bets[bet].eventId,
                                       sportId : bets[bet].gameId,
                                       seriesName : bets[bet].event,
