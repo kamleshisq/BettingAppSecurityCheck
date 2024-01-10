@@ -10,17 +10,21 @@ socket.on('disconnect', () => {
 });
 let c = 0
 socket.on('connect', () => {
-    let tokenCHECK
-    var myCookie = document.cookie
-    console.log(myCookie)
-    reconnectAttempts = 0;
-    if (myCookie) {
-        tokenCHECK = myCookie.split('=')[1].trim();
-        console.log(tokenCHECK);
-    } else {
-        console.log("Cookie not found");
+    function getCookie(cookieName) {
+        var name = cookieName + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(';');
+        for(var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i].trim();
+            if (cookie.indexOf(name) == 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+        return null;
     }
-    console.log("websocket Connected")
+    let tokenCHECK = getCookie("JWT");
+
+    console.log("websocket Connected", tokenCHECK)
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         console.log(data, "datadatadata123456")
