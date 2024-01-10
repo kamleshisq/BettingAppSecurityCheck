@@ -84,7 +84,7 @@ io.on('connection', (socket) => {
     socket.on('LOGIN23', async(data) => {
         console.log(data, 123456)
         if(data){
-            let logsDATA = await loginlogs.findOne({session_id:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBIjoiNjU2ZWU4ZGYwMTQwY2E1ZjU2M2RlYjJmIiwiaWF0IjoxNzA0ODgzNDMwLCJleHAiOjE3MDY2ODM0MzB9.0OlQn3NB342UBGBBIu9DvmcYUQoUWnJBcdhNt4netC4"})
+            let logsDATA = await loginlogs.findOne({session_id:data})
             console.log(logsDATA)
             if(logsDATA){
                 let thatUser = await User.findOne({userName:logsDATA.userName})
