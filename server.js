@@ -81,6 +81,9 @@ const { Socket } = require('engine.io');
 // const { date } = require('joi');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
+    if (!socket.request.app) {
+        socket.request.app = app;
+      }
     socket.on('LOGIN23', async(data) => {
         if(data){
             const ip = socket.request.app.get('Ip');
@@ -100,9 +103,7 @@ io.on('connection', (socket) => {
                 socket.emit('LOGIN23', 'reaload')
             }
         }else{
-            if (!socket.request.app) {
-                socket.request.app = app;
-              }
+            
             if (socket.request && socket.request.app) {
                 const myVariable = socket.request.app.get('User');
                 const myVariable2 = socket.request.app.get('token');
