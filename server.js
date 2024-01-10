@@ -85,18 +85,18 @@ io.on('connection', (socket) => {
         console.log(data, 123456)
         let tokenFORUSER = data
         if(tokenFORUSER){
-            let logsDATA = await loginlogs.findOne({session_id:tokenFORUSER})
-            console.log(logsDATA)
-            if(logsDATA){
-                let thatUser = await User.findOne({userName:logsDATA.userName})
-                if(thatUser){
-                   console.log(thatUser, tokenFORUSER, "datadatadatadata")
-                }else{
-                    socket.emit('LOGIN23', 'reaload')
-                }
-            }else{
-                socket.emit('LOGIN23', 'reaload')
-            }
+            // await loginlogs.findOne({session_id:tokenFORUSER})
+            console.log(await loginlogs.findOne({session_id:tokenFORUSER}))
+            // if(logsDATA){
+            //     let thatUser = await User.findOne({userName:logsDATA.userName})
+            //     if(thatUser){
+            //        console.log(thatUser, tokenFORUSER, "datadatadatadata")
+            //     }else{
+            //         socket.emit('LOGIN23', 'reaload')
+            //     }
+            // }else{
+            //     socket.emit('LOGIN23', 'reaload')
+            // }
         }
     })
     
