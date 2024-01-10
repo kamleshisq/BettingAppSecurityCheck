@@ -11,7 +11,8 @@ socket.on('disconnect', () => {
 let c = 0
 socket.on('connect', () => {
     let tokenCHECK
-    var myCookie = document.cookie.split(';').find(cookie => cookie.includes('JWT'));
+    var myCookie = document.cookie
+    console.log(myCookie)
     reconnectAttempts = 0;
     if (myCookie) {
         tokenCHECK = myCookie.split('=')[1].trim();
