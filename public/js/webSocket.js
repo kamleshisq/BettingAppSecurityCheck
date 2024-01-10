@@ -7822,7 +7822,7 @@ socket.on('connect', () => {
                 socket.emit('OddsCheck', {ids, eventId})
                 setTimeout(()=>{
                     OddsCheck()
-                  }, 1000)
+                  }, 10000)
             })
         }
         OddsCheck()
