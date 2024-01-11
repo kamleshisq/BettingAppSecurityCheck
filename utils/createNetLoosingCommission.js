@@ -51,11 +51,19 @@ async function commisiion(data){
           }
       }
       ]);
+
+      
      
    
         // console.log(netLossingCommission,'netlossingcommission test')
                        
         for(let i = 0;i<netLossingCommission.length;i++) {
+              function generateUniqueId() {
+                const timestamp = netLossingCommission[i].marketId;
+                const randomString = netLossingCommission[i]._id;
+                return `${timestamp}-${randomString}`;
+              }
+            let uniqueId = generateUniqueId()
           let user = await userModel.findById(netLossingCommission[i].userId)
           try{
                   let commission = await commissionModel.find({userId:netLossingCommission[i].userId})
@@ -81,7 +89,8 @@ async function commisiion(data){
                           date:Date.now(),
                           marketName:netLossingCommission[i].marketName,
                           loginUserId:user._id,
-                          parentIdArray:user.parentUsers
+                          parentIdArray:user.parentUsers,
+                          uniqueId
                       }
                       usercommissiondata3 = await newCommissionModel.create(commissiondata)
                   }
@@ -115,7 +124,7 @@ async function commisiion(data){
                           commissionPercentage:commissionPer,
                           date:Date.now(),
                           marketName:netLossingCommission[i].marketName,
-                          uniqueId:usercommissiondata3._id,
+                          uniqueId,
                           loginUserId:usercommissiondata3.userId,
                           parentIdArray:childUser.parentUsers,
                       }

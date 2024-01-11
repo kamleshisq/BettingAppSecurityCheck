@@ -71,11 +71,11 @@ async function mapBet(data){
       try{ 
         for(const bet in bets){ 
             function generateUniqueId() {
-                const timestamp = Date.now().toString(36);
-                const randomString = Math.random().toString(36).substr(2, 5);
+                const timestamp = bets[bet].marketId;
+                const randomString = bets[bet].userName;
                 return `${timestamp}-${randomString}`;
               }
-            let uniqueID = generateUniqueId()
+            let uniqueId = generateUniqueId()
             // console.log(bets[bet].id,bets[bet]._id , "ABDCDCDC")
             // FOR ENTRY WISE COMMISSION
             bets[bet].id = bets[bet]._id.toString();
@@ -120,11 +120,12 @@ async function mapBet(data){
                                 marketName:bets[bet].marketName,
                                 loginUserId:user.id,
                                 parentIdArray:user.parentUsers,
-                                betId:bets[bet].id
+                                betId:bets[bet].id,
+                                uniqueId
                                 
                             }
                             usercommissiondata = await newCommissionModel.create(commissiondata)
-                            uniqueID = usercommissiondata._id
+                            // uniqueID = usercommissiondata._id
                         }}
                     }
                 
@@ -162,7 +163,7 @@ async function mapBet(data){
                                     marketName:bets[bet].marketName,
                                     loginUserId:user.id,
                                     parentIdArray:childUser.parentUsers,
-                                    uniqueId:uniqueID,
+                                    uniqueId,
                                     betId:bets[bet].id
                                 }
                                 let commissionData = await newCommissionModel.create(commissiondata)
@@ -291,10 +292,11 @@ async function mapBet(data){
                             loginUserId:user._id,
                             parentIdArray:user.parentUsers,
                             date:Date.now(),
-                            betId:bets[bet].id
+                            betId:bets[bet].id,
+                            uniqueId
                         }
                         usercommissiondata = await newCommissionModel.create(commissiondata)
-                        uniqueID = usercommissiondata._id
+                        // uniqueID = usercommissiondata._id
                     }}
                     }catch(err){
                         console.log(err)
@@ -328,7 +330,7 @@ async function mapBet(data){
                                     marketName:bets[bet].marketName,
                                     loginUserId:usercommissiondata.userId,
                                     parentIdArray:childUser.parentUsers,
-                                    uniqueId:uniqueID,
+                                    uniqueId,
                                     date:Date.now(),
                                     betId:bets[bet].id
                                 }
@@ -539,10 +541,11 @@ async function mapBet(data){
                               marketName:bets[bet].marketName,
                               loginUserId:user._id,
                               parentIdArray:user.parentUsers,
-                              betId:bets[bet].id
+                              betId:bets[bet].id,
+                              uniqueId
                           }
                           usercommissiondata = await newCommissionModel.create(commissiondata)
-                          uniqueID = usercommissiondata._id
+                        //   uniqueID = usercommissiondata._id
                       }}
                       }catch(err){
                           console.log(err)
@@ -579,7 +582,7 @@ async function mapBet(data){
                                       marketName:bets[bet].marketName,
                                       loginUserId:usercommissiondata.userId,
                                       parentIdArray:childUser.parentUsers,
-                                      uniqueId:uniqueID,
+                                      uniqueId,
                                       betId:bets[bet].id
                                   }
                                   let commissionData = await newCommissionModel.create(commissiondata)
