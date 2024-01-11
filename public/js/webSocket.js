@@ -7589,6 +7589,12 @@ socket.on('connect', () => {
 
 
     if(pathname === '/exchange_inPlay/match'  ){
+        let MATCHinPLAYSTATUS = false
+        $('.inplay-match').each(function(){
+            if($(this).hasClass('false')){
+                MATCHinPLAYSTATUS = true
+            }
+        })
 
 
         $(".live-stream-match-dropdown .exchange-pg-rit-ro-livetv-titl").click(function(){
@@ -7902,7 +7908,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 let eventId = search.split('=')[1]
-                socket.emit("marketId", {ids, eventId})
+                socket.emit("marketId", {ids, eventId, MATCHinPLAYSTATUS})
               });
               if(limitData.length === 0){
                 setTimeout(()=>{
