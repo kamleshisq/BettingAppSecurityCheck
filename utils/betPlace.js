@@ -243,6 +243,7 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
     if(data.data.bettype2 === 'BACK'){
         let OddChake = (data.data.oldOdds * 1) + (15) 
+        console.log(OddChake,data.data.odds, data.data.odds2 )
         if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
             return 'Odds out of range back'
         }
