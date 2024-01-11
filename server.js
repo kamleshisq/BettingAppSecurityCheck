@@ -2153,7 +2153,7 @@ io.on('connection', (socket) => {
                 data.data.odds2 = odds
                 data.data.secId = data.data.secId.slice(0,-1)
             }
-            // console.log(data ,'++++++==>DATA', multimarketstatus)
+            console.log(data ,'++++++==>DATA', multimarketstatus)
             let result = await placeBet(data)
             const endTimestamp = performance.now();
             const elapsedTimeInSeconds = (endTimestamp - startTimestamp) / 1000;
