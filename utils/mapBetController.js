@@ -145,7 +145,7 @@ async function mapBet(data){
                             
                             let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                             // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-                            if(commissionPer > 0 ){
+                            if(commissionPer > 0  && bets[bet].commionstatus){
                                 let commissiondata = {
                                     userName : childUser.userName,
                                     userId : user.parentUsers[i],
@@ -523,7 +523,7 @@ async function mapBet(data){
                       }
                       let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                     //   console.log(commissionCoin, commissionPer)
-                      if(commissionPer > 0 ){
+                      if(commissionPer > 0 && bets[bet].commionstatus){
                           let commissiondata = {
                               userName : user.userName,
                               userId : user.id,
@@ -564,7 +564,7 @@ async function mapBet(data){
                               }
                               let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
                               console.log(commissionCoin,commissionPer )
-                              if(commissionPer > 0 ){
+                              if(commissionPer > 0  && bets[bet].commionstatus){
                                   let commissiondata = {
                                       userName : childUser.userName,
                                       userId : user.parentUsers[i],
