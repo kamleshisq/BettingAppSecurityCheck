@@ -38,7 +38,7 @@ async function commisiion(data){
           $group:{
               _id:'$userName',
               returns:{
-                $sum:returns
+                $sum:'$returns'
               },
               userId:{$first:'$userId'},
               eventId:{$first:'$eventId'},
