@@ -2139,18 +2139,21 @@ io.on('connection', (socket) => {
             }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
                 let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
                 let name
+                let name2
                 if(data.data.secId.slice(-1) == 2){
                     name = `layPrice${data.data.secId.slice(-1) - 3}`
                     name =  name.slice(0, -2)
     
                     data.data.bettype2 = 'LAY'
+                    name2 = lay
                 }else{
                     name = `backPrice${data.data.secId.slice(-1)}`
                     name = name.slice(0, -1)
                     data.data.bettype2 = 'BACK'
+                    name2 = back
                 }
                 console.log(realodd, name)
-                let odds = realodd[name];
+                let odds = realodd[name2];
                 data.data.odds2 = odds
                 data.data.secId = data.data.secId.slice(0,-1)
             }
