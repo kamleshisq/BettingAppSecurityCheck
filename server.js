@@ -341,7 +341,7 @@ io.on('connection', (socket) => {
             
             
             if(data.filterData.userName){
-                var regexp = new RegExp(data.filterData.userName);
+                var regexp = new RegExp(data.filterData.userName, 'i');
                 data.filterData.userName = regexp
             }
             if(data.filterData.status){
