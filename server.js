@@ -1346,7 +1346,7 @@ io.on('connection', (socket) => {
         }
         // console.log(role_type, 123)
         
-        var regexp = new RegExp(data.x,i);
+        var regexp = new RegExp(data.x, 'i');
 
         let user = await User.aggregate([
             {
