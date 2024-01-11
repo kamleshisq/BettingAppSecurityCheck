@@ -2149,6 +2149,7 @@ io.on('connection', (socket) => {
                     name = name.slice(0, -1)
                     data.data.bettype2 = 'BACK'
                 }
+                console.log(realodd, name)
                 let odds = realodd[name];
                 data.data.odds2 = odds
                 data.data.secId = data.data.secId.slice(0,-1)
