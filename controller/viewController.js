@@ -4177,57 +4177,59 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
           }
     ])
 
-    let userWiseData = await commissionNewModel.aggregate([
-        {
-            $match: {
-              eventDate: {
-                $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-              },
-              userName:{$in:childrenUsername},
-              loginUserId:{$exists:true},
-              parentIdArray:{$exists:true}
-            }
-        },
-        {
-            $lookup: {
-                from: "commissionnewmodels",
-                let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
-                pipeline: [
-                    {
-                      $match: {
-                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
-                        loginUserId:{$exists:true},
-                        parentIdArray:{$exists:true}
-                      }
-                    }
-                  ],
-                as: "parentdata"
-            }
-        },
-        {
-            $group: {
-                _id: "$userName",
-                totalCommission: { $sum: "$commission" },
-                totalUPline: { $sum:{
-                    $reduce:{
-                        input:'$parentdata',
-                        initialValue:0,
-                        in: { $add: ["$$value", "$$this.commission"] }
-                    }
-                }},
-            }
-        },
-        {
-            $sort:{
-            _id : -1,
-            totalCommission : 1,
-            totalUPline : 1
-            }
-        },
-        {
-        $limit:10
-        }
-    ])
+
+    let userWiseData = []
+    // let userWiseData = await commissionNewModel.aggregate([
+    //     {
+    //         $match: {
+    //           eventDate: {
+    //             $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+    //           },
+    //           userName:{$in:childrenUsername},
+    //           loginUserId:{$exists:true},
+    //           parentIdArray:{$exists:true}
+    //         }
+    //     },
+    //     {
+    //         $lookup: {
+    //             from: "commissionnewmodels",
+    //             let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+    //             pipeline: [
+    //                 {
+    //                   $match: {
+    //                     $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
+    //                     loginUserId:{$exists:true},
+    //                     parentIdArray:{$exists:true}
+    //                   }
+    //                 }
+    //               ],
+    //             as: "parentdata"
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //             _id: "$userName",
+    //             totalCommission: { $sum: "$commission" },
+    //             totalUPline: { $sum:{
+    //                 $reduce:{
+    //                     input:'$parentdata',
+    //                     initialValue:0,
+    //                     in: { $add: ["$$value", "$$this.commission"] }
+    //                 }
+    //             }},
+    //         }
+    //     },
+    //     {
+    //         $sort:{
+    //         _id : -1,
+    //         totalCommission : 1,
+    //         totalUPline : 1
+    //         }
+    //     },
+    //     {
+    //     $limit:10
+    //     }
+    // ])
     // res.status(200).json({
     //     userWiseData
     // })
