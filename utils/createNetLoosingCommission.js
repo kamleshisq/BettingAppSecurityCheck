@@ -37,7 +37,9 @@ async function commisiion(data){
         {
           $group:{
               _id:'$userName',
-              returns:{$sum:{$cond:[{$in:['$status',['LOSS']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}},
+              returns:{
+                $sum:returns
+              },
               userId:{$first:'$userId'},
               eventId:{$first:'$eventId'},
               gameId:{$first:'$gameId'},
