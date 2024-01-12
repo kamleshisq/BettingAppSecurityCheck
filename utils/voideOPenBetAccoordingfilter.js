@@ -29,10 +29,10 @@ async function voidbetOPENFORTIMELYVOIDE(data){
             filterData.userName = data.filterData.userName
         }else{
             childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
-            filterData.username = {$in:childrenUsername}
+            filterData.userName = {$in:childrenUsername}
         }
         console.log(filterData, "filterDatafilterDatafilterData")
-        let bets = await Bet.find({marketId:filterData.marketId, username:filterData.username})
+        let bets = await Bet.find(filterData)
         console.log(bets, 'betsbetsbetsbetsbets')
     //     await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
     //     let inprogressData = await InprogressModel.findOne({marketId:data.id, progressType:'VoideBet'})
