@@ -987,6 +987,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
         }else{
             const user = await User.findOne({userName}).select('+password');
             let whiteLabel = process.env.whiteLabelName
+            console.log("gothere", user)
             if(user && user.role_type != 6){
                 if(user.whiteLabel != whiteLabel && user.role_type !== 1){
                     res.status(404).json({
