@@ -692,6 +692,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 foreignField: 'transactionId',
                 as: 'betdetail'
             }
+        },
+        {
+            $unwind:"$betdetail"
         }
     ])
     console.log(userAcc,'userAcc')
