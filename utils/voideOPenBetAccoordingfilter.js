@@ -21,6 +21,7 @@ async function voidbetOPENFORTIMELYVOIDE(data){
             childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
             filterData.username = {$in:childrenUsername}
         }
+        console.log(filterData, "filterDatafilterDatafilterData")
         let bets = await Bet.find(filterData)
         console.log(bets, 'betsbetsbetsbetsbets')
     //     await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
