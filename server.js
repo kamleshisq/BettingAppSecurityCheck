@@ -2829,6 +2829,15 @@ io.on('connection', (socket) => {
 
           socket.emit("GAMEREPORTUSER", {bets, page})
     })
+
+    socket.on('getbetdetailbyid',async(data)=>{
+        try{
+            const bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id})
+            socket.emit('getbetdetailbyid',{status:'success',bets})
+        }catch(err){
+            socket.emit('getbetdetailbyid',{status:'fail',msg:'something went wrong'})
+        }
+    })
     
     socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
         let page = data.page
