@@ -51,7 +51,7 @@ async function voidbetOPENFORTIMELYVOIDE(data){
                     for(const bet in bets){
                         let exposure = bets[bet].exposure
 
-                        await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", return:0 ,remark:data.data.remark, calcelUser:operatoruserName});
+                        await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", return:0 ,remark:data.FormData1.Remark, calcelUser:operatoruserName});
                         let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{exposure:-exposure}})
                         let description = `Unsettle Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
                         // let description2 = `Bet for ${bets[bet].match}/stake = ${creditDebitamount}/user = ${user.userName}/CANCEL `
@@ -63,7 +63,7 @@ async function voidbetOPENFORTIMELYVOIDE(data){
                             "date" : Date.now(),
                             "userName" : user.userName,
                             "role_type" : user.role_type,
-                            "Remark":data.data.remark,
+                            "Remark":data.FormData1.Remark,
                             "stake": bets[bet].Stake,
                             "transactionId":`${bets[bet].transactionId}`
                         }
