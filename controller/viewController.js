@@ -680,39 +680,39 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     // let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
-    let userAcc = await gameModel.aggregate([
+    let userAcc = await betModel.aggregate([
         {
             $match:{
                 userId:req.currentUser._id.toString()
             }
         },
-        // {
-        //     $lookup: {
-        //         from: 'accountstatements', // Assuming the name of the Whitelabel collection
-        //         localField: 'transactionId',
-        //         foreignField: 'transactionId',
-        //         as: 'accountdetail'
-        //     }
-        // },
-        // {
-        //     $unwind:"$accountdetail"
-        // },
-        // {
-        //     $group:{
-        //         _id:{
-        //             eventId:"$accountdetail.eventId",
-        //             marketId:"$accountdetail.marketId"
-        //         },
-        //         match:{$first:'$$accountdetail.match'},
-        //         marketName:{$first:'$$accountdetail.marketName'},
-        //         stake:{$first:'$$accountdetail.stake'},
-        //         accStype:{$first:'$$accountdetail.accStype'},
-        //         creditDebitamount:{$sum:'$$accountdetail.creditDebitamount'},
-        //         balance:{$sum:'$$accountdetail.balance'},
-        //         transactionId:{$first:'$$accountdetail.transactionId'}
+        {
+            $lookup: {
+                from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                localField: 'transactionId',
+                foreignField: 'transactionId',
+                as: 'accountdetail'
+            }
+        },
+        {
+            $unwind:"$accountdetail"
+        },
+        {
+            $group:{
+                _id:{
+                    eventId:"$accountdetail.eventId",
+                    marketId:"$accountdetail.marketId"
+                },
+                match:{$first:'$$accountdetail.match'},
+                marketName:{$first:'$$accountdetail.marketName'},
+                stake:{$first:'$$accountdetail.stake'},
+                accStype:{$first:'$$accountdetail.accStype'},
+                creditDebitamount:{$sum:'$$accountdetail.creditDebitamount'},
+                balance:{$sum:'$$accountdetail.balance'},
+                transactionId:{$first:'$$accountdetail.transactionId'}
 
-        //     }
-        // }
+            }
+        }
     ])
     console.log(userAcc,'userAcc')
 
