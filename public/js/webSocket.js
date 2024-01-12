@@ -6725,6 +6725,12 @@ socket.on('connect', () => {
                 alert(data.message)
             }else{
                 alert('Bet Voided Successfully !!')
+                $('.timely-voideBet :input').val('');
+                $('#myModal2')
+                    .removeClass('show')
+                    .css('display', 'none')
+                    .attr('aria-modal', 'false')
+                    .attr('role', 'none');
                 let page = parseInt($('.pageId').attr('data-pageid')) - 1;
                 let data = {}
                 let userName = $('.searchUser').val()
