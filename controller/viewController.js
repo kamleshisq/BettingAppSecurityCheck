@@ -682,7 +682,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let userAcc = await gameModel.aggregate([
         {
             $match:{
-                userId:req.currentUser._id
+                userId:req.currentUser._id.toString()
             }
         },
         {
