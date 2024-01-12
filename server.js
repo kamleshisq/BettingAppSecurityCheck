@@ -8262,7 +8262,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('timelyVoideBEt', async(data) => {
-        // console.log(data, "DATADATA")
+        console.log(data, "DATADATA")
         try{
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPasscode(data.data.FormData1, user.passcode)
@@ -8274,6 +8274,7 @@ io.on('connection', (socket) => {
             }
         }catch(err){
             console.log(err)
+            socket.emit('timelyVoideBEt', {status:'err', message:'Please try again leter'})
         }
         // try{
         //     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
