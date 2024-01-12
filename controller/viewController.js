@@ -686,33 +686,33 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 userId:req.currentUser._id.toString()
             }
         },
-        {
-            $lookup: {
-                from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                localField: 'transactionId',
-                foreignField: 'transactionId',
-                as: 'accountdetail'
-            }
-        },
-        {
-            $unwind:"$accountdetail"
-        },
-        {
-            $group:{
-                _id:{
-                    eventId:"$accountdetail.eventId",
-                    marketId:"$accountdetail.marketId"
-                },
-                match:{$first:'$$accountdetail.match'},
-                marketName:{$first:'$$accountdetail.marketName'},
-                stake:{$first:'$$accountdetail.stake'},
-                accStype:{$first:'$$accountdetail.accStype'},
-                creditDebitamount:{$sum:'$$accountdetail.creditDebitamount'},
-                balance:{$sum:'$$accountdetail.balance'},
-                transactionId:{$first:'$$accountdetail.transactionId'}
+        // {
+        //     $lookup: {
+        //         from: 'accountstatements', // Assuming the name of the Whitelabel collection
+        //         localField: 'transactionId',
+        //         foreignField: 'transactionId',
+        //         as: 'accountdetail'
+        //     }
+        // },
+        // {
+        //     $unwind:"$accountdetail"
+        // },
+        // {
+        //     $group:{
+        //         _id:{
+        //             eventId:"$accountdetail.eventId",
+        //             marketId:"$accountdetail.marketId"
+        //         },
+        //         match:{$first:'$$accountdetail.match'},
+        //         marketName:{$first:'$$accountdetail.marketName'},
+        //         stake:{$first:'$$accountdetail.stake'},
+        //         accStype:{$first:'$$accountdetail.accStype'},
+        //         creditDebitamount:{$sum:'$$accountdetail.creditDebitamount'},
+        //         balance:{$sum:'$$accountdetail.balance'},
+        //         transactionId:{$first:'$$accountdetail.transactionId'}
 
-            }
-        }
+        //     }
+        // }
     ])
     console.log(userAcc,'userAcc')
 
