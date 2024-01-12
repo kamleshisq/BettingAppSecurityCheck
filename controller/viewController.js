@@ -712,21 +712,26 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 transactionId:{$first:'$accountdetail.transactionId'}
 
             }
+        },{
+            $sort:{"$date":-1}
+        },
+        {
+            $limit:20
         }
     ])
     console.log(userAcc,'userAcc')
 
-    //     res.status(200).render("./userSideEjs/AccountStatements/main", {
-    //     title:"Account Statement",
-    //     data:userAcc,
-    //     user:req.currentUser,
-    //     verticalMenus,
-    //     check:"ACCC",
-    //     userLog,
-    //     notifications:req.notifications,
-    //     basicDetails,
-    //     colorCode
-    // })
+        res.status(200).render("./userSideEjs/AccountStatements/main", {
+        title:"Account Statement",
+        data:userAcc,
+        user:req.currentUser,
+        verticalMenus,
+        check:"ACCC",
+        userLog,
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
+    })
 });
 
 exports.myProfile = catchAsync(async(req, res, next) => {
