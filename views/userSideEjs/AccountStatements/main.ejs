@@ -80,11 +80,11 @@
                                     <td title="SR No."><%=i+1%></td>
                                     <td title="Date & Time"><%=formattedTime%></td>
                                     <%if(data[i].creditDebitamount > 0){%>
-                                        <td title="Credit"><%=data[i].creditDebitamount%></td>
+                                        <td title="Credit" class="c-gren"><%=data[i].creditDebitamount%></td>
                                         <td title="Debit">0</td>
                                     <%}else{%>
                                         <td title="Credit">0</td>
-                                        <td title="Debit"><%=data[i].creditDebitamount%></td>
+                                        <td title="Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
                                     <%}%>
                                     <%if(data[i].stake){%>
                                         <td title="Stake"><%=data[i].stake%></td>

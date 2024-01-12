@@ -12,6 +12,7 @@ const Decimal = require('decimal.js');
 const runnerDataModel = require('../model/runnersData');
 const exposurecheck = require('./checkExpoOfThatUSer');
 const checkLimit = require('./checkOddsLimit');
+const checkMarketWinAmount = require('./checkWinAmountOfThatMarket');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -242,6 +243,7 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
     if(data.data.bettype2 === 'BACK'){
         let OddChake = (data.data.oldOdds * 1) + (15) 
+        console.log(OddChake,data.data.odds, data.data.odds2 )
         if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
             return 'Odds out of range back'
         }
@@ -282,10 +284,11 @@ if(data.data.odds2){
         }
         WinAmount = (parseFloat(data.data.stake)).toFixed(2)
     }
-    console.log(WinAmount, "WinAmountWinAmountWinAmount")
-    if(WinAmount > limitData.max_profit){
-        return 'Win Amount out of range'
-    }
+    // console.log(WinAmount, "WinAmountWinAmountWinAmount")
+
+    // if(WinAmount > limitData.max_profit){
+    //     return 'Win Amount out of range'
+    // }
 
     // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
 //FOR BETPLACE PARENTSID ARRAY DATA
@@ -396,6 +399,13 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     }
     let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
     
+
+    let data23 = await checkMarketWinAmount(betPlaceData)
+    // console.log(data23, "data23data23data23data23")
+    if(data23 >= limitData.max_profit){
+        return 'Win Amount out of range'
+    }
+    // return 'Please try again leter market SUSPENDED'
     // console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
 // FOR ACC STATEMENTS DATA 
     // let Acc = {

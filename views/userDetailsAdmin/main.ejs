@@ -231,7 +231,7 @@
                       <div class="container-fluid">
                           <div class="row">
                           </div>
-                          <div class="table-data-section">
+                          <div class="table-data-section data-table">
                             <table >
                                 <thead>
                                     <tr>
@@ -262,10 +262,10 @@
                                   };
                                   var formattedTime = date.toLocaleString('en-US', options);
                                     %>
-                                    <%if((i%2)==0){%>
-                                        <tr>
+                                    <%if(bets[i].bettype2=='BACK'){%>
+                                        <tr class="back" >
                                     <%}else{%>
-                                        <tr>
+                                        <tr class="lay">
                                     <%}%>
                                     <td><%=i + 1%></td>
 

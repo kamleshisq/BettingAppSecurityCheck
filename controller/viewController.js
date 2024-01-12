@@ -2154,34 +2154,12 @@ exports.getSpoertPage = catchAsync(async(req, res, next) => {
 
 
 exports.getVoidBetPage = catchAsync(async(req, res, next) => {
-    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    // let role_type =[]
-    // for(let i = 0; i < roles.length; i++){
-    //     role_type.push(roles[i].role_type)
-    // }
-    // // console.log(await betModel.find({status:'OPEN'}).limit(10))
-    // let bets
-    // if(req.currentUser.role.role_level == 1){
-    //     bets = await betModel.find({status:'CANCEL'}).limit(10)
-    // }else{
-    //     bets = await betModel.find({role_type:{$in:role_type},status:'CANCEL'}).limit(10)
-    // }
     let limit = 10;
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -2204,14 +2182,39 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
             }
         },
         {
+            $group:{
+                _id:'$marketId',
+                betType:{
+                    $first:'$betType'
+                },
+                event:{
+                    $first:'$match'
+                },
+                marketName:{
+                    $first:'$marketName'
+                },
+                eventDate:{
+                    $first:'$eventDate'
+                },
+                totalBets:{
+                    $sum : 1
+                }
+            }
+        },
+        {
             $sort:{
-                date:-1
+                eventDate:-1,
+                marketName:1,
+                event:1,
+                betType:1
             }
         },
         {
             $limit:limit
         }
     ])
+
+    console.log(betResult, "betResultbetResultbetResultbetResult")
     let events = await betModel.aggregate([
         {
             $match:{
@@ -2300,7 +2303,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["1.222218327", "4.1702114932195-BM", "4.1702288166905-F2", "4.1702115752278-OE"]);
+    let body = JSON.stringify(["4.1704946928360-BM", "4.1704946945371-BM", "4.1704946873785-BM", "4.1704946887250-BM", "4.1704946810264-BM"]);
     // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
@@ -2331,8 +2334,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://dev.ollscores.com/",
-            "Referer":"http://dev.ollscores.com/"},
+            "Origin":"http://ollscores.com/",
+            "Referer":"http://ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -3235,7 +3238,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             if(stakeLabledata === null){
                 stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
             }
-            betsOnthisMatch = await betModel.find({userId:req.currentUser._id, match:match.eventData.name, status: 'OPEN'})
+            betsOnthisMatch = await betModel.find({userId:req.currentUser._id, match:match.eventData.name, status: 'OPEN'}).sort({ date: -1 })
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
@@ -3305,7 +3308,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         const commissionmarkerarr = await commissionMarketModel.distinct('marketId');
         // console.log(betLimit)
         // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
-
+        // console.log(status, "STATUS")
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         let notification = await eventNotification.findOne({id:req.query.id})
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
@@ -4140,22 +4143,10 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
 exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let childrenUsername = []
-    // if()
-    // console.log(req.currentUser)
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     
     let eventWiseData = await commissionNewModel.aggregate([
@@ -4203,11 +4194,11 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         {
             $lookup: {
                 from: "commissionnewmodels",
-                let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+                let: {ud:"$uniqueId",loginId:'$loginUserId',parentArr:'$parentIdArray'},
                 pipeline: [
                     {
                       $match: {
-                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
+                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: ["$uniqueId", "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
                         loginUserId:{$exists:true},
                         parentIdArray:{$exists:true}
                       }
@@ -5209,11 +5200,11 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             {
                 $lookup: {
                     from: "commissionnewmodels",
-                    let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+                    let: {ud:"$uniqueId",loginId:'$loginUserId',parentArr:'$parentIdArray'},
                     pipeline: [
                         {
                           $match: {
-                            $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
+                            $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: ["$uniqueId", "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
                             loginUserId:{$exists:true},
                             parentIdArray:{$exists:true}
                           }

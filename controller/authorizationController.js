@@ -112,7 +112,9 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*1000 * 60)),
         httpOnly: true,
-        // secure: true
+        secure: false,
+        // sameSite: 'None', 
+        path: '/'
         }
         // const sessionId = user.id
     res.cookie('JWT', token, cookieOption)
@@ -450,7 +452,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     req.currentUserUnique = currentUser
     req.app.set('token', token);
     req.app.set('User', currentUser);
-    process.nextTick(next);
+    next()
 });
 
 
@@ -458,6 +460,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     let loginData = {}
+    res.locals.loginData = undefined
     res.locals.whiteLabel = process.env.whiteLabelName
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
     if(whiteLabelData){
@@ -470,30 +473,28 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
         if(!token){
             token = req.headers.authorization.split(' ')[1]
         }
-        if(!token){
-            token = req.headers.authorization.split('  ')[1].split("=")[1];
-        }
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
-            if(req.headers.cookie){
-                loginData.Token = req.headers.cookie.split(';')[0]
-                if(!loginData.Token.startsWith("ADMIN_JWT")){
-                    loginData.Token = req.headers.cookie.split(';')[1]
-                }
-            }else{
-                loginData.Token = ""
-            }
-
-       
     }
+    // console.log(loginData.Token, "hfhfghfhfhfhf")
     if(!token){
         req.app.set('token', null);
         req.app.set('User', null);
         return res.redirect('/')
         // return next(new AppError('Please log in to access', 404))
     }
+    if(token == "loggedout"){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/')
+    }
 
     const tokenId = await loginLogs.findOne({session_id:token})
+    if(!tokenId){
+        req.app.set('token', null);
+        req.app.set('User', null);
+        return res.redirect('/')
+    }
     if(!tokenId.isOnline){
         req.app.set('token', null);
         req.app.set('User', null);
@@ -527,6 +528,10 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
         }
     }
     // console.log('working')
+    loginData = {
+        Token : token,
+        User : currentUser
+    }
     loginData.User = currentUser
     res.locals.loginData = loginData
     req.currentUser = currentUser
@@ -982,40 +987,48 @@ exports.userLogin = catchAsync (async(req, res, next) => {
         }else{
             const user = await User.findOne({userName}).select('+password');
             let whiteLabel = process.env.whiteLabelName
-            if(user.whiteLabel != whiteLabel && user.role_type !== 1){
-                res.status(404).json({
-                    status:'error',
-                    message:"not a valid user userLogin"
-                })
-            }else  if(!user || !(await user.correctPassword(password, user.password))){
-                // console.log()
-                res.status(404).json({
-                    status:'error',
-                    message:"Please provide valide user and password"
-                })
-            }else if(user.role_type != 5){
-                res.status(404).json({
-                    status:'error',
-                    message:"You do not have permission to login as user"
-                })
-            }else if(!user.isActive){
-                res.status(404).json({
-                    status:'error',
-                    message:"You are inactive"
-                })
-            }
-            // else if(user.is_Online){
-            //     // console.log(user)
-            //     res.status(404).json({
-            //         status:"error",
-            //         message:"User is already login"
-            //     })
-            // }
-            else{
-                await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
-                user_createSendToken(user, 200, res, req);
-
-            }
+            console.log("gothere", user)
+            if(user && user.role_type != 6){
+                if(user.whiteLabel != whiteLabel && user.role_type !== 1){
+                    res.status(404).json({
+                        status:'error',
+                        message:"not a valid user userLogin"
+                    })
+                }else  if(!user || !(await user.correctPassword(password, user.password))){
+                    // console.log()
+                    res.status(404).json({
+                        status:'error',
+                        message:"Please provide valide user and password"
+                    })
+                }else if(user.role_type != 5 && user.role_type != 6){
+                    res.status(404).json({
+                        status:'error',
+                        message:"You do not have permission to login as user"
+                    })
+                }else if(!user.isActive){
+                    res.status(404).json({
+                        status:'error',
+                        message:"You are inactive"
+                    })
+                }
+                // else if(user.is_Online){
+                    //     // console.log(user)
+                    //     res.status(404).json({
+                        //         status:"error",
+                        //         message:"User is already login"
+                        //     })
+                        // }
+                        else{
+                            await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
+                            console.log('WORKING')
+                            user_createSendToken(user, 200, res, req);
+                            
+                        }
+                    }else{
+                        await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
+                            console.log('WORKING')
+                            user_createSendToken(user, 200, res, req);
+                    }
         }
     }else{
         let demoUser = await User.findOne({roleName: 'DemoLogin'})

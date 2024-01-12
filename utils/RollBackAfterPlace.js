@@ -10,10 +10,7 @@ const revokeCommission = require('./commissionRevocke');
 
 async function rollBack(data){
     // console.log(data, "rollBack Data")
-    let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-    if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
-        return 'please provide a valid password'
-    }else{ 
+   
         let allBetWithMarketId = await Bet.find({marketId:data.id})
         revokeCommission(data)
         // await commissionNewModel.updateMany({marketId:data.id, commissionType: 'Win Commission', commissionStatus : 'Unclaimed'}, {commissionStatus : 'Unclaimed'})
@@ -64,7 +61,7 @@ async function rollBack(data){
                     
                     await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", returns:-exposure, remark:data.data.remark, calcelUser:operatoruserName})
                     let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount, pointsWL: -VoidAmount, uplinePL: VoidAmount, exposure: exposure}})
-                    let description = `Settle Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/OPEN`
+                    let description = `Settle Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/Rollback`
                     let userAcc = {
                         "user_id":user._id,
                         "description": description,
@@ -117,7 +114,7 @@ async function rollBack(data){
                     await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", remark:data.data.remark, calcelUser:operatoruserName})
                     let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: VoidAmount, myPL: VoidAmount, pointsWL: VoidAmount, uplinePL: -VoidAmount, exposure: exposure}})
 
-                    let description = `Settle Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/OPEN`
+                    let description = `Settle Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/Rollback`
                     let userAcc = {
                         "user_id":user._id,
                         "description": description,
@@ -178,7 +175,7 @@ async function rollBack(data){
             console.log(err)
             return 'Please try again leter'
         }
-    } 
+
 }
 
 

@@ -31,13 +31,15 @@ async function commisiion(data){
               userId:{$in:newfilterUser},
               marketId:`${data.marketId}`,
               status:{$in:['WON','LOSS']},
-              commissionStatus:false
+              commionstatus:true
           }
         },
         {
           $group:{
               _id:'$userName',
-              returns:{$sum:{$cond:[{$in:['$status',['LOSS']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}},
+              returns:{
+                $sum:'$returns'
+              },
               userId:{$first:'$userId'},
               eventId:{$first:'$eventId'},
               gameId:{$first:'$gameId'},
@@ -49,11 +51,19 @@ async function commisiion(data){
           }
       }
       ]);
+
+      
      
    
         // console.log(netLossingCommission,'netlossingcommission test')
                        
         for(let i = 0;i<netLossingCommission.length;i++) {
+              function generateUniqueId() {
+                const timestamp = netLossingCommission[i].marketId;
+                const randomString = netLossingCommission[i]._id;
+                return `${timestamp}-${randomString}`;
+              }
+            let uniqueId = generateUniqueId()
           let user = await userModel.findById(netLossingCommission[i].userId)
           try{
                   let commission = await commissionModel.find({userId:netLossingCommission[i].userId})
@@ -79,7 +89,8 @@ async function commisiion(data){
                           date:Date.now(),
                           marketName:netLossingCommission[i].marketName,
                           loginUserId:user._id,
-                          parentIdArray:user.parentUsers
+                          parentIdArray:user.parentUsers,
+                          uniqueId
                       }
                       usercommissiondata3 = await newCommissionModel.create(commissiondata)
                   }
@@ -91,7 +102,7 @@ async function commisiion(data){
               for(let j = user.parentUsers.length - 1; j >= 1; j--){
                   let childUser = await userModel.findById(user.parentUsers[j])
                   let parentUser = await userModel.findById(user.parentUsers[j - 1])
-                  let commissionChild = await commissionModel.find({userId:childUser.id})
+                  let commissionChild = await commissionModel.find({userId:user.parentUsers[j]})
                   let commissionPer = 0
                   if (commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
                       commissionPer = commissionChild[0].Bookmaker.percentage
@@ -100,7 +111,7 @@ async function commisiion(data){
                   if(commissionPer > 0 && commissionCoin < 0){
                       let commissiondata = {
                           userName : childUser.userName,
-                          userId : childUser.id,
+                          userId : user.parentUsers[j],
                           eventId : netLossingCommission[i].eventId,
                           sportId : netLossingCommission[i].gameId,
                           seriesName : netLossingCommission[i].event,
@@ -113,7 +124,7 @@ async function commisiion(data){
                           commissionPercentage:commissionPer,
                           date:Date.now(),
                           marketName:netLossingCommission[i].marketName,
-                          uniqueId:usercommissiondata3._id,
+                          uniqueId,
                           loginUserId:usercommissiondata3.userId,
                           parentIdArray:childUser.parentUsers,
                       }
@@ -126,14 +137,14 @@ async function commisiion(data){
         }
   
         
-        await betModel.updateMany({
-            marketName : new RegExp('book','i'),
-            match: `${data.match}`,
-            userId:{$in:newfilterUser},
-            marketId:`${data.marketId}`,
-            status:{$in:['WON','LOSS']},
-            commissionStatus:false
-        },{commissionStatus:true})
+        // await betModel.updateMany({
+        //     marketName : new RegExp('book','i'),
+        //     match: `${data.match}`,
+        //     userId:{$in:newfilterUser},
+        //     marketId:`${data.marketId}`,
+        //     status:{$in:['WON','LOSS']},
+        //     commissionStatus:false
+        // },{commissionStatus:true})
         console.log('net losing commission ended')
     }
 }

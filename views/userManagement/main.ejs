@@ -562,6 +562,7 @@
                   <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Operator"){%>
                     <option value="6492fe4fd09db28e00761695">Super-Duper-Admin</option>
                     <option value="650bccdbb3fdc8c922c34bbe">Operator</option>
+                    <option value="64db25621617ac95db36764e">Demo</option>
                   <%}else if (B2C_Status){%>
                     <option value="6492fe4fd09db28e00761694">user</option>
                   <%}else{%>
@@ -868,13 +869,13 @@
   
     document.getElementById('roleSelect').addEventListener('change', function () {
       // console.log("WORK")
-      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
+      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694' || document.getElementById('roleSelect').value === "64db25621617ac95db36764e") {  
         document.getElementById('shareVisibleActual').classList.add("hide") 
       } else {
         document.getElementById('shareVisibleActual').classList.remove("hide") 
       }
 
-      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
+      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694' || document.getElementById('roleSelect').value === "64db25621617ac95db36764e") {  
         document.getElementById('ExposureLimits').classList.remove("hide") 
       } else {
         document.getElementById('ExposureLimits').classList.add("hide") 

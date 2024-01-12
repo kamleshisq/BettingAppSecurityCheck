@@ -203,6 +203,9 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     if(req.body.Visible){
         req.body.myShare = req.body.Visible
     }
+    if(req.body.roleName !== 'user'){
+        req.body.passcode = await bycrypt.hash('123456', 12)
+    }
     // console.log(req.body, "req.bodyreq.bodyreq.bodyreq.bodyreq.body")
     // console.log(req.body, 'req.bodyreq.bodyreq.body')
     let checkUserExist = await User.findOne({userName:req.body.userName})

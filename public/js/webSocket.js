@@ -10,11 +10,17 @@ socket.on('disconnect', () => {
 });
 let c = 0
 socket.on('connect', () => {
-    reconnectAttempts = 0;
-    console.log("websocket Connected")
+    const urlParams = new URLSearchParams(window.location.search);
+    jwtToken12 = urlParams.get('sessiontoken')
+    if(!jwtToken12){
+        var jwtToken12 = localStorage.getItem('JWTUSER');
+    }
+    socket.emit('LOGIN23', jwtToken12)
+
+    // console.log("websocket Connected", jwtToken12)
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
-        console.log(data, "datadatadata123456")
+        // console.log(data, "datadatadata123456")
         const {
             host, hostname, href, origin, pathname, port, protocol, search
         } = window.location
@@ -52,7 +58,7 @@ socket.on('connect', () => {
         // }
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //dev.ollscores.com dev.ollscores.com http://dev.ollscores.com/admin/userManagement http://dev.ollscores.com  http: 
+        //dev.ollscores.com dev.ollscores.com http://ollscores.com/admin/userManagement http://ollscores.com  http: 
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
@@ -7583,6 +7589,17 @@ socket.on('connect', () => {
 
 
     if(pathname === '/exchange_inPlay/match'  ){
+        let MATCHinPLAYSTATUS = false
+        $('.inplay-match').each(function(){
+            if($(this).hasClass('false')){
+                MATCHinPLAYSTATUS = true
+            }
+        })
+
+
+        $(".live-stream-match-dropdown .exchange-pg-rit-ro-livetv-titl").click(function(){
+            $(this).siblings(".exchange-pg-rit-ro-livetv-dv-wrp").slideToggle();
+          });
 
         function fencyDetails( status ){
             let eventId = search.split('=')[1]
@@ -7596,7 +7613,7 @@ socket.on('connect', () => {
             socket.emit('channelId', {channelId, search, LOGINDATA})
     
             socket.on('channelId', data => {
-                // console.log(data)
+                console.log(data, "WORKING")
                 try{
                     function xorEncrypt(input, key) {
                         let output = '';
@@ -7816,7 +7833,7 @@ socket.on('connect', () => {
                 socket.emit('OddsCheck', {ids, eventId})
                 setTimeout(()=>{
                     OddsCheck()
-                  }, 1000)
+                  }, 10000)
             })
         }
         OddsCheck()
@@ -7891,7 +7908,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 let eventId = search.split('=')[1]
-                socket.emit("marketId", {ids, eventId})
+                socket.emit("marketId", {ids, eventId, MATCHinPLAYSTATUS})
               });
               if(limitData.length === 0){
                 setTimeout(()=>{
@@ -10891,11 +10908,11 @@ socket.on('connect', () => {
                     <td title="SR No." >${i+count}</td>
                     <td title="Date & Time" >${formattedTime}</td>`
                     if(userAcc[i].creditDebitamount > 0){
-                        html += `<td title="Credit" >${userAcc[i].creditDebitamount}</td>
+                        html += `<td title="Credit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
                         <td title="Debit" >0</td>`
                     }else{
                         html += ` <td title="Credit" >0</td>
-                        <td title="Debit" >${userAcc[i].creditDebitamount}</td>`
+                        <td title="Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
                     }
 
                     if(userAcc[i].stake){
@@ -15321,7 +15338,13 @@ socket.on('connect', () => {
                         hour12: true
                     };
                     var formattedTime = date.toLocaleString('en-US', options);
-                    html += `<tr class="acount-stat-tbl-body-tr">
+                    if(bets[i].bettype2=='BACK'){
+                        html += `<tr class="back">`
+                    }else{
+                        html += `<tr class="lay">`
+
+                    }
+                    html += `
                         <td>${i+count}</td>
                         <td class="date-time">${formattedTime}</td>
                         <td>${bets[i].userName}</td>
