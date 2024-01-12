@@ -8,7 +8,7 @@ const commissionNewModel = require('../model/commissioNNModel');
 
 
 async function voidbetOPENFORTIMELYVOIDE(data){
-    console.log(data)
+    console.log(data, "DATADAT")
 }
 
 

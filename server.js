@@ -8262,7 +8262,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('timelyVoideBEt', async(data) => {
-        console.log(data, "DATADATA")
+        // console.log(data, "DATADATA")
         let sendData = await voidebundel(data)
         // try{
         //     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
