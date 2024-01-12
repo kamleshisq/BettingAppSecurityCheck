@@ -10,9 +10,17 @@ const commissionNewModel = require('../model/commissioNNModel');
 async function voidbetOPENFORTIMELYVOIDE(data){
     console.log(data, "DATADAT")
     try{
-        let filterData = data.filterData
+        let filterData ={}
+        filterData.from_date = new Date(data.filterData.from_date)
+        filterData.to_date = new Date(data.filterData.to_date)
         filterData.marketId = data.id
         filterData.status = {$in: ['OPEN', 'MAP']}
+        if(data.filterData.userName !== data.LOGINDATA.LOGINUSER.userName){
+            filterData.userName = data.filterData.userName
+        }else{
+            childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
+            filterData.username = {$in:childrenUsername}
+        }
         let bets = await Bet.find(filterData)
         console.log(bets, 'betsbetsbetsbetsbets')
     //     await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
