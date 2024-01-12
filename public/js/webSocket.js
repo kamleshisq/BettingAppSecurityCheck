@@ -6725,6 +6725,23 @@ socket.on('connect', () => {
                 alert(data.message)
             }else{
                 alert('Bet Voided Successfully !!')
+                let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                data.refreshStatus = true
+                socket.emit('voidBET',data)
+                setTimeout(function() {
+                    window.close();
+                }, 3000);
             }
         })
     }
