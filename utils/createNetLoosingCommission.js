@@ -27,7 +27,7 @@ async function commisiion(data){
       let netLossingCommission = await betModel.aggregate([
         {
           $match:{
-              marketName : new RegExp('book','i'),
+              marketName : new RegExp('(book|toss)','i'),
               match: `${data.match}`,
               userId:{$in:newfilterUser},
               marketId:`${data.marketId}`,
