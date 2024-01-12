@@ -11,8 +11,18 @@ async function voidbetOPENFORTIMELYVOIDE(data){
     console.log(data, "DATADAT")
     try{
         let filterData ={}
-        filterData.from_date = new Date(data.filterData.from_date)
-        filterData.to_date = new Date(data.filterData.to_date)
+        if(data.filterData.from_date && data.filterData.to_date){
+            filterData.date = {$gte : new Date(data.filterData.from_date),$lte : new Date(new Date(data.filterData.to_date))}
+        }else{
+            if(data.filterData.from_date){
+                filterData.date = {$gte : data.filterData.from_date}
+
+            }
+            if(data.filterData.to_date){
+                filterData.date = {$lte : new Date(new Date(data.filterData.to_date))}
+
+            }
+        }
         filterData.marketId = data.id
         filterData.status = {$in: ['OPEN', 'MAP']}
         if(data.filterData.userName !== data.LOGINDATA.LOGINUSER.userName){
