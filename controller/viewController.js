@@ -697,22 +697,22 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         {
             $unwind:"$accountdetail"
         },
-        // {
-        //     $group:{
-        //         _id:{
-        //             eventId:"$accountdetail.eventId",
-        //             marketId:"$accountdetail.marketId"
-        //         },
-        //         match:{$first:'$$accountdetail.match'},
-        //         marketName:{$first:'$$accountdetail.marketName'},
-        //         stake:{$first:'$$accountdetail.stake'},
-        //         accStype:{$first:'$$accountdetail.accStype'},
-        //         creditDebitamount:{$sum:'$$accountdetail.creditDebitamount'},
-        //         balance:{$sum:'$$accountdetail.balance'},
-        //         transactionId:{$first:'$$accountdetail.transactionId'}
+        {
+            $group:{
+                _id:{
+                    eventId:"$accountdetail.eventId",
+                    marketId:"$accountdetail.marketId"
+                },
+                match:{$first:'$$accountdetail.match'},
+                marketName:{$first:'$$accountdetail.marketName'},
+                stake:{$first:'$$accountdetail.stake'},
+                accStype:{$first:'$$accountdetail.accStype'},
+                creditDebitamount:{$sum:'$$accountdetail.creditDebitamount'},
+                balance:{$sum:'$$accountdetail.balance'},
+                transactionId:{$first:'$$accountdetail.transactionId'}
 
-        //     }
-        // }
+            }
+        }
     ])
     console.log(userAcc,'userAcc')
 
