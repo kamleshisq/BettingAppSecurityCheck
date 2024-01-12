@@ -678,48 +678,48 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    // let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
+    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
-    let userAcc = await betModel.aggregate([
-        {
-            $match:{
-                userId:req.currentUser._id.toString()
-            }
-        },
-        {
-            $lookup: {
-                from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                localField: 'transactionId',
-                foreignField: 'transactionId',
-                as: 'accountdetail'
-            }
-        },
-        {
-            $unwind:"$accountdetail"
-        },
-        {
-            $group:{
-                _id:{
-                    eventId:"$eventId",
-                    marketId:"$marketId"
-                },
-                match:{$first:'$match'},
-                marketName:{$first:'$marketName'},
-                stake:{$first:'$accountdetail.stake'},
-                accStype:{$first:'$accountdetail.accStype'},
-                creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                balance:{$sum:'$accountdetail.balance'},
-                transactionId:{$first:'$accountdetail.transactionId'}
+    // let userAcc = await betModel.aggregate([
+    //     {
+    //         $match:{
+    //             userId:req.currentUser._id.toString()
+    //         }
+    //     },
+    //     {
+    //         $lookup: {
+    //             from: 'accountstatements', // Assuming the name of the Whitelabel collection
+    //             localField: 'transactionId',
+    //             foreignField: 'transactionId',
+    //             as: 'accountdetail'
+    //         }
+    //     },
+    //     {
+    //         $unwind:"$accountdetail"
+    //     },
+    //     {
+    //         $group:{
+    //             _id:{
+    //                 eventId:"$eventId",
+    //                 marketId:"$marketId"
+    //             },
+    //             match:{$first:'$match'},
+    //             marketName:{$first:'$marketName'},
+    //             stake:{$first:'$accountdetail.stake'},
+    //             accStype:{$first:'$accountdetail.accStype'},
+    //             creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+    //             balance:{$sum:'$accountdetail.balance'},
+    //             transactionId:{$first:'$accountdetail.transactionId'}
 
-            }
-        },
-        {
-            $sort:{"date":-1}
-        },
-        {
-            $limit:20
-        }
-    ])
+    //         }
+    //     },
+    //     {
+    //         $sort:{"date":-1}
+    //     },
+    //     {
+    //         $limit:20
+    //     }
+    // ])
     console.log(userAcc,'userAcc')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
