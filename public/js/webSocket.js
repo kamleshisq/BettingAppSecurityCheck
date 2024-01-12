@@ -6725,6 +6725,9 @@ socket.on('connect', () => {
                 alert(data.message)
             }else{
                 alert('Bet Voided Successfully !!')
+                setTimeout(function() {
+                    window.close();
+                }, 2000);
                 $('.timely-voideBet :input').val('');
                 $('#myModal2 , .modal-backdrop')
                     .removeClass('show')
@@ -6739,15 +6742,12 @@ socket.on('connect', () => {
                 }else{
                     filterData.userName = userName
                 }
-
+                
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
                 data.refreshStatus = true
                 socket.emit('voidBET',data)
-                setTimeout(function() {
-                    window.close();
-                }, 3000);
             }
         })
     }
