@@ -585,7 +585,7 @@ socket.on('connect', () => {
         socket.emit('userLoginBalance', LOGINDATA)
         setTimeout(()=>{
             balance()
-          }, 1000)
+          }, 1000 * 5000)
     }
     balance()
     socket.on('userLoginBalance', async(data) => {

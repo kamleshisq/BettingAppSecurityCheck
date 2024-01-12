@@ -81,102 +81,7 @@ async function mapBet(data){
             bets[bet].id = bets[bet]._id.toString();
             // console.log(bets[bet].id,bets[bet]._id , "ABDCDCDC")
 
-            try{
-                // console.log("COMMISSION MARKET")
-                let usercommissiondata;
-                let commissionMarket = await commissionMarketModel.find()
-                if(commissionMarket.some(item => item.marketId == data.id)){
-                    let commission = await commissionModel.find({userId:bets[bet].userId})
-                    let user = await userModel.findById(bets[bet].userId)
-                    if(commission.length > 0){
-                    // console.log(commission, 456)
-                    let commissionPer = 0
-                    // console.log(((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status), bets[bet].marketName.toLowerCase().startsWith('book'), commission[0].Bookmaker.type == "ENTRY")
-                    if ((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
-                      commissionPer = commission[0].Bookmaker.percentage
-                    //   console.log(commissionPer, "commissionPer")
-                    }else if (commission[0].fency.type == "ENTRY" && !(bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss') || bets[bet].marketName.toLowerCase().startsWith('match')) && commission[0].fency.status){
-                      commissionPer = commission[0].fency.percentage
-                    }
-                    let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                    // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-                    if(bets[bet].commionstatus){
-                        // console.log('WORKING')
-                        if(commissionPer > 0){
-                            let commissiondata = {
-                                userName : user.userName,
-                                userId : user.id,
-                                eventId : bets[bet].eventId,
-                                sportId : bets[bet].gameId,
-                                seriesName : bets[bet].event,
-                                marketId : bets[bet].marketId,
-                                eventDate : new Date(bets[bet].date),
-                                eventName : bets[bet].match,
-                                commission : commissionCoin,
-                                upline : 100,
-                                commissionType: 'Entry Wise Commission',
-                                commissionPercentage:commissionPer,
-                                date:Date.now(),
-                                marketName:bets[bet].marketName,
-                                loginUserId:user.id,
-                                parentIdArray:user.parentUsers,
-                                betId:bets[bet].id,
-                                uniqueId
-                                
-                            }
-                            usercommissiondata = await newCommissionModel.create(commissiondata)
-                            // uniqueID = usercommissiondata._id
-                        }}
-                    }
-                
-                    try{
-                        for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                            let childUser = await userModel.findById(user.parentUsers[i])
-                            let parentUser = await userModel.findById(user.parentUsers[i - 1])
-                            let commissionChild = await commissionModel.find({userId:user.parentUsers[i]})
-                            if(commissionChild.length > 0){
-                            let commissionPer = 0
-                            if ((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
-                              commissionPer = commissionChild[0].Bookmaker.percentage
-                            }else if (commissionChild[0].fency.type == "ENTRY" && !(bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss') || bets[bet].marketName.toLowerCase().startsWith('match')) && commissionChild[0].fency.status){
-                              commissionPer = commissionChild[0].fency.percentage
             
-                            }
-                            
-                            let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
-                            // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
-                            if(commissionPer > 0  && bets[bet].commionstatus){
-                                let commissiondata = {
-                                    userName : childUser.userName,
-                                    userId : user.parentUsers[i],
-                                    eventId : bets[bet].eventId,
-                                    sportId : bets[bet].gameId,
-                                    seriesName : bets[bet].event,
-                                    marketId : bets[bet].marketId,
-                                    eventDate : new Date(bets[bet].date),
-                                    eventName : bets[bet].match,
-                                    commission : commissionCoin,
-                                    upline : 100,
-                                    commissionType: 'Entry Wise Commission',
-                                    commissionPercentage:commissionPer,
-                                    date:Date.now(),
-                                    marketName:bets[bet].marketName,
-                                    loginUserId:user.id,
-                                    parentIdArray:childUser.parentUsers,
-                                    uniqueId,
-                                    betId:bets[bet].id
-                                }
-                                let commissionData = await newCommissionModel.create(commissiondata)
-                            }}
-                        }
-                    }catch(err){
-                        console.log(err)
-                    }
-                }
-            }catch(err){
-                console.log(err)
-            }
-
 
 
 
@@ -273,7 +178,7 @@ async function mapBet(data){
                         commissionPer = commission[0].matchOdd.percentage
                     }
                     // console.log(commissionPer, "commissionPercommissionPercommissionPer")
-                    let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
+                    let commissionCoin = ((commissionPer * Math.abs(debitCreditAmount))/100).toFixed(4)
                     if(commissionPer > 0 && bets[bet].commionstatus){
                         let commissiondata = {
                             userName : user.userName,
@@ -312,7 +217,7 @@ async function mapBet(data){
                             if (bets[bet].marketName.toLowerCase().startsWith('match') && commissionChild[0].matchOdd.status){
                                 commissionPer = commissionChild[0].matchOdd.percentage
                             }
-                            let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
+                            let commissionCoin = ((commissionPer * Math.abs(debitCreditAmount))/100).toFixed(4)
                             if(commissionPer > 0 && bets[bet].commionstatus){
                                 let commissiondata = {
                                     userName : childUser.userName,
@@ -521,7 +426,7 @@ async function mapBet(data){
                       if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status){
                           commissionPer = commission[0].Bookmaker.percentage
                       }
-                      let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
+                      let commissionCoin = ((commissionPer * Math.abs(exposure))/100).toFixed(4)
                     //   console.log(commissionCoin, commissionPer)
                       if(commissionPer > 0 && bets[bet].commionstatus){
                           let commissiondata = {
@@ -562,7 +467,7 @@ async function mapBet(data){
                               if ((bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status){
                               commissionPer = commissionChild[0].Bookmaker.percentage
                               }
-                              let commissionCoin = ((commissionPer * bets[bet].Stake)/100).toFixed(4)
+                              let commissionCoin = ((commissionPer * Math.abs(exposure))/100).toFixed(4)
                               console.log(commissionCoin,commissionPer )
                               if(commissionPer > 0  && bets[bet].commionstatus){
                                   let commissiondata = {
@@ -596,6 +501,105 @@ async function mapBet(data){
 
 
 
+            }
+
+
+
+            try{
+                // console.log("COMMISSION MARKET")
+                let usercommissiondata;
+                let commissionMarket = await commissionMarketModel.find()
+                if(commissionMarket.some(item => item.marketId == data.id)){
+                    let thatBet = await betModel.findById(bets[bet]._id)
+                    let commission = await commissionModel.find({userId:bets[bet].userId})
+                    let user = await userModel.findById(bets[bet].userId)
+                    if(commission.length > 0){
+                    // console.log(commission, 456)
+                    let commissionPer = 0
+                    // console.log(((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status), bets[bet].marketName.toLowerCase().startsWith('book'), commission[0].Bookmaker.type == "ENTRY")
+                    if ((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
+                      commissionPer = commission[0].Bookmaker.percentage
+                    //   console.log(commissionPer, "commissionPer")
+                    }else if (commission[0].fency.type == "ENTRY" && !(bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss') || bets[bet].marketName.toLowerCase().startsWith('match')) && commission[0].fency.status){
+                      commissionPer = commission[0].fency.percentage
+                    }
+                    let commissionCoin = ((commissionPer * Math.abs(thatBet.returns))/100).toFixed(4)
+                    // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
+                    if(bets[bet].commionstatus){
+                        // console.log('WORKING')
+                        if(commissionPer > 0){
+                            let commissiondata = {
+                                userName : user.userName,
+                                userId : user.id,
+                                eventId : bets[bet].eventId,
+                                sportId : bets[bet].gameId,
+                                seriesName : bets[bet].event,
+                                marketId : bets[bet].marketId,
+                                eventDate : new Date(bets[bet].date),
+                                eventName : bets[bet].match,
+                                commission : commissionCoin,
+                                upline : 100,
+                                commissionType: 'Entry Wise Commission',
+                                commissionPercentage:commissionPer,
+                                date:Date.now(),
+                                marketName:bets[bet].marketName,
+                                loginUserId:user.id,
+                                parentIdArray:user.parentUsers,
+                                betId:bets[bet].id,
+                                uniqueId
+                                
+                            }
+                            usercommissiondata = await newCommissionModel.create(commissiondata)
+                            // uniqueID = usercommissiondata._id
+                        }}
+                    }
+                
+                    try{
+                        for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                            let childUser = await userModel.findById(user.parentUsers[i])
+                            let parentUser = await userModel.findById(user.parentUsers[i - 1])
+                            let commissionChild = await commissionModel.find({userId:user.parentUsers[i]})
+                            if(commissionChild.length > 0){
+                            let commissionPer = 0
+                            if ((bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
+                              commissionPer = commissionChild[0].Bookmaker.percentage
+                            }else if (commissionChild[0].fency.type == "ENTRY" && !(bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss') || bets[bet].marketName.toLowerCase().startsWith('match')) && commissionChild[0].fency.status){
+                              commissionPer = commissionChild[0].fency.percentage
+            
+                            }
+                            
+                            let commissionCoin = ((commissionPer * Math.abs(thatBet.returns))/100).toFixed(4)
+                            // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
+                            if(commissionPer > 0  && bets[bet].commionstatus){
+                                let commissiondata = {
+                                    userName : childUser.userName,
+                                    userId : user.parentUsers[i],
+                                    eventId : bets[bet].eventId,
+                                    sportId : bets[bet].gameId,
+                                    seriesName : bets[bet].event,
+                                    marketId : bets[bet].marketId,
+                                    eventDate : new Date(bets[bet].date),
+                                    eventName : bets[bet].match,
+                                    commission : commissionCoin,
+                                    upline : 100,
+                                    commissionType: 'Entry Wise Commission',
+                                    commissionPercentage:commissionPer,
+                                    date:Date.now(),
+                                    marketName:bets[bet].marketName,
+                                    loginUserId:user.id,
+                                    parentIdArray:childUser.parentUsers,
+                                    uniqueId,
+                                    betId:bets[bet].id
+                                }
+                                let commissionData = await newCommissionModel.create(commissiondata)
+                            }}
+                        }
+                    }catch(err){
+                        console.log(err)
+                    }
+                }
+            }catch(err){
+                console.log(err)
             }
 
 
