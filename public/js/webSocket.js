@@ -6518,6 +6518,7 @@ socket.on('connect', () => {
         filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
 
         $('#toTime,#fromTime').keyup(function(e){
+            console.log('working123456')
             let value = $(this).val()
             if(!isValidTimeString(value)){
                 if(!$(this).siblings('span').hasClass('active')){
