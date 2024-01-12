@@ -117,6 +117,14 @@ $(document).ready(function(){
 
 });
 
+$('.clockpicker').clockpicker({
+    placement: 'top',
+    align: 'left',
+    donetext: 'Done'
+});
+
+
+
 
 $(document).on('click','.passcodemsgbox',function(e){
     console.log('hewr')
