@@ -2203,7 +2203,10 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
         },
         {
             $sort:{
-                date:-1
+                eventDate:-1,
+                marketName:1,
+                event:1,
+                betType:1
             }
         },
         {
