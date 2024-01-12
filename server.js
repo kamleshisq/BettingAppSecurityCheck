@@ -9694,7 +9694,7 @@ io.on('connection', (socket) => {
         let Status = false
         let Bets = []
         if(data.LOGINDATA.LOGINUSER){
-            Bets = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, marketId:data.id})
+            Bets = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, marketId:data.id, status:'OPEN'})
         }
         if(Bets.length > 0){
             if(Bets[0].betType === 'Tennis' || Bets[0].betType === 'Cricket'){
