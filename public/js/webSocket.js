@@ -6726,7 +6726,7 @@ socket.on('connect', () => {
             }else{
                 alert('Bet Voided Successfully !!')
                 $('.timely-voideBet :input').val('');
-                $('#myModal2')
+                $('#myModal2 , .modal-backdrop')
                     .removeClass('show')
                     .css('display', 'none')
                     .attr('aria-modal', 'false')
