@@ -7453,7 +7453,8 @@ io.on('connection', (socket) => {
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
                     void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}},
+                    result:{$first:'$result'}
                     
                 }
             },
@@ -8228,7 +8229,8 @@ io.on('connection', (socket) => {
                               $match: {
                                 $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
                                 loginUserId:{$exists:true},
-                                parentIdArray:{$exists:true}
+                                parentIdArray:{$exists:true},
+                                commissionStatus:{$ne:'cancel'}
                               }
                             }
                           ],
@@ -8271,13 +8273,13 @@ io.on('connection', (socket) => {
 
 
     socket.on('timelyVoideBEt', async(data) => {
-        console.log(data, "DATADATA")
+        // console.log(data, "DATADATA")
         try{
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPasscode(data.FormData1.password, user.passcode)
             if(passcheck){
                 let sendData = await voidebundel(data)
-
+                socket.emit('timelyVoideBEt', {status:'sucess', message:'Void process start, please wait a moment'})
             }else{
                 socket.emit('timelyVoideBEt', {status:'err', message:'Please Provide valide password'})
             }
@@ -8285,54 +8287,6 @@ io.on('connection', (socket) => {
             console.log(err)
             socket.emit('timelyVoideBEt', {status:'err', message:'Please try again leter'})
         }
-        // try{
-        //     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-        //     const passcheck = await user.correctPasscode(data.data.password, user.passcode)
-        //     // console.log(passcheck, "PASSWORD CHECK")
-        //     if(passcheck){
-        //     let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark,alertStatus:'CANCEL',returns:0});
-          
-        //     // console.log(bet, "BETS")
-        //     let DebitCreditAmount 
-        //     if(bet.bettype2 === "Back"){
-        //         if(bet.marketName.toLowerCase().startsWith('match')){
-        //             DebitCreditAmount = bet.Stake
-        //         }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
-        //             DebitCreditAmount = bet.Stake
-        //         }else{
-        //             DebitCreditAmount = bet.Stake
-        //         }
-        //     }else{
-        //         if(bet.marketName.toLowerCase().startsWith('match')){
-        //             DebitCreditAmount = ((bet.Stake * bet.oddValue) - bet.Stake).toFixed(2)
-        //         }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
-        //             DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
-        //         }else{
-        //             DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
-        //         }
-        //     }
-        //     let user = await User.findByIdAndUpdate(bet.userId, {$inc:{exposure:-DebitCreditAmount}})
-        //     let timelyVoideCheck = await timelyNotificationModel.findOne({marketId : bet.marketId})
-        //     let notification
-        //     if(timelyVoideCheck){
-        //         notification = await timelyNotificationModel.findOneAndUpdate({marketId : bet.marketId}, {message:data.data.Remark})
-        //     }else{
-        //         let timelyNotification = {
-        //             message : data.data.Remark,
-        //             userName : user.userName,
-        //             marketId : bet.marketId
-        //         }
-        //         notification = await timelyNotificationModel.create(timelyNotification)
-        //     }
-        //     let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
-        //     socket.emit('timelyVoideBEt', {bet, status:"success"})
-        //     }else{
-        //         socket.emit('timelyVoideBEt', {status:'err', message:'Please Provide valide password'})
-        //     }
-        // }catch(err){
-        //     console.log(err)
-        //     socket.emit('timelyVoideBEt', {status:'err', message:'Please try again leter'})
-        // }
     })
 
 
@@ -9742,7 +9696,7 @@ io.on('connection', (socket) => {
         let Status = false
         let Bets = []
         if(data.LOGINDATA.LOGINUSER){
-            Bets = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, marketId:data.id})
+            Bets = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, marketId:data.id, status:'OPEN'})
         }
         if(Bets.length > 0){
             if(Bets[0].betType === 'Tennis' || Bets[0].betType === 'Cricket'){

@@ -4266,7 +4266,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                       $match: {
                         $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: ["$uniqueId", "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
                         loginUserId:{$exists:true},
-                        parentIdArray:{$exists:true}
+                        parentIdArray:{$exists:true},
+                        $expr: { $ne: ["$commissionStatus", "cancel"] }
                       }
                     }
                   ],
@@ -4297,6 +4298,10 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         $limit:10
         }
     ])
+    // for(let i = 0; i < userWiseData.length; i++){
+    //     console.log(userWiseData[i].parentdata, "userWiseDatauserWiseDatauserWiseDatauserWiseData")
+    // }
+
     // res.status(200).json({
     //     userWiseData
     // })

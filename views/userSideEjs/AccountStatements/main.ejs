@@ -1,388 +1,406 @@
-    <%-include('../headers')%>
+<%-include('../headers')%>
 
 
       
 
 
-      <!-- ----= ACCOUNT STATMENT SECTION START =-----   -->
-      <section class="acount-stat-sec-wrp">
-        <div class="container-fluid acount-stat-contnr">
-            <div class="acount-stat-ro1">
-                <div class="acount-stat-ro-titl">
-                    <div class="featured-sec-ro--titl-txt">
-                        <span class="titl-bodr-lft-spn2"></span>
-                        <h3 class="featured-sec-ro--titl-txt-tg2">ACCOUNT STATEMENT</h3>
-                        <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
-                    </div>
-                    <div class="pageId" data-pageid="1"></div>
-                    <div class="acount-stat-ro-titlselect-dv">
-                        <form class="acount-stat-ro-titlselect-form">
-                            <div class="">
-                                <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="Fdate">
-                            </div>
-                            <div class="">
-                                <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="Tdate">
-                            </div>
-                            <div class="">
-                                <select id="select" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
-                                    <option selected>All Reports</option>
-                                    <option value="deposit">Deposit</option>
-                                    <option value="withdraw">Withdraw</option>
-                                    <option value="sdeposit">Settlement Deposit</option>
-                                    <option value="swithdraw">Settlement Withdraw</option>
-                                    <option value="2">Game Reports</option>
-                                </select>
-                            </div>
-                            
-                            
-                            <button  id="downloadBtn" class="btn acount-stat-ro-titl-form-btnn load">Download CSV</button>
-                            <button  id="pdfDownload" class="btn acount-stat-ro-titl-form-btnn load">Print PDF</button>
-                          </form>
-                    </div>
-                </div>
+<!-- ----= ACCOUNT STATMENT SECTION START =-----   -->
+<section class="acount-stat-sec-wrp">
+  <div class="container-fluid acount-stat-contnr">
+      <div class="acount-stat-ro1">
+          <div class="acount-stat-ro-titl">
+              <div class="featured-sec-ro--titl-txt">
+                  <span class="titl-bodr-lft-spn2"></span>
+                  <h3 class="featured-sec-ro--titl-txt-tg2">ACCOUNT STATEMENT</h3>
+                  <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
+              </div>
+              <div class="pageId" data-pageid="1"></div>
+              <div class="acount-stat-ro-titlselect-dv">
+                  <form class="acount-stat-ro-titlselect-form">
+                      <div class="">
+                          <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="Fdate">
+                      </div>
+                      <div class="">
+                          <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="Tdate">
+                      </div>
+                      <div class="">
+                          <select id="select" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
+                              <option selected>All Reports</option>
+                              <option value="deposit">Deposit</option>
+                              <option value="withdraw">Withdraw</option>
+                              <option value="sdeposit">Settlement Deposit</option>
+                              <option value="swithdraw">Settlement Withdraw</option>
+                              <option value="2">Game Reports</option>
+                          </select>
+                      </div>
+                      
+                      
+                      <button  id="downloadBtn" class="btn acount-stat-ro-titl-form-btnn load">Download CSV</button>
+                      <button  id="pdfDownload" class="btn acount-stat-ro-titl-form-btnn load">Print PDF</button>
+                    </form>
+              </div>
+          </div>
+      </div>
+
+      <div class="acount-stat-ro2">
+          <div class="acount-stat-tbl-txt-wrp userSide-Table">
+              <table class="acount-stat-tbl" id="table12">
+
+                  <thead class="acount-stat-tbl-hed">
+                      <tr class="acount-stat-tbl-hed-tr">
+                          <th class="bod-red-lft">SR No.</th>
+                          <th>Date & Time</th>
+                          <th>Credit</th>
+                          <th>Debit</th>
+                          <th>Stake</th>
+                          <th>Pts</th>
+                          <th>Closing</th>
+                          <th>Description</th>
+                          <th class="bod-red-rit">Remark</th>
+                      </tr>
+                  </thead>
+
+                  <tbody class="acount-stat-tbl-body">
+                      <%if(data.length != 0){%>
+                      <%for(let i = 0; i < data.length; i++){%>
+                          <%
+                              <!-- var timestamp = `${data[i].time}`;  -->
+                              var date = new Date(data[i].date);
+                              var options = { 
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                                  hour: 'numeric',
+                                  minute: 'numeric',
+                                  hour12: true
+                              };
+                              var formattedTime = date.toLocaleString('en-US', options);
+                          %>
+                          <tr class="acount-stat-tbl-body-tr">
+                              <td title="SR No."><%=i+1%></td>
+                              <td title="Date & Time"><%=formattedTime%></td>
+                              <%if(data[i].creditDebitamount > 0){%>
+                                  <td title="Credit" class="c-gren"><%=data[i].creditDebitamount%></td>
+                                  <td title="Debit">0</td>
+                              <%}else{%>
+                                  <td title="Credit">0</td>
+                                  <td title="Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
+                              <%}%>
+                              <%if(data[i].stake){%>
+                                  <td title="Stake"><%=data[i].stake%></td>
+                              <%}else{%>
+                                  <td title="Stake">-</td>
+                              <%}%>
+                              <td title="Pts">0</td>
+                              <td title="Closing"><%=data[i].balance%></td>
+                              <td title="Description"><%=data[i].description%></td>
+                              <%if(data[i].Remark){%>
+                                <td title="Remark"><%=data[i].Remark%></td>
+                              <%}else{%>
+                                <td title="Remark">-</td>
+                              <%}%>
+                          </tr>
+                          <%}%>
+                          <%}%>
+                  </tbody>
+
+              </table>
+              <div class="loadMoredive">
+              <a id="loadMore">Load More</a>
             </div>
-
-            <div class="acount-stat-ro2">
-                <div class="acount-stat-tbl-txt-wrp userSide-Table">
-                    <table class="acount-stat-tbl" id="table12">
-
-                        <thead class="acount-stat-tbl-hed">
-                            <tr class="acount-stat-tbl-hed-tr">
-                                <th class="bod-red-lft">Transaction</th>
-                                <th>Event</th>
-                                <th>Market Type</th>
-                                <th>Credit/Debit</th>
-                                <th>Closing</th>
-                                <th>Transaction ID</th>
-                            </tr>
-                        </thead>
-
-                        <tbody class="acount-stat-tbl-body">
-                            <%if(data.length != 0){%>
-                            <%for(let i = 0; i < data.length; i++){%>
-                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>">
-                                  <td title="Transaction"><%if(!data[i].accStype && data[i].creditDebitamount > 0){%>
-                                    Deposit
-                                  <%}else if(!data[i].accStype && data[i].creditDebitamount < 0){%>
-                                    Withdraw
-                                  <%}else if(data[i].accStype && data[i].creditDebitamount < 0){%>
-                                    Settlement Withdraw
-                                  <%}else if(data[i].accStype && data[i].creditDebitamount > 0){%>
-                                    Settlement Deposit
-                                  <%}else{%>
-                                  -
-                                  <%}%></td>
-                                    <td title="Event"><%=data[i].match%></td>
-                                    <td title="Market Type"><%=data[i].marketName%></td>
-                                    <%if(data[i].creditDebitamount > 0){%>
-                                        <td title="Credit/Debit" class="c-gren"><%=data[i].creditDebitamount%></td>
-                                    <%}else{%>
-                                        <td title="Credit/Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
-                                    <%}%>
-                                    <td title="Closing"><%=data[i].balance%></td>
-                                    <td title="Description"><%=data[i].transactionId%></td>
-                                </tr>
-                                <%}%>
-                                <%}%>
-                        </tbody>
-
-                    </table>
-                    <div class="loadMoredive">
-                    <a id="loadMore">Load More</a>
-                  </div>
-                  </div>
             </div>
+      </div>
 
-        </div>
-      </section>
-      <!-- ----= ACCOUNT STATMENT SECTION END =-----   -->
-      
-      <%-include('../sideBar')%>
-      <div class="mbl-botom-mnu-spacer"></div>
-      <!-- ----= MOBILE BOTTOM MENU SECTION START =-----   -->
-      <%-include("../mobileMenu")%>
-      <!-- ----= MOBILE BOTTOM MENU SECTION END =-----   -->
+  </div>
+</section>
+<!-- ----= ACCOUNT STATMENT SECTION END =-----   -->
+
+<%-include('../sideBar')%>
+<div class="mbl-botom-mnu-spacer"></div>
+<!-- ----= MOBILE BOTTOM MENU SECTION START =-----   -->
+<%-include("../mobileMenu")%>
+<!-- ----= MOBILE BOTTOM MENU SECTION END =-----   -->
 
 
-      <!-- ----=MODEL1 SECTION START =-----   -->
-      <!-- Modal -->
-      <%-include('../loginBox')%>
-      <%-include('../registration')%>
-      <%-include('../updatePass')%>
-      <%-include("../stakeLabel")%>
-      <!-- ----=MODEL1 SECTION END =-----   -->
+<!-- ----=MODEL1 SECTION START =-----   -->
+<!-- Modal -->
+<%-include('../loginBox')%>
+<%-include('../registration')%>
+<%-include('../updatePass')%>
+<%-include("../stakeLabel")%>
+<!-- ----=MODEL1 SECTION END =-----   -->
 
-      <!-- ----=MODEL2 CHANGE PASSWORE =-----   -->
-      <!-- Modal -->
-      
-    <!-- ----=MODEL2 CHANGE PASSWORE =-----   -->
+<!-- ----=MODEL2 CHANGE PASSWORE =-----   -->
+<!-- Modal -->
 
-    <!-- ----=MODEL2 SET STAKE =-----   -->
-    <!-- Modal -->
-    
-  <!-- ----=MODEL2 SET STAKE =-----   -->
+<!-- ----=MODEL2 CHANGE PASSWORE =-----   -->
 
-    </main>
+<!-- ----=MODEL2 SET STAKE =-----   -->
+<!-- Modal -->
 
-    <!-- JQUERY  -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
-      integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <!-- JQUERY  -->
+<!-- ----=MODEL2 SET STAKE =-----   -->
 
-    <!-- AOS ANIMATION CDN  -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
-      integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+</main>
 
-    <script>
-      AOS.init({
-        duration: 1200,
-      });
-    </script>
-    <!-- AOS ANIMATION CDN  -->
+<!-- JQUERY  -->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+crossorigin="anonymous"
+referrerpolicy="no-referrer"
+></script>
+<!-- JQUERY  -->
 
-    <!-- SLICK SLIDER CDN  -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
-      integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+<!-- AOS ANIMATION CDN  -->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+crossorigin="anonymous"
+referrerpolicy="no-referrer"
+></script>
 
-    <script>
-      $(".hiroslide").slick({
-        slidesToShow: 5,
+<script>
+AOS.init({
+  duration: 1200,
+});
+</script>
+<!-- AOS ANIMATION CDN  -->
+
+<!-- SLICK SLIDER CDN  -->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+crossorigin="anonymous"
+referrerpolicy="no-referrer"
+></script>
+
+<script>
+$(".hiroslide").slick({
+  slidesToShow: 5,
+  slidesToScroll: 1,
+  arrows: true,
+  dots: false,
+  speed: 500,
+  infinite: true,
+  autoplaySpeed: 5000,
+  autoplay: true,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 4,
         slidesToScroll: 1,
-        arrows: true,
-        dots: false,
-        speed: 500,
         infinite: true,
-        autoplaySpeed: 5000,
-        autoplay: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 4,
-              slidesToScroll: 1,
-              infinite: true,
-              arrows: false,
-              dots: false,
-            },
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              arrows: false,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-            },
-          },
-          // You can unslick at a given breakpoint now by adding:
-          // settings: "unslick"
-          // instead of a settings object
-        ],
-      });
-
-      $(".hiroslide2").slick({
-        slidesToShow: 3,
+        arrows: false,
+        dots: false,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
         slidesToScroll: 1,
         arrows: false,
-        dots: true,
-        speed: 300,
-        infinite: true,
-        autoplaySpeed: 1500,
-        autoplay: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              infinite: true,
-              arrows: false,
-              dots: true,
-            },
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-              arrows: false,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-            },
-          },
-          // You can unslick at a given breakpoint now by adding:
-          // settings: "unslick"
-          // instead of a settings object
-        ],
-      });
-
-      $(".testimonial").slick({
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
-        arrows: true,
-        dots: true,
-        speed: 300,
+      },
+    },
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ],
+});
+
+$(".hiroslide2").slick({
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  arrows: false,
+  dots: true,
+  speed: 300,
+  infinite: true,
+  autoplaySpeed: 1500,
+  autoplay: true,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
         infinite: true,
-        autoplaySpeed: 3000,
-        autoplay: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              infinite: true,
-              arrows: false,
-              dots: true,
-            },
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              arrows: false,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-            },
-          },
-          // You can unslick at a given breakpoint now by adding:
-          // settings: "unslick"
-          // instead of a settings object
-        ],
-      });
-    </script>
+        arrows: false,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        arrows: false,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ],
+});
 
-    <!-- SLICK SLIDER CDN  -->
+$(".testimonial").slick({
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: true,
+  dots: true,
+  speed: 300,
+  infinite: true,
+  autoplaySpeed: 3000,
+  autoplay: true,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        arrows: false,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ],
+});
+</script>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"
-    ></script>
-    
-    <!-- <script>
-      $('#offsetmenubtnn').click(function() {
-          $('#offsetmenubody').css({
-              'transform': 'translateX(0px)',
-              'transition': 'all 0.3s ease-in-out',
-          });
-      });
-    </script> -->
+<!-- SLICK SLIDER CDN  -->
 
-    <script>
-      $(document).ready(function(){
-        $("#offsetmenubtnn").click(function(){
-          $("#offsetmenubody").toggleClass("offset-mnu-width");
-        });
-      });
-    </script>
-    
-    <script>
-      $(document).ready(function(){
-        $("#offsetmenubtnn").click(function(){
-          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
-        });
-      });
-    </script>
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+crossorigin="anonymous"
+></script>
 
-    <script>
-      $(document).ready(function(){
-        $("#offsertmnuclosbtn").click(function(){
-          $("#offsetmenubody").toggleClass("offset-mnu-width");
-        });
-      });
-    </script>
+<!-- <script>
+$('#offsetmenubtnn').click(function() {
+    $('#offsetmenubody').css({
+        'transform': 'translateX(0px)',
+        'transition': 'all 0.3s ease-in-out',
+    });
+});
+</script> -->
 
-    <script>
-      $(document).ready(function(){
-        $("#offsertmnuclosbtn").click(function(){
-          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
-        });
-      });
-    </script>
-    
-    <!-- <script>
-      $(document).ready(function(){
-        $("#botommainmnubtnn").click(function(){
-          $("#botommnuwrp").toggleClass("botom-mnu-wrp");
-        });
-      });
-    </script> -->
+<script>
+$(document).ready(function(){
+  $("#offsetmenubtnn").click(function(){
+    $("#offsetmenubody").toggleClass("offset-mnu-width");
+  });
+});
+</script>
 
-    <!-- ---------- CAPTCHA CODE ----------  -->
-    <script>
-      // Generate a random CAPTCHA code
-      function generateCaptcha() {
-        var captcha = '';
-        var possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (var i = 0; i < 6; i++) {
-          captcha += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
-        }
-        return captcha;
-      }
-    
-      // Display the CAPTCHA code on the page
-      function displayCaptcha() {
-        var captchaCode = document.getElementById('captchaCode');
-        captcha = generateCaptcha();
-        captchaCode.textContent = captcha;
-      }
-    
-      // Validate the user's input
-      function validateCaptcha() {
-        var userInput = document.getElementById('captchaInput').value;
-        if (userInput === captcha) {
-          alert('CAPTCHA code is correct. Form submitted!');
-        } else {
-          alert('CAPTCHA code is incorrect. Please try again.');
-          displayCaptcha(); // Refresh CAPTCHA on incorrect input
-        }
-        return false; // Prevent form submission
-      }
-    
-      // Refresh the CAPTCHA code
-      document.getElementById('refreshCaptcha').addEventListener('click', displayCaptcha);
-    
-      // Generate a new CAPTCHA code when the page loads
-      var captcha = generateCaptcha();
-      displayCaptcha();
-    
-      // Attach the validation function to the form's submit event
-      document.getElementById('captchaForm').addEventListener('submit', validateCaptcha);
-    </script>
-    
-    
-    <!-- ---------- CAPTCHA CODE ----------  -->
+<script>
+$(document).ready(function(){
+  $("#offsetmenubtnn").click(function(){
+    $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  $("#offsertmnuclosbtn").click(function(){
+    $("#offsetmenubody").toggleClass("offset-mnu-width");
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  $("#offsertmnuclosbtn").click(function(){
+    $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+  });
+});
+</script>
+
+<!-- <script>
+$(document).ready(function(){
+  $("#botommainmnubtnn").click(function(){
+    $("#botommnuwrp").toggleClass("botom-mnu-wrp");
+  });
+});
+</script> -->
+
+<!-- ---------- CAPTCHA CODE ----------  -->
+<script>
+// Generate a random CAPTCHA code
+function generateCaptcha() {
+  var captcha = '';
+  var possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (var i = 0; i < 6; i++) {
+    captcha += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+  }
+  return captcha;
+}
+
+// Display the CAPTCHA code on the page
+function displayCaptcha() {
+  var captchaCode = document.getElementById('captchaCode');
+  captcha = generateCaptcha();
+  captchaCode.textContent = captcha;
+}
+
+// Validate the user's input
+function validateCaptcha() {
+  var userInput = document.getElementById('captchaInput').value;
+  if (userInput === captcha) {
+    alert('CAPTCHA code is correct. Form submitted!');
+  } else {
+    alert('CAPTCHA code is incorrect. Please try again.');
+    displayCaptcha(); // Refresh CAPTCHA on incorrect input
+  }
+  return false; // Prevent form submission
+}
+
+// Refresh the CAPTCHA code
+document.getElementById('refreshCaptcha').addEventListener('click', displayCaptcha);
+
+// Generate a new CAPTCHA code when the page loads
+var captcha = generateCaptcha();
+displayCaptcha();
+
+// Attach the validation function to the form's submit event
+document.getElementById('captchaForm').addEventListener('submit', validateCaptcha);
+</script>
 
 
-  </body>
+<!-- ---------- CAPTCHA CODE ----------  -->
+
+
+</body>
 </html>

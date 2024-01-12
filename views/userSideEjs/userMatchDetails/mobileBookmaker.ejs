@@ -4,7 +4,11 @@
         <div class="exchange-pg-inn-banner-col-titi-txt">
             <h6><span>Bookmaker</span><span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
               <i class="fa-solid fa-circle-info"></i> 
-            </span></h6>
+            </span>
+            <%if(commissionmarkerarr.includes(match.marketList.bookmaker[0].marketId)){%>
+              <span class="blink-commission-bookmaker">*</span>
+            <%}%>
+          </h6>
         </div>
         <div class="exchange-pg-inn-banner-col-titi-txt-tim">
             <h6 class="market-limit" id="<%=match.marketList.bookmaker[0].marketId%>"><b>Min : <%=minBookMaker%>, Max : <%=maxBookMaker%></b></h6>
@@ -92,7 +96,11 @@
             <div class="exchange-pg-inn-banner-col-titi-txt">
                 <h6><span>TOSS</span><span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
                   <i class="fa-solid fa-circle-info"></i> 
-                </span></h6>
+                </span>
+                <%if(commissionmarkerarr.includes(match.marketList.bookmaker[1].marketId)){%>
+                  <span class="blink-commission-bookmaker">*</span>
+                <%}%>
+              </h6>
             </div>
             <div class="exchange-pg-inn-banner-col-titi-txt-tim">
                 <h6 class="market-limit" id="<%=match.marketList.bookmaker[1].marketId%>"><b>Min : <%=minBookMaker%>, Max : <%=maxBookMaker%></b></h6>

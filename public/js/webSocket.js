@@ -585,13 +585,13 @@ socket.on('connect', () => {
         socket.emit('userLoginBalance', LOGINDATA)
         setTimeout(()=>{
             balance()
-          }, 1000)
+          }, 1000 * 5000)
     }
     balance()
     socket.on('userLoginBalance', async(data) => {
         // console.log(data, "USERDATA")
         let html = `<div class="bet-blns-nav-wrp-amount-num">
-        <span class=""><i class="fa-solid fa-wallet"></i> Bal : ${data.userData.availableBalance.toFixed(2)} <a href="/mybets"><span> &nbsp; Exp : ${data.totalExposure.toFixed(2)}</span></a> </span>
+        <span class=""><i class="fa-solid fa-wallet"></i> Bal : ${data.userData.availableBalance.toFixed(2)} <a href="/mybets"><span> Exp : ${data.totalExposure.toFixed(2)}</span></a> </span>
       </div>`
     //   $('.username-admin li a').html(data.userData.userName)
       $('.userBalance').each(function(index, element) {
@@ -6674,7 +6674,7 @@ socket.on('connect', () => {
                     html += `
                     <td>${bets[i].totalBets}</td>
                     <td class="btn-group" >
-                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Voide Bet</button>
+                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Void Bet</button>
                     </td>
                     </tr>`
                 }
@@ -6725,6 +6725,29 @@ socket.on('connect', () => {
                 alert(data.message)
             }else{
                 alert('Bet Voided Successfully !!')
+                setTimeout(function() {
+                    window.close();
+                }, 2000);
+                $('.timely-voideBet :input').val('');
+                $('#myModal2 , .modal-backdrop')
+                    .removeClass('show')
+                    .css('display', 'none')
+                    .attr('aria-modal', 'false')
+                    .attr('role', 'none');
+                let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                data.refreshStatus = true
+                socket.emit('voidBET',data)
             }
         })
     }

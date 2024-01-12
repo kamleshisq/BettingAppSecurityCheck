@@ -4,7 +4,11 @@
       <div class="exchange-pg-inn-banner-col-titi-txt">
           <h6><span>Match Odds</span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
             <i class="fa-solid fa-circle-info"></i> 
-          </span></h6>
+          </span>
+          <%if(commissionmarkerarr.includes(match.marketList.match_odd.marketId)){%>
+            <span class="blink-commission-bookmaker">*</span>
+          <%}%>
+        </h6>
       </div>
       <div class="exchange-pg-inn-banner-col-titi-txt-tim">
           <h6 class="market-limit" id="<%=match.marketList.match_odd.marketId%>"><b>Min : <%=minMatchOdds%>, Max : <%=maxMatchOdds%></b></h6>
