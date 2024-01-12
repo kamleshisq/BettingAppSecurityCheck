@@ -679,23 +679,24 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     // let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
+    console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
     let userAcc = await gameModel.aggregate([
         {
             $match:{
                 userId:req.currentUser._id.toString()
             }
         },
-        {
-            $lookup: {
-                from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                localField: 'transactionId',
-                foreignField: 'transactionId',
-                as: 'accountdetail'
-            }
-        },
-        {
-            $unwind:"$accountdetail"
-        },
+        // {
+        //     $lookup: {
+        //         from: 'accountstatements', // Assuming the name of the Whitelabel collection
+        //         localField: 'transactionId',
+        //         foreignField: 'transactionId',
+        //         as: 'accountdetail'
+        //     }
+        // },
+        // {
+        //     $unwind:"$accountdetail"
+        // },
         // {
         //     $group:{
         //         _id:{
