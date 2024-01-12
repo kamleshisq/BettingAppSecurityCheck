@@ -48,39 +48,57 @@
 
                         <thead class="acount-stat-tbl-hed">
                             <tr class="acount-stat-tbl-hed-tr">
-                                <th class="bod-red-lft">Transaction</th>
-                                <th>Event</th>
-                                <th>Market Type</th>
-                                <th>Credit/Debit</th>
+                                <th class="bod-red-lft">SR No.</th>
+                                <th>Date & Time</th>
+                                <th>Credit</th>
+                                <th>Debit</th>
+                                <th>Stake</th>
+                                <th>Pts</th>
                                 <th>Closing</th>
-                                <th>Transaction ID</th>
+                                <th>Description</th>
+                                <th class="bod-red-rit">Remark</th>
                             </tr>
                         </thead>
 
                         <tbody class="acount-stat-tbl-body">
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
-                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id%>">
-                                  <td title="Transaction"><%if(!data[i].accStype && data[i].creditDebitamount > 0){%>
-                                    Deposit
-                                  <%}else if(!data[i].accStype && data[i].creditDebitamount < 0){%>
-                                    Withdraw
-                                  <%}else if(data[i].accStype && data[i].creditDebitamount < 0){%>
-                                    Settlement Withdraw
-                                  <%}else if(data[i].accStype && data[i].creditDebitamount > 0){%>
-                                    Settlement Deposit
-                                  <%}else{%>
-                                  -
-                                  <%}%></td>
-                                    <td title="Event"><%=data[i].match%></td>
-                                    <td title="Market Type"><%=data[i].marketName%></td>
+                                <%
+                                    <!-- var timestamp = `${data[i].time}`;  -->
+                                    var date = new Date(data[i].date);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
+                                %>
+                                <tr class="acount-stat-tbl-body-tr">
+                                    <td title="SR No."><%=i+1%></td>
+                                    <td title="Date & Time"><%=formattedTime%></td>
                                     <%if(data[i].creditDebitamount > 0){%>
-                                        <td title="Credit/Debit" class="c-gren"><%=data[i].creditDebitamount%></td>
+                                        <td title="Credit" class="c-gren"><%=data[i].creditDebitamount%></td>
+                                        <td title="Debit">0</td>
                                     <%}else{%>
-                                        <td title="Credit/Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
+                                        <td title="Credit">0</td>
+                                        <td title="Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
                                     <%}%>
+                                    <%if(data[i].stake){%>
+                                        <td title="Stake"><%=data[i].stake%></td>
+                                    <%}else{%>
+                                        <td title="Stake">-</td>
+                                    <%}%>
+                                    <td title="Pts">0</td>
                                     <td title="Closing"><%=data[i].balance%></td>
-                                    <td title="Description"><%=data[i].transactionId%></td>
+                                    <td title="Description"><%=data[i].description%></td>
+                                    <%if(data[i].Remark){%>
+                                      <td title="Remark"><%=data[i].Remark%></td>
+                                    <%}else{%>
+                                      <td title="Remark">-</td>
+                                    <%}%>
                                 </tr>
                                 <%}%>
                                 <%}%>
