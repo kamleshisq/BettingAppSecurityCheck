@@ -10976,7 +10976,42 @@ socket.on('connect', () => {
 
         socket.on('getbetdetailbyid',async(data)=>{
             console.log(data,'datasdfasdfas')
-            
+            let html;
+            if(data.status == 'success'){
+                for(let i = 0;i<data.bets.length;i++){
+                    html += ` <tr class="addedaccountstatmentRowHeader">
+                    <td class="">Event</td>
+                    <td>Mrket Type</td>
+                    <td>Bet On</td>
+                    <td>Odds</td>
+                    <td>Stake</td>
+                    <td>Status</td>
+                    <td>Return</td>
+                </tr> <tr class="addedaccountstatmentRowbody">
+                    <td title="">if(!data[i].accStype && data[i].creditDebitamount > 0){
+                      Deposit
+                    }else if(!data[i].accStype && data[i].creditDebitamount < 0){
+                      Withdraw
+                    }else if(data[i].accStype && data[i].creditDebitamount < 0){
+                      Settlement Withdraw
+                    }else if(data[i].accStype && data[i].creditDebitamount > 0){
+                      Settlement Deposit
+                    }else{
+                    -
+                    }</td>
+                      <td title="">=data[i].match</td>
+                      <td title="Market Type">=data[i].marketName</td>
+                      if(data[i].creditDebitamount > 0){
+                          <td title="Credit/Debit" class="c-gren">=data[i].creditDebitamount</td>
+                      }else{
+                          <td title="Credit/Debit" class="c-reed">=data[i].creditDebitamount</td>
+                      }
+                      <td title="Closing">=data[i].balance</td>
+                      <td title="Description">=data[i].transactionId</td>
+                  </tr>`
+                }
+            }
+
         })
     }
 

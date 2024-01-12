@@ -678,7 +678,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
+    // let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
     // let userAcc = await betModel.aggregate([
     //     {
@@ -720,6 +720,43 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     //         $limit:20
     //     }
     // ])
+    let userAcc = await accountStatement.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser._id
+            }
+        },
+        {
+            $lookup: {
+                from: 'betmodels', // Assuming the name of the Whitelabel collection
+                localField: 'transactionId',
+                foreignField: 'transactionId',
+                as: 'betdetails'
+            }
+        },
+        {
+            $unwind:"$betdetails"
+        },
+        {
+            $group:{
+                _id:"$betdetails.marketId",
+                match:{$first:'$betdetails.match'},
+                marketName:{$first:'$betdetails.marketName'},
+                stake:{$first:'$stake'},
+                accStype:{$first:'$accStype'},
+                creditDebitamount:{$sum:'$creditDebitamount'},
+                balance:{$sum:'$balance'},
+                transactionId:{$first:'$transactionId'}
+            }
+        },
+        {
+            $sort:{date:-1}
+        },
+        {
+            $limit:20
+        }
+
+    ])
     console.log(userAcc,'userAcc')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
