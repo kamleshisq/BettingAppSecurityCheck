@@ -8265,7 +8265,7 @@ io.on('connection', (socket) => {
         console.log(data, "DATADATA")
         try{
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-            const passcheck = await user.correctPasscode(data.data.FormData1, user.passcode)
+            const passcheck = await user.correctPasscode(data.FormData1.password, user.passcode)
             if(passcheck){
                 let sendData = await voidebundel(data)
 
