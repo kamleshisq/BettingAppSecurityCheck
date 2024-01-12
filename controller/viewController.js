@@ -675,29 +675,41 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }
     // console.log(req.query.id)
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
-    // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
-    // fetch(fullUrl, {
-    //     method: 'POST',
-    //     headers: { 'Authorization': `Bearer ` + req.token }
-    // }).then(res => res.json())
-    // .then(json =>
-    //     console.log(json) 
-        res.status(200).render("./userSideEjs/AccountStatements/main", {
-        title:"Account Statement",
-        data:userAcc,
-        user:req.currentUser,
-        verticalMenus,
-        check:"ACCC",
-        userLog,
-        notifications:req.notifications,
-        basicDetails,
-        colorCode
-    })
-    // )
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    // let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
+    let userAcc = await accountStatement.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser._id
+            }
+        },
+        {
+            $lookup: {
+                from: 'betmodels', // Assuming the name of the Whitelabel collection
+                localField: 'transactionId',
+                foreignField: 'transactionId',
+                as: 'betdetail'
+            }
+        },
+        {
+            $unwind:"$betdetail"
+        }
+    ])
+    console.log(userAcc,'userAcc')
+
+    //     res.status(200).render("./userSideEjs/AccountStatements/main", {
+    //     title:"Account Statement",
+    //     data:userAcc,
+    //     user:req.currentUser,
+    //     verticalMenus,
+    //     check:"ACCC",
+    //     userLog,
+    //     notifications:req.notifications,
+    //     basicDetails,
+    //     colorCode
+    // })
 });
 
 exports.myProfile = catchAsync(async(req, res, next) => {
