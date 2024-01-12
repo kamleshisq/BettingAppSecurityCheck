@@ -987,27 +987,29 @@ exports.userLogin = catchAsync (async(req, res, next) => {
         }else{
             const user = await User.findOne({userName}).select('+password');
             let whiteLabel = process.env.whiteLabelName
-            if(user.whiteLabel != whiteLabel && user.role_type !== 1){
-                res.status(404).json({
-                    status:'error',
-                    message:"not a valid user userLogin"
-                })
-            }else  if(!user || !(await user.correctPassword(password, user.password))){
-                // console.log()
-                res.status(404).json({
-                    status:'error',
-                    message:"Please provide valide user and password"
-                })
-            }else if(user.role_type != 5 && user.role_type != 6){
-                res.status(404).json({
-                    status:'error',
-                    message:"You do not have permission to login as user"
-                })
-            }else if(!user.isActive){
-                res.status(404).json({
-                    status:'error',
-                    message:"You are inactive"
-                })
+            if(user && user.role_type != 6){
+                if(user.whiteLabel != whiteLabel && user.role_type !== 1){
+                    res.status(404).json({
+                        status:'error',
+                        message:"not a valid user userLogin"
+                    })
+                }else  if(!user || !(await user.correctPassword(password, user.password))){
+                    // console.log()
+                    res.status(404).json({
+                        status:'error',
+                        message:"Please provide valide user and password"
+                    })
+                }else if(user.role_type != 5 && user.role_type != 6){
+                    res.status(404).json({
+                        status:'error',
+                        message:"You do not have permission to login as user"
+                    })
+                }else if(!user.isActive){
+                    res.status(404).json({
+                        status:'error',
+                        message:"You are inactive"
+                    })
+                }
             }
             // else if(user.is_Online){
             //     // console.log(user)
