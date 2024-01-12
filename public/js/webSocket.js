@@ -6518,7 +6518,36 @@ socket.on('connect', () => {
         filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
 
         // $('#toTime,#fromTime').keyup(function(e){
-            $('#fromTime,#toTime').clockpicker().change(function(){
+        $('#fromTime').clockpicker().change(function(){
+            console.log('working123456')
+            let value = $(this).val()
+            if(!isValidTimeString(value)){
+                if(!$(this).siblings('span').hasClass('active')){
+                    $(this).siblings('span').addClass('active')
+                }
+            }else{
+                $(this).siblings('span').removeClass('active')
+                let page = 0;
+                let data = {}
+                fromTime = $('#fromTime').val()
+                toTime = $('#toTime').val()
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                filterData.from_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate1
+                filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
+                console.log(filterData.from_date, "filterData.from_datefilterData.from_datefilterData.from_date")
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                socket.emit('voidBET',data)
+            }
+        })
+
+        $('#toTime').clockpicker().change(function(){
             console.log('working123456')
             let value = $(this).val()
             if(!isValidTimeString(value)){

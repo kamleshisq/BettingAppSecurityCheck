@@ -199,7 +199,10 @@ evt.currentTarget.className += " active";
 }
 </script>
 <script type="text/javascript">
-  $('#fromTime, #toTime').clockpicker().change(function(){
+  $('#fromTime').clockpicker().change(function(){
+      console.log(this.value);
+    });
+    $('#toTime').clockpicker().change(function(){
       console.log(this.value);
     });
   </script>
