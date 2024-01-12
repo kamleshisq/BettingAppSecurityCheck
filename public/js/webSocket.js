@@ -10944,6 +10944,17 @@ socket.on('connect', () => {
                 }
         }
         })
+
+        $(document).on('click','.rowtoggle_AccountStatment',function(e){
+            let marketId = $(this).attr('data-marketid')
+            console.log(marketId)
+            socket.emit('getbetdetailbyid',{marketId,LOGINDATA})
+        })
+
+        socket.on('getbetdetailbyid',async(data)=>{
+            console.log(data,'datasdfasdfas')
+            
+        })
     }
 
 
