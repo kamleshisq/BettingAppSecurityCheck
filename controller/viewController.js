@@ -679,7 +679,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     // let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
-    let userAcc = await gameModel.aggregate([
+    console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
+    let userAcc = await betModel.aggregate([
         {
             $match:{
                 userId:req.currentUser._id.toString()
@@ -696,22 +697,22 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         {
             $unwind:"$accountdetail"
         },
-        // {
-        //     $group:{
-        //         _id:{
-        //             eventId:"$accountdetail.eventId",
-        //             marketId:"$accountdetail.marketId"
-        //         },
-        //         match:{$first:'$$accountdetail.match'},
-        //         marketName:{$first:'$$accountdetail.marketName'},
-        //         stake:{$first:'$$accountdetail.stake'},
-        //         accStype:{$first:'$$accountdetail.accStype'},
-        //         creditDebitamount:{$sum:'$$accountdetail.creditDebitamount'},
-        //         balance:{$sum:'$$accountdetail.balance'},
-        //         transactionId:{$first:'$$accountdetail.transactionId'}
+        {
+            $group:{
+                _id:{
+                    eventId:"$accountdetail.eventId",
+                    marketId:"$accountdetail.marketId"
+                },
+                match:{$first:'$$accountdetail.match'},
+                marketName:{$first:'$$accountdetail.marketName'},
+                stake:{$first:'$$accountdetail.stake'},
+                accStype:{$first:'$$accountdetail.accStype'},
+                creditDebitamount:{$sum:'$$accountdetail.creditDebitamount'},
+                balance:{$sum:'$$accountdetail.balance'},
+                transactionId:{$first:'$$accountdetail.transactionId'}
 
-        //     }
-        // }
+            }
+        }
     ])
     console.log(userAcc,'userAcc')
 
