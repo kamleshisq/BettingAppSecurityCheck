@@ -8263,7 +8263,18 @@ io.on('connection', (socket) => {
 
     socket.on('timelyVoideBEt', async(data) => {
         // console.log(data, "DATADATA")
-        let sendData = await voidebundel(data)
+        try{
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            const passcheck = await user.correctPasscode(data.data.FormData1, user.passcode)
+            if(passcheck){
+                let sendData = await voidebundel(data)
+
+            }else{
+                socket.emit('timelyVoideBEt', {status:'err', message:'Please Provide valide password'})
+            }
+        }catch(err){
+            console.log(err)
+        }
         // try{
         //     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
         //     const passcheck = await user.correctPasscode(data.data.password, user.passcode)
