@@ -712,8 +712,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 transactionId:{$first:'$accountdetail.transactionId'}
 
             }
-        },{
-            $sort:{"$date":-1}
+        },
+        {
+            $sort:{"date":-1}
         },
         {
             $limit:20
