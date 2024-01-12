@@ -29,7 +29,7 @@ async function voidbetOPENFORTIMELYVOIDE(data){
             filterData.userName = data.filterData.userName
         }else{
             childrenUsername = await User.distinct('userName', { parentUsers: data.LOGINDATA.LOGINUSER._id });
-            filterData.username = {$in:childrenUsername}
+            filterData.userName = {$in:childrenUsername}
         }
         console.log(filterData, "filterDatafilterDatafilterData")
         let bets = await Bet.find(filterData)
