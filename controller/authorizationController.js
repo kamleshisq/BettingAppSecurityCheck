@@ -1011,20 +1011,24 @@ exports.userLogin = catchAsync (async(req, res, next) => {
                         message:"You are inactive"
                     })
                 }
-            }
-            // else if(user.is_Online){
-            //     // console.log(user)
-            //     res.status(404).json({
-            //         status:"error",
-            //         message:"User is already login"
-            //     })
-            // }
-            else{
-                await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
-                console.log('WORKING')
-                user_createSendToken(user, 200, res, req);
-
-            }
+                // else if(user.is_Online){
+                    //     // console.log(user)
+                    //     res.status(404).json({
+                        //         status:"error",
+                        //         message:"User is already login"
+                        //     })
+                        // }
+                        else{
+                            await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
+                            console.log('WORKING')
+                            user_createSendToken(user, 200, res, req);
+                            
+                        }
+                    }else{
+                        await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
+                            console.log('WORKING')
+                            user_createSendToken(user, 200, res, req);
+                    }
         }
     }else{
         let demoUser = await User.findOne({roleName: 'DemoLogin'})
