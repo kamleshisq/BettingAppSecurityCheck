@@ -2154,34 +2154,12 @@ exports.getSpoertPage = catchAsync(async(req, res, next) => {
 
 
 exports.getVoidBetPage = catchAsync(async(req, res, next) => {
-    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    // let role_type =[]
-    // for(let i = 0; i < roles.length; i++){
-    //     role_type.push(roles[i].role_type)
-    // }
-    // // console.log(await betModel.find({status:'OPEN'}).limit(10))
-    // let bets
-    // if(req.currentUser.role.role_level == 1){
-    //     bets = await betModel.find({status:'CANCEL'}).limit(10)
-    // }else{
-    //     bets = await betModel.find({role_type:{$in:role_type},status:'CANCEL'}).limit(10)
-    // }
     let limit = 10;
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -2204,6 +2182,26 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
             }
         },
         {
+            $group:{
+                _id:'$marketId',
+                betType:{
+                    $first:'$betType'
+                },
+                event:{
+                    $first:'$match'
+                },
+                marketName:{
+                    $first:'$marketName'
+                },
+                eventDate:{
+                    $first:'$eventDate'
+                },
+                totalBets:{
+                    $sum : 1
+                }
+            }
+        },
+        {
             $sort:{
                 date:-1
             }
@@ -2212,6 +2210,8 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
             $limit:limit
         }
     ])
+
+    console.log(betResult, "betResultbetResultbetResultbetResult")
     let events = await betModel.aggregate([
         {
             $match:{
