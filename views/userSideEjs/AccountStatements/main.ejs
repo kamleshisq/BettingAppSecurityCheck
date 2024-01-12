@@ -60,7 +60,7 @@
                         <tbody class="acount-stat-tbl-body">
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
-                                <tr class="acount-stat-tbl-body-tr">
+                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>">
                                   <td title="Transaction"><%if(!data[i].accStype && data[i].creditDebitamount > 0){%>
                                     Deposit
                                   <%}else if(!data[i].accStype && data[i].creditDebitamount < 0){%>

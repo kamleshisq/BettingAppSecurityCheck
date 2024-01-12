@@ -10944,6 +10944,10 @@ socket.on('connect', () => {
                 }
         }
         })
+
+        $(document).on('click','.rowtoggle_AccountStatment',function(e){
+            
+        })
     }
 
 
