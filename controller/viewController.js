@@ -686,17 +686,17 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 userId:req.currentUser._id.toString()
             }
         },
-        // {
-        //     $lookup: {
-        //         from: 'accountstatements', // Assuming the name of the Whitelabel collection
-        //         localField: 'transactionId',
-        //         foreignField: 'transactionId',
-        //         as: 'accountdetail'
-        //     }
-        // },
-        // {
-        //     $unwind:"$accountdetail"
-        // },
+        {
+            $lookup: {
+                from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                localField: 'transactionId',
+                foreignField: 'transactionId',
+                as: 'accountdetail'
+            }
+        },
+        {
+            $unwind:"$accountdetail"
+        },
         // {
         //     $group:{
         //         _id:{
