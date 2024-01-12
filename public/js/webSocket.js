@@ -6658,7 +6658,7 @@ socket.on('connect', () => {
             }
             for(let i = 0; i < bets.length; i++){
                 let date = new Date(bets[i].eventDate)
-                html += `<tr class="lay">`
+                html += `<tr>`
                 html += `<td>${i + count}</td>
                 <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                 <td>${bets[i].betType}</td>
