@@ -6707,6 +6707,18 @@ socket.on('connect', () => {
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             let id = this.id
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            data.refreshStatus = true
             console.log(id, "sdfghjkl", data)
             // socket.emit('timelyVoideBEt',{data,LOGINDATA, id})
             // console.log(data, "DATA123")
