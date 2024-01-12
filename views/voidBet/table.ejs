@@ -6,11 +6,7 @@
         <th>Sport</th>
         <th>Event</th>
         <th>Market </th>
-        <th>Odds</th>
-        <th>Bet On</th>
-        <th>Stake</th>
-        <th>Txn ID </th>
-        <th>Status</th>
+        <th>Total Bets</th>
         <th>Action</th>                      
       </tr>
   </thead>
@@ -29,6 +25,7 @@
         <%}else{%>
           <td><%=bets[i].marketName%> </td>
         <%}%>
+        <td><%=bets[i].totalBets%> </td>
 
         
         <td class="btn-group" >
