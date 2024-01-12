@@ -6657,7 +6657,7 @@ socket.on('connect', () => {
                 $('#Event').html(html2)
             }
             for(let i = 0; i < bets.length; i++){
-                console.log(bets[i])
+                // console.log(bets[i])
                 if(bets[i]._id){
                     let date = new Date(bets[i].eventDate)
                     html += `<tr>`
@@ -6708,7 +6708,7 @@ socket.on('connect', () => {
             e.preventDefault() 
             let form = $(this)[0];
             let fd = new FormData(form);
-            let data = Object.fromEntries(fd.entries());
+            let FormData = Object.fromEntries(fd.entries());
             let id = this.id
             let page = parseInt($('.pageId').attr('data-pageid')) - 1;
             let userName = $('.searchUser').val()
@@ -6717,14 +6717,7 @@ socket.on('connect', () => {
             }else{
                 filterData.userName = userName
             }
-
-            data.filterData = filterData;
-            data.page = page
-            data.LOGINDATA = LOGINDATA
-            data.refreshStatus = true
-            console.log(id, "sdfghjkl", data)
-            // socket.emit('timelyVoideBEt',{data,LOGINDATA, id})
-            // console.log(data, "DATA123")
+            socket.emit('timelyVoideBEt',{FormData,LOGINDATA, id, filterData})
         })
 
 
