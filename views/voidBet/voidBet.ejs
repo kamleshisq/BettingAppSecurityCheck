@@ -1,14 +1,7 @@
 <%- include("../header") %>
 <link rel="stylesheet" href="https://weareoutman.github.io/clockpicker/dist/jquery-clockpicker.min.css">
-<script type="text/javascript" src="/src/clockpicker.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 
-<script type="text/javascript">
-$('.clockpicker').clockpicker()
-	.find('input').change(function(){
-		console.log(this.value);
-	});
-</script>
+
   <!--Container Main start-->
   <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
@@ -39,8 +32,7 @@ $('.clockpicker').clockpicker()
             </div> 
             <div class="input-group">
               <label class="up-down-form">From Time</label>
-              <input type="text" class="form-control clockpicker" id="fromTime" value="09:30:00">
-              <!-- <input type = "text" id="fromTime"> -->
+              <input type="text" class="form-control " id="fromTime">
               <span id="fromTime_err" class="input_error">Please enter valid time</span>
             </div>
             <div class="input-group">
@@ -49,7 +41,8 @@ $('.clockpicker').clockpicker()
             </div> 
             <div class="input-group">
               <label class="up-down-form">To Time</label>
-              <input type = "text" id="toTime">
+              <input type="text" class="form-control " id="toTime">
+              <!-- <input type = "text" id="toTime"> -->
               <span id="toTime_err" class="input_error">Please enter valid time</span>
             </div>
             <div class="input-group">
@@ -180,10 +173,14 @@ $('.clockpicker').clockpicker()
   </div>
 </div>
     
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 <script type="text/javascript" src="../js/bundle.js"></script>
+<script type="text/javascript" src="/src/clockpicker.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 
 <script>
   function openCity(evt, cityName) {
@@ -201,5 +198,13 @@ evt.currentTarget.className += " active";
 
 }
 </script>
+<script type="text/javascript">
+  $('#fromTime').clockpicker().change(function(){
+      console.log(this.value);
+    });
+    $('#toTime').clockpicker().change(function(){
+      console.log(this.value);
+    });
+  </script>
 </body>
 </html>
