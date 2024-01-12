@@ -6537,6 +6537,7 @@ socket.on('connect', () => {
                 }
                 filterData.from_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate1
                 filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
+                console.log(filterData.from_date, "filterData.from_datefilterData.from_datefilterData.from_date")
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
