@@ -4243,33 +4243,33 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 as: "parentdata"
             }
         },
-        {
-            $group: {
-                _id: "$userName",
-                totalCommission: { $sum: "$commission" },
-                totalUPline: { $sum:{
-                    $reduce:{
-                        input:'$parentdata',
-                        initialValue:0,
-                        in: { $add: ["$$value", "$$this.commission"] }
-                    }
-                }},
-            }
-        },
-        {
-            $sort:{
-            _id : -1,
-            totalCommission : 1,
-            totalUPline : 1
-            }
-        },
-        {
-        $limit:10
-        }
+        // {
+        //     $group: {
+        //         _id: "$userName",
+        //         totalCommission: { $sum: "$commission" },
+        //         totalUPline: { $sum:{
+        //             $reduce:{
+        //                 input:'$parentdata',
+        //                 initialValue:0,
+        //                 in: { $add: ["$$value", "$$this.commission"] }
+        //             }
+        //         }},
+        //     }
+        // },
+        // {
+        //     $sort:{
+        //     _id : -1,
+        //     totalCommission : 1,
+        //     totalUPline : 1
+        //     }
+        // },
+        // {
+        // $limit:10
+        // }
     ])
-    // for(let i = 0; i < userWiseData.length; i++){
-    //     console.log(userWiseData[i].parentdata, "userWiseDatauserWiseDatauserWiseDatauserWiseData")
-    // }
+    for(let i = 0; i < userWiseData.length; i++){
+        console.log(userWiseData[i].parentdata, "userWiseDatauserWiseDatauserWiseDatauserWiseData")
+    }
 
     // res.status(200).json({
     //     userWiseData
