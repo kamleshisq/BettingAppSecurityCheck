@@ -4267,9 +4267,9 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         $limit:10
         }
     ])
-    for(let i = 0; i < userWiseData.length; i++){
-        console.log(userWiseData[i].parentdata, "userWiseDatauserWiseDatauserWiseDatauserWiseData")
-    }
+    // for(let i = 0; i < userWiseData.length; i++){
+    //     console.log(userWiseData[i].parentdata, "userWiseDatauserWiseDatauserWiseDatauserWiseData")
+    // }
 
     // res.status(200).json({
     //     userWiseData
