@@ -8229,7 +8229,8 @@ io.on('connection', (socket) => {
                               $match: {
                                 $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
                                 loginUserId:{$exists:true},
-                                parentIdArray:{$exists:true}
+                                parentIdArray:{$exists:true},
+                                commissionStatus:{$ne:'cancel'}
                               }
                             }
                           ],
