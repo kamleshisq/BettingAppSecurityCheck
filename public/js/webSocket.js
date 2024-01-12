@@ -897,7 +897,7 @@ socket.on('connect', () => {
         // .filter((value) => value.trim() !== "");
                 // console.log(input2Values)
                 socket.emit("STAKELABEL", {input1Values, input2Values, LOGINDATA})
-            })
+    })
 
     socket.on("STAKELABEL", data =>{
         if(data === "Updated"){

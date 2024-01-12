@@ -1,4 +1,14 @@
 <%- include("../header") %>
+<link rel="stylesheet" href="https://weareoutman.github.io/clockpicker/dist/jquery-clockpicker.min.css">
+<script type="text/javascript" src="/src/clockpicker.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+
+<script type="text/javascript">
+$('.clockpicker').clockpicker()
+	.find('input').change(function(){
+		console.log(this.value);
+	});
+</script>
   <!--Container Main start-->
   <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
@@ -29,7 +39,8 @@
             </div> 
             <div class="input-group">
               <label class="up-down-form">From Time</label>
-              <input type = "text" id="fromTime">
+              <input type="text" class="form-control clockpicker" id="fromTime" value="09:30:00">
+              <!-- <input type = "text" id="fromTime"> -->
               <span id="fromTime_err" class="input_error">Please enter valid time</span>
             </div>
             <div class="input-group">
