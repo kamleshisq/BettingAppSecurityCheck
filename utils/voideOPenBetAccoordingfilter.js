@@ -5,6 +5,7 @@ const settlementHistoryModel = require('../model/settelementHistory');
 const InprogressModel = require('../model/InprogressModel');
 const Decimal =  require('decimal.js');
 const commissionNewModel = require('../model/commissioNNModel');
+const marketnotificationId = require('../model/timelyVoideNotification');
 
 
 async function voidbetOPENFORTIMELYVOIDE(data){
@@ -37,8 +38,16 @@ async function voidbetOPENFORTIMELYVOIDE(data){
             }
             filterData.userName = {$in:childrenUsername}
         }
+
+        
         console.log(filterData, "filterDatafilterDatafilterData")
         let bets = await Bet.find(filterData)
+        let timelyNotification = {
+            message : data.FormData1.Remark,
+            userName : operatoruserName,
+            marketId : bets[0].marketId
+        }
+        await marketnotificationId.create(timelyNotification)
                     for(const bet in bets){
                         let exposure = bets[bet].exposure
 
