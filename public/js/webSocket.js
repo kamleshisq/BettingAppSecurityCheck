@@ -6658,24 +6658,26 @@ socket.on('connect', () => {
             }
             for(let i = 0; i < bets.length; i++){
                 console.log(bets[i])
-                let date = new Date(bets[i].eventDate)
-                html += `<tr>`
-                html += `<td>${i + count}</td>
-                <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
-                <td>${bets[i].betType}</td>
-                <td>${bets[i].event}</td>
-                `
-                if(bets[i]._id.slice(-2).startsWith('OE') || bets[i]._id.slice(-2).startsWith('F2')){
-                    html += `<td>Fancy - ${bets[i].marketName} </td>`
-                }else{
-                    html += `<td>${bets[i].marketName} </td>`
+                if(bets[i]._id){
+                    let date = new Date(bets[i].eventDate)
+                    html += `<tr>`
+                    html += `<td>${i + count}</td>
+                    <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                    <td>${bets[i].betType}</td>
+                    <td>${bets[i].event}</td>
+                    `
+                    if(bets[i]._id.slice(-2).startsWith('OE') || bets[i]._id.slice(-2).startsWith('F2')){
+                        html += `<td>Fancy - ${bets[i].marketName} </td>`
+                    }else{
+                        html += `<td>${bets[i].marketName} </td>`
+                    }
+                    html += `
+                    <td>${bets[i].totalBets}</td>
+                    <td class="btn-group" >
+                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Voide Bet</button>
+                    </td>
+                    </tr>`
                 }
-                html += `
-                <td>${bets[i].totalBets}</td>
-                <td class="btn-group" >
-                <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Voide Bet</button>
-                </td>
-                </tr>`
             }
             count += bets.length;
             if(data.page == 0 || data.refreshStatus){
