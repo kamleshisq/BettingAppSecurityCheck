@@ -748,6 +748,12 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 balance:{$sum:'$balance'},
                 transactionId:{$first:'$transactionId'}
             }
+        },
+        {
+            $sort:{date:-1}
+        },
+        {
+            $limit:20
         }
 
     ])
