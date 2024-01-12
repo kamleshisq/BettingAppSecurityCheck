@@ -12,8 +12,9 @@ async function voidbetOPENFORTIMELYVOIDE(data){
     try{
         let filterData = data.filterData
         filterData.marketId = data.id
-        console.log(filterData, 'filterDatafilterData')
-    //     let bets = await Bet.find({marketId:data.id, status : {$in: ['OPEN', 'MAP']}})
+        filterData.status = {$in: ['OPEN', 'MAP']}
+        let bets = await Bet.find(filterData)
+        console.log(bets, 'betsbetsbetsbetsbets')
     //     await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
     //     let inprogressData = await InprogressModel.findOne({marketId:data.id, progressType:'VoideBet'})
     //     if(inprogressData === null){
