@@ -1020,6 +1020,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
             // }
             else{
                 await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
+                console.log('WORKING')
                 user_createSendToken(user, 200, res, req);
 
             }
