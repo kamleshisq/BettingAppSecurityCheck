@@ -6657,6 +6657,7 @@ socket.on('connect', () => {
                 $('#Event').html(html2)
             }
             for(let i = 0; i < bets.length; i++){
+                console.log(bets[i])
                 let date = new Date(bets[i].eventDate)
                 html += `<tr>`
                 html += `<td>${i + count}</td>
