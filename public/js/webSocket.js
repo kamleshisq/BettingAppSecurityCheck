@@ -6674,7 +6674,7 @@ socket.on('connect', () => {
                     html += `
                     <td>${bets[i].totalBets}</td>
                     <td class="btn-group" >
-                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Voide Bet</button>
+                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Void Bet</button>
                     </td>
                     </tr>`
                 }
