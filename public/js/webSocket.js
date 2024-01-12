@@ -6518,7 +6518,7 @@ socket.on('connect', () => {
         filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
 
         // $('#toTime,#fromTime').keyup(function(e){
-            $('#fromTime').clockpicker().change(function(){
+            $('#fromTime,#toTime').clockpicker().change(function(){
             console.log('working123456')
             let value = $(this).val()
             if(!isValidTimeString(value)){

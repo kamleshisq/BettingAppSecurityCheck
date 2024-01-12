@@ -41,7 +41,8 @@
             </div> 
             <div class="input-group">
               <label class="up-down-form">To Time</label>
-              <input type = "text" id="toTime">
+              <input type="text" class="form-control " id="toTime">
+              <!-- <input type = "text" id="toTime"> -->
               <span id="toTime_err" class="input_error">Please enter valid time</span>
             </div>
             <div class="input-group">
@@ -198,7 +199,7 @@ evt.currentTarget.className += " active";
 }
 </script>
 <script type="text/javascript">
-  $('#fromTime').clockpicker().change(function(){
+  $('#fromTime, #toTime').clockpicker().change(function(){
       console.log(this.value);
     });
   </script>
