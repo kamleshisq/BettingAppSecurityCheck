@@ -1801,6 +1801,9 @@ io.on('connection', (socket) => {
                 }
             },
             {
+                $skip : skip
+            },
+            {
                 $limit:limit
             }
         ])
