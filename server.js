@@ -1768,7 +1768,43 @@ io.on('connection', (socket) => {
             ])
         }
         let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
-
+        let betResult2 = await Bet.aggregate([
+            {
+                $match:data.filterData
+            },
+            {
+                $group:{
+                    _id:'$marketId',
+                    betType:{
+                        $first:'$betType'
+                    },
+                    event:{
+                        $first:'$match'
+                    },
+                    marketName:{
+                        $first:'$marketName'
+                    },
+                    eventDate:{
+                        $first:'$eventDate'
+                    },
+                    totalBets:{
+                        $sum : 1
+                    }
+                }
+            },
+            {
+                $sort:{
+                    eventDate:-1,
+                    marketName:1,
+                    event:1,
+                    betType:1
+                }
+            },
+            {
+                $limit:limit
+            }
+        ])
+        console.log(betResult2, "betResult2betResult2betResult2betResult2")
         socket.emit("voidBET", {betResult,events,page,refreshStatus:data.refreshStatus})
 
     })

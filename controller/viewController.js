@@ -2214,7 +2214,7 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
         }
     ])
 
-    console.log(betResult, "betResultbetResultbetResultbetResult")
+    // console.log(betResult, "betResultbetResultbetResultbetResult")
     let events = await betModel.aggregate([
         {
             $match:{
