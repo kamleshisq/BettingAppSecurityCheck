@@ -4,12 +4,7 @@
 <script type="text/javascript" src="/src/clockpicker.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 
-<script type="text/javascript">
-$('.clockpicker').clockpicker()
-	.find('input').change(function(){
-		console.log(this.value);
-	});
-</script>
+
   <!--Container Main start-->
   <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
@@ -202,5 +197,11 @@ evt.currentTarget.className += " active";
 
 }
 </script>
+<script type="text/javascript">
+  $('.clockpicker').clockpicker()
+    .find('input').change(function(){
+      console.log(this.value);
+    });
+  </script>
 </body>
 </html>
