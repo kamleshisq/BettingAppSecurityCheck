@@ -42,12 +42,17 @@ async function voidbetOPENFORTIMELYVOIDE(data){
         
         console.log(filterData, "filterDatafilterDatafilterData")
         let bets = await Bet.find(filterData)
-        let timelyNotification = {
-            message : data.FormData1.Remark,
-            userName : operatoruserName,
-            marketId : bets[0].marketId
+        let checkNotification = await marketnotificationId.findOne({marketId : bets[0].marketId})
+        if(checkNotification){
+            await marketnotificationId.findOneAndUpdate({marketId : bets[0].marketId}, {message : data.FormData1.Remark} )
+        }else{
+            let timelyNotification = {
+                message : data.FormData1.Remark,
+                userName : operatoruserName,
+                marketId : bets[0].marketId
+            }
+            await marketnotificationId.create(timelyNotification)
         }
-        await marketnotificationId.create(timelyNotification)
                     for(const bet in bets){
                         let exposure = bets[bet].exposure
 
