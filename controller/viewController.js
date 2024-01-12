@@ -4236,7 +4236,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                         $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: ["$uniqueId", "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
                         loginUserId:{$exists:true},
                         parentIdArray:{$exists:true},
-                        commissionStatus:{$ne:'cancel'}
+                        $expr: { $ne: ["$commissionStatus", "cancel"] }
                       }
                     }
                   ],
