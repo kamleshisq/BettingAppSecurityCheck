@@ -6657,30 +6657,20 @@ socket.on('connect', () => {
                 $('#Event').html(html2)
             }
             for(let i = 0; i < bets.length; i++){
-                let date = new Date(bets[i].date)
-                if(bets[i].bettype2 === 'BACK'){
-                html += `<tr class="back">`
-                }else{
+                let date = new Date(bets[i].eventDate)
                 html += `<tr class="lay">`
-                }
                 html += `<td>${i + count}</td>
                 <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
-                <td>${bets[i].userName}</td>
+                <td>${bets[i].betType}</td>
+                <td>${bets[i].event}</td>
                 `
-                if(bets[i].match){
-                html += `
-                <td class="text-nowrap" >${bets[i].match}</td>
-                <td class="text-nowrap" >${bets[i].marketName}</td>
-                <td>${bets[i].oddValue}</td>
-                <td class="text-nowrap" >${bets[i].selectionName}</td>`
+                if(bets[i]._id.slice(-2).startsWith('OE') || bets[i]._id.slice(-2).startsWith('F2')){
+                    html += `<td>Fancy - ${bets[i].marketName} </td>`
                 }else{
-                html += `<td>-</td>
-                <td>-</td><td>-</td><td>-</td>`
+                    html += `<td>${bets[i].marketName} </td>`
                 }
                 html += `
-                <td>${bets[i].Stake}</td>
-                <td>${bets[i].transactionId}</td>
-                <td>${bets[i].status}</td>
+                <td>${bets[i].totalBets}</td>
                 <td class="btn-group" >
                 <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Voide Bet</button>
                 </td>
