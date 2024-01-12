@@ -2,8 +2,8 @@
   <thead>
       <tr>
         <th>S.No</th>
-        <th>Date</th>
-        <th>User Name</th>
+        <th>Match Date</th>
+        <th>Sport</th>
         <th>Event</th>
         <th>Market </th>
         <th>Odds</th>
@@ -17,29 +17,20 @@
   <tbody class="new-body">
     <%if(bets.length != 0){%>
       <% for(let i = 0; i < bets.length; i++){%>
-        <% let date = new Date(bets[i].date)%>
-        <%if(bets[i].bettype2 === 'BACK'){%>
-            <tr class="back">
-        <%}else{%>
-            <tr class="lay">
-        <%}%>
+        <% let date = new Date(bets[i].eventDate)%>
+      
+        <tr>
         <td><%=i + 1%></td>
         <td class="date-time" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-        <td><%=bets[i].userName%></td>
-        <%if(bets[i].match){%>
-          <td class="text-nowrap" ><%=bets[i].match%></td>
-          <td class="text-nowrap" ><%=bets[i].marketName%></td>
-          <td><%=bets[i].oddValue%></td>
-          <td class="text-nowrap" ><%=bets[i].selectionName%></td>
+        <td><%=bets[i].betType%></td>
+        <td><%=bets[i].event%></td>
+        <%if(bets[i]._id.slice(-2).startsWith('OE') || bets[i]._id.slice(-2).startsWith('F2')){%>
+          <td>Fancy - <%=bets[i].marketName%> </td>
         <%}else{%>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
+          <td><%=bets[i].marketName%> </td>
         <%}%>
-        <td><%=bets[i].Stake%></td>
-        <td><%=bets[i].transactionId%></td>
-        <td><%=bets[i].status%></td>
+
+        
         <td class="btn-group" >
           <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="<%=bets[i]._id%>"> Voide Bet</button>
         </td>
