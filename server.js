@@ -7453,7 +7453,8 @@ io.on('connection', (socket) => {
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
                     void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}},
+                    result:{$first:'$result'}
                     
                 }
             },
