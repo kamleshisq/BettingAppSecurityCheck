@@ -75,6 +75,7 @@ const oddsLimitCHeck = require('./utils/checkOddsLimit');
 const { ObjectId } = require('mongodb');
 const commissionNewModel = require('./model/commissioNNModel');
 const checkExposureARRAY = require('./utils/exposureofarrayUser');
+const voidebundel = require('./utils/voideOPenBetAccoordingfilter');
 const { Socket } = require('engine.io');
 // const checkLimit = require('./utils/checkOddsLimit');
 
@@ -8262,6 +8263,7 @@ io.on('connection', (socket) => {
 
     socket.on('timelyVoideBEt', async(data) => {
         console.log(data, "DATADATA")
+        let data = await voidebundel(data)
         // try{
         //     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
         //     const passcheck = await user.correctPasscode(data.data.password, user.passcode)
