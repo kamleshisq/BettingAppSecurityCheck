@@ -470,6 +470,9 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
+        if(!token){
+            token = req.headers.authorization.split(' ')[1]
+        }
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
     }
@@ -995,7 +998,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
                     status:'error',
                     message:"Please provide valide user and password"
                 })
-            }else if(user.role_type != 5){
+            }else if(user.role_type != 5 && user.role_type != 6){
                 res.status(404).json({
                     status:'error',
                     message:"You do not have permission to login as user"
