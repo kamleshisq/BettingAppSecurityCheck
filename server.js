@@ -75,6 +75,7 @@ const oddsLimitCHeck = require('./utils/checkOddsLimit');
 const { ObjectId } = require('mongodb');
 const commissionNewModel = require('./model/commissioNNModel');
 const checkExposureARRAY = require('./utils/exposureofarrayUser');
+const voidebundel = require('./utils/voideOPenBetAccoordingfilter');
 const { Socket } = require('engine.io');
 // const checkLimit = require('./utils/checkOddsLimit');
 
@@ -1767,8 +1768,47 @@ io.on('connection', (socket) => {
                 }
             ])
         }
-        let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
-
+        // let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+        let betResult = await Bet.aggregate([
+            {
+                $match:data.filterData
+            },
+            {
+                $group:{
+                    _id:'$marketId',
+                    betType:{
+                        $first:'$betType'
+                    },
+                    event:{
+                        $first:'$match'
+                    },
+                    marketName:{
+                        $first:'$marketName'
+                    },
+                    eventDate:{
+                        $first:'$eventDate'
+                    },
+                    totalBets:{
+                        $sum : 1
+                    }
+                }
+            },
+            {
+                $sort:{
+                    eventDate:-1,
+                    marketName:1,
+                    event:1,
+                    betType:1
+                }
+            },
+            {
+                $skip : skip
+            },
+            {
+                $limit:limit
+            }
+        ])
+        // console.log(betResult2, "betResult2betResult2betResult2betResult2")
         socket.emit("voidBET", {betResult,events,page,refreshStatus:data.refreshStatus})
 
     })
@@ -8222,101 +8262,56 @@ io.on('connection', (socket) => {
 
 
     socket.on('timelyVoideBEt', async(data) => {
-        // console.log(data)
-        try{
-            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
-            const passcheck = await user.correctPasscode(data.data.password, user.passcode)
-            // console.log(passcheck, "PASSWORD CHECK")
-            if(passcheck){
-            let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark,alertStatus:'CANCEL',returns:0});
+        // console.log(data, "DATADATA")
+        let sendData = await voidebundel(data)
+        // try{
+        //     let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+        //     const passcheck = await user.correctPasscode(data.data.password, user.passcode)
+        //     // console.log(passcheck, "PASSWORD CHECK")
+        //     if(passcheck){
+        //     let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark,alertStatus:'CANCEL',returns:0});
           
-            // console.log(bet, "BETS")
-            let DebitCreditAmount 
-            if(bet.bettype2 === "Back"){
-                if(bet.marketName.toLowerCase().startsWith('match')){
-                    DebitCreditAmount = bet.Stake
-                }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
-                    DebitCreditAmount = bet.Stake
-                }else{
-                    DebitCreditAmount = bet.Stake
-                }
-            }else{
-                if(bet.marketName.toLowerCase().startsWith('match')){
-                    DebitCreditAmount = ((bet.Stake * bet.oddValue) - bet.Stake).toFixed(2)
-                }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
-                    DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
-                }else{
-                    DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
-                }
-            }
-            let user = await User.findByIdAndUpdate(bet.userId, {$inc:{exposure:-DebitCreditAmount}})
-            let timelyVoideCheck = await timelyNotificationModel.findOne({marketId : bet.marketId})
-            let notification
-            if(timelyVoideCheck){
-                notification = await timelyNotificationModel.findOneAndUpdate({marketId : bet.marketId}, {message:data.data.Remark})
-            }else{
-                let timelyNotification = {
-                    message : data.data.Remark,
-                    userName : user.userName,
-                    marketId : bet.marketId
-                }
-                notification = await timelyNotificationModel.create(timelyNotification)
-            }
-            let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
-            // console.log(user.availableBalance, DebitCreditAmount, user.availableBalance + DebitCreditAmount)
-            // let userAcc = {
-            //     "user_id":user._id,
-            //     "description": description,
-            //     "creditDebitamount" : DebitCreditAmount,
-            //     "balance" : user.availableBalance + parseFloat(DebitCreditAmount),
-            //     "date" : Date.now(),
-            //     "userName" : user.userName,
-            //     "role_type" : user.role_type,
-            //     "Remark":"-",
-            //     "stake": DebitCreditAmount,
-            //     "transactionId":`${bet.transactionId}`
-            // }
-            
-            // let debitAmountForP = DebitCreditAmount
-            //   for(let i = user.parentUsers.length - 1; i >= 1; i--){
-            //       let parentUser1 = await User.findById(user.parentUsers[i])
-            //       let parentUser2 = await User.findById(user.parentUsers[i - 1])
-            //       let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-            //       let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-            //       parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-            //       parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-            //       await User.findByIdAndUpdate(user.parentUsers[i], {
-            //         $inc: {
-            //             downlineBalance: DebitCreditAmount,
-            //             myPL: -parentUser1Amount,
-            //             uplinePL: -parentUser2Amount,
-            //             lifetimePL: -parentUser1Amount,
-            //             pointsWL: DebitCreditAmount
-            //         }
-            //     });
-            
-            //     if (i === 1) {
-            //         await User.findByIdAndUpdate(user.parentUsers[i - 1], {
-            //             $inc: {
-            //                 downlineBalance: DebitCreditAmount,
-            //                 myPL: -parentUser2Amount,
-            //                 lifetimePL: -parentUser2Amount,
-            //                 pointsWL: DebitCreditAmount
-            //             }
-            //         });
-            //     }
-            //       debitAmountForP = parentUser2Amount
-            //   }
-            
-            // await AccModel.create(userAcc);
-            socket.emit('timelyVoideBEt', {bet, status:"success"})
-            }else{
-                socket.emit('timelyVoideBEt', {status:'err', message:'Please Provide valide password'})
-            }
-        }catch(err){
-            console.log(err)
-            socket.emit('timelyVoideBEt', {status:'err', message:'Please try again leter'})
-        }
+        //     // console.log(bet, "BETS")
+        //     let DebitCreditAmount 
+        //     if(bet.bettype2 === "Back"){
+        //         if(bet.marketName.toLowerCase().startsWith('match')){
+        //             DebitCreditAmount = bet.Stake
+        //         }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
+        //             DebitCreditAmount = bet.Stake
+        //         }else{
+        //             DebitCreditAmount = bet.Stake
+        //         }
+        //     }else{
+        //         if(bet.marketName.toLowerCase().startsWith('match')){
+        //             DebitCreditAmount = ((bet.Stake * bet.oddValue) - bet.Stake).toFixed(2)
+        //         }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
+        //             DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
+        //         }else{
+        //             DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
+        //         }
+        //     }
+        //     let user = await User.findByIdAndUpdate(bet.userId, {$inc:{exposure:-DebitCreditAmount}})
+        //     let timelyVoideCheck = await timelyNotificationModel.findOne({marketId : bet.marketId})
+        //     let notification
+        //     if(timelyVoideCheck){
+        //         notification = await timelyNotificationModel.findOneAndUpdate({marketId : bet.marketId}, {message:data.data.Remark})
+        //     }else{
+        //         let timelyNotification = {
+        //             message : data.data.Remark,
+        //             userName : user.userName,
+        //             marketId : bet.marketId
+        //         }
+        //         notification = await timelyNotificationModel.create(timelyNotification)
+        //     }
+        //     let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
+        //     socket.emit('timelyVoideBEt', {bet, status:"success"})
+        //     }else{
+        //         socket.emit('timelyVoideBEt', {status:'err', message:'Please Provide valide password'})
+        //     }
+        // }catch(err){
+        //     console.log(err)
+        //     socket.emit('timelyVoideBEt', {status:'err', message:'Please try again leter'})
+        // }
     })
 
 

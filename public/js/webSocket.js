@@ -6657,34 +6657,27 @@ socket.on('connect', () => {
                 $('#Event').html(html2)
             }
             for(let i = 0; i < bets.length; i++){
-                let date = new Date(bets[i].date)
-                if(bets[i].bettype2 === 'BACK'){
-                html += `<tr class="back">`
-                }else{
-                html += `<tr class="lay">`
+                // console.log(bets[i])
+                if(bets[i]._id){
+                    let date = new Date(bets[i].eventDate)
+                    html += `<tr>`
+                    html += `<td>${i + count}</td>
+                    <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                    <td>${bets[i].betType}</td>
+                    <td>${bets[i].event}</td>
+                    `
+                    if(bets[i]._id.slice(-2).startsWith('OE') || bets[i]._id.slice(-2).startsWith('F2')){
+                        html += `<td>Fancy - ${bets[i].marketName} </td>`
+                    }else{
+                        html += `<td>${bets[i].marketName} </td>`
+                    }
+                    html += `
+                    <td>${bets[i].totalBets}</td>
+                    <td class="btn-group" >
+                    <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Voide Bet</button>
+                    </td>
+                    </tr>`
                 }
-                html += `<td>${i + count}</td>
-                <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
-                <td>${bets[i].userName}</td>
-                `
-                if(bets[i].match){
-                html += `
-                <td class="text-nowrap" >${bets[i].match}</td>
-                <td class="text-nowrap" >${bets[i].marketName}</td>
-                <td>${bets[i].oddValue}</td>
-                <td class="text-nowrap" >${bets[i].selectionName}</td>`
-                }else{
-                html += `<td>-</td>
-                <td>-</td><td>-</td><td>-</td>`
-                }
-                html += `
-                <td>${bets[i].Stake}</td>
-                <td>${bets[i].transactionId}</td>
-                <td>${bets[i].status}</td>
-                <td class="btn-group" >
-                <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Voide Bet</button>
-                </td>
-                </tr>`
             }
             count += bets.length;
             if(data.page == 0 || data.refreshStatus){
@@ -6715,11 +6708,15 @@ socket.on('connect', () => {
             e.preventDefault() 
             let form = $(this)[0];
             let fd = new FormData(form);
-            let data = Object.fromEntries(fd.entries());
+            let FormData1 = Object.fromEntries(fd.entries());
             let id = this.id
-            // console.log(id)
-            socket.emit('timelyVoideBEt',{data,LOGINDATA, id})
-            // console.log(data, "DATA123")
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            socket.emit('timelyVoideBEt',{FormData1,LOGINDATA, id, filterData})
         })
 
 
