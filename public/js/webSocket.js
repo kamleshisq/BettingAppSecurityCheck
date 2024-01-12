@@ -6636,6 +6636,7 @@ socket.on('connect', () => {
             data.page = page
             data.LOGINDATA = LOGINDATA
             data.refreshStatus = true
+            console.log(data.filterData)
             socket.emit('voidBET',data)
         })
         let count = 11
@@ -6747,7 +6748,7 @@ socket.on('connect', () => {
                 data.page = page
                 data.LOGINDATA = LOGINDATA
                 data.refreshStatus = true
-                console.log(data.filterData)
+                // console.log(data.filterData)
                 socket.emit('voidBET',data)
             }
         })
