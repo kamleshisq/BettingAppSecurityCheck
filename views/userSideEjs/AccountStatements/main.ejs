@@ -54,7 +54,6 @@
                                 <th>Credit/Debit</th>
                                 <th>Closing</th>
                                 <th>Transaction ID</th>
-                                <th class="bod-red-rit">Remark</th>
                             </tr>
                         </thead>
 
@@ -83,7 +82,7 @@
                                         <td title="Credit/Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
                                     <%}%>
                                     <td title="Closing"><%=data[i].balance%></td>
-                                    <td title="Description"><%=data[i].description%></td>
+                                    <td title="Description"><%=data[i].transactionId%></td>
                                 </tr>
                                 <%}%>
                                 <%}%>
