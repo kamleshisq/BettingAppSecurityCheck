@@ -6708,16 +6708,15 @@ socket.on('connect', () => {
             e.preventDefault() 
             let form = $(this)[0];
             let fd = new FormData(form);
-            let FormData = Object.fromEntries(fd.entries());
+            let FormData1 = Object.fromEntries(fd.entries());
             let id = this.id
-            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
             let userName = $('.searchUser').val()
             if(userName == ''){
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }else{
                 filterData.userName = userName
             }
-            socket.emit('timelyVoideBEt',{FormData,LOGINDATA, id, filterData})
+            socket.emit('timelyVoideBEt',{FormData1,LOGINDATA, id, filterData})
         })
 
 
