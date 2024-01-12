@@ -56417,6 +56417,11 @@ $(document).ready(function () {
     }
   });
 });
+$('.clockpicker').clockpicker({
+  placement: 'top',
+  align: 'left',
+  donetext: 'Done'
+});
 $(document).on('click', '.passcodemsgbox', function (e) {
   console.log('hewr');
   function copyElementTextToClipboard(elementId) {
@@ -57161,7 +57166,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53267" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58870" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
