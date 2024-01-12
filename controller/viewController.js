@@ -680,45 +680,76 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     // let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
-    let userAcc = await betModel.aggregate([
+    // let userAcc = await betModel.aggregate([
+    //     {
+    //         $match:{
+    //             userId:req.currentUser._id.toString()
+    //         }
+    //     },
+    //     {
+    //         $lookup: {
+    //             from: 'accountstatements', // Assuming the name of the Whitelabel collection
+    //             localField: 'transactionId',
+    //             foreignField: 'transactionId',
+    //             as: 'accountdetail'
+    //         }
+    //     },
+    //     {
+    //         $unwind:"$accountdetail"
+    //     },
+    //     {
+    //         $group:{
+    //             _id:{
+    //                 eventId:"$eventId",
+    //                 marketId:"$marketId"
+    //             },
+    //             match:{$first:'$match'},
+    //             marketName:{$first:'$marketName'},
+    //             stake:{$first:'$accountdetail.stake'},
+    //             accStype:{$first:'$accountdetail.accStype'},
+    //             creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+    //             balance:{$sum:'$accountdetail.balance'},
+    //             transactionId:{$first:'$accountdetail.transactionId'}
+
+    //         }
+    //     },
+    //     {
+    //         $sort:{"date":-1}
+    //     },
+    //     {
+    //         $limit:20
+    //     }
+    // ])
+    let userAcc = await accountStatement.aggregate([
         {
             $match:{
-                userId:req.currentUser._id.toString()
+                user_id:req.currentUser._id
             }
         },
         {
             $lookup: {
-                from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                from: 'betmodels', // Assuming the name of the Whitelabel collection
                 localField: 'transactionId',
                 foreignField: 'transactionId',
-                as: 'accountdetail'
+                as: 'betdetails'
             }
         },
         {
-            $unwind:"$accountdetail"
+            $unwind:"$betdetails"
         },
         {
             $group:{
-                _id:{
-                    eventId:"$eventId",
-                    marketId:"$marketId"
-                },
-                match:{$first:'$match'},
-                marketName:{$first:'$marketName'},
-                stake:{$first:'$accountdetail.stake'},
-                accStype:{$first:'$accountdetail.accStype'},
-                creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                balance:{$sum:'$accountdetail.balance'},
-                transactionId:{$first:'$accountdetail.transactionId'}
-
+                _id:"$betdetails.marketId",
+                match:{$first:'$betdetails.match'},
+                marketName:{$first:'$betdetails.marketName'},
+                stake:{$first:'$stake'},
+                accStype:{$first:'$accStype'},
+                creditDebitamount:{$sum:'$creditDebitamount'},
+                balance:{$sum:'$balance'},
+                transactionId:{$first:'$transactionId'}
             }
-        },
-        {
-            $sort:{"date":-1}
-        },
-        {
-            $limit:20
         }
+
     ])
     console.log(userAcc,'userAcc')
 
