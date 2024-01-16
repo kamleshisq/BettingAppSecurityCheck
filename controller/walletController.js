@@ -52,6 +52,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
         if(loginData[0] && loginData[0].gameToken){
             if(loginData[0].gameToken == req.body.token){
+                console.log("gotHERE")
                 next()
             }else{
                 return res.status(200).json({
