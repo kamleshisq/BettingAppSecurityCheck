@@ -269,7 +269,7 @@ async function checkExposure(data){
               },
         ])
 
-        console.log(exposure3, "exposure3exposure3exposure3")
+        // console.log(exposure3, "exposure3exposure3exposure3")
         let exposer3Amount = 0
         // console.log(exposure3[1].data, exposure3[0].data,userData.userName)
         if(exposure3.length > 0){
