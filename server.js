@@ -2740,7 +2740,7 @@ io.on('connection', (socket) => {
             let bet = await Bet.aggregate([
                 {
                     $match:{
-                        userId:req.currentUser._id.toString(),
+                        userId:LOGINDATA.LOGINUSER._id.toString(),
                         transactionId:userAcc[i].transactionId
                     }
                 },
