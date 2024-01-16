@@ -243,7 +243,11 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 
 exports.betResult = catchAsync(async(req, res, next) =>{
     try{
-
+        if(!req.body.transactionId || req.body.transactionId.trim() === ''){
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }
         const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let check = await userModel.findById(req.body.userId);
         let exposureCheck  = await exposurecheckfunction(check)
@@ -366,9 +370,18 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     let user1 =  await userModel.findById(req.body.userId)
     let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
     let clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-
+    if(!req.body.transactionId || req.body.transactionId.trim() === ''){
+        return res.status(200).json({
+            "status": "RS_ERROR"
+        })
+    }
     // console.log(user, bet1)
     if(bet1 != null){
+        if(bet1.status !== "OPEN"){
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }
         let user;
         let balance;
         let parentUser;
@@ -376,14 +389,12 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         // console.log(user, "USer")
         if(!user){
             if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-                res.status(200).json({
-                    "status": "RS_OK",
-                    "balance": 0
+                return res.status(200).json({
+                    "status": "RS_ERROR"
                 })
             }else{
-                res.status(200).json({
-                    "status": "OP_SUCCESS",
-                    "balance": 0
+                return res.status(200).json({
+                    "status": "RS_ERROR"
                 })
             }
         }else{
@@ -488,14 +499,12 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         }
     }else{
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-            res.status(200).json({
-                "status": "RS_OK",
-                "balance": user1.availableBalance
+            return res.status(200).json({
+                "status": "RS_ERROR"
             })
         }else{
-            res.status(200).json({
-                "status": "OP_SUCCESS",
-                "balance": user1.availableBalance
+            return res.status(200).json({
+                "status": "RS_ERROR"
             })
         }
     }
