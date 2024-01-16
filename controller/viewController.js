@@ -717,57 +717,17 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     }
                 }
             ])
-            finalresult.push(bet,"bet")
+            finalresult.push(bet[0],"bet")
         }else{
             finalresult.push(userAcc[i],"userAcc[i]")
         }
     }
      
-    // let userAcc = await accountStatement.aggregate([
-    //     {
-    //         $match:{
-    //             user_id:req.currentUser._id
-    //         }
-    //     },
-    //     {
-    //         $lookup: {
-    //             from: 'betmodels', // Assuming the name of the Whitelabel collection
-    //             localField: 'transactionId',
-    //             foreignField: 'transactionId',
-    //             as: 'betdetails'
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:{$cond: {
-    //                 if: { $eq: [{ $size: "$betdetails" }, 0] },
-    //                 then: "null",
-    //                 else: "$betdetails"
-    //               }},
-    //             match:{$first:'$$betdetails.match'},
-    //             marketName:{$first:'$$betdetails.marketName'},
-    //             stake:{$first:'$stake'},
-    //             accStype:{$first:'$accStype'},
-    //             creditDebitamount:{$sum:'$creditDebitamount'},
-    //             balance:{$sum:'$balance'},
-    //             transactionId:{$first:'$transactionId'}
-    //         }
-    //     },
-    //     {
-    //         $sort:{date:-1}
-    //     },
-    //     {
-    //         $limit:20
-    //     }
-
-    // ])
-    // console.log(userAcc,'userAcc')
-    // console.log(userAcc,'userAcc')
     console.log(finalresult,'finalresul')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
-        data:userAcc,
+        data:finalresult,
         user:req.currentUser,
         verticalMenus,
         check:"ACCC",
