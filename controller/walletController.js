@@ -39,7 +39,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         if(req.body.reqId){
             let check = reqIdModel.findOne({reqId:req.body.reqId})
             if(check){
-                res.status(200).json({
+                return res.status(200).json({
                     "status": "RS_ERROR"
                 })
             }else{
@@ -54,19 +54,19 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
             if(loginData[0].gameToken == req.body.token){
                 next()
             }else{
-               res.status(200).json({
+                return res.status(200).json({
                 "status": "RS_ERROR"
             })
             }
         }else{
-           res.status(200).json({
+            return res.status(200).json({
                 "status": "RS_ERROR"
             })
         }
         console.log(result, "resultresultresult")
         // next()
     }else{
-        res.status(200).json({
+        return res.status(200).json({
             "status": "RS_ERROR"
         })
     }
