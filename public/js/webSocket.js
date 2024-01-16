@@ -11054,8 +11054,8 @@ socket.on('connect', () => {
                       
                       html += `</tr>`
                 }
-                if(!$('#rowid'+data.rowid).next().hasClass('addedaccountstatmentRowHeader')){
-                    $('#rowid'+data.rowid).after(html)
+                if(!$('#'+data.rowid).next().hasClass('addedaccountstatmentRowHeader')){
+                    $('#'+data.rowid).after(html)
                 }
             }
 
