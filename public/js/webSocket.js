@@ -10961,9 +10961,13 @@ socket.on('connect', () => {
                       }
                       if(userAcc[i].match){
                           html += `<td title="Event">${userAcc[i].match}</td>`
+                      }else{
+                        html += `<td title="Event">-</td>`
                       }
                       if(userAcc.marketName){
                           html += `<td title="Market Type">${userAcc[i].marketName}</td>`
+                      }else{
+                        html += `<td title="Market Type">-</td>`
                       }
                     if(userAcc[i].creditDebitamount > 0){
                         html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
