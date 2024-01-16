@@ -1,0 +1,8 @@
+https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata => done
+https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata => done
+https://oddsserver.dbm9.com/dream/get_odds => done
+https://admin-api.dreamexch9.com/api/dream/markets/result
+https://score-session.dbm9.com/api/tv-stream-2 
+https://dev-api.dreamdelhi.com/api/operator/login
+https://api2.dbm9.com/api/tv-stream
+https://score-session.dbm9.com/api/get-live-score?event_id=${id}`
