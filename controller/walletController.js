@@ -113,6 +113,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
         if(req.body.transactionId){
             let check = await betModel.findOne({transactionId:req.body.transactionId})
+            console.log(check)
             if(check){
                 res.status(200).json({
                     "status": "RS_ERROR"
