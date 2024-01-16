@@ -13,6 +13,7 @@ const Decimal = require("decimal.js")
 const loginLogs = require('../model/loginLogs')
 const mongoose = require('mongoose');
 const exposurecheckfunction = require('../utils/checkExpoOfThatUSer');
+const reqIdModel = require('../model/reqIdModel');
 // const Decimal = require("decima")
 // const { use } = require('../app');
 function readPem (filename) {
@@ -35,6 +36,16 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     let result = verify(req.headers.signature, publicKey, x)
     console.log(result)
     if(result){
+        if(req.body.reqId){
+            let check = reqIdModel.findOne({reqId:req.body.reqId})
+            if(check){
+                res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                await reqIdModel.create({reqId:req.body.reqId})
+            }
+        }
         const ObjectId = mongoose.Types.ObjectId;
         let objectId = new ObjectId(req.body.userId);
         let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
@@ -43,15 +54,21 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
             if(loginData[0].gameToken == req.body.token){
                 next()
             }else{
-                return next(new AppError("Please re login to access", 404))
+               res.status(200).json({
+                "status": "RS_ERROR"
+            })
             }
         }else{
-            return next(new AppError("Please re login to access", 404))
+           res.status(200).json({
+                "status": "RS_ERROR"
+            })
         }
         console.log(result, "resultresultresult")
         // next()
     }else{
-        return next(new AppError("Please provide a valide signature", 404))
+        res.status(200).json({
+            "status": "RS_ERROR"
+        })
     }
 })
 
@@ -83,14 +100,24 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     try{
         const check = await userModel.findById(req.body.userId)
         let exposureCheck  = await exposurecheckfunction(check)
-        if(check.availableBalance - req.body.debitAmount - exposureCheck < 0){
-            return "Error: Insufficient balance"
+        if(check.availableBalance - req.body.debitAmount - exposureCheck <= 0){
+            res.status(200).json({
+                "status": "RS_ERROR"
+            })
         }
         let betLimit
         if(req.body.sportId){
             betLimit = await betLimitModel.findOne({type:"Sport"})
         }else{
             betLimit = await betLimitModel.findOne({type:"Casino"})
+        }
+        if(req.body.transactionId){
+            let check = await betModel.findOne({transactionId:req.body.transactionId})
+            if(check){
+                res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }
         }
         let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
         const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
