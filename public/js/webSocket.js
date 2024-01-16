@@ -10959,8 +10959,16 @@ socket.on('connect', () => {
                       }else{
                         html += `<td title="Transaction"> - </td>`
                       }
-                      html += `<td title="Event">${userAcc[i].match}</td>`
-                      html += `<td title="Market Type">${userAcc[i].marketName}</td>`
+                      if(userAcc[i].match){
+                          html += `<td title="Event">${userAcc[i].match}</td>`
+                      }else{
+                        html += `<td title="Event">-</td>`
+                      }
+                      if(userAcc.marketName){
+                          html += `<td title="Market Type">${userAcc[i].marketName}</td>`
+                      }else{
+                        html += `<td title="Market Type">-</td>`
+                      }
                     if(userAcc[i].creditDebitamount > 0){
                         html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
                        `
