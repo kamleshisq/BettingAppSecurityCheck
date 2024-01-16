@@ -17,7 +17,7 @@ const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
 const SHA256 = require("../utils/sha256");
-const sportList = require("../utils/getSportList");
+// const sportList = require("../utils/getSportList");
 const getCrkAndAllData = require("../utils/getSportAndCricketList");
 const getmarketDetails = require("../utils/getmarketsbymarketId"); 
 const fs = require('fs');
@@ -2296,9 +2296,12 @@ exports.getBetLimitPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSportList = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata';
+    var fullUrl = 'http://127.0.0.1:8883/api/v1/getsportdata';
     fetch(fullUrl, {
-        method: 'GET'
+        method: 'GET',
+        headers:{
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+          }
     })
     .then(res =>res.json())
     .then(result => {
@@ -2313,9 +2316,12 @@ exports.getSportList = catchAsync(async(req, res, next) => {
 
 
 exports.getCricketData = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
+    var fullUrl = "http://127.0.0.1:8883/api/v1/getcricketdata";
     fetch(fullUrl, {
-        method: 'GET'
+        method: 'GET',
+        headers:{
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+          }
     })
     .then(res =>res.json())
     .then(result => {
