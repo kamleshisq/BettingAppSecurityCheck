@@ -3,9 +3,12 @@ const fetch = require("node-fetch")
 
 async function getSportList(){
     let DATA
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata';
+    var fullUrl = 'http://127.0.0.1:8883/api/v1/getsportdata';
     await fetch(fullUrl, {
-        method: 'GET'
+        method: 'GET',
+        headers:{
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+        }
     })
     .then(res => res.json())
     .then(result => {

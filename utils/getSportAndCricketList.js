@@ -3,8 +3,8 @@ const fetch = require("node-fetch") ;
 
 async function getSportDATA(){
 
-    let fullUrl = "https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata";
-    let fullUrl1 = "https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata";
+    let fullUrl = "http://127.0.0.1:8883/api/v1/getcricketdata";
+    let fullUrl1 = "http://127.0.0.1:8883/api/v1/getsportdata";
     let urls = [
         {
             url:fullUrl,
@@ -16,20 +16,27 @@ async function getSportDATA(){
         }
     ]
     let requests = urls.map(item => fetch(item.url, {
-        method: 'GET'
-    }).then(data => data.json()));
+        method: 'GET',
+        headers:{
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+          }
+    }).then(data => data.json()).then(data => data.result));
     let requests2 = urls.map(item => fetch(item.url, {
-        method: 'GET'
+        method: 'GET',
+        headers:{
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+          }
     }).then(data => data.text()));
     let data
     try{
         data = await Promise.all(requests)
+        // console.log(data)
 
     }catch(err){
         // console.log(err, "ERROR")
 
         data = await Promise.all(requests2)
-        console.log(data)
+        // console.log(data)
     }
     return data
 }
