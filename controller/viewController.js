@@ -680,46 +680,49 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     // console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
-    // let userAcc = await betModel.aggregate([
-    //     {
-    //         $match:{
-    //             userId:req.currentUser._id.toString()
-    //         }
-    //     },
-    //     {
-    //         $lookup: {
-    //             from: 'accountstatements', // Assuming the name of the Whitelabel collection
-    //             localField: 'transactionId',
-    //             foreignField: 'transactionId',
-    //             as: 'accountdetail'
-    //         }
-    //     },
-    //     {
-    //         $unwind:"$accountdetail"
-    //     },
-    //     {
-    //         $group:{
-    //             _id:{
-    //                 eventId:"$eventId",
-    //                 marketId:"$marketId"
-    //             },
-    //             match:{$first:'$match'},
-    //             marketName:{$first:'$marketName'},
-    //             stake:{$first:'$accountdetail.stake'},
-    //             accStype:{$first:'$accountdetail.accStype'},
-    //             creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-    //             balance:{$sum:'$accountdetail.balance'},
-    //             transactionId:{$first:'$accountdetail.transactionId'}
-
-    //         }
-    //     },
-    //     {
-    //         $sort:{"date":-1}
-    //     },
-    //     {
-    //         $limit:20
-    //     }
-    // ])
+    let finalresult = []
+    for(let i = 0;i<userAcc.length;i++){
+        if(userAcc[i].transactionId){
+            let bet = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser._id.toString(),
+                        transactionId:userAcc[i].transactionId
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        localField: 'transactionId',
+                        foreignField: 'transactionId',
+                        as: 'accountdetail'
+                    }
+                },
+                {
+                    $unwind:"$accountdetail"
+                },
+                {
+                    $group:{
+                        _id:{
+                            eventId:"$eventId",
+                            marketId:"$marketId"
+                        },
+                        match:{$first:'$match'},
+                        marketName:{$first:'$marketName'},
+                        stake:{$first:'$accountdetail.stake'},
+                        accStype:{$first:'$accountdetail.accStype'},
+                        creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                        balance:{$sum:'$accountdetail.balance'},
+                        transactionId:{$first:'$accountdetail.transactionId'}
+                    }
+                }
+            ])
+            finalresult.push(bet,"bet")
+        }else{
+            finalresult.push(userAcc[i],"userAcc[i]")
+        }
+    }
+     
     // let userAcc = await accountStatement.aggregate([
     //     {
     //         $match:{
@@ -758,7 +761,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     //     }
 
     // ])
-    console.log(userAcc,'userAcc')
+    // console.log(userAcc,'userAcc')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
