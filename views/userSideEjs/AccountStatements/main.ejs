@@ -60,8 +60,8 @@
                         <tbody class="acount-stat-tbl-body">
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
-                              <tr class="acount-stat-tbl-body-tr">
-                                  <%if(data[i].transactionId){%>
+                              <%if(data[i].transactionId){%>
+                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>">
                                     <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
                                       <td title="Transaction">Deposit</td>
                                     <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>
@@ -84,6 +84,7 @@
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
                                   <%}else{%>
+                                    <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid=""></tr>
                                     <%if(data[i].creditDebitamount > 0 && data[i].accStype != undefined){%>
                                       <td title="Transaction">Deposit</td>
                                     <%}else if(data[i].creditDebitamount < 0 && data[i].accStype != undefined){%>
