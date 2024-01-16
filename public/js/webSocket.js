@@ -11029,7 +11029,8 @@ socket.on('connect', () => {
             let html;
             if(data.status == 'success'){
                 for(let i = 0;i<data.bets.length;i++){
-                    html += ` <tr class="addedaccountstatmentRowHeader">
+                    if(i == 0){
+                        html += ` <tr class="addedaccountstatmentRowHeader">
                     <td class="">Event</td>
                     <td>Mrket Type</td>
                     <td>Bet On</td>
@@ -11037,7 +11038,9 @@ socket.on('connect', () => {
                     <td>Stake</td>
                     <td>Status</td>
                     <td>Return</td>
-                </tr> <tr class="addedaccountstatmentRowbody">
+                </tr>`
+                    }
+                    html += ` <tr class="addedaccountstatmentRowbody">
                     <td>${data.bets[i].match}</td>
                     <td>${data.bets[i].marketName}</td>
                     <td>${data.bets[i].selectionName}</td>
