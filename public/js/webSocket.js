@@ -10944,10 +10944,10 @@ socket.on('connect', () => {
             }
             let userAcc = data.userAcc;
             let html = '';
+            let count = 20;
              for(let i = 0; i < userAcc.length; i++){
-               
                 if(userAcc[i].transactionId){
-                    html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${data[i]._id.marketId}">`
+                    html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${data[i]._id.marketId}" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
                         html += `<td title="Transaction">Deposit</td>`
                       }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
@@ -10973,7 +10973,7 @@ socket.on('connect', () => {
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                       
                 }else{
-                    html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="">`
+                    html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
                         html += `<td title="Transaction">Deposit</td>`
                       }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
@@ -11017,9 +11017,10 @@ socket.on('connect', () => {
 
         $(document).on('click','.rowtoggle_AccountStatment',function(e){
             let marketId = $(this).attr('data-marketid')
+            let rowid = $(this).attr('id')
             console.log(marketId)
             if(marketId != ""){
-                socket.emit('getbetdetailbyid',{marketId,LOGINDATA})
+                socket.emit('getbetdetailbyid',{marketId,LOGINDATA,rowid})
             }
         })
 
@@ -11037,27 +11038,24 @@ socket.on('connect', () => {
                     <td>Status</td>
                     <td>Return</td>
                 </tr> <tr class="addedaccountstatmentRowbody">
-                    <td title="">if(!data[i].accStype && data[i].creditDebitamount > 0){
-                      Deposit
-                    }else if(!data[i].accStype && data[i].creditDebitamount < 0){
-                      Withdraw
-                    }else if(data[i].accStype && data[i].creditDebitamount < 0){
-                      Settlement Withdraw
-                    }else if(data[i].accStype && data[i].creditDebitamount > 0){
-                      Settlement Deposit
-                    }else{
-                    -
-                    }</td>
-                      <td title="">=data[i].match</td>
-                      <td title="Market Type">=data[i].marketName</td>
-                      if(data[i].creditDebitamount > 0){
-                          <td title="Credit/Debit" class="c-gren">=data[i].creditDebitamount</td>
+                    <td>${data.bets[i].match}</td>
+                    <td>${data.bets[i].marketName}</td>
+                    <td>${data.bets[i].selectionName}</td>
+                    <td>${data.bets[i].oddValue}</td>
+                    <td>${data.bets[i].Stake}</td>
+                    <td>${data.bets[i].status}</td>
+                    <td>${data.bets[i].returns}</td>`
+                    
+                      if(data.bets[i].returns > 0){
+                        html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
                       }else{
-                          <td title="Credit/Debit" class="c-reed">=data[i].creditDebitamount</td>
+                        html += `<td title="Credit/Debit" class="c-reed">${data.bets[i].returns}</td>`
                       }
-                      <td title="Closing">=data[i].balance</td>
-                      <td title="Description">=data[i].transactionId</td>
-                  </tr>`
+                      
+                      html += `</tr>`
+                }
+                if(!$('#rowid'+data.rowid).next().hasClass('addedaccountstatmentRowHeader')){
+                    $('#rowid'+data.rowid).after(html)
                 }
             }
 

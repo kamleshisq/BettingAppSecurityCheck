@@ -2875,7 +2875,7 @@ io.on('connection', (socket) => {
     socket.on('getbetdetailbyid',async(data)=>{
         try{
             const bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id})
-            socket.emit('getbetdetailbyid',{status:'success',bets})
+            socket.emit('getbetdetailbyid',{status:'success',bets,rowid:data.rowid})
         }catch(err){
             socket.emit('getbetdetailbyid',{status:'fail',msg:'something went wrong'})
         }
