@@ -38,7 +38,6 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     if(result){
         if(req.body.reqId){
             let check = await reqIdModel.findOne({reqId:req.body.reqId})
-            console.log(check)
             if(check){
                 return res.status(200).json({
                     "status": "RS_ERROR"
@@ -53,7 +52,6 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
         if(loginData[0] && loginData[0].gameToken){
             if(loginData[0].gameToken == req.body.token){
-                console.log("gotHERE")
                 next()
             }else{
                 return res.status(200).json({
@@ -98,7 +96,6 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
-    console.log(req.body, "REQ.body")
     try{
         const check = await userModel.findById(req.body.userId)
         let exposureCheck  = await exposurecheckfunction(check)
@@ -253,13 +250,11 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         if(!check){
             if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                 return res.status(200).json({
-                    "balance": 0,
-                    "status": "RS_OK"
+                    "status": "RS_ERROR"
                 })
             }else{
                 return res.status(200).json({
-                    "balance": 0,
-                    "status": "OP_SUCCESS"
+                    "status": "RS_ERROR"
                 })
             }
         }
@@ -269,6 +264,18 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         }else{
             let game1 = await betModel.findOne({transactionId:req.body.transactionId})
             game.game_name = game1.match
+        }
+        let thatBet = await betModel.findOne({transactionId:req.body.transactionId})
+        if(thatBet){
+            if(thatBet.status !== "OPEN"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                }) 
+            }
+        }else{
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
         }
         let user;
         let balance;
@@ -312,14 +319,12 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             }
             if(!user){
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-                    res.status(200).json({
-                        "balance": 0,
-                        "status": "RS_OK"
+                    return res.status(200).json({
+                        "status": "RS_ERROR"
                     })
                 }else{
-                    res.status(200).json({
-                        "balance": 0,
-                        "status": "OP_SUCCESS"
+                    return res.status(200).json({
+                        "status": "RS_ERROR"
                     })
                 }
             }
