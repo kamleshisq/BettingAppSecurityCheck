@@ -10969,7 +10969,7 @@ socket.on('connect', () => {
                     }
     
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
-                    <td title="Transaction ID">${data[i].transactionId}</td>`
+                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                       
                 }else{
                      html += ``
@@ -10995,7 +10995,7 @@ socket.on('connect', () => {
                     }
     
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
-                    <td title="Transaction ID">${data[i].transactionId}</td>`
+                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                 }
                 html += `</tr>`
             }
