@@ -74,8 +74,12 @@
                                     <%}else{%>
                                       <td title="Transaction"> - </td>
                                     <%}%>
+                                    <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
+                                    <%}%>
+                                    <%if(data[i].marketName){%>
                                       <td title="Market Type"><%=data[i].marketName%></td>
+                                    <%}%>
                                     <%if(data[i].creditDebitamount > 0){%>
                                         <td title="Credit/Debit" class="c-gren"><%=data[i].creditDebitamount%></td>
                                     <%}else{%>
