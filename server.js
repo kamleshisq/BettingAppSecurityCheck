@@ -2734,8 +2734,50 @@ io.on('connection', (socket) => {
     }
     // console.log(filter)
     let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
+    let finalresult = []
+    for(let i = 0;i<userAcc.length;i++){
+        if(userAcc[i].transactionId){
+            let bet = await betModel.aggregate([
+                {
+                    $match:{
+                        userId:req.currentUser._id.toString(),
+                        transactionId:userAcc[i].transactionId
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        localField: 'transactionId',
+                        foreignField: 'transactionId',
+                        as: 'accountdetail'
+                    }
+                },
+                {
+                    $unwind:"$accountdetail"
+                },
+                {
+                    $group:{
+                        _id:{
+                            eventId:"$eventId",
+                            marketId:"$marketId"
+                        },
+                        match:{$first:'$match'},
+                        marketName:{$first:'$marketName'},
+                        stake:{$first:'$accountdetail.stake'},
+                        accStype:{$first:'$accountdetail.accStype'},
+                        creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                        balance:{$sum:'$accountdetail.balance'},
+                        transactionId:{$first:'$accountdetail.transactionId'}
+                    }
+                }
+            ])
+            finalresult.push(bet[0])
+        }else{
+            finalresult.push(userAcc[i])
+        }
+    }
     // console.log(userAcc, page)
-    socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
+    socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page})
     })
 
     socket.on("BETSFORUSER", async(data) => {

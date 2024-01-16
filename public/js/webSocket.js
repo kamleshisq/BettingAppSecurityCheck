@@ -10937,56 +10937,68 @@ socket.on('connect', () => {
           }
 
 
-        let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
             if(data.userAcc.length > 0){
             // console.log(data.page)
             if(data.page === 0){
-                count = 1
             }
-            let page = data.page
             let userAcc = data.userAcc;
             let html = '';
              for(let i = 0; i < userAcc.length; i++){
-                var date = new Date(userAcc[i].date);
-                var options = { 
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                };
-                var formattedTime = date.toLocaleString('en-US', options);
-                html += `<tr class="acount-stat-tbl-body-tr">
-                    <td title="SR No." >${i+count}</td>
-                    <td title="Date & Time" >${formattedTime}</td>`
+                html += `<tr class="acount-stat-tbl-body-tr">`
+                if(userAcc[i].transactionId){
+                    if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
+                        html += `<td title="Transaction">Deposit</td>`
+                      }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
+                        html += `<td title="Transaction">Withdraw</td>`
+                      }else if(userAcc[i].creditDebitamount > 0 && userAcc[i].accStype){
+                        html += `<td title="Transaction">Settlement_Deposit</td>`
+                      }else if(userAcc[i].creditDebitamount < 0 && userAcc[i].accStype){
+                        html += `<td title="Transaction">Settlement_Withdraw</td>`
+                      }else{
+                        html += `<td title="Transaction"> - </td>`
+                      }
+                      html += `<td title="Event">${userAcc[i].match}</td>`
+                      html += `<td title="Market Type">${userAcc[i].marketName}</td>`
                     if(userAcc[i].creditDebitamount > 0){
-                        html += `<td title="Credit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
-                        <td title="Debit" >0</td>`
+                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
+                       `
                     }else{
-                        html += ` <td title="Credit" >0</td>
-                        <td title="Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
+                        html += `
+                        <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
                     }
-
-                    if(userAcc[i].stake){
-                        html += `<td title="Stake" >${userAcc[i].stake}</td>`
+    
+                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
+                    <td title="Transaction ID">${data[i].transactionId}</td>`
+                      
+                }else{
+                     html += ``
+                    if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
+                        html += `<td title="Transaction">Deposit</td>`
+                      }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
+                        html += `<td title="Transaction">Withdraw</td>`
+                      }else if(userAcc[i].creditDebitamount > 0 && userAcc[i].accStype){
+                        html += `<td title="Transaction">Settlement_Deposit</td>`
+                      }else if(userAcc[i].creditDebitamount < 0 && userAcc[i].accStype){
+                        html += `<td title="Transaction">Settlement_Withdraw</td>`
+                      }else{
+                        html += `<td title="Transaction"> - </td>`
+                      }
+                      html += `<td title="Event">-</td>`
+                      html += `<td title="Market Type">-</td>`
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
+                       `
                     }else{
-                        html += `<td title="Stake" >-</td>`
+                        html += `
+                        <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
                     }
-
-                    html += `<td title="Pts" >0</td>
-                    <td title="Closing" >${userAcc[i].balance}</td>
-                    <td title="Description" >${userAcc[i].description}</td>`
-                    if(userAcc[i].Remark){
-
-                        html += `<td title="Remark" >${userAcc[i].Remark}</td>`
-                    }else{
-                        html += `<td title="Remark" >-</td>`
-
-                    }
+    
+                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
+                    <td title="Transaction ID">${data[i].transactionId}</td>`
+                }
+                html += `</tr>`
             }
-            count += 20
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
             }else{
