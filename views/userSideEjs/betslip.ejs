@@ -46,13 +46,15 @@
 
       <div class="nww-bet-slip-wrp-col2 betSlip-price-placebutton">
         <div class="nww-bet-slip-wrp-col2-inn">
-          <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
+          <!-- <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
             <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span>
-            <%}%>
-            <!-- <span id="100">+100</span>
+            <%}%> -->
+            <span id="100">+100</span>
+            <span id="500">+500</span>
             <span id="1000">+1000</span>
+            <span id="10000">+10000</span>
             <span id="50000">+50000</span>
-            <span id="10000">+10000</span> -->
+            <span id="100000">+100000</span>
             <span id="1000" class="MAX">MAX</span>
             <%if(user){%>
             <span id="<%=user.availableBalance%>" class="ALLIN">ALL IN</span>
