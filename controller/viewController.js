@@ -2347,16 +2347,17 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["4.1704946928360-BM", "4.1704946945371-BM", "4.1704946873785-BM", "4.1704946887250-BM", "4.1704946810264-BM"]);
+    let marketids = ["4.1704946928360-BM", "4.1704946945371-BM", "4.1704946873785-BM", "4.1704946887250-BM", "4.1704946810264-BM"];
     // console.log(body)
-    var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
+    var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'accept': 'application/json'
-            },
-        body:body 
+            'accept': 'application/json',
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+        },
+        body:JSON.stringify({marketids})  
     })
     .then(res =>res.json())
     .then(result => {
