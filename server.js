@@ -2737,7 +2737,7 @@ io.on('connection', (socket) => {
     let finalresult = []
     for(let i = 0;i<userAcc.length;i++){
         if(userAcc[i].transactionId){
-            let bet = await betModel.aggregate([
+            let bet = await Bet.aggregate([
                 {
                     $match:{
                         userId:req.currentUser._id.toString(),
