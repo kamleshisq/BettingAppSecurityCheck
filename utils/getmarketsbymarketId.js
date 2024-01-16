@@ -2,32 +2,35 @@ const fetch = require("node-fetch")
 
 async function getmarketdetails(array){
     let Data
-    let body = JSON.stringify(array);
+    let marketids = array;
     try{
 
-        var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
+        var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
         await fetch(fullUrl, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'accept': 'application/json'
+                'accept': 'application/json',
+                'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
             },
-            body:body 
+            body:JSON.stringify({marketids}) 
         })
         .then(res =>res.json())
         .then(result => {
-            Data = result
+            Data = result.result
+            // console.log(Data)
         })
     }catch(err){
         console.log(err, "fetchERROr")
-        var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
+        var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
         await fetch(fullUrl, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'accept': 'application/json'
+                'accept': 'application/json',
+                'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
             },
-            body:body 
+            body:JSON.stringify({marketids}) 
         })
         .then(res =>res.text())
         .then(result => {
