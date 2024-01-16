@@ -717,9 +717,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     }
                 }
             ])
-            finalresult.push(bet[0],"bet")
+            finalresult.push(bet[0])
         }else{
-            finalresult.push(userAcc[i],"userAcc[i]")
+            finalresult.push(userAcc[i])
         }
     }
      

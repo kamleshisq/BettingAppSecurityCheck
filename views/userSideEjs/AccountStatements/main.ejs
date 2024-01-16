@@ -83,28 +83,28 @@
                                       <td title="Closing Balance"><%=data[i].balance%></td>
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
+                                  <%}else{%>
+                                    <%if(data[i].creditDebitamount > 0 && data[i].accStype != undefined){%>
+                                      <td title="Transaction">Deposit</td>
+                                    <%}else if(data[i].creditDebitamount < 0 && data[i].accStype != undefined){%>
+                                      <td title="Transaction">Withdraw</td>
+                                    <%}else if(data[i].creditDebitamount > 0 && data[i].accStype == undefined){%>
+                                      <td title="Transaction">Settlement_Deposit</td>
+                                    <%}else if(data[i].creditDebitamount < 0 && data[i].accStype == undefined){%>
+                                      <td title="Transaction">Settlement_Withdraw</td>
                                     <%}else{%>
-                                      <%if(data[i].creditDebitamount > 0 && data[i].accStype != undefined){%>
-                                        <td title="Transaction">Deposit</td>
-                                      <%}else if(data[i].creditDebitamount < 0 && data[i].accStype != undefined){%>
-                                        <td title="Transaction">Withdraw</td>
-                                      <%}else if(data[i].creditDebitamount > 0 && data[i].accStype == undefined){%>
-                                        <td title="Transaction">Settlement_Deposit</td>
-                                      <%}else if(data[i].creditDebitamount < 0 && data[i].accStype == undefined){%>
-                                        <td title="Transaction">Settlement_Withdraw</td>
-                                      <%}else{%>
-                                        <td title="Transaction"> - </td>
-                                      <%}%>
-                                      <td title="Event">-</td>
-                                      <td title="Market Type">-</td>
-                                      <%if(data[i].creditDebitamount > 0){%>
-                                          <td title="Credit" class="c-gren"><%=data[i].creditDebitamount%></td>
-                                      <%}else{%>
-                                          <td title="Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
-                                      <%}%>
-                                      <td title="Closing Balance"><%=data[i].balance%></td>
-                                      <td title="Transaction ID">-</td>
+                                      <td title="Transaction"> - </td>
                                     <%}%>
+                                    <td title="Event">-</td>
+                                    <td title="Market Type">-</td>
+                                    <%if(data[i].creditDebitamount > 0){%>
+                                        <td title="Credit" class="c-gren"><%=data[i].creditDebitamount%></td>
+                                    <%}else{%>
+                                        <td title="Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
+                                    <%}%>
+                                    <td title="Closing Balance"><%=data[i].balance%></td>
+                                    <td title="Transaction ID">-</td>
+                                  <%}%>
                                 </tr>
                                 <%}%>
                                 <%}%>
