@@ -62,13 +62,13 @@
                             <%for(let i = 0; i < data.length; i++){%>
                               <tr class="acount-stat-tbl-body-tr">
                                   <%if(data[i].transactionId){%>
-                                    <%if(data[i].creditDebitamount > 0 && !data[i].stake && !data[i].accStype){%>
+                                    <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
                                       <td title="Transaction">Deposit</td>
-                                    <%}else if(data[i].creditDebitamount < 0 && !data[i].stake && !data[i].accStype){%>
+                                    <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>
                                       <td title="Transaction">Withdraw</td>
-                                    <%}else if(data[i].creditDebitamount > 0 && !data[i].stake && data[i].accStype){%>
+                                    <%}else if(data[i].creditDebitamount > 0 && data[i].accStype){%>
                                       <td title="Transaction">Settlement_Deposit</td>
-                                    <%}else if(data[i].creditDebitamount < 0 && !data[i].stake && data[i].accStype){%>
+                                    <%}else if(data[i].creditDebitamount < 0 && data[i].accStype){%>
                                       <td title="Transaction">Settlement_Withdraw</td>
                                     <%}%>
                                       <td title="Event"><%=data[i].match%></td>
@@ -82,13 +82,13 @@
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
                                     <%}else{%>
-                                      <%if(data[i].creditDebitamount > 0 && !data[i].stake && !data[i].accStype){%>
+                                      <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
                                         <td title="Transaction">Deposit</td>
-                                      <%}else if(data[i].creditDebitamount < 0 && !data[i].stake && !data[i].accStype){%>
+                                      <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>
                                         <td title="Transaction">Withdraw</td>
-                                      <%}else if(data[i].creditDebitamount > 0 && !data[i].stake && data[i].accStype){%>
+                                      <%}else if(data[i].creditDebitamount > 0 && data[i].accStype){%>
                                         <td title="Transaction">Settlement_Deposit</td>
-                                      <%}else if(data[i].creditDebitamount < 0 && !data[i].stake && data[i].accStype){%>
+                                      <%}else if(data[i].creditDebitamount < 0 && data[i].accStype){%>
                                         <td title="Transaction">Settlement_Withdraw</td>
                                       <%}%>
                                       <td title="Event">-</td>
