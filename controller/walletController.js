@@ -37,7 +37,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log(result)
     if(result){
         if(req.body.reqId){
-            let check = reqIdModel.findOne({reqId:req.body.reqId})
+            let check = await reqIdModel.findOne({reqId:req.body.reqId})
             console.log(check)
             if(check){
                 return res.status(200).json({
