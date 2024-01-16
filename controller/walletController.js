@@ -101,7 +101,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         const check = await userModel.findById(req.body.userId)
         let exposureCheck  = await exposurecheckfunction(check)
         if(check.availableBalance - req.body.debitAmount - exposureCheck <= 0){
-            res.status(200).json({
+            return res.status(200).json({
                 "status": "RS_ERROR"
             })
         }
@@ -113,9 +113,9 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
         if(req.body.transactionId){
             let check = await betModel.findOne({transactionId:req.body.transactionId})
-            console.log(check, "checkcheckcheck")
+            // console.log(check, "checkcheckcheck")
             if(check){
-                res.status(200).json({
+                return res.status(200).json({
                     "status": "RS_ERROR"
                 })
             }
@@ -177,7 +177,9 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             }
         }
         if(!user){
-            return next(new AppError("There is no user with that id", 404))
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
         }
         let amount = req.body.debitAmount
         for(let i = user.parentUsers.length - 1; i >= 1; i--){
