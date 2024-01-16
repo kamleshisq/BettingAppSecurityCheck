@@ -111,7 +111,8 @@ const betSchema = mongoose.Schema({
     },
     commionstatus:{
         type:Boolean,
-        required:true
+        required:true,
+        default:false
     }
 })
 
