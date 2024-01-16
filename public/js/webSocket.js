@@ -10998,7 +10998,7 @@ socket.on('connect', () => {
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                 }
-                html += `</tr>`
+                html += `<td></td></tr>`
             }
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
@@ -11044,7 +11044,7 @@ socket.on('connect', () => {
                     <td>${data.bets[i].oddValue}</td>
                     <td>${data.bets[i].Stake}</td>
                     <td>${data.bets[i].status}</td>
-                    <td>${data.bets[i].returns}</td>`
+                    `
                     
                       if(data.bets[i].returns > 0){
                         html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
