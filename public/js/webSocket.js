@@ -10945,8 +10945,9 @@ socket.on('connect', () => {
             let userAcc = data.userAcc;
             let html = '';
              for(let i = 0; i < userAcc.length; i++){
-                html += `<tr class="acount-stat-tbl-body-tr">`
+               
                 if(userAcc[i].transactionId){
+                    html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${data[i]._id.marketId}">`
                     if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
                         html += `<td title="Transaction">Deposit</td>`
                       }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
@@ -10972,7 +10973,7 @@ socket.on('connect', () => {
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                       
                 }else{
-                     html += ``
+                    html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="">`
                     if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
                         html += `<td title="Transaction">Deposit</td>`
                       }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
@@ -11017,7 +11018,9 @@ socket.on('connect', () => {
         $(document).on('click','.rowtoggle_AccountStatment',function(e){
             let marketId = $(this).attr('data-marketid')
             console.log(marketId)
-            socket.emit('getbetdetailbyid',{marketId,LOGINDATA})
+            if(marketId != ""){
+                socket.emit('getbetdetailbyid',{marketId,LOGINDATA})
+            }
         })
 
         socket.on('getbetdetailbyid',async(data)=>{
