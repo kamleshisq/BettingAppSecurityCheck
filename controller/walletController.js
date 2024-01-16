@@ -97,6 +97,18 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 
 exports.betrequest = catchAsync(async(req, res, next) => {
     try{
+
+        if(!req.body.transactionId || req.body.transactionId.trim() === ''){
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }
+
+        if(!req.body.reqId || req.body.reqId.trim() === ''){
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }
         const check = await userModel.findById(req.body.userId)
         let exposureCheck  = await exposurecheckfunction(check)
         if(check.availableBalance - req.body.debitAmount - exposureCheck <= 0){
@@ -248,6 +260,12 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 "status": "RS_ERROR"
             })
         }
+
+        if(!req.body.reqId || req.body.reqId.trim() === ''){
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }
         const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let check = await userModel.findById(req.body.userId);
         let exposureCheck  = await exposurecheckfunction(check)
@@ -371,6 +389,12 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
     let clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     if(!req.body.transactionId || req.body.transactionId.trim() === ''){
+        return res.status(200).json({
+            "status": "RS_ERROR"
+        })
+    }
+
+    if(!req.body.reqId || req.body.reqId.trim() === ''){
         return res.status(200).json({
             "status": "RS_ERROR"
         })
