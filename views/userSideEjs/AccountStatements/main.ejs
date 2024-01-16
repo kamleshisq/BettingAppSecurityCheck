@@ -82,13 +82,13 @@
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
                                     <%}else{%>
-                                      <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
+                                      <%if(data[i].creditDebitamount > 0 && data[i].accStype != undefined){%>
                                         <td title="Transaction">Deposit</td>
-                                      <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>
+                                      <%}else if(data[i].creditDebitamount < 0 && data[i].accStype != undefined){%>
                                         <td title="Transaction">Withdraw</td>
-                                      <%}else if(data[i].creditDebitamount > 0 && data[i].accStype){%>
+                                      <%}else if(data[i].creditDebitamount > 0 && data[i].accStype == undefined){%>
                                         <td title="Transaction">Settlement_Deposit</td>
-                                      <%}else if(data[i].creditDebitamount < 0 && data[i].accStype){%>
+                                      <%}else if(data[i].creditDebitamount < 0 && data[i].accStype == undefined){%>
                                         <td title="Transaction">Settlement_Withdraw</td>
                                       <%}%>
                                       <td title="Event">-</td>
@@ -99,7 +99,7 @@
                                           <td title="Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
                                       <%}%>
                                       <td title="Closing Balance"><%=data[i].balance%></td>
-                                      <td title="Transaction ID"><%=data[i].transactionId%></td>
+                                      <td title="Transaction ID">-</td>
                                     <%}%>
                                 </tr>
                                 <%}%>
