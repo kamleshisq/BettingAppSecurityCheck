@@ -70,6 +70,8 @@
                                       <td title="Transaction">Settlement_Deposit</td>
                                     <%}else if(data[i].creditDebitamount < 0 && data[i].accStype){%>
                                       <td title="Transaction">Settlement_Withdraw</td>
+                                    <%}else{%>
+                                      <td title="Transaction"> - </td>
                                     <%}%>
                                       <td title="Event"><%=data[i].match%></td>
                                       <td title="Market Type"><%=data[i].marketName%></td>
@@ -90,6 +92,8 @@
                                         <td title="Transaction">Settlement_Deposit</td>
                                       <%}else if(data[i].creditDebitamount < 0 && data[i].accStype == undefined){%>
                                         <td title="Transaction">Settlement_Withdraw</td>
+                                      <%}else{%>
+                                        <td title="Transaction"> - </td>
                                       <%}%>
                                       <td title="Event">-</td>
                                       <td title="Market Type">-</td>
