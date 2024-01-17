@@ -2958,7 +2958,7 @@ io.on('connection', (socket) => {
                     bets = await Bet.find({gameId:data.gameId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$lte:0}})
                 }
             }
-            socket.emit('getbetdetailbyid',{status:'success',bets,rowid:data.rowid})
+            socket.emit('getbetdetailbyid',{status:'success',bets,rowid:data.rowid,gameId:data.gameID,marketId:data.marketId})
         }catch(err){
             socket.emit('getbetdetailbyid',{status:'fail',msg:'something went wrong'})
             console.log(err,'Errrror')
