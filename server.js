@@ -2889,11 +2889,11 @@ io.on('connection', (socket) => {
         skip = data.skipid
         skipvalue = await getmarketwiseaccdata(limit,skip)
         skipvalue += skip
+        console.log(skipvalue,j,'skipvalue')
+        console.log(finalresult.length,'finalresult.length')
         if(!userAccflage){
             break
         }
-        console.log(skipvalue,j,'skipvalue')
-        console.log(finalresult.length,'finalresult.length')
         j++
     }
     console.log(finalresult, 'finalresult')
