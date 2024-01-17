@@ -670,6 +670,8 @@ exports.edit = catchAsync(async(req, res, next) => {
 exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // let id = req.originalUrl.split("=")[1]
     let userLog
+    let limit = 20;
+    let skip = 0 * limit
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
@@ -678,52 +680,86 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
+   
     // console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
     let finalresult = []
-    for(let i = 0;i<userAcc.length;i++){
-        if(userAcc[i].transactionId){
-            let bet = await betModel.aggregate([
-                {
-                    $match:{
-                        userId:req.currentUser._id.toString(),
-                        transactionId:userAcc[i].transactionId
+    let marketidarray = [];
+    let userAccflage = true
+    async function getmarketwiseaccdata (limit,skip){
+         let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).skip(skip).limit(limit)
+         let c = 0
+         if(userAcc.length == 0){
+            userAccflage = false
+            return c + 1
+         }
+
+        for(let i = 0;i<userAcc.length;i++){
+            if(userAcc[i].transactionId){
+                let bet = await betModel.aggregate([
+                    {
+                        $match:{
+                            userId:req.currentUser._id.toString(),
+                            transactionId:userAcc[i].transactionId
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                            localField: 'transactionId',
+                            foreignField: 'transactionId',
+                            as: 'accountdetail'
+                        }
+                    },
+                    {
+                        $unwind:"$accountdetail"
+                    },
+                    {
+                        $group:{
+                            _id:{
+                                eventId:"$eventId",
+                                marketId:"$marketId"
+                            },
+                            match:{$first:'$match'},
+                            marketName:{$first:'$marketName'},
+                            stake:{$first:'$accountdetail.stake'},
+                            accStype:{$first:'$accountdetail.accStype'},
+                            creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                            balance:{$sum:'$accountdetail.balance'},
+                            transactionId:{$first:'$accountdetail.transactionId'}
+                        }
                     }
-                },
-                {
-                    $lookup: {
-                        from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                        localField: 'transactionId',
-                        foreignField: 'transactionId',
-                        as: 'accountdetail'
-                    }
-                },
-                {
-                    $unwind:"$accountdetail"
-                },
-                {
-                    $group:{
-                        _id:{
-                            eventId:"$eventId",
-                            marketId:"$marketId"
-                        },
-                        match:{$first:'$match'},
-                        marketName:{$first:'$marketName'},
-                        stake:{$first:'$accountdetail.stake'},
-                        accStype:{$first:'$accountdetail.accStype'},
-                        creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                        balance:{$sum:'$accountdetail.balance'},
-                        transactionId:{$first:'$accountdetail.transactionId'}
+                ])
+                if(!marketidarray.includes(bet[0]._id.marketId)){
+                    marketidarray.push(bet[0]._id.marketId)
+                    finalresult.push(bet[0])
+                    if(finalresult.length == 20){
+                        break
                     }
                 }
-            ])
-            finalresult.push(bet[0])
-        }else{
-            finalresult.push(userAcc[i])
+            }else{
+                finalresult.push(userAcc[i])
+                if(finalresult.length == 20){
+                        break
+                }
+            }
+            c++
         }
+        return c+1
     }
-     
-    // console.log(finalresult,'finalresul')
+    let j = 0
+    let skipvalue
+    while(finalresult.length != 20){
+        skip = j * limit
+        skipvalue = await getmarketwiseaccdata(limit,skip)
+        skipvalue += skip
+        if(!userAccflage){
+            break
+        }
+        console.log(skipvalue,j,'skipvalue')
+        console.log(finalresult.length,'finalresult.length')
+        j++
+    }
+    console.log(finalresult,'finalresul')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
@@ -734,7 +770,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         basicDetails,
-        colorCode
+        colorCode,
+        skipvalue
     })
 });
 
