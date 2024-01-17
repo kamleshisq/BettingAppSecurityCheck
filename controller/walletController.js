@@ -244,7 +244,8 @@ exports.betrequest = catchAsync(async(req, res, next) => {
                 "role_type" : user.role_type,
                 "Remark":"-",
                 "stake": req.body.debitAmount,
-                "transactionId":req.body.transactionId
+                "transactionId":req.body.transactionId,
+                "gameId": req.body.gameId
             }
             accountStatement.create(Acc)
         }
@@ -485,7 +486,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                     "role_type" : user.role_type,
                     "Remark":"-",
                     "stake": bet.Stake,
-                    "transactionId":`${bet.transactionId}`
+                    "transactionId":`${bet.transactionId}`,
+                    "gameId": req.body.gameId
                   })
 
             }
