@@ -723,8 +723,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         }
                     }
                 ])
-                marketidarray.push(bet[0]._id.marketId)
                 if(!marketidarray.includes(bet[0]._id.marketId)){
+                    marketidarray.push(bet[0]._id.marketId)
                     finalresult.push(bet[0])
                     if(finalresult.length == 20){
                         break
