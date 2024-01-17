@@ -4,6 +4,7 @@
 
 
 async function checkExposure(data){
+    console.log('WORKING')
     if(data){
         let userData = await User.findById(data.id)
         const exposure1 = await Bet.aggregate([
