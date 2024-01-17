@@ -10936,7 +10936,7 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid',1)
             // console.log()
             let skipid = 0
-            $('.skipid').attr('data=skipid',0)
+            $('.skipid').attr('data-skipid',0)
             socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
         }
 
@@ -10954,16 +10954,10 @@ socket.on('connect', () => {
             for(let i = 0; i < userAcc.length; i++){
                 if(userAcc[i].gameId){
                         html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="${userAcc[i]._id.gameId}" id="rowid-${i + 1 + count}">`
-                    if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Withdraw</td>`
-                    }else if(userAcc[i].creditDebitamount > 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Withdraw</td>`
-                    }else{
-                        html += `<td title="Transaction"> - </td>`
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td title="Transaction" class="positive transactiontype">Casino Bet  Settlement</td>`
+                    }else if(userAcc[i].creditDebitamount < 0 ){
+                        html += `<td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>`
                     }
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
@@ -10984,19 +10978,32 @@ socket.on('connect', () => {
                     }
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
-                }else if(userAcc[i]._id.marketId){
-                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">`
-                    if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Withdraw</td>`
-                    }else if(userAcc[i].creditDebitamount > 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Withdraw</td>`
+                }else if(userAcc[i].transactionId > 16){
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">
+                        <td title="Transaction">Sport Book Bet Settlement</td>`
+                  
+                    if(userAcc[i].match){
+                        html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
-                        html += `<td title="Transaction"> - </td>`
+                        html += `<td title="Event">-</td>`
                     }
+                    if(userAcc.marketName){
+                        html += `<td title="Market Type">${userAcc[i].marketName}</td>`
+                    }else{
+                        html += `<td title="Market Type">-</td>`
+                    }
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
+                    `
+                    }else{
+                        html += `
+                    <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
+                    }
+                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
+                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
+                }else if(userAcc[i]._id.marketId){
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">
+                        <td title="Transaction">Bet Settlement</td>`
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
@@ -11018,18 +11025,8 @@ socket.on('connect', () => {
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
 
                 }else{
-                    html += `<tr class="acount-stat-tbl-body-tr" data-marketid="" id="rowid-${i + 1 + count}">`
-                    if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Withdraw</td>`
-                    }else if(userAcc[i].creditDebitamount > 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Withdraw</td>`
-                    }else{
-                        html += `<td title="Transaction"> - </td>`
-                    }
+                    html += `<tr class="acount-stat-tbl-body-tr" data-marketid="" id="rowid-${i + 1 + count}">
+                    <td title="Transaction">Settlement</td>`
                         html += `<td title="Event">-</td>`
                         html += `<td title="Market Type">-</td>`
                     if(userAcc[i].creditDebitamount > 0){
@@ -11062,12 +11059,22 @@ socket.on('connect', () => {
 
         $(document).on('click','.rowtoggle_AccountStatment',function(e){
             if(!$(this).hasClass('active')){
+                $(this).parent().children('tr.active').removeClass('active')
                 $(this).addClass('active')
                 let marketId = $(this).attr('data-marketid')
+                let gameId = $(this).attr('data-gameid')
+                let gametype;
+                if(gameId != ""){
+                    if($(this).find('.transactiontype').hasClass('positive')){
+                        gametype = 'positive'
+                    }else{
+                        gametype = 'negative'
+                    }
+                }
                 let rowid = $(this).attr('id')
-                console.log(marketId)
-                if(marketId != ""){
-                    socket.emit('getbetdetailbyid',{marketId,LOGINDATA,rowid})
+                console.log({marketId,gameId,gametype,LOGINDATA,rowid})
+                if(marketId != "" || gameId != ""){
+                    socket.emit('getbetdetailbyid',{marketId,gameId,gametype,LOGINDATA,rowid})
                 }
             }else{
                 $(this).removeClass('active')
@@ -11075,7 +11082,6 @@ socket.on('connect', () => {
                 $(`.addedaccountstatmentRowHeader-${rowid},.addedaccountstatmentRowbody-${rowid}`).remove()
             }
         })
-
         socket.on('getbetdetailbyid',async(data)=>{
             console.log(data,'datasdfasdfas')
             let html;
@@ -11097,14 +11103,21 @@ socket.on('connect', () => {
                     }else{
                         html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody lay">`
                     }
-                    html += `<td>${data.bets[i].match}</td>
-                    <td>${data.bets[i].marketName}</td>
-                    <td>${data.bets[i].selectionName}</td>
-                    <td>${data.bets[i].oddValue}</td>
-                    <td>${data.bets[i].Stake}</td>
-                    <td>${data.bets[i].status}</td>
-                    `
+                    if(data.bets[i].marketId){
+                        html += `<td>${data.bets[i].match}</td>
+                        <td>${data.bets[i].marketName}</td>
+                        <td>${data.bets[i].selectionName}</td>
+                        <td>${data.bets[i].oddValue}</td>`
+                    }else{
+                        html += `<td>${data.bets[i].event}</td>
+                        <td>${data.bets[i].betType}</td>
+                        <td>-</td>
+                        <td>-</td>`
                     
+                    }
+                    html += `<td>${data.bets[i].Stake}</td>
+                    <td>${data.bets[i].status}</td>
+                    `                    
                       if(data.bets[i].returns > 0){
                         html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
                       }else{
