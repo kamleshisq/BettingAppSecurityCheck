@@ -11110,14 +11110,16 @@ socket.on('connect', () => {
                 let gameId = $(this).attr('data.gameId')
                 let gametype;
                 if(gameId != ""){
-                    gametype = $(this).find('.transactiontype')
-                    console.log($(this).find('.transactiontype').hasClass('positive'))
-                    console.log(gametype,'gametype')
+                    if($(this).find('.transactiontype').hasClass('positive')){
+                        gametype = 'positive'
+                    }else{
+                        gametype = 'negative'
+                    }
                 }
                 let rowid = $(this).attr('id')
                 console.log(marketId)
                 if(marketId != "" || gameId != ""){
-                    socket.emit('getbetdetailbyid',{marketId,gameId,LOGINDATA,rowid})
+                    socket.emit('getbetdetailbyid',{marketId,gameId,gametype,LOGINDATA,rowid})
                 }
             }else{
                 $(this).removeClass('active')

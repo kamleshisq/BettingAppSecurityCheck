@@ -2948,7 +2948,16 @@ io.on('connection', (socket) => {
 
     socket.on('getbetdetailbyid',async(data)=>{
         try{
-            const bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id})
+            let bets
+            if(data.marketId){
+                bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id})
+            }else if(data.gameId){
+                if(gametype == 'positive'){
+                    bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$gt:0}})
+                }else{
+                    bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$lte:0}})
+                }
+            }
             socket.emit('getbetdetailbyid',{status:'success',bets,rowid:data.rowid})
         }catch(err){
             socket.emit('getbetdetailbyid',{status:'fail',msg:'something went wrong'})
