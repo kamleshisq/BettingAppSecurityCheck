@@ -11049,7 +11049,7 @@ socket.on('connect', () => {
             if(data.status == 'success'){
                 for(let i = 0;i<data.bets.length;i++){
                     if(i == 0){
-                        html += ` <tr class="addedaccountstatmentRowHeader-${data.rowid}">
+                        html += ` <tr class="addedaccountstatmentRowHeader-${data.rowid} addedasrowheader">
                     <td class="">Event</td>
                     <td>Mrket Type</td>
                     <td>Bet On</td>
@@ -11059,8 +11059,12 @@ socket.on('connect', () => {
                     <td>Return</td>
                 </tr>`
                     }
-                    html += ` <tr class="addedaccountstatmentRowbody-${data.rowid}">
-                    <td>${data.bets[i].match}</td>
+                    if(data.bets[i].bettype2 == 'BACK'){
+                        html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody blue">`
+                    }else{
+                        html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody red">`
+                    }
+                    html += `<td>${data.bets[i].match}</td>
                     <td>${data.bets[i].marketName}</td>
                     <td>${data.bets[i].selectionName}</td>
                     <td>${data.bets[i].oddValue}</td>
