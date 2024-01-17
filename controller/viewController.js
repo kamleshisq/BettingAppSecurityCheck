@@ -684,9 +684,15 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
     let finalresult = []
     let marketidarray = [];
+    let userAccflage = true
     async function getmarketwiseaccdata (limit,skip){
          let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
+         if(userAcc.length == 0){
+            userAccflage = false
+            return c + 1
+         }
+
         for(let i = 0;i<userAcc.length;i++){
             if(userAcc[i].transactionId){
                 let bet = await betModel.aggregate([
@@ -745,6 +751,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         skip = j * limit
         let skipvalue = await getmarketwiseaccdata(limit,skip)
         skipvalue += skip
+        if(!userAccflage){
+            break
+        }
         console.log(skipvalue,j,'skipvalue')
         console.log(finalresult.length,'finalresult.length')
         j++
