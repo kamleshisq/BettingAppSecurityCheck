@@ -63,11 +63,11 @@
                             <%for(let i = 0; i < data.length; i++){%>
                                 if(data[i]._id.gameId){%>
                                 <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="<%=data[i]._id.gameId%>" id="rowid-<%=i + 1%>">
-                                    <%if(data[i].creditDebitamount > 0{%>
+                                    <%if(data[i].creditDebitamount > 0){%>
                                       <td title="Transaction" class="positive transactiontype">Casino Bet  Settlement</td>
-                                    <%}else if(data[i].creditDebitamount < 0{%>
+                                    <%}else if(data[i].creditDebitamount < 0){%>
                                       <td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>
-                                    <%}
+                                    <%}%>
                                     <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
                                     <%}else{%>
