@@ -774,13 +774,13 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 if(!marketidarray.includes(bet[0]._id.marketId)){
                     marketidarray.push(bet[0]._id.marketId)
                     finalresult.push(bet[0])
-                    if(finalresult.length == 20){
+                    if(finalresult.length >= 20){
                         break
                     }
                 }
             }else{
                 finalresult.push(userAcc[i])
-                if(finalresult.length == 20){
+                if(finalresult.length >= 20){
                         break
                 }
             }
