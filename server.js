@@ -2738,7 +2738,7 @@ io.on('connection', (socket) => {
     let marketidarray = [];
     let userAccflage = true
     async function getmarketwiseaccdata (limit,skip){
-         let userAcc = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER._id}).sort({date: -1}).skip(skip).limit(limit)
+         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false

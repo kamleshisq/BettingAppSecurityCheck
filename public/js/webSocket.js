@@ -11059,12 +11059,22 @@ socket.on('connect', () => {
 
         $(document).on('click','.rowtoggle_AccountStatment',function(e){
             if(!$(this).hasClass('active')){
+                $(this).parent().children('tr.active').removeClass('active')
                 $(this).addClass('active')
                 let marketId = $(this).attr('data-marketid')
+                let gameId = $(this).attr('data-gameid')
+                let gametype;
+                if(gameId != ""){
+                    if($(this).find('.transactiontype').hasClass('positive')){
+                        gametype = 'positive'
+                    }else{
+                        gametype = 'negative'
+                    }
+                }
                 let rowid = $(this).attr('id')
-                console.log(marketId)
-                if(marketId != ""){
-                    socket.emit('getbetdetailbyid',{marketId,LOGINDATA,rowid})
+                console.log({marketId,gameId,gametype,LOGINDATA,rowid})
+                if(marketId != "" || gameId != ""){
+                    socket.emit('getbetdetailbyid',{marketId,gameId,gametype,LOGINDATA,rowid})
                 }
             }else{
                 $(this).removeClass('active')
@@ -11072,7 +11082,6 @@ socket.on('connect', () => {
                 $(`.addedaccountstatmentRowHeader-${rowid},.addedaccountstatmentRowbody-${rowid}`).remove()
             }
         })
-
         socket.on('getbetdetailbyid',async(data)=>{
             console.log(data,'datasdfasdfas')
             let html;
@@ -11094,14 +11103,21 @@ socket.on('connect', () => {
                     }else{
                         html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody lay">`
                     }
-                    html += `<td>${data.bets[i].match}</td>
-                    <td>${data.bets[i].marketName}</td>
-                    <td>${data.bets[i].selectionName}</td>
-                    <td>${data.bets[i].oddValue}</td>
-                    <td>${data.bets[i].Stake}</td>
-                    <td>${data.bets[i].status}</td>
-                    `
+                    if(data.bets[i].marketId){
+                        html += `<td>${data.bets[i].match}</td>
+                        <td>${data.bets[i].marketName}</td>
+                        <td>${data.bets[i].selectionName}</td>
+                        <td>${data.bets[i].oddValue}</td>`
+                    }else{
+                        html += `<td>${data.bets[i].event}</td>
+                        <td>${data.bets[i].betType}</td>
+                        <td>-</td>
+                        <td>-</td>`
                     
+                    }
+                    html += `<td>${data.bets[i].Stake}</td>
+                    <td>${data.bets[i].status}</td>
+                    `                    
                       if(data.bets[i].returns > 0){
                         html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
                       }else{
