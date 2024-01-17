@@ -249,7 +249,13 @@ exports.login = catchAsync (async(req, res, next) => {
                 status:'error',
                 message:"not a valid user login"
             })
-        }else if(!user || !(await user.correctPassword(password, user.password))){
+        }else if(user.role_type === 1 && whiteLabel !=="ollscores.com"){
+            res.status(404).json({
+                status:'error',
+                message:"not a valid user login"
+            })
+        }
+        else if(!user || !(await user.correctPassword(password, user.password))){
             res.status(404).json({
                 status:'error',
                 message:"Please provide valide user and password"
