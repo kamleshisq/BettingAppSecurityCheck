@@ -11117,7 +11117,7 @@ socket.on('connect', () => {
                     }
                 }
                 let rowid = $(this).attr('id')
-                console.log(marketId)
+                console.log({marketId,gameId,gametype,LOGINDATA,rowid})
                 if(marketId != "" || gameId != ""){
                     socket.emit('getbetdetailbyid',{marketId,gameId,gametype,LOGINDATA,rowid})
                 }
