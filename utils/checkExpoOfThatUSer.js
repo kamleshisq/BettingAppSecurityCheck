@@ -454,7 +454,7 @@ async function checkExposure(data){
                 $group:{
                     _id:null,
                     sum:{
-                        $sum:returns
+                        $sum:'$returns'
                     }
                 }
             }
