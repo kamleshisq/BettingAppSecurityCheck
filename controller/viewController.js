@@ -699,7 +699,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     {
                         $match:{
                             userId:req.currentUser._id.toString(),
-                            transactionId:userAcc[i].marketId
+                            marketId:userAcc[i].marketId
                         }
                     },
                     {
