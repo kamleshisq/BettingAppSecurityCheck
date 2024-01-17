@@ -8882,6 +8882,9 @@ io.on('connection', (socket) => {
             console.log(stoprtBookexp, "stoprtBookexpstoprtBookexpstoprtBookexp")
             totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
             // totalExposure = totalExposure + exposer3Amount
+            if(stoprtBookexp.length > 0){
+                totalExposure = totalExposure + stoprtBookexp[0].sum
+            }
             // console.log(totalExposure, "totalExposuretotalExposuretotalExposure")
             socket.emit('userLoginBalance', {userData,totalExposure})
         }
