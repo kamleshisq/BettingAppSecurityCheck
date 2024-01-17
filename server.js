@@ -2749,7 +2749,7 @@ io.on('connection', (socket) => {
                     let bet = await Bet.aggregate([
                         {
                             $match:{
-                                userId:data.LOGINUSER.LOGINUSER._id.toString(),
+                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                 gameId:userAcc[i].gameId
                             }
                         },
@@ -2792,7 +2792,7 @@ io.on('connection', (socket) => {
                     let bet = await Bet.aggregate([
                         {
                             $match:{
-                                userId:data.LOGINUSER.LOGINUSER._id.toString(),
+                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                 marketId:userAcc[i].marketId
                             }
                         },
@@ -2834,7 +2834,7 @@ io.on('connection', (socket) => {
                     let bet = await Bet.aggregate([
                         {
                             $match:{
-                                userId:data.LOGINUSER.LOGINUSER._id.toString(),
+                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                 marketId:userAcc[i].marketId
                             }
                         },
