@@ -736,7 +736,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         break
                     }
                 }
-            }else if(userAcc[i].marketId){
+            }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
                 let bet = await betModel.aggregate([
                     {
                         $match:{
@@ -778,7 +778,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         break
                     }
                 }
-            }else if(userAcc[i].transactionId.length > 16){
+            }else if(userAcc[i].marketId){
                 let bet = await betModel.aggregate([
                     {
                         $match:{
