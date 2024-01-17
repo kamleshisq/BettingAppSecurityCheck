@@ -837,11 +837,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         skip = j * limit
         skipvalue = await getmarketwiseaccdata(limit,skip)
         skipvalue += skip
+        console.log(skipvalue,j,'skipvalue')
+        console.log(finalresult.length,'finalresult.length')
         if(!userAccflage){
             break
         }
-        console.log(skipvalue,j,'skipvalue')
-        console.log(finalresult.length,'finalresult.length')
         j++
     }
     // console.log(finalresult,'finalresul')
