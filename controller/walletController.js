@@ -363,7 +363,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                     "Remark":"-",
                     "stake": req.body.debitAmount,
                     "transactionId":req.body.transactionId,
-                    "marketId":`${thatBet.marketId}`
+                    "marketId":`${req.body.marketId}`
                 }
 
                 accountStatement.create(Acc)
