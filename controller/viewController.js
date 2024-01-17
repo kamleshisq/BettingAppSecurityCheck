@@ -703,7 +703,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     },
                     {
                         $lookup: {
-                            from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                            from: 'accountstatements', 
                             localField: 'transactionId',
                             foreignField: 'transactionId',
                             as: 'accountdetail'
