@@ -440,6 +440,25 @@ async function checkExposure(data){
             exposureOther = exposure1[0].totalAmount
         }
         // console.log(exposureOther, exposureFancy, exposer3Amount)
+        let stoprtBookexp = await Bet.aggregate([
+            {
+                $match: {
+                    status: "OPEN",
+                    userName:userData.userName,
+                    betType:'SportBook'
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:null,
+                    sum:{
+                        $sum:returns
+                    }
+                }
+            }
+        ])
+        console.log(stoprtBookexp, "stoprtBookexpstoprtBookexpstoprtBookexp")
         totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
        return totalExposure
     }
