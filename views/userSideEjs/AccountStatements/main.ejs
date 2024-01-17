@@ -61,9 +61,9 @@
                         <tbody class="acount-stat-tbl-body">
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
-                              <%if(data[i].gameId){%>
-                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment casinogame" data-gameid="<%=data[i]._id.gameid%>" id="rowid-<%=i + 1%>">
-                                    <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
+                              <%if(data[i]._id.marketId){%>
+                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
+                                    <%if(data[i].creditDebitamount > 0){%>
                                       <td title="Transaction">Deposit</td>
                                     <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>
                                       <td title="Transaction">Withdraw</td>
@@ -92,8 +92,8 @@
                                       <td title="Closing Balance"><%=data[i].balance%></td>
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
-                                  <%}else if(data[i]._id.marketId){%>
-                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
+                                  <%}else if(data[i]._id.gameId){%>
+                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="<%=data[i].gameId%>" id="rowid-<%=i + 1%>">
                                     <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
                                       <td title="Transaction">Deposit</td>
                                     <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>

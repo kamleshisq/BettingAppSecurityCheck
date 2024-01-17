@@ -715,11 +715,10 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     {
                         $group:{
                             _id:{
-                                eventId:"$eventId",
-                                marketId:"$marketId"
+                                gameId:"$gameId",
                             },
-                            match:{$first:'$match'},
-                            marketName:{$first:'$marketName'},
+                            match:{$first:'$event'},
+                            marketName:{$first:'$betType'},
                             stake:{$first:'$accountdetail.stake'},
                             accStype:{$first:'$accountdetail.accStype'},
                             creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
@@ -728,8 +727,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         }
                     }
                 ])
-                if(!marketidarray.includes(bet[0]._id.marketId)){
-                    marketidarray.push(bet[0]._id.marketId)
+                if(!marketidarray.includes(bet[0]._id.gameId)){
+                    marketidarray.push(bet[0]._id.gameId)
                     finalresult.push(bet[0])
                     if(finalresult.length == 20){
                         break
