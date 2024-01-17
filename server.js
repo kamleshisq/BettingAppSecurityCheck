@@ -2896,7 +2896,7 @@ io.on('connection', (socket) => {
         console.log(finalresult.length,'finalresult.length')
         j++
     }
-    // console.log(userAcc, page)
+    console.log(finalresult, 'finalresult')
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})
     })
 
