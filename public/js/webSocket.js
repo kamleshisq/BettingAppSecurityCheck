@@ -11060,9 +11060,9 @@ socket.on('connect', () => {
                 </tr>`
                     }
                     if(data.bets[i].bettype2 == 'BACK'){
-                        html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody blue">`
+                        html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody back">`
                     }else{
-                        html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody red">`
+                        html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody lay">`
                     }
                     html += `<td>${data.bets[i].match}</td>
                     <td>${data.bets[i].marketName}</td>
