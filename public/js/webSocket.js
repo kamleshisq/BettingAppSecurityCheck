@@ -11061,7 +11061,7 @@ socket.on('connect', () => {
             if(!$(this).hasClass('active')){
                 $(this).parent().children('tr.active').removeClass('active')
                 if($(this).parent().children('tr.active').length > 0){
-                let rowid = $$(this).parent().children('tr.active').attr('id')
+                let rowid = $(this).parent().children('tr.active').attr('id')
                 $(`.addedaccountstatmentRowHeader-${rowid},.addedaccountstatmentRowbody-${rowid}`).remove()
                 }
                 $(this).addClass('active')
