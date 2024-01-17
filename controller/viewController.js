@@ -714,12 +714,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     },
                     {
                         $group:{
-                            _id:{
-                                eventId:"$eventId",
-                                marketId:"$marketId"
-                            },
-                            match:{$first:'$match'},
-                            marketName:{$first:'$marketName'},
+                            _id:"$gameId",
+                            match:{$first:'$event'},
+                            marketName:{$first:'$betType'},
                             stake:{$first:'$accountdetail.stake'},
                             accStype:{$first:'$accountdetail.accStype'},
                             creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
