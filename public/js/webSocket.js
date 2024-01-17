@@ -10933,16 +10933,20 @@ socket.on('connect', () => {
             page = 0
             $('.pageId').attr('data-pageid',1)
             // console.log()
-            socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
+            let skipid = 0
+            $('.skipid').attr('data=skipid',0)
+            socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
         }
 
         let count = 20;
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
             if(data.userAcc.length > 0){
+                $('.skipid').attr('data-skipid',data.skipvalue)
             // console.log(data.page)
             if(data.page === 0){
                 count = 0;
             }
+
             let userAcc = data.userAcc;
             let html = '';
             for(let i = 0; i < userAcc.length; i++){

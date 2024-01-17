@@ -694,12 +694,12 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
          }
 
         for(let i = 0;i<userAcc.length;i++){
-            if(userAcc[i].transactionId){
+            if(userAcc[i].marketId){
                 let bet = await betModel.aggregate([
                     {
                         $match:{
                             userId:req.currentUser._id.toString(),
-                            transactionId:userAcc[i].transactionId
+                            marketId:userAcc[i].marketId
                         }
                     },
                     {
