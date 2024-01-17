@@ -92,7 +92,7 @@
                                       <td title="Closing Balance"><%=data[i].balance%></td>
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
-                                  <%}else if(data[i].transactionId){%>
+                                  <%}else if(data[i]._id.marketId){%>
                                 <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
                                     <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
                                       <td title="Transaction">Deposit</td>
