@@ -11107,7 +11107,7 @@ socket.on('connect', () => {
                 $(this).parent().children('tr.active').removeClass('active')
                 $(this).addClass('active')
                 let marketId = $(this).attr('data-marketid')
-                let gameId = $(this).attr('data.gameId')
+                let gameId = $(this).attr('data-gameid')
                 let gametype;
                 if(gameId != ""){
                     if($(this).find('.transactiontype').hasClass('positive')){
