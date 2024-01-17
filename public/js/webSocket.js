@@ -10936,7 +10936,7 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid',1)
             // console.log()
             let skipid = 0
-            $('.skipid').attr('data=skipid',0)
+            $('.skipid').attr('data-skipid',0)
             socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
         }
 
