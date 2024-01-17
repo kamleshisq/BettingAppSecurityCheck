@@ -747,9 +747,10 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         return c+1
     }
     let j = 0
+    let skipvalue
     while(finalresult.length != 20){
         skip = j * limit
-        let skipvalue = await getmarketwiseaccdata(limit,skip)
+        skipvalue = await getmarketwiseaccdata(limit,skip)
         skipvalue += skip
         if(!userAccflage){
             break
