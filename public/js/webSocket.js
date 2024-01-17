@@ -11110,8 +11110,8 @@ socket.on('connect', () => {
                 let gameId = $(this).attr('data.gameId')
                 let gametype;
                 if(gameId != ""){
-                    gametype = $(this).closest('.transactiontype')
-                    console.log($(this).closest('.transactiontype').hasClass('positive'))
+                    gametype = $(this).find('.transactiontype')
+                    console.log($(this).find('.transactiontype').hasClass('positive'))
                     console.log(gametype,'gametype')
                 }
                 let rowid = $(this).attr('id')
