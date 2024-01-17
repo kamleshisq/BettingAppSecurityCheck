@@ -10951,99 +10951,141 @@ socket.on('connect', () => {
 
             let userAcc = data.userAcc;
             let html = '';
-            for(let i = 0; i < userAcc.length; i++){
+            for(let i = 0;i<userAcc.length;i++){
                 if(userAcc[i].gameId){
-                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="${userAcc[i]._id.gameId}" id="rowid-${i + 1 + count}">`
-                    if(userAcc[i].creditDebitamount > 0){
-                        html += `<td title="Transaction">Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Withdraw</td>`
-                    }else if(userAcc[i].creditDebitamount > 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Withdraw</td>`
-                    }else{
-                        html += `<td title="Transaction"> - </td>`
+                    let bet = await Bet.aggregate([
+                        {
+                            $match:{
+                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                gameId:userAcc[i].gameId
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                localField: 'transactionId',
+                                foreignField: 'transactionId',
+                                as: 'accountdetail'
+                            }
+                        },
+                        {
+                            $unwind:"$accountdetail"
+                        },
+                        {
+                            $group:{
+                                _id:{
+                                    gameId:"$gameId",
+                                    status:"$status"
+                                },
+                                match:{$first:'$event'},
+                                marketName:{$first:'$betType'},
+                                stake:{$first:'$accountdetail.stake'},
+                                accStype:{$first:'$accountdetail.accStype'},
+                                creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                balance:{$sum:'$accountdetail.balance'},
+                                transactionId:{$first:'$accountdetail.transactionId'}
+                            }
+                        }
+                    ])
+                    console.log(bet,'betin game id')
+                    if(!marketidarray.includes(bet[0]._id.gameId)){
+                        marketidarray.push(bet[0]._id.gameId)
+                        finalresult = finalresult.concat(bet)
+                        if(finalresult.length >= 20){
+                            break
+                        }
                     }
-                    if(userAcc[i].match){
-                        html += `<td title="Event">${userAcc[i].match}</td>`
-                    }else{
-                        html += `<td title="Event">-</td>`
+                }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                    let bet = await Bet.aggregate([
+                        {
+                            $match:{
+                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                marketId:userAcc[i].marketId
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                localField: 'transactionId',
+                                foreignField: 'transactionId',
+                                as: 'accountdetail'
+                            }
+                        },
+                        {
+                            $unwind:"$accountdetail"
+                        },
+                        {
+                            $group:{
+                                _id:{
+                                    eventId:"$eventId",
+                                    marketId:"$marketId"
+                                },
+                                match:{$first:'$match'},
+                                marketName:{$first:'$marketName'},
+                                stake:{$first:'$accountdetail.stake'},
+                                accStype:{$first:'$accountdetail.accStype'},
+                                creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                balance:{$sum:'$accountdetail.balance'},
+                                transactionId:{$first:'$accountdetail.transactionId'}
+                            }
+                        }
+                    ])
+                    if(!marketidarray.includes(bet[0]._id.marketId)){
+                        marketidarray.push(bet[0]._id.marketId)
+                        finalresult.push(bet[0])
+                        if(finalresult.length >= 20){
+                            break
+                        }
                     }
-                    if(userAcc.marketName){
-                        html += `<td title="Market Type">${userAcc[i].marketName}</td>`
-                    }else{
-                        html += `<td title="Market Type">-</td>`
+                }else if(userAcc[i].marketId){
+                    let bet = await Bet.aggregate([
+                        {
+                            $match:{
+                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                marketId:userAcc[i].marketId
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                localField: 'transactionId',
+                                foreignField: 'transactionId',
+                                as: 'accountdetail'
+                            }
+                        },
+                        {
+                            $unwind:"$accountdetail"
+                        },
+                        {
+                            $group:{
+                                _id:{
+                                    eventId:"$eventId",
+                                    marketId:"$marketId"
+                                },
+                                match:{$first:'$match'},
+                                marketName:{$first:'$marketName'},
+                                stake:{$first:'$accountdetail.stake'},
+                                accStype:{$first:'$accountdetail.accStype'},
+                                creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                balance:{$sum:'$accountdetail.balance'},
+                                transactionId:{$first:'$accountdetail.transactionId'}
+                            }
+                        }
+                    ])
+                    if(!marketidarray.includes(bet[0]._id.marketId)){
+                        marketidarray.push(bet[0]._id.marketId)
+                        finalresult.push(bet[0])
+                        if(finalresult.length >= 20){
+                            break
+                        }
                     }
-                    if(userAcc[i].creditDebitamount > 0){
-                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
-                    `
-                    }else{
-                        html += `
-                    <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
-                    }
-                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
-                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
-                }else if(userAcc[i]._id.marketId){
-                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">`
-                    if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Withdraw</td>`
-                    }else if(userAcc[i].creditDebitamount > 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Withdraw</td>`
-                    }else{
-                        html += `<td title="Transaction"> - </td>`
-                    }
-                    if(userAcc[i].match){
-                        html += `<td title="Event">${userAcc[i].match}</td>`
-                    }else{
-                        html += `<td title="Event">-</td>`
-                    }
-                    if(userAcc.marketName){
-                        html += `<td title="Market Type">${userAcc[i].marketName}</td>`
-                    }else{
-                        html += `<td title="Market Type">-</td>`
-                    }
-                    if(userAcc[i].creditDebitamount > 0){
-                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
-                    `
-                    }else{
-                        html += `
-                    <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
-                    }
-                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
-                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
-
                 }else{
-                    html += `<tr class="acount-stat-tbl-body-tr" data-marketid="" id="rowid-${i + 1 + count}">`
-                    if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
-                        html += `<td title="Transaction">Withdraw</td>`
-                    }else if(userAcc[i].creditDebitamount > 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Deposit</td>`
-                    }else if(userAcc[i].creditDebitamount < 0 && userAcc[i].accStype){
-                        html += `<td title="Transaction">Settlement_Withdraw</td>`
-                    }else{
-                        html += `<td title="Transaction"> - </td>`
+                    finalresult.push(userAcc[i])
+                    if(finalresult.length >= 20){
+                            break
                     }
-                        html += `<td title="Event">-</td>`
-                        html += `<td title="Market Type">-</td>`
-                    if(userAcc[i].creditDebitamount > 0){
-                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
-                    `
-                    }else{
-                        html += `
-                        <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
-                    }
-
-                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
-                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                 }
-                html += `<td></td></tr>`
+                c++
             }
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
@@ -11062,12 +11104,20 @@ socket.on('connect', () => {
 
         $(document).on('click','.rowtoggle_AccountStatment',function(e){
             if(!$(this).hasClass('active')){
+                $(this).parent().children('tr.active').removeClass('active')
                 $(this).addClass('active')
                 let marketId = $(this).attr('data-marketid')
+                let gameId = $(this).attr('data.gameId')
+                let gametype;
+                if(gameId != ""){
+                    gametype = $(this).closest('.transactiontype')
+                    console.log($(this).closest('.transactiontype').hasClass('positive'))
+                    console.log(gametype,'gametype')
+                }
                 let rowid = $(this).attr('id')
                 console.log(marketId)
-                if(marketId != ""){
-                    socket.emit('getbetdetailbyid',{marketId,LOGINDATA,rowid})
+                if(marketId != "" || gameId != ""){
+                    socket.emit('getbetdetailbyid',{marketId,gameId,LOGINDATA,rowid})
                 }
             }else{
                 $(this).removeClass('active')
