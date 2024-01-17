@@ -2961,6 +2961,7 @@ io.on('connection', (socket) => {
             socket.emit('getbetdetailbyid',{status:'success',bets,rowid:data.rowid})
         }catch(err){
             socket.emit('getbetdetailbyid',{status:'fail',msg:'something went wrong'})
+            console.log(err,'Errrror')
         }
     })
     
