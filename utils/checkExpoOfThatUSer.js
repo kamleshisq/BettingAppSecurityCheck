@@ -459,8 +459,11 @@ async function checkExposure(data){
                 }
             }
         ])
-        console.log(stoprtBookexp, "stoprtBookexpstoprtBookexpstoprtBookexp")
+        // console.log(stoprtBookexp, "stoprtBookexpstoprtBookexpstoprtBookexp")
         totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
+        if(stoprtBookexp.length > 0){
+            totalExposure = totalExposure - stoprtBookexp[0].sum
+        }
        return totalExposure
     }
 }
