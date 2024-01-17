@@ -162,7 +162,8 @@ async function mapBet(data){
                 "role_type" : user.role_type,
                 "Remark":"-",
                 "stake": bets[bet].Stake,
-                "transactionId":`${bets[bet].transactionId}`
+                "transactionId":`${bets[bet].transactionId}`,
+                "marketId":`${bets[bet].marketId}`
               })
 
 
@@ -302,7 +303,8 @@ async function mapBet(data){
                   "role_type" : user.role_type,
                   "Remark":"-",
                   "stake": bets[bet].Stake,
-                  "transactionId":`${bets[bet].transactionId}`
+                  "transactionId":`${bets[bet].transactionId}`,
+                  "marketId":`${bets[bet].marketId}`
                 })
             }else if (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")){
                 console.log('FANCY')
@@ -358,7 +360,8 @@ async function mapBet(data){
                           "role_type" : user.role_type,
                           "Remark":"-",
                           "stake": bets[bet].Stake,
-                          "transactionId":`${bets[bet].transactionId}`
+                          "transactionId":`${bets[bet].transactionId}`,
+                          "marketId":`${bets[bet].marketId}`
                         })
             }else{
                 console.log('LOOSE')
@@ -408,7 +411,8 @@ async function mapBet(data){
                     "role_type" : user.role_type,
                     "Remark":"-",
                     "stake": bets[bet].Stake,
-                    "transactionId":`${bets[bet].transactionId}`
+                    "transactionId":`${bets[bet].transactionId}`,
+                    "marketId":`${bets[bet].marketId}`
                 })
 
                 //EntryWise Loosing Commiission

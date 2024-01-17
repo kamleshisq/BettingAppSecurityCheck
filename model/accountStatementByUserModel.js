@@ -52,6 +52,9 @@ const accountStatementByUser = mongoose.Schema({
     },
     accStype:{
         type:String
+    },
+    marketId:{
+        type:String
     }
 })
 
