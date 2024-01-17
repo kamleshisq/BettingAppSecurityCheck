@@ -8879,7 +8879,7 @@ io.on('connection', (socket) => {
                     }
                 }
             ])
-            console.log(stoprtBookexp, "stoprtBookexpstoprtBookexpstoprtBookexp")
+            // console.log(stoprtBookexp, "stoprtBookexpstoprtBookexpstoprtBookexp")
             totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
             // totalExposure = totalExposure + exposer3Amount
             if(stoprtBookexp.length > 0){
