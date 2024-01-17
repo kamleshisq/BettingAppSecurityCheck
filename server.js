@@ -2863,7 +2863,7 @@ io.on('connection', (socket) => {
                 c++
             }
          }
-        return c+1
+        return c
     }
     let j = 0
     let skipvalue
