@@ -375,6 +375,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             let thatBet = await betModel.findOne({transactionId:req.body.transactionId})
             if(thatBet.marketId){
                 let debitCreditAmount = req.body.creditAmount + thatBet.returns
+                console.log(debitCreditAmount)
                 let exposure = Math.abs(thatBet.returns)
                 let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:debitCreditAmount, result: req.body.marketWinner });
                 let user = await userModel.findByIdAndUpdate(thatBet.userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
