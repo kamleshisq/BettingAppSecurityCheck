@@ -2097,7 +2097,7 @@ socket.on('connect', () => {
                 form.attr('id', userData._id)
                 form.find('#fuBlanceAfter').text((me.availableBalance - amount).toFixed(2))
                 form.find('#tuBalanceAfter').text((userData.availableBalance + amount).toFixed(2))
-
+                form.find('input[name = "remark"]').attr('value', 'SETTLE DEP')
             }else{
                 form.find('.withdraw').addClass('active')
                 form.find('input[name = "type"]').val("withdrawl")
@@ -2110,6 +2110,7 @@ socket.on('connect', () => {
                 form.attr('id', userData._id)
                 form.find('#fuBlanceAfter').text((userData.availableBalance - amount).toFixed(2))
                 form.find('#tuBalanceAfter').text((me.availableBalance + amount).toFixed(2))
+                form.find('input[name = "remark"]').attr('value', 'SETTLE WITH')
 
             }
             }
