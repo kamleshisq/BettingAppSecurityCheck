@@ -2700,38 +2700,20 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
-    if(data.Transaction_type === "2"){
-        filter.stake = {
-            $ne:undefined
-        }
+    let filterstatus = true
+    if(data.filterData.type === "bsettlement"){
+        filter.$expr = {
+            $eq: [{ $strLenCP: "$transactionId" }, 16]
+          }
+        filter.marketId = {$exists:true}
     }else if (data.filterData.type === "deposit"){
-        filter.stake = undefined
-        filter.accStype = undefined
-        filter.creditDebitamount = {
-            $gt: 0
-        }
+        filterstatus = false
     }else if(data.filterData.type === "withdraw"){
-        filter.stake = undefined
-        filter.accStype = undefined
-        filter.creditDebitamount = {
-            $lt: 0
-        }
+        filterstatus = false
     }else if (data.filterData.type === "sdeposit"){
-        filter.stake = undefined
-        filter.accStype = {
-            $ne:undefined
-        }
-        filter.creditDebitamount = {
-            $gt: 0
-        }
+        filterstatus = false
     }else if(data.filterData.type === "swithdraw"){
-        filter.stake = undefined
-        filter.accStype = {
-            $ne:undefined
-        }
-        filter.creditDebitamount = {
-            $lt: 0
-        }
+        filterstatus = false
     }
     // console.log(filter)
     let finalresult = []
@@ -2881,22 +2863,24 @@ io.on('connection', (socket) => {
                 c++
             }
          }
-        return c+1
+        return c
     }
     let j = 0
     let skipvalue
-    while(finalresult.length != 20){
-        skip = data.skipid
-        skipvalue = await getmarketwiseaccdata(limit,skip)
-        skipvalue += skip
-        if(!userAccflage){
-            break
+    if(filterstatus){
+        while(finalresult.length < 20){
+            skip = data.skipid
+            skipvalue = await getmarketwiseaccdata(limit,skip)
+            skipvalue += skip
+            console.log(skipvalue,j,'skipvalue')
+            console.log(finalresult.length,'finalresult.length')
+            if(!userAccflage){
+                break
+            }
+            j++
         }
-        console.log(skipvalue,j,'skipvalue')
-        console.log(finalresult.length,'finalresult.length')
-        j++
     }
-    // console.log(userAcc, page)
+    console.log(finalresult, 'finalresult')
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})
     })
 

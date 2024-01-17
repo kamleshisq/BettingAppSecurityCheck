@@ -11059,6 +11059,10 @@ socket.on('connect', () => {
 
         $(document).on('click','.rowtoggle_AccountStatment',function(e){
             if(!$(this).hasClass('active')){
+                if($(this).parent().children('tr.active').length > 0){
+                let rowid = $(this).parent().children('tr.active').attr('id')
+                $(`.addedaccountstatmentRowHeader-${rowid},.addedaccountstatmentRowbody-${rowid}`).remove()
+                }
                 $(this).parent().children('tr.active').removeClass('active')
                 $(this).addClass('active')
                 let marketId = $(this).attr('data-marketid')
