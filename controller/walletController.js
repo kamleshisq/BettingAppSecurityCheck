@@ -413,8 +413,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
               await accountStatement.create({
                 "user_id":user._id,
                 "description": description,
-                "creditDebitamount" : req.body.creditAmount,
-                "balance" : user.availableBalance + req.body.creditAmount,
+                "creditDebitamount" : debitCreditAmount,
+                "balance" : user.availableBalance + debitCreditAmount,
                 "date" : Date.now(),
                 "userName" : user.userName,
                 "role_type" : user.role_type,
@@ -423,6 +423,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 "transactionId":`${bet.transactionId}`,
                 "marketId":`${bet.marketId}`
               })
+
+              balance = user.availableBalance + debitCreditAmount
 
             }else{
                 let returnAmount = req.body.creditAmount + thatBet.returns
