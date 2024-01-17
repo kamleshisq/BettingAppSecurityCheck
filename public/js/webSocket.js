@@ -10954,7 +10954,7 @@ socket.on('connect', () => {
             for(let i = 0; i < userAcc.length; i++){
                 if(userAcc[i].gameId){
                         html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="${userAcc[i]._id.gameId}" id="rowid-${i + 1 + count}">`
-                    if(userAcc[i].creditDebitamount > 0 && !userAcc[i].accStype){
+                    if(userAcc[i].creditDebitamount > 0){
                         html += `<td title="Transaction">Deposit</td>`
                     }else if(userAcc[i].creditDebitamount < 0 && !userAcc[i].accStype){
                         html += `<td title="Transaction">Withdraw</td>`

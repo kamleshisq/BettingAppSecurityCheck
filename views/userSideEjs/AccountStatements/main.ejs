@@ -61,50 +61,13 @@
                         <tbody class="acount-stat-tbl-body">
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
-                              <%if(data[i]._id.marketId){%>
-                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
-                                    <%if(data[i].creditDebitamount > 0){%>
-                                      <td title="Transaction">Deposit</td>
-                                    <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>
-                                      <td title="Transaction">Withdraw</td>
-                                    <%}else if(data[i].creditDebitamount > 0 && data[i].accStype){%>
-                                      <td title="Transaction">Settlement_Deposit</td>
-                                    <%}else if(data[i].creditDebitamount < 0 && data[i].accStype){%>
-                                      <td title="Transaction">Settlement_Withdraw</td>
-                                    <%}else{%>
-                                      <td title="Transaction"> - </td>
-                                    <%}%>
-                                    <%if(data[i].match){%>
-                                      <td title="Event"><%=data[i].match%></td>
-                                    <%}else{%>
-                                      <td title="Event">-</td>
-                                    <%}%>
-                                    <%if(data[i].marketName){%>
-                                      <td title="Market Type"><%=data[i].marketName%></td>
-                                    <%}else{%>
-                                      <td title="Market Type">-</td>
-                                    <%}%>
-                                    <%if(data[i].creditDebitamount > 0){%>
-                                        <td title="Credit/Debit" class="c-gren"><%=data[i].creditDebitamount%></td>
-                                    <%}else{%>
-                                        <td title="Credit/Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
-                                    <%}%>
-                                      <td title="Closing Balance"><%=data[i].balance%></td>
-                                      <td title="Transaction ID"><%=data[i].transactionId%></td>
-                                      
-                                  <%}else if(data[i]._id.gameId){%>
+                                if(data[i]._id.gameId){%>
                                 <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="<%=data[i]._id.gameId%>" id="rowid-<%=i + 1%>">
-                                    <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
-                                      <td title="Transaction">Deposit</td>
-                                    <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>
-                                      <td title="Transaction">Withdraw</td>
-                                    <%}else if(data[i].creditDebitamount > 0 && data[i].accStype){%>
-                                      <td title="Transaction">Settlement_Deposit</td>
-                                    <%}else if(data[i].creditDebitamount < 0 && data[i].accStype){%>
-                                      <td title="Transaction">Settlement_Withdraw</td>
-                                    <%}else{%>
-                                      <td title="Transaction"> - </td>
-                                    <%}%>
+                                    <%if(data[i].creditDebitamount > 0{%>
+                                      <td title="Transaction" class="positive transactiontype">Casino Bet  Settlement</td>
+                                    <%}else if(data[i].creditDebitamount < 0{%>
+                                      <td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>
+                                    <%}
                                     <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
                                     <%}else{%>
@@ -123,19 +86,50 @@
                                       <td title="Closing Balance"><%=data[i].balance%></td>
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
+                                  <%}else if(data[i].transactionId > 16){%>
+                                    <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
+                                    <td title="Transaction">Sport Book Bet Settlement</td>
+                                    <%if(data[i].match){%>
+                                      <td title="Event"><%=data[i].match%></td>
+                                    <%}else{%>
+                                      <td title="Event">-</td>
+                                    <%}%>
+                                    <%if(data[i].marketName){%>
+                                      <td title="Market Type"><%=data[i].marketName%></td>
+                                    <%}else{%>
+                                      <td title="Market Type">-</td>
+                                    <%}%>
+                                    <%if(data[i].creditDebitamount > 0){%>
+                                        <td title="Credit/Debit" class="c-gren"><%=data[i].creditDebitamount%></td>
+                                    <%}else{%>
+                                        <td title="Credit/Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
+                                    <%}%>
+                                      <td title="Closing Balance"><%=data[i].balance%></td>
+                                      <td title="Transaction ID"><%=data[i].transactionId%></td>
+                                      
+                                  <%}else if(data[i]._id.marketId){%>
+                                    <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
+                                      <td title="Transaction">Bet Settlement</td>
+                                        <%if(data[i].match){%>
+                                          <td title="Event"><%=data[i].match%></td>
+                                        <%}else{%>
+                                          <td title="Event">-</td>
+                                        <%}%>
+                                        <%if(data[i].marketName){%>
+                                          <td title="Market Type"><%=data[i].marketName%></td>
+                                        <%}else{%>
+                                          <td title="Market Type">-</td>
+                                        <%}%>
+                                        <%if(data[i].creditDebitamount > 0){%>
+                                            <td title="Credit/Debit" class="c-gren"><%=data[i].creditDebitamount%></td>
+                                        <%}else{%>
+                                            <td title="Credit/Debit" class="c-reed"><%=data[i].creditDebitamount%></td>
+                                        <%}%>
+                                          <td title="Closing Balance"><%=data[i].balance%></td>
+                                          <td title="Transaction ID"><%=data[i].transactionId%></td>
                                   <%}else{%>
                                     <tr class="acount-stat-tbl-body-tr " data-marketid="" id="rowid-<%=i + 1%>">
-                                    <%if(data[i].creditDebitamount > 0 && data[i].accStype != undefined){%>
-                                      <td title="Transaction">Deposit</td>
-                                    <%}else if(data[i].creditDebitamount < 0 && data[i].accStype != undefined){%>
-                                      <td title="Transaction">Withdraw</td>
-                                    <%}else if(data[i].creditDebitamount > 0 && data[i].accStype == undefined){%>
-                                      <td title="Transaction">Settlement_Deposit</td>
-                                    <%}else if(data[i].creditDebitamount < 0 && data[i].accStype == undefined){%>
-                                      <td title="Transaction">Settlement_Withdraw</td>
-                                    <%}else{%>
-                                      <td title="Transaction"> - </td>
-                                    <%}%>
+                                    <td title="Transaction">Settlement</td>
                                     <td title="Event">-</td>
                                     <td title="Market Type">-</td>
                                     <%if(data[i].creditDebitamount > 0){%>

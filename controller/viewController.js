@@ -778,6 +778,48 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         break
                     }
                 }
+            }else if(userAcc[i].transactionId.length > 16){
+                let bet = await betModel.aggregate([
+                    {
+                        $match:{
+                            userId:req.currentUser._id.toString(),
+                            marketId:userAcc[i].marketId
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                            localField: 'transactionId',
+                            foreignField: 'transactionId',
+                            as: 'accountdetail'
+                        }
+                    },
+                    {
+                        $unwind:"$accountdetail"
+                    },
+                    {
+                        $group:{
+                            _id:{
+                                eventId:"$eventId",
+                                marketId:"$marketId"
+                            },
+                            match:{$first:'$match'},
+                            marketName:{$first:'$marketName'},
+                            stake:{$first:'$accountdetail.stake'},
+                            accStype:{$first:'$accountdetail.accStype'},
+                            creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                            balance:{$sum:'$accountdetail.balance'},
+                            transactionId:{$first:'$accountdetail.transactionId'}
+                        }
+                    }
+                ])
+                if(!marketidarray.includes(bet[0]._id.marketId)){
+                    marketidarray.push(bet[0]._id.marketId)
+                    finalresult.push(bet[0])
+                    if(finalresult.length >= 20){
+                        break
+                    }
+                }
             }else{
                 finalresult.push(userAcc[i])
                 if(finalresult.length >= 20){
