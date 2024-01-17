@@ -2868,7 +2868,7 @@ io.on('connection', (socket) => {
     let j = 0
     let skipvalue
     if(filterstatus){
-        while(finalresult.length != 20){
+        while(finalresult.length < 20){
             skip = data.skipid
             skipvalue = await getmarketwiseaccdata(limit,skip)
             skipvalue += skip
