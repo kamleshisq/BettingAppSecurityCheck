@@ -16,15 +16,33 @@ const checkMarketWinAmount = require('./checkWinAmountOfThatMarket');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    function generateString(length) {
-        let result = "";
-        const charactersLength = characters.length;
-        for ( let i = 0; i < length; i++ ) {
-            result += characters.charAt(parseFloat(Math.random() * charactersLength));
-        }
+function generateTransactionId() {
+    const datePart = new Date().getTime().toString(16).toUpperCase(); // Convert current timestamp to hexadecimal
+    const randomPart = Math.random().toString(16).substr(2, 8).toUpperCase(); // Generate a random hexadecimal string
 
-        return result;
+    const transactionId = datePart + randomPart;
+
+    // Ensure the transaction ID is exactly 16 characters long
+    if (transactionId.length < 16) {
+        const additionalRandomChars = generateString(16 - transactionId.length);
+        return transactionId + additionalRandomChars;
+    } else {
+        return transactionId.substr(0, 16);
     }
+}
+
+function generateString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = "";
+    const charactersLength = characters.length;
+
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
+    
 
 async function placeBet(data){
     // console.log(data, "data1")
@@ -54,7 +72,7 @@ async function placeBet(data){
     // else if(check.exposureLimit === check.exposure){
     //     return "Please try again later, Your exposure Limit is full"
     // }
-    let uniqueToken = generateString(5)
+    let uniqueToken = generateTransactionId()
     const sportData = await cricketAndOtherSport()
     let gameList
     let bettype
@@ -336,7 +354,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
         betPlaceData = {
             userId : data.LOGINDATA.LOGINUSER._id,
             userName : data.LOGINDATA.LOGINUSER.userName,
-            transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
+            transactionId : `${uniqueToken}`,
             date : Date.now(),
             oddValue : parseFloat(data.data.odds),
             Stake : parseFloat(data.data.stake),
@@ -370,7 +388,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
             betPlaceData = {
                 userId : data.LOGINDATA.LOGINUSER._id,
                 userName : data.LOGINDATA.LOGINUSER.userName,
-                transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
+                transactionId : `${uniqueToken}`,
                 date : Date.now(),
                 oddValue : parseFloat(data.data.odds),
                 Stake : parseFloat(data.data.stake),
