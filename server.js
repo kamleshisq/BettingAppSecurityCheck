@@ -2953,9 +2953,9 @@ io.on('connection', (socket) => {
                 bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id})
             }else if(data.gameId){
                 if(gametype == 'positive'){
-                    bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$gt:0}})
+                    bets = await Bet.find({gameId:data.gameId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$gt:0}})
                 }else{
-                    bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$lte:0}})
+                    bets = await Bet.find({gameId:data.gameId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$lte:0}})
                 }
             }
             socket.emit('getbetdetailbyid',{status:'success',bets,rowid:data.rowid})
