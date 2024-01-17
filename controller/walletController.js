@@ -531,7 +531,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         let user;
         let balance;
         let parentUser;
-        if(!bet1.marketId){
+        if(req.body.gameId){
             user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
         }else{
             user = await userModel.findById(req.body.userId)
