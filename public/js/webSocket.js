@@ -10912,7 +10912,8 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
                 filterData.type = type
-                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
+                let skipid = parseInt($('.skipid').attr('data-skipid'))
+                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
             });
         });
 
