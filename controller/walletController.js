@@ -379,7 +379,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:debitCreditAmount, result: req.body.marketWinner });
                 let user = await userModel.findByIdAndUpdate(thatBet.userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
                 let description = `Bet for ${thatBet.match}/Result = ${req.body.marketWinner}/WON`
-
+                
                 let debitAmountForP = debitCreditAmount
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
                     let parentUser1 = await userModel.findById(user.parentUsers[i])
@@ -389,9 +389,9 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
                     await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                      $inc: {
-                          downlineBalance: debitCreditAmount,
-                          myPL: -parentUser1Amount,
+                        $inc: {
+                            downlineBalance: debitCreditAmount,
+                            myPL: -parentUser1Amount,
                           uplinePL: -parentUser2Amount,
                           lifetimePL: -parentUser1Amount,
                           pointsWL: debitCreditAmount
@@ -409,6 +409,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 }
                   debitAmountForP = parentUser2Amount
               }
+              console.log(user.availableBalance,req.body.creditAmount,  user.availableBalance + req.body.creditAmount)
 
               await accountStatement.create({
                 "user_id":user._id,
