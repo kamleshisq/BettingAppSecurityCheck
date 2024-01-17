@@ -356,13 +356,13 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 let Acc = {
                     "user_id":req.body.userId,
                     "description": description,
-                    "creditDebitamount" : -req.body.debitAmount,
-                    "balance" : user.availableBalance - req.body.debitAmount,
+                    "creditDebitamount" : -exposure,
+                    "balance" : user.availableBalance - exposure,
                     "date" : Date.now(),
                     "userName" : user.userName,
                     "role_type" : user.role_type,
                     "Remark":"-",
-                    "stake": req.body.debitAmount,
+                    "stake": betforStake.Stake,
                     "transactionId":req.body.transactionId,
                     "marketId":`${req.body.marketId}`
                 }
@@ -409,7 +409,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 }
                   debitAmountForP = parentUser2Amount
               }
-              console.log(user.availableBalance,req.body.creditAmount,  user.availableBalance + req.body.creditAmount)
 
               await accountStatement.create({
                 "user_id":user._id,
