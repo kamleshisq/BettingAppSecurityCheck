@@ -190,6 +190,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
                 marketName:req.body.marketName,
                 eventId:req.body.eventId,
                 bettype2:req.body.betType,
+                marketId:req.body.marketId
             }
         }
         if(!user){
