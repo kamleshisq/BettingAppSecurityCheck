@@ -2743,7 +2743,7 @@ io.on('connection', (socket) => {
          if(userAcc.length == 0){
             userAccflage = false
          }
-         if(!userAccflage){
+         if(userAccflage){
              for(let i = 0;i<userAcc.length;i++){
                  if(userAcc[i].marketId){
                      let bet = await Bet.aggregate([
