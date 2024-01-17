@@ -740,14 +740,14 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         }
         return c+1
     }
-    let i = 0
+    let j = 0
     while(finalresult.length != 20){
-        skip = i * limit
+        skip = j * limit
         let skipvalue = await getmarketwiseaccdata(limit,skip)
         skipvalue += skip
-        i++
+        console.log(skipvalue,j,'skipvalue')
+        j++
     }
-     console.log(skipvalue,'skipvalue')
     console.log(finalresult,'finalresul')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
