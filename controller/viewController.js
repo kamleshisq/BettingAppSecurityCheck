@@ -716,6 +716,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         $group:{
                             _id:{
                                 gameId:"$gameId",
+                                status:"$status"
                             },
                             match:{$first:'$event'},
                             marketName:{$first:'$betType'},
@@ -727,10 +728,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         }
                     }
                 ])
+                console.log(bet,'betin game id')
                 if(!marketidarray.includes(bet[0]._id.gameId)){
                     marketidarray.push(bet[0]._id.gameId)
                     finalresult.push(bet[0])
-                    if(finalresult.length == 20){
+                    if(finalresult.length >= 20){
                         break
                     }
                 }

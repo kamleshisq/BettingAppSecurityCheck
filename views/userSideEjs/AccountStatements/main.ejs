@@ -93,7 +93,7 @@
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
                                   <%}else if(data[i]._id.gameId){%>
-                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="<%=data[i].gameId%>" id="rowid-<%=i + 1%>">
+                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="<%=data[i]._id.gameId%>" id="rowid-<%=i + 1%>">
                                     <%if(data[i].creditDebitamount > 0 && !data[i].accStype){%>
                                       <td title="Transaction">Deposit</td>
                                     <%}else if(data[i].creditDebitamount < 0 && !data[i].accStype){%>
