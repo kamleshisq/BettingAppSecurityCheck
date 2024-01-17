@@ -731,7 +731,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 console.log(bet,'betin game id')
                 if(!marketidarray.includes(bet[0]._id.gameId)){
                     marketidarray.push(bet[0]._id.gameId)
-                    finalresult.concat(bet)
+                    finalresult = finalresult.concat(bet)
                     if(finalresult.length >= 20){
                         break
                     }
