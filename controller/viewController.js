@@ -801,7 +801,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         console.log(finalresult.length,'finalresult.length')
         j++
     }
-    console.log(finalresult,'finalresul')
+    // console.log(finalresult,'finalresul')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
