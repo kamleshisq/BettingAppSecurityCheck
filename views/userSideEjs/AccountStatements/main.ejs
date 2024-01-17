@@ -124,7 +124,7 @@
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
                                   <%}else{%>
-                                    <tr class="acount-stat-tbl-body-tr " data-marketid="" id="rowid-<%=i + 1%>"></tr>
+                                    <tr class="acount-stat-tbl-body-tr " data-marketid="" id="rowid-<%=i + 1%>">
                                     <%if(data[i].creditDebitamount > 0 && data[i].accStype != undefined){%>
                                       <td title="Transaction">Deposit</td>
                                     <%}else if(data[i].creditDebitamount < 0 && data[i].accStype != undefined){%>
