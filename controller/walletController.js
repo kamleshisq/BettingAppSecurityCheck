@@ -116,11 +116,11 @@ exports.betrequest = catchAsync(async(req, res, next) => {
                 "status": "RS_ERROR"
             })
         }
-        let betLimit
+        let betTYPE
         if(req.body.sportId){
-            betLimit = await betLimitModel.findOne({type:"Sport"})
+            betTYPE = 'SPORTBOOK'
         }else{
-            betLimit = await betLimitModel.findOne({type:"Casino"})
+            betTYPE = 'SPORTBOOK'
         }
         if(req.body.transactionId){
             let check = await betModel.findOne({transactionId:req.body.transactionId})
@@ -131,7 +131,12 @@ exports.betrequest = catchAsync(async(req, res, next) => {
                 })
             }
         }
-        let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
+        let user
+        if(req.body.gameId){
+            user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
+        }else{
+            user = await userModel.findById(req.body.userId)
+        }
         const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let date = Date.now()
         let game
@@ -192,51 +197,56 @@ exports.betrequest = catchAsync(async(req, res, next) => {
                 "status": "RS_ERROR"
             })
         }
-        let amount = req.body.debitAmount
-        for(let i = user.parentUsers.length - 1; i >= 1; i--){
-            let parentUser1 = await userModel.findById(user.parentUsers[i])
-            let parentUser2 = await userModel.findById(user.parentUsers[i-1])
-            let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
-            let parentUser2Amount = new Decimal(parentUser1.Share).times(amount).dividedBy(100);
-            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-            await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                $inc: {
-                    downlineBalance: -req.body.debitAmount,
-                    myPL: parentUser1Amount,
-                    uplinePL: parentUser2Amount,
-                    lifetimePL: parentUser1Amount,
-                    pointsWL: -req.body.debitAmount
-                }
-            });
-        
-            if (i === 1) {
-                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+        if(req.body.gameId){
+            let amount = req.body.debitAmount
+            for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                let parentUser1 = await userModel.findById(user.parentUsers[i])
+                let parentUser2 = await userModel.findById(user.parentUsers[i-1])
+                let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
+                let parentUser2Amount = new Decimal(parentUser1.Share).times(amount).dividedBy(100);
+                parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                await userModel.findByIdAndUpdate(user.parentUsers[i], {
                     $inc: {
                         downlineBalance: -req.body.debitAmount,
-                        myPL: parentUser2Amount,
-                        lifetimePL: parentUser2Amount,
+                        myPL: parentUser1Amount,
+                        uplinePL: parentUser2Amount,
+                        lifetimePL: parentUser1Amount,
                         pointsWL: -req.body.debitAmount
                     }
                 });
+            
+                if (i === 1) {
+                    await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                        $inc: {
+                            downlineBalance: -req.body.debitAmount,
+                            myPL: parentUser2Amount,
+                            lifetimePL: parentUser2Amount,
+                            pointsWL: -req.body.debitAmount
+                        }
+                    });
+                }
+                amount = parentUser2Amount
             }
-            amount = parentUser2Amount
+
         }
         // console.log(betDATA, "betDATAbetDATAbetDATAbetDATA")
         await betModel.create(betDATA);
-        let Acc = {
-            "user_id":req.body.userId,
-            "description": description,
-            "creditDebitamount" : -req.body.debitAmount,
-            "balance" : user.availableBalance - req.body.debitAmount,
-            "date" : Date.now(),
-            "userName" : user.userName,
-            "role_type" : user.role_type,
-            "Remark":"-",
-            "stake": req.body.debitAmount,
-            "transactionId":req.body.transactionId
+        if(req.body.gameId){
+            let Acc = {
+                "user_id":req.body.userId,
+                "description": description,
+                "creditDebitamount" : -req.body.debitAmount,
+                "balance" : user.availableBalance - req.body.debitAmount,
+                "date" : Date.now(),
+                "userName" : user.userName,
+                "role_type" : user.role_type,
+                "Remark":"-",
+                "stake": req.body.debitAmount,
+                "transactionId":req.body.transactionId
+            }
+            accountStatement.create(Acc)
         }
-        accountStatement.create(Acc)
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             return res.status(200).json({
                 "balance": user.availableBalance - req.body.debitAmount - exposureCheck,
