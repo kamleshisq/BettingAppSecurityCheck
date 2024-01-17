@@ -8875,7 +8875,7 @@ io.on('connection', (socket) => {
                     $group:{
                         _id:null,
                         sum:{
-                            $sum:returns
+                            $sum:'$returns'
                         }
                     }
                 }
