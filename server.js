@@ -788,7 +788,7 @@ io.on('connection', (socket) => {
                                 $match:{
                                     userId:data.id,
                                     $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
-                                     date:filter.date
+                                    //  date:filter.date
                                 }
                             },
                             // {
@@ -835,7 +835,7 @@ io.on('connection', (socket) => {
                                     userId:data.id,
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                                      eventId:{$exists:'eventId'},
-                                     date:filter.date
+                                    //  date:filter.date
                                 }
                             },
                             // {
@@ -879,7 +879,7 @@ io.on('connection', (socket) => {
                                 $match:{
                                     userId:data.id,
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                                     date:filter.date
+                                    //  date:filter.date
                                 }
                             },
                             // {
