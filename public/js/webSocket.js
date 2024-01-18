@@ -3417,6 +3417,7 @@ socket.on('connect', () => {
         let model 
 
         $(document).on('click','.ownAccDetails',function(e){
+            model = $('#myModal5')
             let gameId = $(this).attr('data-gameid')
             let marketId = $(this).attr('data-marketid')
             let id = $(this).attr('data-id')
@@ -3598,7 +3599,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
-            $('.skipid').attr('data-skipid',skipvalue)
+            $('.skipid').attr('data-skipid',data.skipvalue)
             console.log(data)
             if(data.json.status == "success" && data.user){
                 let html = "";
@@ -3642,26 +3643,15 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;">
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.finalresult[i].transactionId){
-                            if(data.json.finalresult[i].match || data.json.finalresult[i].event){
-                                if(data.json.finalresult[i].event && data.json.finalresult[i].match){
-                                    html += `<td>${data.json.finalresult[i].match}</td>`
-                                }else if(data.json.finalresult[i].event && data.json.finalresult[i].gameId){
-                                    html += `<td>${data.json.finalresult[i].event}</td>`
-    
-                                }
-                                if(data.json.finalresult[i].marketName || data.json.finalresult[i].betType){
-                                    if(data.json.finalresult[i].marketName){
-                                        html += `<td>${data.json.finalresult[i].marketName}</td>`
-                                    }else if(data.json.finalresult[i].betType){
-                                        html += `<td>${data.json.finalresult[i].betType}</td>`
-                                    }
-                                    
-                                }else{
-    
-                                    html += `<td>-</td>`
-                                }
+                            if(data.json.finalresult[i].match){
+                                html += `<td>${data.json.finalresult[i].match}</td>`
                             }else{
-                                html += `<td>-</td><td>-</td>`
+                                html += `<td>-</td>`
+                            }
+                            if(data.json.finalresult[i].marketName){
+                                html += `<td>${data.json.finalresult[i].marketName}</td>`
+                            }else{
+                                html += `<td>-</td>`
                             }
                         }else{
                             html += `<td>-</td><td>-</td>`
@@ -3675,10 +3665,10 @@ socket.on('connect', () => {
                         }
                         if(data.json.finalresult[i]._id.gameId){
                             html += `<td>${data.json.finalresult[i].balance}</td>
-                            <td><a class="ownAccDetails" data-gameid="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                            <td><a class="ownAccDetails" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
                         }else if(data.json.finalresult[i]._id.marketId){
                             html += `<td>${data.json.finalresult[i].balance}</td>
-                            <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                            <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id.marketId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
                         }else{
                             html += `<td>${data.json.finalresult[i].balance}</td>
                             <td><a class="ownAccDetails" data-id="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`

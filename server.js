@@ -743,6 +743,7 @@ io.on('connection', (socket) => {
         let json  = {}
         let filter = {};
         let limit = 10
+        filter.$or = [{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}]
         if(data.Fdate != '' && data.Tdate != ''){
             filter.date = {$gte:new Date(data.Fdate),$lte:new Date(data.Tdate)}
         }else if(data.Fdate != '' && data.Tdate == ''){
@@ -785,7 +786,7 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                    userId:data.id.toString(),
                                     $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
                                      date:filter.date
                                 }
@@ -814,7 +815,11 @@ io.on('connection', (socket) => {
                                     accStype:{$first:'$accountdetail.accStype'},
                                     creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
                                     balance:{$sum:'$accountdetail.balance'},
-                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                    transactionId:{$first:'$accountdetail.transactionId'},
+                                    description:{$first:'$accountdetail.description'},
+                                    Remark:{$first:'$accountdetail.Remark'},
+                                    date:{$first:'$accountdetail.date'}
+
                                 }
                             }
                         ])
@@ -830,7 +835,7 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                    userId:data.id.toString(),
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                                      eventId:{$exists:'eventId'},
                                      date:filter.date
@@ -860,7 +865,10 @@ io.on('connection', (socket) => {
                                     accStype:{$first:'$accountdetail.accStype'},
                                     creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
                                     balance:{$sum:'$accountdetail.balance'},
-                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                    transactionId:{$first:'$accountdetail.transactionId'},
+                                    description:{$first:'$accountdetail.description'},
+                                    Remark:{$first:'$accountdetail.Remark'},
+                                    date:{$first:'$accountdetail.date'}
                                 }
                             }
                         ])
@@ -875,7 +883,7 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                    userId:data.id.toString(),
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                                      date:filter.date
                                 }
@@ -904,7 +912,10 @@ io.on('connection', (socket) => {
                                     accStype:{$first:'$accountdetail.accStype'},
                                     creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
                                     balance:{$sum:'$accountdetail.balance'},
-                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                    transactionId:{$first:'$accountdetail.transactionId'},
+                                    description:{$first:'$accountdetail.description'},
+                                    Remark:{$first:'$accountdetail.Remark'},
+                                    date:{$first:'$accountdetail.date'}
                                 }
                             }
                         ])
@@ -1140,7 +1151,7 @@ io.on('connection', (socket) => {
             }
         }else if (data.Fdate != "" && data.Tdate != ""){
             filter.date = {
-                $gte : new Date(data.filterData.fromDate),
+                $gte : new Date(data.Fdate),
                 $lt : new Date(data.Tdate)
             }
         }
