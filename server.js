@@ -791,17 +791,17 @@ io.on('connection', (socket) => {
                                      date:filter.date
                                 }
                             },
-                            {
-                                $lookup: {
-                                    from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                    localField: 'transactionId',
-                                    foreignField: 'transactionId',
-                                    as: 'accountdetail'
-                                }
-                            },
-                            {
-                                $unwind:"$accountdetail"
-                            },
+                            // {
+                            //     $lookup: {
+                            //         from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                            //         localField: 'transactionId',
+                            //         foreignField: 'transactionId',
+                            //         as: 'accountdetail'
+                            //     }
+                            // },
+                            // {
+                            //     $unwind:"$accountdetail"
+                            // },
                             {
                                 $group:{
                                     _id:{
@@ -811,14 +811,11 @@ io.on('connection', (socket) => {
                                     },
                                     match:{$first:'$event'},
                                     marketName:{$first:'$betType'},
-                                    stake:{$first:'$accountdetail.stake'},
-                                    accStype:{$first:'$accountdetail.accStype'},
-                                    creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                    balance:{$sum:'$accountdetail.balance'},
-                                    transactionId:{$first:'$accountdetail.transactionId'},
-                                    description:{$first:'$accountdetail.description'},
-                                    Remark:{$first:'$accountdetail.Remark'},
-                                    date:{$first:'$accountdetail.date'}
+                                    stake:{$first:'Stake'},
+                                    creditDebitamount:{$sum:'returns'},
+                                    balance:{$sum:'$returns'},
+                                    transactionId:{$first:'$transactionId'},
+                                    date:{$first:'$date'}
 
                                 }
                             }

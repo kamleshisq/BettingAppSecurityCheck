@@ -3683,24 +3683,18 @@ socket.on('connect', () => {
                         if(data.json.finalresult[i]._id.gameId){
                             if(data.json.finalresult[i].creditDebitamount > 0){
                                 html += `<td>${data.json.finalresult[i].balance}</td>
-                                <td><a class="ownAccDetails positive" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                                <td><a class="ownAccDetails positive" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
                             }else{
                                 html += `<td>${data.json.finalresult[i].balance}</td>
-                                <td><a class="ownAccDetails negative" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                                <td><a class="ownAccDetails negative" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
 
                             }
                         }else if(data.json.finalresult[i]._id.marketId){
                             html += `<td>${data.json.finalresult[i].balance}</td>
-                            <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id.marketId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                            <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id.marketId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
                         }else{
                             html += `<td>${data.json.finalresult[i].balance}</td>
-                            <td><a class="ownAccDetails" data-id="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
-                        }
-
-                        if(data.json.finalresult[i].Remark){
-                            html += `<td>${data.json.finalresult[i].Remark}</td>`
-                        }else{
-                            html += `<td>-</td>`
+                            <td><a class="ownAccDetails" data-id="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
                         }
                 }
                 count1 += 10;
