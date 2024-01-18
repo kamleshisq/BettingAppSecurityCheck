@@ -3537,6 +3537,7 @@ socket.on('connect', () => {
         let SUSER
         let Fdate = document.getElementById("Fdate").value
         let Tdate = document.getElementById("Tdate").value
+        
         Transaction_type = $('#transaction_type').val()
         data.Transaction_type = Transaction_type
         data.Fdate = Fdate;
@@ -3556,9 +3557,9 @@ socket.on('connect', () => {
             data.id = this.id
             SUSER = this.id
             data.page = 0
-            data.LOGINDATA = LOGINDATA
             $('.pageLink').attr('data-page',1)
             $('.wrapper').hide()
+            console.log(data)
             socket.emit( "AccountScroll2", data)
         })
 
