@@ -714,7 +714,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              $match:{
                                  userId:req.currentUser._id.toString(),
                                  $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
-                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} ,
+                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
                                  
                              }
                          },
