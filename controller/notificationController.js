@@ -62,7 +62,7 @@ exports.deleteNotification = catchAsync(async(req, res, next) => {
 
 
 exports.myNotifications = catchAsync(async(req, res, next) => {
-    console.log('WORKINGNOTIFICATION')
+    console.log('WORKINGNOTIFICATION', req.currentUser)
     if(req.currentUser){
         let user = req.currentUser;
         const today = new Date();
@@ -73,6 +73,7 @@ exports.myNotifications = catchAsync(async(req, res, next) => {
         const today = new Date();
         let notifications = await notificationModel.find({userId:{$in:"6492fd6cd09db28e00761691"},startDate: { $lte: today },endDate: { $gte: today }})
         req.notifications = notifications
+        console.log('WORKINGNOTIFICATION')
         next()
     }
     // console.log('WORKINGNOTIFICATION222')
