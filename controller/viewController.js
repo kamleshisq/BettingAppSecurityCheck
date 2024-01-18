@@ -718,17 +718,17 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  
                              }
                          },
-                         {
-                             $lookup: {
-                                 from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                 localField: 'transactionId',
-                                 foreignField: 'transactionId',
-                                 as: 'accountdetail'
-                             }
-                         },
-                         {
-                             $unwind:"$accountdetail"
-                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
                          {
                              $group:{
                                  _id:{
@@ -738,10 +738,10 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  },
                                  match:{$first:'$event'},
                                  marketName:{$first:'$betType'},
-                                 stake:{$first:'$accountdetail.stake'},
-                                 accStype:{$first:'$accountdetail.accStype'},
-                                 creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                 balance:{$sum:'$accountdetail.balance'},
+                                 stake:{$first:'$Stake'},
+                                 accStype:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$returns'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
                          },
@@ -771,17 +771,17 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
 
                              }
                          },
-                         {
-                             $lookup: {
-                                 from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                 localField: 'transactionId',
-                                 foreignField: 'transactionId',
-                                 as: 'accountdetail'
-                             }
-                         },
-                         {
-                             $unwind:"$accountdetail"
-                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
                          {
                              $group:{
                                  _id:{
@@ -791,11 +791,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  },
                                  match:{$first:'$match'},
                                  marketName:{$first:'$marketName'},
-                                 stake:{$first:'$accountdetail.stake'},
-                                 accStype:{$first:'$accountdetail.accStype'},
-                                 creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                 balance:{$sum:'$accountdetail.balance'},
-                                 transactionId:{$first:'$accountdetail.transactionId'}
+                                 stake:{$first:'$Stake'},
+                                 accStype:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$returns'},
+                                 transactionId:{$first:'$transactionId'}
                              }
                          },
                          {
@@ -805,7 +805,24 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     console.log('inuseracc sport book',bet)
+                     let accounts = []
+                    // accounts = await accountStatement.aggregate([
+                    //     {
+                    //         $match:{
+                    //             userName:req.currentUser.userName,
+                    //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                    //         }
+                    //     },
+                    //     {
+                    //         $group:{
+                    //             _id:null,
+                    //             marketId:{$first:'$marketId'},
+                    //             creditDebitamount:{$sum:'$creditDebitamount'},
+                    //         }
+                    //     }
+                    //  ])
+
+                     console.log('inuseracc sport book',bet,accounts)
                      if(!marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
@@ -822,17 +839,17 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
                              }
                          },
-                         {
-                             $lookup: {
-                                 from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                 localField: 'transactionId',
-                                 foreignField: 'transactionId',
-                                 as: 'accountdetail'
-                             }
-                         },
-                         {
-                             $unwind:"$accountdetail"
-                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
                          {
                              $group:{
                                  _id:{
@@ -842,11 +859,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  },
                                  match:{$first:'$match'},
                                  marketName:{$first:'$marketName'},
-                                 stake:{$first:'$accountdetail.stake'},
-                                 accStype:{$first:'$accountdetail.accStype'},
-                                 creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                 balance:{$sum:'$accountdetail.balance'},
-                                 transactionId:{$first:'$accountdetail.transactionId'}
+                                 stake:{$first:'$Stake'},
+                                 accStype:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$returns'},
+                                 transactionId:{$first:'$transactionId'}
                              }
                          },
                          {
