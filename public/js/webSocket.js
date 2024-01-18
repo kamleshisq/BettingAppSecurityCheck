@@ -3557,6 +3557,7 @@ socket.on('connect', () => {
             data.id = this.id
             SUSER = this.id
             data.page = 0
+            data.skipid = parseInt($('.skipid').attr('data-skipid'))
             $('.pageLink').attr('data-page',1)
             $('.wrapper').hide()
             console.log(data)
@@ -3587,15 +3588,17 @@ socket.on('connect', () => {
             let page = parseInt($('.pageLink').attr('data-page'));
             $('.pageLink').attr('data-page',page + 1)
             data.page = page
+            data.skipid = parseInt($('.skipid').attr('data-skipid'))
            if(searchU){
                 data.id = SUSER
            }
-            socket.emit('   ',data)
+            socket.emit('AccountScroll2',data)
         })
     
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
+            $('.skipid').attr('data-skipid',skipvalue)
             console.log(data)
             if(data.json.status == "success" && data.user){
                 let html = "";
