@@ -2867,12 +2867,12 @@ io.on('connection', (socket) => {
         return c + 1
     }
     let j = 0
-    let skipvalue
+    let skipvalue = data.skipid;
     if(filterstatus){
         while(finalresult.length < 20){
             skip = (limit * j) + data.skipid 
-            skipvalue = await getmarketwiseaccdata(limit,skip)
-            skipvalue += skip
+            let result = await getmarketwiseaccdata(limit,skip)
+            skipvalue = skipvalue + result
             console.log(skipvalue,j,'skipvalue')
             console.log(finalresult.length,'finalresult.length')
             if(!userAccflage){
