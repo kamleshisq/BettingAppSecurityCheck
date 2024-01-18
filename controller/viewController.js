@@ -621,6 +621,7 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
+    console.log('WORKING')
     let featureEventId = []
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
