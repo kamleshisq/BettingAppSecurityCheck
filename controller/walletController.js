@@ -538,7 +538,9 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 "status": "RS_ERROR"
             })
         }else{
-            await reqIdModel.create({reqId:req.body.transactionId})
+            if(!check){
+                await reqIdModel.create({reqId:req.body.transactionId})
+            }
         }
     }
     // console.log(user, bet1)
