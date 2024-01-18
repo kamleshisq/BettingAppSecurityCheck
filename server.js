@@ -920,6 +920,8 @@ io.on('connection', (socket) => {
                                 }
                             }
                         ])
+                        console.log('in marketid',bet)
+
                         if(!marketidarray.includes(bet[0]._id.marketId)){
                             marketidarray.push(bet[0]._id.marketId)
                             for(let k = 0;k<bet.length;k++){
