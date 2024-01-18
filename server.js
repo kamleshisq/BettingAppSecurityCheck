@@ -2700,12 +2700,12 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
+    filter.$or = [{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}]
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
         filter.$expr = {
             $eq: [{ $strLenCP: "$transactionId" }, 16]
           }
-        filter.marketId = {$exists:true}
     }else if (data.filterData.type === "deposit"){
         filterstatus = false
     }else if(data.filterData.type === "withdraw"){
@@ -2715,7 +2715,8 @@ io.on('connection', (socket) => {
     }else if(data.filterData.type === "swithdraw"){
         filterstatus = false
     }
-    filter.$or = [{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}]
+    console.log('filter',filter)
+    
 
     // console.log(filter)
     let finalresult = []
