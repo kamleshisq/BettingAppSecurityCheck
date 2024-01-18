@@ -786,7 +786,7 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.id.toString(),
+                                    userId:data.id,
                                     $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
                                      date:filter.date
                                 }
@@ -832,7 +832,7 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.id.toString(),
+                                    userId:data.id,
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                                      eventId:{$exists:'eventId'},
                                      date:filter.date
@@ -877,7 +877,7 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.id.toString(),
+                                    userId:data.id,
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                                      date:filter.date
                                 }
