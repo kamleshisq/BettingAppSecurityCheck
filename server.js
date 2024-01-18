@@ -10077,7 +10077,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('getRefresh', async(data) => {
-        console.log(data, "datadatadata")
+        // console.log(data, "datadatadata")
         let getMapBetData = await Bet.aggregate([
             {
                 $match: {
