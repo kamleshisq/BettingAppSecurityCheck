@@ -621,6 +621,7 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
+    console.log('WORKING33333')
     let featureEventId = []
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
@@ -691,6 +692,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
+            return c + 1
          }
          if(userAccflage){
              for(let i = 0;i<userAcc.length;i++){
@@ -6353,6 +6355,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
 
 
 exports.userdashboard22 = catchAsync(async(req, res, next) => {
+    console.log('WORKING')
     let featureEventId = []
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)

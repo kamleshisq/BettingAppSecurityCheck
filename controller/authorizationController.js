@@ -652,7 +652,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log(req.cookies, "cookiescookiescookies")
     // console.log('product: ', sessionStorage.getItem('sessionID'));
     // console.log(req.session, "SESSSION")
-    console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies21212")
+    // console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies21212")
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
