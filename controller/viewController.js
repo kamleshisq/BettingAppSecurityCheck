@@ -686,6 +686,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let marketidarray = [];
     let userAccflage = true
     async function getmarketwiseaccdata (limit,skip){
+        console.log('in getmarketwiseaccdata function')
          let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
@@ -728,7 +729,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          }
                      ])
-                     console.log(bet,'betin game id')
+                     console.log(bet,'bet in game id')
                      if(!marketidarray.includes(bet[0]._id.gameId)){
                          marketidarray.push(bet[0]._id.gameId)
                          finalresult = finalresult.concat(bet)
