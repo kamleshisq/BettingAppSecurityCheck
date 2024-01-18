@@ -874,7 +874,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      ])
                      console.log('inuseracc marketid',bet)
-                     if(!marketidarray.includes(bet[0]._id.marketId)){
+                     if(bet[0] && !marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
