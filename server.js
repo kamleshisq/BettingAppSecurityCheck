@@ -2864,7 +2864,7 @@ io.on('connection', (socket) => {
                 c++
             }
          }
-        return c
+        return c + 1
     }
     let j = 0
     let skipvalue
