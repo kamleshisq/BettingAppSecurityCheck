@@ -552,6 +552,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
            }else{
             debitCreditAmoun = req.body.rollbackAmount + bet1.exposure
            }
+           console.log(debitCreditAmoun)
            user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, exposure:-debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}});
            if(!user){
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
