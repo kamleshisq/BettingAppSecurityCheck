@@ -3598,7 +3598,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
-            $('.skipid').attr('data-skipid',skipvalue)
+            $('.skipid').attr('data-skipid',data.skipvalue)
             console.log(data)
             if(data.json.status == "success" && data.user){
                 let html = "";
