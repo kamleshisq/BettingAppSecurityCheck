@@ -295,13 +295,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 })
             }
         }
-        let game = {}
-        if(req.body.gameId){
-            game = await gameModel.findOne({game_id:(req.body.gameId)*1})
-        }else{
-            let game1 = await betModel.findOne({transactionId:req.body.transactionId})
-            game.game_name = game1.match
-        }
         let thatBet = await betModel.findOne({transactionId:req.body.transactionId})
         if(thatBet){
             if(thatBet.status !== "OPEN"){
@@ -313,6 +306,13 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             return res.status(200).json({
                 "status": "RS_ERROR"
             })
+        }
+        let game = {}
+        if(req.body.gameId){
+            game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+        }else{
+            let game1 = await betModel.findOne({transactionId:req.body.transactionId})
+            game.game_name = game1.match
         }
         let user;
         let balance;
