@@ -841,7 +841,7 @@ io.on('connection', (socket) => {
                         if(!marketidarray.includes(bet[0]._id.gameId)){
                             marketidarray.push(bet[0]._id.gameId)
                             finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 20){
+                            if(finalresult.length >= 10){
                                 break
                             }
                         }
@@ -886,7 +886,7 @@ io.on('connection', (socket) => {
                         if(!marketidarray.includes(bet[0]._id.marketId)){
                             marketidarray.push(bet[0]._id.marketId)
                             finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 20){
+                            if(finalresult.length >= 10){
                                 break
                             }
                         }
@@ -930,13 +930,13 @@ io.on('connection', (socket) => {
                         if(!marketidarray.includes(bet[0]._id.marketId)){
                             marketidarray.push(bet[0]._id.marketId)
                             finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 20){
+                            if(finalresult.length >= 10){
                                 break
                             }
                         }
                     }else{
                         finalresult.push(userAcc[i])
-                        if(finalresult.length >= 20){
+                        if(finalresult.length >= 10){
                                 break
                         }
                     }
@@ -947,7 +947,7 @@ io.on('connection', (socket) => {
         }
         let j = 0
         let skipvalue = data.skipid;
-        while(finalresult.length < 20){
+        while(finalresult.length < 10){
             skip = (limit * j) + data.skipid 
             let result = await getmarketwiseaccdata(limit,skip)
             skipvalue = skipvalue + result
