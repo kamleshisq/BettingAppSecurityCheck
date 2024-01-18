@@ -786,9 +786,9 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.id.toString(),
+                                    userId:data.id,
                                     $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
-                                     date:filter.date
+                                    //  date:filter.date
                                 }
                             },
                             // {
@@ -811,7 +811,7 @@ io.on('connection', (socket) => {
                                     },
                                     match:{$first:'$event'},
                                     marketName:{$first:'$betType'},
-                                    stake:{$first:'Stake'},
+                                    stake:{$first:'$Stake'},
                                     creditDebitamount:{$sum:'$returns'},
                                     balance:{$sum:'$returns'},
                                     transactionId:{$first:'$transactionId'},
@@ -832,10 +832,10 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.id.toString(),
+                                    userId:data.id,
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                                      eventId:{$exists:'eventId'},
-                                     date:filter.date
+                                    //  date:filter.date
                                 }
                             },
                             // {
@@ -858,7 +858,7 @@ io.on('connection', (socket) => {
                                     },
                                     match:{$first:'$match'},
                                     marketName:{$first:'$marketName'},
-                                    stake:{$first:'Stake'},
+                                    stake:{$first:'$Stake'},
                                     creditDebitamount:{$sum:'$returns'},
                                     balance:{$sum:'$returns'},
                                     transactionId:{$first:'$transactionId'},
@@ -877,9 +877,9 @@ io.on('connection', (socket) => {
                         let bet = await Bet.aggregate([
                             {
                                 $match:{
-                                    userId:data.id.toString(),
+                                    userId:data.id,
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                                     date:filter.date
+                                    //  date:filter.date
                                 }
                             },
                             // {
@@ -902,7 +902,7 @@ io.on('connection', (socket) => {
                                     },
                                     match:{$first:'$match'},
                                     marketName:{$first:'$marketName'},
-                                    stake:{$first:'Stake'},
+                                    stake:{$first:'$Stake'},
                                     creditDebitamount:{$sum:'$returns'},
                                     balance:{$sum:'$returns'},
                                     transactionId:{$first:'$transactionId'},
