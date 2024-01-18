@@ -86,7 +86,7 @@
                                       <td title="Closing Balance"><%=data[i].balance%></td>
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
-                                  <%}else if(data[i].transactionId > 16){%>
+                                  <%}else if(data[i].transactionId.length > 16){%>
                                     <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
                                     <td title="Transaction">Sport Book Bet Settlement</td>
                                     <%if(data[i].match){%>

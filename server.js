@@ -2700,12 +2700,12 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
+    filter.$or = [{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}]
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
         filter.$expr = {
             $eq: [{ $strLenCP: "$transactionId" }, 16]
           }
-        filter.marketId = {$exists:true}
     }else if (data.filterData.type === "deposit"){
         filterstatus = false
     }else if(data.filterData.type === "withdraw"){
@@ -2715,11 +2715,15 @@ io.on('connection', (socket) => {
     }else if(data.filterData.type === "swithdraw"){
         filterstatus = false
     }
-    filter.$or = [{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}]
+    console.log('filter',filter)
+    
+
     // console.log(filter)
     let finalresult = []
     let marketidarray = [];
     let userAccflage = true
+
+
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwise accdata ',limit,skip)
          let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
@@ -2735,7 +2739,8 @@ io.on('connection', (socket) => {
                         {
                             $match:{
                                 userId:data.LOGINDATA.LOGINUSER._id.toString(),
-                                gameId:userAcc[i].gameId
+                                $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
+                                 date:filter.date
                             }
                         },
                         {
@@ -2753,7 +2758,8 @@ io.on('connection', (socket) => {
                             $group:{
                                 _id:{
                                     gameId:"$gameId",
-                                    status:"$status"
+                                    status:"$status",
+                                    date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                 },
                                 match:{$first:'$event'},
                                 marketName:{$first:'$betType'},
@@ -2778,7 +2784,9 @@ io.on('connection', (socket) => {
                         {
                             $match:{
                                 userId:data.LOGINDATA.LOGINUSER._id.toString(),
-                                marketId:userAcc[i].marketId
+                                $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                                 eventId:{$exists:'eventId'},
+                                 date:filter.date
                             }
                         },
                         {
@@ -2796,7 +2804,8 @@ io.on('connection', (socket) => {
                             $group:{
                                 _id:{
                                     eventId:"$eventId",
-                                    marketId:"$marketId"
+                                    marketId:"$marketId",
+                                    date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                 },
                                 match:{$first:'$match'},
                                 marketName:{$first:'$marketName'},
@@ -2810,7 +2819,7 @@ io.on('connection', (socket) => {
                     ])
                     if(!marketidarray.includes(bet[0]._id.marketId)){
                         marketidarray.push(bet[0]._id.marketId)
-                        finalresult.push(bet[0])
+                        finalresult = finalresult.concat(bet)
                         if(finalresult.length >= 20){
                             break
                         }
@@ -2820,7 +2829,8 @@ io.on('connection', (socket) => {
                         {
                             $match:{
                                 userId:data.LOGINDATA.LOGINUSER._id.toString(),
-                                marketId:userAcc[i].marketId
+                                $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                                 date:filter.date
                             }
                         },
                         {
@@ -2838,7 +2848,8 @@ io.on('connection', (socket) => {
                             $group:{
                                 _id:{
                                     eventId:"$eventId",
-                                    marketId:"$marketId"
+                                    marketId:"$marketId",
+                                    date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                 },
                                 match:{$first:'$match'},
                                 marketName:{$first:'$marketName'},
@@ -2852,7 +2863,7 @@ io.on('connection', (socket) => {
                     ])
                     if(!marketidarray.includes(bet[0]._id.marketId)){
                         marketidarray.push(bet[0]._id.marketId)
-                        finalresult.push(bet[0])
+                        finalresult = finalresult.concat(bet)
                         if(finalresult.length >= 20){
                             break
                         }
