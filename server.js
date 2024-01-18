@@ -812,7 +812,7 @@ io.on('connection', (socket) => {
                                     match:{$first:'$event'},
                                     marketName:{$first:'$betType'},
                                     stake:{$first:'Stake'},
-                                    creditDebitamount:{$sum:'returns'},
+                                    creditDebitamount:{$sum:'$returns'},
                                     balance:{$sum:'$returns'},
                                     transactionId:{$first:'$transactionId'},
                                     date:{$first:'$date'}
@@ -859,7 +859,7 @@ io.on('connection', (socket) => {
                                     match:{$first:'$match'},
                                     marketName:{$first:'$marketName'},
                                     stake:{$first:'Stake'},
-                                    creditDebitamount:{$sum:'returns'},
+                                    creditDebitamount:{$sum:'$returns'},
                                     balance:{$sum:'$returns'},
                                     transactionId:{$first:'$transactionId'},
                                     date:{$first:'$date'}
@@ -903,7 +903,7 @@ io.on('connection', (socket) => {
                                     match:{$first:'$match'},
                                     marketName:{$first:'$marketName'},
                                     stake:{$first:'Stake'},
-                                    creditDebitamount:{$sum:'returns'},
+                                    creditDebitamount:{$sum:'$returns'},
                                     balance:{$sum:'$returns'},
                                     transactionId:{$first:'$transactionId'},
                                     date:{$first:'$date'}
