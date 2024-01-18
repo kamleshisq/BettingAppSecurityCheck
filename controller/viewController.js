@@ -810,16 +810,16 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         {
                             $match:{
                                 userId:req.currentUser._id.toString(),
-                                // $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                                $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                             }
                         },
-                        {
-                            $group:{
-                                _id:null,
-                                marketId:"$marketId",
-                                creditDebitamount:{$sum:'$creditDebitamount'},
-                            }
-                        }
+                        // {
+                        //     $group:{
+                        //         _id:null,
+                        //         marketId:"$marketId",
+                        //         creditDebitamount:{$sum:'$creditDebitamount'},
+                        //     }
+                        // }
                      ])
 
                      console.log('inuseracc sport book',bet,accounts)
