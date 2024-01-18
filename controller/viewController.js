@@ -746,7 +746,10 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          {
                              $match:{
                                  userId:req.currentUser._id.toString(),
-                                 marketId:userAcc[i].marketId
+                                 marketId:userAcc[i].marketId,
+                                 eventId:{$exists:'eventId'},
+                                 marketId:{$exists:'marketId'}
+
                              }
                          },
                          {
