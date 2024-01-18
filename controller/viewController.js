@@ -806,21 +806,21 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      ])
                      let accounts = []
-                    // accounts = await accountStatement.aggregate([
-                    //     {
-                    //         $match:{
-                    //             userId:req.currentUser._id.toString(),
-                    //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                    //         }
-                    //     },
-                    //     {
-                    //         $group:{
-                    //             _id:null,
-                    //             marketId:"$marketId",
-                    //             creditDebitamount:{$sum:'$creditDebitamount'},
-                    //         }
-                    //     }
-                    //  ])
+                    accounts = await accountStatement.aggregate([
+                        {
+                            $match:{
+                                userId:req.currentUser._id.toString(),
+                                // $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                            }
+                        },
+                        {
+                            $group:{
+                                _id:null,
+                                marketId:"$marketId",
+                                creditDebitamount:{$sum:'$creditDebitamount'},
+                            }
+                        }
+                     ])
 
                      console.log('inuseracc sport book',bet,accounts)
                      if(!marketidarray.includes(bet[0]._id.marketId)){
