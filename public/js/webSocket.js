@@ -10777,6 +10777,20 @@ socket.on('connect', () => {
 
 
     if(pathname === "/myAccountStatment"){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        $('#Fdate').val(tomorrowFormatted)
+        $('#Tdate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
 
         function generatePDF(table) {
             const printWindow = window.open('', '_blank');
