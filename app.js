@@ -31,7 +31,6 @@ const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
-const session = require('express-session')
 const uuid = require('uuid');
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
@@ -67,14 +66,7 @@ app.use(fileUpload({
   }));
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    genid: (req) => {
-        return uuid.v4(); 
-      },
-}));
+
 
 app.use((req, res, next) => {
     // Store a unique tab identifier in the session
