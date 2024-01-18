@@ -3423,88 +3423,105 @@ socket.on('connect', () => {
             let id = $(this).attr('data-id')
             let Fdate = document.getElementById("Fdate").value
             let Tdate = document.getElementById("Tdate").value
-    
+            let gametype;
+            if(gameId != ""){
+                if($(this).hasClass('positive')){
+                    gametype = 'positive'
+                }else{
+                    gametype = 'negative'
+                }
+            }
             // console.log('elementId',modelId)
-            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate})
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype})
         })
 
         socket.on('getMyBetDetails',(data)=>{
-            // console.log(data)
+            console.log(data)
             let html = ``
-            if(data.betType){
-                console.log(data)
-                html += `<thead>
-                <tr >
-                  <th>Date</th>
-                  <th>Event</th>
-                  <th>Market</th>
-                  <th>Bet on</th>
-                  <th>odds</th>
-                  <th>Stake</th>
-                  <th>Status</th>
-                  <th>Returns</th>
-                </tr>
-                </thead>`
-
-                html += `<tbody class="new-body" >`
-                if(data.bettype2 === "LAY"){
-                    html += `<tr class="lay" ><td>${new Date(data.date)}</td>`
-                }else{
-                    html += `<tr class="back" ><td>${new Date(data.date)}</td>`
-                }
-                html += `<td>${data.event}</td>`
-                if(data.marketName){
-                    html += `<td>${data.marketName}</td>`
-                }else{
-                    html += `<td>-</td>`
-                }
-                if(data.selectionName){
-                    if(data.selectionName.includes('@')){
-                        let odds2 = data.selectionName.split('@')[1]
-                        let selectionName2 = data.selectionName.split('@')[0]
-                        html += `<td>${selectionName2}@${data.oddValue}</td>`
-                        html += `<td>${odds2}</td>`
-                    }else{
-                        html += `<td>${data.selectionName}</td>`
-                        html += `<td>${data.oddValue}</td>`
+            for(let i = 0;i<data.length;i++){
+                if(data[i].betType){
+                    console.log(data[i])
+                    if(i == 0){
+                        html += `<thead>
+                        <tr >
+                          <th>Date</th>
+                          <th>Event</th>
+                          <th>Market</th>
+                          <th>Bet on</th>
+                          <th>odds</th>
+                          <th>Stake</th>
+                          <th>Status</th>
+                          <th>Returns</th>
+                        </tr>
+                        </thead>`
+                        html += `<tbody class="new-body" >`
                     }
+    
+                    if(data[i].bettype2 === "LAY"){
+                        html += `<tr class="lay" ><td>${new Date(data[i].date)}</td>`
+                    }else{
+                        html += `<tr class="back" ><td>${new Date(data[i].date)}</td>`
+                    }
+                    html += `<td>${data[i].event}</td>`
+                    if(data[i].marketName){
+                        html += `<td>${data[i].marketName}</td>`
+                    }else{
+                        html += `<td>-</td>`
+                    }
+                    if(data[i].selectionName){
+                        if(data[i].selectionName.includes('@')){
+                            let odds2 = data[i].selectionName.split('@')[1]
+                            let selectionName2 = data[i].selectionName.split('@')[0]
+                            html += `<td>${selectionName2}@${data[i].oddValue}</td>`
+                            html += `<td>${odds2}</td>`
+                        }else{
+                            html += `<td>${data[i].selectionName}</td>`
+                            html += `<td>${data[i].oddValue}</td>`
+                        }
+                    }else{
+                        html += `<td>-</td>`
+                        html += `<td>-</td>`
+                    }
+                    // if(data[i].oddValue){
+                    // }else{
+                    // }
+    
+                    html += `
+                    <td>${data[i].Stake}</td>
+                    <td>${data[i].status}</td>
+                    <td>${data[i].returns}</td></tr></tbody>`
+                    model.find('table').html(html)
                 }else{
-                    html += `<td>-</td>`
-                    html += `<td>-</td>`
+                    if(i == 0){
+                    html += `<thead>
+                    <tr >
+                      <th>Date</th>
+                      <th>Balance Before</th>
+                      <th>Balance After</th>
+                      <th>Amount</th>
+                      <th>Remarks</th>
+                    </tr>
+                    </thead>
+                    <tbody class="new-body" >`
+                    }
+                    html += `<tr>`
+                    html += `<td>${new Date(data[i].date)}</td>`
+                    html += `<td>${((data[i].balance - data[i].creditDebitamount).toFixed(2))}</td>`
+                    html += `<td>${(data[i].balance)}</td>`
+                    html += `<td>${(data[i].creditDebitamount)}</td>`
+                    if(data[i].Remark){
+                        html += `<td>${(data[i].Remark)}</td>`
+                    }else{
+                        html += `<td>-</td>`
+                    }
+                    if(i == data.length - 1){
+                    html += `</tr></tbody>`
+                    }else{
+                        html += `</tr>`
+                    }
                 }
-                // if(data.oddValue){
-                // }else{
-                // }
-
-                html += `
-                <td>${data.Stake}</td>
-                <td>${data.status}</td>
-                <td>${data.returns}</td></tr></tbody>`
-                model.find('table').html(html)
-            }else{
-                html += `<thead>
-                <tr >
-                  <th>Date</th>
-                  <th>Balance Before</th>
-                  <th>Balance After</th>
-                  <th>Amount</th>
-                  <th>Remarks</th>
-                </tr>
-                </thead>
-                <tbody class="new-body" >`
-                html += `<tr>`
-                html += `<td>${new Date(data.date)}</td>`
-                html += `<td>${((data.balance - data.creditDebitamount).toFixed(2))}</td>`
-                html += `<td>${(data.balance)}</td>`
-                html += `<td>${(data.creditDebitamount)}</td>`
-                if(data.Remark){
-                    html += `<td>${(data.Remark)}</td>`
-                }else{
-                    html += `<td>-</td>`
-                }
-                html += `</tr></tbody>`
-                model.find('table').html(html)
             }
+            model.find('table').html(html)
             // console.log(model)
         })
 
@@ -3664,8 +3681,14 @@ socket.on('connect', () => {
                             html += `<td>0</td><td class="c-reed">${data.json.finalresult[i].creditDebitamount}</td>`
                         }
                         if(data.json.finalresult[i]._id.gameId){
-                            html += `<td>${data.json.finalresult[i].balance}</td>
-                            <td><a class="ownAccDetails" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                            if(data.json.finalresult[i].creditDebitamount > 0){
+                                html += `<td>${data.json.finalresult[i].balance}</td>
+                                <td><a class="ownAccDetails positive" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                            }else{
+                                html += `<td>${data.json.finalresult[i].balance}</td>
+                                <td><a class="ownAccDetails negative" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+
+                            }
                         }else if(data.json.finalresult[i]._id.marketId){
                             html += `<td>${data.json.finalresult[i].balance}</td>
                             <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id.marketId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
