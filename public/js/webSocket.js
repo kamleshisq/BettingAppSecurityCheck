@@ -3561,7 +3561,7 @@ socket.on('connect', () => {
             $('.pageLink').attr('data-page',1)
             $('.wrapper').hide()
             console.log(data)
-            // socket.emit( "AccountScroll2", data)
+            socket.emit( "AccountScroll2", data)
         })
 
         $('#Fdate,#Tdate,#transaction_type').change(function(){
