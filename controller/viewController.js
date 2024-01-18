@@ -643,7 +643,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
 
-    console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
+    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         user,
@@ -2460,8 +2460,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://app.ollscores.com/",
-            "Referer":"http://app.ollscores.com/"},
+            "Origin":"http://bigbull9exch.com/",
+            "Referer":"http://bigbull9exch.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
