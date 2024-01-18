@@ -31,6 +31,7 @@ const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
 const cors = require('cors');
 const crone = require('./crones/crones');
+const session = require('express-session')
 const uuid = require('uuid');
 const cancelCrone = require('./crones/cancelCrone');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
@@ -49,10 +50,9 @@ mongoose.connect(process.env.db2,{
     useNewUrlParser: true, 
     useUnifiedTopology: true
 }).then(()=>{
-  console.log("MongoDB connected")
+    console.log("MongoDB connected")
 })
 // console.log("WORKING 54545 ")
-app.use(middlewares);
 global._blacklistToken=[];
 global._loggedInToken=[];
 app.set('view engine', "ejs");
@@ -67,7 +67,14 @@ app.use(fileUpload({
   }));
 app.use(express.urlencoded({ extended:true, limit: '50mb'}));
 app.use(cookieParser());
-
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    genid: (req) => {
+        return uuid.v4(); 
+      },
+}));
 
 app.use((req, res, next) => {
     // Store a unique tab identifier in the session
@@ -80,6 +87,7 @@ app.use((req, res, next) => {
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
+app.use(middlewares);
 crone();
 // cancelCrone();
 // userCrone(); 
