@@ -686,13 +686,23 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let finalresult = []
     let marketidarray = [];
     let userAccflage = true
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).skip(skip).limit(limit)
+         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
-            return c + 1
          }
          if(userAccflage){
              for(let i = 0;i<userAcc.length;i++){
@@ -703,7 +713,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          {
                              $match:{
                                  userId:req.currentUser._id.toString(),
-                                 gameId:userAcc[i].gameId
+                                 gameId:userAcc[i].gameId,
+                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
                              }
                          },
                          {
@@ -721,7 +732,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              $group:{
                                  _id:{
                                      gameId:"$gameId",
-                                     status:"$status"
+                                     status:"$status",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                  },
                                  match:{$first:'$event'},
                                  marketName:{$first:'$betType'},
@@ -731,6 +743,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  balance:{$sum:'$accountdetail.balance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
+                         },
+                         {
+                            $sort:{date:-1}
                          },
                          {
                             $limit:(10 - finalresult.length)
@@ -751,7 +766,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  userId:req.currentUser._id.toString(),
                                  marketId:userAcc[i].marketId,
                                  eventId:{$exists:'eventId'},
-                                 marketId:{$exists:'marketId'}
+                                 marketId:{$exists:'marketId'},
+                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
 
                              }
                          },
@@ -770,7 +786,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              $group:{
                                  _id:{
                                      eventId:"$eventId",
-                                     marketId:"$marketId"
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                  },
                                  match:{$first:'$match'},
                                  marketName:{$first:'$marketName'},
@@ -780,6 +797,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  balance:{$sum:'$accountdetail.balance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
+                         },
+                         {
+                            $sort:{date:-1}
                          },
                          {
                             $limit:(10 - finalresult.length)
@@ -798,7 +818,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          {
                              $match:{
                                  userId:req.currentUser._id.toString(),
-                                 marketId:userAcc[i].marketId
+                                 marketId:userAcc[i].marketId,
+                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
                              }
                          },
                          {
@@ -816,7 +837,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              $group:{
                                  _id:{
                                      eventId:"$eventId",
-                                     marketId:"$marketId"
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                  },
                                  match:{$first:'$match'},
                                  marketName:{$first:'$marketName'},
@@ -826,6 +848,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  balance:{$sum:'$accountdetail.balance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
+                         },
+                         {
+                            $sort:{date:-1}
                          },
                          {
                             $limit:(10 - finalresult.length)
