@@ -34,43 +34,43 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }
     // console.log("PublicKey:",publicKey)
     next()
-    // let result = verify(req.headers.signature, publicKey, x)
-    // console.log(result)
-    // if(result){
-    //     if(req.body.reqId){
-    //         let check = await reqIdModel.findOne({reqId:req.body.reqId})
-    //         if(check){
-    //             return res.status(200).json({
-    //                 "status": "RS_ERROR"
-    //             })
-    //         }else{
-    //             await reqIdModel.create({reqId:req.body.reqId})
-    //         }
-    //     }
-    //     const ObjectId = mongoose.Types.ObjectId;
-    //     let objectId = new ObjectId(req.body.userId);
-    //     let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
-    //     // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
-    //     if(loginData[0] && loginData[0].gameToken){
-    //         if(loginData[0].gameToken == req.body.token){
-    //             next()
-    //         }else{
-    //             return res.status(200).json({
-    //             "status": "RS_ERROR"
-    //         })
-    //         }
-    //     }else{
-    //         return res.status(200).json({
-    //             "status": "RS_ERROR"
-    //         })
-    //     }
-    //     console.log(result, "resultresultresult")
-    //     // next()
-    // }else{
-    //     return res.status(200).json({
-    //         "status": "RS_ERROR"
-    //     })
-    // }
+    let result = verify(req.headers.signature, publicKey, x)
+    console.log(result)
+    if(result){
+        if(req.body.reqId){
+            let check = await reqIdModel.findOne({reqId:req.body.reqId})
+            if(check){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                await reqIdModel.create({reqId:req.body.reqId})
+            }
+        }
+        const ObjectId = mongoose.Types.ObjectId;
+        let objectId = new ObjectId(req.body.userId);
+        let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
+        // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
+        if(loginData[0] && loginData[0].gameToken){
+            if(loginData[0].gameToken == req.body.token){
+                next()
+            }else{
+                return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+            }
+        }else{
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }
+        console.log(result, "resultresultresult")
+        // next()
+    }else{
+        return res.status(200).json({
+            "status": "RS_ERROR"
+        })
+    }
 })
 
 
