@@ -2728,6 +2728,7 @@ io.on('connection', (socket) => {
          }
          if(userAccflage){
             for(let i = 0;i<userAcc.length;i++){
+                c++
                 if(userAcc[i].gameId){
                     let bet = await Bet.aggregate([
                         {
@@ -2861,7 +2862,7 @@ io.on('connection', (socket) => {
                             break
                     }
                 }
-                c++
+                
             }
          }
         return c

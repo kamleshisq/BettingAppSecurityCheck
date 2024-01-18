@@ -696,6 +696,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
          }
          if(userAccflage){
              for(let i = 0;i<userAcc.length;i++){
+                c++
                  if(userAcc[i].gameId){
                      let bet = await betModel.aggregate([
                          {
@@ -829,7 +830,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              break
                      }
                  }
-                 c++
+                 
              }
          }
         return c
