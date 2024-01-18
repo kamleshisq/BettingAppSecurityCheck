@@ -3430,9 +3430,8 @@ socket.on('connect', () => {
 
         socket.on('getMyBetDetails',(data)=>{
             console.log(data)
+            let html = ``
             for(let i = 0;i<data.length;i++){
-
-                let html = ``
                 if(data[i].betType){
                     console.log(data[i])
                     if(i == 0){
