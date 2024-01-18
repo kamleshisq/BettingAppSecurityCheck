@@ -552,7 +552,11 @@ exports.rollBack = catchAsync(async(req, res, next) => {
            if(req.body.gameId){
             debitCreditAmoun = req.body.rollbackAmount
            }else{
-            debitCreditAmoun = req.body.rollbackAmount + bet1.exposure
+            if(bet1.exposure){
+                debitCreditAmoun = req.body.rollbackAmount + bet1.exposure
+            }else{
+                debitCreditAmoun = req.body.rollbackAmount
+            }
            }
            console.log(debitCreditAmoun,  req.body.rollbackAmount, bet1.exposure, "bet1.exposurebet1.exposurebet1.exposurebet1.exposure")
            user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, exposure:-debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}});
