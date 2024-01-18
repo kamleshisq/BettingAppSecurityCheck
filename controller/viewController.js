@@ -832,7 +832,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                  c++
              }
          }
-        return c + 1
+        return c
     }
     let j = 0
     let skipvalue = 0;
