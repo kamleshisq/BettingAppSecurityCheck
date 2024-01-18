@@ -33,7 +33,6 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         publicKey = readPem("publicCasino.pem")
     }
     // console.log("PublicKey:",publicKey)
-    next()
     let result = verify(req.headers.signature, publicKey, x)
     console.log(result)
     if(result){
@@ -65,7 +64,6 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
             })
         }
         console.log(result, "resultresultresult")
-        // next()
     }else{
         return res.status(200).json({
             "status": "RS_ERROR"
