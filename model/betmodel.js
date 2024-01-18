@@ -113,6 +113,12 @@ const betSchema = mongoose.Schema({
         type:Boolean,
         required:true,
         default:false
+    },
+    settleDate:{
+        type:Date
+    },
+    closingBalance:{
+        type:Number
     }
 })
 
