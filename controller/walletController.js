@@ -22,7 +22,7 @@ function readPem (filename) {
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log("body:",req.body)
-    console.log("signature:", req.headers.signature)
+    // console.log("signature:", req.headers.signature)
     // console.log(req.ip)
     let x  = req.body
     let publicKey
