@@ -809,7 +809,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     accounts = await accountStatement.aggregate([
                         {
                             $match:{
-                                userId:req.currentUser._id.toString(),
+                                userName:req.currentUser.userName,
                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                             }
                         },
