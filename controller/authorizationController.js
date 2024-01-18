@@ -249,7 +249,7 @@ exports.login = catchAsync (async(req, res, next) => {
                 status:'error',
                 message:"not a valid user login"
             })
-        }else if(user.role_type === 1 && whiteLabel !=="dev.ollscores.com"){
+        }else if(user.role_type === 1 && whiteLabel !=="app.ollscores.com"){
             res.status(404).json({
                 status:'error',
                 message:"not a valid user login"
@@ -652,7 +652,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log(req.cookies, "cookiescookiescookies")
     // console.log('product: ', sessionStorage.getItem('sessionID'));
     // console.log(req.session, "SESSSION")
-    console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies21212")
+    // console.log(req.cookies, "req.cookiesreq.cookiesreq.cookies21212")
     let token 
     res.locals.loginData = undefined
     let whiteLabelData = await whiteLabelMOdel.findOne({whiteLabelName:process.env.whiteLabelName})
