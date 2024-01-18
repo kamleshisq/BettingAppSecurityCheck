@@ -10833,11 +10833,6 @@ socket.on('connect', () => {
             }
           });
 
-
-       
-          
-
-
         function downloadCSV(csvContent, fileName) {
             const link = document.createElement('a');
             const blob = new Blob([csvContent], { type: 'text/csv' });
