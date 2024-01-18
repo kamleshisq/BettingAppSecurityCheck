@@ -805,7 +805,24 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     console.log('inuseracc sport book',bet)
+
+                     let accounts = await accountStatement.aggregate([
+                        {
+                            $match:{
+                                userId:req.currentUser._id.toString(),
+                                $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                            }
+                        },
+                        {
+                            $group:{
+                                _id:null,
+                                marketId:"$marketId",
+                                creditDebitamount:{$sum:'$creditDebitamount'},
+                            }
+                        }
+                     ])
+
+                     console.log('inuseracc sport book',bet,accounts)
                      if(!marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
