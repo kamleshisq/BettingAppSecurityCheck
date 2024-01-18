@@ -78,18 +78,20 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     // console.log(req.body)
     const user = await userModel.findById(req.body.userId)
     if(!user){
-        return next(new AppError("There is no user with that id", 404))
+        return  res.status(200).json({
+            "status": "RS_ERROR"
+        })
     }
     let exposureCheck  = await exposurecheckfunction(user)
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let balanceSend = user.availableBalance - exposureCheck
     if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-        return res.status(200).json({
+        res.status(200).json({
             "balance": balanceSend,
             "status": "RS_OK"
         })
     }else{
-        return res.status(200).json({
+        res.status(200).json({
             "balance": balanceSend,
             "status": "OP_SUCCESS"
         })
