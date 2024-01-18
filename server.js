@@ -1157,6 +1157,11 @@ io.on('connection', (socket) => {
         }
         let bet
         if(data.gameId){
+            if(data.gametype == 'positive'){
+                filter.returns={$gt:0}
+            }else{
+                filter.returns={$lte:0}
+            }
             filter.gameId = data.gameId
         }else if(data.marketId){
             filter.marketId = data.marketId

@@ -3423,9 +3423,16 @@ socket.on('connect', () => {
             let id = $(this).attr('data-id')
             let Fdate = document.getElementById("Fdate").value
             let Tdate = document.getElementById("Tdate").value
-    
+            let gametype;
+            if(gameId != ""){
+                if($(this).hasClass('positive')){
+                    gametype = 'positive'
+                }else{
+                    gametype = 'negative'
+                }
+            }
             // console.log('elementId',modelId)
-            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate})
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype})
         })
 
         socket.on('getMyBetDetails',(data)=>{
@@ -3674,8 +3681,14 @@ socket.on('connect', () => {
                             html += `<td>0</td><td class="c-reed">${data.json.finalresult[i].creditDebitamount}</td>`
                         }
                         if(data.json.finalresult[i]._id.gameId){
-                            html += `<td>${data.json.finalresult[i].balance}</td>
-                            <td><a class="ownAccDetails" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                            if(data.json.finalresult[i].creditDebitamount > 0){
+                                html += `<td>${data.json.finalresult[i].balance}</td>
+                                <td><a class="ownAccDetails positive" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                            }else{
+                                html += `<td>${data.json.finalresult[i].balance}</td>
+                                <td><a class="ownAccDetails negative" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+
+                            }
                         }else if(data.json.finalresult[i]._id.marketId){
                             html += `<td>${data.json.finalresult[i].balance}</td>
                             <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id.marketId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
