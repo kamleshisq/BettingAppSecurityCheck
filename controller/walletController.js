@@ -559,7 +559,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             }
            }
            console.log(debitCreditAmoun,  req.body.rollbackAmount, bet1.exposure, "bet1.exposurebet1.exposurebet1.exposurebet1.exposure")
-           user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, exposure:-debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}});
+           user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, exposure:-debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}}); 
            if(!user){
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     return res.status(200).json({
