@@ -889,7 +889,7 @@ io.on('connection', (socket) => {
                                 $match:{
                                     userId:data.id.toString(),
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                                     date:filter.date
+                                    // date:filter.date
                                 }
                             },
                             // {
