@@ -751,7 +751,7 @@ io.on('connection', (socket) => {
         }else if(data.Fdata == '' && data.Tdate != ''){
             filter.date = {$lte:new Date(data.Tdate)}
         }
-        filter.user_id = new mongoose.Types.ObjectId(data.id)
+        filter.user_id = data.id
         if(data.Transaction_type === "Bet_Settlement"){
             filter.stake = {
                 $ne:undefined
