@@ -733,7 +733,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $limit:(20 - finalresult.length)
+                            $limit:(10 - finalresult.length)
                          }
                      ])
                      console.log(bet,'bet in game id')
@@ -782,7 +782,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $limit:(20 - finalresult.length)
+                            $limit:(10 - finalresult.length)
                          }
                      ])
                      console.log('inuseracc sport book',bet)
@@ -828,7 +828,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $limit:(20 - finalresult.length)
+                            $limit:(10 - finalresult.length)
                          }
                      ])
                      console.log('inuseracc marketid',bet)
