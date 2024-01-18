@@ -808,7 +808,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                      console.log('inuseracc sport book',bet)
                      if(!marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
-                         finalresult.push(bet[0])
+                         finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break
                          }
@@ -859,7 +859,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                      console.log('inuseracc marketid',bet)
                      if(!marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
-                         finalresult.push(bet[0])
+                         finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break
                          }
