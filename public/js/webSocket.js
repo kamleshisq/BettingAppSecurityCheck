@@ -3556,6 +3556,7 @@ socket.on('connect', () => {
             data.id = this.id
             SUSER = this.id
             data.page = 0
+            data.LOGINDATA = LOGINDATA
             $('.pageLink').attr('data-page',1)
             $('.wrapper').hide()
             socket.emit( "AccountScroll2", data)
