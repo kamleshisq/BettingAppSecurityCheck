@@ -3417,17 +3417,20 @@ socket.on('connect', () => {
         let model 
 
         $(document).on('click','.ownAccDetails',function(e){
-            let modelId = $(this).attr('id')
-            let modelId1 = $(this).attr("data-bs-target")
-            model =  $(modelId1)
+            let gameId = $(this).attr('data-gameid')
+            let marketId = $(this).attr('data-marketid')
+            let id = $(this).attr('data-id')
+            let Fdate = document.getElementById("Fdate").value
+            let Tdate = document.getElementById("Tdate").value
+    
             // console.log('elementId',modelId)
-            socket.emit("ElementID", modelId)
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate})
         })
 
         socket.on('getMyBetDetails',(data)=>{
             // console.log(data)
             let html = ``
-            if(data.transactionId){
+            if(data.betType){
                 console.log(data)
                 html += `<thead>
                 <tr >
@@ -3503,24 +3506,6 @@ socket.on('connect', () => {
             }
             // console.log(model)
         })
-            // let 
-            // let data = $(this).parent().parent().data('details')
-            // let html = '';
-            // if(data.hasOwnProperty('transactionId')){
-            //     socket.emit('getMyBetDetails',data.transactionId)
-                
-            //         // console.log(data)
-                   
-
-            // }
-            
-    
-            //     
-            // }
-
-        
-        
-            // console.log(data)
 
 
         
@@ -3603,7 +3588,7 @@ socket.on('connect', () => {
            if(searchU){
                 data.id = SUSER
            }
-            socket.emit('AccountScroll2',data)
+            socket.emit('   ',data)
         })
     
 
@@ -3636,8 +3621,8 @@ socket.on('connect', () => {
                   `
                   $('.welcome-info-btn').html(html1)
                 }
-                for(let i = 0; i < data.json.userAcc.length; i++){
-                    let date = new Date(data.json.userAcc[i].date);
+                for(let i = 0; i < data.json.finalresult.length; i++){
+                    let date = new Date(data.json.finalresult[i].date);
                     var options = { 
                         year: 'numeric',
                         month: 'long',
@@ -3649,22 +3634,23 @@ socket.on('connect', () => {
                     var formattedTime = date.toLocaleString('en-US', options);
                     // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
                     // console.log(abc)
-                    if((i%2)==0){
-                        html += `<tr style="text-align: center;" class="blue" >
+                        html += `<tr style="text-align: center;">
                         <td class="text-nowrap" >${formattedTime}</td>`
-                        if(data.json.userAcc[i].transactionId){
-                            if(data.json.userAcc[i].betDetails.length != 0){
-
-                                if(data.json.userAcc[i].betDetails[0].event){
-    
-                                    html += `<td>${data.json.userAcc[i].betDetails[0].event}</td>`
-                                }else{
-                                    html += `<td>-}</td>`
+                        if(data.json.finalresult[i].transactionId){
+                            if(data.json.finalresult[i].match || data.json.finalresult[i].event){
+                                if(data.json.finalresult[i].event && data.json.finalresult[i].match){
+                                    html += `<td>${data.json.finalresult[i].match}</td>`
+                                }else if(data.json.finalresult[i].event && data.json.finalresult[i].gameId){
+                                    html += `<td>${data.json.finalresult[i].event}</td>`
     
                                 }
-                                if(data.json.userAcc[i].betDetails[0].marketName){
-    
-                                    html += `<td>${data.json.userAcc[i].betDetails[0].marketName}</td>`
+                                if(data.json.finalresult[i].marketName || data.json.finalresult[i].betType){
+                                    if(data.json.finalresult[i].marketName){
+                                        html += `<td>${data.json.finalresult[i].marketName}</td>`
+                                    }else if(data.json.finalresult[i].betType){
+                                        html += `<td>${data.json.finalresult[i].betType}</td>`
+                                    }
+                                    
                                 }else{
     
                                     html += `<td>-</td>`
@@ -3676,65 +3662,32 @@ socket.on('connect', () => {
                             html += `<td>-</td><td>-</td>`
 
                         }
-                        if(data.json.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
+                        if(data.json.finalresult[i].creditDebitamount > 0){
+                            html += `<td class="c-gren">${data.json.finalresult[i].creditDebitamount}</td>
                             <td>0</td>`
                         }else{
-                            html += `<td>0</td><td>${data.json.userAcc[i].creditDebitamount}</td>`
+                            html += `<td>0</td><td class="c-reed">${data.json.finalresult[i].creditDebitamount}</td>`
                         }
-                        html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
-                        if(data.json.userAcc[i].Remark){
-                            html += `<td>${data.json.userAcc[i].Remark}</td>`
+                        if(data.json.finalresult[i]._id.gameId){
+                            html += `<td>${data.json.finalresult[i].balance}</td>
+                            <td><a class="ownAccDetails" data-gameid="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                        }else if(data.json.finalresult[i]._id.marketId){
+                            html += `<td>${data.json.finalresult[i].balance}</td>
+                            <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                        }else{
+                            html += `<td>${data.json.finalresult[i].balance}</td>
+                            <td><a class="ownAccDetails" data-id="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].description}&nbsp;</a></td>`
+                        }
+
+                        if(data.json.finalresult[i].Remark){
+                            html += `<td>${data.json.finalresult[i].Remark}</td>`
                         }else{
                             html += `<td>-</td>`
                         }
-                    }else{
-                        html += `<tr style="text-align: center;" >
-                        <td class="text-nowrap" >${formattedTime}</td>`
-                        if(data.json.userAcc[i].transactionId){
-                            if(data.json.userAcc[i].betDetails.length != 0){
-
-                                if(data.json.userAcc[i].betDetails[0].event){
-    
-                                    html += `<td>${data.json.userAcc[i].betDetails[0].event}</td>`
-                                }else{
-                                    html += `<td>-}</td>`
-    
-                                }
-                                if(data.json.userAcc[i].betDetails[0].marketName){
-    
-                                    html += `<td>${data.json.userAcc[i].betDetails[0].marketName}</td>`
-                                }else{
-    
-                                    html += `<td>-</td>`
-                                }
-                            }else{
-                                html += `<td>-</td><td>-</td>`
-                            }
-                        }else{
-                            html += `<td>-</td><td>-</td>`
-
-                        }
-                        if(data.json.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>0</td>`
-                        }else{
-                            html += `<td>0</td><td>${data.json.userAcc[i].creditDebitamount}</td>`
-                        }
-                       
-                        html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
-                        if(data.json.userAcc[i].Remark){
-                            html += `<td>${data.json.userAcc[i].Remark}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
-                    }
                 }
                 count1 += 10;
                 if(data.page == 0){
-                    if(data.json.userAcc.length == 0){
+                    if(data.json.finalresult.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                     }else{
                         $('#load-more').show()
@@ -3743,7 +3696,7 @@ socket.on('connect', () => {
                     $('tbody').html(html)
 
                 }else {
-                    if(data.json.userAcc.length == 0){
+                    if(data.json.finalresult.length == 0){
                         $('#load-more').hide()
                     }
                     $('tbody').append(html)

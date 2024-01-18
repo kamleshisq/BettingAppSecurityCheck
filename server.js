@@ -740,8 +740,6 @@ io.on('connection', (socket) => {
     socket.on("AccountScroll2", async(data)=>{
         // console.log(data)
         const user = await User.findById(data.id)
-        let fullUrl
-        let account;
         let json  = {}
         let filter = {};
         let limit = 10
@@ -787,44 +785,181 @@ io.on('connection', (socket) => {
                 $lt: 0
             }
         }
-        if(data.id){
-            // console.log(filter, "filterfilterfilterfilter")
-            let Logs = await AccModel.aggregate([
-                {
-                    $match:filter
-                },
-                {
-                    $lookup:{
-                        from:'betmodels',
-                        localField:'transactionId',
-                        foreignField:'transactionId',
-                        as:'betDetails'
+        let finalresult = []
+        let marketidarray = [];
+        let userAccflage = true
+    
+    
+        async function getmarketwiseaccdata (limit,skip){
+            console.log('in getmarketwise accdata ',limit,skip)
+             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+             let c = 0
+             if(userAcc.length == 0){
+                userAccflage = false
+             }
+             if(userAccflage){
+                for(let i = 0;i<userAcc.length;i++){
+                    c++
+                    if(userAcc[i].gameId){
+                        let bet = await Bet.aggregate([
+                            {
+                                $match:{
+                                    userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                    $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
+                                     date:filter.date
+                                }
+                            },
+                            {
+                                $lookup: {
+                                    from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                    localField: 'transactionId',
+                                    foreignField: 'transactionId',
+                                    as: 'accountdetail'
+                                }
+                            },
+                            {
+                                $unwind:"$accountdetail"
+                            },
+                            {
+                                $group:{
+                                    _id:{
+                                        gameId:"$gameId",
+                                        status:"$status",
+                                        date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                    },
+                                    match:{$first:'$event'},
+                                    marketName:{$first:'$betType'},
+                                    stake:{$first:'$accountdetail.stake'},
+                                    accStype:{$first:'$accountdetail.accStype'},
+                                    creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                    balance:{$sum:'$accountdetail.balance'},
+                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                }
+                            }
+                        ])
+                        console.log(bet,'betin game id')
+                        if(!marketidarray.includes(bet[0]._id.gameId)){
+                            marketidarray.push(bet[0]._id.gameId)
+                            finalresult = finalresult.concat(bet)
+                            if(finalresult.length >= 20){
+                                break
+                            }
+                        }
+                    }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                        let bet = await Bet.aggregate([
+                            {
+                                $match:{
+                                    userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                    $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                                     eventId:{$exists:'eventId'},
+                                     date:filter.date
+                                }
+                            },
+                            {
+                                $lookup: {
+                                    from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                    localField: 'transactionId',
+                                    foreignField: 'transactionId',
+                                    as: 'accountdetail'
+                                }
+                            },
+                            {
+                                $unwind:"$accountdetail"
+                            },
+                            {
+                                $group:{
+                                    _id:{
+                                        eventId:"$eventId",
+                                        marketId:"$marketId",
+                                        date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                    },
+                                    match:{$first:'$match'},
+                                    marketName:{$first:'$marketName'},
+                                    stake:{$first:'$accountdetail.stake'},
+                                    accStype:{$first:'$accountdetail.accStype'},
+                                    creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                    balance:{$sum:'$accountdetail.balance'},
+                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                }
+                            }
+                        ])
+                        if(!marketidarray.includes(bet[0]._id.marketId)){
+                            marketidarray.push(bet[0]._id.marketId)
+                            finalresult = finalresult.concat(bet)
+                            if(finalresult.length >= 20){
+                                break
+                            }
+                        }
+                    }else if(userAcc[i].marketId){
+                        let bet = await Bet.aggregate([
+                            {
+                                $match:{
+                                    userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                    $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                                     date:filter.date
+                                }
+                            },
+                            {
+                                $lookup: {
+                                    from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                    localField: 'transactionId',
+                                    foreignField: 'transactionId',
+                                    as: 'accountdetail'
+                                }
+                            },
+                            {
+                                $unwind:"$accountdetail"
+                            },
+                            {
+                                $group:{
+                                    _id:{
+                                        eventId:"$eventId",
+                                        marketId:"$marketId",
+                                        date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                    },
+                                    match:{$first:'$match'},
+                                    marketName:{$first:'$marketName'},
+                                    stake:{$first:'$accountdetail.stake'},
+                                    accStype:{$first:'$accountdetail.accStype'},
+                                    creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                    balance:{$sum:'$accountdetail.balance'},
+                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                }
+                            }
+                        ])
+                        if(!marketidarray.includes(bet[0]._id.marketId)){
+                            marketidarray.push(bet[0]._id.marketId)
+                            finalresult = finalresult.concat(bet)
+                            if(finalresult.length >= 20){
+                                break
+                            }
+                        }
+                    }else{
+                        finalresult.push(userAcc[i])
+                        if(finalresult.length >= 20){
+                                break
+                        }
                     }
-                },
-                // {
-                //     $unwind:"$betDetails"
-                // },
-                {
-                    $sort:{"date":-1}
-                },
-                {
-                    $skip:limit * data.page
-                },
-                {
-                    $limit:limit
+                    
                 }
-            ])
-            // console.log(Logs, "LogsLogs")
-            json.userAcc = Logs
-
-            // account  = await AccModel.find({user_id:data.id})
-            
-            // fullUrl = 'http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
-        }else{
-            json.userAcc = [] 
-            
+             }
+            return c
+        }
+        let j = 0
+        let skipvalue = data.skipid;
+        while(finalresult.length < 20){
+            skip = (limit * j) + data.skipid 
+            let result = await getmarketwiseaccdata(limit,skip)
+            skipvalue = skipvalue + result
+            console.log(skipvalue,j,'skipvalue')
+            console.log(finalresult.length,'finalresult.length')
+            if(!userAccflage){
+                break
+            }
+            j++
         }
         json.status = 'success'
+        json.finalresult = finalresult
         socket.emit('Acc2', {json,page:data.page,user})
 
     })
@@ -1011,21 +1146,31 @@ io.on('connection', (socket) => {
 
     socket.on('ElementID',async(data)=>{
         // console.log(data)
-        const acc = await AccModel.findById(data)
-        // console.log(acc, 132)
-        let bet = {}
-        if(acc.transactionId){
-            bet = await Bet.findOne({transactionId:acc.transactionId})
-            if(!bet){
-                const result = acc.transactionId.replace(/Parent$/, '');
-                bet = await Bet.findOne({transactionId:result})
+        let filter = {}
+        if(data.Fdate != "" && data.Tdate == ""){
+            filter.date = {
+                $gt : new Date(data.Fdate)
             }
-        }else{
-            bet = acc
+        }else if(data.Fdate == "" && data.Tdate != ""){
+            filter.date = {
+                $lt : new Date(data.Tdate)
+            }
+        }else if (data.Fdate != "" && data.Tdate != ""){
+            filter.date = {
+                $gte : new Date(data.filterData.fromDate),
+                $lt : new Date(data.Tdate)
+            }
         }
-
-        // let transactionId = data;
-        // console.log(bet)
+        let bet
+        if(data.gameId){
+            filter.gameId = data.gameId
+        }else if(data.marketId){
+            filter.marketId = data.marketId
+        }else{
+            let account = await AccModel.findById(data.id)
+            filter.transactionId = account.transactionId
+        }
+        bet = await Bet.find(filter)
         socket.emit('getMyBetDetails',bet)
     })
 
