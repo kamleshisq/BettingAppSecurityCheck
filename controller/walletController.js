@@ -34,43 +34,43 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }
     // console.log("PublicKey:",publicKey)
     next()
-    // let result = verify(req.headers.signature, publicKey, x)
-    // console.log(result)
-    // if(result){
-    //     if(req.body.reqId){
-    //         let check = await reqIdModel.findOne({reqId:req.body.reqId})
-    //         if(check){
-    //             return res.status(200).json({
-    //                 "status": "RS_ERROR"
-    //             })
-    //         }else{
-    //             await reqIdModel.create({reqId:req.body.reqId})
-    //         }
-    //     }
-    //     const ObjectId = mongoose.Types.ObjectId;
-    //     let objectId = new ObjectId(req.body.userId);
-    //     let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
-    //     // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
-    //     if(loginData[0] && loginData[0].gameToken){
-    //         if(loginData[0].gameToken == req.body.token){
-    //             next()
-    //         }else{
-    //             return res.status(200).json({
-    //             "status": "RS_ERROR"
-    //         })
-    //         }
-    //     }else{
-    //         return res.status(200).json({
-    //             "status": "RS_ERROR"
-    //         })
-    //     }
-    //     console.log(result, "resultresultresult")
-    //     // next()
-    // }else{
-    //     return res.status(200).json({
-    //         "status": "RS_ERROR"
-    //     })
-    // }
+    let result = verify(req.headers.signature, publicKey, x)
+    console.log(result)
+    if(result){
+        if(req.body.reqId){
+            let check = await reqIdModel.findOne({reqId:req.body.reqId})
+            if(check){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                await reqIdModel.create({reqId:req.body.reqId})
+            }
+        }
+        const ObjectId = mongoose.Types.ObjectId;
+        let objectId = new ObjectId(req.body.userId);
+        let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
+        // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
+        if(loginData[0] && loginData[0].gameToken){
+            if(loginData[0].gameToken == req.body.token){
+                next()
+            }else{
+                return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+            }
+        }else{
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }
+        console.log(result, "resultresultresult")
+        // next()
+    }else{
+        return res.status(200).json({
+            "status": "RS_ERROR"
+        })
+    }
 })
 
 
@@ -295,13 +295,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 })
             }
         }
-        let game = {}
-        if(req.body.gameId){
-            game = await gameModel.findOne({game_id:(req.body.gameId)*1})
-        }else{
-            let game1 = await betModel.findOne({transactionId:req.body.transactionId})
-            game.game_name = game1.match
-        }
         let thatBet = await betModel.findOne({transactionId:req.body.transactionId})
         if(thatBet){
             if(thatBet.status !== "OPEN"){
@@ -313,6 +306,13 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             return res.status(200).json({
                 "status": "RS_ERROR"
             })
+        }
+        let game = {}
+        if(req.body.gameId){
+            game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+        }else{
+            let game1 = await betModel.findOne({transactionId:req.body.transactionId})
+            game.game_name = game1.match
         }
         let user;
         let balance;
@@ -559,7 +559,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             }
            }
            console.log(debitCreditAmoun,  req.body.rollbackAmount, bet1.exposure, "bet1.exposurebet1.exposurebet1.exposurebet1.exposure")
-           user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, exposure:-debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}});
+           user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, exposure:-debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}}); 
            if(!user){
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     return res.status(200).json({
