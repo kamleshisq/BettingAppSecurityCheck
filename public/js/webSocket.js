@@ -3513,9 +3513,9 @@ socket.on('connect', () => {
                     }else{
                         html += `</tr>`
                     }
-                    model.find('table').html(html)
                 }
             }
+            model.find('table').html(html)
             // console.log(model)
         })
 
