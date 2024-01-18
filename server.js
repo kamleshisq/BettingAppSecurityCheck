@@ -823,11 +823,6 @@ io.on('connection', (socket) => {
                         console.log(bet,'betin game id')
                         if(!marketidarray.includes(bet[0]._id.gameId)){
                             marketidarray.push(bet[0]._id.gameId)
-                            for(let k = 0;k<bet.length;k++){
-                                let accountstat = await AccModel.find({gameId:bet[k]._id.gameId,status:bet[k]._id.status,date:filter.date}).sort({date:-1}).limit(1)
-                                bet[k].balance = accountstat[0].balance
-                            }
-
                             finalresult = finalresult.concat(bet)
                             if(finalresult.length >= 10){
                                 break
@@ -873,11 +868,6 @@ io.on('connection', (socket) => {
                         ])
                         if(!marketidarray.includes(bet[0]._id.marketId)){
                             marketidarray.push(bet[0]._id.marketId)
-                            
-                            for(let k = 0;k<bet.length;k++){
-                                let accountstat = await AccModel.find({marketId:bet[k]._id.marketId,date:filter.date}).sort({date:-1}).limit(1)
-                                bet[k].balance = accountstat[0].balance
-                            }
                             finalresult = finalresult.concat(bet)
                             if(finalresult.length >= 10){
                                 break
@@ -889,7 +879,7 @@ io.on('connection', (socket) => {
                                 $match:{
                                     userId:data.id.toString(),
                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                                    // date:filter.date
+                                     date:filter.date
                                 }
                             },
                             // {
@@ -920,14 +910,8 @@ io.on('connection', (socket) => {
                                 }
                             }
                         ])
-                        console.log('in marketid',bet)
-
                         if(!marketidarray.includes(bet[0]._id.marketId)){
                             marketidarray.push(bet[0]._id.marketId)
-                            for(let k = 0;k<bet.length;k++){
-                                let accountstat = await AccModel.find({marketId:bet[k]._id.marketId,date:filter.date}).sort({date:-1}).limit(1)
-                                bet[k].balance = accountstat[0].balance
-                            }
                             finalresult = finalresult.concat(bet)
                             if(finalresult.length >= 10){
                                 break
