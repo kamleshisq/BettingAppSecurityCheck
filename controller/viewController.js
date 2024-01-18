@@ -731,6 +731,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  balance:{$sum:'$accountdetail.balance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
                          }
                      ])
                      console.log(bet,'bet in game id')
@@ -777,6 +780,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  balance:{$sum:'$accountdetail.balance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
                          }
                      ])
                      console.log('inuseracc sport book',bet)
@@ -820,6 +826,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  balance:{$sum:'$accountdetail.balance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
                          }
                      ])
                      console.log('inuseracc marketid',bet)
