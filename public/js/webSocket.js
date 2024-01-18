@@ -48,7 +48,7 @@ socket.on('connect', () => {
 
         socket.on('LoginCHeckUSerSIde', data => {
             // console.log(data)
-            // window.location.reload();
+            window.location.reload();
         })
 
 
@@ -10832,6 +10832,11 @@ socket.on('connect', () => {
               generatePDF(table);
             }
           });
+
+
+       
+          
+
 
         function downloadCSV(csvContent, fileName) {
             const link = document.createElement('a');
@@ -22941,6 +22946,6 @@ function attemptReconnect() {
         }, delay);
     } else {
         // console.log("Max reconnect attempts reached. Please refresh the page.");
-        // window.location.reload();
+        window.location.reload();
     }
 }
