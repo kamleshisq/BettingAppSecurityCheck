@@ -48,7 +48,7 @@ socket.on('connect', () => {
 
         socket.on('LoginCHeckUSerSIde', data => {
             // console.log(data)
-            window.location.reload();
+            // window.location.reload();
         })
 
 
