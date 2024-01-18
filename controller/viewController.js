@@ -794,7 +794,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  stake:{$first:'$Stake'},
                                  accStype:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:0,
+                                 balance:{$sum:'$returns'},
                                  transactionId:{$first:'$transactionId'}
                              }
                          },
