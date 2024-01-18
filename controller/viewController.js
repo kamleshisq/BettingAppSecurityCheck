@@ -17,7 +17,7 @@ const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
 const SHA256 = require("../utils/sha256");
-const sportList = require("../utils/getSportList");
+// const sportList = require("../utils/getSportList");
 const getCrkAndAllData = require("../utils/getSportAndCricketList");
 const getmarketDetails = require("../utils/getmarketsbymarketId"); 
 const fs = require('fs');
@@ -621,6 +621,7 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
+    // console.log('WORKING33333')
     let featureEventId = []
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
@@ -670,6 +671,8 @@ exports.edit = catchAsync(async(req, res, next) => {
 exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // let id = req.originalUrl.split("=")[1]
     let userLog
+    let limit = 20;
+    let skip = 0 * limit
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
@@ -678,98 +681,243 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
+   
     // console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
-    // let userAcc = await betModel.aggregate([
-    //     {
-    //         $match:{
-    //             userId:req.currentUser._id.toString()
-    //         }
-    //     },
-    //     {
-    //         $lookup: {
-    //             from: 'accountstatements', // Assuming the name of the Whitelabel collection
-    //             localField: 'transactionId',
-    //             foreignField: 'transactionId',
-    //             as: 'accountdetail'
-    //         }
-    //     },
-    //     {
-    //         $unwind:"$accountdetail"
-    //     },
-    //     {
-    //         $group:{
-    //             _id:{
-    //                 eventId:"$eventId",
-    //                 marketId:"$marketId"
-    //             },
-    //             match:{$first:'$match'},
-    //             marketName:{$first:'$marketName'},
-    //             stake:{$first:'$accountdetail.stake'},
-    //             accStype:{$first:'$accountdetail.accStype'},
-    //             creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-    //             balance:{$sum:'$accountdetail.balance'},
-    //             transactionId:{$first:'$accountdetail.transactionId'}
+    let finalresult = []
+    let marketidarray = [];
+    let userAccflage = true
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    async function getmarketwiseaccdata (limit,skip){
+        console.log('in getmarketwiseaccdata function')
+         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}],}).sort({date: -1}).skip(skip).limit(limit)
+         let c = 0
+         if(userAcc.length == 0){
+            userAccflage = false
+         }
+         if(userAccflage){
+             for(let i = 0;i<userAcc.length;i++){
+                c++
+                 if(userAcc[i].gameId){
+                    
+                     let bet = await betModel.aggregate([
+                         {
+                             $match:{
+                                 userId:req.currentUser._id.toString(),
+                                 $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
+                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+                                 
+                             }
+                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
+                         {
+                             $group:{
+                                 _id:{
+                                     gameId:"$gameId",
+                                     status:"$status",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$betType'},
+                                 stake:{$first:'$Stake'},
+                                 accStype:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$returns'},
+                                 transactionId:{$first:'$accountdetail.transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     console.log(bet,'bet in game id')
+                     if(!marketidarray.includes(bet[0]._id.gameId)){
+                         marketidarray.push(bet[0]._id.gameId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                     let bet = await betModel.aggregate([
+                         {
+                             $match:{
+                                 userId:req.currentUser._id.toString(),
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                                 eventId:{$exists:'eventId'},
+                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
 
-    //         }
-    //     },
-    //     {
-    //         $sort:{"date":-1}
-    //     },
-    //     {
-    //         $limit:20
-    //     }
-    // ])
-    // let userAcc = await accountStatement.aggregate([
-    //     {
-    //         $match:{
-    //             user_id:req.currentUser._id
-    //         }
-    //     },
-    //     {
-    //         $lookup: {
-    //             from: 'betmodels', // Assuming the name of the Whitelabel collection
-    //             localField: 'transactionId',
-    //             foreignField: 'transactionId',
-    //             as: 'betdetails'
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:{$cond: {
-    //                 if: { $eq: [{ $size: "$betdetails" }, 0] },
-    //                 then: "null",
-    //                 else: "$betdetails"
-    //               }},
-    //             match:{$first:'$$betdetails.match'},
-    //             marketName:{$first:'$$betdetails.marketName'},
-    //             stake:{$first:'$stake'},
-    //             accStype:{$first:'$accStype'},
-    //             creditDebitamount:{$sum:'$creditDebitamount'},
-    //             balance:{$sum:'$balance'},
-    //             transactionId:{$first:'$transactionId'}
-    //         }
-    //     },
-    //     {
-    //         $sort:{date:-1}
-    //     },
-    //     {
-    //         $limit:20
-    //     }
+                             }
+                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$Stake'},
+                                 accStype:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$returns'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     let accounts = []
+                    // accounts = await accountStatement.aggregate([
+                    //     {
+                    //         $match:{
+                    //             userName:req.currentUser.userName,
+                    //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                    //         }
+                    //     },
+                    //     {
+                    //         $group:{
+                    //             _id:null,
+                    //             marketId:{$first:'$marketId'},
+                    //             creditDebitamount:{$sum:'$creditDebitamount'},
+                    //         }
+                    //     }
+                    //  ])
 
-    // ])
-    console.log(userAcc,'userAcc')
+                     console.log('inuseracc sport book',bet,accounts)
+                     if(!marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].marketId){
+                     let bet = await betModel.aggregate([
+                         {
+                             $match:{
+                                 userId:req.currentUser._id.toString(),
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
+                             }
+                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$Stake'},
+                                 accStype:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$returns'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     console.log('inuseracc marketid',bet)
+                     if(bet[0] && !marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else{
+                     finalresult.push(userAcc[i])
+                     if(finalresult.length >= 20){
+                             break
+                     }
+                 }
+                 
+             }
+         }
+        return c
+    }
+    let j = 0
+    let skipvalue = 0;
+    while(finalresult.length < 20){
+        skip = j * limit
+        let result = await getmarketwiseaccdata(limit,skip)
+        skipvalue = skipvalue + result
+        console.log(skipvalue,j,'skipvalue')
+        console.log(finalresult.length,'finalresult.length')
+        if(!userAccflage){
+            break
+        }
+        j++
+    }
+    // console.log(finalresult,'finalresul')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
-        data:userAcc,
+        data:finalresult,
         user:req.currentUser,
         verticalMenus,
         check:"ACCC",
         userLog,
         notifications:req.notifications,
         basicDetails,
-        colorCode
+        colorCode,
+        skipvalue
     })
 });
 
@@ -2251,7 +2399,8 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
             $match:{
                 status: 'OPEN',
                 userName:{$in:childrenUsername},
-                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
+                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},
+                marketId: { $exists: true }
             }
         },
         {
@@ -2331,9 +2480,12 @@ exports.getBetLimitPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSportList = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata';
+    var fullUrl = 'http://127.0.0.1:8883/api/v1/getsportdata';
     fetch(fullUrl, {
-        method: 'GET'
+        method: 'GET',
+        headers:{
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+          }
     })
     .then(res =>res.json())
     .then(result => {
@@ -2348,9 +2500,12 @@ exports.getSportList = catchAsync(async(req, res, next) => {
 
 
 exports.getCricketData = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
+    var fullUrl = "http://127.0.0.1:8883/api/v1/getcricketdata";
     fetch(fullUrl, {
-        method: 'GET'
+        method: 'GET',
+        headers:{
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+          }
     })
     .then(res =>res.json())
     .then(result => {
@@ -2376,16 +2531,17 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["4.1704946928360-BM", "4.1704946945371-BM", "4.1704946873785-BM", "4.1704946887250-BM", "4.1704946810264-BM"]);
+    let marketids = ["4.1704946928360-BM", "4.1704946945371-BM", "4.1704946873785-BM", "4.1704946887250-BM", "4.1704946810264-BM"];
     // console.log(body)
-    var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
+    var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'accept': 'application/json'
-            },
-        body:body 
+            'accept': 'application/json',
+            'Authorization': 'Bearer manwegiyuzasdfag2165761awyhiasnd6asdf'
+        },
+        body:JSON.stringify({marketids})  
     })
     .then(res =>res.json())
     .then(result => {
@@ -2407,8 +2563,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://ollscores.com/",
-            "Referer":"http://ollscores.com/"},
+            "Origin":"http://dev.ollscores.com/",
+            "Referer":"http://dev.ollscores.com/"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
@@ -6257,6 +6413,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
 
 
 exports.userdashboard22 = catchAsync(async(req, res, next) => {
+    console.log('WORKING')
     let featureEventId = []
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)

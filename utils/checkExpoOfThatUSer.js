@@ -4,6 +4,7 @@
 
 
 async function checkExposure(data){
+    console.log('WORKING')
     if(data){
         let userData = await User.findById(data.id)
         const exposure1 = await Bet.aggregate([
@@ -269,7 +270,7 @@ async function checkExposure(data){
               },
         ])
 
-        console.log(exposure3, "exposure3exposure3exposure3")
+        // console.log(exposure3, "exposure3exposure3exposure3")
         let exposer3Amount = 0
         // console.log(exposure3[1].data, exposure3[0].data,userData.userName)
         if(exposure3.length > 0){
@@ -440,7 +441,29 @@ async function checkExposure(data){
             exposureOther = exposure1[0].totalAmount
         }
         // console.log(exposureOther, exposureFancy, exposer3Amount)
+        let stoprtBookexp = await Bet.aggregate([
+            {
+                $match: {
+                    status: "OPEN",
+                    userName:userData.userName,
+                    betType:'SportBook'
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:null,
+                    sum:{
+                        $sum:'$returns'
+                    }
+                }
+            }
+        ])
+        // console.log(stoprtBookexp, "stoprtBookexpstoprtBookexpstoprtBookexp")
         totalExposure = (exposureOther + exposureFancy + exposer3Amount) * -1
+        if(stoprtBookexp.length > 0){
+            totalExposure = totalExposure - stoprtBookexp[0].sum
+        }
        return totalExposure
     }
 }

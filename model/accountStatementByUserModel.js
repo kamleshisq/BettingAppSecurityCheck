@@ -1,3 +1,4 @@
+const { string } = require('joi');
 const mongoose = require('mongoose');
 
 const accountStatementByUser = mongoose.Schema({
@@ -51,6 +52,12 @@ const accountStatementByUser = mongoose.Schema({
         type:String
     },
     accStype:{
+        type:String
+    },
+    marketId:{
+        type:String
+    },
+    gameId:{
         type:String
     }
 })

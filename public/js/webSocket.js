@@ -58,7 +58,7 @@ socket.on('connect', () => {
         // }
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //dev.ollscores.com dev.ollscores.com http://ollscores.com/admin/userManagement http://ollscores.com  http: 
+        //dev.ollscores.com dev.ollscores.com http://dev.ollscores.com/admin/userManagement http://dev.ollscores.com/  http: 
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
@@ -2097,7 +2097,7 @@ socket.on('connect', () => {
                 form.attr('id', userData._id)
                 form.find('#fuBlanceAfter').text((me.availableBalance - amount).toFixed(2))
                 form.find('#tuBalanceAfter').text((userData.availableBalance + amount).toFixed(2))
-
+                form.find('input[name = "remark"]').attr('value', 'SETTLE DEP')
             }else{
                 form.find('.withdraw').addClass('active')
                 form.find('input[name = "type"]').val("withdrawl")
@@ -2110,6 +2110,7 @@ socket.on('connect', () => {
                 form.attr('id', userData._id)
                 form.find('#fuBlanceAfter').text((userData.availableBalance - amount).toFixed(2))
                 form.find('#tuBalanceAfter').text((me.availableBalance + amount).toFixed(2))
+                form.find('input[name = "remark"]').attr('value', 'SETTLE WITH')
 
             }
             }
@@ -3416,110 +3417,113 @@ socket.on('connect', () => {
         let model 
 
         $(document).on('click','.ownAccDetails',function(e){
-            let modelId = $(this).attr('id')
-            let modelId1 = $(this).attr("data-bs-target")
-            model =  $(modelId1)
+            model = $('#myModal5')
+            let gameId = $(this).attr('data-gameid')
+            let marketId = $(this).attr('data-marketid')
+            let id = $(this).attr('data-id')
+            let Fdate = document.getElementById("Fdate").value
+            let Tdate = document.getElementById("Tdate").value
+            let gametype;
+            if(gameId != ""){
+                if($(this).hasClass('positive')){
+                    gametype = 'positive'
+                }else{
+                    gametype = 'negative'
+                }
+            }
             // console.log('elementId',modelId)
-            socket.emit("ElementID", modelId)
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype})
         })
 
         socket.on('getMyBetDetails',(data)=>{
-            // console.log(data)
+            console.log(data)
             let html = ``
-            if(data.transactionId){
-                console.log(data)
-                html += `<thead>
-                <tr >
-                  <th>Date</th>
-                  <th>Event</th>
-                  <th>Market</th>
-                  <th>Bet on</th>
-                  <th>odds</th>
-                  <th>Stake</th>
-                  <th>Status</th>
-                  <th>Returns</th>
-                </tr>
-                </thead>`
-
-                html += `<tbody class="new-body" >`
-                if(data.bettype2 === "LAY"){
-                    html += `<tr class="lay" ><td>${new Date(data.date)}</td>`
-                }else{
-                    html += `<tr class="back" ><td>${new Date(data.date)}</td>`
-                }
-                html += `<td>${data.event}</td>`
-                if(data.marketName){
-                    html += `<td>${data.marketName}</td>`
-                }else{
-                    html += `<td>-</td>`
-                }
-                if(data.selectionName){
-                    if(data.selectionName.includes('@')){
-                        let odds2 = data.selectionName.split('@')[1]
-                        let selectionName2 = data.selectionName.split('@')[0]
-                        html += `<td>${selectionName2}@${data.oddValue}</td>`
-                        html += `<td>${odds2}</td>`
-                    }else{
-                        html += `<td>${data.selectionName}</td>`
-                        html += `<td>${data.oddValue}</td>`
+            for(let i = 0;i<data.length;i++){
+                if(data[i].betType){
+                    console.log(data[i])
+                    if(i == 0){
+                        html += `<thead>
+                        <tr >
+                          <th>Date</th>
+                          <th>Event</th>
+                          <th>Market</th>
+                          <th>Bet on</th>
+                          <th>odds</th>
+                          <th>Stake</th>
+                          <th>Status</th>
+                          <th>Returns</th>
+                        </tr>
+                        </thead>`
+                        html += `<tbody class="new-body" >`
                     }
+    
+                    if(data[i].bettype2 === "LAY"){
+                        html += `<tr class="lay" ><td>${new Date(data[i].date)}</td>`
+                    }else{
+                        html += `<tr class="back" ><td>${new Date(data[i].date)}</td>`
+                    }
+                    html += `<td>${data[i].event}</td>`
+                    if(data[i].marketName){
+                        html += `<td>${data[i].marketName}</td>`
+                    }else{
+                        html += `<td>-</td>`
+                    }
+                    if(data[i].selectionName){
+                        if(data[i].selectionName.includes('@')){
+                            let odds2 = data[i].selectionName.split('@')[1]
+                            let selectionName2 = data[i].selectionName.split('@')[0]
+                            html += `<td>${selectionName2}@${data[i].oddValue}</td>`
+                            html += `<td>${odds2}</td>`
+                        }else{
+                            html += `<td>${data[i].selectionName}</td>`
+                            html += `<td>${data[i].oddValue}</td>`
+                        }
+                    }else{
+                        html += `<td>-</td>`
+                        html += `<td>-</td>`
+                    }
+                    // if(data[i].oddValue){
+                    // }else{
+                    // }
+    
+                    html += `
+                    <td>${data[i].Stake}</td>
+                    <td>${data[i].status}</td>
+                    <td>${data[i].returns}</td></tr></tbody>`
+                    model.find('table').html(html)
                 }else{
-                    html += `<td>-</td>`
-                    html += `<td>-</td>`
+                    if(i == 0){
+                    html += `<thead>
+                    <tr >
+                      <th>Date</th>
+                      <th>Balance Before</th>
+                      <th>Balance After</th>
+                      <th>Amount</th>
+                      <th>Remarks</th>
+                    </tr>
+                    </thead>
+                    <tbody class="new-body" >`
+                    }
+                    html += `<tr>`
+                    html += `<td>${new Date(data[i].date)}</td>`
+                    html += `<td>${((data[i].balance - data[i].creditDebitamount).toFixed(2))}</td>`
+                    html += `<td>${(data[i].balance)}</td>`
+                    html += `<td>${(data[i].creditDebitamount)}</td>`
+                    if(data[i].Remark){
+                        html += `<td>${(data[i].Remark)}</td>`
+                    }else{
+                        html += `<td>-</td>`
+                    }
+                    if(i == data.length - 1){
+                    html += `</tr></tbody>`
+                    }else{
+                        html += `</tr>`
+                    }
                 }
-                // if(data.oddValue){
-                // }else{
-                // }
-
-                html += `
-                <td>${data.Stake}</td>
-                <td>${data.status}</td>
-                <td>${data.returns}</td></tr></tbody>`
-                model.find('table').html(html)
-            }else{
-                html += `<thead>
-                <tr >
-                  <th>Date</th>
-                  <th>Balance Before</th>
-                  <th>Balance After</th>
-                  <th>Amount</th>
-                  <th>Remarks</th>
-                </tr>
-                </thead>
-                <tbody class="new-body" >`
-                html += `<tr>`
-                html += `<td>${new Date(data.date)}</td>`
-                html += `<td>${((data.balance - data.creditDebitamount).toFixed(2))}</td>`
-                html += `<td>${(data.balance)}</td>`
-                html += `<td>${(data.creditDebitamount)}</td>`
-                if(data.Remark){
-                    html += `<td>${(data.Remark)}</td>`
-                }else{
-                    html += `<td>-</td>`
-                }
-                html += `</tr></tbody>`
-                model.find('table').html(html)
             }
+            model.find('table').html(html)
             // console.log(model)
         })
-            // let 
-            // let data = $(this).parent().parent().data('details')
-            // let html = '';
-            // if(data.hasOwnProperty('transactionId')){
-            //     socket.emit('getMyBetDetails',data.transactionId)
-                
-            //         // console.log(data)
-                   
-
-            // }
-            
-    
-            //     
-            // }
-
-        
-        
-            // console.log(data)
 
 
         
@@ -3551,6 +3555,7 @@ socket.on('connect', () => {
         let SUSER
         let Fdate = document.getElementById("Fdate").value
         let Tdate = document.getElementById("Tdate").value
+        
         Transaction_type = $('#transaction_type').val()
         data.Transaction_type = Transaction_type
         data.Fdate = Fdate;
@@ -3570,8 +3575,10 @@ socket.on('connect', () => {
             data.id = this.id
             SUSER = this.id
             data.page = 0
+            data.skipid = parseInt($('.skipid').attr('data-skipid'))
             $('.pageLink').attr('data-page',1)
             $('.wrapper').hide()
+            console.log(data)
             socket.emit( "AccountScroll2", data)
         })
 
@@ -3599,6 +3606,7 @@ socket.on('connect', () => {
             let page = parseInt($('.pageLink').attr('data-page'));
             $('.pageLink').attr('data-page',page + 1)
             data.page = page
+            data.skipid = parseInt($('.skipid').attr('data-skipid'))
            if(searchU){
                 data.id = SUSER
            }
@@ -3608,6 +3616,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
+            $('.skipid').attr('data-skipid',data.skipvalue)
             console.log(data)
             if(data.json.status == "success" && data.user){
                 let html = "";
@@ -3635,8 +3644,8 @@ socket.on('connect', () => {
                   `
                   $('.welcome-info-btn').html(html1)
                 }
-                for(let i = 0; i < data.json.userAcc.length; i++){
-                    let date = new Date(data.json.userAcc[i].date);
+                for(let i = 0; i < data.json.finalresult.length; i++){
+                    let date = new Date(data.json.finalresult[i].date);
                     var options = { 
                         year: 'numeric',
                         month: 'long',
@@ -3648,92 +3657,49 @@ socket.on('connect', () => {
                     var formattedTime = date.toLocaleString('en-US', options);
                     // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
                     // console.log(abc)
-                    if((i%2)==0){
-                        html += `<tr style="text-align: center;" class="blue" >
+                        html += `<tr style="text-align: center;">
                         <td class="text-nowrap" >${formattedTime}</td>`
-                        if(data.json.userAcc[i].transactionId){
-                            if(data.json.userAcc[i].betDetails.length != 0){
-
-                                if(data.json.userAcc[i].betDetails[0].event){
-    
-                                    html += `<td>${data.json.userAcc[i].betDetails[0].event}</td>`
-                                }else{
-                                    html += `<td>-}</td>`
-    
-                                }
-                                if(data.json.userAcc[i].betDetails[0].marketName){
-    
-                                    html += `<td>${data.json.userAcc[i].betDetails[0].marketName}</td>`
-                                }else{
-    
-                                    html += `<td>-</td>`
-                                }
+                        if(data.json.finalresult[i].transactionId){
+                            if(data.json.finalresult[i].match){
+                                html += `<td>${data.json.finalresult[i].match}</td>`
                             }else{
-                                html += `<td>-</td><td>-</td>`
+                                html += `<td>-</td>`
+                            }
+                            if(data.json.finalresult[i].marketName){
+                                html += `<td>${data.json.finalresult[i].marketName}</td>`
+                            }else{
+                                html += `<td>-</td>`
                             }
                         }else{
                             html += `<td>-</td><td>-</td>`
 
                         }
-                        if(data.json.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
+                        if(data.json.finalresult[i].creditDebitamount > 0){
+                            html += `<td class="c-gren">${data.json.finalresult[i].creditDebitamount}</td>
                             <td>0</td>`
                         }else{
-                            html += `<td>0</td><td>${data.json.userAcc[i].creditDebitamount}</td>`
+                            html += `<td>0</td><td class="c-reed">${data.json.finalresult[i].creditDebitamount}</td>`
                         }
-                        html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
-                        if(data.json.userAcc[i].Remark){
-                            html += `<td>${data.json.userAcc[i].Remark}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
-                    }else{
-                        html += `<tr style="text-align: center;" >
-                        <td class="text-nowrap" >${formattedTime}</td>`
-                        if(data.json.userAcc[i].transactionId){
-                            if(data.json.userAcc[i].betDetails.length != 0){
-
-                                if(data.json.userAcc[i].betDetails[0].event){
-    
-                                    html += `<td>${data.json.userAcc[i].betDetails[0].event}</td>`
-                                }else{
-                                    html += `<td>-}</td>`
-    
-                                }
-                                if(data.json.userAcc[i].betDetails[0].marketName){
-    
-                                    html += `<td>${data.json.userAcc[i].betDetails[0].marketName}</td>`
-                                }else{
-    
-                                    html += `<td>-</td>`
-                                }
+                        if(data.json.finalresult[i]._id.gameId){
+                            if(data.json.finalresult[i].creditDebitamount > 0){
+                                html += `<td>${data.json.finalresult[i].balance}</td>
+                                <td><a class="ownAccDetails positive" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
                             }else{
-                                html += `<td>-</td><td>-</td>`
-                            }
-                        }else{
-                            html += `<td>-</td><td>-</td>`
+                                html += `<td>${data.json.finalresult[i].balance}</td>
+                                <td><a class="ownAccDetails negative" data-gameid="${data.json.finalresult[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
 
-                        }
-                        if(data.json.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>0</td>`
+                            }
+                        }else if(data.json.finalresult[i]._id.marketId){
+                            html += `<td>${data.json.finalresult[i].balance}</td>
+                            <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id.marketId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
                         }else{
-                            html += `<td>0</td><td>${data.json.userAcc[i].creditDebitamount}</td>`
+                            html += `<td>${data.json.finalresult[i].balance}</td>
+                            <td><a class="ownAccDetails" data-id="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
                         }
-                       
-                        html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
-                        if(data.json.userAcc[i].Remark){
-                            html += `<td>${data.json.userAcc[i].Remark}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
-                    }
                 }
                 count1 += 10;
                 if(data.page == 0){
-                    if(data.json.userAcc.length == 0){
+                    if(data.json.finalresult.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                     }else{
                         $('#load-more').show()
@@ -3742,7 +3708,7 @@ socket.on('connect', () => {
                     $('tbody').html(html)
 
                 }else {
-                    if(data.json.userAcc.length == 0){
+                    if(data.json.finalresult.length == 0){
                         $('#load-more').hide()
                     }
                     $('tbody').append(html)
@@ -10776,6 +10742,20 @@ socket.on('connect', () => {
 
 
     if(pathname === "/myAccountStatment"){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        $('#Fdate').val(tomorrowFormatted)
+        $('#Tdate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
 
         function generatePDF(table) {
             const printWindow = window.open('', '_blank');
@@ -10831,11 +10811,6 @@ socket.on('connect', () => {
               generatePDF(table);
             }
           });
-
-
-       
-          
-
 
         function downloadCSV(csvContent, fileName) {
             const link = document.createElement('a');
@@ -10912,7 +10887,8 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
                 filterData.type = type
-                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
+                let skipid = parseInt($('.skipid').attr('data-skipid'))
+                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
             });
         });
 
@@ -10933,60 +10909,113 @@ socket.on('connect', () => {
             page = 0
             $('.pageId').attr('data-pageid',1)
             // console.log()
-            socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
-          }
+            let skipid = 0
+            $('.skipid').attr('data-skipid',0)
+            socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
+        }
 
-
-        let count = 21
+        let count = 20;
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
             if(data.userAcc.length > 0){
+                $('.skipid').attr('data-skipid',data.skipvalue)
             // console.log(data.page)
             if(data.page === 0){
-                count = 1
+                count = 0;
             }
-            let page = data.page
+
             let userAcc = data.userAcc;
             let html = '';
-             for(let i = 0; i < userAcc.length; i++){
-                var date = new Date(userAcc[i].date);
-                var options = { 
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                };
-                var formattedTime = date.toLocaleString('en-US', options);
-                html += `<tr class="acount-stat-tbl-body-tr">
-                    <td title="SR No." >${i+count}</td>
-                    <td title="Date & Time" >${formattedTime}</td>`
+            for(let i = 0; i < userAcc.length; i++){
+                if(userAcc[i].gameId){
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="${userAcc[i]._id.gameId}" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].creditDebitamount > 0){
-                        html += `<td title="Credit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
-                        <td title="Debit" >0</td>`
+                        html += `<td title="Transaction" class="positive transactiontype">Casino Bet  Settlement</td>`
+                    }else if(userAcc[i].creditDebitamount < 0 ){
+                        html += `<td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>`
+                    }
+                    if(userAcc[i].match){
+                        html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
-                        html += ` <td title="Credit" >0</td>
-                        <td title="Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
+                        html += `<td title="Event">-</td>`
+                    }
+                    if(userAcc.marketName){
+                        html += `<td title="Market Type">${userAcc[i].marketName}</td>`
+                    }else{
+                        html += `<td title="Market Type">-</td>`
+                    }
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
+                    `
+                    }else{
+                        html += `
+                    <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
+                    }
+                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
+                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
+                }else if(userAcc[i].transactionId.length > 16){
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">
+                        <td title="Transaction">Sport Book Bet Settlement</td>`
+                  
+                    if(userAcc[i].match){
+                        html += `<td title="Event">${userAcc[i].match}</td>`
+                    }else{
+                        html += `<td title="Event">-</td>`
+                    }
+                    if(userAcc.marketName){
+                        html += `<td title="Market Type">${userAcc[i].marketName}</td>`
+                    }else{
+                        html += `<td title="Market Type">-</td>`
+                    }
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
+                    `
+                    }else{
+                        html += `
+                    <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
+                    }
+                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
+                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
+                }else if(userAcc[i]._id.marketId){
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">
+                        <td title="Transaction">Bet Settlement</td>`
+                    if(userAcc[i].match){
+                        html += `<td title="Event">${userAcc[i].match}</td>`
+                    }else{
+                        html += `<td title="Event">-</td>`
+                    }
+                    if(userAcc.marketName){
+                        html += `<td title="Market Type">${userAcc[i].marketName}</td>`
+                    }else{
+                        html += `<td title="Market Type">-</td>`
+                    }
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
+                    `
+                    }else{
+                        html += `
+                    <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
+                    }
+                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
+                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
+
+                }else{
+                    html += `<tr class="acount-stat-tbl-body-tr" data-marketid="" id="rowid-${i + 1 + count}">
+                    <td title="Transaction">Settlement</td>`
+                        html += `<td title="Event">-</td>`
+                        html += `<td title="Market Type">-</td>`
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td title="Credit/Debit" class="c-gren" >${userAcc[i].creditDebitamount}</td>
+                    `
+                    }else{
+                        html += `
+                        <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
                     }
 
-                    if(userAcc[i].stake){
-                        html += `<td title="Stake" >${userAcc[i].stake}</td>`
-                    }else{
-                        html += `<td title="Stake" >-</td>`
-                    }
-
-                    html += `<td title="Pts" >0</td>
-                    <td title="Closing" >${userAcc[i].balance}</td>
-                    <td title="Description" >${userAcc[i].description}</td>`
-                    if(userAcc[i].Remark){
-
-                        html += `<td title="Remark" >${userAcc[i].Remark}</td>`
-                    }else{
-                        html += `<td title="Remark" >-</td>`
-
-                    }
+                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
+                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
+                }
+                html += `<td></td></tr>`
             }
-            count += 20
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
             }else{
@@ -11003,17 +11032,41 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.rowtoggle_AccountStatment',function(e){
-            let marketId = $(this).attr('data-marketid')
-            console.log(marketId)
-            socket.emit('getbetdetailbyid',{marketId,LOGINDATA})
+            if(!$(this).hasClass('active')){
+                if($(this).parent().children('tr.active').length > 0){
+                let rowid = $(this).parent().children('tr.active').attr('id')
+                $(`.addedaccountstatmentRowHeader-${rowid},.addedaccountstatmentRowbody-${rowid}`).remove()
+                }
+                $(this).parent().children('tr.active').removeClass('active')
+                $(this).addClass('active')
+                let marketId = $(this).attr('data-marketid')
+                let gameId = $(this).attr('data-gameid')
+                let gametype;
+                if(gameId != ""){
+                    if($(this).find('.transactiontype').hasClass('positive')){
+                        gametype = 'positive'
+                    }else{
+                        gametype = 'negative'
+                    }
+                }
+                let rowid = $(this).attr('id')
+                console.log({marketId,gameId,gametype,LOGINDATA,rowid})
+                if(marketId != "" || gameId != ""){
+                    socket.emit('getbetdetailbyid',{marketId,gameId,gametype,LOGINDATA,rowid})
+                }
+            }else{
+                $(this).removeClass('active')
+                let rowid = $(this).attr('id')
+                $(`.addedaccountstatmentRowHeader-${rowid},.addedaccountstatmentRowbody-${rowid}`).remove()
+            }
         })
-
         socket.on('getbetdetailbyid',async(data)=>{
             console.log(data,'datasdfasdfas')
             let html;
             if(data.status == 'success'){
                 for(let i = 0;i<data.bets.length;i++){
-                    html += ` <tr class="addedaccountstatmentRowHeader">
+                    if(i == 0){
+                        html += ` <tr class="addedaccountstatmentRowHeader-${data.rowid} addedasrowheader">
                     <td class="">Event</td>
                     <td>Mrket Type</td>
                     <td>Bet On</td>
@@ -11021,28 +11074,38 @@ socket.on('connect', () => {
                     <td>Stake</td>
                     <td>Status</td>
                     <td>Return</td>
-                </tr> <tr class="addedaccountstatmentRowbody">
-                    <td title="">if(!data[i].accStype && data[i].creditDebitamount > 0){
-                      Deposit
-                    }else if(!data[i].accStype && data[i].creditDebitamount < 0){
-                      Withdraw
-                    }else if(data[i].accStype && data[i].creditDebitamount < 0){
-                      Settlement Withdraw
-                    }else if(data[i].accStype && data[i].creditDebitamount > 0){
-                      Settlement Deposit
+                </tr>`
+                    }
+                    if(data.bets[i].bettype2 == 'BACK'){
+                        html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody back">`
                     }else{
-                    -
-                    }</td>
-                      <td title="">=data[i].match</td>
-                      <td title="Market Type">=data[i].marketName</td>
-                      if(data[i].creditDebitamount > 0){
-                          <td title="Credit/Debit" class="c-gren">=data[i].creditDebitamount</td>
+                        html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody lay">`
+                    }
+                    if(data.bets[i].marketId){
+                        html += `<td>${data.bets[i].match}</td>
+                        <td>${data.bets[i].marketName}</td>
+                        <td>${data.bets[i].selectionName}</td>
+                        <td>${data.bets[i].oddValue}</td>`
+                    }else{
+                        html += `<td>${data.bets[i].event}</td>
+                        <td>${data.bets[i].betType}</td>
+                        <td>-</td>
+                        <td>-</td>`
+                    
+                    }
+                    html += `<td>${data.bets[i].Stake}</td>
+                    <td>${data.bets[i].status}</td>
+                    `                    
+                      if(data.bets[i].returns > 0){
+                        html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
                       }else{
-                          <td title="Credit/Debit" class="c-reed">=data[i].creditDebitamount</td>
+                        html += `<td title="Credit/Debit" class="c-reed">${data.bets[i].returns}</td>`
                       }
-                      <td title="Closing">=data[i].balance</td>
-                      <td title="Description">=data[i].transactionId</td>
-                  </tr>`
+                      
+                      html += `</tr>`
+                }
+                if(!$('#'+data.rowid).next().hasClass('addedaccountstatmentRowHeader')){
+                    $('#'+data.rowid).after(html)
                 }
             }
 
@@ -14366,7 +14429,7 @@ socket.on('connect', () => {
             socket.emit('chartMain', LOGINDATA) 
 
             socket.on("chartMain", data => {
-                console.log(data, "datadatadata")
+                // console.log(data, "datadatadata")
                 var options = {
                     series: [{
                     name: 'Income',
