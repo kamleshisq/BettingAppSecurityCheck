@@ -49,9 +49,10 @@ mongoose.connect(process.env.liveProd,{
     useNewUrlParser: true, 
     useUnifiedTopology: true
 }).then(()=>{
-    console.log("MongoDB connected")
+  console.log("MongoDB connected")
 })
 // console.log("WORKING 54545 ")
+app.use(middlewares);
 global._blacklistToken=[];
 global._loggedInToken=[];
 app.set('view engine', "ejs");
@@ -79,7 +80,6 @@ app.use((req, res, next) => {
 // console.log("WORKING 54545 ")
 // console.log(1014545)
 // console.log(process.memoryUsage(), "MEMORY DATA")
-app.use(middlewares);
 crone();
 // cancelCrone();
 // userCrone(); 
