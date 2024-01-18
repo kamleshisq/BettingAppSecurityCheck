@@ -2715,6 +2715,7 @@ io.on('connection', (socket) => {
     }else if(data.filterData.type === "swithdraw"){
         filterstatus = false
     }
+    filter.$or = [{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}]
     // console.log(filter)
     let finalresult = []
     let marketidarray = [];
