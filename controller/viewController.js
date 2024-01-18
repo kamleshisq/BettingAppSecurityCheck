@@ -839,17 +839,17 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
                              }
                          },
-                         {
-                             $lookup: {
-                                 from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                 localField: 'transactionId',
-                                 foreignField: 'transactionId',
-                                 as: 'accountdetail'
-                             }
-                         },
-                         {
-                             $unwind:"$accountdetail"
-                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
                          {
                              $group:{
                                  _id:{
@@ -859,11 +859,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  },
                                  match:{$first:'$match'},
                                  marketName:{$first:'$marketName'},
-                                 stake:{$first:'$accountdetail.stake'},
-                                 accStype:{$first:'$accountdetail.accStype'},
-                                 creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                 balance:{$sum:'$accountdetail.balance'},
-                                 transactionId:{$first:'$accountdetail.transactionId'}
+                                 stake:{$first:'$Stake'},
+                                 accStype:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$returns'},
+                                 transactionId:{$first:'$transactionId'}
                              }
                          },
                          {
