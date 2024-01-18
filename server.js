@@ -752,38 +752,19 @@ io.on('connection', (socket) => {
             filter.date = {$lte:new Date(data.Tdate)}
         }
         filter.user_id = data.id
+        let filterstatus = true
         if(data.Transaction_type === "Bet_Settlement"){
-            filter.stake = {
-                $ne:undefined
-            }
+            filter.$expr = {
+                $eq: [{ $strLenCP: "$transactionId" }, 16]
+              }
         }else if (data.Transaction_type === "Deposit"){
-            filter.stake = undefined
-            filter.accStype = undefined
-            filter.creditDebitamount = {
-                $gt: 0
-            }
+            filterstatus = false
         }else if(data.Transaction_type === "Withdraw"){
-            filter.stake = undefined
-            filter.accStype = undefined
-            filter.creditDebitamount = {
-                $lt: 0
-            }
+            filterstatus = false
         }else if (data.Transaction_type === "Settlement_Deposit"){
-            filter.stake = undefined
-            filter.accStype = {
-                $ne:undefined
-            }
-            filter.creditDebitamount = {
-                $gt: 0
-            }
+            filterstatus = false
         }else if(data.Transaction_type === "Settlement_Withdraw"){
-            filter.stake = undefined
-            filter.accStype = {
-                $ne:undefined
-            }
-            filter.creditDebitamount = {
-                $lt: 0
-            }
+            filterstatus = false
         }
         let finalresult = []
         let marketidarray = [];
@@ -947,16 +928,18 @@ io.on('connection', (socket) => {
         }
         let j = 0
         let skipvalue = data.skipid;
-        while(finalresult.length < 10){
-            skip = (limit * j) + data.skipid 
-            let result = await getmarketwiseaccdata(limit,skip)
-            skipvalue = skipvalue + result
-            console.log(skipvalue,j,'skipvalue')
-            console.log(finalresult.length,'finalresult.length')
-            if(!userAccflage){
-                break
+        if(filterstatus){
+            while(finalresult.length < 10){
+                skip = (limit * j) + data.skipid 
+                let result = await getmarketwiseaccdata(limit,skip)
+                skipvalue = skipvalue + result
+                console.log(skipvalue,j,'skipvalue')
+                console.log(finalresult.length,'finalresult.length')
+                if(!userAccflage){
+                    break
+                }
+                j++
             }
-            j++
         }
         json.status = 'success'
         json.finalresult = finalresult
