@@ -3417,7 +3417,7 @@ socket.on('connect', () => {
         let model 
 
         $(document).on('click','.ownAccDetails',function(e){
-            model = '#myModal5'
+            model = $('#myModal5')
             let gameId = $(this).attr('data-gameid')
             let marketId = $(this).attr('data-marketid')
             let id = $(this).attr('data-id')

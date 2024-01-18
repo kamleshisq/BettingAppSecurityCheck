@@ -818,6 +818,7 @@ io.on('connection', (socket) => {
                                     transactionId:{$first:'$accountdetail.transactionId'},
                                     description:{$first:'$accountdetail.description'},
                                     Remark:{$first:'$accountdetail.Remark'},
+                                    date:{$first:'$accountdetail.date'}
 
                                 }
                             }
@@ -866,7 +867,8 @@ io.on('connection', (socket) => {
                                     balance:{$sum:'$accountdetail.balance'},
                                     transactionId:{$first:'$accountdetail.transactionId'},
                                     description:{$first:'$accountdetail.description'},
-                                    Remark:{$first:'$accountdetail.Remark'}
+                                    Remark:{$first:'$accountdetail.Remark'},
+                                    date:{$first:'$accountdetail.date'}
                                 }
                             }
                         ])
@@ -912,7 +914,8 @@ io.on('connection', (socket) => {
                                     balance:{$sum:'$accountdetail.balance'},
                                     transactionId:{$first:'$accountdetail.transactionId'},
                                     description:{$first:'$accountdetail.description'},
-                                    Remark:{$first:'$accountdetail.Remark'}
+                                    Remark:{$first:'$accountdetail.Remark'},
+                                    date:{$first:'$accountdetail.date'}
                                 }
                             }
                         ])
