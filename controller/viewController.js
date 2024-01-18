@@ -771,17 +771,17 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
 
                              }
                          },
-                         {
-                             $lookup: {
-                                 from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                 localField: 'transactionId',
-                                 foreignField: 'transactionId',
-                                 as: 'accountdetail'
-                             }
-                         },
-                         {
-                             $unwind:"$accountdetail"
-                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
                          {
                              $group:{
                                  _id:{
@@ -791,11 +791,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  },
                                  match:{$first:'$match'},
                                  marketName:{$first:'$marketName'},
-                                 stake:{$first:'$accountdetail.stake'},
-                                 accStype:{$first:'$accountdetail.accStype'},
-                                 creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                 balance:{$sum:'$accountdetail.balance'},
-                                 transactionId:{$first:'$accountdetail.transactionId'}
+                                 stake:{$first:'$Stake'},
+                                 accStype:null,
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:0,
+                                 transactionId:{$first:'$transactionId'}
                              }
                          },
                          {
@@ -806,21 +806,21 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      ])
                      let accounts = []
-                    accounts = await accountStatement.aggregate([
-                        {
-                            $match:{
-                                userName:req.currentUser.userName,
-                                $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                            }
-                        },
-                        {
-                            $group:{
-                                _id:null,
-                                marketId:{$first:'$marketId'},
-                                creditDebitamount:{$sum:'$creditDebitamount'},
-                            }
-                        }
-                     ])
+                    // accounts = await accountStatement.aggregate([
+                    //     {
+                    //         $match:{
+                    //             userName:req.currentUser.userName,
+                    //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                    //         }
+                    //     },
+                    //     {
+                    //         $group:{
+                    //             _id:null,
+                    //             marketId:{$first:'$marketId'},
+                    //             creditDebitamount:{$sum:'$creditDebitamount'},
+                    //         }
+                    //     }
+                    //  ])
 
                      console.log('inuseracc sport book',bet,accounts)
                      if(!marketidarray.includes(bet[0]._id.marketId)){
