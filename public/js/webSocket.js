@@ -3537,6 +3537,7 @@ socket.on('connect', () => {
         let SUSER
         let Fdate = document.getElementById("Fdate").value
         let Tdate = document.getElementById("Tdate").value
+        
         Transaction_type = $('#transaction_type').val()
         data.Transaction_type = Transaction_type
         data.Fdate = Fdate;
@@ -3556,9 +3557,11 @@ socket.on('connect', () => {
             data.id = this.id
             SUSER = this.id
             data.page = 0
+            data.skipid = parseInt($('.skipid').attr('data-skipid'))
             $('.pageLink').attr('data-page',1)
             $('.wrapper').hide()
-            socket.emit( "AccountScroll2", data)
+            console.log(data)
+            // socket.emit( "AccountScroll2", data)
         })
 
         $('#Fdate,#Tdate,#transaction_type').change(function(){
@@ -3585,15 +3588,17 @@ socket.on('connect', () => {
             let page = parseInt($('.pageLink').attr('data-page'));
             $('.pageLink').attr('data-page',page + 1)
             data.page = page
+            data.skipid = parseInt($('.skipid').attr('data-skipid'))
            if(searchU){
                 data.id = SUSER
            }
-            socket.emit('   ',data)
+            socket.emit('AccountScroll2',data)
         })
     
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
+            $('.skipid').attr('data-skipid',skipvalue)
             console.log(data)
             if(data.json.status == "success" && data.user){
                 let html = "";

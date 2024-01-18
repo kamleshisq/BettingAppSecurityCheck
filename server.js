@@ -960,7 +960,7 @@ io.on('connection', (socket) => {
         }
         json.status = 'success'
         json.finalresult = finalresult
-        socket.emit('Acc2', {json,page:data.page,user})
+        socket.emit('Acc2', {json,page:data.page,user,skipvalue})
 
     })
 
