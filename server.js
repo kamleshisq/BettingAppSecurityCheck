@@ -1148,7 +1148,7 @@ io.on('connection', (socket) => {
             }
         }else if (data.Fdate != "" && data.Tdate != ""){
             filter.date = {
-                $gte : new Date(data.filterData.fromDate),
+                $gte : new Date(data.Fdate),
                 $lt : new Date(data.Tdate)
             }
         }
