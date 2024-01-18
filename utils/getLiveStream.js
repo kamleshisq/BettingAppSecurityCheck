@@ -13,8 +13,8 @@ async function getLiveStream(id, ipv4){
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://dev.ollscores.com/",
-            "Referer":"http://dev.ollscores.com/"},
+            "Origin":"http://bigbull9exch.com/",
+            "Referer":"http://bigbull9exch.com/"},
         body:JSON.stringify(body)
     })
     .then(res =>res.json())
