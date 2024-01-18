@@ -816,7 +816,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                         {
                             $group:{
                                 _id:null,
-                                marketId:"$marketId",
+                                marketId:{$first:'$marketId'},
                                 creditDebitamount:{$sum:'$creditDebitamount'},
                             }
                         }
