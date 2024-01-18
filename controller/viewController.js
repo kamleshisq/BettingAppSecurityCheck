@@ -687,114 +687,175 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let marketidarray = [];
     let userAccflage = true
     async function getmarketwiseaccdata (limit,skip){
+        console.log('in getmarketwiseaccdata function')
          let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
             return c + 1
          }
+         if(userAccflage){
+             for(let i = 0;i<userAcc.length;i++){
+                c++
+                 if(userAcc[i].gameId){
+                    
+                     let bet = await betModel.aggregate([
+                         {
+                             $match:{
+                                 userId:req.currentUser._id.toString(),
+                                 gameId:userAcc[i].gameId
+                             }
+                         },
+                         {
+                             $lookup: {
+                                 from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                 localField: 'transactionId',
+                                 foreignField: 'transactionId',
+                                 as: 'accountdetail'
+                             }
+                         },
+                         {
+                             $unwind:"$accountdetail"
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                     gameId:"$gameId",
+                                     status:"$status"
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$betType'},
+                                 stake:{$first:'$accountdetail.stake'},
+                                 accStype:{$first:'$accountdetail.accStype'},
+                                 creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                 balance:{$sum:'$accountdetail.balance'},
+                                 transactionId:{$first:'$accountdetail.transactionId'}
+                             }
+                         },
+                         {
+                            $limit:(10 - finalresult.length)
+                         }
+                     ])
+                     console.log(bet,'bet in game id')
+                     if(!marketidarray.includes(bet[0]._id.gameId)){
+                         marketidarray.push(bet[0]._id.gameId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                     let bet = await betModel.aggregate([
+                         {
+                             $match:{
+                                 userId:req.currentUser._id.toString(),
+                                 marketId:userAcc[i].marketId,
+                                 eventId:{$exists:'eventId'},
+                                 marketId:{$exists:'marketId'}
 
-        for(let i = 0;i<userAcc.length;i++){
-            if(userAcc[i].transactionId){
-                let bet = await betModel.aggregate([
-                    {
-                        $match:{
-                            userId:req.currentUser._id.toString(),
-                            transactionId:userAcc[i].transactionId
-                        }
-                    },
-                    {
-                        $lookup: {
-                            from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                            localField: 'transactionId',
-                            foreignField: 'transactionId',
-                            as: 'accountdetail'
-                        }
-                    },
-                    {
-                        $unwind:"$accountdetail"
-                    },
-                    {
-                        $group:{
-                            _id:{
-                                eventId:"$eventId",
-                                marketId:"$marketId"
-                            },
-                            match:{$first:'$match'},
-                            marketName:{$first:'$marketName'},
-                            stake:{$first:'$accountdetail.stake'},
-                            accStype:{$first:'$accountdetail.accStype'},
-                            creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                            balance:{$sum:'$accountdetail.balance'},
-                            transactionId:{$first:'$accountdetail.transactionId'}
-                        }
-                    }
-                ])
-                if(!marketidarray.includes(bet[0]._id.marketId)){
-                    marketidarray.push(bet[0]._id.marketId)
-                    finalresult.push(bet[0])
-                    if(finalresult.length >= 20){
-                        break
-                    }
-                }
-            }else if(userAcc[i].marketId){
-                let bet = await betModel.aggregate([
-                    {
-                        $match:{
-                            userId:req.currentUser._id.toString(),
-                            marketId:userAcc[i].marketId
-                        }
-                    },
-                    {
-                        $lookup: {
-                            from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                            localField: 'transactionId',
-                            foreignField: 'transactionId',
-                            as: 'accountdetail'
-                        }
-                    },
-                    {
-                        $unwind:"$accountdetail"
-                    },
-                    {
-                        $group:{
-                            _id:{
-                                eventId:"$eventId",
-                                marketId:"$marketId"
-                            },
-                            match:{$first:'$match'},
-                            marketName:{$first:'$marketName'},
-                            stake:{$first:'$accountdetail.stake'},
-                            accStype:{$first:'$accountdetail.accStype'},
-                            creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                            balance:{$sum:'$accountdetail.balance'},
-                            transactionId:{$first:'$accountdetail.transactionId'}
-                        }
-                    }
-                ])
-                if(!marketidarray.includes(bet[0]._id.marketId)){
-                    marketidarray.push(bet[0]._id.marketId)
-                    finalresult.push(bet[0])
-                    if(finalresult.length >= 20){
-                        break
-                    }
-                }
-            }else{
-                finalresult.push(userAcc[i])
-                if(finalresult.length >= 20){
-                        break
-                }
-            }
-            c++
-        }
-        return c+1
+                             }
+                         },
+                         {
+                             $lookup: {
+                                 from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                 localField: 'transactionId',
+                                 foreignField: 'transactionId',
+                                 as: 'accountdetail'
+                             }
+                         },
+                         {
+                             $unwind:"$accountdetail"
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId"
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$accountdetail.stake'},
+                                 accStype:{$first:'$accountdetail.accStype'},
+                                 creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                 balance:{$sum:'$accountdetail.balance'},
+                                 transactionId:{$first:'$accountdetail.transactionId'}
+                             }
+                         },
+                         {
+                            $limit:(10 - finalresult.length)
+                         }
+                     ])
+                     console.log('inuseracc sport book',bet)
+                     if(!marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult.push(bet[0])
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].marketId){
+                     let bet = await betModel.aggregate([
+                         {
+                             $match:{
+                                 userId:req.currentUser._id.toString(),
+                                 marketId:userAcc[i].marketId
+                             }
+                         },
+                         {
+                             $lookup: {
+                                 from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                                 localField: 'transactionId',
+                                 foreignField: 'transactionId',
+                                 as: 'accountdetail'
+                             }
+                         },
+                         {
+                             $unwind:"$accountdetail"
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId"
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$accountdetail.stake'},
+                                 accStype:{$first:'$accountdetail.accStype'},
+                                 creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
+                                 balance:{$sum:'$accountdetail.balance'},
+                                 transactionId:{$first:'$accountdetail.transactionId'}
+                             }
+                         },
+                         {
+                            $limit:(10 - finalresult.length)
+                         }
+                     ])
+                     console.log('inuseracc marketid',bet)
+                     if(!marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult.push(bet[0])
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else{
+                     finalresult.push(userAcc[i])
+                     if(finalresult.length >= 20){
+                             break
+                     }
+                 }
+                 
+             }
+         }
+        return c
     }
     let j = 0
-    let skipvalue
+    let skipvalue = 0;
     while(finalresult.length < 20){
         skip = j * limit
-        skipvalue = await getmarketwiseaccdata(limit,skip)
-        skipvalue += skip
+        let result = await getmarketwiseaccdata(limit,skip)
+        skipvalue = skipvalue + result
         console.log(skipvalue,j,'skipvalue')
         console.log(finalresult.length,'finalresult.length')
         if(!userAccflage){

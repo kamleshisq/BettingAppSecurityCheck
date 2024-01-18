@@ -2720,6 +2720,7 @@ io.on('connection', (socket) => {
     let marketidarray = [];
     let userAccflage = true
     async function getmarketwiseaccdata (limit,skip){
+        console.log('in getmarketwise accdata ',limit,skip)
          let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
@@ -2727,6 +2728,7 @@ io.on('connection', (socket) => {
          }
          if(userAccflage){
             for(let i = 0;i<userAcc.length;i++){
+                c++
                 if(userAcc[i].gameId){
                     let bet = await Bet.aggregate([
                         {
@@ -2860,18 +2862,18 @@ io.on('connection', (socket) => {
                             break
                     }
                 }
-                c++
+                
             }
          }
         return c
     }
     let j = 0
-    let skipvalue
+    let skipvalue = data.skipid;
     if(filterstatus){
         while(finalresult.length < 20){
-            skip = data.skipid
-            skipvalue = await getmarketwiseaccdata(limit,skip)
-            skipvalue += skip
+            skip = (limit * j) + data.skipid 
+            let result = await getmarketwiseaccdata(limit,skip)
+            skipvalue = skipvalue + result
             console.log(skipvalue,j,'skipvalue')
             console.log(finalresult.length,'finalresult.length')
             if(!userAccflage){
