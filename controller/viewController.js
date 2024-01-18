@@ -643,7 +643,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
 
-    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
+    console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         user,
