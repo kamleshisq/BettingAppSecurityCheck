@@ -813,13 +813,13 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                             }
                         },
-                        // {
-                        //     $group:{
-                        //         _id:null,
-                        //         marketId:"$marketId",
-                        //         creditDebitamount:{$sum:'$creditDebitamount'},
-                        //     }
-                        // }
+                        {
+                            $group:{
+                                _id:null,
+                                marketId:"$marketId",
+                                creditDebitamount:{$sum:'$creditDebitamount'},
+                            }
+                        }
                      ])
 
                      console.log('inuseracc sport book',bet,accounts)
