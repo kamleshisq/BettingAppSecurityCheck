@@ -369,7 +369,7 @@ async function mapBet(data){
                 let exposure = bets[bet].exposure
                 user = await userModel.findByIdAndUpdate(bets[bet].userId, {$inc:{Loss:1, exposure:-parseFloat(exposure), availableBalance: -parseFloat(exposure), myPL:-parseFloat(exposure), uplinePL:parseFloat(exposure), pointsWL:-parseFloat(exposure)}})
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/LOSS`
-                let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"LOSS", result:data.result, settleDate:Date.now()})
+                let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"LOSS", result:data.result, settleDate:Date.now(),closingBalance:parseFloat(user.availableBalance) - parseFloat(exposure)})
 
                 let debitAmountForP = exposure
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
