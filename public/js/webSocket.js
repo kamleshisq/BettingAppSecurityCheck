@@ -3508,7 +3508,7 @@ socket.on('connect', () => {
                     }else{
                         html += `<td>-</td>`
                     }
-                    if(i == 0){
+                    if(i == data.length - 1){
                     html += `</tr></tbody>`
                     }else{
                         html += `</tr>`
