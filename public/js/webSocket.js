@@ -3642,26 +3642,15 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;">
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.finalresult[i].transactionId){
-                            if(data.json.finalresult[i].match || data.json.finalresult[i].event){
-                                if(data.json.finalresult[i].event && data.json.finalresult[i].match){
-                                    html += `<td>${data.json.finalresult[i].match}</td>`
-                                }else if(data.json.finalresult[i].event && data.json.finalresult[i].gameId){
-                                    html += `<td>${data.json.finalresult[i].event}</td>`
-    
-                                }
-                                if(data.json.finalresult[i].marketName || data.json.finalresult[i].betType){
-                                    if(data.json.finalresult[i].marketName){
-                                        html += `<td>${data.json.finalresult[i].marketName}</td>`
-                                    }else if(data.json.finalresult[i].betType){
-                                        html += `<td>${data.json.finalresult[i].betType}</td>`
-                                    }
-                                    
-                                }else{
-    
-                                    html += `<td>-</td>`
-                                }
+                            if(data.json.finalresult[i].match){
+                                html += `<td>${data.json.finalresult[i].match}</td>`
                             }else{
-                                html += `<td>-</td><td>-</td>`
+                                html += `<td>-</td>`
+                            }
+                            if(data.json.finalresult[i].marketName){
+                                html += `<td>${data.json.finalresult[i].marketName}</td>`
+                            }else{
+                                html += `<td>-</td>`
                             }
                         }else{
                             html += `<td>-</td><td>-</td>`

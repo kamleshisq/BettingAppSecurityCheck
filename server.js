@@ -815,7 +815,10 @@ io.on('connection', (socket) => {
                                     accStype:{$first:'$accountdetail.accStype'},
                                     creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
                                     balance:{$sum:'$accountdetail.balance'},
-                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                    transactionId:{$first:'$accountdetail.transactionId'},
+                                    description:{$first:'$accountdetail.description'},
+                                    Remark:{$first:'$accountdetail.Remark'},
+
                                 }
                             }
                         ])
@@ -861,7 +864,9 @@ io.on('connection', (socket) => {
                                     accStype:{$first:'$accountdetail.accStype'},
                                     creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
                                     balance:{$sum:'$accountdetail.balance'},
-                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                    transactionId:{$first:'$accountdetail.transactionId'},
+                                    description:{$first:'$accountdetail.description'},
+                                    Remark:{$first:'$accountdetail.Remark'}
                                 }
                             }
                         ])
@@ -905,7 +910,9 @@ io.on('connection', (socket) => {
                                     accStype:{$first:'$accountdetail.accStype'},
                                     creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
                                     balance:{$sum:'$accountdetail.balance'},
-                                    transactionId:{$first:'$accountdetail.transactionId'}
+                                    transactionId:{$first:'$accountdetail.transactionId'},
+                                    description:{$first:'$accountdetail.description'},
+                                    Remark:{$first:'$accountdetail.Remark'}
                                 }
                             }
                         ])
