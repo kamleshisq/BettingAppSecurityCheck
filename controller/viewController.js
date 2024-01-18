@@ -698,6 +698,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
              for(let i = 0;i<userAcc.length;i++){
                 c++
                  if(userAcc[i].gameId){
+                    
                      let bet = await betModel.aggregate([
                          {
                              $match:{
@@ -775,6 +776,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          }
                      ])
+                     console.log('inuseracc sport book',bet)
                      if(!marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult.push(bet[0])
@@ -817,6 +819,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          }
                      ])
+                     console.log('inuseracc marketid',bet)
                      if(!marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult.push(bet[0])
