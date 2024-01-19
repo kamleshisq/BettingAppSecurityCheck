@@ -597,7 +597,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     }
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}],}).sort({date: -1}).skip(skip).limit(limit)
+         let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
@@ -858,7 +858,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
    
-    // console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
     let finalresult = []
     let marketidarray = [];
     let userAccflage = true
@@ -875,7 +874,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}],}).sort({date: -1}).skip(skip).limit(limit)
+         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
@@ -895,17 +894,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  
                              }
                          },
-                        //  {
-                        //      $lookup: {
-                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                        //          localField: 'transactionId',
-                        //          foreignField: 'transactionId',
-                        //          as: 'accountdetail'
-                        //      }
-                        //  },
-                        //  {
-                        //      $unwind:"$accountdetail"
-                        //  },
                          {
                              $group:{
                                  _id:{
@@ -948,17 +936,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
 
                              }
                          },
-                        //  {
-                        //      $lookup: {
-                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                        //          localField: 'transactionId',
-                        //          foreignField: 'transactionId',
-                        //          as: 'accountdetail'
-                        //      }
-                        //  },
-                        //  {
-                        //      $unwind:"$accountdetail"
-                        //  },
                          {
                              $group:{
                                  _id:{
@@ -981,24 +958,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     let accounts = []
-                    // accounts = await accountStatement.aggregate([
-                    //     {
-                    //         $match:{
-                    //             userName:req.currentUser.userName,
-                    //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                    //         }
-                    //     },
-                    //     {
-                    //         $group:{
-                    //             _id:null,
-                    //             marketId:{$first:'$marketId'},
-                    //             creditDebitamount:{$sum:'$creditDebitamount'},
-                    //         }
-                    //     }
-                    //  ])
-
-                     console.log('inuseracc sport book',bet,accounts)
+                     console.log('inuseracc sport book',bet)
                      if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
@@ -1015,17 +975,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  closingBalance:{$exists:true}
                              }
                          },
-                        //  {
-                        //      $lookup: {
-                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                        //          localField: 'transactionId',
-                        //          foreignField: 'transactionId',
-                        //          as: 'accountdetail'
-                        //      }
-                        //  },
-                        //  {
-                        //      $unwind:"$accountdetail"
-                        //  },
                          {
                              $group:{
                                  _id:{
