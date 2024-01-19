@@ -753,7 +753,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      ])
                      console.log(bet,'bet in game id')
-                     if(!marketidarray.includes(bet[0]._id.gameId)){
+
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.gameId)){
                          marketidarray.push(bet[0]._id.gameId)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
@@ -822,7 +823,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     //  ])
 
                      console.log('inuseracc sport book',bet,accounts)
-                     if(!marketidarray.includes(bet[0]._id.marketId)){
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
@@ -872,7 +873,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      ])
                      console.log('inuseracc marketid',bet)
-                     if(bet[0] && !marketidarray.includes(bet[0]._id.marketId)){
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
