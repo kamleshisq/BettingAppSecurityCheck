@@ -3206,16 +3206,39 @@ io.on('connection', (socket) => {
 
     socket.on('getbetdetailbyid',async(data)=>{
         try{
-            let bets
-            if(data.marketId){
-                bets = await Bet.find({marketId:data.marketId,userId:data.LOGINDATA.LOGINUSER._id})
-            }else if(data.gameId){
-                if(data.gametype == 'positive'){
-                    bets = await Bet.find({gameId:data.gameId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$gt:0}})
-                }else{
-                    bets = await Bet.find({gameId:data.gameId,userId:data.LOGINDATA.LOGINUSER._id,returns:{$lte:0}})
+            let filter = {}
+            filter.user_id = data.LOGINDATA.LOGINUSER_id.toString()
+            if(data.fromDate != "" && data.toDate == ""){
+                filter.date = {
+                    $gt : new Date(data.fromDate)
+                }
+            }else if(data.fromDate == "" && data.toDate != ""){
+                filter.date = {
+                    $lt : new Date(data.toDate)
+                }
+            }else if (data.fromDate != "" && data.toDate != ""){
+                filter.date = {
+                    $gte : new Date(data.fromDate),
+                    $lt : new Date(data.toDate)
                 }
             }
+            filter.closingBalance={$exists:true}
+            if(data.gameId){
+                if(data.gametype == 'positive'){
+                    filter.returns={$gt:0}
+                }else{
+                    filter.returns={$lte:0}
+                }
+                filter.$and=[{gameId:data.gameId},{settleDate:filter.date}]
+            }else if(data.marketId){
+                filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
+            }else{
+                let account = await AccModel.findById(data.id)
+                filter.transactionId = account.transactionId
+            }
+            let bets
+            bets = await Bet.find(filter)
+            
             socket.emit('getbetdetailbyid',{status:'success',bets,rowid:data.rowid,gameId:data.gameID,marketId:data.marketId})
         }catch(err){
             socket.emit('getbetdetailbyid',{status:'fail',msg:'something went wrong'})
