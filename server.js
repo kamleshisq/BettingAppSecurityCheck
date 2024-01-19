@@ -2832,15 +2832,15 @@ io.on('connection', (socket) => {
     }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
-        filter.$expr = {
-            $eq: [{ $strLenCP: "$transactionId" }, 16]
-          }
         // filter.$expr = {
-        //     $and: [
-        //         { $eq: [{ $type: "$transactionId" }, "string"] },
-        //         { $eq: [{ $strLenCP: "$transactionId" }, 16] }
-        //       ]
+        //     $eq: [{ $strLenCP: "$transactionId" }, 16]
         //   }
+        filter.$expr = {
+            $and: [
+                { $eq: [{ $type: "$transactionId" }, "string"] },
+                { $eq: [{ $strLenCP: "$transactionId" }, 16] }
+              ]
+          }
     }else if (data.filterData.type === "deposit"){
         filterstatus = false
     }else if(data.filterData.type === "withdraw"){
