@@ -875,12 +875,13 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.currentUser._id,$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}],}).sort({date: -1}).skip(skip).limit(limit)
+         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}],}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
          }
          if(userAccflage){
+            console.log(userAcc)
              for(let i = 0;i<userAcc.length;i++){
                 c++
                  if(userAcc[i].gameId){
