@@ -958,6 +958,7 @@ io.on('connection', (socket) => {
             }
         }{
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+            console.log(userAcc, "userAccuserAccuserAccuserAccuserAcc")
             if(finalresult.length > 0){
                 finalresult.concat(userAcc)
             }else{
