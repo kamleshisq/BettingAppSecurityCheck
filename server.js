@@ -756,7 +756,10 @@ io.on('connection', (socket) => {
         let filterstatus = true
         if(data.Transaction_type === "Bet_Settlement"){
             filter.$expr = {
-                $eq: [{ $strLenCP: "$transactionId" }, 16]
+                $and: [
+                    { $eq: [{ $type: "$transactionId" }, "string"] },
+                    { $eq: [{ $strLenCP: "$transactionId" }, 16] }
+                  ]
               }
         }else if (data.Transaction_type === "Deposit"){
             filter.accStype = {$exists:false}
@@ -777,7 +780,7 @@ io.on('connection', (socket) => {
     
     
         async function getmarketwiseaccdata (limit,skip){
-            console.log('in getmarketwise accdata ',limit,skip)
+            console.log('in getmarketwise accdata ',limit,skip, filter.$expr)
              let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
              let c = 0
              if(userAcc.length == 0){
@@ -2832,8 +2835,14 @@ io.on('connection', (socket) => {
     }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
+        // filter.$expr = {
+        //     $eq: [{ $strLenCP: "$transactionId" }, 16]
+        //   }
         filter.$expr = {
-            $eq: [{ $strLenCP: "$transactionId" }, 16]
+            $and: [
+                { $eq: [{ $type: "$transactionId" }, "string"] },
+                { $eq: [{ $strLenCP: "$transactionId" }, 16] }
+              ]
           }
     }else if (data.filterData.type === "deposit"){
         filterstatus = false
@@ -2844,7 +2853,7 @@ io.on('connection', (socket) => {
     }else if(data.filterData.type === "swithdraw"){
         filterstatus = false
     }
-    console.log('filter',filter)
+    console.log('filter',filter.$expr)
     
 
     // console.log(filter)
