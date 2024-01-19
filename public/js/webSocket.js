@@ -15402,30 +15402,30 @@ socket.on('connect', () => {
         //     socket.emit("myShare", {,,id})
         // })
 
-        socket.on("myShare", data => {
-            // console.log(data)
-            if(data.status === "error"){
-                alert(data.message)
-            }else{
-                alert("Updated")
-                $(".userDetails").find('input[name="Share"]').val(data.share)
-                $(".userDetails").find('input[name="myShare"]').val(data.myShare)
-            }
-        })
+        // socket.on("myShare", data => {
+        //     // console.log(data)
+        //     if(data.status === "error"){
+        //         alert(data.message)
+        //     }else{
+        //         alert("Updated")
+        //         $(".userDetails").find('input[name="Share"]').val(data.share)
+        //         $(".userDetails").find('input[name="myShare"]').val(data.myShare)
+        //     }
+        // })
 
-        const num1Input = document.getElementById('myShare');
-        const num2Input = document.getElementById('Share');
-        num1Input.addEventListener('input', () => {
-            const num1 = parseFloat(num1Input.value);
-            const num2 = 100 - num1;
-            num2Input.value = num2;
-        });
+        // const num1Input = document.getElementById('myShare');
+        // const num2Input = document.getElementById('Share');
+        // num1Input.addEventListener('input', () => {
+        //     const num1 = parseFloat(num1Input.value);
+        //     const num2 = 100 - num1;
+        //     num2Input.value = num2;
+        // });
 
-        num2Input.addEventListener('input', () => {
-            const num2 = parseFloat(num2Input.value);
-            const num1 = 100 - num2;
-            num1Input.value = num1;
-        });
+        // num2Input.addEventListener('input', () => {
+        //     const num2 = parseFloat(num2Input.value);
+        //     const num1 = 100 - num2;
+        //     num1Input.value = num1;
+        // });
 
 
 
