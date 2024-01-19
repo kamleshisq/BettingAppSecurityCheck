@@ -909,7 +909,7 @@ io.on('connection', (socket) => {
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
-                                     userId:data.LOGINDATA.LOGINUSER_id.toString(),
+                                     userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                      $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
                                      closingBalance:{$exists:true}
                                  }
