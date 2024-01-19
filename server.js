@@ -2845,15 +2845,19 @@ io.on('connection', (socket) => {
               ]
           }
     }else if (data.filterData.type === "deposit"){
-        filterstatus = false
+        filter.accStype = {$exists:false}
+        filter.creditDebitamount={$gt:0}
     }else if(data.filterData.type === "withdraw"){
-        filterstatus = false
+        filter.accStype = {$exists:false}
+        filter.creditDebitamount={$lte:0}
     }else if (data.filterData.type === "sdeposit"){
-        filterstatus = false
+        filter.accStype = {$exists:true}
+        filter.creditDebitamount={$gt:0}
     }else if(data.filterData.type === "swithdraw"){
-        filterstatus = false
+        filter.accStype = {$exists:true}
+        filter.creditDebitamount={$lte:0}
     }
-    console.log('filter',filter.$expr)
+    console.log('filter',filter)
     
 
     // console.log(filter)

@@ -3557,7 +3557,7 @@ socket.on('connect', () => {
         let Fdate = document.getElementById("Fdate").value
         let Tdate = document.getElementById("Tdate").value
         
-        Transaction_type = $('#transaction_type').val()
+        let Transaction_type = $('#transaction_type').val()
         data.Transaction_type = Transaction_type
         data.Fdate = Fdate;
         if(Tdate != ''){
