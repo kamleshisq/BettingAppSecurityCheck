@@ -10993,7 +10993,7 @@ socket.on('connect', () => {
                     }else{
                         html += `<td title="Event">-</td>`
                     }
-                    if(userAcc.marketName){
+                    if(userAcc[i].marketName){
                         html += `<td title="Market Type">${userAcc[i].marketName}</td>`
                     }else{
                         html += `<td title="Market Type">-</td>`
