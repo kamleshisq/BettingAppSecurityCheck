@@ -3207,7 +3207,7 @@ io.on('connection', (socket) => {
     socket.on('getbetdetailbyid',async(data)=>{
         try{
             let filter = {}
-            filter.user_id = data.LOGINDATA.LOGINUSER._id.toString()
+            filter.userId = data.LOGINDATA.LOGINUSER._id.toString()
             if(data.fromDate != "" && data.toDate == ""){
                 filter.date = {
                     $gt : new Date(data.fromDate)
