@@ -2829,14 +2829,7 @@ io.on('connection', (socket) => {
     }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
-        filter.$and = [
-            { transactionId: { $exists: true } }, // Check if 'name' field exists
-            {
-              $expr: {
-                $eq: [{ $strLenCP: { $toString: "$transactionId" }}, 16] // Compare the length of 'name' field
-              }
-            }
-          ]
+        filter.transactionId =  {$exists: true }
     }else if (data.filterData.type === "deposit"){
         filterstatus = false
     }else if(data.filterData.type === "withdraw"){
@@ -2861,6 +2854,13 @@ io.on('connection', (socket) => {
         let userAcc = await AccModel.aggregate([
             {
                 $match:filter,
+            },
+            {
+                $match:{
+                    $expr: {
+                      $eq: [{ $strLenCP: { $toString: "$transactionId" }}, 16] // Compare the length of 'name' field
+                    }
+                  },
             },
             {
                 $sort:{date:-1}
