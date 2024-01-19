@@ -59,6 +59,7 @@ const sendErrorDev = (err, req,res) => {
         if(req.originalUrl.startsWith('/admin')){
             adminStatus = true
         }
+        console.log(adminStatus, "adminStatusadminStatusadminStatusadminStatus")
         if(adminStatus){
             return res.render('./errorMessage',{
                 statusCode : err.statusCode,
