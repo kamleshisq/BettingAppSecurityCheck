@@ -15684,8 +15684,8 @@ socket.on('connect', () => {
             let gameId = $(this).attr('data-gameid')
             let marketId = $(this).attr('data-marketid')
             let id = $(this).attr('data-id')
-            let Fdate = document.getElementById("Fdate").value
-            let Tdate = document.getElementById("Tdate").value
+            let Fdate = document.getElementById("FdateACC").value
+            let Tdate = document.getElementById("TdateACC").value
             let gametype;
             if(gameId != ""){
                 if($(this).hasClass('positive')){
