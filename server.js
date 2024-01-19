@@ -1170,6 +1170,7 @@ io.on('connection', (socket) => {
     socket.on('ElementID',async(data)=>{
         // console.log(data)
         let filter = {}
+        filter.userName = data.userid
         if(data.Fdate != "" && data.Tdate == ""){
             filter.date = {
                 $gt : new Date(data.Fdate)

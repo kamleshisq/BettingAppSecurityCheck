@@ -3423,6 +3423,7 @@ socket.on('connect', () => {
             let id = $(this).attr('data-id')
             let Fdate = document.getElementById("Fdate").value
             let Tdate = document.getElementById("Tdate").value
+            let userid = $('#searchUser').val()
             let gametype;
             if(gameId != ""){
                 if($(this).hasClass('positive')){
@@ -3432,7 +3433,7 @@ socket.on('connect', () => {
                 }
             }
             // console.log('elementId',modelId)
-            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype})
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
         socket.on('getMyBetDetails',(data)=>{
@@ -15686,6 +15687,7 @@ socket.on('connect', () => {
             let id = $(this).attr('data-id')
             let Fdate = document.getElementById("FdateACC").value
             let Tdate = document.getElementById("TdateACC").value
+            let userid = $('#searchUser').val()
             let gametype;
             if(gameId != ""){
                 if($(this).hasClass('positive')){
@@ -15695,7 +15697,7 @@ socket.on('connect', () => {
                 }
             }
             // console.log('elementId',modelId)
-            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype})
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
         socket.on('getMyBetDetails',(data)=>{
