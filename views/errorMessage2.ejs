@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Error</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+            body { font-family: 'Kanit', sans-serif; font-size: 14px; line-height: 1.2; font-weight: 400; background-color: #EFEFEF;-webkit-font-smoothing: antialiased; font-smoothing: antialiased; margin: 0;}
+            .page-not-found { height: 100vh; display: flex; align-items: center; flex-direction: column; justify-content: center; text-align: center;}
+            .page-not-found h2 { margin: 0; font-size: 45px; text-align: center;}
+            .page-not-found h2 span { display: block; font-size: 300%; color: #e36a6a;}
+            .page-not-found h2 span::before { content: ''; height: 160px; width: 160px; background: url(../images/error-crying-face.svg) no-repeat center, linear-gradient(15deg, #182ea6 40%, #7a8ced 60%, #dbe0fb 1000%) repeat; color: #fff; display: table; background-size: 100px; margin: auto; border-radius: 50%; animation: error404anim infinite 2s; transform: scale(1);}
+            .page-not-found p { margin: 10px 0 40px; font-size: 20px; }
+            .page-not-found .error-404-btn a { display: inline-block; text-decoration: none; background: #182ea6; color: #fff; padding: 11px 15px 12px; min-width: 110px; text-align: center; border-radius: 5px; font-size: 20px; border: 1px solid #182ea6; margin: 0 5px; transition: 0.5s;}
+            .page-not-found .error-404-btn a:hover{background: transparent; color: #182ea6;}
+            .page-not-found .error-404-btn a:nth-child(2) { background: transparent; color: #182ea6; }
+            .page-not-found .error-404-btn a:nth-child(2):hover{background: #182ea6; color: #fff;}
+        
+            @keyframes error404anim {
+                0%{transform: scale(1.03);}
+                50%{transform: scale(1);}
+                100%{transform: scale(1.03);}
+            }
+
+            @media (max-width:767px) {
+                .page-not-found h2 span::before{    height: 130px; width: 130px; background-size: 80px;}
+                .page-not-found h2 { font-size: 28px;}
+                .page-not-found p{font-size: 16px; margin: 10px 0 30px;}
+                .page-not-found .error-404-btn a{font-size: 16px;padding: 8px 15px 9px; min-width: 85px;}
+            }
+
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="page-not-found">
+            <h2><span><%=statusCode%></span><%=message%></h2>
+            <p><%=mainMassage%></p>
+            <div class="error-404-btn">
+                    <a href="/">Home</a>
+                <a href="#">Contact us</a>
+            </div>
+        </div>
+    </body>
+</html>
