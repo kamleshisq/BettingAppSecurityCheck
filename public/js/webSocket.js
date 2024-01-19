@@ -11050,6 +11050,7 @@ socket.on('connect', () => {
                 $(this).addClass('active')
                 let fromDate = $('#Fdate').val()
                 let toDate = $('#Tdate').val()
+                toDate = new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))
                 let marketId = $(this).attr('data-marketid')
                 let gameId = $(this).attr('data-gameid')
                 let gametype;
