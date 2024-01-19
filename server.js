@@ -787,7 +787,7 @@ io.on('connection', (socket) => {
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
-                                     userId:req.currentUser._id.toString(),
+                                     userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                      $and:[{gameId:userAcc[i].gameId},{settleDate:filter.date}],
                                      closingBalance:{$exists:true}
     
@@ -840,7 +840,7 @@ io.on('connection', (socket) => {
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
-                                     userId:req.currentUser._id.toString(),
+                                     userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                      eventId:{$exists:'eventId'},
                                      $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
                                      closingBalance:{$exists:true}
@@ -909,7 +909,7 @@ io.on('connection', (socket) => {
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
-                                     userId:req.currentUser._id.toString(),
+                                     userId:data.LOGINDATA.LOGINUSER_id.toString(),
                                      $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
                                      closingBalance:{$exists:true}
                                  }
