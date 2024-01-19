@@ -15689,7 +15689,7 @@ socket.on('connect', () => {
             let id = $(this).attr('data-id')
             let Fdate = document.getElementById("FdateACC").value
             let Tdate = document.getElementById("TdateACC").value
-            let userid = $('#searchUser').val()
+            let userid = $('.userDetails').find('input["name=name"]').val()
             let gametype;
             if(gameId != ""){
                 if($(this).hasClass('positive')){
@@ -15699,6 +15699,7 @@ socket.on('connect', () => {
                 }
             }
             // console.log('elementId',modelId)
+            console.log(userid,'userid')
             socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
