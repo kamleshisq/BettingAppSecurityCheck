@@ -167,6 +167,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
                 token : req.body.token,
                 gameId : req.body.gameId,
                 roundId : req.body.roundId,
+                exposure:req.body.debitAmount
             }
         }else{
             game = req.body.competitionName
@@ -614,7 +615,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 let bet =  await betModel.findOne({transactionId:req.body.transactionId})
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
                 if(bet){
-                    await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"OPEN"})
+                    await betModel.findByIdAndUpdate(bet._id,{returns:-bet.exposure, status:"OPEN"})
                     if(req.body.gameId){
                         let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/ROLLBACK`
                         if(acc){
