@@ -149,6 +149,11 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         if(req.body.gameId){
             let game1 = await gameModel.findOne({game_id:(req.body.gameId)*1})
             // console.log(game1)
+            if(!game1){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }
             game = game1.game_name
             description = `Bet for game ${game}/amount ${req.body.debitAmount}`
             description2 = `Bet for game ${game}/amount ${req.body.debitAmount}/user = ${user.userName}`
@@ -311,6 +316,11 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         let game = {}
         if(req.body.gameId){
             game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+            if(!game){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }
         }else{
             let game1 = await betModel.findOne({transactionId:req.body.transactionId})
             game.game_name = game1.match
@@ -575,6 +585,11 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 let game = {}
                 if(req.body.gameId){
                     game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+                    if(!game){
+                        return res.status(200).json({
+                            "status": "RS_ERROR"
+                        })
+                    }
                 }else{
                     let game1 = await betModel.findOne({transactionId:req.body.transactionId})
                     game.game_name = game1.match
@@ -691,6 +706,11 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 let game = {}
                 if(req.body.gameId){
                     game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+                    if(!game){
+                        return res.status(200).json({
+                            "status": "RS_ERROR"
+                        })
+                    }
                 }else{
                     let game1 = await betModel.findOne({transactionId:req.body.transactionId})
                     game.game_name = game1.match
