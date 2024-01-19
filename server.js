@@ -782,149 +782,184 @@ io.on('connection', (socket) => {
              if(userAccflage){
                 for(let i = 0;i<userAcc.length;i++){
                     c++
-                    if(userAcc[i].gameId){
-                        let bet = await Bet.aggregate([
-                            {
-                                $match:{
-                                    userId:data.id,
-                                    $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
-                                    //  date:filter.date
-                                }
-                            },
-                            // {
-                            //     $lookup: {
-                            //         from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                            //         localField: 'transactionId',
-                            //         foreignField: 'transactionId',
-                            //         as: 'accountdetail'
-                            //     }
-                            // },
-                            // {
-                            //     $unwind:"$accountdetail"
-                            // },
-                            {
-                                $group:{
-                                    _id:{
-                                        gameId:"$gameId",
-                                        status:"$status",
-                                        date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
-                                    },
-                                    match:{$first:'$event'},
-                                    marketName:{$first:'$betType'},
-                                    stake:{$first:'$Stake'},
-                                    creditDebitamount:{$sum:'$returns'},
-                                    balance:{$sum:'$returns'},
-                                    transactionId:{$first:'$transactionId'},
-                                    date:{$first:'$date'}
-
-                                }
-                            }
-                        ])
-                        console.log(bet,'betin game id')
-                        if(!marketidarray.includes(bet[0]._id.gameId)){
-                            marketidarray.push(bet[0]._id.gameId)
-                            finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 10){
-                                break
-                            }
-                        }
-                    }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
-                        let bet = await Bet.aggregate([
-                            {
-                                $match:{
-                                    userId:data.id,
-                                    $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                     if(userAcc[i].gameId){
+                        
+                         let bet = await Bet.aggregate([
+                             {
+                                 $match:{
+                                     userId:req.currentUser._id.toString(),
+                                     $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                     closingBalance:{$exists:true}
+    
+                                     
+                                 }
+                             },
+                            //  {
+                            //      $lookup: {
+                            //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                            //          localField: 'transactionId',
+                            //          foreignField: 'transactionId',
+                            //          as: 'accountdetail'
+                            //      }
+                            //  },
+                            //  {
+                            //      $unwind:"$accountdetail"
+                            //  },
+                             {
+                                 $group:{
+                                     _id:{
+                                         gameId:"$gameId",
+                                         status:"$status",
+                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                     },
+                                     match:{$first:'$event'},
+                                     marketName:{$first:'$betType'},
+                                     creditDebitamount:{$sum:'$returns'},
+                                     balance:{$sum:'$closingBalance'},
+                                     transactionId:{$first:'$accountdetail.transactionId'}
+                                 }
+                             },
+                             {
+                                $sort:{date:-1}
+                             },
+                             {
+                                $limit:(10 - finalresult.length)
+                             }
+                         ])
+                         console.log(bet,'bet in game id')
+    
+                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.gameId)){
+                             marketidarray.push(bet[0]._id.gameId)
+                             finalresult = finalresult.concat(bet)
+                             if(finalresult.length >= 10){
+                                 break
+                             }
+                         }
+                     }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                         let bet = await Bet.aggregate([
+                             {
+                                 $match:{
+                                     userId:req.currentUser._id.toString(),
                                      eventId:{$exists:'eventId'},
-                                    //  date:filter.date
-                                }
-                            },
-                            // {
-                            //     $lookup: {
-                            //         from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                            //         localField: 'transactionId',
-                            //         foreignField: 'transactionId',
-                            //         as: 'accountdetail'
-                            //     }
-                            // },
-                            // {
-                            //     $unwind:"$accountdetail"
-                            // },
-                            {
-                                $group:{
-                                    _id:{
-                                        eventId:"$eventId",
-                                        marketId:"$marketId",
-                                        date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
-                                    },
-                                    match:{$first:'$match'},
-                                    marketName:{$first:'$marketName'},
-                                    stake:{$first:'$Stake'},
-                                    creditDebitamount:{$sum:'$returns'},
-                                    balance:{$sum:'$returns'},
-                                    transactionId:{$first:'$transactionId'},
-                                    date:{$first:'$date'}
-                                }
-                            }
-                        ])
-                        if(!marketidarray.includes(bet[0]._id.marketId)){
-                            marketidarray.push(bet[0]._id.marketId)
-                            finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 10){
-                                break
-                            }
-                        }
-                    }else if(userAcc[i].marketId){
-                        let bet = await Bet.aggregate([
-                            {
-                                $match:{
-                                    userId:data.id,
-                                    $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                                    //  date:filter.date
-                                }
-                            },
-                            // {
-                            //     $lookup: {
-                            //         from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                            //         localField: 'transactionId',
-                            //         foreignField: 'transactionId',
-                            //         as: 'accountdetail'
-                            //     }
-                            // },
-                            // {
-                            //     $unwind:"$accountdetail"
-                            // },
-                            {
-                                $group:{
-                                    _id:{
-                                        eventId:"$eventId",
-                                        marketId:"$marketId",
-                                        date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
-                                    },
-                                    match:{$first:'$match'},
-                                    marketName:{$first:'$marketName'},
-                                    stake:{$first:'$Stake'},
-                                    creditDebitamount:{$sum:'$returns'},
-                                    balance:{$sum:'$returns'},
-                                    transactionId:{$first:'$transactionId'},
-                                    date:{$first:'$date'}
-                                }
-                            }
-                        ])
-                        if(!marketidarray.includes(bet[0]._id.marketId)){
-                            marketidarray.push(bet[0]._id.marketId)
-                            finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 10){
-                                break
-                            }
-                        }
-                    }else{
-                        finalresult.push(userAcc[i])
-                        if(finalresult.length >= 10){
-                                break
-                        }
-                    }
-                    
-                }
+                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                     closingBalance:{$exists:true}
+    
+                                 }
+                             },
+                            //  {
+                            //      $lookup: {
+                            //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                            //          localField: 'transactionId',
+                            //          foreignField: 'transactionId',
+                            //          as: 'accountdetail'
+                            //      }
+                            //  },
+                            //  {
+                            //      $unwind:"$accountdetail"
+                            //  },
+                             {
+                                 $group:{
+                                     _id:{
+                                         eventId:"$eventId",
+                                         marketId:"$marketId",
+                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                     },
+                                     match:{$first:'$match'},
+                                     marketName:{$first:'$marketName'},
+                                     creditDebitamount:{$sum:'$returns'},
+                                     balance:{$sum:'$closingBalance'},
+                                     transactionId:{$first:'$transactionId'}
+                                 }
+                             },
+                             {
+                                $sort:{date:-1}
+                             },
+                             {
+                                $limit:(10 - finalresult.length)
+                             }
+                         ])
+                         let accounts = []
+                        // accounts = await accountStatement.aggregate([
+                        //     {
+                        //         $match:{
+                        //             userName:req.currentUser.userName,
+                        //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                        //         }
+                        //     },
+                        //     {
+                        //         $group:{
+                        //             _id:null,
+                        //             marketId:{$first:'$marketId'},
+                        //             creditDebitamount:{$sum:'$creditDebitamount'},
+                        //         }
+                        //     }
+                        //  ])
+    
+                         console.log('inuseracc sport book',bet,accounts)
+                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                             marketidarray.push(bet[0]._id.marketId)
+                             finalresult = finalresult.concat(bet)
+                             if(finalresult.length >= 10){
+                                 break
+                             }
+                         }
+                     }else if(userAcc[i].marketId){
+                         let bet = await Bet.aggregate([
+                             {
+                                 $match:{
+                                     userId:req.currentUser._id.toString(),
+                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                     closingBalance:{$exists:true}
+                                 }
+                             },
+                            //  {
+                            //      $lookup: {
+                            //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                            //          localField: 'transactionId',
+                            //          foreignField: 'transactionId',
+                            //          as: 'accountdetail'
+                            //      }
+                            //  },
+                            //  {
+                            //      $unwind:"$accountdetail"
+                            //  },
+                             {
+                                 $group:{
+                                     _id:{
+                                         eventId:"$eventId",
+                                         marketId:"$marketId",
+                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                     },
+                                     match:{$first:'$match'},
+                                     marketName:{$first:'$marketName'},
+                                     creditDebitamount:{$sum:'$returns'},
+                                     balance:{$sum:'$closingBalance'},
+                                     transactionId:{$first:'$transactionId'}
+                                 }
+                             },
+                             {
+                                $sort:{date:-1}
+                             },
+                             {
+                                $limit:(10 - finalresult.length)
+                             }
+                         ])
+                         console.log('inuseracc marketid',bet)
+                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                             marketidarray.push(bet[0]._id.marketId)
+                             finalresult = finalresult.concat(bet)
+                             if(finalresult.length >= 10){
+                                 break
+                             }
+                         }
+                     }else{
+                         finalresult.push(userAcc[i])
+                         if(finalresult.length >= 10){
+                                 break
+                         }
+                     }
+                     
+                 }
              }
             return c
         }
@@ -2869,148 +2904,187 @@ io.on('connection', (socket) => {
          if(userAccflage){
             for(let i = 0;i<userAcc.length;i++){
                 c++
-                if(userAcc[i].gameId){
-                    let bet = await Bet.aggregate([
-                        {
-                            $match:{
-                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
-                                $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
-                                 date:filter.date
-                            }
-                        },
-                        {
-                            $lookup: {
-                                from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                localField: 'transactionId',
-                                foreignField: 'transactionId',
-                                as: 'accountdetail'
-                            }
-                        },
-                        {
-                            $unwind:"$accountdetail"
-                        },
-                        {
-                            $group:{
-                                _id:{
-                                    gameId:"$gameId",
-                                    status:"$status",
-                                    date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
-                                },
-                                match:{$first:'$event'},
-                                marketName:{$first:'$betType'},
-                                stake:{$first:'$accountdetail.stake'},
-                                accStype:{$first:'$accountdetail.accStype'},
-                                creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                balance:{$sum:'$accountdetail.balance'},
-                                transactionId:{$first:'$accountdetail.transactionId'}
-                            }
-                        }
-                    ])
-                    console.log(bet,'betin game id')
-                    if(!marketidarray.includes(bet[0]._id.gameId)){
-                        marketidarray.push(bet[0]._id.gameId)
-                        finalresult = finalresult.concat(bet)
-                        if(finalresult.length >= 20){
-                            break
-                        }
-                    }
-                }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
-                    let bet = await Bet.aggregate([
-                        {
-                            $match:{
-                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
-                                $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                 if(userAcc[i].gameId){
+                    
+                     let bet = await Bet.aggregate([
+                         {
+                             $match:{
+                                 userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                 $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                 closingBalance:{$exists:true}
+
+                                 
+                             }
+                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
+                         {
+                             $group:{
+                                 _id:{
+                                     gameId:"$gameId",
+                                     status:"$status",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$betType'},
+                                 stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$closingBalance'},
+                                 transactionId:{$first:'$accountdetail.transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     console.log(bet,'bet in game id')
+
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.gameId)){
+                         marketidarray.push(bet[0]._id.gameId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                     let bet = await Bet.aggregate([
+                         {
+                             $match:{
+                                 userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                  eventId:{$exists:'eventId'},
-                                 date:filter.date
-                            }
-                        },
-                        {
-                            $lookup: {
-                                from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                localField: 'transactionId',
-                                foreignField: 'transactionId',
-                                as: 'accountdetail'
-                            }
-                        },
-                        {
-                            $unwind:"$accountdetail"
-                        },
-                        {
-                            $group:{
-                                _id:{
-                                    eventId:"$eventId",
-                                    marketId:"$marketId",
-                                    date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
-                                },
-                                match:{$first:'$match'},
-                                marketName:{$first:'$marketName'},
-                                stake:{$first:'$accountdetail.stake'},
-                                accStype:{$first:'$accountdetail.accStype'},
-                                creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                balance:{$sum:'$accountdetail.balance'},
-                                transactionId:{$first:'$accountdetail.transactionId'}
-                            }
-                        }
-                    ])
-                    if(!marketidarray.includes(bet[0]._id.marketId)){
-                        marketidarray.push(bet[0]._id.marketId)
-                        finalresult = finalresult.concat(bet)
-                        if(finalresult.length >= 20){
-                            break
-                        }
-                    }
-                }else if(userAcc[i].marketId){
-                    let bet = await Bet.aggregate([
-                        {
-                            $match:{
-                                userId:data.LOGINDATA.LOGINUSER._id.toString(),
-                                $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                                 date:filter.date
-                            }
-                        },
-                        {
-                            $lookup: {
-                                from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                                localField: 'transactionId',
-                                foreignField: 'transactionId',
-                                as: 'accountdetail'
-                            }
-                        },
-                        {
-                            $unwind:"$accountdetail"
-                        },
-                        {
-                            $group:{
-                                _id:{
-                                    eventId:"$eventId",
-                                    marketId:"$marketId",
-                                    date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
-                                },
-                                match:{$first:'$match'},
-                                marketName:{$first:'$marketName'},
-                                stake:{$first:'$accountdetail.stake'},
-                                accStype:{$first:'$accountdetail.accStype'},
-                                creditDebitamount:{$sum:'$accountdetail.creditDebitamount'},
-                                balance:{$sum:'$accountdetail.balance'},
-                                transactionId:{$first:'$accountdetail.transactionId'}
-                            }
-                        }
-                    ])
-                    if(!marketidarray.includes(bet[0]._id.marketId)){
-                        marketidarray.push(bet[0]._id.marketId)
-                        finalresult = finalresult.concat(bet)
-                        if(finalresult.length >= 20){
-                            break
-                        }
-                    }
-                }else{
-                    finalresult.push(userAcc[i])
-                    if(finalresult.length >= 20){
-                            break
-                    }
-                }
-                
-            }
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                 closingBalance:{$exists:true}
+
+                             }
+                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$closingBalance'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     let accounts = []
+                    // accounts = await accountStatement.aggregate([
+                    //     {
+                    //         $match:{
+                    //             userName:req.currentUser.userName,
+                    //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
+                    //         }
+                    //     },
+                    //     {
+                    //         $group:{
+                    //             _id:null,
+                    //             marketId:{$first:'$marketId'},
+                    //             creditDebitamount:{$sum:'$creditDebitamount'},
+                    //         }
+                    //     }
+                    //  ])
+
+                     console.log('inuseracc sport book',bet,accounts)
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].marketId){
+                     let bet = await Bet.aggregate([
+                         {
+                             $match:{
+                                 userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                 closingBalance:{$exists:true}
+                             }
+                         },
+                        //  {
+                        //      $lookup: {
+                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
+                        //          localField: 'transactionId',
+                        //          foreignField: 'transactionId',
+                        //          as: 'accountdetail'
+                        //      }
+                        //  },
+                        //  {
+                        //      $unwind:"$accountdetail"
+                        //  },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$sum:'$closingBalance'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     console.log('inuseracc marketid',bet)
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else{
+                     finalresult.push(userAcc[i])
+                     if(finalresult.length >= 20){
+                             break
+                     }
+                 }
+                 
+             }
          }
         return c
     }
