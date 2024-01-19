@@ -11003,7 +11003,7 @@ socket.on('connect', () => {
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
 
                 }else{
-                    html += `<tr class="acount-stat-tbl-body-tr" data-marketid="" id="rowid-${i + 1 + count}">
+                    html += `<tr class="acount-stat-tbl-body-tr" data-id="" id="rowid-${i + 1 + count}">
                     <td title="Transaction">Settlement</td>`
                         html += `<td title="Event">-</td>`
                         html += `<td title="Market Type">-</td>`
