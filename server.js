@@ -2832,20 +2832,20 @@ io.on('connection', (socket) => {
     // filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
     filter.user_id = data.LOGINDATA.LOGINUSER._id
     filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]
-    // if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
-    //     filter.date = {
-    //         $gt : new Date(data.filterData.fromDate)
-    //     }
-    // }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
-    //     filter.date = {
-    //         $lt : new Date(data.filterData.toDate)
-    //     }
-    // }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
-    //     filter.date = {
-    //         $gte : new Date(data.filterData.fromDate),
-    //         $lt : new Date(data.filterData.toDate)
-    //     }
-    // }
+    if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
+        filter.date = {
+            $gt : new Date(data.filterData.fromDate)
+        }
+    }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
+        filter.date = {
+            $lt : new Date(data.filterData.toDate)
+        }
+    }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
+        filter.date = {
+            $gte : new Date(data.filterData.fromDate),
+            $lt : new Date(data.filterData.toDate)
+        }
+    }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
         // filter.$expr = {
