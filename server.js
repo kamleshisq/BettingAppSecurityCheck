@@ -759,13 +759,17 @@ io.on('connection', (socket) => {
                 $eq: [{ $strLenCP: "$transactionId" }, 16]
               }
         }else if (data.Transaction_type === "Deposit"){
-            filterstatus = false
+            filter.accStype = {$exists:false}
+            filter.creditDebitamount={$gt:0}
         }else if(data.Transaction_type === "Withdraw"){
-            filterstatus = false
+            filter.accStype = {$exists:false}
+            filter.creditDebitamount={$lte:0}
         }else if (data.Transaction_type === "Settlement_Deposit"){
-            filterstatus = false
+            filter.accStype = {$exists:true}
+            filter.creditDebitamount={$gt:0}
         }else if(data.Transaction_type === "Settlement_Withdraw"){
-            filterstatus = false
+            filter.accStype = {$exists:true}
+            filter.creditDebitamount={$lte:0}
         }
         let finalresult = []
         let marketidarray = [];
@@ -787,12 +791,11 @@ io.on('connection', (socket) => {
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
-                                     userId:data.id.toString(),
-                                     $and:[{gameId:userAcc[i].gameId},{settleDate:filter.date}],
-                                     closingBalance:{$exists:true}
-    
-                                     
-                                 }
+                                    userId:data.id.toString(),
+                                    $and:[{gameId:userAcc[i].gameId},{settleDate:filter.date}],
+                                    closingBalance:{$exists:true} ,
+        
+                                }
                              },
                              {
                                  $group:{
