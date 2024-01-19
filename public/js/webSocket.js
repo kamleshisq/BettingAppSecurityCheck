@@ -15689,7 +15689,7 @@ socket.on('connect', () => {
             let id = $(this).attr('data-id')
             let Fdate = document.getElementById("FdateACC").value
             let Tdate = document.getElementById("TdateACC").value
-            let userid = $('.userDetails').find('input["name=name"]').val()
+            let userid = $('.userDetails').find('input[name="userName"]').val()
             let gametype;
             if(gameId != ""){
                 if($(this).hasClass('positive')){
