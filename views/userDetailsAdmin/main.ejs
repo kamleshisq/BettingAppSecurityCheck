@@ -382,12 +382,12 @@
                                         <td class="date-time"><%=formattedTime%></td>
                                         <%if(ACCount[i].transactionId){%>
                                           <%if(ACCount[i].match){%>
-                                              <td><%ACCount[i].match%></td>
+                                              <td><%=ACCount[i].match%></td>
                                           <%}else{%>
                                               <td>-</td>
                                           <%}%>
-                                          <%if(ACCount[i].marketName)<%{%>
-                                              <td>${ACCount[i].marketName}</td>
+                                          <%if(ACCount[i].marketName){%>
+                                              <td><%ACCount[i].marketName%></td>
                                           <%}else{%>
                                               <td>-</td>
                                           <%}%>
@@ -405,14 +405,14 @@
                                         <td><%=ACCount[i].balance%></td>
                                         <%if(ACCount[i]._id.gameId){%>
                                           <%if(ACCount[i].creditDebitamount > 0){%>
-                                          <td><a class="ownAccDetails positive" data-gameid="<%ACCount[i]._id.gameId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <td><a class="ownAccDetails positive" data-gameid="<%=ACCount[i]._id.gameId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
                                         <%}else{%>
-                                          <td><a class="ownAccDetails negative" data-gameid="<%ACCount[i]._id.gameId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <td><a class="ownAccDetails negative" data-gameid="<%=ACCount[i]._id.gameId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
                                         <%}%>
                                         <%}else if(ACCount[i]._id.marketId){%>
-                                          <td><a class="ownAccDetails" data-marketid="<%ACCount[i]._id.marketId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <td><a class="ownAccDetails" data-marketid="<%=ACCount[i]._id.marketId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
                                         <%}else{%>
-                                          <td><a class="ownAccDetails" data-id="<%ACCount[i]._id%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <td><a class="ownAccDetails" data-id="<%=ACCount[i]._id%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
                                         <%}%>
                                     </tr>
                                     <%}%>
