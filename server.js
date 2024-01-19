@@ -794,17 +794,6 @@ io.on('connection', (socket) => {
                                      
                                  }
                              },
-                            //  {
-                            //      $lookup: {
-                            //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                            //          localField: 'transactionId',
-                            //          foreignField: 'transactionId',
-                            //          as: 'accountdetail'
-                            //      }
-                            //  },
-                            //  {
-                            //      $unwind:"$accountdetail"
-                            //  },
                              {
                                  $group:{
                                      _id:{
@@ -847,17 +836,6 @@ io.on('connection', (socket) => {
     
                                  }
                              },
-                            //  {
-                            //      $lookup: {
-                            //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                            //          localField: 'transactionId',
-                            //          foreignField: 'transactionId',
-                            //          as: 'accountdetail'
-                            //      }
-                            //  },
-                            //  {
-                            //      $unwind:"$accountdetail"
-                            //  },
                              {
                                  $group:{
                                      _id:{
@@ -880,24 +858,8 @@ io.on('connection', (socket) => {
                                 $limit:(10 - finalresult.length)
                              }
                          ])
-                         let accounts = []
-                        // accounts = await accountStatement.aggregate([
-                        //     {
-                        //         $match:{
-                        //             userName:req.currentUser.userName,
-                        //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                        //         }
-                        //     },
-                        //     {
-                        //         $group:{
-                        //             _id:null,
-                        //             marketId:{$first:'$marketId'},
-                        //             creditDebitamount:{$sum:'$creditDebitamount'},
-                        //         }
-                        //     }
-                        //  ])
     
-                         console.log('inuseracc sport book',bet,accounts)
+                         console.log('inuseracc sport book',bet)
                          if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                              marketidarray.push(bet[0]._id.marketId)
                              finalresult = finalresult.concat(bet)
@@ -914,17 +876,6 @@ io.on('connection', (socket) => {
                                      closingBalance:{$exists:true}
                                  }
                              },
-                            //  {
-                            //      $lookup: {
-                            //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                            //          localField: 'transactionId',
-                            //          foreignField: 'transactionId',
-                            //          as: 'accountdetail'
-                            //      }
-                            //  },
-                            //  {
-                            //      $unwind:"$accountdetail"
-                            //  },
                              {
                                  $group:{
                                      _id:{
@@ -2878,9 +2829,9 @@ io.on('connection', (socket) => {
     }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
-        filter.$expr = {
+        filter.$and = [{transactionId:{$exist:true}},{$expr:{
             $eq: [{ $strLenCP: "$transactionId" }, 16]
-          }
+          }}]
     }else if (data.filterData.type === "deposit"){
         filterstatus = false
     }else if(data.filterData.type === "withdraw"){
