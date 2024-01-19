@@ -11059,7 +11059,7 @@ socket.on('connect', () => {
                 console.log({marketId,gameId,gametype,LOGINDATA,rowid})
                 if(marketId != "" || gameId != ""){
                     console.log(fromDate,toDate)
-                    socket.emit('getbetdetailbyid',{marketId,gameId,type,fromDate,toDate,gametype,LOGINDATA,rowid})
+                    socket.emit('getbetdetailbyid',{marketId,gameId,fromDate,toDate,gametype,LOGINDATA,rowid})
                 }
             }else{
                 $(this).removeClass('active')
