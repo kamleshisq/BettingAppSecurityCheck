@@ -743,7 +743,7 @@ io.on('connection', (socket) => {
         let json  = {}
         let filter = {};
         let limit = 10
-        filter.$or = [{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}]
+        filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]
         if(data.Fdate != '' && data.Tdate != ''){
             filter.date = {$gte:new Date(data.Fdate),$lte:new Date(data.Tdate)}
         }else if(data.Fdate != '' && data.Tdate == ''){
@@ -2861,6 +2861,7 @@ io.on('connection', (socket) => {
     // console.log(data.LOGINDATA.LOGINUSER)
     let filter = {}
     filter.user_id = data.LOGINDATA.LOGINUSER._id
+    filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
         filter.date = {
             $gt : new Date(data.filterData.fromDate)
@@ -2875,7 +2876,6 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
-    filter.$or = [{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}]
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
         filter.$expr = {

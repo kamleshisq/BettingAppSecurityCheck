@@ -597,7 +597,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     }
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}],}).sort({date: -1}).skip(skip).limit(limit)
+         let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
@@ -858,11 +858,10 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
    
-    // console.log(req.currentUser._id.toString(),'req.currentUser._id.toString()')
     let finalresult = []
     let marketidarray = [];
     let userAccflage = true
-    var today = new Date();
+    var today = new Date(new Date().getTime() + ((24 * 60 * 60 * 1000)-1));
     var todayFormatted = formatDate(today);
     var tomorrow = new Date();
     tomorrow.setDate(today.getDate() - 7);
@@ -875,13 +874,12 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{eventId:{$exists:true}}],}).sort({date: -1}).skip(skip).limit(limit)
+         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
          }
          if(userAccflage){
-            console.log(userAcc)
              for(let i = 0;i<userAcc.length;i++){
                 c++
                  if(userAcc[i].gameId){
@@ -896,17 +894,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  
                              }
                          },
-                        //  {
-                        //      $lookup: {
-                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                        //          localField: 'transactionId',
-                        //          foreignField: 'transactionId',
-                        //          as: 'accountdetail'
-                        //      }
-                        //  },
-                        //  {
-                        //      $unwind:"$accountdetail"
-                        //  },
                          {
                              $group:{
                                  _id:{
@@ -949,17 +936,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
 
                              }
                          },
-                        //  {
-                        //      $lookup: {
-                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                        //          localField: 'transactionId',
-                        //          foreignField: 'transactionId',
-                        //          as: 'accountdetail'
-                        //      }
-                        //  },
-                        //  {
-                        //      $unwind:"$accountdetail"
-                        //  },
                          {
                              $group:{
                                  _id:{
@@ -982,24 +958,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     let accounts = []
-                    // accounts = await accountStatement.aggregate([
-                    //     {
-                    //         $match:{
-                    //             userName:req.currentUser.userName,
-                    //             $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                    //         }
-                    //     },
-                    //     {
-                    //         $group:{
-                    //             _id:null,
-                    //             marketId:{$first:'$marketId'},
-                    //             creditDebitamount:{$sum:'$creditDebitamount'},
-                    //         }
-                    //     }
-                    //  ])
-
-                     console.log('inuseracc sport book',bet,accounts)
+                     console.log('inuseracc sport book',bet)
                      if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
@@ -1016,17 +975,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  closingBalance:{$exists:true}
                              }
                          },
-                        //  {
-                        //      $lookup: {
-                        //          from: 'accountstatements', // Assuming the name of the Whitelabel collection
-                        //          localField: 'transactionId',
-                        //          foreignField: 'transactionId',
-                        //          as: 'accountdetail'
-                        //      }
-                        //  },
-                        //  {
-                        //      $unwind:"$accountdetail"
-                        //  },
                          {
                              $group:{
                                  _id:{
@@ -1058,7 +1006,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      }
                  }else{
-                    console.log(userAcc[i], "userAcc[i]userAcc[i]userAcc[i]userAcc[i]")
                      finalresult.push(userAcc[i])
                      if(finalresult.length >= 20){
                              break
@@ -1082,7 +1029,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         }
         j++
     }
-    // console.log(finalresult,'finalresul')
+    console.log(finalresult,'finalresul')
 
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
@@ -3596,26 +3543,16 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
         match = data1liveCricket.find(item => item != undefined)
     }
-
     if(match == undefined){
         // res.status(404).json({
         //     status:"Success",
         //     message:"This match is no more live"
         // })
-        if(req.originalUrl.startsWith('/admin')){
-            res.render('./errorMessage', {
-                statusCode : 404,
-                message:"Opps! Please try again later",
-                mainMassage:"The match you are looking for is no more live"
-            })
-        }else{
-            return res.render('./errorMessage2',{
-                statusCode : err.statusCode,
-                message,
-                mainMassage,
-                adminStatus
-            })
-        }
+        res.render('./errorMessage', {
+            statusCode : 404,
+            message:"Opps! Please try again later",
+            mainMassage:"The match you are looking for is no more live"
+        })
     }
     let src
     let status = false
@@ -5297,20 +5234,11 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         //     status:"Success",
         //     message:"This match is no more live"
         // })
-        if(req.originalUrl.startsWith('/admin')){
-            res.render('./errorMessage', {
-                statusCode : 404,
-                message:"Opps! Please try again later",
-                mainMassage:"The match you are looking for is no more live"
-            })
-        }else{
-            return res.render('./errorMessage2',{
-                statusCode : err.statusCode,
-                message,
-                mainMassage,
-                adminStatus
-            })
-        }
+        res.render('./errorMessage', {
+            statusCode : 404,
+            message:"Opps! Please try again later",
+            mainMassage:"The match you are looking for is no more live"
+        })
     }
     let src
     let status = false
