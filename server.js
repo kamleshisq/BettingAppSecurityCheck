@@ -1195,7 +1195,7 @@ io.on('connection', (socket) => {
             let account = await AccModel.findById(data.id)
             filter.transactionId = account.transactionId
         }
-        bet = await Bet.find(filter)
+        bet = await Bet.find(filter).sort({date:-1})
         socket.emit('getMyBetDetails',bet)
     })
 
