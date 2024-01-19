@@ -788,7 +788,7 @@ io.on('connection', (socket) => {
                              {
                                  $match:{
                                      userId:req.currentUser._id.toString(),
-                                     $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                     $and:[{gameId:userAcc[i].gameId},{settleDate:filter.date}],
                                      closingBalance:{$exists:true}
     
                                      
@@ -841,7 +841,7 @@ io.on('connection', (socket) => {
                                  $match:{
                                      userId:req.currentUser._id.toString(),
                                      eventId:{$exists:'eventId'},
-                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                     $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
                                      closingBalance:{$exists:true}
     
                                  }
@@ -908,7 +908,7 @@ io.on('connection', (socket) => {
                              {
                                  $match:{
                                      userId:req.currentUser._id.toString(),
-                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                     $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
                                      closingBalance:{$exists:true}
                                  }
                              },
