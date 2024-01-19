@@ -767,18 +767,30 @@ io.on('connection', (socket) => {
         }else if (data.Transaction_type === "Deposit"){
             filter.accStype = {$exists:false}
             filter.creditDebitamount={$gt:0}
+            filter.marketId = {$exists:false}
+            filter.gameId = {$exists:false}
+            filter.user_id = new ObjectId(filter.user_id)
             filterstatus = false
         }else if(data.Transaction_type === "Withdraw"){
             filter.accStype = {$exists:false}
             filter.creditDebitamount={$lte:0}
+            filter.marketId = {$exists:false}
+            filter.gameId = {$exists:false}
+            filter.user_id = new ObjectId(filter.user_id)
             filterstatus = false
         }else if (data.Transaction_type === "Settlement_Deposit"){
             filter.accStype = {$exists:true}
             filter.creditDebitamount={$gt:0}
+            filter.marketId = {$exists:false}
+            filter.gameId = {$exists:false}
+            filter.user_id = new ObjectId(filter.user_id)
             filterstatus = false
         }else if(data.Transaction_type === "Settlement_Withdraw"){
             filter.accStype = {$exists:true}
             filter.creditDebitamount={$lte:0}
+            filter.marketId = {$exists:false}
+            filter.gameId = {$exists:false}
+            filter.user_id = new ObjectId(filter.user_id)
             filterstatus = false
         }
         let finalresult = []
