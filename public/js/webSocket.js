@@ -15390,15 +15390,17 @@ socket.on('connect', () => {
             var day = date.getDate().toString().padStart(2, '0');
             return year + "-" + month + "-" + day;
         }
-        $(document).on("submit", ".userDetails", function(e){
-            e.preventDefault()
-            let form = $(this)[0];
-            // console.log(form)
-            // let share = $(".userDetails").find('input[name="Share"]').val()
-            // let myShare = $(".userDetails").find('input[name="myShare"]').val()
-            let id = this.id
-            socket.emit("myShare", {id})
-        })
+        // $(document).on("submit", ".userDetails", function(e){
+        //     e.preventDefault()
+        //     let form = $(this)[0];
+        //     // console.log(form)
+        //     // let share = $(".userDetails").find('input[name="Share"]').val()
+        //     // let myShare = $(".userDetails").find('input[name="myShare"]').val()
+        //     let share;
+        //     let myShare;
+        //     let id = this.id
+        //     socket.emit("myShare", {,,id})
+        // })
 
         socket.on("myShare", data => {
             // console.log(data)
