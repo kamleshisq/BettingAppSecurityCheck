@@ -2833,7 +2833,7 @@ io.on('connection', (socket) => {
             { transactionId: { $exists: true } }, // Check if 'name' field exists
             {
               $expr: {
-                $eq: [{ $strLenCP: "$transactionId" }, 16] // Compare the length of 'name' field
+                $eq: [{ $strLenCP: { $toString: "$transactionId" }}, 16] // Compare the length of 'name' field
               }
             }
           ]
