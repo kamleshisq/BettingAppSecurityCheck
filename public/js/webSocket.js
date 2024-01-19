@@ -15801,8 +15801,7 @@ socket.on('connect', () => {
             let fromDate = $('#FdateACC').val()
             let toDate = $('#TdateACC').val()
             let type = $("#selectACC").val()
-            $('.skipid').attr('data-skipid',0)
-            let skipid = 0
+            let skipid = parseInt($('.skipid').attr('data-skipid'))
             let filterData = {}
             filterData.fromDate = fromDate,
             filterData.toDate = toDate
@@ -15889,7 +15888,6 @@ socket.on('connect', () => {
                         html += ` <td>0</td>
                         <td>${userAcc[i].creditDebitamount}</td>`
                     }
-                    html += `<td>0</td>`
                     if(userAcc[i]._id.gameId){
                         if(userAcc[i].creditDebitamount > 0){
                             html += `<td>${userAcc[i].balance}</td>
