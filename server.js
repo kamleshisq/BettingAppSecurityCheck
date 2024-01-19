@@ -764,15 +764,19 @@ io.on('connection', (socket) => {
         }else if (data.Transaction_type === "Deposit"){
             filter.accStype = {$exists:false}
             filter.creditDebitamount={$gt:0}
+            filterstatus = false
         }else if(data.Transaction_type === "Withdraw"){
             filter.accStype = {$exists:false}
             filter.creditDebitamount={$lte:0}
+            filterstatus = false
         }else if (data.Transaction_type === "Settlement_Deposit"){
             filter.accStype = {$exists:true}
             filter.creditDebitamount={$gt:0}
+            filterstatus = false
         }else if(data.Transaction_type === "Settlement_Withdraw"){
             filter.accStype = {$exists:true}
             filter.creditDebitamount={$lte:0}
+            filterstatus = false
         }
         let finalresult = []
         let marketidarray = [];
@@ -937,6 +941,9 @@ io.on('connection', (socket) => {
                 }
                 j++
             }
+        }{
+            let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+            finalresult.concat(userAcc)
         }
         json.status = 'success'
         json.finalresult = finalresult
@@ -2847,15 +2854,19 @@ io.on('connection', (socket) => {
     }else if (data.filterData.type === "deposit"){
         filter.accStype = {$exists:false}
         filter.creditDebitamount={$gt:0}
+        filterstatus = false
     }else if(data.filterData.type === "withdraw"){
         filter.accStype = {$exists:false}
         filter.creditDebitamount={$lte:0}
+        filterstatus = false
     }else if (data.filterData.type === "sdeposit"){
         filter.accStype = {$exists:true}
         filter.creditDebitamount={$gt:0}
+        filterstatus = false
     }else if(data.filterData.type === "swithdraw"){
         filter.accStype = {$exists:true}
         filter.creditDebitamount={$lte:0}
+        filterstatus = false
     }
     console.log('filter',filter)
     
@@ -3075,6 +3086,9 @@ io.on('connection', (socket) => {
             }
             j++
         }
+    }else{
+        let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+        finalresult.concat(userAcc)
     }
     console.log(finalresult, 'finalresult')
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})
