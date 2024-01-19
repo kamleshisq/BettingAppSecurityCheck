@@ -15848,7 +15848,6 @@ socket.on('connect', () => {
         socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
             $('.skipid').attr('data-skipid',data.skipvalue)
             let userAcc = data.userAcc;
-            let page = data.page
             let html = '';
 
             if(data.userAcc.length > 0){
@@ -15864,6 +15863,9 @@ socket.on('connect', () => {
                         hour12: true
                     };
                     var formattedTime = date.toLocaleString('en-US', options);
+                   
+                    html += `<tr class="acount-stat-tbl-body-tr">`
+                    html += `<td class="date-time">${formattedTime}</td>`
                     if(userAcc[i].transactionId){
                         if(userAcc[i].match){
                             html += `<td>${userAcc[i].match}</td>`
@@ -15879,8 +15881,7 @@ socket.on('connect', () => {
                         html += `<td>-</td><td>-</td>`
 
                     }
-                    html += `<tr class="acount-stat-tbl-body-tr">
-                    <td class="date-time">${formattedTime}</td>`
+                    
                     if(userAcc[i].creditDebitamount > 0){
                         html += `<td>${userAcc[i].creditDebitamount}</td>
                         <td>0</td>`
