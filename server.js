@@ -816,7 +816,8 @@ io.on('connection', (socket) => {
                                      marketName:{$first:'$betType'},
                                      creditDebitamount:{$sum:'$returns'},
                                      balance:{$sum:'$closingBalance'},
-                                     transactionId:{$first:'$accountdetail.transactionId'}
+                                     transactionId:{$first:'$accountdetail.transactionId'},
+                                     date:{ $max: "$settleDate" }
                                  }
                              },
                              {
@@ -868,7 +869,8 @@ io.on('connection', (socket) => {
                                      marketName:{$first:'$marketName'},
                                      creditDebitamount:{$sum:'$returns'},
                                      balance:{$sum:'$closingBalance'},
-                                     transactionId:{$first:'$transactionId'}
+                                     transactionId:{$first:'$transactionId'},
+                                     date:{ $max: "$settleDate" }
                                  }
                              },
                              {
@@ -934,7 +936,8 @@ io.on('connection', (socket) => {
                                      marketName:{$first:'$marketName'},
                                      creditDebitamount:{$sum:'$returns'},
                                      balance:{$sum:'$closingBalance'},
-                                     transactionId:{$first:'$transactionId'}
+                                     transactionId:{$first:'$transactionId'},
+                                     date:{ $max: "$settleDate" }
                                  }
                              },
                              {
