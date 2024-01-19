@@ -774,20 +774,7 @@ io.on('connection', (socket) => {
     
         async function getmarketwiseaccdata (limit,skip){
             console.log('in getmarketwise accdata ',limit,skip)
-              let userAcc = await AccModel.aggregate([
-            {
-                $match:filter,
-            },
-            {
-                $sort:{date:-1}
-            },
-            {
-                $skip:skip
-            },
-            {
-                $limit:limit
-            }
-        ])
+             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
              let c = 0
              if(userAcc.length == 0){
                 userAccflage = false
@@ -2842,18 +2829,9 @@ io.on('connection', (socket) => {
     }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
-        filter.transactionId= {
-            $regexMatch: {
-              $exists: true,
-              $regex: /./, // Any non-empty string
-              $options: ""
-            },
-          $expr: {
-            $eq: [{ $strLenCP: "$transactionId" }, 16] // Compare the length of 'name' field
+        filter.$expr = {
+            $eq: [{ $strLenCP: "$transactionId" }, 16]
           }
-        }
-    
-
     }else if (data.filterData.type === "deposit"){
         filterstatus = false
     }else if(data.filterData.type === "withdraw"){
@@ -2875,20 +2853,7 @@ io.on('connection', (socket) => {
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwise accdata ',limit,skip)
         //  let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-        let userAcc = await AccModel.aggregate([
-            {
-                $match:filter,
-            },
-            {
-                $sort:{date:-1}
-            },
-            {
-                $skip:skip
-            },
-            {
-                $limit:limit
-            }
-        ])
+        let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
