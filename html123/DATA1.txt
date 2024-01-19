@@ -122,7 +122,7 @@ git commit -m "Update .gitignore to ignore .css files"
 
 for dump 
 
-mongodump --uri "mongodb://127.0.0.1:27017" --db transaction --out /var/www/html/
+mongodump --uri "mongodb://127.0.0.1:27017" --db New_Lordex --out /var/www/DATABACKUP
 
 
 mongorestore --uri "mongodb://127.0.0.1:27017" --nsInclude 'shree247.*' /var/www/html/

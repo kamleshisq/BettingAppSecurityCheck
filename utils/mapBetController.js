@@ -117,8 +117,8 @@ async function mapBet(data){
                     }
                   }
 
-                let bet1 = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:debitCreditAmount, result: data.result})
-                let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
+                  let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
+                  let bet1 = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:debitCreditAmount, result: data.result, settleDate: Date.now(), closingBalance:parseFloat(user.availableBalance) + parseFloat(debitCreditAmount)})
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/WON`
 
                 let debitAmountForP = debitCreditAmount
@@ -258,8 +258,8 @@ async function mapBet(data){
                 }else{
                     debitCreditAmount = bets[bet].Stake
                 }
-                let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:debitCreditAmount, result:data.result})
                 let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
+                let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:debitCreditAmount, result:data.result, settleDate:Date.now(), closingBalance: parseFloat(user.availableBalance) + parseFloat(debitCreditAmount)})
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/WON`
 
                 let debitAmountForP = parseFloat(debitCreditAmount)
@@ -306,7 +306,7 @@ async function mapBet(data){
                   "transactionId":`${bets[bet].transactionId}`,
                   "marketId":`${bets[bet].marketId}`
                 })
-            }else if (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")){
+            }else if (((bets[bet].selectionName.split('@')[1] >=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] <= data.result) && bets[bet].bettype2 == "LAY")){
                 console.log('FANCY')
                 let creditDebitamount 
                         let exposure = bets[bet].exposure
@@ -315,8 +315,8 @@ async function mapBet(data){
                         }else{
                             creditDebitamount = bets[bet].Stake
                         }
-                        let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:creditDebitamount, result:data.result})
                         let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(creditDebitamount), myPL: parseFloat(creditDebitamount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(creditDebitamount), pointsWL:parseFloat(creditDebitamount)}})
+                        let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:creditDebitamount, result:data.result, closingBalance:parseFloat(user.availableBalance) + parseFloat(creditDebitamount), settleDate:Date.now()})
                         let description = `Bet for ${bets[bet].match}/Result = ${data.result}/WON`
 
                         let debitAmountForP = parseFloat(creditDebitamount)
@@ -365,11 +365,11 @@ async function mapBet(data){
                         })
             }else{
                 console.log('LOOSE')
-                let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"LOSS", result:data.result})
                 let user 
                 let exposure = bets[bet].exposure
                 user = await userModel.findByIdAndUpdate(bets[bet].userId, {$inc:{Loss:1, exposure:-parseFloat(exposure), availableBalance: -parseFloat(exposure), myPL:-parseFloat(exposure), uplinePL:parseFloat(exposure), pointsWL:-parseFloat(exposure)}})
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/LOSS`
+                let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"LOSS", result:data.result, settleDate:Date.now(),closingBalance:parseFloat(user.availableBalance) - parseFloat(exposure)})
 
                 let debitAmountForP = exposure
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
