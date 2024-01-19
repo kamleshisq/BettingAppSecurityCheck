@@ -46,7 +46,7 @@ app.use(requestIp.mw());
 app.use(cors());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
-mongoose.connect(process.env.db2,{
+mongoose.connect(process.env.db1,{
     useNewUrlParser: true, 
     useUnifiedTopology: true
 }).then(()=>{
