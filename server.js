@@ -1185,6 +1185,7 @@ io.on('connection', (socket) => {
                 $lt : new Date(data.Tdate)
             }
         }
+        filter.closingBalance={$exists:true}
         let bet
         if(data.gameId){
             if(data.gametype == 'positive'){
@@ -1192,9 +1193,9 @@ io.on('connection', (socket) => {
             }else{
                 filter.returns={$lte:0}
             }
-            filter.gameId = data.gameId
+            filter.$and=[{gameId:data.gameId},{settleDate:filter.date}]
         }else if(data.marketId){
-            filter.marketId = data.marketId
+            filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
         }else{
             let account = await AccModel.findById(data.id)
             filter.transactionId = account.transactionId
