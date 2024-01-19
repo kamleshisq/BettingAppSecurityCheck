@@ -752,7 +752,9 @@ io.on('connection', (socket) => {
         }else if(data.Fdata == '' && data.Tdate != ''){
             filter.date = {$lte:new Date(data.Tdate)}
         }
-        filter.user_id = data.id
+        const ObjectId = mongoose.Types.ObjectId
+        filter.user_id = new ObjectId(data.id)
+        // filter.user_id = data.id
         let filterstatus = true
         if(data.Transaction_type === "Bet_Settlement"){
             filter.$expr = {
@@ -762,19 +764,27 @@ io.on('connection', (socket) => {
                   ]
               }
         }else if (data.Transaction_type === "Deposit"){
+            filter.accStype = {$exists:false}
+            filter.creditDebitamount={$gt:0}
             filterstatus = false
         }else if(data.Transaction_type === "Withdraw"){
+            filter.accStype = {$exists:false}
+            filter.creditDebitamount={$lte:0}
             filterstatus = false
         }else if (data.Transaction_type === "Settlement_Deposit"){
+            filter.accStype = {$exists:true}
+            filter.creditDebitamount={$gt:0}
             filterstatus = false
         }else if(data.Transaction_type === "Settlement_Withdraw"){
+            filter.accStype = {$exists:true}
+            filter.creditDebitamount={$lte:0}
             filterstatus = false
         }
         let finalresult = []
         let marketidarray = [];
         let userAccflage = true
     
-    
+        console.log(filter,'filter')
         async function getmarketwiseaccdata (limit,skip){
             console.log('in getmarketwise accdata ',limit,skip, filter.$expr)
              let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
@@ -790,12 +800,11 @@ io.on('connection', (socket) => {
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
-                                     userId:data.id.toString(),
-                                     $and:[{gameId:userAcc[i].gameId},{settleDate:filter.date}],
-                                     closingBalance:{$exists:true}
-    
-                                     
-                                 }
+                                    userId:data.id.toString(),
+                                    $and:[{gameId:userAcc[i].gameId},{settleDate:filter.date}],
+                                    closingBalance:{$exists:true} ,
+        
+                                }
                              },
                              {
                                  $group:{
@@ -934,6 +943,9 @@ io.on('connection', (socket) => {
                 }
                 j++
             }
+        }{
+            let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+            finalresult.concat(userAcc)
         }
         json.status = 'success'
         json.finalresult = finalresult
@@ -2814,8 +2826,9 @@ io.on('connection', (socket) => {
     // console.log(data.filterData)
     // console.log(data.LOGINDATA.LOGINUSER)
     let filter = {}
-    filter.user_id = data.LOGINDATA.LOGINUSER._id
-    filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]
+    const ObjectId = mongoose.Types.ObjectId
+    filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
+    // filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
         filter.date = {
             $gt : new Date(data.filterData.fromDate)
@@ -2825,10 +2838,10 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
-        filter.date = {
-            $gte : new Date(data.filterData.fromDate),
-            $lt : new Date(data.filterData.toDate)
-        }
+        // filter.date = {
+        //     $gte : new Date(data.filterData.fromDate),
+        //     $lt : new Date(data.filterData.toDate)
+        // }
     }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
@@ -2842,15 +2855,23 @@ io.on('connection', (socket) => {
               ]
           }
     }else if (data.filterData.type === "deposit"){
+        filter.accStype = {$exists:false}
+        filter.creditDebitamount={$gt:0}
         filterstatus = false
     }else if(data.filterData.type === "withdraw"){
+        filter.accStype = {$exists:false}
+        filter.creditDebitamount={$lte:0}
         filterstatus = false
     }else if (data.filterData.type === "sdeposit"){
+        filter.accStype = {$exists:true}
+        filter.creditDebitamount={$gt:0}
         filterstatus = false
     }else if(data.filterData.type === "swithdraw"){
+        filter.accStype = {$exists:true}
+        filter.creditDebitamount={$lte:0}
         filterstatus = false
     }
-    console.log('filter',filter.$expr)
+    console.log('filter',filter)
     
 
     // console.log(filter)
@@ -3068,6 +3089,10 @@ io.on('connection', (socket) => {
             }
             j++
         }
+    }else{
+        skip = 0
+        let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+        finalresult.concat(userAcc)
     }
     console.log(finalresult, 'finalresult')
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})

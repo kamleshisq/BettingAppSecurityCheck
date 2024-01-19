@@ -3557,7 +3557,7 @@ socket.on('connect', () => {
         let Fdate = document.getElementById("Fdate").value
         let Tdate = document.getElementById("Tdate").value
         
-        Transaction_type = $('#transaction_type').val()
+        let Transaction_type = $('#transaction_type').val()
         data.Transaction_type = Transaction_type
         data.Fdate = Fdate;
         if(Tdate != ''){
@@ -10894,7 +10894,7 @@ socket.on('connect', () => {
                 let type = $("#select").val()
                 let filterData = {}
                 filterData.fromDate = fromDate,
-                filterData.toDate = toDate
+                filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 filterData.type = type
                 let skipid = parseInt($('.skipid').attr('data-skipid'))
                 socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
@@ -10913,7 +10913,7 @@ socket.on('connect', () => {
             let type = $("#select").val()
             let filterData = {}
             filterData.fromDate = fromDate,
-            filterData.toDate = toDate
+            filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
             filterData.type = type
             page = 0
             $('.pageId').attr('data-pageid',1)
