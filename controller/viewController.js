@@ -881,6 +881,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
             userAccflage = false
          }
          if(userAccflage){
+            console.log(userAcc)
              for(let i = 0;i<userAcc.length;i++){
                 c++
                  if(userAcc[i].gameId){
@@ -1057,6 +1058,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      }
                  }else{
+                    console.log(userAcc[i], "userAcc[i]userAcc[i]userAcc[i]userAcc[i]")
                      finalresult.push(userAcc[i])
                      if(finalresult.length >= 20){
                              break
@@ -3594,16 +3596,26 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
         match = data1liveCricket.find(item => item != undefined)
     }
+
     if(match == undefined){
         // res.status(404).json({
         //     status:"Success",
         //     message:"This match is no more live"
         // })
-        res.render('./errorMessage', {
-            statusCode : 404,
-            message:"Opps! Please try again later",
-            mainMassage:"The match you are looking for is no more live"
-        })
+        if(req.originalUrl.startsWith('/admin')){
+            res.render('./errorMessage', {
+                statusCode : 404,
+                message:"Opps! Please try again later",
+                mainMassage:"The match you are looking for is no more live"
+            })
+        }else{
+            return res.render('./errorMessage2',{
+                statusCode : err.statusCode,
+                message,
+                mainMassage,
+                adminStatus
+            })
+        }
     }
     let src
     let status = false
@@ -5285,11 +5297,20 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         //     status:"Success",
         //     message:"This match is no more live"
         // })
-        res.render('./errorMessage', {
-            statusCode : 404,
-            message:"Opps! Please try again later",
-            mainMassage:"The match you are looking for is no more live"
-        })
+        if(req.originalUrl.startsWith('/admin')){
+            res.render('./errorMessage', {
+                statusCode : 404,
+                message:"Opps! Please try again later",
+                mainMassage:"The match you are looking for is no more live"
+            })
+        }else{
+            return res.render('./errorMessage2',{
+                statusCode : err.statusCode,
+                message,
+                mainMassage,
+                adminStatus
+            })
+        }
     }
     let src
     let status = false

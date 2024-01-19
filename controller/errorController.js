@@ -54,12 +54,27 @@ const sendErrorDev = (err, req,res) => {
         }else {
             message = err.message
         }
-        console.log(req.originalUrl())
-        return res.render('./errorMessage',{
-            statusCode : err.statusCode,
-            message,
-            mainMassage
-        })
+        console.log(req.originalUrl)
+        let adminStatus = false
+        if(req.originalUrl.startsWith('/admin')){
+            adminStatus = true
+        }
+        console.log(adminStatus, "adminStatusadminStatusadminStatusadminStatus")
+        if(adminStatus){
+            return res.render('./errorMessage',{
+                statusCode : err.statusCode,
+                message,
+                mainMassage,
+                adminStatus
+            })
+        }else{
+            return res.render('./errorMessage2',{
+                statusCode : err.statusCode,
+                message,
+                mainMassage,
+                adminStatus
+            })
+        }
     }
     // return res.status(err.statusCode).render('loginPage',{
     //     title: 'login page'
