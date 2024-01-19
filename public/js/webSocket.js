@@ -3423,6 +3423,7 @@ socket.on('connect', () => {
             let id = $(this).attr('data-id')
             let Fdate = document.getElementById("Fdate").value
             let Tdate = document.getElementById("Tdate").value
+            let userid = $('#searchUser').val()
             let gametype;
             if(gameId != ""){
                 if($(this).hasClass('positive')){
@@ -3432,7 +3433,7 @@ socket.on('connect', () => {
                 }
             }
             // console.log('elementId',modelId)
-            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype})
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
         socket.on('getMyBetDetails',(data)=>{
@@ -15389,40 +15390,42 @@ socket.on('connect', () => {
             var day = date.getDate().toString().padStart(2, '0');
             return year + "-" + month + "-" + day;
         }
-        $(document).on("submit", ".userDetails", function(e){
-            e.preventDefault()
-            let form = $(this)[0];
-            // console.log(form)
-            let share = $(".userDetails").find('input[name="Share"]').val()
-            let myShare = $(".userDetails").find('input[name="myShare"]').val()
-            let id = this.id
-            socket.emit("myShare", {share, myShare, id})
-        })
+        // $(document).on("submit", ".userDetails", function(e){
+        //     e.preventDefault()
+        //     let form = $(this)[0];
+        //     // console.log(form)
+        //     // let share = $(".userDetails").find('input[name="Share"]').val()
+        //     // let myShare = $(".userDetails").find('input[name="myShare"]').val()
+        //     let share;
+        //     let myShare;
+        //     let id = this.id
+        //     socket.emit("myShare", {,,id})
+        // })
 
-        socket.on("myShare", data => {
-            // console.log(data)
-            if(data.status === "error"){
-                alert(data.message)
-            }else{
-                alert("Updated")
-                $(".userDetails").find('input[name="Share"]').val(data.share)
-                $(".userDetails").find('input[name="myShare"]').val(data.myShare)
-            }
-        })
+        // socket.on("myShare", data => {
+        //     // console.log(data)
+        //     if(data.status === "error"){
+        //         alert(data.message)
+        //     }else{
+        //         alert("Updated")
+        //         $(".userDetails").find('input[name="Share"]').val(data.share)
+        //         $(".userDetails").find('input[name="myShare"]').val(data.myShare)
+        //     }
+        // })
 
-        const num1Input = document.getElementById('myShare');
-        const num2Input = document.getElementById('Share');
-        num1Input.addEventListener('input', () => {
-            const num1 = parseFloat(num1Input.value);
-            const num2 = 100 - num1;
-            num2Input.value = num2;
-        });
+        // const num1Input = document.getElementById('myShare');
+        // const num2Input = document.getElementById('Share');
+        // num1Input.addEventListener('input', () => {
+        //     const num1 = parseFloat(num1Input.value);
+        //     const num2 = 100 - num1;
+        //     num2Input.value = num2;
+        // });
 
-        num2Input.addEventListener('input', () => {
-            const num2 = parseFloat(num2Input.value);
-            const num1 = 100 - num2;
-            num1Input.value = num1;
-        });
+        // num2Input.addEventListener('input', () => {
+        //     const num2 = parseFloat(num2Input.value);
+        //     const num1 = 100 - num2;
+        //     num1Input.value = num1;
+        // });
 
 
 
@@ -15684,8 +15687,9 @@ socket.on('connect', () => {
             let gameId = $(this).attr('data-gameid')
             let marketId = $(this).attr('data-marketid')
             let id = $(this).attr('data-id')
-            let Fdate = document.getElementById("Fdate").value
-            let Tdate = document.getElementById("Tdate").value
+            let Fdate = document.getElementById("FdateACC").value
+            let Tdate = document.getElementById("TdateACC").value
+            let userid = $('#searchUser').val()
             let gametype;
             if(gameId != ""){
                 if($(this).hasClass('positive')){
@@ -15695,7 +15699,7 @@ socket.on('connect', () => {
                 }
             }
             // console.log('elementId',modelId)
-            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype})
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
         socket.on('getMyBetDetails',(data)=>{
