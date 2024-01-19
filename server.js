@@ -2294,7 +2294,7 @@ io.on('connection', (socket) => {
         let delay = await oddsLimitCHeck({eventId:data.data.eventId, ids:[data.data.market]})
         // console.log(delay, "delay")
         let delayReal = 0
-        if(delay[0] && delay[0].Limits!= 0 ){
+        if(delay[0] && delay[0].Limits!= 0 && delay[0].Limits.delay){
             delayReal = delay[0].Limits.delay - 0.7 - 3 
         }
             setTimeout(async function(){
