@@ -713,8 +713,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          {
                              $match:{
                                  userId:req.currentUser._id.toString(),
-                                 $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId}],
-                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+                                 $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 closingBalance:{$exists:true}
+
                                  
                              }
                          },
@@ -734,14 +735,13 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  _id:{
                                      gameId:"$gameId",
                                      status:"$status",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
                                  },
                                  match:{$first:'$event'},
                                  marketName:{$first:'$betType'},
                                  stake:{$first:'$Stake'},
-                                 accStype:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$returns'},
+                                 balance:{$sum:'$closingBalance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
                          },
@@ -765,9 +765,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          {
                              $match:{
                                  userId:req.currentUser._id.toString(),
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
                                  eventId:{$exists:'eventId'},
-                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 closingBalance:{$exists:true}
 
                              }
                          },
@@ -787,14 +787,13 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  _id:{
                                      eventId:"$eventId",
                                      marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
                                  },
                                  match:{$first:'$match'},
                                  marketName:{$first:'$marketName'},
                                  stake:{$first:'$Stake'},
-                                 accStype:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$returns'},
+                                 balance:{$sum:'$closingBalance'},
                                  transactionId:{$first:'$transactionId'}
                              }
                          },
@@ -835,8 +834,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          {
                              $match:{
                                  userId:req.currentUser._id.toString(),
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId}],
-                                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))} 
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 closingBalance:{$exists:true}
                              }
                          },
                         //  {
@@ -855,14 +854,13 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  _id:{
                                      eventId:"$eventId",
                                      marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
                                  },
                                  match:{$first:'$match'},
                                  marketName:{$first:'$marketName'},
                                  stake:{$first:'$Stake'},
-                                 accStype:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$returns'},
+                                 balance:{$sum:'$closingBalance'},
                                  transactionId:{$first:'$transactionId'}
                              }
                          },
