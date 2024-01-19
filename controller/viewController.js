@@ -3548,11 +3548,19 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         //     status:"Success",
         //     message:"This match is no more live"
         // })
-        res.render('./errorMessage', {
-            statusCode : 404,
-            message:"Opps! Please try again later",
-            mainMassage:"The match you are looking for is no more live"
-        })
+        if(req.originalUrl.startsWith('/admin')){
+            res.render('./errorMessage', {
+                statusCode : 404,
+                message:"The match you are looking for is no more live",
+                mainMassage:"Opps! Please try again later"
+            })
+        }else{
+            return res.render('./errorMessage2',{
+                statusCode : 404,
+                message:"The match you are looking for is no more live",
+                mainMassage:"Opps! Please try again later"
+            })
+        }
     }
     let src
     let status = false
@@ -5234,11 +5242,19 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         //     status:"Success",
         //     message:"This match is no more live"
         // })
-        res.render('./errorMessage', {
-            statusCode : 404,
-            message:"Opps! Please try again later",
-            mainMassage:"The match you are looking for is no more live"
-        })
+        if(req.originalUrl.startsWith('/admin')){
+            res.render('./errorMessage', {
+                statusCode : 404,
+                message:"The match you are looking for is no more live",
+                mainMassage:"Opps! Please try again later"
+            })
+        }else{
+            res.render('./errorMessage2', {
+                statusCode : 404,
+                message:"The match you are looking for is no more live",
+                mainMassage:"Opps! Please try again later"
+            })
+        }
     }
     let src
     let status = false
