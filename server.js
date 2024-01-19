@@ -946,7 +946,7 @@ io.on('connection', (socket) => {
             }
         }{
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-            finalresult.concat(userAcc)
+            finalresult=userAcc
         }
         json.status = 'success'
         json.finalresult = finalresult
