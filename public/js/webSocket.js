@@ -3697,8 +3697,14 @@ socket.on('connect', () => {
                             html += `<td>${data.json.finalresult[i].balance}</td>
                             <td><a class="ownAccDetails" data-marketid="${data.json.finalresult[i]._id.marketId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
                         }else{
-                            html += `<td>${data.json.finalresult[i].balance}</td>
-                            <td><a class="ownAccDetails" data-id="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
+                            if(data.json.finalresult[i].transactionId){
+
+                                html += `<td>${data.json.finalresult[i].balance}</td>
+                                <td><a class="ownAccDetails" data-id="${data.json.finalresult[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.finalresult[i].transactionId}&nbsp;</a></td>`
+                            }else{
+                                html += `<td>${data.json.finalresult[i].balance}</td>
+                                <td>-</td>`
+                            }
                         }
                 }
                 count1 += 10;
