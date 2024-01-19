@@ -778,7 +778,7 @@ io.on('connection', (socket) => {
         let marketidarray = [];
         let userAccflage = true
     
-    
+        console.log(filter,'filter')
         async function getmarketwiseaccdata (limit,skip){
             console.log('in getmarketwise accdata ',limit,skip, filter.$expr)
              let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
