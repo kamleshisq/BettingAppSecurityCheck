@@ -752,8 +752,9 @@ io.on('connection', (socket) => {
         }else if(data.Fdata == '' && data.Tdate != ''){
             filter.date = {$lte:new Date(data.Tdate)}
         }
-        const ObjectId = mongoose.Types.ObjectId
-        filter.user_id = new ObjectId(data.id)
+        // const ObjectId = mongoose.Types.ObjectId
+        // filter.user_id = new ObjectId(data.id)
+        filter.user_id = data.id
         // filter.user_id = data.id
         let filterstatus = true
         if(data.Transaction_type === "Bet_Settlement"){
@@ -2827,9 +2828,10 @@ io.on('connection', (socket) => {
     // console.log(data.filterData)
     // console.log(data.LOGINDATA.LOGINUSER)
     let filter = {}
-    const ObjectId = mongoose.Types.ObjectId
-    filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
-    // filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]
+    // const ObjectId = mongoose.Types.ObjectId
+    // filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
+    filter.user_id = data.LOGINDATA.LOGINUSER._id
+    filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
         filter.date = {
             $gt : new Date(data.filterData.fromDate)
@@ -2839,10 +2841,10 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
-        // filter.date = {
-        //     $gte : new Date(data.filterData.fromDate),
-        //     $lt : new Date(data.filterData.toDate)
-        // }
+        filter.date = {
+            $gte : new Date(data.filterData.fromDate),
+            $lt : new Date(data.filterData.toDate)
+        }
     }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
