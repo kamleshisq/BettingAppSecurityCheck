@@ -11003,7 +11003,7 @@ socket.on('connect', () => {
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
 
                 }else{
-                    html += `<tr class="acount-stat-tbl-body-tr" data-marketid="" id="rowid-${i + 1 + count}">
+                    html += `<tr class="acount-stat-tbl-body-tr" data-id="" id="rowid-${i + 1 + count}">
                     <td title="Transaction">Settlement</td>`
                         html += `<td title="Event">-</td>`
                         html += `<td title="Market Type">-</td>`
@@ -11043,6 +11043,8 @@ socket.on('connect', () => {
                 }
                 $(this).parent().children('tr.active').removeClass('active')
                 $(this).addClass('active')
+                let fromDate = $('#Fdate').val()
+                let toDate = $('#Tdate').val()
                 let marketId = $(this).attr('data-marketid')
                 let gameId = $(this).attr('data-gameid')
                 let gametype;
@@ -11056,7 +11058,8 @@ socket.on('connect', () => {
                 let rowid = $(this).attr('id')
                 console.log({marketId,gameId,gametype,LOGINDATA,rowid})
                 if(marketId != "" || gameId != ""){
-                    socket.emit('getbetdetailbyid',{marketId,gameId,gametype,LOGINDATA,rowid})
+                    console.log(fromDate,toDate)
+                    socket.emit('getbetdetailbyid',{marketId,gameId,fromDate,toDate,gametype,LOGINDATA,rowid})
                 }
             }else{
                 $(this).removeClass('active')
