@@ -2829,15 +2829,17 @@ io.on('connection', (socket) => {
     }
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
-        filter.$and= [
-            { transactionId: { $exists: true } }, // Check if 'transactionId' field exists
-            { transactionId: { $type: "string" } }, // Check if 'transactionId' is a string
-            {
-              $expr: {
-                $eq: [{ $strLenCP: "$transactionId" }, 16] // Compare the length of 'name' field
-              }
-            }
-          ]
+        filter.transactionId= {
+            $regexMatch: {
+              $exists: true,
+              $regex: /./, // Any non-empty string
+              $options: ""
+            },
+          $expr: {
+            $eq: [{ $strLenCP: "$transactionId" }, 16] // Compare the length of 'name' field
+          }
+        }
+    
 
     }else if (data.filterData.type === "deposit"){
         filterstatus = false
