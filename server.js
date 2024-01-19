@@ -755,9 +755,15 @@ io.on('connection', (socket) => {
         filter.user_id = data.id
         let filterstatus = true
         if(data.Transaction_type === "Bet_Settlement"){
-            filter.$expr = {
-                $eq: [{ $strLenCP: "$transactionId" }, 16]
-              }
+            filter. $and= [
+                { transactionId: { $exists: true } }, // Check if 'transactionId' field exists
+                { transactionId: { $type: "string" } }, // Check if 'transactionId' is a string
+                {
+                  $expr: {
+                    $eq: [{ $strLenCP: "$transactionId" }, 16] // Compare the length of 'name' field
+                  }
+                }
+              ]
         }else if (data.Transaction_type === "Deposit"){
             filterstatus = false
         }else if(data.Transaction_type === "Withdraw"){
@@ -774,7 +780,20 @@ io.on('connection', (socket) => {
     
         async function getmarketwiseaccdata (limit,skip){
             console.log('in getmarketwise accdata ',limit,skip)
-             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+            let userAcc = await AccModel.aggregate([
+                {
+                    $match:filter,
+                },
+                {
+                    $sort:{date:-1}
+                },
+                {
+                    $skip:skip
+                },
+                {
+                    $limit:limit
+                }
+            ])
              let c = 0
              if(userAcc.length == 0){
                 userAccflage = false
