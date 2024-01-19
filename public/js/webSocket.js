@@ -3609,8 +3609,7 @@ socket.on('connect', () => {
             let page = parseInt($('.pageLink').attr('data-page'));
             $('.pageLink').attr('data-page',page + 1)
             data.page = page
-            $('.skipid').attr('data-skipid',0)
-            data.skipid = 0
+            data.skipid = parseInt($('.skipid').attr('data-skipid'))
            if(searchU){
                 data.id = SUSER
            }
