@@ -54,7 +54,7 @@ const sendErrorDev = (err, req,res) => {
         }else {
             message = err.message
         }
-        console.log(req.originalUrl())
+        console.log(req.originalUrl)
         return res.render('./errorMessage',{
             statusCode : err.statusCode,
             message,
