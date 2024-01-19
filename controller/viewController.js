@@ -862,7 +862,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let finalresult = []
     let marketidarray = [];
     let userAccflage = true
-    var today = new Date();
+    var today = new Date(new Date().getTime() + ((24 * 60 * 60 * 1000)-1));
     var todayFormatted = formatDate(today);
     var tomorrow = new Date();
     tomorrow.setDate(today.getDate() - 7);
@@ -875,7 +875,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{Remark:{$ne:"-"}}],}).sort({date: -1}).skip(skip).limit(limit)
+         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}],}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
