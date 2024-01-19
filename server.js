@@ -2820,6 +2820,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
+        console.log(data)
     let limit = 20;
     let page = data.page;
     let skip;
