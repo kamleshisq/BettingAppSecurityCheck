@@ -1,5 +1,65 @@
 <!DOCTYPE html>
 <html>
+    <script>
+
+        // $('a').click(function(e){
+        //   e.preventDefault();
+        //   console.log($(this).attr('href'))
+        // })
+        $(document).ready(function(){
+            function findQueryParam(href) {
+      
+            // Get the href attribute value
+            var href = href;
+      
+            // Use a regular expression to extract the value of the 'param1' query parameter
+            var param1Value = getQueryParamValue(href, 'sessiontoken');
+      
+            if (param1Value !== null) {
+              return true
+            } else {
+              return false
+            }
+          }
+      
+          function getQueryParamValue(url, param) {
+            // Use a regular expression to match the query parameter and extract its value
+            var regex = new RegExp('[?&]' + param + '=([^&#]*)');
+            var results = regex.exec(url);
+      
+            return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+          }
+          function appendquerttourl(){
+            let elements = $('a').each(function(index,ele){
+              if($(this).attr('href')){
+                if($(this).attr('href').startsWith('/admin')){
+                  if($(this).attr('href').includes('?')){
+                    $(this).attr('href',$(this).attr('href') + '&sessiontoken=' +sessionStorage.getItem('sessiontoken'))
+                  }else{
+                    $(this).attr('href',$(this).attr('href') + '?sessiontoken=' +sessionStorage.getItem('sessiontoken'))
+                  }
+                }
+              }
+        
+            })
+          }
+          appendquerttourl()
+          // setInterval(()=>{
+          //   appendquerttourl
+          // },100)
+          
+        })
+        let currentURL = window.location.href;
+      
+      // Check if the URL already has query parameters
+      let separator = currentURL.includes('?') ? '&' : '?';
+      
+      // Add or update a query parameter
+      let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem('sessiontoken')}`;
+      
+      // Update the browser's address bar
+      // window.history.replaceState({}, '', updatedURL);
+      </script>
     <head>
         <title>Page Error</title>
         <style>
@@ -36,7 +96,7 @@
             <h2><span><%=statusCode%></span><%=message%></h2>
             <p><%=mainMassage%></p>
             <div class="error-404-btn">
-                <a href="/">Home</a>
+                    <a href="/admin/dashboard">Home</a>
                 <a href="#">Contact us</a>
             </div>
         </div>
