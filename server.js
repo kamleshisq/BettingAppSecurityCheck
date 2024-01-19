@@ -3232,9 +3232,6 @@ io.on('connection', (socket) => {
                 filter.$and=[{gameId:data.gameId},{settleDate:filter.date}]
             }else if(data.marketId){
                 filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
-            }else{
-                let account = await AccModel.findById(data.id)
-                filter.transactionId = account.transactionId
             }
             let bets
             bets = await Bet.find(filter)
