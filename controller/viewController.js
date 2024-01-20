@@ -976,6 +976,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
+                            $sort:{date:-1}
+                         },
+                         {
                              $group:{
                                  _id:{
                                      eventId:"$eventId",
@@ -986,7 +989,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  marketName:{$first:'$marketName'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$transactionId'}
                              }
                          },
