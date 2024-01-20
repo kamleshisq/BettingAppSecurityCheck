@@ -2947,10 +2947,8 @@ io.on('connection', (socket) => {
                         //      $unwind:"$accountdetail"
                         //  },
                         {
-                            $sort:{
-                                date:-1
-                            }
-                        },
+                            $sort:{settleDate:-1}
+                         },
                          {
                              $group:{
                                  _id:{
@@ -3004,6 +3002,9 @@ io.on('connection', (socket) => {
                         //  {
                         //      $unwind:"$accountdetail"
                         //  },
+                        {
+                            $sort:{settleDate:-1}
+                         },
                          {
                              $group:{
                                  _id:{
@@ -3015,7 +3016,7 @@ io.on('connection', (socket) => {
                                  marketName:{$first:'$marketName'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$transactionId'}
                              }
                          },
@@ -3071,6 +3072,9 @@ io.on('connection', (socket) => {
                         //  {
                         //      $unwind:"$accountdetail"
                         //  },
+                        {
+                            $sort:{settleDate:-1}
+                         },
                          {
                              $group:{
                                  _id:{
@@ -3082,7 +3086,7 @@ io.on('connection', (socket) => {
                                  marketName:{$first:'$marketName'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$transactionId'}
                              }
                          },
