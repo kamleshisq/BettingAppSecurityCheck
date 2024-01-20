@@ -4210,6 +4210,9 @@ io.on('connection', (socket) => {
                                      }
                                  },
                                  {
+                                    $sort:{settleDate:-1}
+                                 },
+                                 {
                                      $group:{
                                          _id:{
                                              gameId:"$gameId",
@@ -4219,7 +4222,7 @@ io.on('connection', (socket) => {
                                          match:{$first:'$event'},
                                          marketName:{$first:'$betType'},
                                          creditDebitamount:{$sum:'$returns'},
-                                         balance:{$sum:'$closingBalance'},
+                                         balance:{$first:'$closingBalance'},
                                          transactionId:{$first:'$accountdetail.transactionId'},
                                          date:{ $max: "$settleDate" }
                                      }
@@ -4251,6 +4254,9 @@ io.on('connection', (socket) => {
                                      }
                                  },
                                  {
+                                    $sort:{settleDate:-1}
+                                 },
+                                 {
                                      $group:{
                                          _id:{
                                              eventId:"$eventId",
@@ -4260,7 +4266,7 @@ io.on('connection', (socket) => {
                                          match:{$first:'$match'},
                                          marketName:{$first:'$marketName'},
                                          creditDebitamount:{$sum:'$returns'},
-                                         balance:{$sum:'$closingBalance'},
+                                         balance:{$first:'$closingBalance'},
                                          transactionId:{$first:'$transactionId'},
                                          date:{ $max: "$settleDate" }
                                      }
@@ -4291,6 +4297,9 @@ io.on('connection', (socket) => {
                                      }
                                  },
                                  {
+                                    $sort:{settleDate:-1}
+                                 },
+                                 {
                                      $group:{
                                          _id:{
                                              eventId:"$eventId",
@@ -4300,7 +4309,7 @@ io.on('connection', (socket) => {
                                          match:{$first:'$match'},
                                          marketName:{$first:'$marketName'},
                                          creditDebitamount:{$sum:'$returns'},
-                                         balance:{$sum:'$closingBalance'},
+                                         balance:{$first:'$closingBalance'},
                                          transactionId:{$first:'$transactionId'},
                                          date:{ $max: "$settleDate" }
                                      }

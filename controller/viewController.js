@@ -618,6 +618,9 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
+                            $sort:{settleDate:-1}
+                         },
+                         {
                              $group:{
                                  _id:{
                                      gameId:"$gameId",
@@ -628,7 +631,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                                  marketName:{$first:'$betType'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$accountdetail.transactionId'},
                                  date:{ $max: "$settleDate" }
                              }
@@ -661,6 +664,9 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
+                            $sort:{settleDate:-1}
+                         },
+                         {
                              $group:{
                                  _id:{
                                      eventId:"$eventId",
@@ -671,7 +677,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                                  marketName:{$first:'$marketName'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$transactionId'},
                                  date:{ $max: "$settleDate" }
                              }
@@ -702,6 +708,9 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
+                            $sort:{settleDate:-1}
+                         },
+                         {
                              $group:{
                                  _id:{
                                      eventId:"$eventId",
@@ -712,7 +721,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                                  marketName:{$first:'$marketName'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$transactionId'},
                                  date:{ $max: "$settleDate" }
                              }
