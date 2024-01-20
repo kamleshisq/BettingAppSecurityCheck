@@ -2946,6 +2946,11 @@ io.on('connection', (socket) => {
                         //  {
                         //      $unwind:"$accountdetail"
                         //  },
+                        {
+                            $sort:{
+                                date:-1
+                            }
+                        },
                          {
                              $group:{
                                  _id:{
@@ -2957,7 +2962,7 @@ io.on('connection', (socket) => {
                                  marketName:{$first:'$betType'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
                          },
