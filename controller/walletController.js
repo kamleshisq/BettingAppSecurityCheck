@@ -33,8 +33,8 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         publicKey = readPem("publicCasino.pem")
     }
     // console.log("PublicKey:",publicKey)
-    let result = verify(req.headers.signature, publicKey, x)
-    console.log(result)
+    // let result = verify(req.headers.signature, publicKey, x)
+    // console.log(result)
     next()
     // if(result){
     //     if(req.body.reqId){
