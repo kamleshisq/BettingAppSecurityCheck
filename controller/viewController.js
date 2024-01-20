@@ -895,6 +895,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
+                            $sort:{settleDate:-1}
+                         },
+                         {
                              $group:{
                                  _id:{
                                      gameId:"$gameId",
@@ -905,7 +908,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  marketName:{$first:'$betType'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$accountdetail.transactionId'}
                              }
                          },
@@ -937,6 +940,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
+                            $sort:{settleDate:-1}
+                         },
+                         {
                              $group:{
                                  _id:{
                                      eventId:"$eventId",
@@ -947,7 +953,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  marketName:{$first:'$marketName'},
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
-                                 balance:{$sum:'$closingBalance'},
+                                 balance:{$first:'$closingBalance'},
                                  transactionId:{$first:'$transactionId'}
                              }
                          },
@@ -976,7 +982,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $sort:{date:-1}
+                            $sort:{settleDate:-1}
                          },
                          {
                              $group:{
