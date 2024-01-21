@@ -696,6 +696,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
             }else{
                 user = await userModel.findById(req.body.userId)
+                balance = user.availableBalance
             }
             // console.log(user, "USer")
             if(!user){
@@ -759,7 +760,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                         debitAmountForP = parentUser2Amount
                     }
     
-                    balance = user.balance + req.body.rollbackAmount;
+                    balance = user.availableBalance + req.body.rollbackAmount;
                 }
                 let bet =  await betModel.findOne({transactionId:req.body.transactionId})
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
@@ -799,7 +800,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                         }
                     }
                 }
-                // console.log(balance)
+                console.log(balance)
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     res.status(200).json({
                         "status": "RS_OK",
