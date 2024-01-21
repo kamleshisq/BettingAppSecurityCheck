@@ -765,6 +765,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 }
                 let bet =  await betModel.findOne({transactionId:req.body.transactionId})
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
+                console.log(bet, "4a866a41-5fff-49d2-a5c9-91f569fe319a4a866a41-5fff-49d2-a5c9-91f569fe319a4a866a41-5fff-49d2-a5c9-91f569fe319a4a866a41-5fff-49d2-a5c9-91f569fe319a")
                 if(bet){
                     let thatBet = await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"CANCEL"})
                     console.log(thatBet, "thatBetthatBet")
