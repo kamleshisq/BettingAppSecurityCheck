@@ -118,12 +118,10 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
 
         const check = await userModel.findById(req.body.userId)
-        let errBALANCE = check.availableBalance
         let exposureCheck  = await exposurecheckfunction(check)
         if(check.availableBalance - req.body.debitAmount - exposureCheck <= 0){
             return res.status(200).json({
-                "status": "RS_ERROR",
-                "balance": errBALANCE
+                "status": "RS_ERROR"
             })
         }
         let betTYPE
@@ -137,8 +135,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             // console.log(check, "checkcheckcheck")
             if(check){
                 return res.status(200).json({
-                    "status": "RS_ERROR",
-                    "balance": errBALANCE
+                    "status": "RS_ERROR"
                 })
             }
         }
@@ -160,8 +157,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             // console.log(game1)
             if(!game1){
                 return res.status(200).json({
-                    "status": "RS_ERROR",
-                    "balance": errBALANCE
+                    "status": "RS_ERROR"
                 })
             }
             game = game1.game_name
@@ -214,8 +210,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
         if(!user){
             return res.status(200).json({
-                "status": "RS_ERROR",
-                "balance": errBALANCE
+                "status": "RS_ERROR"
             })
         }
         if(req.body.gameId){
