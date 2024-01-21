@@ -550,6 +550,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
 
     if(req.body.transactionId){
         let check = await reqIdModel.findOne({reqId:req.body.transactionId})
+        console.log(check,bet1.status, "bet1.statusbet1.statusbet1.statusbet1.status" )
         if(check && bet1.status === "OPEN"){
             return res.status(200).json({
                 "status": "RS_ERROR"
