@@ -11010,8 +11010,14 @@ socket.on('connect', () => {
                         <td title="Credit/Debit" class="c-reed" >${userAcc[i].creditDebitamount}</td>`
                     }
 
-                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
-                    <td title="Transaction ID">${userAcc[i].transactionId}</td>`
+                    html += `<td title="Closing Balance" >${userAcc[i].balance}</td>`
+                    if(userAcc[i].transactionId){
+                        html +=  `<td title="Transaction ID">${userAcc[i].transactionId}</td>`
+
+                    }else{
+                        html +=  `<td title="Transaction ID">-</td>`
+
+                    }
                 }
                 html += `<td></td></tr>`
             }
