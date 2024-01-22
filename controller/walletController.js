@@ -631,7 +631,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 if(req.body.gameId){
                     balance = user.availableBalance + debitCreditAmoun - checkExposure;
                 }else{
-                    balance = user.availableBalance - checkExposure;
+                    balance = user.availableBalance - checkExposure + debitCreditAmoun - bet1.exposure;
                 }
 
                 // let bet =  await betModel.findOne({transactionId:req.body.transactionId})
