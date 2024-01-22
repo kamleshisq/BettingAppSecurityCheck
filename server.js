@@ -3243,6 +3243,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('getbetdetailbyid',async(data)=>{
+        console.log(data, "datadatadatadatadatadatadata")
         try{
             let filter = {}
             filter.userId = data.LOGINDATA.LOGINUSER._id.toString()
