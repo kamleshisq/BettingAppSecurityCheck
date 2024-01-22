@@ -11105,10 +11105,10 @@ socket.on('connect', () => {
                     html += `<td>${data.bets[i].Stake}</td>
                     <td>${data.bets[i].status}</td>
                     `                    
-                        if(data.bets[i].result > 0){
-                        html += `<td title="Result" class="c-gren">${data.bets[i].result}</td>`
+                        if(data.bets[i].result){
+                        html += `<td title="Result">${data.bets[i].result}</td>`
                         }else{
-                        html += `<td title="Result" class="c-reed">-</td>`
+                        html += `<td title="Result">-</td>`
                         }
                       if(data.bets[i].returns > 0){
                         html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
