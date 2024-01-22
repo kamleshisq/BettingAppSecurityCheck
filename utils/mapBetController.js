@@ -169,6 +169,7 @@ async function mapBet(data){
 
               let commissionMarket = await commissionMarketModel.find()
               let usercommissiondata;
+              console.log( bets[bet].selectionName.split('@')[1] ,data.result, bets[bet].bettype2, (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")))
               if(commissionMarket.some(item => item.marketId == bets[bet].marketId)){ 
                 try{
                     let commission = await commissionModel.find({userId:user.id})
