@@ -99,7 +99,7 @@ async function mapBet(data){
             // console.log(bets[bet].selectionName.split('@')[1], data.result, bets[bet].bettype2, (bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK', ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY"), "hjgjhgjhgjghghghghghghghghghghghgh")
 
             // console.log((bets[bet].selectionName.toLowerCase() === data.result.toLowerCase() && bets[bet].bettype2 == 'BACK'), (bets[bet].selectionName.toLowerCase() !== data.result.toLowerCase() && bets[bet].bettype2 == 'LAY'))
-            console.log( bets[bet].selectionName.split('@')[1] ,data.result, bets[bet].bettype2, (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")))
+            console.log( bets[bet].selectionName.split('@')[1] ,data.result, bets[bet].bettype2, ((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK'),(((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")))
             if((bets[bet].selectionName.toLowerCase() === data.result.toLowerCase() && bets[bet].bettype2 == 'BACK'&& bets[bet].secId !== "odd_Even_Yes") || (bets[bet].selectionName.toLowerCase() !== data.result.toLowerCase() && bets[bet].bettype2 == 'LAY' && bets[bet].secId !== "odd_Even_No")){
                 // console.log("matchoddsLike")
                 let debitCreditAmount;
