@@ -3248,7 +3248,7 @@ io.on('connection', (socket) => {
             let filter = {}
             filter.userId = data.LOGINDATA.LOGINUSER._id.toString()
             
-            if(data.gameId){
+            if(data.gameId && !data.marketId){
                 filter.transactionId=data.gameId
             }else if(data.marketId && !data.gameId){
                 if(data.fromDate != "" && data.toDate == ""){
