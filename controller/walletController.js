@@ -568,6 +568,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
            }else{
             if(bet1.exposure){
                 debitCreditAmoun = req.body.rollbackAmount + bet1.exposure
+                // console.log(debitCreditAmoun, "debitCreditAmoundebitCreditAmoundebitCreditAmoun")
             }else{
                 debitCreditAmoun = req.body.rollbackAmount
             }
@@ -628,7 +629,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     debitAmountForP = parentUser2Amount
                 }
 
-                balance = user.availableBalance + debitCreditAmoun - checkExposure;
+                balance = user.availableBalance + debitCreditAmoun;
 
                 // let bet =  await betModel.findOne({transactionId:req.body.transactionId})
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
