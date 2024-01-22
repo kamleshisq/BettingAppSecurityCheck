@@ -104,7 +104,6 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 
 exports.betrequest = catchAsync(async(req, res, next) => {
     try{
-
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
             return res.status(200).json({
                 "status": "RS_ERROR"
@@ -118,7 +117,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
 
         const check = await userModel.findById(req.body.userId)
-        let exposureCheck  = await exposurecheckfunction(check)
+        let exposureCheck  = check.exposure
         if(check.availableBalance - req.body.debitAmount - exposureCheck <= 0){
             return res.status(200).json({
                 "status": "RS_ERROR"
@@ -141,7 +140,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
         let user
         if(req.body.gameId){
-            user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
+            user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
         }else{
             user = await userModel.findById(req.body.userId)
         }
