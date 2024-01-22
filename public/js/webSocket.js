@@ -10866,26 +10866,6 @@ socket.on('connect', () => {
             }
           });
 
-
-        // $(window).scroll(function() {
-        //     var scroll = $(window).scrollTop();
-        //     var windowHeight = $(window).height();
-        //     var documentHeight = $(document).height();
-        //     if (scroll + windowHeight >= documentHeight) {
-                // let page = parseInt($('.pageId').attr('data-pageid'));
-                // $('.pageId').attr('data-pageid',page + 1)
-                // let fromDate = $('#Fdate').val()
-                // let toDate = $('#Tdate').val()
-                // let type = $("#select").val()
-                // let filterData = {}
-                // filterData.fromDate = fromDate,
-                // filterData.toDate = toDate
-                // filterData.type = type
-                // socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
-        //     }
-        // });
-
-
         $(function () {
             $("div").slice(0, 4).show();
             $("#loadMore").on('click', function (e) {
@@ -10900,6 +10880,7 @@ socket.on('connect', () => {
                 filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 filterData.type = type
                 let skipid = parseInt($('.skipid').attr('data-skipid'))
+                $('.main-loader').removeClass('hide')
                 socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
             });
         });
@@ -10923,6 +10904,7 @@ socket.on('connect', () => {
             // console.log()
             let skipid = 0
             $('.skipid').attr('data-skipid',0)
+            $('.main-loader').removeClass('hide')
             socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData,skipid})
         }
 
@@ -11046,6 +11028,7 @@ socket.on('connect', () => {
                     $('.acount-stat-tbl-body').html(html)  
                 }
         }
+        $('.main-loader').addClass('hide')
         })
 
         $(document).on('click','.rowtoggle_AccountStatment',function(e){
