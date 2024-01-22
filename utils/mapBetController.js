@@ -99,7 +99,7 @@ async function mapBet(data){
             // console.log(bets[bet].selectionName.split('@')[1], data.result, bets[bet].bettype2, (bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK', ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY"), "hjgjhgjhgjghghghghghghghghghghghgh")
 
             // console.log((bets[bet].selectionName.toLowerCase() === data.result.toLowerCase() && bets[bet].bettype2 == 'BACK'), (bets[bet].selectionName.toLowerCase() !== data.result.toLowerCase() && bets[bet].bettype2 == 'LAY'))
-            console.log( bets[bet].selectionName.split('@')[1] ,data.result, bets[bet].bettype2, bets[bet].selectionName.split('@')[1] <=  data.result , bets[bet].bettype2 == 'BACK')
+            console.log( bets[bet].selectionName.split('@')[1] ,data.result, bets[bet].bettype2, parseInt(bets[bet].selectionName.split('@')[1], 10) <=  parseInt(data.result, 10) , bets[bet].bettype2 == 'BACK')
             if((bets[bet].selectionName.toLowerCase() === data.result.toLowerCase() && bets[bet].bettype2 == 'BACK'&& bets[bet].secId !== "odd_Even_Yes") || (bets[bet].selectionName.toLowerCase() !== data.result.toLowerCase() && bets[bet].bettype2 == 'LAY' && bets[bet].secId !== "odd_Even_No")){
                 // console.log("matchoddsLike")
                 let debitCreditAmount;
@@ -308,7 +308,7 @@ async function mapBet(data){
                   "transactionId":`${bets[bet].transactionId}`,
                   "marketId":`${bets[bet].marketId}`
                 })
-            }else if (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")){
+            }else if (((parseInt(bets[bet].selectionName.split('@')[1],10) <=  parseInt(data.result, 10)) && bets[bet].bettype2 == 'BACK') || ((parseInt(bets[bet].selectionName.split('@')[1],10) >= parseInt(data.result, 10)) && bets[bet].bettype2 == "LAY")){
                 console.log('FANCY') 
                 let creditDebitamount 
                         let exposure = bets[bet].exposure
