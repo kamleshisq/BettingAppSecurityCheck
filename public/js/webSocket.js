@@ -11012,8 +11012,12 @@ socket.on('connect', () => {
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
 
                 }else{
-                    html += `<tr class="acount-stat-tbl-body-tr" data-id="" id="rowid-${i + 1 + count}">
-                    <td title="Transaction">Settlement</td>`
+                    html += `<tr class="acount-stat-tbl-body-tr" data-id="" id="rowid-${i + 1 + count}">`
+                    if(data[i].child_id){
+                        html += `<td title="Transaction">Settlement</td>`
+                    }else{
+                        html += `<td title="Transaction">Commission Settlement</td>`
+                    }
                         html += `<td title="Event">-</td>`
                         html += `<td title="Market Type">-</td>`
                     if(userAcc[i].creditDebitamount > 0){
