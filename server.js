@@ -3249,11 +3249,6 @@ io.on('connection', (socket) => {
             filter.userId = data.LOGINDATA.LOGINUSER._id.toString()
             
             if(data.gameId){
-                if(data.gametype == 'positive'){
-                    filter.returns={$gt:0}
-                }else{
-                    filter.returns={$lte:0}
-                }
                 filter.transactionId=data.gameId
             }else if(data.marketId){
                 if(data.fromDate != "" && data.toDate == ""){
