@@ -530,7 +530,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 
 exports.rollBack = catchAsync(async(req, res, next) => {
     try{
-    let user1 =  await userModel.findById(req.body.userId)
     let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
     let clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     if(!req.body.transactionId || req.body.transactionId.trim() === ''){
@@ -574,7 +573,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             }
            }
            console.log(debitCreditAmoun,  req.body.rollbackAmount, bet1.exposure, "bet1.exposurebet1.exposurebet1.exposurebet1.exposure")
-           user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, exposure:-debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}}); 
+           user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}}); 
+           let checkExposure = user.exposure
            if(!user){
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     return res.status(200).json({
@@ -595,8 +595,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                         })
                     }
                 }else{
-                    let game1 = await betModel.findOne({transactionId:req.body.transactionId})
-                    game.game_name = game1.match
+                    game.game_name = bet1.match
                 }
                 let debitAmountForP = debitCreditAmoun
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
@@ -629,14 +628,14 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     debitAmountForP = parentUser2Amount
                 }
 
-                balance = user.balance + debitCreditAmoun;
+                balance = user.availableBalance + debitCreditAmoun - checkExposure;
 
-                let bet =  await betModel.findOne({transactionId:req.body.transactionId})
+                // let bet =  await betModel.findOne({transactionId:req.body.transactionId})
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
-                if(bet){
-                    await betModel.findByIdAndUpdate(bet._id,{returns:-bet.exposure, status:"OPEN"})
+                if(bet1){
+                    await betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
                     if(req.body.gameId){
-                        let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/ROLLBACK`
+                        let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/ROLLBACK`
                         if(acc){
                             if(req.body.gameId){
                                 let Acc = {
@@ -689,12 +688,14 @@ exports.rollBack = catchAsync(async(req, res, next) => {
 
             let user;
             let balance;
-            let parentUser;
+            let checkExposure;
             if(req.body.gameId){
-                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
+                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
+                checkExposure = user.exposure
             }else{
                 user = await userModel.findById(req.body.userId)
-                balance = user.availableBalance
+                balance = user.availableBalance 
+                checkExposure = user.exposure
             }
             // console.log(user, "USer")
             if(!user){
@@ -727,14 +728,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                         let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
                         let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
                         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-                        // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
-                        // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
                         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                        // await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.rollbackAmount}})
-                        // if(i === 1){
-                        //     await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.rollbackAmount}})
-                        // }
                         await userModel.findByIdAndUpdate(user.parentUsers[i], {
                             $inc: {
                                 downlineBalance: req.body.rollbackAmount,
@@ -760,28 +755,13 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     
                     balance = user.availableBalance + req.body.rollbackAmount;
                 }
-                let bet =  await betModel.findOne({transactionId:req.body.transactionId})
+                let bet =  await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
-                console.log(bet, "4a866a41-5fff-49d2-a5c9-91f569fe319a4a866a41-5fff-49d2-a5c9-91f569fe319a4a866a41-5fff-49d2-a5c9-91f569fe319a4a866a41-5fff-49d2-a5c9-91f569fe319a")
                 if(bet){
-                    let thatBet = await betModel.findByIdAndUpdate(bet._id.toString(),{returns:0, status:"CANCEL"})
-                    console.log(thatBet, "thatBetthatBet")
+                    // let thatBet = await betModel.findByIdAndUpdate(bet._id.toString(),{returns:0, status:"CANCEL"})
                     if(req.body.gameId){
                         let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/CANCEL`
-                        let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
                         if(acc){
-                            // let Acc2 = {
-                            //     "user_id":parentUser._id,
-                            //     "description": description2,
-                            //     "creditDebitamount" : -req.body.rollbackAmount,
-                            //     "balance" : parentUser.availableBalance - req.body.rollbackAmount,
-                            //     "date" : Date.now(),
-                            //     "userName" : parentUser.userName,
-                            //     "role_type" : parentUser.role_type,
-                            //     "Remark":"-",
-                            //     "stake": req.body.rollbackAmount,
-                            //     "transactionId":req.body.transactionId
-                            // }
                             let Acc = {
                                 "user_id":req.body.userId,
                                 "description": description,
@@ -795,20 +775,18 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                                 "transactionId":req.body.transactionId
                             }
                             await accountStatement.create(Acc)
-                            // await accountStatement.create(Acc2)
                         }
                     }
                 }
-                console.log(balance)
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     res.status(200).json({
                         "status": "RS_OK",
-                        "balance": balance
+                        "balance": balance - checkExposure
                     })
                 }else{
                     res.status(200).json({
                         "status": "OP_SUCCESS",
-                        "balance": balance
+                        "balance": balance - checkExposure
                     })
                 }
             }
