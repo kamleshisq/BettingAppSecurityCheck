@@ -10995,7 +10995,7 @@ socket.on('connect', () => {
 
                 }else{
                     html += `<tr class="acount-stat-tbl-body-tr" data-id="" id="rowid-${i + 1 + count}">`
-                    if(data[i].child_id){
+                    if(userAcc[i].child_id){
                         html += `<td title="Transaction">Settlement</td>`
                     }else{
                         html += `<td title="Transaction">Commission Settlement</td>`
