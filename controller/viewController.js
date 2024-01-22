@@ -891,58 +891,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
              for(let i = 0;i<userAcc.length;i++){
                 c++
                  if(userAcc[i].gameId){
-                    // if(marketidarray.includes(userAcc[i].gameId)){
-                    //     continue;
-                    // }
-                    //  let bet = await betModel.aggregate([
-                    //      {
-                    //          $match:{
-                    //              userId:req.currentUser._id.toString(),
-                    //              $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                    //              closingBalance:{$exists:true}
-
-                                 
-                    //          }
-                    //      },
-                    //      {
-                    //         $sort:{settleDate:-1}
-                    //      },
-                    //      {
-                    //          $group:{
-                    //              _id:{
-                    //                  gameId:"$gameId",
-                    //                  status:"$status",
-                    //                  date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-                    //              },
-                    //              match:{$first:'$event'},
-                    //              marketName:{$first:'$betType'},
-                    //              stake:{$first:'$Stake'},
-                    //              creditDebitamount:{$sum:'$returns'},
-                    //              balance:{$first:'$closingBalance'},
-                    //              transactionId:{$first:'$accountdetail.transactionId'}
-                    //          }
-                    //      },
-                    //      {
-                    //         $sort:{settleDate:-1}
-                    //      },
-                    //      {
-                    //         $limit:(20 - finalresult.length)
-                    //      }
-                    //  ])
-                    //  console.log(bet,'bet in game id')
-
-                    //  if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.gameId)){
-                    //      marketidarray.push(bet[0]._id.gameId)
-                    //      finalresult = finalresult.concat(bet)
-                    //      if(finalresult.length >= 20){
-                    //          break
-                    //      }
-                    //  }
                     finalresult.push(userAcc[i])
                     if(finalresult.length >= 20){
                             break
                     }
-                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
                     if(marketidarray.includes(userAcc[i].marketId)){
                         continue;
                     }
@@ -981,7 +934,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     console.log('inuseracc sport book',bet)
                      if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
@@ -1020,13 +972,12 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $sort:{date:-1}
+                            $sort:{settleDate:-1}
                          },
                          {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     console.log('inuseracc marketid',bet)
                      if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                          marketidarray.push(bet[0]._id.marketId)
                          finalresult = finalresult.concat(bet)
