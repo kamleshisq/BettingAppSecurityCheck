@@ -3288,6 +3288,7 @@ io.on('connection', (socket) => {
 
             }
             let bets
+            console.log(filter)
             bets = await Bet.find(filter)
             
             socket.emit('getbetdetailbyid',{status:'success',bets,rowid:data.rowid,gameId:data.gameID,marketId:data.marketId})
