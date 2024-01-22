@@ -54,6 +54,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         }
         const ObjectId = mongoose.Types.ObjectId;
         let objectId = new ObjectId(req.body.userId);
+        exposurecheckfunction({id:req.body.userId})
         let loginData = await loginLogs.find({user_id:objectId, isOnline:true})
         // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
         if(loginData[0] && loginData[0].gameToken){
