@@ -327,8 +327,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 })
             }
         }else{
-            let game1 = await betModel.findOne({transactionId:req.body.transactionId})
-            game.game_name = game1.match
+            // let game1 = await betModel.findOne({transactionId:req.body.transactionId})
+            game.game_name = thatBet.match
         }
         let user;
         let balance;
@@ -511,16 +511,14 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 
             }
         }
-
-        let sendBalance = balance 
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
-                "balance": sendBalance,
+                "balance": balance,
                 "status": "RS_OK"
             })
         }else{
             res.status(200).json({
-                "balance": sendBalance,
+                "balance": balance,
                 "status": "OP_SUCCESS"
             })
         }
