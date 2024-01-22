@@ -3265,7 +3265,7 @@ io.on('connection', (socket) => {
                         $lt : new Date(data.toDate)
                     }
                 }
-                filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
+                filter.$and=[{marketId:data.marketId}]
                 filter.closingBalance={$exists:true}
 
             }else if(data.gameId && data.marketId){
@@ -3283,7 +3283,7 @@ io.on('connection', (socket) => {
                         $lt : new Date(data.toDate)
                     }
                 }
-                filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
+                filter.$and=[{marketId:data.marketId}]
                 filter.closingBalance={$exists:true}
                 filter.match=data.gameId
 
