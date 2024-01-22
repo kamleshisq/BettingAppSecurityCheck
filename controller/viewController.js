@@ -892,6 +892,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 c++
                  if(userAcc[i].gameId){
                     if(marketidarray.includes(userAcc[i].gameId)){
+                        console.log('WORKING')
                         continue;
                     }
                      let bet = await betModel.aggregate([
@@ -940,6 +941,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                      }
                  }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
                     if(marketidarray.includes(userAcc[i].marketId)){
+                        console.log('WORKING2')
                         continue;
                     }
                      let bet = await betModel.aggregate([
@@ -987,6 +989,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                      }
                  }else if(userAcc[i].marketId){
                     if(marketidarray.includes(userAcc[i].marketId)){
+                        console.log('WORKING3')
                         continue;
                     }
                      let bet = await betModel.aggregate([
