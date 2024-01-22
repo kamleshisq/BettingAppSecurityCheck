@@ -10922,7 +10922,7 @@ socket.on('connect', () => {
             let html = '';
             for(let i = 0; i < userAcc.length; i++){
                 if(userAcc[i].gameId){
-                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="${userAcc[i]._id.gameId}" id="rowid-${i + 1 + count}">`
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="${userAcc[i]._id.transactionId}" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].creditDebitamount > 0){
                         html += `<td title="Transaction" class="positive transactiontype">Casino Bet  Settlement</td>`
                     }else if(userAcc[i].creditDebitamount < 0 ){
@@ -10948,7 +10948,7 @@ socket.on('connect', () => {
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
-                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${data[i]._id.eventId}" id="rowid-${i + 1 + count}">
                         <td title="Transaction">Sport Book Bet Settlement</td>`
                   
                     if(userAcc[i].match){
