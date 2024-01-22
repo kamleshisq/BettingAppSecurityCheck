@@ -3249,7 +3249,7 @@ io.on('connection', (socket) => {
             
             if(data.gameId){
                 filter.transactionId=data.gameId
-            }else if(data.marketId){
+            }else if(data.marketId && !data.gameId){
                 if(data.fromDate != "" && data.toDate == ""){
                     filter.date = {
                         $gt : new Date(data.fromDate)
@@ -3266,6 +3266,25 @@ io.on('connection', (socket) => {
                 }
                 filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
                 filter.closingBalance={$exists:true}
+
+            }else if(data.gameId && data.marketId){
+                if(data.fromDate != "" && data.toDate == ""){
+                    filter.date = {
+                        $gt : new Date(data.fromDate)
+                    }
+                }else if(data.fromDate == "" && data.toDate != ""){
+                    filter.date = {
+                        $lt : new Date(data.toDate)
+                    }
+                }else if (data.fromDate != "" && data.toDate != ""){
+                    filter.date = {
+                        $gte : new Date(data.fromDate),
+                        $lt : new Date(data.toDate)
+                    }
+                }
+                filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
+                filter.closingBalance={$exists:true}
+                filter.match=data.gameId
 
             }
             let bets
