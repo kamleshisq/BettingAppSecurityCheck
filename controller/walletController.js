@@ -389,6 +389,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 }
 
                 accountStatement.create(Acc)
+                console.log(user.availableBalance, exposureCheck, exposure, "iuhrihuihruuruururu")
                 balance = user.availableBalance - exposureCheck - exposure
             }
         }else{
