@@ -11081,6 +11081,7 @@ socket.on('connect', () => {
                     <td>Odds</td>
                     <td>Stake</td>
                     <td>Status</td>
+                    <td>Result</td>
                     <td>Return</td>
                 </tr>`
                     }
@@ -11104,11 +11105,17 @@ socket.on('connect', () => {
                     html += `<td>${data.bets[i].Stake}</td>
                     <td>${data.bets[i].status}</td>
                     `                    
+                        if(data.bets[i].result > 0){
+                        html += `<td title="Result" class="c-gren">${data.bets[i].result}</td>`
+                        }else{
+                        html += `<td title="Result" class="c-reed">-</td>`
+                        }
                       if(data.bets[i].returns > 0){
                         html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
                       }else{
                         html += `<td title="Credit/Debit" class="c-reed">${data.bets[i].returns}</td>`
                       }
+
                       
                       html += `</tr>`
                 }
