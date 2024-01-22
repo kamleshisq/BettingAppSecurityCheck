@@ -9406,6 +9406,7 @@ io.on('connection', (socket) => {
                 totalExposure = totalExposure - stoprtBookexp[0].sum
             }
             // console.log(totalExposure, "totalExposuretotalExposuretotalExposure")
+             await User.findByIdAndUpdate(data.LOGINUSER._id, {exposure:totalExposure})
             socket.emit('userLoginBalance', {userData,totalExposure})
         }
     })

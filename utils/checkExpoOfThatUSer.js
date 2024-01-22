@@ -464,6 +464,7 @@ async function checkExposure(data){
         if(stoprtBookexp.length > 0){
             totalExposure = totalExposure - stoprtBookexp[0].sum
         }
+        await User.findByIdAndUpdate(data.id, {exposure:totalExposure})
        return totalExposure
     }
 }

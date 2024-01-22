@@ -117,7 +117,7 @@ async function mapBet(data){
                     }
                   }
 
-                  let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
+                  let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1,  uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
                   let bet1 = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:debitCreditAmount, result: data.result, settleDate: Date.now(), closingBalance:parseFloat(user.availableBalance) + parseFloat(debitCreditAmount)})
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/WON`
 
@@ -258,7 +258,7 @@ async function mapBet(data){
                 }else{
                     debitCreditAmount = bets[bet].Stake
                 }
-                let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
+                let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(debitCreditAmount), myPL: parseFloat(debitCreditAmount), Won:1,  uplinePL:-parseFloat(debitCreditAmount), pointsWL:parseFloat(debitCreditAmount)}})
                 let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:debitCreditAmount, result:data.result, settleDate:Date.now(), closingBalance: parseFloat(user.availableBalance) + parseFloat(debitCreditAmount)})
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/WON`
 
@@ -315,7 +315,7 @@ async function mapBet(data){
                         }else{
                             creditDebitamount = bets[bet].Stake
                         }
-                        let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(creditDebitamount), myPL: parseFloat(creditDebitamount), Won:1, exposure:-parseFloat(exposure), uplinePL:-parseFloat(creditDebitamount), pointsWL:parseFloat(creditDebitamount)}})
+                        let user = await userModel.findByIdAndUpdate(bets[bet].userId,{$inc:{availableBalance: parseFloat(creditDebitamount), myPL: parseFloat(creditDebitamount), Won:1,  uplinePL:-parseFloat(creditDebitamount), pointsWL:parseFloat(creditDebitamount)}})
                         let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"WON", returns:creditDebitamount, result:data.result, closingBalance:parseFloat(user.availableBalance) + parseFloat(creditDebitamount), settleDate:Date.now()})
                         let description = `Bet for ${bets[bet].match}/Result = ${data.result}/WON`
 
@@ -367,7 +367,7 @@ async function mapBet(data){
                 console.log('LOOSE')
                 let user 
                 let exposure = bets[bet].exposure
-                user = await userModel.findByIdAndUpdate(bets[bet].userId, {$inc:{Loss:1, exposure:-parseFloat(exposure), availableBalance: -parseFloat(exposure), myPL:-parseFloat(exposure), uplinePL:parseFloat(exposure), pointsWL:-parseFloat(exposure)}})
+                user = await userModel.findByIdAndUpdate(bets[bet].userId, {$inc:{Loss:1,  availableBalance: -parseFloat(exposure), myPL:-parseFloat(exposure), uplinePL:parseFloat(exposure), pointsWL:-parseFloat(exposure)}})
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/LOSS`
                 let thatbet = await betModel.findByIdAndUpdate(bets[bet]._id,{status:"LOSS", result:data.result, settleDate:Date.now(),closingBalance:parseFloat(user.availableBalance) - parseFloat(exposure)})
 

@@ -86,7 +86,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
             "status": "RS_ERROR"
         })
     }
-    let exposureCheck  = await exposurecheckfunction(user)
+    let exposureCheck  = user.exposure
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let balanceSend = user.availableBalance - exposureCheck
     if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){

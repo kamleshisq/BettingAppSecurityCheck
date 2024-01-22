@@ -449,7 +449,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
 
 // FOR USER CHANGES 
     // let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{availableBalance: - creditDebitamount, myPL: - creditDebitamount, Bets : 1, exposure: creditDebitamount, uplinePL:creditDebitamount, pointsWL:-creditDebitamount}})
-    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{Bets : 1, exposure: creditDebitamount}})
+    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{Bets : 1}})
     if(!user){
         return "There is no user with that id"
     }
