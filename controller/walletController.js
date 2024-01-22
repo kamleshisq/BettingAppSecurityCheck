@@ -335,8 +335,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         let balance;
         if(req.body.creditAmount === 0){
             if(req.body.gameId){
+                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{Loss:1}})
                 let betforStake = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS", settleDate:Date.now(), closingBalance:parseFloat(user.availableBalance)})
-                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{Loss:1, exposure: -parseFloat(betforStake.Stake)}})
                 balance = user.availableBalance - exposureCheck
             }else{
                 let exposure = thatBet.returns
