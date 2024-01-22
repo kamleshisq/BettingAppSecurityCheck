@@ -441,9 +441,9 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 "userName" : user.userName,
                 "role_type" : user.role_type,
                 "Remark":"-",
-                "stake": bet.Stake,
-                "transactionId":`${bet.transactionId}`,
-                "marketId":`${bet.marketId}`
+                "stake": thatBet.Stake,
+                "transactionId":`${thatBet.transactionId}`,
+                "marketId":`${thatBet.marketId}`
               })
 
               balance = user.availableBalance + debitCreditAmount - exposureCheck
