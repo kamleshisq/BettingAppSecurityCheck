@@ -61,8 +61,8 @@
                         <tbody class="acount-stat-tbl-body">
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
-                                <%if(data[i]._id.gameId){%>
-                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameid="<%=data[i]._id.gameId%>" id="rowid-<%=i + 1%>">
+                                <%if(data[i].gameId){%>
+                                <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameid="<%=data[i].gameId%>" id="rowid-<%=i + 1%>">
                                     <%if(data[i].creditDebitamount > 0){%>
                                       <td title="Transaction" class="positive transactiontype">Casino Bet  Settlement</td>
                                     <%}else if(data[i].creditDebitamount < 0){%>
