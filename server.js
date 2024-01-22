@@ -3285,7 +3285,7 @@ io.on('connection', (socket) => {
                 }
                 filter.marketId=data.marketId
                 filter.closingBalance={$exists:true}
-                filter.match=data.gameId
+                filter.eventId=data.gameId
 
             }
             let bets

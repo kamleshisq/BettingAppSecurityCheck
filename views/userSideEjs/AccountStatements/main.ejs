@@ -87,7 +87,7 @@
                                       <td title="Transaction ID"><%=data[i].transactionId%></td>
                                       
                                   <%}else if(data[i].transactionId && data[i].transactionId.length > 16 && data[i]._id.marketId){%>
-                                    <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" data-gameid="<%=data[i].match%>" id="rowid-<%=i + 1%>">
+                                    <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" data-gameid="<%=data[i]._id.eventId%>" id="rowid-<%=i + 1%>">
                                     <td title="Transaction">Sport Book Bet Settlement</td>
                                     <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
