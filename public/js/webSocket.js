@@ -11070,9 +11070,7 @@ socket.on('connect', () => {
                     }
                 }
                 let rowid = $(this).attr('id')
-                console.log({marketId,gameId,gametype,LOGINDATA,rowid})
                 if(marketId != "" || gameId != ""){
-                    console.log(fromDate,toDate)
                     socket.emit('getbetdetailbyid',{marketId,gameId,fromDate,toDate,gametype,LOGINDATA,rowid})
                 }
             }else{

@@ -3267,7 +3267,7 @@ io.on('connection', (socket) => {
                 }else{
                     filter.returns={$lte:0}
                 }
-                filter.$and=[{gameId:data.gameId},{settleDate:filter.date}]
+                filter.transactionId=data.gameId
             }else if(data.marketId){
                 filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
             }
