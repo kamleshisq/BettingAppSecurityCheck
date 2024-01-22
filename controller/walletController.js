@@ -450,8 +450,9 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 
             }else{
                 let returnAmount = req.body.creditAmount + thatBet.returns
+                let thatBET = await betModel.findOne({transactionId:req.body.transactionId})
+                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-thatBET.Stake, uplinePL:-req.body.creditAmount, pointsWL:req.body.creditAmount}});
                 let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:returnAmount,settleDate:Date.now(), closingBalance:parseFloat(user.availableBalance + req.body.creditAmount)});
-                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake, uplinePL:-req.body.creditAmount, pointsWL:req.body.creditAmount}});
                 let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
                 let debitAmountForP = req.body.creditAmount
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
