@@ -99,6 +99,7 @@ async function mapBet(data){
             // console.log(bets[bet].selectionName.split('@')[1], data.result, bets[bet].bettype2, (bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK', ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY"), "hjgjhgjhgjghghghghghghghghghghghgh")
 
             // console.log((bets[bet].selectionName.toLowerCase() === data.result.toLowerCase() && bets[bet].bettype2 == 'BACK'), (bets[bet].selectionName.toLowerCase() !== data.result.toLowerCase() && bets[bet].bettype2 == 'LAY'))
+            console.log( bets[bet].selectionName.split('@')[1] ,data.result, bets[bet].bettype2, (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")))
             if((bets[bet].selectionName.toLowerCase() === data.result.toLowerCase() && bets[bet].bettype2 == 'BACK'&& bets[bet].secId !== "odd_Even_Yes") || (bets[bet].selectionName.toLowerCase() !== data.result.toLowerCase() && bets[bet].bettype2 == 'LAY' && bets[bet].secId !== "odd_Even_No")){
                 // console.log("matchoddsLike")
                 let debitCreditAmount;
@@ -169,7 +170,7 @@ async function mapBet(data){
 
               let commissionMarket = await commissionMarketModel.find()
               let usercommissiondata;
-              console.log( bets[bet].selectionName.split('@')[1] ,data.result, bets[bet].bettype2, (((bets[bet].selectionName.split('@')[1] <=  data.result) && bets[bet].bettype2 == 'BACK') || ((bets[bet].selectionName.split('@')[1] >= data.result) && bets[bet].bettype2 == "LAY")))
+              
               if(commissionMarket.some(item => item.marketId == bets[bet].marketId)){ 
                 try{
                     let commission = await commissionModel.find({userId:user.id})
