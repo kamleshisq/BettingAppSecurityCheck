@@ -294,7 +294,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         }
         const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let check = await userModel.findById(req.body.userId);
-        let exposureCheck  = await exposurecheckfunction(check)
+        let exposureCheck  = check.exposure
         if(!check){
             if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                 return res.status(200).json({
@@ -334,13 +334,13 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         let balance;
         if(req.body.creditAmount === 0){
             if(req.body.gameId){
-                let betforStake = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS", settleDate:Date.now(), closingBalance:parseFloat(user.balance)})
+                let betforStake = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS", settleDate:Date.now(), closingBalance:parseFloat(user.availableBalance)})
                 user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{Loss:1, exposure: -parseFloat(betforStake.Stake)}})
-                balance = user.balance
+                balance = user.availableBalance - exposureCheck
             }else{
                 let exposure = thatBet.returns
                 user = await userModel.findByIdAndUpdate(thatBet.userId, {$inc:{Loss:1, exposure:exposure, availableBalance: exposure, myPL:exposure, uplinePL: -parseFloat(exposure), pointsWL:exposure}})
-                let betforStake = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS",result:req.body.marketWinner,settleDate:Date.now(), closingBalance:parseFloat(user.balance - exposure)})
+                let betforStake = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS",result:req.body.marketWinner,settleDate:Date.now(), closingBalance:parseFloat(user.availableBalance - exposure)})
                 let description = `Bet for ${thatBet.match}/Result = ${req.body.marketWinner}/LOSS`
                 let debitAmountForP =  - exposure
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
@@ -388,7 +388,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 }
 
                 accountStatement.create(Acc)
-                balance = user.balance
+                balance = user.availableBalance - exposureCheck - exposure
             }
         }else{
             // let returnAmount = 
@@ -445,7 +445,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 "marketId":`${bet.marketId}`
               })
 
-              balance = user.availableBalance + debitCreditAmount
+              balance = user.availableBalance + debitCreditAmount - exposureCheck
 
             }else{
                 let returnAmount = req.body.creditAmount + thatBet.returns
@@ -493,7 +493,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                         })
                     }
                 }
-                balance = user.availableBalance + req.body.creditAmount
+                balance = user.availableBalance + req.body.creditAmount - exposureCheck
         
                 await accountStatement.create({
                     "user_id":user._id,
@@ -512,7 +512,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             }
         }
 
-        let sendBalance = balance - exposureCheck
+        let sendBalance = balance 
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
                 "balance": sendBalance,
