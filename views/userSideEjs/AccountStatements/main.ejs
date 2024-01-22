@@ -129,7 +129,11 @@
                                           <td title="Transaction ID"><%=data[i].transactionId%></td>
                                   <%}else{%>
                                     <tr class="acount-stat-tbl-body-tr " data-marketid="" id="rowid-<%=i + 1%>">
-                                    <td title="Transaction">Settlement</td>
+                                      <%if(data[i].child_id){%>
+                                        <td title="Transaction">Settlement</td>
+                                        <%}else{%>
+                                          <td title="Transaction">Commission Settlement</td>
+                                      <%}%>
                                     <td title="Event">-</td>
                                     <td title="Market Type">-</td>
                                     <%if(data[i].creditDebitamount > 0){%>
