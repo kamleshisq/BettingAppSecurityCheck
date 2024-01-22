@@ -10948,7 +10948,7 @@ socket.on('connect', () => {
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
-                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${data[i]._id.eventId}" id="rowid-${i + 1 + count}">
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" id="rowid-${i + 1 + count}">
                         <td title="Transaction">Sport Book Bet Settlement</td>`
                   
                     if(userAcc[i].match){
