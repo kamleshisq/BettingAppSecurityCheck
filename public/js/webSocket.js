@@ -10993,7 +10993,7 @@ socket.on('connect', () => {
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
 
-                }else{
+                }else if(!userAcc[i]._id.marketId && !userAcc[i].gameId && !userAcc[i].description.toLowerCase().startsWith('bet for')) {
                     html += `<tr class="acount-stat-tbl-body-tr" data-id="" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].child_id){
                         html += `<td title="Transaction">Settlement</td>`
