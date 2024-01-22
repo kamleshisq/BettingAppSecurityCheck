@@ -882,7 +882,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         return year + "-" + month + "-" + day;
     }
     async function getmarketwiseaccdata (limit,skip){
-        console.log('in getmarketwiseaccdata function')
          let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
          if(userAcc.length == 0){
@@ -892,7 +891,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
              for(let i = 0;i<userAcc.length;i++){
                 c++
                  if(userAcc[i].gameId){
-                    
+                    if(marketidarray.includes(userAcc[i].gameId)){
+                        continue;
+                    }
                      let bet = await betModel.aggregate([
                          {
                              $match:{
@@ -922,7 +923,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $sort:{date:-1}
+                            $sort:{settleDate:-1}
                          },
                          {
                             $limit:(20 - finalresult.length)
@@ -938,6 +939,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      }
                  }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                    if(marketidarray.includes(userAcc[i].marketId)){
+                        continue;
+                    }
                      let bet = await betModel.aggregate([
                          {
                              $match:{
@@ -982,6 +986,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      }
                  }else if(userAcc[i].marketId){
+                    if(marketidarray.includes(userAcc[i].marketId)){
+                        continue;
+                    }
                      let bet = await betModel.aggregate([
                          {
                              $match:{
@@ -1040,8 +1047,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         skip = j * limit
         let result = await getmarketwiseaccdata(limit,skip)
         skipvalue = skipvalue + result
-        console.log(skipvalue,j,'skipvalue')
-        console.log(finalresult.length,'finalresult.length')
         if(!userAccflage){
             break
         }
