@@ -528,10 +528,6 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     if(userDetails.roleName != "user"){
         let childrenUsername = []
         childrenUsername = await User.distinct('userName', {parentUsers:req.query.id});
-        // let children = await User.find({parentUsers:req.query.id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
         bets = await betModel.aggregate([
             {
                 $match: {
@@ -607,52 +603,15 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                 c++
                  if(userAcc[i].gameId){
                     
-                     let bet = await betModel.aggregate([
-                         {
-                             $match:{
-                                 userId:req.query.id.toString(),
-                                 $and:[{gameId:{$exists:true}},{gameId:userAcc[i].gameId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                                 closingBalance:{$exists:true}
+                    finalresult.push(userAcc[i])
+                    if(finalresult.length >= 20){
+                            break
+                    }
 
-                                 
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                             $group:{
-                                 _id:{
-                                     gameId:"$gameId",
-                                     status:"$status",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-                                 },
-                                 match:{$first:'$event'},
-                                 marketName:{$first:'$betType'},
-                                 stake:{$first:'$Stake'},
-                                 creditDebitamount:{$sum:'$returns'},
-                                 balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$accountdetail.transactionId'},
-                                 date:{ $max: "$settleDate" }
-                             }
-                         },
-                         {
-                            $sort:{date:-1}
-                         },
-                         {
-                            $limit:(10 - finalresult.length)
-                         }
-                     ])
-                     console.log(bet,'bet in game id')
-
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.gameId)){
-                         marketidarray.push(bet[0]._id.gameId)
-                         finalresult = finalresult.concat(bet)
-                         if(finalresult.length >= 10){
-                             break
-                         }
-                     }
-                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
+                    if(marketidarray.includes(userAcc[i].marketId)){
+                        continue;
+                    }
                      let bet = await betModel.aggregate([
                          {
                              $match:{
@@ -683,7 +642,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $sort:{date:-1}
+                            $sort:{settleDate:-1}
                          },
                          {
                             $limit:(10 - finalresult.length)
@@ -699,6 +658,9 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                          }
                      }
                  }else if(userAcc[i].marketId){
+                    if(marketidarray.includes(userAcc[i].marketId)){
+                        continue;
+                    }
                      let bet = await betModel.aggregate([
                          {
                              $match:{
@@ -727,7 +689,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $sort:{date:-1}
+                            $sort:{settleDate:-1}
                          },
                          {
                             $limit:(10 - finalresult.length)
