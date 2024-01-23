@@ -4276,6 +4276,7 @@ io.on('connection', (socket) => {
                     j++
                 }
             }
+            console.log(finalresult, "finalresultfinalresultfinalresultfinalresultfinalresultfinalresult")
             socket.emit("ACCSTATEMENTADMINSIDE", {userAcc:finalresult, skipvalue,page})
 
         }catch(err){
