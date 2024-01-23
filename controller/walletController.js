@@ -29,7 +29,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     let publicKey
     console.log(req.ip, "ipip")
     if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
-        publicKey = readPem("publicSport.pem")
+        publicKey = readPem("publicSportLive.pem")
     }else{
         publicKey = readPem("publicCasino.pem")
     }
