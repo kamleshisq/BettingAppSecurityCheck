@@ -39,7 +39,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
             "status": "RS_ERROR"
         })
     }
-    console.log(req.headers.signature, "req.headers.signaturereq.headers.signaturereq.headers.signaturereq.headers.signature")
+    // console.log(req.headers.signature, "req.headers.signaturereq.headers.signaturereq.headers.signaturereq.headers.signature")
     let result = verify(req.headers.signature, publicKey, x)
     console.log(result)
     // next()
