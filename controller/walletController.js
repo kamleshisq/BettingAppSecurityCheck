@@ -122,6 +122,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
+    const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     try{
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
             if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
@@ -211,7 +212,6 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }else{
             user = await userModel.findById(req.body.userId)
         }
-        const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let date = Date.now()
         let game
         let description
@@ -347,6 +347,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 });
 
 exports.betResult = catchAsync(async(req, res, next) =>{
+    const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     try{
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
             if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
@@ -365,7 +366,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 "status": "RS_ERROR"
             })
         }
-        const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let check = await userModel.findById(req.body.userId);
         let exposureCheck  = check.exposure
         if(!check){
