@@ -40,7 +40,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         if(req.body.reqId){
             let check = await reqIdModel.findOne({reqId:req.body.reqId})
             if(check){
-                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
                     return res.status(200).json({
                         "status": "RS_ERROR"
                     })
