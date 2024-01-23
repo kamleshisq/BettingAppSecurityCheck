@@ -592,6 +592,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         return year + "-" + month + "-" + day;
     }
     async function getmarketwiseaccdata (limit,skip){
+        console.log(limit, "limitlimitlimitlimitlimitlimitlimitlimit")
         console.log('in getmarketwiseaccdata function')
          let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
@@ -716,17 +717,17 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     }
     let j = 0
     let skipvalue = 0;
-    // while(finalresult.length < 10){
-    //     skip = j * limit
-    //     let result = await getmarketwiseaccdata(limit,skip)
-    //     skipvalue = skipvalue + result
-    //     console.log(skipvalue,j,'skipvalue')
-    //     console.log(finalresult.length,'finalresult.length')
-    //     if(!userAccflage){
-    //         break
-    //     }
-    //     j++
-    // }
+    while(finalresult.length < 10){
+        skip = j * limit
+        let result = await getmarketwiseaccdata(limit,skip)
+        skipvalue = skipvalue + result
+        console.log(skipvalue,j,'skipvalue')
+        console.log(finalresult.length,'finalresult.length')
+        if(!userAccflage){
+            break
+        }
+        j++
+    }
     let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).limit(limit)
     // console.log(bets)
     // console.log(betsDetails)
