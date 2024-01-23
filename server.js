@@ -4186,6 +4186,7 @@ io.on('connection', (socket) => {
                                          creditDebitamount:{$sum:'$returns'},
                                          balance:{$first:'$closingBalance'},
                                          transactionId:{$first:'$transactionId'},
+                                         date:{ $max: "$settleDate" }
                                      }
                                  },
                                  {
@@ -4231,6 +4232,7 @@ io.on('connection', (socket) => {
                                          creditDebitamount:{$sum:'$returns'},
                                          balance:{$first:'$closingBalance'},
                                          transactionId:{$first:'$transactionId'},
+                                         date:{ $max: "$settleDate" }
                                      }
                                  },
                                  {
