@@ -15815,7 +15815,7 @@ socket.on('connect', () => {
             let skipid = parseInt($('.skipid').attr('data-skipid'))
             let filterData = {}
             filterData.fromDate = fromDate,
-            filterData.toDate = toDate
+            filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
             filterData.type = type
             const queryString = window.location.search;
             const queryParams = new URLSearchParams(queryString);
@@ -15840,7 +15840,7 @@ socket.on('connect', () => {
             let skipid = 0
             let filterData = {}
             filterData.fromDate = fromDate,
-            filterData.toDate = toDate
+            filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
             filterData.type = type
             page = 0
             $('.pageIdACC').attr('data-pageid',1)
