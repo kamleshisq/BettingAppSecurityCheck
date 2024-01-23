@@ -15912,6 +15912,7 @@ socket.on('connect', () => {
                         html += `<td>${userAcc[i].balance}</td>
                         <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
                     }else if (userAcc[i]._id.marketId){
+                        console.log('WORKINGGGGGG')
                         html += `<td>${userAcc[i].balance}</td>
                         <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}"  style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
                     }else{
