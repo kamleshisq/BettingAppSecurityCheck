@@ -743,7 +743,7 @@ io.on('connection', (socket) => {
         let json  = {}
         let filter = {};
         let limit = 10
-        filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]
+        filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]
         if(data.Fdate != '' && data.Tdate != ''){
             filter.date = {$gte:new Date(data.Fdate),$lte:new Date(data.Tdate)}
         }else if(data.Fdate != '' && data.Tdate == ''){
@@ -809,51 +809,14 @@ io.on('connection', (socket) => {
                 for(let i = 0;i<userAcc.length;i++){
                     c++
                      if(userAcc[i].gameId){
-                        
-                         let bet = await Bet.aggregate([
-                             {
-                                 $match:{
-                                    userId:data.id.toString(),
-                                    $and:[{gameId:userAcc[i].gameId},{settleDate:filter.date}],
-                                    closingBalance:{$exists:true} ,
-        
-                                }
-                             },
-                             {
-                                $sort:{settleDate:-1}
-                             },
-                             {
-                                 $group:{
-                                     _id:{
-                                         gameId:"$gameId",
-                                         status:"$status",
-                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-                                     },
-                                     match:{$first:'$event'},
-                                     marketName:{$first:'$betType'},
-                                     creditDebitamount:{$sum:'$returns'},
-                                     balance:{$first:'$closingBalance'},
-                                     transactionId:{$first:'$accountdetail.transactionId'},
-                                     date:{ $max: "$settleDate" }
-                                 }
-                             },
-                             {
-                                $sort:{date:-1}
-                             },
-                             {
-                                $limit:(10 - finalresult.length)
-                             }
-                         ])
-                         console.log(bet,'bet in game id')
-    
-                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.gameId)){
-                             marketidarray.push(bet[0]._id.gameId)
-                             finalresult = finalresult.concat(bet)
-                             if(finalresult.length >= 10){
-                                 break
-                             }
-                         }
-                     }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16){
+                        finalresult.push(userAcc[i])
+                        if(finalresult.length >= 20){
+                                break
+                        }
+                     }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
+                        if(marketidarray.includes(userAcc[i].marketId)){
+                            continue;
+                        }
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
@@ -883,7 +846,7 @@ io.on('connection', (socket) => {
                                  }
                              },
                              {
-                                $sort:{date:-1}
+                                $sort:{settleDate:-1}
                              },
                              {
                                 $limit:(10 - finalresult.length)
@@ -899,6 +862,9 @@ io.on('connection', (socket) => {
                              }
                          }
                      }else if(userAcc[i].marketId){
+                        if(marketidarray.includes(userAcc[i].marketId)){
+                            continue;
+                        }
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
@@ -926,7 +892,7 @@ io.on('connection', (socket) => {
                                  }
                              },
                              {
-                                $sort:{date:-1}
+                                $sort:{settleDate:-1}
                              },
                              {
                                 $limit:(10 - finalresult.length)
