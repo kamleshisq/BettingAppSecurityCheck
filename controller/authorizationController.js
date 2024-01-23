@@ -872,7 +872,9 @@ exports.logOut = catchAsync( async function logout(req, res) {
             }
                 await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
         }else{
+            console.log(token)
           const logs = await loginLogs.find({session_id:token,isOnline:true})
+          console.log(logs)
             res.cookie(logs[0].session_id, '', { expires: new Date(0) });
             res.clearCookie(logs[0].session_id);
 
