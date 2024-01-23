@@ -28,7 +28,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     let x  = req.body
     let publicKey
     console.log(req.ip, "ipip")
-    if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+    if(req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91"){
         publicKey = readPem("publicSportLive.pem")
     }else{
         publicKey = readPem("publicCasino.pem")
