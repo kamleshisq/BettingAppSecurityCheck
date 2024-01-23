@@ -4142,7 +4142,6 @@ io.on('connection', (socket) => {
         
         
             async function getmarketwiseaccdata (limit,skip){
-                console.log('in getmarketwise accdata ',limit,skip)
                  let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
                  let c = 0
                  if(userAcc.length == 0){
@@ -4197,7 +4196,6 @@ io.on('connection', (socket) => {
                                  }
                              ])
         
-                             console.log('inuseracc sport book',bet)
                              if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                                  marketidarray.push(bet[0]._id.marketId)
                                  finalresult = finalresult.concat(bet)
@@ -4268,8 +4266,6 @@ io.on('connection', (socket) => {
                     skip = (limit * j) + data.skipid 
                     let result = await getmarketwiseaccdata(limit,skip)
                     skipvalue = skipvalue + result
-                    console.log(skipvalue,j,'skipvalue')
-                    console.log(finalresult.length,'finalresult.length')
                     if(!userAccflage){
                         break
                     }
