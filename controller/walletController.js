@@ -186,7 +186,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
         if(req.body.transactionId){
             let check = await betModel.findOne({transactionId:req.body.transactionId})
-            // console.log(check, "checkcheckcheck")
+            console.log(check, "checkcheckcheck", clientIP)
             if(check){
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     return res.status(200).json({
