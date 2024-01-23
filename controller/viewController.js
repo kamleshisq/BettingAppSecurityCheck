@@ -716,17 +716,17 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     }
     let j = 0
     let skipvalue = 0;
-    while(finalresult.length < 10){
-        skip = j * limit
-        let result = await getmarketwiseaccdata(limit,skip)
-        skipvalue = skipvalue + result
-        console.log(skipvalue,j,'skipvalue')
-        console.log(finalresult.length,'finalresult.length')
-        if(!userAccflage){
-            break
-        }
-        j++
-    }
+    // while(finalresult.length < 10){
+    //     skip = j * limit
+    //     let result = await getmarketwiseaccdata(limit,skip)
+    //     skipvalue = skipvalue + result
+    //     console.log(skipvalue,j,'skipvalue')
+    //     console.log(finalresult.length,'finalresult.length')
+    //     if(!userAccflage){
+    //         break
+    //     }
+    //     j++
+    // }
     let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).limit(limit)
     // console.log(bets)
     // console.log(betsDetails)
