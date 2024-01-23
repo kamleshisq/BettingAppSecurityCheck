@@ -21,27 +21,19 @@ function readPem (filename) {
   }
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
-    console.log("body:",req.body)
-    console.log("signature:",req.headers.signature)
-    // console.log("signature:", req.headers.signature)
-    // console.log(req.ip)
     let x  = req.body
     let publicKey
-    console.log(req.ip, "ipip")
     if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
         publicKey = readPem("publicSport.pem")
     }else{
         publicKey = readPem("publicCasino.pem")
     }
-    console.log("PublicKey:",publicKey)
     if(!req.headers.signature ||  (req.headers.signature && req.headers.signature.trim() === '')){
         return res.status(200).json({
             "status": "RS_ERROR"
         })
     }
-    // console.log(req.headers.signature, "req.headers.signaturereq.headers.signaturereq.headers.signaturereq.headers.signature")
     let result = verify(req.headers.signature, publicKey, x)
-    console.log("verfication:", result)
     // next()
     if(result){
         if(req.body.reqId){
@@ -660,7 +652,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                                     "role_type" : user.role_type,
                                     "Remark":"-",
                                     "stake": req.body.rollbackAmount,
-                                    "transactionId":req.body.transactionId
+                                    "transactionId":req.body.transactionId,
+                                    "gameId": bet1.gameId
                                 }
                                 await accountStatement.create(Acc)
                             }else{
