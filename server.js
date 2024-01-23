@@ -4090,12 +4090,12 @@ io.on('connection', (socket) => {
                 }
             }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
                 filter.date = {
-                    $lt : new Date(data.filterData.toDate)
+                    $lt : new Date(data.filterData.toDate + (1000 * 60 * 60 * 24) - 1)
                 }
             }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
                 filter.date = {
                     $gte : new Date(data.filterData.fromDate),
-                    $lt : new Date(data.filterData.toDate)
+                    $lt : new Date(data.filterData.toDate + (1000 * 60 * 60 * 24) - 1)
                 }
             }
             let filterstatus = true
