@@ -3746,6 +3746,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 exports.getSportBookGame = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+    console.log(user._id, "user._iduser._iduser._iduser._id")
     let urldata
     let body = {
         clientIp: `${req.ip}`,
@@ -3763,7 +3764,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     const privateKey = readPem('private.pem');
     const textToSign = JSON.stringify(body);
     const hashedOutput = SHA256(privateKey, textToSign);
-    // console.log(hashedOutput)
+    console.log(hashedOutput, "hashedOutputhashedOutputhashedOutput")
     // var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/user-login';
     var fullUrl = 'https://api.mysportsfeed.io/api/v1/feed/user-login';
     await fetch(fullUrl, {
