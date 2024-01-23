@@ -1164,36 +1164,48 @@ io.on('connection', (socket) => {
         console.log(data, "ddddddddddddddatata")
         let filter = {}
         filter.userName = data.userid
-        if(data.Fdate != "" && data.Tdate == ""){
-            filter.date = {
-                $gt : new Date(data.Fdate)
+        if(data.gameId && !data.marketId){
+            filter.transactionId=data.gameId
+        }else if(data.marketId && !data.gameId){
+            if(data.Fdate != "" && data.Tdate == ""){
+                filter.date = {
+                    $gt : new Date(data.Fdate)
+                }
+            }else if(data.Fdate == "" && data.Tdate != ""){
+                filter.date = {
+                    $lt : new Date(data.Tdate)
+                }
+            }else if (data.Fdate != "" && data.Tdate != ""){
+                filter.date = {
+                    $gte : new Date(data.Fdate),
+                    $lt : new Date(data.Tdate)
+                }
             }
-        }else if(data.Fdate == "" && data.Tdate != ""){
-            filter.date = {
-                $lt : new Date(data.Tdate)
+            filter.marketId=data.marketId
+            filter.closingBalance={$exists:true}
+
+        }else if(data.gameId && data.marketId){
+            if(data.Fdate != "" && data.Tdate == ""){
+                filter.date = {
+                    $gt : new Date(data.Fdate)
+                }
+            }else if(data.Fdate == "" && data.Tdate != ""){
+                filter.date = {
+                    $lt : new Date(data.Tdate)
+                }
+            }else if (data.Fdate != "" && data.Tdate != ""){
+                filter.date = {
+                    $gte : new Date(data.Fdate),
+                    $lt : new Date(data.Tdate)
+                }
             }
-        }else if (data.Fdate != "" && data.Tdate != ""){
-            filter.date = {
-                $gte : new Date(data.Fdate),
-                $lt : new Date(data.Tdate)
-            }
+            filter.marketId=data.marketId
+            filter.closingBalance={$exists:true}
+            filter.eventId=data.gameId
+
         }
-        filter.closingBalance={$exists:true}
-        let bet
-        if(data.gameId){
-            if(data.gametype == 'positive'){
-                filter.returns={$gt:0}
-            }else{
-                filter.returns={$lte:0}
-            }
-            filter.$and=[{gameId:data.gameId},{settleDate:filter.date}]
-        }else if(data.marketId){
-            filter.$and=[{marketId:data.marketId},{settleDate:filter.date}]
-        }else{
-            let account = await AccModel.findById(data.id)
-            filter.transactionId = account.transactionId
-        }
-        bet = await Bet.find(filter).sort({date:-1})
+        let bet = await Bet.find(filter).sort({date:-1})
+        console.log(bet, "betbetbetbetbetbetbetbet")
         socket.emit('getMyBetDetails',bet)
     })
 
