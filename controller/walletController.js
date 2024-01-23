@@ -72,9 +72,15 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         }
         console.log(result, "resultresultresult")
     }else{
-        return res.status(200).json({
-            "status": "RS_ERROR"
-        })
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }else{
+            return res.status(200).json({
+                "status": "OP_INVALID_SIGNATURE"
+            })
+        }
     }
 })
 
@@ -106,9 +112,15 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 exports.betrequest = catchAsync(async(req, res, next) => {
     try{
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
-            return res.status(200).json({
-                "status": "RS_ERROR"
-            })
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                return res.status(200).json({
+                    "status": "OP_TRANSACTION_NOT_FOUND"
+                })
+            }
         }
 
         if(!req.body.reqId || req.body.reqId.trim() === ''){
@@ -117,12 +129,41 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             })
         }
 
+        if(req.body.debitAmount < 0){
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                return res.status(200).json({
+                    "status": "OP_ERROR_NEGATIVE_DEBIT_AMOUNT"
+                })
+            }
+        }
+
+        if(req.body.debitAmount == 0){
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                return res.status(200).json({
+                    "status": "OP_ZERO_DEBIT_AMOUNT"
+                })
+            }
+        }
         const check = await userModel.findById(req.body.userId)
         let exposureCheck  = check.exposure
         if(check.availableBalance - req.body.debitAmount - exposureCheck <= 0){
-            return res.status(200).json({
-                "status": "RS_ERROR"
-            })
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                return res.status(200).json({
+                    "status": "OP_INSUFFICIENT_FUNDS"
+                })
+            }
         }
         let betTYPE
         if(req.body.sportId){
@@ -134,13 +175,26 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             let check = await betModel.findOne({transactionId:req.body.transactionId})
             // console.log(check, "checkcheckcheck")
             if(check){
-                return res.status(200).json({
-                    "status": "RS_ERROR"
-                })
+                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                    return res.status(200).json({
+                        "status": "RS_ERROR"
+                    })
+                }else{
+                    return res.status(200).json({
+                        "status": "OP_DUPLICATE_TRANSACTION"
+                    })
+                }
             }
         }
         let user
         if(req.body.gameId){
+            let game1 = await gameModel.findOne({game_id:(req.body.gameId)*1})
+            // console.log(game1)
+            if(!game1){
+                    return res.status(200).json({
+                        "status": "OP_INVALID_GAME"
+                    })
+            }
             user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
         }else{
             user = await userModel.findById(req.body.userId)
@@ -157,7 +211,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             // console.log(game1)
             if(!game1){
                 return res.status(200).json({
-                    "status": "RS_ERROR"
+                    "status": "OP_INVALID_GAME"
                 })
             }
             game = game1.game_name
@@ -283,9 +337,15 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 exports.betResult = catchAsync(async(req, res, next) =>{
     try{
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
-            return res.status(200).json({
-                "status": "RS_ERROR"
-            })
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                return res.status(200).json({
+                    "status": "OP_TRANSACTION_NOT_FOUND"
+                })
+            }
         }
 
         if(!req.body.reqId || req.body.reqId.trim() === ''){
@@ -310,9 +370,15 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         let thatBet = await betModel.findOne({transactionId:req.body.transactionId})
         if(thatBet){
             if(thatBet.status !== "OPEN"){
-                return res.status(200).json({
-                    "status": "RS_ERROR"
-                }) 
+                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                    return res.status(200).json({
+                        "status": "RS_ERROR"
+                    })
+                }else{
+                    return res.status(200).json({
+                        "status": "OP_ERROR_TRANSACTION_INVALID"
+                    })
+                }
             }
         }else{
             return res.status(200).json({
@@ -324,7 +390,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             game = await gameModel.findOne({game_id:(req.body.gameId)*1})
             if(!game){
                 return res.status(200).json({
-                    "status": "RS_ERROR"
+                    "status": "OP_INVALID_GAME"
                 })
             }
         }else{
@@ -535,9 +601,15 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
     let clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     if(!req.body.transactionId || req.body.transactionId.trim() === ''){
-        return res.status(200).json({
-            "status": "RS_ERROR"
-        })
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }else{
+            return res.status(200).json({
+                "status": "OP_TRANSACTION_NOT_FOUND"
+            })
+        }
     }
 
     if(!req.body.reqId || req.body.reqId.trim() === ''){
@@ -550,13 +622,27 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         let check = await reqIdModel.findOne({reqId:req.body.transactionId})
         // console.log(check,bet1.status, "bet1.statusbet1.statusbet1.statusbet1.status" )
         if(check && (bet1.status === "OPEN" || bet1.status === "CANCEL")){
-            return res.status(200).json({
-                "status": "RS_ERROR"
-            })
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                return res.status(200).json({
+                    "status": "OP_TRANSACTION_NOT_FOUND"
+                })
+            }
         }else{
             if(!check){
                 await reqIdModel.create({reqId:req.body.transactionId})
             }
+        }
+    }
+    if(req.body.gameId){
+        game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+        if(!game){
+            return res.status(200).json({
+                "status": "OP_INVALID_GAME"
+            })
         }
     }
     // console.log(user, bet1)
