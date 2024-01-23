@@ -15899,18 +15899,21 @@ socket.on('connect', () => {
                         html += ` <td>0</td>
                         <td>${userAcc[i].creditDebitamount}</td>`
                     }
-                    if(userAcc[i]._id.gameId){
+                    if(userAcc[i].gameId){
                         if(userAcc[i].creditDebitamount > 0){
                             html += `<td>${userAcc[i].balance}</td>
-                            <td><a class="ownAccDetails positive" data-gameid="${userAcc[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                            <td><a class="ownAccDetails positive" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
                         }else{
                             html += `<td>${userAcc[i].balance}</td>
-                            <td><a class="ownAccDetails negative" data-gameid="${userAcc[i]._id.gameId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                            <td><a class="ownAccDetails negative" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
 
                         }
-                    }else if(userAcc[i]._id.marketId){
+                    }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
                         html += `<td>${userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                        <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                    }else if (userAcc[i]._id.marketId){
+                        html += `<td>${userAcc[i].balance}</td>
+                        <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}"  style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
                     }else{
                         html += `<td>${userAcc[i].balance}</td>
                         <td><a class="ownAccDetails" data-id="${userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
