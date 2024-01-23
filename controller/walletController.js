@@ -61,18 +61,30 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
             if(loginData[0].gameToken == req.body.token){
                 next()
             }else{
-                return res.status(200).json({
-                "status": "RS_ERROR"
-            })
+                if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+                    return res.status(200).json({
+                        "status": "RS_ERROR"
+                    })
+                }else{
+                    return res.status(200).json({
+                        "status": "OP_INVALID_SIGNATURE"
+                    })
+                }
             }
         }else{
-            return res.status(200).json({
-                "status": "RS_ERROR"
-            })
+            if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                return res.status(200).json({
+                    "status": "OP_INVALID_SIGNATURE"
+                })
+            }
         }
         console.log(result, "resultresultresult")
     }else{
-        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+        if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
             return res.status(200).json({
                 "status": "RS_ERROR"
             })
@@ -381,9 +393,15 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 }
             }
         }else{
-            return res.status(200).json({
-                "status": "RS_ERROR"
-            })
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                return res.status(200).json({
+                    "status": "RS_ERROR"
+                })
+            }else{
+                return res.status(200).json({
+                    "status": "OP_TRANSACTION_NOT_FOUND"
+                })
+            }
         }
         let game = {}
         if(req.body.gameId){
