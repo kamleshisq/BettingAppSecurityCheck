@@ -41,7 +41,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }
     // console.log(req.headers.signature, "req.headers.signaturereq.headers.signaturereq.headers.signaturereq.headers.signature")
     let result = verify(req.headers.signature, publicKey, x)
-    console.log(result)
+    console.log("verfication:", result)
     // next()
     if(result){
         if(req.body.reqId){
