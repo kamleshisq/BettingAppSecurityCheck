@@ -1204,6 +1204,7 @@ io.on('connection', (socket) => {
             filter.eventId=data.gameId
 
         }
+        console.log(filter)
         let bet = await Bet.find(filter).sort({date:-1})
         console.log(bet, "betbetbetbetbetbetbetbet")
         socket.emit('getMyBetDetails',bet)
