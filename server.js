@@ -1167,38 +1167,38 @@ io.on('connection', (socket) => {
         if(data.gameId && !data.marketId){
             filter.transactionId=data.gameId
         }else if(data.marketId && !data.gameId){
-            if(data.Fdate != "" && data.Tdate == ""){
-                filter.date = {
-                    $gt : new Date(data.Fdate)
-                }
-            }else if(data.Fdate == "" && data.Tdate != ""){
-                filter.date = {
-                    $lt : new Date(data.Tdate)
-                }
-            }else if (data.Fdate != "" && data.Tdate != ""){
-                filter.date = {
-                    $gte : new Date(data.Fdate),
-                    $lt : new Date(data.Tdate)
-                }
-            }
+            // if(data.Fdate != "" && data.Tdate == ""){
+            //     filter.date = {
+            //         $gt : new Date(data.Fdate)
+            //     }
+            // }else if(data.Fdate == "" && data.Tdate != ""){
+            //     filter.date = {
+            //         $lt : new Date(data.Tdate)
+            //     }
+            // }else if (data.Fdate != "" && data.Tdate != ""){
+            //     filter.date = {
+            //         $gte : new Date(data.Fdate),
+            //         $lt : new Date(data.Tdate)
+            //     }
+            // }
             filter.marketId=data.marketId
             filter.closingBalance={$exists:true}
 
         }else if(data.gameId && data.marketId){
-            if(data.Fdate != "" && data.Tdate == ""){
-                filter.date = {
-                    $gt : new Date(data.Fdate)
-                }
-            }else if(data.Fdate == "" && data.Tdate != ""){
-                filter.date = {
-                    $lt : new Date(data.Tdate)
-                }
-            }else if (data.Fdate != "" && data.Tdate != ""){
-                filter.date = {
-                    $gte : new Date(data.Fdate),
-                    $lt : new Date(data.Tdate)
-                }
-            }
+            // if(data.Fdate != "" && data.Tdate == ""){
+            //     filter.date = {
+            //         $gt : new Date(data.Fdate)
+            //     }
+            // }else if(data.Fdate == "" && data.Tdate != ""){
+            //     filter.date = {
+            //         $lt : new Date(data.Tdate)
+            //     }
+            // }else if (data.Fdate != "" && data.Tdate != ""){
+            //     filter.date = {
+            //         $gte : new Date(data.Fdate),
+            //         $lt : new Date(data.Tdate)
+            //     }
+            // }
             filter.marketId=data.marketId
             filter.closingBalance={$exists:true}
             filter.eventId=data.gameId
