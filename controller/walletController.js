@@ -122,7 +122,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
-    console.log('req')
+    console.log('reqddddddddddddddddddddd')
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     try{
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
