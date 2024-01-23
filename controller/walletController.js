@@ -184,6 +184,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }else{
             betTYPE = 'SPORTBOOK'
         }
+        console.log('gotHERE')
         if(req.body.transactionId){
             let check = await betModel.findOne({transactionId:req.body.transactionId})
             console.log(check, "checkcheckcheck", clientIP)
