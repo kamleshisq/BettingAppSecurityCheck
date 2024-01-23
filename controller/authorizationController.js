@@ -864,7 +864,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
         // }
           // console.log(user._id)
           const logs = await loginLogs.find({user_id:user._id,isOnline:true})
-          // console.log(logs)
+          console.log(logs)
           for(let i = 0; i < logs.length; i++){
               res.cookie(logs[i].session_id, '', { expires: new Date(0) });
               res.clearCookie(logs[i].session_id);
