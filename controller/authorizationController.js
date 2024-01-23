@@ -863,15 +863,20 @@ exports.logOut = catchAsync( async function logout(req, res) {
         //     global._loggedInToken.splice(findToken, 1);
         // }
           // console.log(user._id)
+          if(user.roleName != "DemoLogin"){
           const logs = await loginLogs.find({user_id:user._id,isOnline:true})
           console.log(logs)
           for(let i = 0; i < logs.length; i++){
               res.cookie(logs[i].session_id, '', { expires: new Date(0) });
               res.clearCookie(logs[i].session_id);
             }
-            if(user.roleName != "DemoLogin"){
                 await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
-            }
+        }else{
+          const logs = await loginLogs.find({session_id:token,isOnline:true})
+            res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+            res.clearCookie(logs[i].session_id);
+
+        }
         //   global._loggedInToken.splice(logs.session_id, 1);
           await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
     
