@@ -3781,7 +3781,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     .then(result => {
       urldata = result
     })
-    // console.log(urldata)
+    console.log(urldata)
     let loginData = await loginLogs.find({userName: user.userName, isOnline: true})
     // console.log(loginData, "loginDataloginDataloginData")
     let CheckingData
