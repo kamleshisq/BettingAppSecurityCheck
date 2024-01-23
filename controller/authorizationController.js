@@ -834,6 +834,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
 		userid: Joi.number().required(),
 		parent_ids: Joi.optional().required(),
 	});
+    console.log('WORMKIHUKJBF')
 	try {
 		profilechema.validate(req.body, {
 			abortEarly: true
