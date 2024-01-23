@@ -858,10 +858,10 @@ exports.logOut = catchAsync( async function logout(req, res) {
         // console.log(token)
         let date = Date.now();
         // console.log(global._loggedInToken)
-        let findToken=global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
-        if (findToken >= 0) {
-            global._loggedInToken.splice(findToken, 1);
-        }
+        // let findToken= global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
+        // if (findToken >= 0) {
+        //     global._loggedInToken.splice(findToken, 1);
+        // }
           // console.log(user._id)
           const logs = await loginLogs.find({user_id:user._id,isOnline:true})
           // console.log(logs)
@@ -872,7 +872,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
             if(user.roleName != "DemoLogin"){
                 await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
             }
-          global._loggedInToken.splice(logs.session_id, 1);
+        //   global._loggedInToken.splice(logs.session_id, 1);
           await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
     
         res.cookie('JWT', 'loggedout', {
