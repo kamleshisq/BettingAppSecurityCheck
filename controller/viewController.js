@@ -3746,7 +3746,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 
 exports.getSportBookGame = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    console.log(user._id, "user._iduser._iduser._iduser._id")
+    console.log(user._id.toString(), "user._iduser._iduser._iduser._id")
     let urldata
     let body = {
         clientIp: `${req.ip}`,
@@ -3754,7 +3754,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         operatorId: "sheldon",
         partnerId: "SHPID01",
         platformId: "DESKTOP",
-        userId: user._id,
+        userId: user._id.toString(),
         username: user.userName
     }
     function readPem (filename) {
