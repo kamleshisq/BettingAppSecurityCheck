@@ -605,7 +605,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                  if(userAcc[i].gameId){
                     
                     finalresult.push(userAcc[i])
-                    if(finalresult.length >= 20){
+                    if(finalresult.length >= 10){
                             break
                     }
 
