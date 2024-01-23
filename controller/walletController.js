@@ -28,8 +28,8 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     let x  = req.body
     let publicKey
     console.log(req.ip, "ipip")
-    if(req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91"){
-        publicKey = readPem("publicSportLive.pem")
+    if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+        publicKey = readPem("publicSport.pem")
     }else{
         publicKey = readPem("publicCasino.pem")
     }
@@ -97,7 +97,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     let exposureCheck  = user.exposure
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let balanceSend = user.availableBalance - exposureCheck
-    if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+    if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
         res.status(200).json({
             "balance": balanceSend,
             "status": "RS_OK"
@@ -271,7 +271,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             }
             accountStatement.create(Acc)
         }
-        if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             return res.status(200).json({
                 "balance": user.availableBalance - req.body.debitAmount - exposureCheck,
                 "status": "RS_OK"
@@ -304,7 +304,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         let check = await userModel.findById(req.body.userId);
         let exposureCheck  = check.exposure
         if(!check){
-            if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -492,7 +492,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                     debitAmountForP = parentUser2Amount
                 }
                 if(!user){
-                    if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+                    if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                         return res.status(200).json({
                             "status": "RS_ERROR"
                         })
@@ -520,7 +520,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 
             }
         }
-        if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
                 "balance": balance,
                 "status": "RS_OK"
@@ -585,7 +585,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
            user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}}); 
            let checkExposure = user.exposure
            if(!user){
-                if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     return res.status(200).json({
                         "status": "RS_ERROR"
                     })
@@ -684,7 +684,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     }
                 }
                 // console.log(balance)
-                if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     res.status(200).json({
                         "status": "RS_OK",
                         "balance": balance
@@ -711,7 +711,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             }
             // console.log(user, "USer")
             if(!user){
-                if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     return res.status(200).json({
                         "status": "RS_ERROR"
                     })
@@ -780,7 +780,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                             await accountStatement.create(Acc)
                         }
                 }
-                if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
                     res.status(200).json({
                         "status": "RS_OK",
                         "balance": balance - checkExposure
@@ -794,7 +794,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             }
         }
     }else{
-        if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             return res.status(200).json({
                 "status": "RS_ERROR"
             })
