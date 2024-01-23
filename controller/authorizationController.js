@@ -834,7 +834,6 @@ exports.logOut = catchAsync( async function logout(req, res) {
 		userid: Joi.number().required(),
 		parent_ids: Joi.optional().required(),
 	});
-    console.log('WORMKIHUKeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeJBF')
 	try {
 		profilechema.validate(req.body, {
 			abortEarly: true
@@ -846,7 +845,6 @@ exports.logOut = catchAsync( async function logout(req, res) {
     // console.log(req.headers)
     try{
     let user = await User.findById(req.currentUser.id)
-    console.log(user, "useruseruseruseruseruseruseruseruseruser")
 
         let token
         // console.log(req.headers)
@@ -865,7 +863,6 @@ exports.logOut = catchAsync( async function logout(req, res) {
           // console.log(user._id)
           if(user.roleName != "DemoLogin"){
           const logs = await loginLogs.find({user_id:user._id,isOnline:true})
-          console.log(logs)
           for(let i = 0; i < logs.length; i++){
               res.cookie(logs[i].session_id, '', { expires: new Date(0) });
               res.clearCookie(logs[i].session_id);
@@ -873,7 +870,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
                 await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
         }else{
             console.log(token)
-          const logs = await loginLogs.find({session_id:token,isOnline:true})
+          const logs = await loginLogs.find({session_id:req.token,isOnline:true})
           console.log(logs)
             res.cookie(logs[0].session_id, '', { expires: new Date(0) });
             res.clearCookie(logs[0].session_id);
