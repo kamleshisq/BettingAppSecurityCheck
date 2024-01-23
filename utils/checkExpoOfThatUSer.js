@@ -7,7 +7,7 @@ async function checkExposure(data){
     // console.log('WORKING')
     if(data){
         let userData = await User.findById(data.id)
-        if(userData.userName){
+        if(userData && userData.userName){
             const exposure1 = await Bet.aggregate([
                 {
                     $match: {
