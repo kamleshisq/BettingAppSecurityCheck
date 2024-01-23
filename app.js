@@ -103,7 +103,7 @@ app.use(morgan('dev'));
 //     console.log('Request headers:', req.headers); // Logs the request headers
 //     next();
 //   });
-app.use("/",walletRoutes );
+app.use("/wallet",walletRoutes );
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/role", roleRoutes);
 app.use("/api/v1/Account", accountRoutes);
