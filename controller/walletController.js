@@ -40,9 +40,15 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         if(req.body.reqId){
             let check = await reqIdModel.findOne({reqId:req.body.reqId})
             if(check){
-                return res.status(200).json({
-                    "status": "RS_ERROR"
-                })
+                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                    return res.status(200).json({
+                        "status": "RS_ERROR"
+                    })
+                }else{
+                    return res.status(200).json({
+                        "status": "OP_DUPLICATE_TRANSACTION"
+                    })
+                }
             }else{
                 await reqIdModel.create({reqId:req.body.reqId})
             }
