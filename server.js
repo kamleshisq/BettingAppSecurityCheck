@@ -4040,6 +4040,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
+        console.log(data)
         try{
             let limit = 10
             let page = 0
