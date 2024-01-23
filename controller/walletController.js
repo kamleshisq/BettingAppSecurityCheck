@@ -900,7 +900,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             })
         }else{
             return res.status(200).json({
-                "status": "RS_ERROR"
+                "status": "OP_TRANSACTION_NOT_FOUND"
             })
         }
     }
