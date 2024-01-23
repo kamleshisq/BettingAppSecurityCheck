@@ -810,7 +810,7 @@ io.on('connection', (socket) => {
                     c++
                      if(userAcc[i].gameId){
                         finalresult.push(userAcc[i])
-                        if(finalresult.length >= 20){
+                        if(finalresult.length >= 10){
                                 break
                         }
                      }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
