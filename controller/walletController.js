@@ -654,7 +654,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                                     "Remark":"-",
                                     "stake": req.body.rollbackAmount,
                                     "transactionId":req.body.transactionId,
-                                    "gameId": bet1.gameId
+                                    "gameId": req.body.gameId
                                 }
                                 await accountStatement.create(Acc)
                             }else{
@@ -769,7 +769,9 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                                 "role_type" : user.role_type,
                                 "Remark":"-",
                                 "stake": req.body.rollbackAmount,
-                                "transactionId":req.body.transactionId
+                                "transactionId":req.body.transactionId,
+                                "gameId":req.body.gameId
+                                
                             }
                             await accountStatement.create(Acc)
                         }
