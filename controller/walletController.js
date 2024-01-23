@@ -33,7 +33,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }else{
         publicKey = readPem("publicCasino.pem")
     }
-    // console.log("PublicKey:",publicKey)
+    console.log("PublicKey:",publicKey)
     if(!req.headers.signature ||  (req.headers.signature && req.headers.signature.trim() === '')){
         return res.status(200).json({
             "status": "RS_ERROR"
