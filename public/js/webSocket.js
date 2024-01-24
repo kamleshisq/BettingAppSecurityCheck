@@ -15459,6 +15459,17 @@ socket.on('connect', () => {
             socket.emit('adminSideKyc', {id})
         })
 
+        socket.on('adminSideKyc', pdfData => {
+            try {
+                const blob = new Blob([pdfData.data1], { type: 'application/pdf' });
+                const pdfUrl = URL.createObjectURL(blob);
+                window.open(pdfUrl, '_blank');
+                URL.revokeObjectURL(pdfUrl);
+              } catch (error) {
+                console.error('Error creating or opening the PDF:', error);
+              }
+          })
+
         socket.on("maxCreditReference", data =>{
             if(data.status === "error"){
                 alert(data.message)

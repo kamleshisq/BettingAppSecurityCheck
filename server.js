@@ -3322,7 +3322,17 @@ io.on('connection', (socket) => {
     })
 
     socket.on('adminSideKyc', async(data) => {
-        console.log(data, "asdfghdddddddddddddddddddddddddddddddddjk")
+        // console.log(data, "asdfghdddddddddddddddddddddddddddddddddjk")
+        let user = await User.findById(data.id)
+        const fileName = `${user.userName}`; 
+        const filePath = `/var/www/bettingApp/documents/${fileName}.pdf`;
+        fs.readFile(filePath, (err, data1) => {
+            if (err) {
+              console.error('Error reading the PDF file:', err);
+              return;
+            }
+            socket.emit('adminSideKyc', { fileName, data1 });
+        })
     })
 
     socket.on("CasinoFevorite", async(data) => {
