@@ -3979,6 +3979,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("BETSFORUSERAdminSide", async(data) => {
+        console.log(data, "BETSFORUSERAdminSideBETSFORUSERAdminSide")
         try{
             let limit = 10
             let page = 0
@@ -4006,10 +4007,10 @@ io.on('connection', (socket) => {
             if(data.filterData.type != "All Bets"){
                 filter.status = data.filterData.type
             }
-            // console.log(filter)
+            console.log(filter)
+            if(user.roleName != "user"){
             let childUserName = await User.distinct('userName', { parentUsers: data.id })
             filter.userName = {$in:childUserName}
-            if(user.roleName != "user"){
                 bets = await Bet.aggregate([
                       {
                         $match:filter
@@ -4029,8 +4030,8 @@ io.on('connection', (socket) => {
             }else{
                 filter.userId = data.id
                 bets = await Bet.find(filter).sort({date:-1}).skip(limit*page).limit(limit)
-
             }
+            console.log(bets, "betsbetsbets")
             socket.emit("BETSFORUSERAdminSide",{bets, page,status:"success"})
 
         }catch(err){

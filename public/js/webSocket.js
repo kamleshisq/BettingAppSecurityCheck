@@ -15480,7 +15480,7 @@ socket.on('connect', () => {
                 let type = $("#selectBet").val()
                 let filterData = {}
                 filterData.fromDate = fromDate,
-                filterData.toDate = toDate
+                filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 filterData.type = type
                 socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
         })
@@ -15497,7 +15497,7 @@ socket.on('connect', () => {
             let type = $("#selectBet").val()
             let filterData = {}
             filterData.fromDate = fromDate,
-            filterData.toDate = toDate
+            filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
             filterData.type = type,
             page = 0
             $('.pageId').attr('data-pageid', 1)
