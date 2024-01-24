@@ -38,7 +38,7 @@
           <%if(currentUser.roleName === "Admin"){%>
           <button class="tablinks" onclick="openCity(event, 'Payment')"> Payment</button>
           <%}%>
-          <%if(currentUser.roleName === "user"){%>
+          <%if(userDetails.roleName === "user"){%>
             <button class="tablinks" onclick="openCity(event, 'kyc')"> kyc</button>
           <%}%>
       </div>
