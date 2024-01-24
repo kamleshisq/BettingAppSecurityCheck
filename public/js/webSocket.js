@@ -15454,7 +15454,7 @@ socket.on('connect', () => {
 
         $(document).on('click', '.kycPdf', function(e){
             e.preventDefault()
-            let id = $(this).attr(id)
+            let id = $(this).attr('id')
             console.log(id, "ididididiididididid")
             socket.emit('adminSideKyc', {id})
         })
