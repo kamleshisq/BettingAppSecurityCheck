@@ -297,8 +297,8 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
         if(req.body.gameId){
             let amount = req.body.debitAmount
-            downLevelBalance = req.body.debitAmount
-            // updateParents(user, amount, -downLevelBalance)
+            // downLevelBalance = req.body.debitAmount
+            // updateParents(user, amount, amount)
             for(let i = user.parentUsers.length - 1; i >= 1; i--){
                 let parentUser1 = await userModel.findById(user.parentUsers[i])
                 let parentUser2 = await userModel.findById(user.parentUsers[i-1])
@@ -553,7 +553,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-thatBet.Stake, uplinePL:-req.body.creditAmount, pointsWL:req.body.creditAmount}});
                 let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:returnAmount,settleDate:Date.now(), closingBalance:parseFloat(user.availableBalance + req.body.creditAmount)});
                 let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
-                let amount = req.body.creditAmount
+                let debitAmountForP = req.body.creditAmount
                 // updateParents(user, amount, amount)
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
                     let parentUser1 = await userModel.findById(user.parentUsers[i])
