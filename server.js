@@ -3979,7 +3979,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("BETSFORUSERAdminSide", async(data) => {
-        console.log(data, "BETSFORUSERAdminSideBETSFORUSERAdminSide")
+        // console.log(data, "BETSFORUSERAdminSideBETSFORUSERAdminSide")
         try{
             let limit = 10
             let page = 0
@@ -4007,7 +4007,7 @@ io.on('connection', (socket) => {
             if(data.filterData.type != "All Bets"){
                 filter.status = data.filterData.type
             }
-            console.log(filter)
+            console.log(filter, user, "sdsdsdsdsdds")
             if(user.roleName != "user"){
             let childUserName = await User.distinct('userName', { parentUsers: data.id })
             filter.userName = {$in:childUserName}
