@@ -38,6 +38,9 @@
           <%if(currentUser.roleName === "Admin"){%>
           <button class="tablinks" onclick="openCity(event, 'Payment')"> Payment</button>
           <%}%>
+          <%if(currentUser.roleName === "user"){%>
+            <button class="tablinks" onclick="openCity(event, 'kyc')"> kyc</button>
+          <%}%>
       </div>
       <div id="Cricket" class="tabcontent">
                   <div class="row">
@@ -515,6 +518,12 @@
                 </div>
               </div>
               <div id="Payment" class="tabcontent">
+                  <div class="row">
+                    
+                  </div>
+                </div>
+
+                <div id="Payment" class="tabcontent">
                   <div class="row">
                     
                   </div>
