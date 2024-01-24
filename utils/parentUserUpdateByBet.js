@@ -18,21 +18,21 @@ async function updateParents(user, amount, downLevelBalance){
         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
         await userModel.findByIdAndUpdate(user.parentUsers[i], {
             $inc: {
-                downlineBalance: -downLevelBalance,
+                downlineBalance: downLevelBalance,
                 myPL: parentUser1Amount,
                 uplinePL: parentUser2Amount,
                 lifetimePL: parentUser1Amount,
-                pointsWL: -downLevelBalance
+                pointsWL: downLevelBalance
             }
         });
     
         if (i === 1) {
             await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                 $inc: {
-                    downlineBalance: -downLevelBalance,
+                    downlineBalance: downLevelBalance,
                     myPL: parentUser2Amount,
                     lifetimePL: parentUser2Amount,
-                    pointsWL: -downLevelBalance
+                    pointsWL: downLevelBalance
                 }
             });
         }
