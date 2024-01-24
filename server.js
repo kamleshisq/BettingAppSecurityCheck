@@ -3322,7 +3322,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('adminSideKyc', async(data) => {
-        console.log(data, "asdfghjk")
+        console.log(data, "asdfghdddddddddddddddddddddddddddddddddjk")
     })
 
     socket.on("CasinoFevorite", async(data) => {
