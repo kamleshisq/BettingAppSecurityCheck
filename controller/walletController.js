@@ -72,11 +72,11 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
                         })
                     }
                     
-                    if(req.body.tableId.trim() == ''){
-                        return res.status(200).json({
-                            "status": "OP_INVALID_PARAMS"
-                        })
-                    }
+                    // if(req.body.tableId.trim() == ''){
+                    //     return res.status(200).json({
+                    //         "status": "OP_INVALID_PARAMS"
+                    //     })
+                    // }
                 }
                 next()
             }else{
