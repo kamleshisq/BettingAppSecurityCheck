@@ -15479,8 +15479,12 @@ socket.on('connect', () => {
                 let toDate = $('#TdateBet').val()
                 let type = $("#selectBet").val()
                 let filterData = {}
-                filterData.fromDate = fromDate,
-                filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                if(fromDate.trim() != ''){
+                    filterData.fromDate = fromDate
+                }
+                if(toDate.trim() != ''){
+                    filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }
                 filterData.type = type
                 socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
         })
@@ -15496,8 +15500,12 @@ socket.on('connect', () => {
             let toDate = $('#TdateBet').val()
             let type = $("#selectBet").val()
             let filterData = {}
-            filterData.fromDate = fromDate,
-            filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
+            if(fromDate.trim() != ''){
+                filterData.fromDate = fromDate
+            }
+            if(toDate.trim() != ''){
+                filterData.toDate = new Date(new Date(toDate).getTime() + (1000 * 60 * 60 * 24) - 1)
+            }
             filterData.type = type,
             page = 0
             $('.pageId').attr('data-pageid', 1)
