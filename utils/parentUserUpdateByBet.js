@@ -8,7 +8,7 @@ const commissionNewModel = require('../model/commissioNNModel');
 const revokeCommission = require('./commissionRevocke');
 
 
-async function updateParents(user, amount){
+async function updateParents(user, amount, downLevelBalance){
     for(let i = user.parentUsers.length - 1; i >= 1; i--){
         let parentUser1 = await userModel.findById(user.parentUsers[i])
         let parentUser2 = await userModel.findById(user.parentUsers[i-1])
@@ -18,21 +18,21 @@ async function updateParents(user, amount){
         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
         await userModel.findByIdAndUpdate(user.parentUsers[i], {
             $inc: {
-                downlineBalance: -req.body.debitAmount,
+                downlineBalance: -downLevelBalance,
                 myPL: parentUser1Amount,
                 uplinePL: parentUser2Amount,
                 lifetimePL: parentUser1Amount,
-                pointsWL: -req.body.debitAmount
+                pointsWL: -downLevelBalance
             }
         });
     
         if (i === 1) {
             await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                 $inc: {
-                    downlineBalance: -req.body.debitAmount,
+                    downlineBalance: -downLevelBalance,
                     myPL: parentUser2Amount,
                     lifetimePL: parentUser2Amount,
-                    pointsWL: -req.body.debitAmount
+                    pointsWL: -downLevelBalance
                 }
             });
         }

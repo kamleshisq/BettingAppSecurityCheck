@@ -297,7 +297,8 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
         if(req.body.gameId){
             let amount = req.body.debitAmount
-            updateParents(user, amount)
+            downLevelBalance = req.body.debitAmount
+            updateParents(user, amount, downLevelBalance)
             // for(let i = user.parentUsers.length - 1; i >= 1; i--){
             //     let parentUser1 = await userModel.findById(user.parentUsers[i])
             //     let parentUser2 = await userModel.findById(user.parentUsers[i-1])
