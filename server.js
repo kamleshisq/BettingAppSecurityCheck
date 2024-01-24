@@ -2667,6 +2667,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('editImageSport', async(data) => {
+        console.log(data)
         let whiteLabel = process.env.whiteLabelName
         if(data.LOGINUSER.role_type == 1){
             whiteLabel = "1"
