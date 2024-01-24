@@ -3321,6 +3321,10 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on('adminSideKyc', async(data) => {
+        console.log(data, "asdfghjk")
+    })
+
     socket.on("CasinoFevorite", async(data) => {
         try{
             let games = await CasinoFevoriteModel.findOne({userId:data.LOGINDATA.LOGINUSER._id})

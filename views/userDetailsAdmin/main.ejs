@@ -538,9 +538,7 @@
                             <%}else if(userDetails.kycDoc != null && !userDetails.isKycVer){ %>
                               <div class="tab-heading"> <h4>KYC Status : <span class="yellow">Processing</span></h4> </div>
                             <%} %>
-                            <a href="/var/www/bettingApp/documents/<%=userDetails.userName%>.pdf" class="btn">
-                              View Uploaded Document
-                            </a>
+                            <button class="kycPdf" id="<%userDetails.id%>" >View Uploaded Document</button>
                             
 
                           </div>

@@ -15452,6 +15452,12 @@ socket.on('connect', () => {
             socket.emit("Wallet", {maxCreditReference, transferLock, id})
         })
 
+        $(document).on('click', '.kycPdf', function(e){
+            e.preventDefault()
+            let id = this.id
+            socket.emit('adminSideKyc', {id})
+        })
+
         socket.on("maxCreditReference", data =>{
             if(data.status === "error"){
                 alert(data.message)
