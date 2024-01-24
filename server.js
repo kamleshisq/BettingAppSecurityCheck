@@ -2669,7 +2669,7 @@ io.on('connection', (socket) => {
     socket.on('editImageSport', async(data) => {
         console.log(data)
         let whiteLabel = process.env.whiteLabelName
-        if(data.LOGINUSER.role_type == 1){
+        if(data.LOGINDATA.LOGINUSER.role_type == 1){
             whiteLabel = "1"
         }
         let name = data.id.split("//")[1]
@@ -2709,20 +2709,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on('deleteSlider', async(data) => {
-        try{
-            let whiteLabel = process.env.whiteLabelName
-            if(data.LOGINUSER.role_type == 1){
-                whiteLabel = "1"
-            }
-            let deleted = await sliderModel.findByIdAndDelete(data.id)
-            await sliderModel.updateMany({Number:{$gt:deleted.Number},whiteLabelName: whiteLabel},{$inc:{Number:-1}})
-                socket.emit("deleteSlider", "Deleted successfully")
-            }catch(err){
-            if(err){
-                console.log(err)
-                socket.emit("deleteSlider", "Please try again leter")
-            }
-        }
+        console.log(data)
+        // try{
+        //     let whiteLabel = process.env.whiteLabelName
+        //     if(data.LOGINUSER.role_type == 1){
+        //         whiteLabel = "1"
+        //     }
+        //     let deleted = await sliderModel.findByIdAndDelete(data.id)
+        //     await sliderModel.updateMany({Number:{$gt:deleted.Number},whiteLabelName: whiteLabel},{$inc:{Number:-1}})
+        //         socket.emit("deleteSlider", "Deleted successfully")
+        //     }catch(err){
+        //     if(err){
+        //         console.log(err)
+        //         socket.emit("deleteSlider", "Please try again leter")
+        //     }
+        // }
     })
 
 
