@@ -522,12 +522,26 @@
                     
                   </div>
                 </div>
-
+                
+                <%if(userDetails.roleName === "user"){%>
                 <div id="kyc" class="tabcontent">
                   <div class="row">
-                    
+                <%if(userDetails.kycDoc){%>
+                <%}else{%>
+                  <div class="row">
+                    <div class="container">
+                        <div class="form-container">
+                          <div class="form-column blue">
+                            <div class="tab-heading"> <h4>User Details:<span class="c-reed">Pending</span></h4> </div>
+                          </div>
+                        </div>
+                      </div>
+                
+                </div>
+                <%}%>
                   </div>
                 </div>
+                <%}%>
       </div>
   </div>
 </section>
