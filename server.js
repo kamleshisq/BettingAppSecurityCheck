@@ -3979,7 +3979,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("BETSFORUSERAdminSide", async(data) => {
-        // console.log(data, "BETSFORUSERAdminSideBETSFORUSERAdminSide")
+        console.log(data, "BETSFORUSERAdminSideBETSFORUSERAdminSide")
         try{
             let limit = 10
             let page = 0
