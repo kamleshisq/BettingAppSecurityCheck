@@ -71,12 +71,6 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
                             "status": "OP_INVALID_PARAMS"
                         })
                     }
-                    
-                    // if(req.body.tableId.trim() == ''){
-                    //     return res.status(200).json({
-                    //         "status": "OP_INVALID_PARAMS"
-                    //     })
-                    // }
                 }
                 next()
             }else{
@@ -497,8 +491,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 balance = user.availableBalance - exposureCheck + exposure
             }
         }else{
-            // let returnAmount = 
-            let thatBet = await betModel.findOne({transactionId:req.body.transactionId})
             if(thatBet.marketId){
                 let debitCreditAmount = req.body.creditAmount + thatBet.returns
                 // console.log(debitCreditAmount)
@@ -555,8 +547,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 
             }else{
                 let returnAmount = req.body.creditAmount + thatBet.returns
-                let thatBET = await betModel.findOne({transactionId:req.body.transactionId})
-                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-thatBET.Stake, uplinePL:-req.body.creditAmount, pointsWL:req.body.creditAmount}});
+                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-thatBet.Stake, uplinePL:-req.body.creditAmount, pointsWL:req.body.creditAmount}});
                 let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:returnAmount,settleDate:Date.now(), closingBalance:parseFloat(user.availableBalance + req.body.creditAmount)});
                 let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
                 let debitAmountForP = req.body.creditAmount
