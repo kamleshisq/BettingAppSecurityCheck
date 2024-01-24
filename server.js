@@ -173,34 +173,34 @@ io.on('connection', (socket) => {
         return whiteLabel
     }
 
-    socket.on('checklogintimeout',async(data)=>{
-        try{
-            let loginuser = await loginuserdata.findOne({userId:data.id})
-            let loginstatus = true
-            if(loginuser && (Date.now() - new Date(loginuser.date).getTime())/(1000 * 60) >= 1000){
-                loginstatus = false
-                let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser
-                `
-                fetch(fullUrl, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'accept': 'application/json' },
-                    body:JSON.stringify({'sessiontoken':data.sessiontoken,'userId':data.id})
-                }).then(res => res.json())
-                .then(json =>{
-                    // console.log(json.status)
-                    if(json.status == "success"){
-                        socket.emit('checklogintimeout',{status:'success',loginstatus})
-                    }
-                })
-            }
+    // socket.on('checklogintimeout',async(data)=>{
+    //     try{
+    //         let loginuser = await loginuserdata.findOne({userId:data.id})
+    //         let loginstatus = true
+    //         if(loginuser && (Date.now() - new Date(loginuser.date).getTime())/(1000 * 60) >= 30){
+    //             loginstatus = false
+    //             let fullUrl =  `http://127.0.0.1:${process.env.port}/api/v1/auth/logOutSelectedUser
+    //             `
+    //             fetch(fullUrl, {
+    //                 method: 'POST',
+    //                 headers: { 
+    //                     'Content-Type': 'application/json',
+    //                     'accept': 'application/json' },
+    //                 body:JSON.stringify({'sessiontoken':data.sessiontoken,'userId':data.id})
+    //             }).then(res => res.json())
+    //             .then(json =>{
+    //                 // console.log(json.status)
+    //                 if(json.status == "success"){
+    //                     socket.emit('checklogintimeout',{status:'success',loginstatus})
+    //                 }
+    //             })
+    //         }
                 
-        }catch(err){
-            console.log(err)
-        }
+    //     }catch(err){
+    //         console.log(err)
+    //     }
 
-    })
+    // })
 
     socket.on('checkpasswordreset',async(data)=>{
         if(data.LOGINUSER){

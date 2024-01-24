@@ -1381,15 +1381,15 @@ socket.on('connect', () => {
             }
         })
 
-        setInterval(()=>{
-            socket.emit('checklogintimeout',{id:LOGINDATA.LOGINUSER._id,sessiontoken:sessionStorage.getItem('sessiontoken')})
-        },1000)
+        // setInterval(()=>{
+        //     socket.emit('checklogintimeout',{id:LOGINDATA.LOGINUSER._id,sessiontoken:sessionStorage.getItem('sessiontoken')})
+        // },1000)
 
-        socket.on('checklogintimeout',async(data)=>{
-            if(!data){
-                location.href = '/adminlogin'
-            }
-        })
+        // socket.on('checklogintimeout',async(data)=>{
+        //     if(!data){
+        //         location.href = '/adminlogin'
+        //     }
+        // })
 
       
     }
