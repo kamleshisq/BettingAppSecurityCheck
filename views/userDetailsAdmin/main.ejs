@@ -537,9 +537,27 @@
                               <div class="tab-heading"> <h4>KYC Status : <span class="green">Successfull</span></h4> </div>
                             <%}else if(userDetails.kycDoc != null && !userDetails.isKycVer){ %>
                               <div class="tab-heading"> <h4>KYC Status : <span class="yellow">Processing</span></h4> </div>
-                              <%} %>
-                            <button type="button" id="viewPdfButton">View Uploaded Document</button>
-                            
+                            <%} %>
+                            <button data-bs-toggle="modal" data-bs-target="#kycDoc" class="getBannerDetails">View Uploaded Document</button>
+                            <!-- <button type="button" id="viewPdfButton">View Uploaded Document</button> -->
+                            <div class="modal" id="kycDoc" >
+                              <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+                                  </div>
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Document</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <a href="/var/www/bettingApp/documents/<%userDetails.userName%>.pdf"></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
                           </div>
                         </div>
                       </div>
