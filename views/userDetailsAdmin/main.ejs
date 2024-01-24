@@ -535,6 +535,14 @@
                                                   <label for="contact">Document Number</label>
                                                   <input type="number" readonly name="contact" placeholder="<%=userDetails.kycDocNum%>" value="<%=userDetails.kycDocNum%>">
                                               </div>
+                                              <div class="col form-group">
+                                                <label for="contact">verified</label>
+                                                <%if(userDetails.kycDoc != null && userDetails.isKycVer){ %>
+                                                  <input type="checkbox" name="contact" checked>
+                                                <%}else{%>
+                                                  <input type="checkbox" name="contact">
+                                                <%}%>
+                                            </div>
                                           </div>
                                       </form>
                                     </div>
