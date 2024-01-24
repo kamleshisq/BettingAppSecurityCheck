@@ -2710,20 +2710,20 @@ io.on('connection', (socket) => {
 
     socket.on('deleteSlider', async(data) => {
         console.log(data)
-        // try{
-        //     let whiteLabel = process.env.whiteLabelName
-        //     if(data.LOGINUSER.role_type == 1){
-        //         whiteLabel = "1"
-        //     }
-        //     let deleted = await sliderModel.findByIdAndDelete(data.id)
-        //     await sliderModel.updateMany({Number:{$gt:deleted.Number},whiteLabelName: whiteLabel},{$inc:{Number:-1}})
-        //         socket.emit("deleteSlider", "Deleted successfully")
-        //     }catch(err){
-        //     if(err){
-        //         console.log(err)
-        //         socket.emit("deleteSlider", "Please try again leter")
-        //     }
-        // }
+        try{
+            let whiteLabel = process.env.whiteLabelName
+            if(data.LOGINDATA.LOGINUSER.role_type == 1){
+                whiteLabel = "1"
+            }
+            let deleted = await sliderModel.findByIdAndDelete(data.id)
+            await sliderModel.updateMany({Number:{$gt:deleted.Number},whiteLabelName: whiteLabel},{$inc:{Number:-1}})
+                socket.emit("deleteSlider", "Deleted successfully")
+            }catch(err){
+            if(err){
+                console.log(err)
+                socket.emit("deleteSlider", "Please try again leter")
+            }
+        }
     })
 
 
