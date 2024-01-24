@@ -65,6 +65,19 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         // console.log(loginData[0].gameToken,req.body.token , "loginDataloginDataloginData12313211132")
         if(loginData[0] && loginData[0].gameToken){
             if(loginData[0].gameToken == req.body.token){
+                if(req.body.betType === "Casino"){
+                    if(req.body.gameId.trim() == ''){
+                        return res.status(200).json({
+                            "status": "OP_INVALID_PARAMS"
+                        })
+                    }
+                    
+                    if(req.body.tableId.trim() == ''){
+                        return res.status(200).json({
+                            "status": "OP_INVALID_PARAMS"
+                        })
+                    }
+                }
                 next()
             }else{
                 if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
@@ -128,7 +141,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
-    console.log('reqddddddddddddddddddddd')
+    // console.log('reqddddddddddddddddddddd')
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     try{
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
