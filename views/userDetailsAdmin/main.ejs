@@ -42,7 +42,7 @@
             <button class="tablinks" onclick="openCity(event, 'kyc')"> kyc</button>
           <%}%>
       </div>
-      <div id="Cricket" class="tabcontent">
+              <div id="Cricket" class="tabcontent">
                   <div class="row">
                       <div class="container">
                           <div class="form-container">
@@ -103,19 +103,6 @@
                   
                   </div>
               </div> 
-              <!-- <div id="FOOTBALL" class="tabcontent">
-                  <div class="row">
-                      <div class="container">
-                          <div class="form-container">
-                            <div class="form-column blue">
-                              <div class="tab-heading">
-                                  <h4>User Config</h4>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-                  </div>
-              </div>  -->
               <div id="TENNIS" class="tabcontent">
                   <div class="row">
                       <div class="container">
@@ -538,6 +525,27 @@
                             <%}else if(userDetails.kycDoc != null && !userDetails.isKycVer){ %>
                               <div class="tab-heading"> <h4>KYC Status : <span class="yellow">Processing</span></h4> </div>
                             <%} %>
+                            <div class="row">
+                              <div class="container">
+                                  <div class="form-container">
+                                    <div class="form-column blue">
+                                      <div class="tab-heading"> <h4>User Details</h4> </div>
+                                      <form class="form-data userDetails" id="<%=userDetails._id%>">
+                                          <div class="row">
+                                              <div class="col form-group">
+                                                  <label for="contact">Document Number</label>
+                                                  <input type="number" readonly name="contact" placeholder="<%=userDetails.kycDocNum%>" value="<%=userDetails.kycDocNum%>">
+                                              </div>
+                                          </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                          
+                          </div>
+
+
+
                             <button class="kycPdf" id="<%=userDetails.id%>" >View Uploaded Document</button>
                             
 
