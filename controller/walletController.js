@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const exposurecheckfunction = require('../utils/checkExpoOfThatUSer');
 const reqIdModel = require('../model/reqIdModel');
 const updateParents = require('../utils/parentUserUpdateByBet');
+const updateParents2 = require('../utils/parentUpdateByBetsaWin');
 // const Decimal = require("decima")
 // const { use } = require('../app');
 function readPem (filename) {
@@ -555,6 +556,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
                 let debitAmountForP = req.body.creditAmount
                 // updateParents(user, amount, amount)
+                updateParents2(user, debitAmountForP, debitAmountForP)
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
                     let parentUser1 = await userModel.findById(user.parentUsers[i])
                     let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
