@@ -531,11 +531,11 @@
                     <div class="container">
                         <div class="form-container">
                           <div class="form-column blue">
-                            %if(user.kycDoc === null){%>
+                            %if(userDetails.kycDoc === null){%>
                               <<div class="tab-heading"> <h4>KYC Status : <span class="red">Pending</span></h4> </div>
-                            <%}else if(user.kycDoc != null && user.isKycVer){ %>
+                            <%}else if(userDetails.kycDoc != null && userDetails.isKycVer){ %>
                               <div class="tab-heading"> <h4>KYC Status : <span class="green">Successfull</span></h4> </div>
-                            <%}else if(user.kycDoc != null && !user.isKycVer){ %>
+                            <%}else if(userDetails.kycDoc != null && !userDetails.isKycVer){ %>
                               <div class="tab-heading"> <h4>KYC Status : <span class="yellow">Processing</span></h4> </div>
                               <%} %>
                             <button type="button" id="viewPdfButton">View Uploaded Document</button>
