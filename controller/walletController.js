@@ -23,6 +23,7 @@ function readPem (filename) {
   }
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
+    console.time('verification');
     console.log('Body:',req.body)
     let x  = req.body
     let publicKey
@@ -36,9 +37,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
             "status": "RS_ERROR"
         })
     }
-    console.time('verification');
     let result = verify(req.headers.signature, publicKey, x)
-    console.timeEnd('verification');
     // next()
     if(result){
         if(req.body.reqId){
@@ -125,6 +124,8 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     let exposureCheck  = user.exposure
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let balanceSend = user.availableBalance - exposureCheck
+    console.timeEnd('verification');
+
     if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
         res.status(200).json({
             "balance": balanceSend,
@@ -351,6 +352,8 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             }
             accountStatement.create(Acc)
         }
+    console.timeEnd('verification');
+
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             return res.status(200).json({
                 "balance": user.availableBalance - req.body.debitAmount - exposureCheck,
@@ -617,6 +620,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 
             }
         }
+    console.timeEnd('verification');
+
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             res.status(200).json({
                 "balance": balance,
@@ -711,6 +716,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 "gameId": req.body.gameId
             }
             accountStatement.create(Acc)
+    console.timeEnd('verification');
+
             res.status(200).json({
                 "status": "OP_SUCCESS",
                 "balance": balance
@@ -738,6 +745,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 
             }
             accountStatement.create(Acc)
+    console.timeEnd('verification');
+
             res.status(200).json({
                 "status": "OP_SUCCESS",
                 "balance": balance - checkExposure
@@ -775,6 +784,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
 
             }
             accountStatement.create(Acc)
+    console.timeEnd('verification');
+
             res.status(200).json({
                 "status": "RS_OK",
                 "balance": user.availableBalance + debitCreditAmoun - checkExposure- bet1.exposure
@@ -785,6 +796,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             let balance = user.availableBalance 
             let checkExposure = user.exposure
             await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
+    console.timeEnd('verification');
+
             res.status(200).json({
                 "status": "RS_OK",
                 "balance": balance - checkExposure
