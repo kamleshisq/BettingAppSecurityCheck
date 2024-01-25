@@ -803,7 +803,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     })
                 }
             }else{
-                betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
+                await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
                 if(bet1 && req.body.gameId){
                     let game = {}
                         game = await gameModel.findOne({game_id:(req.body.gameId)*1})
