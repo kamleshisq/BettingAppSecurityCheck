@@ -775,7 +775,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             accountStatement.create(Acc)
             res.status(200).json({
                 "status": "RS_OK",
-                "balance": balance + debitCreditAmoun - checkExposure- bet1.exposure
+                "balance": user.availableBalance + debitCreditAmoun - checkExposure- bet1.exposure
             })
 
         }else{
