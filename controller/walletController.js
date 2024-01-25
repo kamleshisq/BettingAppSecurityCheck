@@ -745,7 +745,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     }else{
         let game = {}
         game.game_name = bet1.match
-        balance = user.availableBalance - checkExposure + debitCreditAmoun - bet1.exposure;
+        // balance = user.availableBalance - checkExposure + debitCreditAmoun - bet1.exposure;
         if(bet1.status !== "OPEN"){
             let debitCreditAmoun
             if(bet1.exposure){
@@ -775,7 +775,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             accountStatement.create(Acc)
             res.status(200).json({
                 "status": "RS_OK",
-                "balance": balance + debitCreditAmoun - checkExposure
+                "balance": balance + debitCreditAmoun - checkExposure- bet1.exposure
             })
 
         }else{
