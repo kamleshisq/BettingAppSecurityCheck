@@ -633,8 +633,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 });
 
 exports.rollBack = catchAsync(async(req, res, next) => {
-    try{
-    let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
     let clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     if(!req.body.transactionId || req.body.transactionId.trim() === ''){
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
@@ -647,208 +645,14 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             })
         }
     }
-
+  
     if(!req.body.reqId || req.body.reqId.trim() === ''){
         return res.status(200).json({
             "status": "RS_ERROR"
         })
     }
-
-    if(req.body.transactionId){
-        let check = await reqIdModel.findOne({reqId:req.body.transactionId})
-        // console.log(check,bet1.status, "bet1.statusbet1.statusbet1.statusbet1.status" )
-        if(check && (bet1.status === "OPEN" || bet1.status === "CANCEL")){
-            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-                return res.status(200).json({
-                    "status": "RS_ERROR"
-                })
-            }else{
-                return res.status(200).json({
-                    "status": "OP_TRANSACTION_NOT_FOUND"
-                })
-            }
-        }else{
-            if(!check){
-                await reqIdModel.create({reqId:req.body.transactionId})
-            }
-        }
-    }
-    if(req.body.gameId){
-        game = await gameModel.findOne({game_id:(req.body.gameId)*1})
-        if(!game){
-            return res.status(200).json({
-                "status": "OP_INVALID_GAME"
-            })
-        }
-    }
-    // console.log(user, bet1)
-
-    if(bet1 != null){
-        if(bet1.status !== "OPEN"){
-           let debitCreditAmoun 
-           let user
-           if(req.body.gameId){
-            debitCreditAmoun = req.body.rollbackAmount
-           }else{
-            if(bet1.exposure){
-                debitCreditAmoun = req.body.rollbackAmount + bet1.exposure
-            }else{
-                debitCreditAmoun = req.body.rollbackAmount
-            }
-           }
-           user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}}); 
-           let checkExposure = user.exposure
-           if(!user){
-                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-                    return res.status(200).json({
-                        "status": "RS_ERROR"
-                    })
-                }else{
-                    return res.status(200).json({
-                        "status": "RS_ERROR"
-                    })
-                }
-            }else{
-                let game = {}
-                if(req.body.gameId){
-                    game = await gameModel.findOne({game_id:(req.body.gameId)*1})
-                    if(!game){
-                        return res.status(200).json({
-                            "status": "RS_ERROR"
-                        })
-                    }
-                    balance = user.availableBalance + debitCreditAmoun - checkExposure;
-                }else{
-                    game.game_name = bet1.match
-                    balance = user.availableBalance - checkExposure + debitCreditAmoun - bet1.exposure;
-                }
-                let debitAmountForP = debitCreditAmoun
-                updateParents2(user, debitAmountForP, req.body.rollbackAmount)
-                let acc = await accountStatement.find({transactionId:req.body.transactionId})
-                if(bet1){
-                    await betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
-                    if(req.body.gameId){
-                        let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/ROLLBACK`
-                        if(acc){
-                            if(req.body.gameId){
-                                let Acc = {
-                                    "user_id":req.body.userId,
-                                    "description": description,
-                                    "creditDebitamount" : req.body.rollbackAmount,
-                                    "balance" : user.availableBalance + req.body.rollbackAmount,
-                                    "date" : Date.now(),
-                                    "userName" : user.userName,
-                                    "role_type" : user.role_type,
-                                    "Remark":"-",
-                                    "stake": req.body.rollbackAmount,
-                                    "transactionId":req.body.transactionId,
-                                    "gameId": req.body.gameId
-                                }
-                                accountStatement.create(Acc)
-                            }else{
-                                let Acc = {
-                                    "user_id":req.body.userId,
-                                    "description": description,
-                                    "creditDebitamount" : req.body.rollbackAmount,
-                                    "balance" : user.availableBalance + req.body.rollbackAmount,
-                                    "date" : Date.now(),
-                                    "userName" : user.userName,
-                                    "role_type" : user.role_type,
-                                    "Remark":"-",
-                                    "stake": req.body.rollbackAmount,
-                                    "transactionId":req.body.transactionId,
-                                    "marketId":req.body.marketId
-
-                                }
-                                accountStatement.create(Acc)
-                            }
-                        }
-                    }
-                }
-                // console.log(balance)
-                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-                    res.status(200).json({
-                        "status": "RS_OK",
-                        "balance": balance
-                    })
-                }else{
-                    res.status(200).json({
-                        "status": "OP_SUCCESS",
-                        "balance": balance
-                    })
-                }
-            }
-        }else{
-
-            let user;
-            let balance;
-            let checkExposure;
-            if(req.body.gameId){
-                user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
-                checkExposure = user.exposure
-            }else{
-                user = await userModel.findById(req.body.userId)
-                balance = user.availableBalance 
-                checkExposure = user.exposure
-            }
-            // console.log(user, "USer")
-            if(!user){
-                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-                    return res.status(200).json({
-                        "status": "RS_ERROR"
-                    })
-                }else{
-                    return res.status(200).json({
-                        "status": "RS_ERROR"
-                    })
-                }
-            }else{
-                await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
-                if(bet1 && req.body.gameId){
-                    let game = {}
-                        game = await gameModel.findOne({game_id:(req.body.gameId)*1})
-                        if(!game){
-                            return res.status(200).json({
-                                "status": "RS_ERROR"
-                            })
-                        }
-                        let debitAmountForP = req.body.rollbackAmount
-                        updateParents2(user, debitAmountForP, req.body.rollbackAmount)
-                        balance = user.availableBalance + req.body.rollbackAmount;
-                        let acc = await accountStatement.find({transactionId:req.body.transactionId})
-                        let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/CANCEL`
-                        if(acc){
-                            let Acc = {
-                                "user_id":req.body.userId,
-                                "description": description,
-                                "creditDebitamount" : req.body.rollbackAmount,
-                                "balance" : user.availableBalance + req.body.rollbackAmount,
-                                "date" : Date.now(),
-                                "userName" : user.userName,
-                                "role_type" : user.role_type,
-                                "Remark":"-",
-                                "stake": req.body.rollbackAmount,
-                                "transactionId":req.body.transactionId,
-                                "gameId":req.body.gameId
-                                
-                            }
-                            accountStatement.create(Acc)
-                        }
-                }
-                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
-                    res.status(200).json({
-                        "status": "RS_OK",
-                        "balance": balance - checkExposure
-                    })
-                }else{
-                    res.status(200).json({
-                        "status": "OP_SUCCESS",
-                        "balance": balance - checkExposure
-                    })
-                }
-            }
-        }
-    }else{
+    let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
+    if(!bet1){
         if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
             return res.status(200).json({
                 "status": "RS_ERROR"
@@ -859,9 +663,131 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             })
         }
     }
-    
-        }catch(err){
-            console.log(err)
+    let check = await reqIdModel.findOne({reqId:req.body.transactionId})
+    // console.log(check,bet1.status, "bet1.statusbet1.statusbet1.statusbet1.status" )
+    if(check && (bet1.status === "OPEN" || bet1.status === "CANCEL")){
+        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            return res.status(200).json({
+                "status": "RS_ERROR"
+            })
+        }else{
+            return res.status(200).json({
+                "status": "OP_TRANSACTION_NOT_FOUND"
+            })
         }
-    
+    }else{
+        if(!check){
+            reqIdModel.create({reqId:req.body.transactionId})
+        }
+    }
+    if(req.body.gameId){
+        let game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+        if(!game){
+            return res.status(200).json({
+                "status": "OP_INVALID_GAME"
+            })
+        }
+        if(bet1.status !== "OPEN"){
+            let debitCreditAmoun = req.body.rollbackAmount
+            let user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}}); 
+            let checkExposure = user.exposure
+            balance = user.availableBalance + debitCreditAmoun - checkExposure;
+            updateParents2(user, debitCreditAmoun, req.body.rollbackAmount)
+            await betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
+            let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/ROLLBACK`
+            let Acc = {
+                "user_id":req.body.userId,
+                "description": description,
+                "creditDebitamount" : req.body.rollbackAmount,
+                "balance" : user.availableBalance + req.body.rollbackAmount,
+                "date" : Date.now(),
+                "userName" : user.userName,
+                "role_type" : user.role_type,
+                "Remark":"-",
+                "stake": req.body.rollbackAmount,
+                "transactionId":req.body.transactionId,
+                "gameId": req.body.gameId
+            }
+            accountStatement.create(Acc)
+            res.status(200).json({
+                "status": "OP_SUCCESS",
+                "balance": balance
+            })
+
+        }else{
+            let user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
+            checkExposure = user.exposure
+            await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
+            updateParents2(user, req.body.rollbackAmount, req.body.rollbackAmount)
+            balance = user.availableBalance + req.body.rollbackAmount;
+            let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/CANCEL`
+            let Acc = {
+                "user_id":req.body.userId,
+                "description": description,
+                "creditDebitamount" : req.body.rollbackAmount,
+                "balance" : user.availableBalance + req.body.rollbackAmount,
+                "date" : Date.now(),
+                "userName" : user.userName,
+                "role_type" : user.role_type,
+                "Remark":"-",
+                "stake": req.body.rollbackAmount,
+                "transactionId":req.body.transactionId,
+                "gameId":req.body.gameId
+                
+            }
+            accountStatement.create(Acc)
+            res.status(200).json({
+                "status": "OP_SUCCESS",
+                "balance": balance - checkExposure
+            })
+        }
+
+    }else{
+        let game = {}
+        game.game_name = bet1.match
+        balance = user.availableBalance - checkExposure + debitCreditAmoun - bet1.exposure;
+        if(bet1.status !== "OPEN"){
+            let debitCreditAmoun
+            if(bet1.exposure){
+                debitCreditAmoun = req.body.rollbackAmount + bet1.exposure
+            }else{
+                debitCreditAmoun = req.body.rollbackAmount
+            }
+            let user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:debitCreditAmoun, myPL: debitCreditAmoun, uplinePL:-debitCreditAmoun, pointsWL:debitCreditAmoun}}); 
+            let checkExposure = user.exposure
+            updateParents2(user, debitCreditAmoun, debitCreditAmoun)
+            await betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
+            let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/ROLLBACK`
+            let Acc = {
+                "user_id":req.body.userId,
+                "description": description,
+                "creditDebitamount" : debitCreditAmoun,
+                "balance" : user.availableBalance + debitCreditAmoun,
+                "date" : Date.now(),
+                "userName" : user.userName,
+                "role_type" : user.role_type,
+                "Remark":"-",
+                "stake": bet1.Stake,
+                "transactionId":req.body.transactionId,
+                "marketId":req.body.marketId
+
+            }
+            accountStatement.create(Acc)
+            res.status(200).json({
+                "status": "RS_OK",
+                "balance": balance + debitCreditAmoun - checkExposure
+            })
+
+        }else{
+            let user = await userModel.findById(req.body.userId)
+            let balance = user.availableBalance 
+            let checkExposure = user.exposure
+            await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
+            res.status(200).json({
+                "status": "RS_OK",
+                "balance": balance - checkExposure
+            })
+        }
+
+    }
 })
