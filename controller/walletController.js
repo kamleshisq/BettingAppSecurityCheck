@@ -726,7 +726,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 updateParents2(user, debitAmountForP, req.body.rollbackAmount)
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
                 if(bet1){
-                    await betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
+                    betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
                     if(req.body.gameId){
                         let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/ROLLBACK`
                         if(acc){
@@ -744,7 +744,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                                     "transactionId":req.body.transactionId,
                                     "gameId": req.body.gameId
                                 }
-                                await accountStatement.create(Acc)
+                                accountStatement.create(Acc)
                             }else{
                                 let Acc = {
                                     "user_id":req.body.userId,
@@ -760,7 +760,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                                     "marketId":req.body.marketId
 
                                 }
-                                await accountStatement.create(Acc)
+                                accountStatement.create(Acc)
                             }
                         }
                     }
@@ -803,7 +803,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     })
                 }
             }else{
-                await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
+                betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
                 if(bet1 && req.body.gameId){
                     let game = {}
                         game = await gameModel.findOne({game_id:(req.body.gameId)*1})
@@ -832,7 +832,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                                 "gameId":req.body.gameId
                                 
                             }
-                            await accountStatement.create(Acc)
+                            accountStatement.create(Acc)
                         }
                 }
                 if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
