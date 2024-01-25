@@ -692,6 +692,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
            }else{
             if(bet1.exposure){
                 debitCreditAmoun = req.body.rollbackAmount + bet1.exposure
+                // console.log(debitCreditAmoun, "debitCreditAmoundebitCreditAmoundebitCreditAmoun")
             }else{
                 debitCreditAmoun = req.body.rollbackAmount
             }
@@ -717,13 +718,47 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                             "status": "RS_ERROR"
                         })
                     }
-                    balance = user.availableBalance + debitCreditAmoun - checkExposure;
                 }else{
                     game.game_name = bet1.match
-                    balance = user.availableBalance - checkExposure + debitCreditAmoun - bet1.exposure;
                 }
                 let debitAmountForP = debitCreditAmoun
                 updateParents2(user, debitAmountForP, req.body.rollbackAmount)
+                // for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                //     let parentUser1 = await userModel.findById(user.parentUsers[i])
+                //     let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                //     let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                //     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                //     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                //     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                //     await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                //         $inc: {
+                //             downlineBalance: req.body.rollbackAmount,
+                //             myPL: -parentUser1Amount,
+                //             uplinePL: -parentUser2Amount,
+                //             lifetimePL: -parentUser1Amount,
+                //             pointsWL: req.body.rollbackAmount
+                //         }
+                //     });
+                
+                //     if (i === 1) {
+                //         await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                //             $inc: {
+                //                 downlineBalance: req.body.rollbackAmount,
+                //                 myPL: -parentUser2Amount,
+                //                 lifetimePL: -parentUser2Amount,
+                //                 pointsWL: req.body.rollbackAmount
+                //             }
+                //         });
+                //     }
+                //     debitAmountForP = parentUser2Amount
+                // }
+                if(req.body.gameId){
+                    balance = user.availableBalance + debitCreditAmoun - checkExposure;
+                }else{
+                    balance = user.availableBalance - checkExposure + debitCreditAmoun - bet1.exposure;
+                }
+
+                // let bet =  await betModel.findOne({transactionId:req.body.transactionId})
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
                 if(bet1){
                     await betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
@@ -803,8 +838,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     })
                 }
             }else{
-                betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
-                if(bet1 && req.body.gameId){
+                let bet =  await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
+                if(bet && req.body.gameId){
                     let game = {}
                         game = await gameModel.findOne({game_id:(req.body.gameId)*1})
                         if(!game){
@@ -814,9 +849,39 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                         }
                         let debitAmountForP = req.body.rollbackAmount
                         updateParents2(user, debitAmountForP, req.body.rollbackAmount)
+                        // for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                        //     let parentUser1 = await userModel.findById(user.parentUsers[i])
+                        //     let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                        //     let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                        //     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                        //     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                        //     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                        //     await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                        //         $inc: {
+                        //             downlineBalance: req.body.rollbackAmount,
+                        //             myPL: -parentUser1Amount,
+                        //             uplinePL: -parentUser2Amount,
+                        //             lifetimePL: -parentUser1Amount,
+                        //             pointsWL: req.body.rollbackAmount
+                        //         }
+                        //     });
+                        
+                        //     if (i === 1) {
+                        //         await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                        //             $inc: {
+                        //                 downlineBalance: req.body.rollbackAmount,
+                        //                 myPL: -parentUser2Amount,
+                        //                 lifetimePL: -parentUser2Amount,
+                        //                 pointsWL: req.body.rollbackAmount
+                        //             }
+                        //         });
+                        //     }
+                        //     debitAmountForP = parentUser2Amount
+                        // }
+        
                         balance = user.availableBalance + req.body.rollbackAmount;
                         let acc = await accountStatement.find({transactionId:req.body.transactionId})
-                        let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/CANCEL`
+                        let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/CANCEL`
                         if(acc){
                             let Acc = {
                                 "user_id":req.body.userId,
