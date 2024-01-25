@@ -36,7 +36,9 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
             "status": "RS_ERROR"
         })
     }
+    console.time('verification');
     let result = verify(req.headers.signature, publicKey, x)
+    console.timeEnd('verification');
     // next()
     if(result){
         if(req.body.reqId){
