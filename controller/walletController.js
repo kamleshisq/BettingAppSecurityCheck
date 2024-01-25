@@ -726,7 +726,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 updateParents2(user, debitAmountForP, req.body.rollbackAmount)
                 let acc = await accountStatement.find({transactionId:req.body.transactionId})
                 if(bet1){
-                    betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
+                    await betModel.findByIdAndUpdate(bet1._id.toString(),{returns:-bet1.exposure, status:"OPEN"})
                     if(req.body.gameId){
                         let description = `Bet for ${game.game_name}/stake = ${bet1.Stake}/ROLLBACK`
                         if(acc){
@@ -803,7 +803,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     })
                 }
             }else{
-                betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
+                await betModel.findOneAndUpdate({transactionId:req.body.transactionId}, {returns:0, status:"CANCEL"})
                 if(bet1 && req.body.gameId){
                     let game = {}
                         game = await gameModel.findOne({game_id:(req.body.gameId)*1})
