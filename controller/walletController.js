@@ -722,35 +722,36 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                     game.game_name = bet1.match
                 }
                 let debitAmountForP = debitCreditAmoun
-                for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                    let parentUser1 = await userModel.findById(user.parentUsers[i])
-                    let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
-                    let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-                    let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-                    parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-                    parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                        $inc: {
-                            downlineBalance: req.body.rollbackAmount,
-                            myPL: -parentUser1Amount,
-                            uplinePL: -parentUser2Amount,
-                            lifetimePL: -parentUser1Amount,
-                            pointsWL: req.body.rollbackAmount
-                        }
-                    });
+                updateParents2(user, debitAmountForP, req.body.rollbackAmount)
+                // for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                //     let parentUser1 = await userModel.findById(user.parentUsers[i])
+                //     let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                //     let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                //     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                //     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                //     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                //     await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                //         $inc: {
+                //             downlineBalance: req.body.rollbackAmount,
+                //             myPL: -parentUser1Amount,
+                //             uplinePL: -parentUser2Amount,
+                //             lifetimePL: -parentUser1Amount,
+                //             pointsWL: req.body.rollbackAmount
+                //         }
+                //     });
                 
-                    if (i === 1) {
-                        await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
-                            $inc: {
-                                downlineBalance: req.body.rollbackAmount,
-                                myPL: -parentUser2Amount,
-                                lifetimePL: -parentUser2Amount,
-                                pointsWL: req.body.rollbackAmount
-                            }
-                        });
-                    }
-                    debitAmountForP = parentUser2Amount
-                }
+                //     if (i === 1) {
+                //         await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                //             $inc: {
+                //                 downlineBalance: req.body.rollbackAmount,
+                //                 myPL: -parentUser2Amount,
+                //                 lifetimePL: -parentUser2Amount,
+                //                 pointsWL: req.body.rollbackAmount
+                //             }
+                //         });
+                //     }
+                //     debitAmountForP = parentUser2Amount
+                // }
                 if(req.body.gameId){
                     balance = user.availableBalance + debitCreditAmoun - checkExposure;
                 }else{
@@ -847,35 +848,36 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                             })
                         }
                         let debitAmountForP = req.body.rollbackAmount
-                        for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                            let parentUser1 = await userModel.findById(user.parentUsers[i])
-                            let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
-                            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-                            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-                            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-                            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                                $inc: {
-                                    downlineBalance: req.body.rollbackAmount,
-                                    myPL: -parentUser1Amount,
-                                    uplinePL: -parentUser2Amount,
-                                    lifetimePL: -parentUser1Amount,
-                                    pointsWL: req.body.rollbackAmount
-                                }
-                            });
+                        updateParents2(user, debitAmountForP, req.body.rollbackAmount)
+                        // for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                        //     let parentUser1 = await userModel.findById(user.parentUsers[i])
+                        //     let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                        //     let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                        //     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                        //     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                        //     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                        //     await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                        //         $inc: {
+                        //             downlineBalance: req.body.rollbackAmount,
+                        //             myPL: -parentUser1Amount,
+                        //             uplinePL: -parentUser2Amount,
+                        //             lifetimePL: -parentUser1Amount,
+                        //             pointsWL: req.body.rollbackAmount
+                        //         }
+                        //     });
                         
-                            if (i === 1) {
-                                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
-                                    $inc: {
-                                        downlineBalance: req.body.rollbackAmount,
-                                        myPL: -parentUser2Amount,
-                                        lifetimePL: -parentUser2Amount,
-                                        pointsWL: req.body.rollbackAmount
-                                    }
-                                });
-                            }
-                            debitAmountForP = parentUser2Amount
-                        }
+                        //     if (i === 1) {
+                        //         await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                        //             $inc: {
+                        //                 downlineBalance: req.body.rollbackAmount,
+                        //                 myPL: -parentUser2Amount,
+                        //                 lifetimePL: -parentUser2Amount,
+                        //                 pointsWL: req.body.rollbackAmount
+                        //             }
+                        //         });
+                        //     }
+                        //     debitAmountForP = parentUser2Amount
+                        // }
         
                         balance = user.availableBalance + req.body.rollbackAmount;
                         let acc = await accountStatement.find({transactionId:req.body.transactionId})
