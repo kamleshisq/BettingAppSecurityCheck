@@ -8,6 +8,9 @@ socket.on('disconnect', () => {
     
     attemptReconnect();
 });
+window.onload = function() {
+    attemptReconnect();
+}
 let c = 0
 socket.on('connect', () => {
     const urlParams = new URLSearchParams(window.location.search);
