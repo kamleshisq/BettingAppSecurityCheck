@@ -8,10 +8,13 @@ socket.on('disconnect', () => {
     
     attemptReconnect();
 });
-window.addEventListener('popstate', function(event) {
-    console.log('WORKING')
-    socket.connect();
-})
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        console.log('Page was cached and is now shown');
+        // Re-establish WebSocket connection here
+        socket.connect();
+    }
+});
 let c = 0
 socket.on('connect', () => {
     const urlParams = new URLSearchParams(window.location.search);
