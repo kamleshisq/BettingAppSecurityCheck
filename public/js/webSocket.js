@@ -12,7 +12,7 @@ window.addEventListener('pageshow', function(event) {
     if (event.persisted) {
         console.log('Page was cached and is now shown');
         // Re-establish WebSocket connection here
-        socket.connect();
+        window.location.reload();
     }
 });
 let c = 0
