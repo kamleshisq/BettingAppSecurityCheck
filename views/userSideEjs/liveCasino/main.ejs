@@ -55,9 +55,9 @@
                                 <div class="input-group flex-nowrap liv-casino-nav-serchcol-inputgrop2">
                                   <select class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <option selected value="All">All</option>
-                                    <option value="RG">Royal Gaming</option>
-                                    <option value="EZUGI">Ezugi</option>
-                                    <option value="DC">Evolution Gaming</option>
+                                    <%for(let i = 0; i < filterData.length; i++){%>
+                                      <option value="<%=filterData[i]._id%>"><%=filterData[i].sub_provider_name%></option>
+                                    <%}%>
                                   </select>
                                 </div>
 

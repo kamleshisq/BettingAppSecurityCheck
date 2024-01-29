@@ -3945,7 +3945,8 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
         notifications:req.notifications,
         gamesFe,
         basicDetails,
-        colorCode
+        colorCode,
+        filterData
     })
 });
 
