@@ -21,9 +21,10 @@ exports.addXlsFIle = catchAsync(async(req, res, next) => {
         data1.sub_provider_name = data[i][4];
         data1.category = data[i][2];
         data1.game_code = data[i][7];
-        data1.game_id = data[i][0]
+        data1.game_id = (data[i][0] * 1)
         data1.game_name = data[i][1]
         data1.url_thumb = data[i][6]
+        data1.whiteLabelName = 'dev.ollscores.com'
         // await gameModel.create(data1)
         console.log(data1)
 
