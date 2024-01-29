@@ -3907,7 +3907,7 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
-    console.log(games.length, "qwsdfghjkkkkkkkkkkk")
+    // console.log(games.length, "qwsdfghjkkkkkkkkkkk")
     let userLog
     let gamesFe = []
     if(user){
@@ -3917,6 +3917,23 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
             gamesFe = gamesfev.gameId
         }
     }
+    let filterData = await gameModel.aggregate([
+        {
+            $match:{
+                whiteLabelName: whiteLabel,
+                status:true
+            }
+        },
+        {
+            $group:{
+                _id:'$provider_name',
+                sub_provider_name:{
+                    $first:'$sub_provider_name'
+                }
+            }
+        }
+    ])
+    console.log(filterData, "filterDatafilterDatafilterDatafilterData")
     res.status(200).render("./userSideEjs/liveCasino/main", {
         title:'Live Casino',
         user,
