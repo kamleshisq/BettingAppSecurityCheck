@@ -3767,8 +3767,8 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
     const textToSign = JSON.stringify(body);
     const hashedOutput = SHA256(privateKey, textToSign);
     console.log(hashedOutput, "hashedOutputhashedOutputhashedOutput")
-    var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/user-login';
-    // var fullUrl = 'https://api.mysportsfeed.io/api/v1/feed/user-login';
+    // var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/user-login';
+    var fullUrl = 'https://api.mysportsfeed.io/api/v1/feed/user-login';
     await fetch(fullUrl, {
         method: 'POST',
         headers: { 
