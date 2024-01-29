@@ -4,7 +4,7 @@ const User = require('../model/userModel');
 const loginLogs = require("../model/loginLogs");
 const Role = require('../model/roleModel');
 const betModel = require("../model/betmodel");
-const Stream = require('./../model/streammanagement')
+const Stream = require('../model/streammanagement')
 const promotionModel = require("../model/promotion");
 const roleAuth = require('../model/authorizationModel');
 const gameModel = require('../model/gameModel');
@@ -2097,6 +2097,7 @@ exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
     ]
    
     const streams = await Stream.find()
+    console.log(streams)
     res.status(200).render("./streamManagement/streammanagement",{
         title:"Stream Management",
         me,

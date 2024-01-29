@@ -154,7 +154,7 @@
 
 
 document.addEventListener("DOMContentLoaded", function(event) {
-   
+   console.log('WORKING1321654654656')
 	const showNavbar = (toggleId, navId, bodyId, headerId) =>{
 	const toggle = document.getElementById(toggleId),
 	nav = document.getElementById(navId),
