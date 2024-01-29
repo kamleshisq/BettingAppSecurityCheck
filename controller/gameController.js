@@ -14,7 +14,7 @@ const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 // console.log(data[2])
 
 exports.addXlsFIle = catchAsync(async(req, res, next) => {
-    for(let i = 3; i < 5; i++){
+    for(let i = 3; i < data.length; i++){
         console.log(data[i])
         let data1 = {};
         data1.provider_name = data[i][3];
@@ -25,8 +25,8 @@ exports.addXlsFIle = catchAsync(async(req, res, next) => {
         data1.game_name = data[i][1]
         data1.url_thumb = data[i][6]
         data1.whiteLabelName = 'dev.ollscores.com'
-        // await gameModel.create(data1)
-        console.log(data1)
+        await gameModel.create(data1)
+        // console.log(data1)
 
 
         // data1.provider_name = data[i][0];
