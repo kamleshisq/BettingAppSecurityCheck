@@ -4814,7 +4814,9 @@ socket.on('connect', () => {
             if(data.status == 'success'){
                 if(data.message){
                     alert(data.message)
-                    console.log(elementchange_status)
+                    $(elementchange_status).prop("checked", false);
+                    $(elementchange_status).parents('.switch').removeClass("on");
+                    // console.log(elementchange_status)
                 }
             }else{
                 alert('somthig watn wrong!!')
