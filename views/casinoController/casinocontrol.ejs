@@ -185,11 +185,11 @@
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
-                      <button class="accordion-button accordion-buttonProvider collapsed" id="<%=filterData[i]._id%>" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                      <button class="accordion-button accordion-buttonProvider" id="<%=filterData[i]._id%>" type="button" data-bs-toggle="collapse" data-bs-target="d<%=filterData[i]._id%>" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
                         <%=filterData[i].sub_provider_name%>
                       </button>
                     </h2>
-                    <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingtwo">
+                    <div id="d<%=filterData[i]._id%>" class="accordion-collapse" aria-labelledby="panelsStayOpen-headingtwo">
                       <div class="accordion-body">
                         <div class="row" id="<%=filterData[i]._id%>d">
                         </div>
