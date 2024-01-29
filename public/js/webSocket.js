@@ -4692,6 +4692,7 @@ socket.on('connect', () => {
         $(document).on('click', '.accordion-buttonProvider', function(e){
             e.preventDefault()
             let id = $(this).attr('id')
+            console.log(id)
         })
 
 
