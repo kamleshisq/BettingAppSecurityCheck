@@ -1114,10 +1114,18 @@ io.on('connection', (socket) => {
     socket.on('casionoStatusChange',async(data)=>{
         try{
             let whiteLabel = checkwhiteLabel(data.LOGINDATA)
-            if(data.status){
-                await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:true})
+            if(data.LOGINDATA.LOGINUSER.userName === 'admin'){
+                if(data.status){
+                    await gameModel.updateOne({game_id:data.id},{status:true})
+                }else{
+                    await gameModel.updateOne({game_id:data.id},{status:false})
+                }
             }else{
-                await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:false})
+                if(data.status){
+                    await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:true})
+                }else{
+                    await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:false})
+                }
             }
             socket.emit('casionoStatusChange',{status:'success'})
         }catch(error){
