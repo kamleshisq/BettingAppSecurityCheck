@@ -11883,11 +11883,11 @@ io.on('connection', (socket) => {
         socket.emit('exposureadmin', sendDATA)
     })
 
-    socket.on('providerGamingData', async(data) => {
+    socket.on('providerGamingData', async(receiveData) => {
         let data;
-        let whiteLabel = checkwhiteLabel(data.LOGINDATA)
-        data = await gameModel.find({provider_name:data.id,whiteLabelName:whiteLabel})
-        socket.emit("RGV1", {data, provider:data.id})
+        let whiteLabel = checkwhiteLabel(receiveData.LOGINDATA)
+        data = await gameModel.find({provider_name:receiveData.id,whiteLabelName:whiteLabel})
+        socket.emit("RGV1", {data, provider:receiveData.id})
     })
 
 })
