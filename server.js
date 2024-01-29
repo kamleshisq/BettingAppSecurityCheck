@@ -11886,7 +11886,9 @@ io.on('connection', (socket) => {
     socket.on('providerGamingData', async(receiveData) => {
         let data;
         let whiteLabel = checkwhiteLabel(receiveData.LOGINDATA)
+        console.log(whiteLabel, "whiteLabel")
         data = await gameModel.find({provider_name:receiveData.id,whiteLabelName:whiteLabel})
+        console.log(data.length, "asdfghjkl;'")
         socket.emit("RGV1", {data, provider:receiveData.id})
     })
 
