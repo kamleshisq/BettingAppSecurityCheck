@@ -4692,31 +4692,32 @@ socket.on('connect', () => {
         $(document).on('click', '.accordion-buttonProvider', function(e){
             e.preventDefault()
             let id = $(this).attr('id')
-            console.log(id)
+            // console.log(id)
+            socket.emit('providerGamingData', {id, LOGINDATA})
         })
 
 
-        $("#RGV").click(function(){
-            if(!RGV){
-                // console.log(2)
-                socket.emit('RGV',  {LOGINDATA})
-                RGV=true
-            }
-        })
+        // $("#RGV").click(function(){
+        //     if(!RGV){
+        //         // console.log(2)
+        //         socket.emit('RGV',  {LOGINDATA})
+        //         RGV=true
+        //     }
+        // })
 
-        $('#EZ').click(function(){
-            if(!EZ){
-                socket.emit('EZ',  {LOGINDATA})
-                EZ = true
-            }
-        })
+        // $('#EZ').click(function(){
+        //     if(!EZ){
+        //         socket.emit('EZ',  {LOGINDATA})
+        //         EZ = true
+        //     }
+        // })
 
-        $('#EG').click(function(){
-            if(!EG){
-                socket.emit('EG',  {LOGINDATA})
-                EG = true
-            }
-        })
+        // $('#EG').click(function(){
+        //     if(!EG){
+        //         socket.emit('EG',  {LOGINDATA})
+        //         EG = true
+        //     }
+        // })
 
         socket.on("RGV1", (data)=>{
             let html = ""
@@ -4774,13 +4775,14 @@ socket.on('connect', () => {
                     </div>`
                 }
             }
-            if(data.provider == "RGV"){
-                document.getElementById('RGVd').innerHTML = html
-            }else if(data.provider == "EZ"){
-                document.getElementById('EZUGId').innerHTML = html
-            }else if(data.provider == "EG"){
-                document.getElementById('ZEd').innerHTML = html
-            }
+            // if(data.provider == "RGV"){
+            //     document.getElementById('RGVd').innerHTML = html
+            // }else if(data.provider == "EZ"){
+            //     document.getElementById('EZUGId').innerHTML = html
+            // }else if(data.provider == "EG"){
+            //     document.getElementById('ZEd').innerHTML = html
+            // }
+            document.getElementById(`${data.provider}A`).innerHTML = html
         })
 
         $(document).on('click','.change_status',function(e){

@@ -11883,6 +11883,13 @@ io.on('connection', (socket) => {
         socket.emit('exposureadmin', sendDATA)
     })
 
+    socket.on('providerGamingData', async(data) => {
+        let data;
+        let whiteLabel = checkwhiteLabel(data.LOGINDATA)
+        data = await gameModel.find({provider_name:data.id,whiteLabelName:whiteLabel})
+        socket.emit("RGV1", {data, provider:data.id})
+    })
+
 })
 
 http.listen(process.env.port,()=> {
