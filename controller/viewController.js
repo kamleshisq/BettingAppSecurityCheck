@@ -2392,7 +2392,7 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
         {
             $match:{
                 whiteLabelName: whiteLabel,
-                status:true
+                // status:true
             }
         },
         {
