@@ -5,25 +5,26 @@ const fs = require('fs')
 const path = require('path')
 const SHA256 = require('../utils/sha256')
 const fetch = require("node-fetch") 
-// const XLSX = require('xlsx');
-// const workbook = XLSX.readFile("C:\\jayesh\\New_folder1\\Lordex-New\\backend\\xlsfiles\\DC.xlsx");
-// const sheetName = workbook.SheetNames[0];
-// const worksheet = workbook.Sheets[sheetName];
-// const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+const XLSX = require('xlsx');
+const workbook = XLSX.readFile("C:\\jayesh\\New_folder1\\Lordex-New\\backend\\xlsfiles\\DC.xlsx");
+const sheetName = workbook.SheetNames[0];
+const worksheet = workbook.Sheets[sheetName];
+const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
 // console.log(data[2])
 
 exports.addXlsFIle = catchAsync(async(req, res, next) => {
-    for(let i = 1; i < data.length; i++){
-        let data1 = {};
-        data1.provider_name = data[i][0];
-        data1.sub_provider_name = data[i][1];
-        data1.category = data[i][2];
-        data1.game_code = data[i][3];
-        data1.game_id = data[i][4]
-        data1.game_name = data[i][6]
-        data1.url_thumb = data[i][7]
-        await gameModel.create(data1)
+    for(let i = 1; i < 5; i++){
+        console.log(data[i])
+        // let data1 = {};
+        // data1.provider_name = data[i][0];
+        // data1.sub_provider_name = data[i][1];
+        // data1.category = data[i][2];
+        // data1.game_code = data[i][3];
+        // data1.game_id = data[i][4]
+        // data1.game_name = data[i][6]
+        // data1.url_thumb = data[i][7]
+        // await gameModel.create(data1)
     }
     res.status(200).json({
         status:"success"
