@@ -200,59 +200,7 @@
                     <div class="accordion-body">
                       <div class="row" id="row">
                         <!--  -->
-                        <%for(let i = 0; i < RG.length; i++){%>
-                        <%if((i%2==0)){%>
                         
-                          <div class="new-head on-off-btn-section">
-                            <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                            <%if(RG[i].status){%>
-                              <span class="on-off">OFF &nbsp; <label class="switch">
-                              <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status" checked>
-                              <span class="slider round"></span>
-                              </label>&nbsp; ON</span>
-                            <%}else{%>
-                              <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status">
-                                <span class="slider round"></span>
-                                </label>&nbsp; ON</span>
-                            <%}%>
-                              
-                          </div>
-                          <%}else if(((i-1)%2 ==0)){%>
-                          <div class="new-head on-off-btn-section">
-                            <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                            <%if(RG[i].status){%>
-                              <span class="on-off">OFF &nbsp; <label class="switch">
-                              <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status" checked>
-                              <span class="slider round"></span>
-                             </label>&nbsp; ON</span>
-                              <%}else{%>
-                                <span class="on-off">OFF &nbsp; <label class="switch">
-                                  <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status">
-                                  <span class="slider round"></span>
-                                 </label>&nbsp; ON</span>
-                              <%}%>
-                              
-                          </div>
-                        
-                        <%}else{%>
-                        <div class="new-head on-off-btn-section">
-                          <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                          <%if(RG[i].status){%>
-                            <span class="on-off">OFF &nbsp; <label class="switch">
-                            <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status" checked>
-                            <span class="slider round"></span>
-                            </label>&nbsp; ON</span>
-                            <%}else{%>
-                              <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status">
-                                <span class="slider round"></span>
-                                </label>&nbsp; ON</span>
-                            <%}%>
-                            
-                        </div>
-                        <%}%>
-                        <%}%>
                       </div>
                     </div>
                   </div>

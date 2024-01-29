@@ -2384,10 +2384,26 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     let RG;
     let currentUser = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     data = await gameModel.find({game_name:new RegExp("32 Cards","i"),whiteLabelName:whiteLabel})
     RG = await gameModel.find({sub_provider_name:"Royal Gaming",whiteLabelName:whiteLabel})
+    let filterData = await gameModel.aggregate([
+        {
+            $match:{
+                whiteLabelName: whiteLabel,
+                status:true
+            }
+        },
+        {
+            $group:{
+                _id:'$provider_name',
+                sub_provider_name:{
+                    $first:'$sub_provider_name'
+                }
+            }
+        }
+    ])
     // console.log(RG.length)
     res.status(200).render("./casinoController/casinocontrol", {
         title:"Casino Controller",
@@ -2396,7 +2412,8 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
         currentUser,
         me: currentUser,
         basicDetails,
-        colorCode
+        colorCode,
+        filterData
     })
 })
 
