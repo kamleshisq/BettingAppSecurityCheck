@@ -1115,6 +1115,7 @@ io.on('connection', (socket) => {
         try{
             let whiteLabel = checkwhiteLabel(data.LOGINDATA)
             if(data.LOGINDATA.LOGINUSER.userName === 'admin'){
+                console.log(data)
                 if(data.status){
                     await gameModel.updateOne({game_id:data.id},{status:true})
                 }else{
