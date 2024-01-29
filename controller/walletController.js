@@ -24,6 +24,11 @@ function readPem (filename) {
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     //console.time('verification');
+    if(!(req.ip == '3.9.38.120' || req.ip == '::ffff:3.9.38.120' || req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91")){
+        return res.status(200).json({
+            "status": "RS_ERROR"
+        })
+    }
     console.log('Body:',req.body, 'ip:',  req.ip)
     let x  = req.body
     let publicKey
