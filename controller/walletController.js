@@ -38,6 +38,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         })
     }
     let result = verify(req.headers.signature, publicKey, x)
+    console.log(result, "resultresultresultresult")
     // next()
     if(result){
         if(req.body.reqId){
