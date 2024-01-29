@@ -9,7 +9,7 @@ socket.on('disconnect', () => {
     attemptReconnect();
 });
 window.onload = function() {
-    attemptReconnect();
+    socket.connect();
 }
 let c = 0
 socket.on('connect', () => {
