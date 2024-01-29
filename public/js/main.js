@@ -161,12 +161,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		headerpd = document.getElementById(headerId)
 		
 		// Validate that all variables exist
-		if(toggle && nav && bodypd && headerpd){
+	if(toggle && nav && bodypd && headerpd){
 			toggle.addEventListener('click', ()=>{
-		console.log('WORKING1321654654656')
-	// show navbar
-	nav.classList.toggle('show')
-	// change icon
+				// show navbar
+				nav.classList.toggle('show')
+				console.log('WORKING1321654654656')
+				// change icon
 	toggle.classList.toggle('bx-x')
 	// add padding to body
 	bodypd.classList.toggle('body-pd')
