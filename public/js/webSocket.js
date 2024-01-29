@@ -4688,6 +4688,13 @@ socket.on('connect', () => {
             $('#'+data.id).parent().next().children('.accordion-body').html(html)
         });
 
+
+        $(document).on('click', '.accordion-buttonProvider', function(e){
+            e.preventDefault()
+            let id = $(this).attr('id')
+        })
+
+
         $("#RGV").click(function(){
             if(!RGV){
                 // console.log(2)

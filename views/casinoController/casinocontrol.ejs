@@ -180,6 +180,25 @@
       <div id="FOOTBALL" class="tabcontent">
         <div class="row">
           <div class="tab-content">
+            <%for(let i = 0; i < filterData.length; i++){%>
+              <div class="tabs__tab " id="tab_2<%=i%>" data-tab-info>
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
+                      <button class="accordion-button accordion-buttonProvider collapsed" id="<%=filterData[i]._id%>" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                        <%=filterData[i].sub_provider_name%>
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingtwo">
+                      <div class="accordion-body">
+                        <div class="row" id="<%=filterData[i]._id%>d">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <%}%>
             <div class="tabs__tab " id="tab_21" data-tab-info>
               <div class="accordion" id="accordionPanelsStayOpenExample">
                 <div class="accordion-item">
