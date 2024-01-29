@@ -4784,17 +4784,17 @@ socket.on('connect', () => {
                 $(this).parents('.switch').removeClass("on");
             }
             if(id){
-                if(confirm('do you want to change status')){
-                    socket.emit('casionoStatusChange',{status,id,LOGINDATA})
-                }else{
-                    $(this).prop('checked') ? $(this).prop('checked',false) : $(this).prop('checked',true)
-                }
+                socket.emit('casionoStatusChange',{status,id,LOGINDATA})
+                // if(confirm('do you want to change status')){
+                // }else{
+                //     $(this).prop('checked') ? $(this).prop('checked',false) : $(this).prop('checked',true)
+                // }
             }
         })
 
         socket.on('casionoStatusChange',async(data)=>{
             if(data.status == 'success'){
-                alert('status changed successfully')
+                // alert('status changed successfully')
             }else{
                 alert('somthig watn wrong!!')
             }
