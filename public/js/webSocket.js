@@ -4815,8 +4815,8 @@ socket.on('connect', () => {
                 if(data.message){
                     alert(data.message)
                     console.log(elementchange_status, "elementchange_statuselementchange_statuselementchange_status")
-                    $(elementchange_status)[0].prop("checked", false);
-                    $(elementchange_status)[0].parents('.switch').removeClass("on");
+                    $(elementchange_status).prop("checked", false);
+                    $(elementchange_status).parents('.switch').removeClass("on");
                     // console.log(elementchange_status)
                 }
             }else{
