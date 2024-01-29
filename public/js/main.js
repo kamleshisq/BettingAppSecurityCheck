@@ -43,6 +43,7 @@ $(document).ready(function() {
       // Validate that all variables exist
       if (toggle.length && nav.length && bodypd.length && headerpd.length) {
         toggle.on('click', () => {
+			console.log('WORKIGNNNNNNNNNNNNNNNNNNNNNNNN')
           // show navbar
           try {
             nav.toggleClass('show');
