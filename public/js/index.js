@@ -806,10 +806,9 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
-    // let data = Object.fromEntries(fd.entries());
+    let data = Object.fromEntries(fd.entries());
     // fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
-    // userLogin(data)
-    console.log(data)
+    userLogin(data)
 })
 
 
