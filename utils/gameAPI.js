@@ -32,8 +32,8 @@ const textToSign = JSON.stringify(body)
 // // console.log(privateKey, textToSign)
 const hashedOutput = SHA256(privateKey, textToSign);
 
-// var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
-var fullUrl = 'https://api.dreamdelhi.com/api/operator/login';
+var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
+// var fullUrl = 'https://api.dreamdelhi.com/api/operator/login';
     await fetch(fullUrl, {
         method: 'POST',
         headers: { 
