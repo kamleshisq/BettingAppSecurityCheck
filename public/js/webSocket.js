@@ -20262,7 +20262,7 @@ socket.on('connect', () => {
             $('.wrapper').show()
             let html = ``
             for(let i = 0; i < data.sportList.length; i++){
-                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}"&sessiontoken=${idValue}>${data.sportList[i].eventData.name}</a></li>`
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}&sessiontoken=${idValue}">${data.sportList[i].eventData.name}</a></li>`
 
             }
             console.log(html)
