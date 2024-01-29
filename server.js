@@ -1117,9 +1117,9 @@ io.on('connection', (socket) => {
             if(data.LOGINDATA.LOGINUSER.userName === 'admin'){
                 console.log(data)
                 if(data.status){
-                    await gameModel.updateOne({game_id:data.id},{status:true})
+                    await gameModel.updateMany({game_id:data.id},{status:true})
                 }else{
-                    await gameModel.updateOne({game_id:data.id},{status:false})
+                    await gameModel.updateMany({game_id:data.id},{status:false})
                 }
             }else{
                 if(data.status){
