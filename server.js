@@ -1722,6 +1722,7 @@ io.on('connection', (socket) => {
         }
         delete data.filterData.whiteLabel
         let events;
+        data.filterData.betType= { $nin: ['Casino', 'SportBook'] }
         if(data.type){
 
         }else{

@@ -2271,7 +2271,8 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         {
           $match: {
             userName: { $in: childrenUsername },
-            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
+            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},
+            betType: { $nin: ['Casino', 'SportBook'] }
             }
         },
         {
@@ -2282,7 +2283,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         { $limit : limit },
         {
             $lookup: {
-              from: 'users', // Assuming the name of the Whitelabel collection
+              from: 'users', 
               localField: 'userName',
               foreignField: 'userName',
               as: 'whitelabelData'
@@ -2628,8 +2629,8 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
         headers: { 
             'Content-Type': 'application/json',
             'accept': 'application/json' ,
-            "Origin":"http://dev.ollscores.com/",
-            "Referer":"http://dev.ollscores.com/"},
+            "Origin":"http://ollscores.com",
+            "Referer":"http://ollscores.com"},
         body:JSON.stringify(body) 
     })
     .then(res =>res.json())
