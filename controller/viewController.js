@@ -3747,6 +3747,7 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
 })
 
 exports.getSportBookGame = catchAsync(async(req, res, next) => {
+    console.log('WORKINGASASASASASASAS')
     let user = req.currentUser
     console.log(user._id.toString(), "user._iduser._iduser._iduser._id")
     let urldata
