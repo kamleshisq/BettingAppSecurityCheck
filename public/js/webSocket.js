@@ -20403,101 +20403,101 @@ socket.on('connect', () => {
 
     }
 
-    // if(pathname == '/admin/streammanagement' || pathname.startsWith('/admin/streammanagement/event')){
-    //     $('.game-analysis-heading-from').submit(function(e){
-    //         e.preventDefault()
-    //         let form = $(this)[0];
-    //         let fd = new FormData(form);
-    //         let data = Object.fromEntries(fd.entries());
-    //         data.sportName = $('.sportId option:selected').text().trim()
-    //         data.eventName = $('.eventId option:selected').text().trim()
-    //         data.date = new Date()
-    //         socket.emit('addnewStream',data)
+    if(pathname == '/admin/streammanagement' || pathname.startsWith('/admin/streammanagement/event')){
+        $('.game-analysis-heading-from').submit(function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            data.sportName = $('.sportId option:selected').text().trim()
+            data.eventName = $('.eventId option:selected').text().trim()
+            data.date = new Date()
+            socket.emit('addnewStream',data)
 
 
-    //     })
+        })
 
-    //     socket.on('addnewStream',async(data)=>{
-    //         if(data.status == 'success'){
-    //             alert(data.msg)
-    //             window.location.reload(true)
+        socket.on('addnewStream',async(data)=>{
+            if(data.status == 'success'){
+                alert(data.msg)
+                window.location.reload(true)
 
-    //         }
-    //     })
+            }
+        })
         
 
-    //     $('.sportId').change(function() {
-    //         let Sport = $(this).val()
-    //         // console.log(Sport)
-    //         socket.emit('getEvetnsOfSport',{sport:Sport})
-    //     })
+        $('.sportId').change(function() {
+            let Sport = $(this).val()
+            // console.log(Sport)
+            socket.emit('getEvetnsOfSport',{sport:Sport})
+        })
 
-    //     socket.on('getEvetnsOfSport',async(data)=>{
-    //         // console.log(data)
-    //         let html =''
-    //         for(let i = 0;i<data.eventList.length;i++){
-    //             html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
-    //         }
-    //         $('.eventId').html(html)
-    //     })
+        socket.on('getEvetnsOfSport',async(data)=>{
+            // console.log(data)
+            let html =''
+            for(let i = 0;i<data.eventList.length;i++){
+                html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
+            }
+            $('.eventId').html(html)
+        })
 
-    //     $(document).on('click','.delete',function(e){
-    //         let id = $(this).closest('tr').attr('data-id')
-    //         let rowId = $(this).closest('tr').attr('id')
-    //         $('.rowId').attr('data-rowid',rowId)
-    //         if(confirm('do you want to delete this stream')){
-    //             socket.emit('delteStreame',id)
-    //         }
-    //     })
+        $(document).on('click','.delete',function(e){
+            let id = $(this).closest('tr').attr('data-id')
+            let rowId = $(this).closest('tr').attr('id')
+            $('.rowId').attr('data-rowid',rowId)
+            if(confirm('do you want to delete this stream')){
+                socket.emit('delteStreame',id)
+            }
+        })
 
-    //     socket.on('delteStreame',async(data)=>{
-    //         if(data.status == 'success'){
-    //             alert('stream deleted successfully')
-    //             window.location.reload(true)
-    //         }
-    //     })
+        socket.on('delteStreame',async(data)=>{
+            if(data.status == 'success'){
+                alert('stream deleted successfully')
+                window.location.reload(true)
+            }
+        })
 
-    //     $(document).on('click','.editStrem',function(e){
-    //         let data = JSON.parse($(this).closest('tr').attr('data-id'))
-    //         let form = $('.editStreamForm');
-    //         form.find('input[name="url"]').val(data.url)
-    //         form.find('input[name="eventId"]').val((data.eventId).toString())
-    //         form.find('input[name="sportId"]').val(data.sportId)
-    //         form.find('input[name="eventName"]').val(data.eventName)
-    //         form.find('input[name="sportName"]').val(data.sportName)
-    //         if(data.status == true){
-    //             form.find('input[name = "status"]').prop('checked', true);
-    //             form.find('input[name = "status"]').parent('.switch').addClass('on');
-    //         }else{
-    //             form.find('input[name = "status"]').prop('checked', false);
-    //             form.find('input[name = "status"]').parent('.switch').removeClass('on');
-    //         }
+        $(document).on('click','.editStrem',function(e){
+            let data = JSON.parse($(this).closest('tr').attr('data-id'))
+            let form = $('.editStreamForm');
+            form.find('input[name="url"]').val(data.url)
+            form.find('input[name="eventId"]').val((data.eventId).toString())
+            form.find('input[name="sportId"]').val(data.sportId)
+            form.find('input[name="eventName"]').val(data.eventName)
+            form.find('input[name="sportName"]').val(data.sportName)
+            if(data.status == true){
+                form.find('input[name = "status"]').prop('checked', true);
+                form.find('input[name = "status"]').parent('.switch').addClass('on');
+            }else{
+                form.find('input[name = "status"]').prop('checked', false);
+                form.find('input[name = "status"]').parent('.switch').removeClass('on');
+            }
 
-    //     })
+        })
 
-    //     $(document).on('submit','.editStreamForm',function(e){
-    //         e.preventDefault()
-    //         let form = $(this)[0];
-    //         let fd = new FormData(form);
-    //         let data = Object.fromEntries(fd.entries());
-    //         if(data.status){
-    //             data.status = true
-    //         }else{
-    //             data.status = false
-    //         }
-    //         data.date = new Date()
-    //         // console.log(data)
-    //         socket.emit('editStream',data)
-    //     })
+        $(document).on('submit','.editStreamForm',function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            if(data.status){
+                data.status = true
+            }else{
+                data.status = false
+            }
+            data.date = new Date()
+            // console.log(data)
+            socket.emit('editStream',data)
+        })
 
-    //     socket.on('editStream',async(data) =>{
-    //         // console.log(data)
-    //         if(data.status == 'success'){
-    //             alert('stream updated successfully')
-    //             location.reload(true)
-    //         }
-    //     })
-    // }
+        socket.on('editStream',async(data) =>{
+            // console.log(data)
+            if(data.status == 'success'){
+                alert('stream updated successfully')
+                location.reload(true)
+            }
+        })
+    }
 
 
     if(pathname == '/admin/paymentmethods'){
