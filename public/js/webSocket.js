@@ -20265,6 +20265,7 @@ socket.on('connect', () => {
                 html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}"&sessiontoken=${idValue}>${data.sportList[i].eventData.name}</a></li>`
 
             }
+            console.log(html)
             document.getElementById('search').innerHTML = html
         })
 
