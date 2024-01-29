@@ -10,7 +10,7 @@ socket.on('disconnect', () => {
 });
 window.addEventListener('pageshow', function(event) {
     if (event.persisted) {
-        console.log('Page was cached and is now shown');
+        // console.log('Page was cached and is now shown');
         // Re-establish WebSocket connection here
         window.location.reload();
     }
