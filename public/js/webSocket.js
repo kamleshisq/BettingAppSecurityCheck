@@ -4791,8 +4791,9 @@ socket.on('connect', () => {
             // }
             document.getElementById(`${data.provider}A`).innerHTML = html
         })
-
+        let elementchange_status
         $(document).on('click','.change_status',function(e){
+            elementchange_status = $(this)
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
             if(status){
@@ -4813,8 +4814,7 @@ socket.on('connect', () => {
             if(data.status == 'success'){
                 if(data.message){
                     alert(data.message)
-                    let element = $(`#${data.id}`)
-                    console.log(element, "elementelementelementelement")
+                    console.log(elementchange_status)
                 }
             }else{
                 alert('somthig watn wrong!!')
