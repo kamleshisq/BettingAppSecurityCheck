@@ -57068,9 +57068,10 @@ $(document).on('submit', ".myloginmodl-form-dv", function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  var data = Object.fromEntries(fd.entries());
+  // let data = Object.fromEntries(fd.entries());
   // fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
-  (0, _userLogin.userLogin)(data);
+  // userLogin(data)
+  console.log(dat);
 });
 $(document).on('submit', ".regestermodl-form", function (e) {
   e.preventDefault();
