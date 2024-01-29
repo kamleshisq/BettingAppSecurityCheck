@@ -8,9 +8,9 @@ socket.on('disconnect', () => {
     
     attemptReconnect();
 });
-window.onload = function() {
+window.addEventListener('popstate', function(event) {
     socket.connect();
-}
+})
 let c = 0
 socket.on('connect', () => {
     const urlParams = new URLSearchParams(window.location.search);
