@@ -3907,6 +3907,7 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
+    console.log(games.length, "qwsdfghjkkkkkkkkkkk")
     let userLog
     let gamesFe = []
     if(user){
