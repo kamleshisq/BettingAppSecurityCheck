@@ -4811,7 +4811,10 @@ socket.on('connect', () => {
 
         socket.on('casionoStatusChange',async(data)=>{
             if(data.status == 'success'){
-                // alert('status changed successfully')
+                if(data.message){
+                    alert(data.message)
+
+                }
             }else{
                 alert('somthig watn wrong!!')
             }
