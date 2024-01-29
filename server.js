@@ -1127,7 +1127,7 @@ io.on('connection', (socket) => {
                     if(check.status){
                         await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:true})
                     }else{
-                        socket.emit('casionoStatusChange',{status:'success', message:'You do not have permission to on this game'})
+                        socket.emit('casionoStatusChange',{status:'success', message:'You do not have permission to on this game', id:data.id})
                     }
                 }else{
                     await gameModel.updateOne({game_id:data.id,whiteLabelName:whiteLabel},{status:false})
