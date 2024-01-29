@@ -9,6 +9,7 @@ socket.on('disconnect', () => {
     attemptReconnect();
 });
 window.addEventListener('popstate', function(event) {
+    console.log('WORKING')
     socket.connect();
 })
 let c = 0
