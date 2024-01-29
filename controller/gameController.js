@@ -14,7 +14,7 @@ const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 // console.log(data[2])
 
 exports.addXlsFIle = catchAsync(async(req, res, next) => {
-    for(let i = 1; i < 5; i++){
+    for(let i = 2; i < 5; i++){
         console.log(data[i])
         // let data1 = {};
         // data1.provider_name = data[i][0];
