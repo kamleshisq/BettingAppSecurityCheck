@@ -20196,7 +20196,7 @@ socket.on('connect', () => {
         })
 
         socket.on("searchEvents", async(data)=>{
-            // console.log(data, 565464)
+            console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
             for(let i = 0; i < data.sportList.length; i++){
