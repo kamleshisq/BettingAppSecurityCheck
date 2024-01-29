@@ -36,6 +36,7 @@ exports.addXlsFIle = catchAsync(async(req, res, next) => {
         data1.game_id = data[i][4]
         data1.game_name = data[i][6]
         data1.url_thumb = data[i][7]
+        data1.whiteLabelName = 'dev.ollscores.com'
         await gameModel.create(data1)
     }
     res.status(200).json({
