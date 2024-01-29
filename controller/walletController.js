@@ -27,7 +27,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log('Body:',req.body, 'ip:',  req.ip)
     let x  = req.body
     let publicKey
-    if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+    if(req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91"){
         publicKey = readPem("publicSportLive.pem")
     }else{
         publicKey = readPem("publicCasino.pem")
@@ -44,7 +44,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         if(req.body.reqId){
             let check = await reqIdModel.findOne({reqId:req.body.reqId})
             if(check){
-                if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+                if(req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91"){
                     return res.status(200).json({
                         "status": "RS_ERROR"
                     })
@@ -78,7 +78,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
                 }
                 next()
             }else{
-                if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+                if(req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91"){
                     return res.status(200).json({
                         "status": "RS_ERROR"
                     })
@@ -89,7 +89,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
                 }
             }
         }else{
-            if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+            if(req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -101,7 +101,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         }
         console.log(result, "resultresultresult")
     }else{
-        if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
+        if(req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91"){
             return res.status(200).json({
                 "status": "RS_ERROR"
             })
@@ -127,7 +127,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     let balanceSend = user.availableBalance - exposureCheck
     //console.timeEnd('verification');
 
-    if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+    if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
         res.status(200).json({
             "balance": balanceSend,
             "status": "RS_OK"
@@ -145,7 +145,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     try{
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
-            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -163,7 +163,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
 
         if(req.body.debitAmount < 0){
-            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -175,7 +175,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
 
         if(req.body.debitAmount == 0){
-            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -188,7 +188,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         const check = await userModel.findById(req.body.userId)
         let exposureCheck  = check.exposure
         if(check.availableBalance - req.body.debitAmount - exposureCheck <= 0){
-            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -209,7 +209,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             let check = await betModel.findOne({transactionId:req.body.transactionId})
             console.log(check, "checkcheckcheck", clientIP)
             if(check){
-                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                     return res.status(200).json({
                         "status": "RS_ERROR"
                     })
@@ -355,7 +355,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         }
     //console.timeEnd('verification');
 
-        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+        if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
             return res.status(200).json({
                 "balance": user.availableBalance - req.body.debitAmount - exposureCheck,
                 "status": "RS_OK"
@@ -375,7 +375,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     try{
         if(!req.body.transactionId || req.body.transactionId.trim() === ''){
-            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -394,7 +394,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         let check = await userModel.findById(req.body.userId);
         let exposureCheck  = check.exposure
         if(!check){
-            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -407,7 +407,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         let thatBet = await betModel.findOne({transactionId:req.body.transactionId})
         if(thatBet){
             if(thatBet.status !== "OPEN"){
-                if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                     return res.status(200).json({
                         "status": "RS_ERROR"
                     })
@@ -418,7 +418,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 }
             }
         }else{
-            if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+            if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                 return res.status(200).json({
                     "status": "RS_ERROR"
                 })
@@ -593,7 +593,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 //     debitAmountForP = parentUser2Amount
                 // }
                 if(!user){
-                    if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+                    if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
                         return res.status(200).json({
                             "status": "RS_ERROR"
                         })
@@ -623,7 +623,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         }
     //console.timeEnd('verification');
 
-        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+        if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
             res.status(200).json({
                 "balance": balance,
                 "status": "RS_OK"
@@ -643,7 +643,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 exports.rollBack = catchAsync(async(req, res, next) => {
     let clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     if(!req.body.transactionId || req.body.transactionId.trim() === ''){
-        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+        if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
             return res.status(200).json({
                 "status": "RS_ERROR"
             })
@@ -661,7 +661,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     }
     let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
     if(!bet1){
-        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+        if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
             return res.status(200).json({
                 "status": "RS_ERROR"
             })
@@ -674,7 +674,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     let check = await reqIdModel.findOne({reqId:req.body.transactionId})
     // console.log(check,bet1.status, "bet1.statusbet1.statusbet1.statusbet1.status" )
     if(check && (bet1.status === "OPEN" || bet1.status === "CANCEL")){
-        if(clientIP == "::ffff:3.9.120.247" || clientIP == "3.9.120.247"){
+        if(clientIP == "::ffff:35.178.88.91" || clientIP == "35.178.88.91"){
             return res.status(200).json({
                 "status": "RS_ERROR"
             })
