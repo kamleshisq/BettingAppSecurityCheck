@@ -1648,6 +1648,10 @@ io.on('connection', (socket) => {
             delete data.filterData.marketName
         }
 
+        if(data.filterData.ip){
+            data.filterData.ip = data.filterData.ip.trim()
+        }
+
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
