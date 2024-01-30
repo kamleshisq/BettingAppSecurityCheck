@@ -1671,7 +1671,7 @@ io.on('connection', (socket) => {
         }
 
         if(data.filterData.Stake){
-            data.filterData.Stake = {$gte:data.filterData.Stake}
+            data.filterData.Stake = {$gte:(data.filterData.Stake * 1)}
         }
 
         if(data.filterData.fromDate && data.filterData.toDate){
