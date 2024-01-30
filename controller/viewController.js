@@ -1299,7 +1299,8 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
         $group:{
             _id:{
                 match:'$match',
-                marketName: '$marketName'
+                marketName: '$marketName',
+                event:'$event'
             },
             eventDate:{$first:'$eventDate'},
             gameCount:{$sum:1},
@@ -1313,6 +1314,7 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     {
         $group:{
             _id:'$_id.match',
+            event:'$_id.event',
             eventDate:{$first:'$eventDate'},
             gameCount:{$sum:1},
             betCount:{$sum:'$gameCount'},
@@ -1339,7 +1341,7 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     ])
 
     let url = `/admin/gamereport/match/market?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
-    
+    console.log(betResult, "betResultbetResultbetResultbetResult")
 
     res.status(200).render('./gamereports/matchwisegamereport',{
         title:"Game Reports",
