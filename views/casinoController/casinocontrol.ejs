@@ -33,28 +33,11 @@
               <div class="accordion" id="accordionPanelsStayOpenExample">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                    <button class="accordion-button" id="32CARDS" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">32CARDS</button>
+                    <button class="accordion-button collapsed" id="32CARDS" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">32CARDS</button>
                   </h2>
-                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
                     <div class="accordion-body">
-                      <%if(data){%>
-                      <%for(let i = 0; i < data.length; i++){%>
-                      <div class="new-head on-off-btn-section">
-                        <span><%=data[i].game_name%> (<%=data[i].sub_provider_name%>)</span>
-                        <%if(data[i].status){%>
-                        <span class="on-off">OFF &nbsp; <label class="switch">
-                          <input type="checkbox" class="change_status" data-id="<%=data[i].game_id%>" checked>
-                          <span class="slider round"></span>
-                        </label>&nbsp; ON</span>
-                        <%}else{%>
-                        <span class="on-off">OFF &nbsp; <label class="switch change_status">
-                          <input type="checkbox" data-id="<%=data[i].game_id%>" class="change_status">
-                          <span class="slider round"></span>
-                        </label>&nbsp; ON</span>
-                        <%}%>
-                      </div>
-                      <%}%>
-                      <%}%>
+                      
                     </div>
                   </div>
                 </div>
