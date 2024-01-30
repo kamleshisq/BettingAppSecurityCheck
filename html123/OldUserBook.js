@@ -598,9 +598,9 @@ socket.on('UerBook', async(data) => {
           }
       })
       let resultPromise = await Promise.all(newUser)
-      console.log(resultPromise, "resultPromiseresultPromise")
+    //   console.log(resultPromise, "resultPromiseresultPromise")
       const result = resultPromise.filter(item => item && item.Bets && item.Bets.length > 0);
-      console.log(result, "resultresultresultresult")
+    //   console.log(result, "resultresultresultresult")
       
       let matchName2 = await Bet.findOne({marketId: data.marketId})
       let matchName

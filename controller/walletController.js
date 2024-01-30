@@ -43,7 +43,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
         })
     }
     let result = verify(req.headers.signature, publicKey, x)
-    console.log(result, "resultresultresultresult")
+    // console.log(result, "resultresultresultresult")
     // next()
     if(result){
         if(req.body.reqId){
@@ -104,7 +104,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
                 })
             }
         }
-        console.log(result, "resultresultresult")
+        // console.log(result, "resultresultresult")
     }else{
         if(req.ip == "::ffff:35.178.88.91" || req.ip == "35.178.88.91"){
             return res.status(200).json({

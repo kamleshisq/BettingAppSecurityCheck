@@ -97,7 +97,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
                 })
             }
         }
-        console.log(result, "resultresultresult")
+        // console.log(result, "resultresultresult")
     }else{
         if(req.ip == "::ffff:3.9.120.247" || req.ip == "3.9.120.247"){
             return res.status(200).json({
