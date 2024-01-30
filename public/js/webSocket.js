@@ -341,6 +341,16 @@ socket.on('connect', () => {
         }
     })
 
+    function setMaxDateForInputs(dateInputs) {
+        const today = new Date().toISOString().split('T')[0];
+  
+        dateInputs.forEach(input => {
+          input.setAttribute('max', today);
+        });
+      }
+      const dateInputs = document.querySelectorAll('input[type="date"]');
+      setMaxDateForInputs(dateInputs);
+
     // $(document).on('submit','#navmod3 .payment-fom',function(e){
     //     e.preventDefault();
     //     let form = $(this)[0];
