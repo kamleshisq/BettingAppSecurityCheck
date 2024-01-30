@@ -2215,26 +2215,7 @@ exports.getNotificationsPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
-    // console.log(req.currentUser)
-    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    // let role_type =[]
-    // for(let i = 0; i < roles.length; i++){
-    //     role_type.push(roles[i].role_type)
-    // }
-    // // console.log(await betModel.find({status:'OPEN'}).limit(10))
-    // let bets
-    // if(req.currentUser.role.role_level == 1){
-    //     bets = await betModel.find({status:'OPEN'}).limit(10)
-    // }else{
-    //     bets = await betModel.find({role_type:{$in:role_type},status:'OPEN'}).limit(10)
-    // }
-    // console.log(bets)
     let limit = 100;
-    // const sportListData = await getCrkAndAllData()
-    // let events = sportListData[0].gameList[0].eventList
-    // sportListData[1].gameList.map(ele => {
-    //     events = events.concat(ele.eventList)
-    // })
     let whiteLabels;
     if(req.currentUser.role.role_level == 1){
         whiteLabels = await whiteLabel.find()
@@ -2243,18 +2224,8 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     let childrenUsername = []
     if(req.currentUser.roleName == "Operator"){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
     var today = new Date();
     var todayFormatted = formatDate(today);
@@ -2311,6 +2282,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         }
     ])
 
+    console.log(events, "eventseventseventsevents")
    
     let me = req.currentUser
     res.status(200).render("./betMonitering/betmoniter",{
