@@ -10,7 +10,7 @@ async function getScore(id){
     .then(res =>res.text())
     .then(result => {
         DATA = result
-        console.log('result=>>>' , result)
+        // console.log('result=>>>' , result)
     })
     return DATA
 }
