@@ -2056,20 +2056,28 @@ io.on('connection', (socket) => {
         // for(let i = 0; i < roles.length; i++){
         //     role_type.push(roles[i].role_type)
         // }
-        data.filterData.is_Online = true
-        data.filterData.parentUsers = data.LOGINDATA.LOGINUSER._id
-        let onlineUsers
-        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
-            delete data.filterData['userName']
-            onlineUsers = await User.find(data.filterData).skip(page * limit).limit(limit)
+        if(data.status){
+            data.filterData.is_Online = true
+            data.filterData.parentUsers = data.LOGINDATA.LOGINUSER._id
+            onlineUsers = await User.find(data.filterData).limit(limit)
+            socket.emit("OnlineUser",{onlineUsers, page})
+
         }else{
-            onlineUsers = await User.find(data.filterData).skip(page * limit).limit(limit)
+            data.filterData.is_Online = true
+            data.filterData.parentUsers = data.LOGINDATA.LOGINUSER._id
+            let onlineUsers
+            if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+                delete data.filterData['userName']
+                onlineUsers = await User.find(data.filterData).skip(page * limit).limit(limit)
+            }else{
+                onlineUsers = await User.find(data.filterData).skip(page * limit).limit(limit)
+            }
+            socket.emit("OnlineUser",{onlineUsers, page})
         }
         // if(data.LOGINDATA.LOGINUSER.role_type === 1){
         // }else{
         // }
         // console.log(onlineUsers)
-        socket.emit("OnlineUser",{onlineUsers, page})
     })
 
     socket.on("marketId", async(data) => {
