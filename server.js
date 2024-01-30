@@ -1738,6 +1738,7 @@ io.on('connection', (socket) => {
         delete data.filterData.whiteLabel
         let events;
         data.filterData.betType= { $nin: ['Casino', 'SportBook'] }
+        console.log(data.filterData, "asdfghjkl")
         if(data.type){
 
         }else{
