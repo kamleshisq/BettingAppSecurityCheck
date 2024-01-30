@@ -2218,7 +2218,7 @@ io.on('connection', (socket) => {
 
     socket.on("eventId", async(data) => {
         let matchScore = await scores(data)
-        console.log(matchScore, 123)
+        // console.log(matchScore, 123)
         socket.emit("eventId", matchScore)
     })
 
