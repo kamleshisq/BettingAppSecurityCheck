@@ -308,7 +308,7 @@ async function mapBet(data){
                   "transactionId":`${bets[bet].transactionId}`,
                   "marketId":`${bets[bet].marketId}`
                 })
-            }else if (((parseInt(bets[bet].selectionName.split('@')[1],10) <=  parseInt(data.result, 10)) && bets[bet].bettype2 == 'BACK') || ((parseInt(bets[bet].selectionName.split('@')[1],10) >= parseInt(data.result, 10)) && bets[bet].bettype2 == "LAY")){
+            }else if (((parseInt(bets[bet].selectionName.split('@')[1],10) <=  parseInt(data.result, 10)) && bets[bet].bettype2 == 'BACK') || ((parseInt(bets[bet].selectionName.split('@')[1],10) > parseInt(data.result, 10)) && bets[bet].bettype2 == "LAY")){
                 console.log('FANCY') 
                 let creditDebitamount 
                         let exposure = bets[bet].exposure
