@@ -9733,7 +9733,7 @@ io.on('connection', (socket) => {
     socket.on('channelId', async(data) => {
 
         // console.log(data)
-        if(data.LOGINDATA.LOGINUSER){
+        if(data.LOGINDATA.LOGINUSER && data.LOGINDATA.IP){
             let ip = data.LOGINDATA.IP.split('::ffff:')[1];
             let eventId = data.search.split('=')[1]
             let StreamData = await streamModel.findOne({eventId:eventId})

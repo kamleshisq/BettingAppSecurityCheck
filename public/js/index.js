@@ -80,11 +80,9 @@ $(document).ready(function(){
         }else if(pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' ||  pathname == '/admin/profiledetail')){
             $("a[href='"+'/admin/userManagement'+"'").addClass('active')
         }else if(pathname.startsWith('/admin/settlementIn')){
-            console.log('GITHERERERERE')
-            console.log($("a[href='"+'/admin/settlement'+"'"), `$("a[href='"+'/admin/settlement'+"'")$("a[href='"+'/admin/settlement'+"'")$("a[href='"+'/admin/settlement'+"'")`)
-            $("a[href='"+'/admin/settlement'+"'").addClass('active')
-            $("a[href='"+'/admin/settlement'+"'").parent().parent().siblings('a').addClass('active')
-            $("a[href='"+'/admin/settlement'+"'").parent().parent().addClass('open')
+            $("a[href='"+'/admin/settlement'+ `?sessiontoken=${sessionStorage.getItem('sessiontoken')}`+"'").addClass('active')
+            $("a[href='"+'/admin/settlement'+ `?sessiontoken=${sessionStorage.getItem('sessiontoken')}`+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+'/admin/settlement'+ `?sessiontoken=${sessionStorage.getItem('sessiontoken')}`+"'").parent().parent().addClass('open')
         }else if(pathname.startsWith('/admin/streammanagement/event')){
             $("a[href='"+'/admin/streammanagement'+"'").addClass('active')
             $("a[href='"+'/admin/streammanagement'+"'").parent().parent().siblings('a').addClass('active')
