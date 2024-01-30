@@ -2057,9 +2057,10 @@ io.on('connection', (socket) => {
         //     role_type.push(roles[i].role_type)
         // }
         if(data.status){
-            data.filterData.is_Online = true
-            data.filterData.parentUsers = data.LOGINDATA.LOGINUSER._id
-            onlineUsers = await User.find(data.filterData).limit(limit)
+            let filterData = {}
+            filterData.is_Online = true
+            filterData.parentUsers = data.LOGINDATA.LOGINUSER._id
+            onlineUsers = await User.find(filterData).limit(limit)
             socket.emit("OnlineUser",{onlineUsers, page})
 
         }else{
