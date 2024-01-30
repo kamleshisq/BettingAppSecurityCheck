@@ -58,7 +58,11 @@
                   <%}%>
                   <td><%=i + 1%></td>
                   <td><%=formattedTime%></td>
-                  <td class="clickableelement getajaxdataclick" data-href="<%=url%>&match=<%=games[i]._id%>&sessiontoken=<%=sessiontoken%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
+                  <%if(games[i]._id.match){%>
+                    <td class="clickableelement getajaxdataclick" data-href="<%=url%>&match=<%=games[i]._id.match%>&sessiontoken=<%=sessiontoken%>" data-parent="<%=games[i]._id.match%>"><%=games[i]._id.match%></td>
+                  <%}else{%>
+                    <td class="clickableelement getajaxdataclick" data-href="<%=url%>&match=<%=games[i]._id.event%>&sessiontoken=<%=sessiontoken%>" data-parent="<%=games[i]._id.event%>"><%=games[i]._id.event%></td>
+                  <%}%>
                   <td><%=games[i].gameCount%></td>
                   <td><%=games[i].betCount%></td>
                   <td><%=games[i].won%></td>
