@@ -81,7 +81,7 @@ $(document).ready(function(){
             $("a[href='"+'/admin/userManagement'+"'").addClass('active')
         }else if(pathname.startsWith('/admin/settlementIn')){
             console.log('GITHERERERERE')
-            console.log($("a[href='"+'/admin/settlement'+"'"), "$("a[href='"+'/admin/settlement'+"'")$("a[href='"+'/admin/settlement'+"'")$("a[href='"+'/admin/settlement'+"'")")
+            console.log($("a[href='"+'/admin/settlement'+"'"), `$("a[href='"+'/admin/settlement'+"'")$("a[href='"+'/admin/settlement'+"'")$("a[href='"+'/admin/settlement'+"'")`)
             $("a[href='"+'/admin/settlement'+"'").addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().addClass('open')
