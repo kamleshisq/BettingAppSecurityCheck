@@ -1643,7 +1643,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('betMoniter',async(data)=>{
-        console.log(data.filterData)
+        // console.log(data.filterData)
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
@@ -1744,7 +1744,7 @@ io.on('connection', (socket) => {
         delete data.filterData.whiteLabel
         let events;
         
-        console.log(data.filterData, "asdfghjkl")
+        // console.log(data.filterData, "asdfghjkl")
         if(data.type){
 
         }else{
