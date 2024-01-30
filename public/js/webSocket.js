@@ -14731,6 +14731,9 @@ socket.on('connect', () => {
             let data = {}
             data.fromTime = $('#FdateEvent').val()
             data.toTime = $('#TdateEvent').val()
+            if(data.toTime){
+                data.toTime =   new Date(new Date(data.toTime).getTime() + ((24 * 60 * 60 * 1000)-1))
+            }
             $('.pageIdUser').attr('data-pageid','1')
             socket.emit('commissionReportFilter', {data, LOGINDATA, page:0})
         })
