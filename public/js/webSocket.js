@@ -5755,9 +5755,13 @@ socket.on('connect', () => {
                   html += `<tr style="text-align: center;" class="blue" style="cursor: pointer;">`
                 }
                   html += `<td>${count + i}</td>
-                  <td>${formattedTime}</td>
-                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id}">${games[i]._id}</td>
-                  <td>${games[i].gameCount}</td>
+                  <td>${formattedTime}</td>`
+                  if(games[i]._id.match){
+                    html += `<td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id.match}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id.match}">${games[i]._id.match}</td>`
+                  }else{
+                    html += `<td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id.event}&sessiontoken=${sessionStorage.getItem('sessiontoken')}" data-parent="${games[i]._id.event}">${games[i]._id.event}</td>`
+                  }
+                  `<td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
                   <td>${games[i].won}</td>
                   <td>${games[i].loss}</td>

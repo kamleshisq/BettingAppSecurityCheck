@@ -1288,7 +1288,8 @@ io.on('connection', (socket) => {
                 $group:{
                     _id:{
                         match:'$match',
-                        marketName: '$marketName'
+                        marketName: '$marketName',
+                        event:'$event'
                     },
                     eventDate:{$first:'$eventDate'},
                     gameCount:{$sum:1},
@@ -1301,7 +1302,10 @@ io.on('connection', (socket) => {
             },
             {
                 $group:{
-                    _id:'$_id.match',
+                    _id:{
+                        event:'$_id.event',
+                        match:'$_id.match'
+                    },
                     eventDate:{$first:'$eventDate'},
                     gameCount:{$sum:1},
                     betCount:{$sum:'$gameCount'},
