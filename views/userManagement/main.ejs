@@ -318,6 +318,7 @@
                 </tr>
               </thead>
               <tbody>
+                <%if(currentUser.roleName === "Admin" ){%>
                 <tr>
                   <td>matchOdds</td>
                   <td>
@@ -344,6 +345,7 @@
                     </select>
                   </td>
                 </tr>
+                <%}%>
                 <tr>
                   <td>Bookmaker</td>
                   <td>
