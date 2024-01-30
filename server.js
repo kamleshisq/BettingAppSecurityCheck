@@ -1651,7 +1651,7 @@ io.on('connection', (socket) => {
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
-
+        data.filterData.betType= { $nin: ['Casino', 'SportBook'] }
         if(data.filterData.betType == "All"){
             data.filterData.betType= { $nin: ['Casino', 'SportBook'] }
         }else if(data.filterData.betType == "4"){
