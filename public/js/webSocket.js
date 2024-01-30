@@ -6229,7 +6229,7 @@ socket.on('connect', () => {
             
         let count = 11
         socket.on('betMoniter',(data) => {
-            // console.log(data)
+            console.log(data, "datadatda")
             if(data.page === 0 || data.refreshStatus){
                 count = 1
             }

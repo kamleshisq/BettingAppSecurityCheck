@@ -2283,7 +2283,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         }
     ])
 
-    console.log(events, "eventseventseventsevents")
+    // console.log(events, "eventseventseventsevents")
    
     let me = req.currentUser
     res.status(200).render("./betMonitering/betmoniter",{
