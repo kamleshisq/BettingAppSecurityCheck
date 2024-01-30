@@ -56384,6 +56384,7 @@ $(document).ready(function () {
       } else if (pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' || pathname == '/admin/profiledetail')) {
         $("a[href='" + '/admin/userManagement' + "'").addClass('active');
       } else if (pathname.startsWith('/admin/settlementIn')) {
+        console.log('GITHERERE');
         $("a[href='" + '/admin/settlement' + "'").addClass('active');
         $("a[href='" + '/admin/settlement' + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + '/admin/settlement' + "'").parent().parent().addClass('open');
