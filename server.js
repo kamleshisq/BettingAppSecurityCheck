@@ -1653,7 +1653,7 @@ io.on('connection', (socket) => {
         }
 
         if(data.filterData.betType == "All"){
-            delete data.filterData.betType; 
+            data.filterData.betType= { $nin: ['Casino', 'SportBook'] }
         }else if(data.filterData.betType == "4"){
             data.filterData.betType = 'Cricket'
         }else if(data.filterData.betType == "1"){
@@ -1737,7 +1737,7 @@ io.on('connection', (socket) => {
         }
         delete data.filterData.whiteLabel
         let events;
-        data.filterData.betType= { $nin: ['Casino', 'SportBook'] }
+        
         console.log(data.filterData, "asdfghjkl")
         if(data.type){
 
