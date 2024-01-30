@@ -6074,9 +6074,7 @@ socket.on('connect', () => {
 
         filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
         filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
-        
-
-        $('#toTime,#fromTime').keyup(function(e){
+        $('#fromTime').change(function(){
             let value = $(this).val()
             if(!isValidTimeString(value)){
                 if(!$(this).siblings('span').hasClass('active')){
@@ -6104,6 +6102,63 @@ socket.on('connect', () => {
                 socket.emit('betMoniter',data)
             }
         })
+        $('#toTime').change(function(){
+            let value = $(this).val()
+            if(!isValidTimeString(value)){
+                if(!$(this).siblings('span').hasClass('active')){
+                    $(this).siblings('span').addClass('active')
+                }
+            }else{
+                $(this).siblings('span').removeClass('active')
+                let page = 0;
+                let data = {}
+                fromTime = $('#fromTime').val()
+                toTime = $('#toTime').val()
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
+                filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
+        
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                // console.log(data)
+                socket.emit('betMoniter',data)
+            }
+        })
+
+        // $('#toTime,#fromTime').keyup(function(e){
+        //     let value = $(this).val()
+        //     if(!isValidTimeString(value)){
+        //         if(!$(this).siblings('span').hasClass('active')){
+        //             $(this).siblings('span').addClass('active')
+        //         }
+        //     }else{
+        //         $(this).siblings('span').removeClass('active')
+        //         let page = 0;
+        //         let data = {}
+        //         fromTime = $('#fromTime').val()
+        //         toTime = $('#toTime').val()
+        //         let userName = $('.searchUser').val()
+        //         if(userName == ''){
+        //             filterData.userName = LOGINDATA.LOGINUSER.userName
+        //         }else{
+        //             filterData.userName = userName
+        //         }
+        //         filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
+        //         filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
+        
+        //         data.filterData = filterData;
+        //         data.page = page
+        //         data.LOGINDATA = LOGINDATA
+        //         // console.log(data)
+        //         socket.emit('betMoniter',data)
+        //     }
+        // })
 
         function isValidTimeString(timeString) {
             // Define a regular expression pattern for a valid time string in HH:MM:SS format
