@@ -2047,6 +2047,9 @@ io.on('connection', (socket) => {
         let page
         let limit = 10
         page = data.page
+        if(!page){
+            page = 0
+        }
         
         // const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
         // let role_type =[]
