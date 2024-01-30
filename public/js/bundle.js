@@ -56378,27 +56378,27 @@ $(document).ready(function () {
         $("a[href='" + newpathname + "'").parent().parent().addClass('open');
       }
       if (pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events') {
-        $("a[href='" + '/admin/catalogcontrol' + "'").addClass('active');
+        $("a[href='" + '/admin/catalogcontrol' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").addClass('active');
       } else if (pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets') {
-        $("a[href='" + '/admin/liveMarket' + "'").addClass('active');
+        $("a[href='" + '/admin/liveMarket' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").addClass('active');
       } else if (pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' || pathname == '/admin/profiledetail')) {
-        $("a[href='" + '/admin/userManagement' + "'").addClass('active');
+        $("a[href='" + '/admin/userManagement' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").addClass('active');
       } else if (pathname.startsWith('/admin/settlementIn')) {
         $("a[href='" + '/admin/settlement' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").addClass('active');
         $("a[href='" + '/admin/settlement' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + '/admin/settlement' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").parent().parent().addClass('open');
       } else if (pathname.startsWith('/admin/streammanagement/event')) {
-        $("a[href='" + '/admin/streammanagement' + "'").addClass('active');
-        $("a[href='" + '/admin/streammanagement' + "'").parent().parent().siblings('a').addClass('active');
-        $("a[href='" + '/admin/streammanagement' + "'").parent().parent().addClass('open');
+        $("a[href='" + '/admin/streammanagement' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").addClass('active');
+        $("a[href='" + '/admin/streammanagement' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/streammanagement' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").parent().parent().addClass('open');
       } else if (pathname.startsWith('/admin/betlimit/sport') || pathname.startsWith('/admin/betlimit/sports') || pathname.startsWith('/admin/betlimit/sports/event') || pathname.startsWith('/admin/betlimit/sports/match')) {
-        $("a[href='" + '/admin/betlimit' + "'").addClass('active');
-        $("a[href='" + '/admin/betlimit' + "'").parent().parent().siblings('a').addClass('active');
-        $("a[href='" + '/admin/betlimit' + "'").parent().parent().addClass('open');
+        $("a[href='" + '/admin/betlimit' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").addClass('active');
+        $("a[href='" + '/admin/betlimit' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/betlimit' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").parent().parent().addClass('open');
       } else if (pathname.startsWith('/admin/gamereport/match') || pathname.startsWith('/admin/gamereport/match/market') || pathname.startsWith('/admin/gamereport/match/market/report')) {
-        $("a[href='" + '/admin/gamereport' + "'").addClass('active');
-        $("a[href='" + '/admin/gamereport' + "'").parent().parent().siblings('a').addClass('active');
-        $("a[href='" + '/admin/gamereport' + "'").parent().parent().addClass('open');
+        $("a[href='" + '/admin/gamereport' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").addClass('active');
+        $("a[href='" + '/admin/gamereport' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/gamereport' + "?sessiontoken=".concat(sessionStorage.getItem('sessiontoken')) + "'").parent().parent().addClass('open');
       }
     }
   }
