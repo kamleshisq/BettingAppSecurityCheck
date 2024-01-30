@@ -58,6 +58,7 @@ const {
 
 
 $(document).ready(function(){ 
+    console.log(pathname, "pathnamepathnamepathname")
     const linkColor = document.querySelectorAll('.nav_link')
 	const operationPathnameArr = ['/admin/houseManagement','/admin/streammanagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
     const reportsPathnameArr = ['/admin/gamereport','/admin/myaccount','/admin/adminaccount','/admin/useraccount','/admin/settlementHistory','/admin/reports','/admin/userhistoryreport','/admin/plreport','/admin/commissionReport','/admin/uplinecommissionReport','/admin/downlinecommissionReort']
@@ -78,7 +79,7 @@ $(document).ready(function(){
             $("a[href='"+'/admin/liveMarket'+"'").addClass('active')
         }else if(pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' ||  pathname == '/admin/profiledetail')){
             $("a[href='"+'/admin/userManagement'+"'").addClass('active')
-        }else if(pathname == '/admin/settlementIn'){
+        }else if(pathname.startsWith('/admin/settlementIn')){
             $("a[href='"+'/admin/settlement'+"'").addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().addClass('open')
