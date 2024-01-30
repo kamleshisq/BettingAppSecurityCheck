@@ -1313,8 +1313,10 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     },
     {
         $group:{
-            _id:'$_id.match',
-            event:'$_id.event',
+            _id:{
+                event:'$_id.event',
+                match:'$_id.match'
+            },
             eventDate:{$first:'$eventDate'},
             gameCount:{$sum:1},
             betCount:{$sum:'$gameCount'},
