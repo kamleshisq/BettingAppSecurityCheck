@@ -22055,11 +22055,12 @@ socket.on('connect', () => {
             let id  = $(this).attr('id')
             let form = $('#uploadFile').find('.uploadFooter')
             form.attr('id', id)
-            socket.emit('getFotterDetails', id)
+            console.log(id)
+            // socket.emit('getFotterDetails', id)
         })
 
         let textEditorInstance = null
-        
+
         socket.on('getFotterDetails', async(data) => {
             let form = $('#uploadFile').find('.uploadFooter')
             form.find('input[name="name"]').val(`${data.name}`)
