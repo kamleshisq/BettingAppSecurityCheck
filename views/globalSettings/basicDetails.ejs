@@ -68,14 +68,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>About Us</td>
-                <td>
-                  <div class="btn-group">
-                    <button data-bs-toggle="modal" data-bs-target="#uploadFile" id="About_Us" class="UploadEjs"><i class="fa-solid fa-database"></i></button>
-                  </div>
-                </td>
-              </tr>
+              <%for(let i = 0; i < footerContectDetaisl.length; i++){%>
+                <tr>
+                  <td><%=footerContectDetaisl[i].name%></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=footerContectDetaisl[i].id%>" class="UploadEjs"><i class="fa-solid fa-database"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              <%}%>
               <tr>
                 <td>gambling responsibilities</td>
                 <td>
