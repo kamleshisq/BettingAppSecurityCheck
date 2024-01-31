@@ -114,7 +114,36 @@
       </div>
     </div>
   </section>
-
+  <div class="modal fade" id="uploadFile" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Update Page</h4>
+        </div>
+        <div class="modal-body">
+          <form class="updatePages" id="updatePages">
+            <div class="row mt-2">
+              <div class="col">
+                <label for="heading">Heading</label>
+                <input type="text" class="form-control ml0 heading"  name="heading" required>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="details">Details</label>
+                <textarea class="form-control ml0" name="details"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn-submit mt-3">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <section>
     <div class="container-fluid">
