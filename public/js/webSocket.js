@@ -7629,6 +7629,12 @@ socket.on('connect', () => {
             }
         })
 
+
+        $(document).on('submit', ".editImageSportForm", function(e){
+            e.preventDefault()
+            console.log('WORKING')
+        })
+
         socket.on('UpdateSport', async(data) => {
             alert(data)
             window.setTimeout(()=>{
