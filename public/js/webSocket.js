@@ -65,7 +65,7 @@ socket.on('connect', () => {
         // }
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //dev.ollscores.com dev.ollscores.com  https://bigbull9exch.com//admin/userManagement  https://bigbull9exch.com//  http: 
+        //dev.ollscores.com dev.ollscores.com  http://ollscores.com//admin/userManagement  http://ollscores.com//  http: 
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
