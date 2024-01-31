@@ -6502,6 +6502,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     const colorcode = await colorCodeModel.findOne({whitelabel:whiteLabel })
     let footerContectDetaisl = await footerInfoModel.find({whiteLabel:whiteLabel})
+    console.log(footerContectDetaisl, "footerContectDetaislfooterContectDetaislfooterContectDetaisl")
     res.status(200).render("./globalSettings/main",{
         title:"Global settings",
         user,
