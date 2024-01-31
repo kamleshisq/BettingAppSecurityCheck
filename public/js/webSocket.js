@@ -22049,6 +22049,25 @@ socket.on('connect', () => {
                 alert('Please try again later')
             }
         })
+
+        $(document).on('click', '.UploadEjs', function(e){
+            e.preventDefault()
+            let id  = $(this).attr('id')
+            let form = $('#uploadFile').find('.uploadFooter')
+            form.attr('id', id)
+            
+        })
+
+        $(document).on('submit', '.uploadFooter', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = $(this).attr('id')
+            data.id = id
+            console.log(data, "datadatadata")
+
+        })
     }
 
     if(pathname === "/MyPlStatement" || pathname === "/MyPlStatement/"){
