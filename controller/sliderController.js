@@ -133,7 +133,7 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
 
 
 exports.updateSlider = catchAsync(async(req, res, next) => {
-    console.log('WORKING12365479987')
+    // console.log('WORKING12365479987')
     let whiteLabel = process.env.whiteLabelName
     if(req.currentUser.role_type == 1){
         whiteLabel = "1"
