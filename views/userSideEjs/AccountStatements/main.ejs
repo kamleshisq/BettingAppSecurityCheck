@@ -133,7 +133,12 @@
                                       <%if(data[i].child_id){%>
                                         <td title="Transaction">Settlement</td>
                                         <%}else{%>
-                                          <td title="Transaction">Commission Settlement</td>
+                                          <%if(data[i].description.startWith('Revoke') || data[i].description.startWith('Settle')){%>
+                                            <td title="Transaction"><%=data[i].description%></td>
+
+                                          <%}else{%>
+                                            <td title="Transaction">Commission Settlement</td>
+                                          <%}%>
                                       <%}%>
                                     <td title="Event">-</td>
                                     <td title="Market Type">-</td>
