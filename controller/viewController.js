@@ -54,6 +54,7 @@ const withdrawalRequestModel = require('../model/withdrowReqModel');
 const globalSettingModel = require('../model/globalSetting');
 const colorCodeModel = require('../model/colorcodeModel');
 const bycrypt = require('bcrypt');
+const footerInfoModel = require('../model/footerInfoModel');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -6500,6 +6501,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
     let whiteLabel = whiteLabelcheck(req)
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     const colorcode = await colorCodeModel.findOne({whitelabel:whiteLabel })
+    let footerContectDetaisl = await footerInfoModel.find({whiteLabel:whiteLabel})
     res.status(200).render("./globalSettings/main",{
         title:"Global settings",
         user,
@@ -6507,6 +6509,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
         currentUser:user,
         basicDetails,
         colorcode,
+        footerContectDetaisl
     })
 });
 
