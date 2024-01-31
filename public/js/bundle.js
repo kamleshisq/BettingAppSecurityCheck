@@ -56418,6 +56418,11 @@ $(document).ready(function () {
     }
   });
 });
+var sessionTokenADMIN;
+if (pathname.startsWith('/admin')) {
+  var urlParams = new URLSearchParams(window.location.search);
+  sessionTokenADMIN = urlParams.get('sessiontoken');
+}
 $(document).on('click', '.passcodemsgbox', function (e) {
   console.log('hewr');
   function copyElementTextToClipboard(elementId) {
@@ -56546,7 +56551,7 @@ $('#Add-User').submit(function (e) {
     }
   }
   formDataObj.OperatorAuthorization = checkedValues;
-  formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken');
+  formDataObj.sessiontoken = sessionTokenADMIN;
   // console.log(formDataObj, "+==> data")
   // console.log(formDataObj);
   (0, _createUser.createUser)(formDataObj);
@@ -56558,7 +56563,7 @@ $(document).on('submit', '.passReset-form', function (e) {
   var formDataObj = Object.fromEntries(fd.entries());
   var id = form.id;
   formDataObj.id = id;
-  formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken');
+  formDataObj.sessiontoken = sessionTokenADMIN;
   // console.log(formDataObj)
   (0, _resetPass.reset)(formDataObj);
 });
@@ -56567,7 +56572,7 @@ $(document).on('submit', '.resetpasswordAdmin', function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   var formDataObj = Object.fromEntries(fd.entries());
-  formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken');
+  formDataObj.sessiontoken = sessionTokenADMIN;
   // console.log(formDataObj)
   (0, _resetadminpassword.resetadminpassword)(formDataObj);
 });
@@ -56582,7 +56587,7 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
           fd = new FormData(form);
           formDataObj = Object.fromEntries(fd.entries()); // console.log(formDataObj);
           rowId = $('.rowId').attr('data-rowid');
-          formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken');
+          formDataObj.sessiontoken = sessionTokenADMIN;
           _context.next = 8;
           return (0, _editUser.editUser)(formDataObj);
         case 8:
@@ -56630,7 +56635,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           _context2.next = 13;
           break;
         case 10:
-          formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken');
+          formDataObj.sessiontoken = sessionTokenADMIN;
           _context2.next = 13;
           return (0, _debitCredit.debitCredit)(formDataObj);
         case 13:
@@ -56658,7 +56663,7 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           if (formDataObj.amount == 0) {
             alert('please enter amount greater than 0');
           } else {
-            formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken');
+            formDataObj.sessiontoken = sessionTokenADMIN;
             (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
           }
           // console.log(formDataObj)
@@ -56744,7 +56749,7 @@ if (document.querySelector('.ChangeFORM')) {
     var data = new FormData(form);
     var formDataObj = Object.fromEntries(data.entries());
     // console.log(formDataObj)
-    formDataObj.sessiontoken = sessionStorage.getItem('sessiontoken');
+    formDataObj.sessiontoken = sessionTokenADMIN;
     (0, _updatePASSWORD.updatePassword)(formDataObj);
   });
 }
@@ -56866,7 +56871,7 @@ $('.createRole-form1').submit(function (e) {
     AdminController: roleAuthorization,
     roleName: roleName,
     name: roleName,
-    sessiontoken: sessionStorage.getItem('sessiontoken')
+    sessiontoken: sessionTokenADMIN
   };
   // console.log(data)
   (0, _createRole.createRole)(data);
@@ -56934,7 +56939,7 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
     roleName: roleName,
     operationAuthorization: operationAuthorization,
     AdminController: AdminController,
-    sessiontoken: sessionStorage.getItem('sessiontoken')
+    sessiontoken: sessionTokenADMIN
   };
   // console.log(data)
   (0, _updateRoleByaxios.updateRole)(data);
@@ -56944,7 +56949,7 @@ $(document).on('click', '.deleteRole', function (e) {
   if (confirm('do you want to delete this role')) {
     (0, _deleteRole.deleteRole)({
       "id": roledata._id,
-      'sessiontoken': sessionStorage.getItem('sessiontoken')
+      'sessiontoken': sessionTokenADMIN
     });
   }
 });
@@ -56956,7 +56961,7 @@ $(document).on('submit', ".form-data1", function (e) {
   form.append('Id', id);
   form.append('position', document.getElementById('name').value);
   form.append("link", document.getElementById('link').value);
-  form.append('sessiontoken', sessionStorage.getItem('sessiontoken'));
+  form.append('sessiontoken', sessionTokenADMIN);
   if (check.checked == true) {
     form.append('status', "on");
   } else {
@@ -56972,13 +56977,13 @@ $(document).on('submit', '.form-data2', function (e) {
   form.append('position', document.getElementById('name1').value);
   form.append('link', document.getElementById('url1').value);
   form.append('image', document.getElementById('file1').files[0]);
-  form.append('sessiontoken', sessionStorage.getItem('sessiontoken'));
+  form.append('sessiontoken', sessionTokenADMIN);
   (0, _createPromotion.createPromotion)(form);
 });
 $(document).on('click', ".Delete", function () {
   var data = {};
   data.id = $(this).attr('id');
-  data.sessiontoken = sessionStorage.getItem('sessiontoken');
+  data.sessiontoken = sessionTokenADMIN;
   (0, _deletePormotion.deletePromotion)(data);
 });
 $(document).on('submit', '.form-data22', function (e) {
@@ -56988,7 +56993,7 @@ $(document).on('submit', '.form-data22', function (e) {
   form.append('url', document.getElementById('url').value);
   form.append('page', document.getElementById('page').value);
   form.append('Icon', document.getElementById('Icon').files[0]);
-  form.append('sessiontoken', sessionStorage.getItem('sessiontoken'));
+  form.append('sessiontoken', sessionTokenADMIN);
   (0, _createHorizontalMenu.createHorizontalMenu)(form);
 });
 $(document).on('submit', ".form-data23", function (e) {
@@ -56997,7 +57002,7 @@ $(document).on('submit', ".form-data23", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  fd.append('sessiontoken', sessionStorage.getItem('sessiontoken'));
+  fd.append('sessiontoken', sessionTokenADMIN);
   var data = Object.fromEntries(fd.entries());
 
   // console.log(data)
@@ -57009,7 +57014,7 @@ $(document).on('submit', ".form-data24", function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  fd.append('sessiontoken', sessionStorage.getItem('sessiontoken'));
+  fd.append('sessiontoken', sessionTokenADMIN);
   // console.log(fd)
   (0, _createBanner.createBanner)(fd);
 });
@@ -57019,7 +57024,7 @@ $(document).on("submit", ".form-data25", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  fd.append('sessiontoken', sessionStorage.getItem('sessiontoken'));
+  fd.append('sessiontoken', sessionTokenADMIN);
   // console.log(fd,'==>fd')
   (0, _updateBanner.updateBanner)(fd);
 });
@@ -57027,7 +57032,7 @@ $(document).on('submit', ".uploadEJS", function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  fd.append(sessiontoken, sessionStorage.getItem('sessiontoken'));
+  fd.append(sessiontoken, sessionTokenADMIN);
   (0, _createpage.createPage)(fd);
 });
 $(document).on('submit', ".form-data26", function (e) {
@@ -57036,7 +57041,7 @@ $(document).on('submit', ".form-data26", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  fd.append(sessiontoken, sessionStorage.getItem('sessiontoken'));
+  fd.append(sessiontoken, sessionTokenADMIN);
   (0, _addImage.addImage)(fd);
 });
 $(document).on('submit', ".editImageSportForm", function (e) {
@@ -57045,7 +57050,7 @@ $(document).on('submit', ".editImageSportForm", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  fd.append(sessiontoken, sessionStorage.getItem('sessiontoken'));
+  fd.append(sessiontoken, sessionTokenADMIN);
   (0, _editSliderInImage.editSliderInImage)(fd);
 });
 $(document).on('submit', ".slider-form", function (e) {
@@ -57054,7 +57059,7 @@ $(document).on('submit', ".slider-form", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  fd.append(sessiontoken, sessionStorage.getItem('sessiontoken'));
+  fd.append(sessiontoken, sessionTokenADMIN);
   console.log('working =>>>', fd);
   // updateSlider(fd)
 });
@@ -57063,7 +57068,7 @@ $(document).on('submit', ".addSlider-form", function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  fd.append(sessiontoken, sessionStorage.getItem('sessiontoken'));
+  fd.append(sessiontoken, sessionTokenADMIN);
   (0, _addSlider.createSlider)(fd);
 });
 $(document).on('submit', ".myloginmodl-form-dv", function (e) {
@@ -57080,7 +57085,7 @@ $(document).on('submit', ".regestermodl-form", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
-  data.sessiontoken = sessionStorage.getItem('sessiontoken');
+  data.sessiontoken = sessionTokenADMIN;
 
   // console.log(data)
   (0, _createAndLoginUser.createAndLoginUser)(data);
@@ -57108,7 +57113,7 @@ $(document).on('submit', '.basicDetailsFOrm', function (e) {
   var table = $(this).closest('.fade').attr('id');
   fd.append('id', id);
   fd.append('table', table);
-  fd.append('sessiontoken', sessionStorage.getItem('sessiontoken'));
+  fd.append('sessiontoken', sessionTokenADMIN);
   (0, _updateBasicDetails.updateBasicDetails)(fd);
   // console.log(data, "DATA23232")
 });
