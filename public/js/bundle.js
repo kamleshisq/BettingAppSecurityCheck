@@ -57032,7 +57032,7 @@ $(document).on('submit', ".uploadEJS", function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  fd.append(sessiontoken, sessionTokenADMIN);
+  fd.append('sessiontoken', sessionTokenADMIN);
   (0, _createpage.createPage)(fd);
 });
 $(document).on('submit', ".form-data26", function (e) {
@@ -57041,7 +57041,7 @@ $(document).on('submit', ".form-data26", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  fd.append(sessiontoken, sessionTokenADMIN);
+  fd.append('sessiontoken', sessionTokenADMIN);
   (0, _addImage.addImage)(fd);
 });
 $(document).on('submit', ".editImageSportForm", function (e) {
@@ -57050,7 +57050,7 @@ $(document).on('submit', ".editImageSportForm", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  fd.append(sessiontoken, sessionTokenADMIN);
+  fd.append('sessiontoken', sessionTokenADMIN);
   (0, _editSliderInImage.editSliderInImage)(fd);
 });
 $(document).on('submit', ".slider-form", function (e) {
@@ -57059,7 +57059,7 @@ $(document).on('submit', ".slider-form", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  fd.append(sessiontoken, sessionTokenADMIN);
+  fd.append('sessiontoken', sessionTokenADMIN);
   console.log('working =>>>', fd);
   // updateSlider(fd)
 });
@@ -57068,7 +57068,7 @@ $(document).on('submit', ".addSlider-form", function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  fd.append(sessiontoken, sessionTokenADMIN);
+  fd.append('sessiontoken', sessionTokenADMIN);
   (0, _addSlider.createSlider)(fd);
 });
 $(document).on('submit', ".myloginmodl-form-dv", function (e) {

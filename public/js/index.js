@@ -761,7 +761,7 @@ $(document).on('submit', ".uploadEJS", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
-    fd.append(sessiontoken , sessionTokenADMIN
+    fd.append('sessiontoken' , sessionTokenADMIN
     )
     createPage(fd)
 })
@@ -774,7 +774,7 @@ $(document).on('submit', ".form-data26", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
-    fd.append(sessiontoken , sessionTokenADMIN)
+    fd.append('sessiontoken' , sessionTokenADMIN)
 
     addImage(fd)
 })
@@ -785,7 +785,7 @@ $(document).on('submit', ".editImageSportForm", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
-    fd.append(sessiontoken , sessionTokenADMIN)
+    fd.append('sessiontoken' , sessionTokenADMIN)
     editSliderInImage(fd)
 })
  
@@ -795,7 +795,7 @@ $(document).on('submit', ".slider-form", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
-    fd.append(sessiontoken , sessionTokenADMIN)
+    fd.append('sessiontoken' , sessionTokenADMIN)
     console.log('working =>>>', fd)
     // updateSlider(fd)
 })
@@ -804,7 +804,7 @@ $(document).on('submit', ".addSlider-form", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
-    fd.append(sessiontoken , sessionTokenADMIN)
+    fd.append('sessiontoken' , sessionTokenADMIN)
     createSlider(fd)
 });
 
