@@ -2859,8 +2859,8 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 exports.getPageManagement = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     const pages = await pagesModel.find({whiteLabelName:whiteLabel})
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
