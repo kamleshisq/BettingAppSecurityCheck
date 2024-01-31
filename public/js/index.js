@@ -790,7 +790,8 @@ $(document).on('submit', ".slider-form", function(e){
     let fd = new FormData(form);
     fd.append('id', id)
     fd.append(sessiontoken , sessionStorage.getItem('sessiontoken'))
-    updateSlider(fd)
+    console.log('working =>>>', fd)
+    // updateSlider(fd)
 })
 
 $(document).on('submit', ".addSlider-form", function(e){
