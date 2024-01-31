@@ -22066,6 +22066,7 @@ socket.on('connect', () => {
             let id = $(this).attr('id')
             data.id = id
             console.log(data, "datadatadata")
+            socket.emit('updateFooterContent', {data, LOGINDATA})
 
         })
     }

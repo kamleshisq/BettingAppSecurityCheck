@@ -77,6 +77,7 @@ const commissionNewModel = require('./model/commissioNNModel');
 const checkExposureARRAY = require('./utils/exposureofarrayUser');
 const voidebundel = require('./utils/voideOPenBetAccoordingfilter');
 const { Socket } = require('engine.io');
+const footerInfoModel = require('./model/footerInfoModel');
 // const checkLimit = require('./utils/checkOddsLimit');
 
 // const { date } = require('joi');
@@ -11920,6 +11921,19 @@ io.on('connection', (socket) => {
         data = await gameModel.find({provider_name:receiveData.id,whiteLabelName:whiteLabel})
         // console.log(data.length, "asdfghjkl;'")
         socket.emit("RGV1", {data, provider:receiveData.id})
+    })
+
+    socket.on('updateFooterContent', async(data) => {
+        console.log(data)
+        if(data.LOGINDATA.LOGINUSER.roleName === 'Super-Duper-Admin'){
+            let whiteLabel = checkwhiteLabel(data.LOGINDATA)
+            let createData = {
+                name : data.data.name,
+                description : data.data.description,
+                whiteLabelName:whiteLabel
+            }
+            await footerInfoModel.create(createData)
+        }
     })
 
 })
