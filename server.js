@@ -11936,6 +11936,11 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('getFotterDetails', async(data) => {
+        let footerData = await footerInfoModel.findById(data)
+        socket.on('getFotterDetails',footerData )
+    })
+
 })
 
 http.listen(process.env.port,()=> {

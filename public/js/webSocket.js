@@ -22055,7 +22055,28 @@ socket.on('connect', () => {
             let id  = $(this).attr('id')
             let form = $('#uploadFile').find('.uploadFooter')
             form.attr('id', id)
-            
+            socket.emit('getFotterDetails', id)
+        })
+        let textEditorInstance = null
+        socket.on('getFotterDetails', async(data) => {
+            let form = $('#uploadFile').find('.uploadFooter')
+            form.find('input[name="name"]').val(`${data.name}`)
+            if (textEditorInstance) {
+            // Update the existing editor with new data
+            textEditorInstance.setData(data.description);
+          } else {
+            // If the editor is not initialized, create a new instance
+            ClassicEditor
+              .create(document.getElementById('detailsTextArea'))
+              .then(editor => {
+                textEditorInstance = editor; // Store the new editor instance in the variable
+                textEditorInstance.setData(data.description); // Set initial data
+                // console.log('ClassicEditor was initialized', editor);
+              })
+              .catch(error => {
+                console.error('Error initializing ClassicEditor', error);
+              });
+          }
         })
 
         $(document).on('submit', '.uploadFooter', function(e){
