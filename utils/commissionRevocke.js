@@ -9,7 +9,7 @@ let Decimal = require('decimal.js');
 
 async function revokeCommission(data){
     // console.log(data)
-    let claimedCommission = await commissionNewModel.find({commissionStatus:'Claimed', marketId:data.id})
+    let claimedCommission = await commissionNewModel.updateMany({commissionStatus:'Claimed', marketId:data.id}, {commissionStatus:'cancel'})
     if(claimedCommission.length > 0){
         for(const i in claimedCommission){
             let user = await User.findByIdAndUpdate(claimedCommission[i].userId, {$inc:{availableBalance: -claimedCommission[i].commission}})
