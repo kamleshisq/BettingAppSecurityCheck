@@ -22055,8 +22055,8 @@ socket.on('connect', () => {
             let id  = $(this).attr('id')
             let form = $('#uploadFile').find('.uploadFooter')
             form.attr('id', id)
-            console.log(id)
-            // socket.emit('getFotterDetails', id)
+            // console.log(id)
+            socket.emit('getFotterDetails', {id})
         })
 
         let textEditorInstance = null
