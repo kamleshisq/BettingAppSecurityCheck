@@ -11940,7 +11940,9 @@ io.on('connection', (socket) => {
         console.log(data, "datadtdatd")
         let footerData = await footerInfoModel.findById(data.id)
         console.log(footerData, "footerDatafooterDatafooterData")
-        socket.emit('getFotterDetails',footerData )
+        if(footerData){
+            socket.emit('getFotterDetails',footerData )
+        }
     })
 
 })
