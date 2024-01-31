@@ -49,6 +49,18 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 <script type="text/javascript" src="../js/bundle.js"></script>
 <script>
+  // Initialize ClassicEditor
+  ClassicEditor
+    .create(document.getElementById('detailsTextArea'))
+    .then(editor => {
+      console.log('ClassicEditor was initialized', editor);
+    })
+    .catch(error => {
+      console.error('Error initializing ClassicEditor', error);
+    });
+</script>
+
+<script>
   function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
