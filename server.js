@@ -11964,11 +11964,15 @@ io.on('connection', (socket) => {
     } )
 
     socket.on('updateMedea', async(data) => {
-        if(data.LOGINDATA.LOGINUSER.roleName === 'Super-Duper-Admin'|| data.LOGINDATA.LOGINUSER.roleName === 'admin'){
-            let updatedData = await socialinfomodel.findByIdAndUpdate(data.data.id, {link:data.data.link})
-            if(updatedData){
-                socket.emit('updateMedea', {status:'sucess'})
+        try{
+            if(data.LOGINDATA.LOGINUSER.roleName === 'Super-Duper-Admin'|| data.LOGINDATA.LOGINUSER.roleName === 'admin'){
+                let updatedData = await socialinfomodel.findByIdAndUpdate(data.data.id, {link:data.data.link})
+                if(updatedData){
+                    socket.emit('updateMedea', {status:'sucess'})
+                }
             }
+        }catch(err){
+            console.log(err)
         }
     })
 
