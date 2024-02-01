@@ -56,6 +56,7 @@ const colorCodeModel = require('../model/colorcodeModel');
 const bycrypt = require('bcrypt');
 const footerInfoModel = require('../model/footerInfoModel');
 const { consoleBodyAndURL } = require('./walletController');
+const socialinfomodel = require('../model/socialMediaLinks');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -6637,6 +6638,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     const colorcode = await colorCodeModel.findOne({whitelabel:whiteLabel })
     let footerContectDetaisl = await footerInfoModel.find({whiteLabelName:whiteLabel})
+    let socialMedia = await socialinfomodel.find({whiteLabelName:whiteLabel})
     console.log(footerContectDetaisl, "footerContectDetaislfooterContectDetaislfooterContectDetaisl")
     res.status(200).render("./globalSettings/main",{
         title:"Global settings",
@@ -6645,7 +6647,8 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
         currentUser:user,
         basicDetails,
         colorcode,
-        footerContectDetaisl
+        footerContectDetaisl,
+        socialMedia
     })
 });
 
