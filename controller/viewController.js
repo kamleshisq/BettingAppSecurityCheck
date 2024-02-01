@@ -772,31 +772,36 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
-    // let footerSettings = await footerInfoModel.find({whiteLabel:"bigbull9exch.com"})
-    // let socialInfo = await socialinfomodel.find({whiteLabel:"bigbull9exch.com"})
-    // newFooter = []
-    //         footerSettings.map(ele => {
-    //             newFooter.push({
-    //                 name:ele.name,
-    //                 description:ele.description,
-    //                 banner:ele.banner,
-    //                 link:ele.link,
-    //                 whiteLabelName:'1'
-    //             })
-    //         })
+    try{
+    let footerSettings = await footerInfoModel.find({whiteLabel:"bigbull9exch.com"})
+    let socialInfo = await socialinfomodel.find({whiteLabel:"bigbull9exch.com"})
+    newFooter = []
+            footerSettings.map(ele => {
+                newFooter.push({
+                    name:ele.name,
+                    description:ele.description,
+                    banner:ele.banner,
+                    link:ele.link,
+                    whiteLabelName:'1'
+                })
+            })
 
-    //         newSocial = []
-    //         socialInfo.map(ele => {
-    //             newSocial.push({
-    //                 name:ele.name,
-    //                 img:ele.img,
-    //                 link:ele.link,
-    //                 whiteLabelName:'1'
-    //             })
-    //         })
-
-    // await footerInfoModel.insertMany(newFooter)
-    // await socialinfomodel.insertMany(newSocial)
+            newSocial = []
+            socialInfo.map(ele => {
+                newSocial.push({
+                    name:ele.name,
+                    img:ele.img,
+                    link:ele.link,
+                    whiteLabelName:'1'
+                })
+            })
+    console.log(newFooter,newSocial )
+    await footerInfoModel.insertMany(newFooter)
+    await socialinfomodel.insertMany(newSocial)
+    }catch(err){
+        console.log(err)
+    }
+    
     // console.log('WORKING33333')
     let featureEventId = []
     let user = req.currentUser
