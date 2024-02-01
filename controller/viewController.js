@@ -772,35 +772,35 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
-    try{
-    let footerSettings = await footerInfoModel.find({whiteLabelName:"bigbull9exch.com"})
-    let socialInfo = await socialinfomodel.find({whiteLabelName:"bigbull9exch.com"})
-    newFooter = []
-            footerSettings.map(ele => {
-                newFooter.push({
-                    name:ele.name,
-                    description:ele.description,
-                    banner:ele.banner,
-                    link:ele.link,
-                    whiteLabelName:'ollscores.com'
-                })
-            })
+    // try{
+    // let footerSettings = await footerInfoModel.find({whiteLabelName:"bigbull9exch.com"})
+    // let socialInfo = await socialinfomodel.find({whiteLabelName:"bigbull9exch.com"})
+    // newFooter = []
+    //         footerSettings.map(ele => {
+    //             newFooter.push({
+    //                 name:ele.name,
+    //                 description:ele.description,
+    //                 banner:ele.banner,
+    //                 link:ele.link,
+    //                 whiteLabelName:'ollscores.com'
+    //             })
+    //         })
 
-            newSocial = []
-            socialInfo.map(ele => {
-                newSocial.push({
-                    name:ele.name,
-                    img:ele.img,
-                    link:ele.link,
-                    whiteLabelName:'ollscores.com'
-                })
-            })
-    console.log(newFooter,newSocial )
-    await footerInfoModel.insertMany(newFooter)
-    await socialinfomodel.insertMany(newSocial)
-    }catch(err){
-        console.log(err)
-    }
+    //         newSocial = []
+    //         socialInfo.map(ele => {
+    //             newSocial.push({
+    //                 name:ele.name,
+    //                 img:ele.img,
+    //                 link:ele.link,
+    //                 whiteLabelName:'ollscores.com'
+    //             })
+    //         })
+    // console.log(newFooter,newSocial )
+    // await footerInfoModel.insertMany(newFooter)
+    // await socialinfomodel.insertMany(newSocial)
+    // }catch(err){
+    //     console.log(err)
+    // }
     
     // console.log('WORKING33333')
     let featureEventId = []
