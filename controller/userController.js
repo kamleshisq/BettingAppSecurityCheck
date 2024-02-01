@@ -15,6 +15,8 @@ const verticalMenuModel = require("../model/verticalMenuModel");
 const gamerulesModel = require('../model/gamesRulesModel')
 const gamemodel = require('../model/gameModel')
 const globalSettingModel = require('../model/globalSetting')
+const footerInfomodel =  require('../model/footerInfoModel')
+const socialInfoModel = require('../model/socialMediaLinks');
 const bycrypt = require('bcrypt');
 
 exports.isOperator = catchAsync(async(req, res, next) => {
@@ -57,6 +59,8 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let gamerules = await gamerulesModel.find({whiteLabelName:"1"})
             let games = await gamemodel.find({whiteLabelName:"1"})
             let globalsetting = await globalSettingModel.findOne({whiteLabel:"1"})
+            let footerSettings = await footerInfomodel.findOne({whiteLabel:"1"})
+            let socialInfo = await socialInfoModel.findOne({whiteLabel:"1"})
             // let promossions = await Pro
             let newbanners = []
             let newpromosions = []
@@ -91,6 +95,27 @@ exports.createUser = catchAsync(async(req, res, next)=>{
                     url:newurl,
                     banner:ele.banner,
                     status:ele.status,
+                    whiteLabelName:req.body.whiteLabel
+                })
+            })
+
+            newFooter = []
+            footerSettings.map(ele => {
+                newFooter.push({
+                    name:ele.name,
+                    description:ele.description,
+                    banner:ele.banner,
+                    link:ele.link,
+                    whiteLabelName:req.body.whiteLabel
+                })
+            })
+
+            newSocial = []
+            socialInfo.map(ele => {
+                newSocial.push({
+                    name:ele.name,
+                    img:ele.img,
+                    link:ele.link,
                     whiteLabelName:req.body.whiteLabel
                 })
             })
@@ -158,6 +183,8 @@ exports.createUser = catchAsync(async(req, res, next)=>{
            
             // console.log(newbanners,'==>newbanners')
             await Benners.insertMany(newbanners)
+            await footerInfomodel.insertMany(newFooter)
+            await socialInfoModel.insertMany(newSocial)
             await Promossion.insertMany(newpromosions)
             await PageModel.insertMany(newpages)
             await sliderModel.insertMany(newsliders)
