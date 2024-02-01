@@ -850,6 +850,43 @@ exports.aboutUSPAge =  catchAsync(async(req, res, next) => {
 
 })
 
+
+
+exports.gambling =  catchAsync(async(req, res, next) => {
+    let featureEventId = []
+    let user = req.currentUser
+    let whiteLabel = whiteLabelcheck(req)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
+    let footerDetailsContentA = await footerInfoModel.find({whiteLabelName: whiteLabel})
+
+    let footerDetailsContentB = await footerInfoModel.findOne({whiteLabelName: whiteLabel, link:'/gambling'})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let pages = await pagesModel.find({whiteLabelName: whiteLabel})
+
+    // console.log(footerDetailsContentA, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+
+    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
+    res.status(200).render("./userSideEjs/footerContentPages/about_us",{
+        title:footerDetailsContentA.name,
+        pages,
+        user,
+        check:"Home",
+        userLog,
+        notifications:req.notifications,
+        basicDetails,
+        colorCode,
+        footerDetailsContentA,
+        verticalMenus,
+        footerDetailsContentB
+    })
+
+})
+
 exports.edit = catchAsync(async(req, res, next) => {
     const user = req.currentUser;
     res.status(200).render('./user/edit',{
