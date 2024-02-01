@@ -4496,7 +4496,7 @@ socket.on('connect', () => {
             
         })
 
-        $('#load-more').click(function(e){
+        $('.load-more').click(function(e){
             let page = parseInt($('.rowId').attr('data-rowid'));
             $('.rowId').attr('data-rowid',page + 1)
             let data = {}
@@ -4598,14 +4598,14 @@ socket.on('connect', () => {
             if(data.page == 0 || data.refreshStatus){
                 if(bets.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
-                    $('#load-more').hide()
+                    $('.load-more').hide()
                 }else{
-                    $('#load-more').show()
+                    $('.load-more').show()
                 }
                 $('.new-body').html(html)
             }else{
                 if(bets.length == 0){
-                    $('#load-more').hide()
+                    $('.load-more').hide()
                 }      
                 $('.new-body').append(html)   
             }

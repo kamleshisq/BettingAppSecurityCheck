@@ -69,6 +69,14 @@
               </div>
             </form>
             <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Download CSV</button>
+            <%if(bets.length !== 0){%>
+
+              <div id="load-more" >
+                <%if(bets.length >= 10){ %>
+                  <button class="load-more">Load More</button>
+                  <%}%>
+                </div>
+            <%}%>
           </div>
         </div>
         <div class="data-table">
