@@ -829,11 +829,14 @@ exports.aboutUSPAge =  catchAsync(async(req, res, next) => {
 
     let footerDetailsContentB = await footerInfoModel.findOne({whiteLabelName: whiteLabel, link:'/about_us'})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let pages = await pagesModel.find({whiteLabelName: whiteLabel})
+
     // console.log(footerDetailsContentA, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
 
     // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/footerContentPages/about_us",{
         title:footerDetailsContentA.name,
+        pages,
         user,
         check:"Home",
         userLog,
