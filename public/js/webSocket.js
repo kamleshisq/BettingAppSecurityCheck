@@ -11398,6 +11398,11 @@ socket.on('connect', () => {
                 }
                 html += ` <td title='Status'>${bets[i].status}</td>
                         <td title='Stake'>${bets[i].Stake}</td>`
+                        if(bets[i].result){
+                            html += `<td title='Result'>${bets[i].result}</td>`
+                        }else{
+                            html += `<td title='Result'>-</td>`
+                        }
                         if(bets[i].returns > 0){
                            html += `<td class="c-gren" title="Returns" >${bets[i].returns}</td>`
                         }else{
