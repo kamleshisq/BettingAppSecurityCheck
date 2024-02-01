@@ -6,7 +6,7 @@ const SocialInfo = mongoose.Schema({
         type:String,
         required:true
     },
-    description:{
+    img:{
         type:String,
         required:true
     },
