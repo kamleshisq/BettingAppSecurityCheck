@@ -825,8 +825,9 @@ exports.aboutUSPAge =  catchAsync(async(req, res, next) => {
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
+    let footerDetailsContentA = await footerInfoModel.find({whiteLabelName: whiteLabel})
 
-    let footerDetailsContentA = await footerInfoModel.findOne({whiteLabelName: whiteLabel, link:'/about_us'})
+    let footerDetailsContentB = await footerInfoModel.findOne({whiteLabelName: whiteLabel, link:'/about_us'})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     // console.log(footerDetailsContentA, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
 
@@ -840,7 +841,8 @@ exports.aboutUSPAge =  catchAsync(async(req, res, next) => {
         basicDetails,
         colorCode,
         footerDetailsContentA,
-        verticalMenus
+        verticalMenus,
+        footerDetailsContentB
     })
 
 })
