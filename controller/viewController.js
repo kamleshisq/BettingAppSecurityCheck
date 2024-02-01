@@ -782,7 +782,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
                     description:ele.description,
                     banner:ele.banner,
                     link:ele.link,
-                    whiteLabelName:'1'
+                    whiteLabelName:'ollscores.com'
                 })
             })
 
@@ -792,7 +792,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
                     name:ele.name,
                     img:ele.img,
                     link:ele.link,
-                    whiteLabelName:'1'
+                    whiteLabelName:'ollscores.com'
                 })
             })
     console.log(newFooter,newSocial )
