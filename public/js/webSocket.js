@@ -22064,17 +22064,23 @@ socket.on('connect', () => {
         socket.on('getFotterDetails', async(data) => {
             let form = $('#uploadFile').find('.uploadFooter')
             form.find('input[name="name"]').val(`${data.name}`)
-            textEditorInstance.setData(data.description);
-            // ClassicEditor
-            //   .create(document.getElementById('detailsTextArea'))
-            //   .then(editor => {
-            //     textEditorInstance = editor; // Store the new editor instance in the variable
-            //     textEditorInstance.setData(data.description); // Set initial data
-            //     // console.log('ClassicEditor was initialized', editor);
-            //   })
-            //   .catch(error => {
-            //     console.error('Error initializing ClassicEditor', error);
-            //   });
+            // textEditorInstance.setData(data.description);
+            if (textEditorInstance) {
+                // Update the existing editor with new data
+                textEditorInstance.setData(data.description);
+              } else {
+                // If the editor is not initialized, create a new instance
+                ClassicEditor
+                  .create(document.getElementById('detailsTextArea1'))
+                  .then(editor => {
+                    textEditorInstance = editor; // Store the new editor instance in the variable
+                    textEditorInstance.setData(data.description); // Set initial data
+                    // console.log('ClassicEditor was initialized', editor);
+                  })
+                  .catch(error => {
+                    console.error('Error initializing ClassicEditor', error);
+                  });
+              }
         })
 
         $(document).on('submit', '.uploadFooter', function(e){
