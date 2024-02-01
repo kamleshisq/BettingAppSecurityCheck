@@ -749,9 +749,9 @@ $(document).on('submit', ".add-media", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
-    fd.append('sessiontoken' ,sessionTokenADMIN
-    )
-    console.log(fd)
+    fd.append('sessiontoken' ,sessionTokenADMIN)
+    let data = Object.fromEntries(fd.entries());
+    console.log(data)
     // createBanner(fd)
 })
 

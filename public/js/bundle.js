@@ -57023,7 +57023,8 @@ $(document).on('submit', ".add-media", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('sessiontoken', sessionTokenADMIN);
-  console.log(fd);
+  var data = Object.fromEntries(fd.entries());
+  console.log(data);
   // createBanner(fd)
 });
 
