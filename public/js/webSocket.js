@@ -22064,6 +22064,9 @@ socket.on('connect', () => {
         socket.on('getFotterDetails', async(data) => {
             let form = $('#uploadFile').find('.uploadFooter')
             form.find('input[name="name"]').val(`${data.name}`)
+            if(data.link){
+                form.find('input[name="link"]').val(`${data.link}`)
+            }
             // textEditorInstance.setData(data.description);
             if (textEditorInstance) {
                 // Update the existing editor with new data
