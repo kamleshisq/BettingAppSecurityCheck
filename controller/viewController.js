@@ -6539,6 +6539,7 @@ exports.userdashboard22 = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     let footerDetails = await footerInfoModel.find({whiteLabelName: whiteLabel})
+    console.log(footerDetails, "footerDetailstydewsfsffsffsffsffsffffffff")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         data,
