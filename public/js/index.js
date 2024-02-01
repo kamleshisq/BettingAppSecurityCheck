@@ -744,6 +744,17 @@ $(document).on('submit', ".form-data24", function(e){
     createBanner(fd)
 })
 
+
+$(document).on('submit', ".add-media", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    fd.append('sessiontoken' ,sessionTokenADMIN
+    )
+    console.log(fd)
+    // createBanner(fd)
+})
+
 $(document).on("submit", ".form-data25",function(e){
     e.preventDefault()
     let id = $(this).attr('id')

@@ -57018,6 +57018,15 @@ $(document).on('submit', ".form-data24", function (e) {
   // console.log(fd)
   (0, _createBanner.createBanner)(fd);
 });
+$(document).on('submit', ".add-media", function (e) {
+  e.preventDefault();
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  fd.append('sessiontoken', sessionTokenADMIN);
+  console.log(fd);
+  // createBanner(fd)
+});
+
 $(document).on("submit", ".form-data25", function (e) {
   e.preventDefault();
   var id = $(this).attr('id');
