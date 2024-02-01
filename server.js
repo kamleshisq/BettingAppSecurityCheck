@@ -11926,7 +11926,7 @@ io.on('connection', (socket) => {
 
     socket.on('updateFooterContent', async(data) => {
         console.log(data)
-        if(data.LOGINDATA.LOGINUSER.roleName === 'Super-Duper-Admin'){
+        if(data.LOGINDATA.LOGINUSER.roleName === 'Super-Duper-Admin' || data.LOGINDATA.LOGINUSER.roleName === 'admin'){
             let whiteLabel = checkwhiteLabel(data.LOGINDATA)
             let createData = {
                 name : data.data.name,
@@ -11962,6 +11962,15 @@ io.on('connection', (socket) => {
             socket.emit('getMediaDetails', details)
         }
     } )
+
+    socket.on('updateMedea', async(data) => {
+        if(data.LOGINDATA.LOGINUSER.roleName === 'Super-Duper-Admin'|| data.LOGINDATA.LOGINUSER.roleName === 'admin'){
+            let updatedData = await socialinfomodel.findByIdAndUpdate(data.data.id, {link:data.data.link})
+            if(updatedData){
+                socket.emit('updateMedea', {status:'sucess'})
+            }
+        }
+    })
 
 })
 

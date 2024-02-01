@@ -22153,6 +22153,23 @@ socket.on('connect', () => {
             form.find('input[name="link"]').val(`${data.link}`)
         })
 
+        $(document).on('submit', '.Update-media', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = $(this).attr('id')
+            data.id = id
+            socket.emit('updateMedea', {data, LOGINDATA})
+        })
+
+        socket.on('updateMedea', data => {
+            if(data.status === 'sucess'){
+                alert('Updated')
+                window.location.reload()
+            }
+        })
+
         let textEditorInstance = null
 
         socket.on('getFotterDetails', async(data) => {
