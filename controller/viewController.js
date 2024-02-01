@@ -781,7 +781,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
                     description:ele.description,
                     banner:ele.banner,
                     link:ele.link,
-                    whiteLabelName:'ollscores.com'
+                    whiteLabelName:'1'
                 })
             })
 
@@ -791,7 +791,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
                     name:ele.name,
                     img:ele.img,
                     link:ele.link,
-                    whiteLabelName:'ollscores.com'
+                    whiteLabelName:'1'
                 })
             })
 
