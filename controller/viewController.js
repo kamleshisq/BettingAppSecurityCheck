@@ -793,8 +793,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
 
-    let footerDetails = await footerInfoModel.find({whiteLabelName: whiteLabel})
-    // console.log(footerDetails, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+    let footerDetailsContentA = await footerInfoModel.find({whiteLabelName: whiteLabel})
+    // console.log(footerDetailsContentA, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
 
     // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
@@ -811,7 +811,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         featureStatusArr,
         basicDetails,
         colorCode,
-        footerDetails
+        footerDetailsContentA
     })
 })
 
