@@ -8,6 +8,7 @@ const Usermiddlewares = require("../middleWares/user_middleware");
 // Admin Panal
 // route.use(middlewares)
 route.post("/createBanner", authController.isProtected, authController.isAdmin, bannerController.createBanner);
+route.post("/createMedia", authController.isProtected, authController.isAdmin, bannerController.createMedia);
 route.post("/updateBanner", authController.isProtected, authController.isAdmin, bannerController.updateBanner);
 
 

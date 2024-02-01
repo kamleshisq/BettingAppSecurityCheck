@@ -34,6 +34,7 @@ import { KYC } from "./kyc";
 import { paymentDeposite } from "./paymentDeposite";
 import { notificationsss } from "./notificationsss";
 import { updateBasicDetails } from "./updateBasicDetails";
+import { createMedia } from "./createMedia";
 import session from "express-session";
 // import { func } from "joi";
 
@@ -750,9 +751,9 @@ $(document).on('submit', ".add-media", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('sessiontoken' ,sessionTokenADMIN)
-    let data = Object.fromEntries(fd.entries());
-    console.log(data)
-    // createBanner(fd)
+    // let data = Object.fromEntries(fd.entries());
+    console.log(fd)
+    createMedia(fd)
 })
 
 $(document).on("submit", ".form-data25",function(e){
