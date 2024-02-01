@@ -22094,6 +22094,14 @@ socket.on('connect', () => {
             socket.emit('updateFooterContent', {data, LOGINDATA})
 
         })
+
+
+        socket.on('updateFooterContent', data => {
+            if(data.status === "sucess"){
+                alert('updated')
+                window.location.reload()
+            }
+        })
     }
 
     if(pathname === "/MyPlStatement" || pathname === "/MyPlStatement/"){
