@@ -772,6 +772,31 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
+    let footerSettings = await footerInfoModel.findOne({whiteLabel:"bigbull9exch.com"})
+    let socialInfo = await socialinfomodel.findOne({whiteLabel:"bigbull9exch.com"})
+    newFooter = []
+            footerSettings.map(ele => {
+                newFooter.push({
+                    name:ele.name,
+                    description:ele.description,
+                    banner:ele.banner,
+                    link:ele.link,
+                    whiteLabelName:'ollscores.com'
+                })
+            })
+
+            newSocial = []
+            socialInfo.map(ele => {
+                newSocial.push({
+                    name:ele.name,
+                    img:ele.img,
+                    link:ele.link,
+                    whiteLabelName:'ollscores.com'
+                })
+            })
+
+    await footerInfoModel.insertMany(newFooter)
+    await socialinfomodel.insertMany(newSocial)
     // console.log('WORKING33333')
     let featureEventId = []
     let user = req.currentUser
