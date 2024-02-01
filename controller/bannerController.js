@@ -34,8 +34,8 @@ exports.createBanner = catchAsync(async(req, res, next) => {
 exports.createMedia = catchAsync(async(req, res, next) => {
     console.log(req.files, req.body)
     if(req.files){
-        if(req.files.banner.mimetype.startsWith('image')){
-            const image = req.files.banner
+        if(req.files.img.mimetype.startsWith('image')){
+            const image = req.files.img
             // console.log(logo)
             image.mv(`public/banner/${req.body.name}.png`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
