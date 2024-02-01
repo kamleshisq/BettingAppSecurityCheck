@@ -772,8 +772,8 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
-    let footerSettings = await footerInfoModel.findOne({whiteLabel:"bigbull9exch.com"})
-    let socialInfo = await socialinfomodel.findOne({whiteLabel:"bigbull9exch.com"})
+    let footerSettings = await footerInfoModel.find({whiteLabel:"bigbull9exch.com"})
+    let socialInfo = await socialinfomodel.find({whiteLabel:"bigbull9exch.com"})
     newFooter = []
             footerSettings.map(ele => {
                 newFooter.push({
