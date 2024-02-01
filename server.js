@@ -11964,6 +11964,7 @@ io.on('connection', (socket) => {
     } )
 
     socket.on('updateMedea', async(data) => {
+        console.log(data, "DADADDA")
         try{
             if(data.LOGINDATA.LOGINUSER.roleName === 'Super-Duper-Admin'|| data.LOGINDATA.LOGINUSER.roleName === 'admin'){
                 let updatedData = await socialinfomodel.findByIdAndUpdate(data.data.id, {link:data.data.link})
