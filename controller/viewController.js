@@ -1694,30 +1694,30 @@ exports.useracount = catchAsync(async(req, res, next) => {
 })
 
 exports.userhistoryreport = catchAsync(async(req, res, next) => {
-    // const currentUser = global._User
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
     const currentUser = req.currentUser
     let limit = 10;
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser.parent_id});
-
-        // let children = await User.find({parentUsers:req.currentUser.parent_id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }else{
         childrenUsername = await User.distinct('userName', {parentUsers:req.currentUser._id});
-
-        // let children = await User.find({parentUsers:req.currentUser._id})
-        // children.map(ele => {
-        //     childrenUsername.push(ele.userName) 
-        // })
     }
-    let Logs = await loginLogs.aggregate([
-      
+    let Logs = await loginLogs.aggregate([      
         {
             $match:{
-               userName : {$in:childrenUsername}
+               userName : {$in:childrenUsername},
+               login_time : {$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
             }
         },
         {
@@ -1729,9 +1729,6 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
             $limit:10
         }
     ])
-
-    // console.log(Logs)
-
     res.status(200).render('./userHistory/userhistoryreport',{
         title:"User History",
         me:currentUser,
