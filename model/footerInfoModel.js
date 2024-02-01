@@ -10,6 +10,9 @@ const footerInfo = mongoose.Schema({
         type:String,
         required:true
     },
+    link : {
+        type:String,
+    },
     whiteLabelName:{
         type:String,
         required:true

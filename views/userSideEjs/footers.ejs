@@ -60,7 +60,9 @@
 
           <div class="footer-sec--options-ro">
             <ul class="footer-sec--options-ul">
-              <li><a href="/">About us  |</a></li>
+              <%for(let i = 0; i < footerDetails.length; i++){%>
+                <li><a href="/">|  footerDetails[i].  |</a></li>
+              <%}%>
               <li><a href="/">gambling responsibilities  |</a></li>
               <li><a href="/">Terms & Conditions  |</a></li>
               <li><a href="/">Privacy policy  |</a></li>

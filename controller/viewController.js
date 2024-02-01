@@ -6538,6 +6538,7 @@ exports.userdashboard22 = catchAsync(async(req, res, next) => {
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
+    let footerDetails = await footerInfoModel.find({whiteLabelName: whiteLabel})
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         data,
@@ -6549,6 +6550,7 @@ exports.userdashboard22 = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         featureStatusArr,
         basicDetails,
-        colorCode
+        colorCode,
+        footerDetails
     })
 })
