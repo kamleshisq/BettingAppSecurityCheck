@@ -22142,9 +22142,9 @@ socket.on('connect', () => {
         $(document).on('click', '.UploadSocialMedia', function(e){
             e.preventDefault()
             let id  = $(this).attr('id')
-            let form = $('#uploadFile').find('.uploadFooter')
+            let form = $('#uploadFileMedia').find('.Update-media')
             form.attr('id', id)
-            // console.log(id)
+            console.log(id)
             socket.emit('getMediaDetails', {id})
         })
 
