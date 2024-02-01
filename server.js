@@ -11930,9 +11930,15 @@ io.on('connection', (socket) => {
             let createData = {
                 name : data.data.name,
                 description : data.data.description,
-                whiteLabelName:whiteLabel
+                whiteLabelName:whiteLabel,
+                link : data.data.link
             }
-            await footerInfoModel.create(createData)
+            let thatFooter = await footerInfoModel.findById(data.data.id)
+            if(thatFooter){
+                await footerInfoModel.findByIdAndUpdate(data.data.id, createData)
+            }else{
+                await footerInfoModel.create(createData)
+            }
         }
     })
 
