@@ -59,8 +59,8 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             let gamerules = await gamerulesModel.find({whiteLabelName:"1"})
             let games = await gamemodel.find({whiteLabelName:"1"})
             let globalsetting = await globalSettingModel.findOne({whiteLabel:"1"})
-            let footerSettings = await footerInfomodel.find({whiteLabel:"1"})
-            let socialInfo = await socialInfoModel.find({whiteLabel:"1"})
+            let footerSettings = await footerInfomodel.find({whiteLabelName:"1"})
+            let socialInfo = await socialInfoModel.find({whiteLabelName:"1"})
             // let promossions = await Pro
             let newbanners = []
             let newpromosions = []
