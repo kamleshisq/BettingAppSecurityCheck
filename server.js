@@ -78,6 +78,7 @@ const checkExposureARRAY = require('./utils/exposureofarrayUser');
 const voidebundel = require('./utils/voideOPenBetAccoordingfilter');
 const { Socket } = require('engine.io');
 const footerInfoModel = require('./model/footerInfoModel');
+const socialinfomodel = require('./model/socialMediaLinks');
 // const checkLimit = require('./utils/checkOddsLimit');
 
 // const { date } = require('joi');
@@ -11953,6 +11954,14 @@ io.on('connection', (socket) => {
             socket.emit('getFotterDetails',footerData )
         }
     })
+
+
+    socket.on('getMediaDetails', async(data) => {
+        let details = await socialinfomodel.findById(data.id)
+        if(details){
+            socket.emit('getMediaDetails', details)
+        }
+    } )
 
 })
 

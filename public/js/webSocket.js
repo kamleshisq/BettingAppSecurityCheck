@@ -22138,6 +22138,21 @@ socket.on('connect', () => {
             socket.emit('getFotterDetails', {id})
         })
 
+
+        $(document).on('click', '.UploadSocialMedia', function(e){
+            e.preventDefault()
+            let id  = $(this).attr('id')
+            let form = $('#uploadFile').find('.uploadFooter')
+            form.attr('id', id)
+            // console.log(id)
+            socket.emit('getMediaDetails', {id})
+        })
+
+        socket.on('getMediaDetails', async(data) => {
+            let form = $('#uploadFileMedia').find('.Update-media')
+            form.find('input[name="link"]').val(`${data.link}`)
+        })
+
         let textEditorInstance = null
 
         socket.on('getFotterDetails', async(data) => {
