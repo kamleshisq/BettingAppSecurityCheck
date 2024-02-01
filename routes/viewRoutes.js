@@ -105,6 +105,7 @@ router.get("/about_us", authController.isLogin, notificationController.myNotific
 router.get("/gambling", authController.isLogin, notificationController.myNotifications ,viewController.gambling);
 router.get("/terms_conditions", authController.isLogin, notificationController.myNotifications ,viewController.terms_conditions);
 router.get("/privacy_policy", authController.isLogin, notificationController.myNotifications ,viewController.privacy_policy);
+router.get("/faqs", authController.isLogin, notificationController.myNotifications ,viewController.faqs);
 // router.get("/homepageWithoutLogin", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard222);
 router.get('/exchange', authController.isLogin, notificationController.myNotifications ,viewController.getUserExchangePage);
 router.get('/exchange/cricket', authController.isLogin, notificationController.myNotifications ,viewController.cricketPage);
