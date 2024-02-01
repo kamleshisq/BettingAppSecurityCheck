@@ -815,6 +815,34 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     })
 })
 
+exports.aboutUSPAge =  catchAsync(async(req, res, next) => {
+    let featureEventId = []
+    let user = req.currentUser
+    let whiteLabel = whiteLabelcheck(req)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
+
+    let footerDetailsContentA = await footerInfoModel.findOne({whiteLabelName: whiteLabel, link:'/about_us'})
+    // console.log(footerDetailsContentA, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+
+    // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
+    res.status(200).render("./userSideEjs/footerContentPages/about_us",{
+        title:footerDetailsContentA.name,
+        user,
+        check:"Home",
+        userLog,
+        notifications:req.notifications,
+        basicDetails,
+        colorCode,
+        footerDetailsContentA
+    })
+
+})
+
 exports.edit = catchAsync(async(req, res, next) => {
     const user = req.currentUser;
     res.status(200).render('./user/edit',{
