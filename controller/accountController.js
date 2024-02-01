@@ -343,7 +343,19 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     })
 });
 exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
     // console.log(req.query)
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
+
     try{
     let userAcc = []
     let page = req.query.page
@@ -373,7 +385,7 @@ exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
         }else if(!req.query.from && req.query.to){
             userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
         }else{
-            userAcc = await accountStatement.find({user_id:{$in:childUsersArr}}).sort({date: -1}).skip(page * limit).limit(limit);
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}  }).sort({date: -1}).skip(page * limit).limit(limit);
 
         }
     }
