@@ -792,6 +792,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
 
+    let footerDetails = await footerInfoModel.find({whiteLabelName: whiteLabel})
+
     // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
@@ -806,7 +808,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         featureStatusArr,
         basicDetails,
-        colorCode
+        colorCode,
+        footerDetails
     })
 })
 
@@ -6517,7 +6520,7 @@ exports.getGlobalSetting = catchAsync(async(req, res, next) => {
 
 
 exports.userdashboard22 = catchAsync(async(req, res, next) => {
-    console.log('WORKING')
+    // console.log('WORKING')
     let featureEventId = []
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
@@ -6539,7 +6542,7 @@ exports.userdashboard22 = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     let footerDetails = await footerInfoModel.find({whiteLabelName: whiteLabel})
-    console.log(footerDetails, "footerDetailstydewsfsffsffsffsffsffffffff")
+    // console.log(footerDetails, "footerDetailstydewsfsffsffsffsffsffffffff")
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         data,
