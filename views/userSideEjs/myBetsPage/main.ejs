@@ -74,6 +74,7 @@
                                 <th>Odds</th>
                                 <th>Status</th>
                                 <th>Stake</th>
+                                <th>Result</th>
                                 <th class="bod-red-rit">Returns</th>
                                 <!-- <th >Amount</th> -->
                             </tr>
@@ -140,6 +141,11 @@
                                         <%}%>
                                         <td title="Status" ><%=bets[i].status%></td>
                                         <td title="Stake" ><%=bets[i].Stake%></td>
+                                        <%if(bets[i].result){%>
+                                        <td title="Result" ><%=bets[i].result%></td>
+                                        <%}else{%>
+                                        <td title="Result" >-</td>
+                                        <%}%>
                                         <%if(bets[i].returns > 0){%>
                                             <td class="c-gren" title="Returns" ><%=bets[i].returns%></td>
                                         <%}else{%>
