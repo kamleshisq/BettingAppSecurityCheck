@@ -55,6 +55,7 @@ const globalSettingModel = require('../model/globalSetting');
 const colorCodeModel = require('../model/colorcodeModel');
 const bycrypt = require('bcrypt');
 const footerInfoModel = require('../model/footerInfoModel');
+const { consoleBodyAndURL } = require('./walletController');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -793,6 +794,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     }
 
     let footerDetails = await footerInfoModel.find({whiteLabelName: whiteLabel})
+    console.log(footerDetails, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
 
     // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
     res.status(200).render("./userSideEjs/home/homePage",{
