@@ -4590,8 +4590,13 @@ socket.on('connect', () => {
                 }
                 html += `
                 <td>${bets[i].status}</td>
-                <td>${bets[i].Stake}</td>
-                <td>${bets[i].returns}</td>
+                <td>${bets[i].Stake}</td>`
+                if(bets[i].result){
+                    html += `<td>${bets[i].result}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
+                html +=`<td>${bets[i].returns}</td>
                 <td>${bets[i].event}</td></tr>`
             }
             count += bets.length

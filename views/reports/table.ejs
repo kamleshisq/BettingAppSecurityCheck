@@ -10,6 +10,7 @@
       <th>Odds</th>
       <th>Status</th>
       <th>Stake</th>
+      <th>Result</th>
       <th>Returns</th>
       <th>Game/Round</th>
     </tr>
@@ -64,6 +65,11 @@
         <%}%>
         <td><%=bets[i].status%></td>
         <td><%=bets[i].Stake%></td>
+        <%if(bets[i].result){%>
+        <td><%=bets[i].result%></td>
+        <%}else{%>
+        <td>-</td>
+        <%}%>
         <td><%=bets[i].returns%></td>
         <td><%=bets[i].event%></td>
       </tr>
