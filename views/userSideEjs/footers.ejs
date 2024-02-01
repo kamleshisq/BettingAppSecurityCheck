@@ -50,9 +50,11 @@
               <h6 class="">CONTACT US</h6>
             </div>
             <div class="footer-sec--payment-img-ro">
-              <a >
-                <img class="img-fluid" src="assets/img/home/footer-payment-img01.png" alt="payment image">
-              </a>
+              <%for(let i = 0; i < socialMedia.length; i++){%>
+                <a href="<%=socialMedia[i].link%>">
+                  <img class="img-fluid" src="<%=socialMedia[i].img%>" alt="payment image">
+                </a>
+              <%}%>
               <a >
                 <img class="img-fluid" src="assets/img/home/footer-payment-img02.png" alt="payment image">
               </a>

@@ -795,6 +795,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     }
 
     let footerDetailsContentA = await footerInfoModel.find({whiteLabelName: whiteLabel})
+    let socialMedia = await socialinfomodel.find({whiteLabelName: whiteLabel})
     // console.log(footerDetailsContentA, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
 
     // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
@@ -812,7 +813,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         featureStatusArr,
         basicDetails,
         colorCode,
-        footerDetailsContentA
+        footerDetailsContentA,
+        socialMedia
     })
 })
 
