@@ -103,6 +103,7 @@ router.get('/passcodeview',authController.isProtected,viewController.passcodevie
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);
 router.get("/about_us", authController.isLogin, notificationController.myNotifications ,viewController.aboutUSPAge);
 router.get("/gambling", authController.isLogin, notificationController.myNotifications ,viewController.gambling);
+router.get("/terms_conditions", authController.isLogin, notificationController.myNotifications ,viewController.terms_conditions);
 // router.get("/homepageWithoutLogin", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard222);
 router.get('/exchange', authController.isLogin, notificationController.myNotifications ,viewController.getUserExchangePage);
 router.get('/exchange/cricket', authController.isLogin, notificationController.myNotifications ,viewController.cricketPage);
