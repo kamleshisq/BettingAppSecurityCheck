@@ -827,6 +827,7 @@ exports.aboutUSPAge =  catchAsync(async(req, res, next) => {
     }
 
     let footerDetailsContentA = await footerInfoModel.findOne({whiteLabelName: whiteLabel, link:'/about_us'})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     // console.log(footerDetailsContentA, "footerDetailsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
 
     // console.log(basicDetails, "basicDetailsbasicDetailsbasicDetailsbasicDetails")
@@ -838,7 +839,8 @@ exports.aboutUSPAge =  catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         basicDetails,
         colorCode,
-        footerDetailsContentA
+        footerDetailsContentA,
+        verticalMenus
     })
 
 })
