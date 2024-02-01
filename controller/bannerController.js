@@ -50,7 +50,7 @@ exports.createMedia = catchAsync(async(req, res, next) => {
             let createData = {
                 name : req.body.name,
                 img : pathname,
-                link : link,
+                link : req.body.link,
                 whiteLabelName : whiteLabel
             }
             let newBanner = await socialinfomodel.create(createData)
