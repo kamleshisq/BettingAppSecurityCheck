@@ -12,6 +12,43 @@
     <div class="chart-right">
         <div class="grid-2 summary-user-man">
           
+          <div class="inner-box-grid"> 
+            <div class="hed-data">
+                <h3 class="fix-h3"><svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.7 12.35L17.7 13.35L15.65 11.35L16.65 10.35C16.85 10.14 17.19 10.13 17.42 10.35L18.7 11.63C18.89 11.83 18.89 12.15 18.7 12.35ZM9 17.94V20H11.06L17.12 13.88L15.07 11.88L9 17.94ZM2 18H7V20H2C1.46957 20 0.960859 19.7893 0.585786 19.4142C0.210714 19.0391 0 18.5304 0 18V4C0 2.9 0.9 2 2 2H3V0H5V2H13V0H15V2H16C16.5304 2 17.0391 2.21071 17.4142 2.58579C17.7893 2.96086 18 3.46957 18 4V8H2V18ZM2 4V6H16V4H2Z" fill="#6359CA"/>
+                  </svg> Summary</h3>
+                <%
+                const currentDate = new Date();
+                  const threeDaysAgo = new Date(currentDate);
+                  threeDaysAgo.setDate(currentDate.getDate() - 2);
+                  const formattedDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(threeDaysAgo);
+                %>
+                <!-- <select name="Today" class="selected">
+                  <option value="all" selected >Select Options</option>
+                  <option value="today">Today</option>
+                  <option value="yesterday">Yesterday</option>
+                  <option value="<%=formattedDate%>"><%=formattedDate%></option>
+                </select> -->
+                <div class="wrapper-dropdown" id="dropdown">
+                  <span class="selected-display" id="destination">All</span>
+                  <svg class="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-all ml-auto rotate-180">
+                    <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                  <ul class="dropdown" data-summary="all">
+                    <li class="item" id="all">All</li>
+                    <li class="item" id="today">Today</li>
+                    <li class="item" id="yesterday">Yesterday</li>
+                    <li class="item" id="<%=formattedDate%>" ><%=formattedDate%></li>
+                    <!-- <li class="item">Option 4</li> -->
+                  </ul>
+                </div>
+            </div>
+            <table>
+              <thead></thead>
+              
+            </table>
+        </div>
+
           <div class="inner-box-grid user-managment">
             <div class="hed-data">
               <h3 class="fix-h3"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
