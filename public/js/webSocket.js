@@ -1419,7 +1419,7 @@ socket.on('connect', () => {
     }
 
     socket.on('checkpasswordreset',async(data)=>{
-        // console.log(data)
+        console.log(data)
         if(data.status == 'success'){
             $('#navmod1').modal('show')
         }
