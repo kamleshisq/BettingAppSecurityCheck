@@ -2186,7 +2186,7 @@ io.on('connection', (socket) => {
                     }
                 }
         
-                console.log(finalResult.items)
+                // console.log(resumeSuspendMarkets)
                 socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
             }catch(err){
                 console.log(err)
