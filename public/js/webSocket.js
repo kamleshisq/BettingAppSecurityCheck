@@ -1408,14 +1408,14 @@ socket.on('connect', () => {
         </div>`
         $('.welcome-info-btn').html(html1)
     })
-
+    
+    async function checkpasswordreset(){
+        socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
+    }
     if(!pathname.startsWith('/admin')){
         if(LOGINDATA.LOGINUSER){
-            async function checkpasswordreset(){
-                socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
-            }
+            checkpasswordreset()
         }
-        checkpasswordreset()
     }
 
     socket.on('checkpasswordreset',async(data)=>{
