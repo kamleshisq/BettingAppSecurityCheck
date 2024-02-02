@@ -56,7 +56,11 @@
                 </tr>
                 <tr class="flex-justify blue">
                   <td>Turn Over</td>
-                  <td class="text-purple" id="turnOver"><%=data.dashboard.turnOver[0].totalAmount%></td>
+                  <%if(data.dashboard.turnOver[0]){%>
+                    <td class="text-purple" id="turnOver"><%=data.dashboard.turnOver[0].totalAmount%></td>
+                  <%}else{%>
+                    <td class="text-purple" id="turnOver">0</td>
+                    <%}%>
                 </tr>
                 
               </tbody>
