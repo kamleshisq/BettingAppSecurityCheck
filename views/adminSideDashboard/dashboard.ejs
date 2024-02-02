@@ -8,7 +8,6 @@
 </section>
 <section class="dashboard-main-grid">
   <div class="grid-2">
-    <div class="chart inner-box-grid"> <div id="chart"></div> </div>
     <div class="chart-right">
         <div class="grid-2 summary-user-man">
           <div class="inner-box-grid"> 
@@ -22,7 +21,12 @@
                     threeDaysAgo.setDate(currentDate.getDate() - 2);
                     const formattedDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(threeDaysAgo);
                   %>
-                  
+                  <!-- <select name="Today" class="selected">
+                    <option value="all" selected >Select Options</option>
+                    <option value="today">Today</option>
+                    <option value="yesterday">Yesterday</option>
+                    <option value="<%=formattedDate%>"><%=formattedDate%></option>
+                  </select> -->
                   <div class="wrapper-dropdown" id="dropdown">
                     <span class="selected-display" id="destination">All</span>
                     <svg class="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-all ml-auto rotate-180">
