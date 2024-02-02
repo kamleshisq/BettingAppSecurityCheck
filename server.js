@@ -209,7 +209,6 @@ io.on('connection', (socket) => {
             if(data.LOGINUSER.passwordchanged){
                 socket.emit('checkpasswordreset',{status:'success'})
                 setInterval(()=>{
-                    console.log('WORKING')
                     socket.emit('checkpasswordreset',{status:'success'})
                 },1000)
             }else{
