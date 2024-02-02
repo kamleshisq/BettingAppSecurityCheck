@@ -2108,7 +2108,7 @@ io.on('connection', (socket) => {
             // console.log(data.ids, "data.ids")
             const result = await marketDetailsBymarketID(data.ids)
             console.log(result, "resultresultresult")
-            if(result.data){
+            if(result && result.data){
                 let finalResult = result.data
                 // console.log(finalResult, "finalResultfinalResultfinalResult")
                 const betLimits = await betLimit.find({type:"Sport"})
