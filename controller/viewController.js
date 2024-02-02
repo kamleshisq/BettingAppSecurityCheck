@@ -444,7 +444,7 @@ exports.getUpdateRolePage = catchAsync(async(req, res, next) => {
 });
 
 exports.dashboard = catchAsync(async(req, res, nex) => {
-    console.log('WORKING')
+    console.log('WORKING 1234546')
     var fullUrl = req.protocol + '://' + req.get('host') + `/api/v1/deshBoard/getDeshboardUserManagement?sessiontoken=${req.query.sessiontoken}`
     let me;
     const currentUser = req.currentUser
