@@ -1410,9 +1410,12 @@ socket.on('connect', () => {
     })
 
     if(!pathname.startsWith('/admin')){
-        setInterval(()=>{
-            socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
-        },500)
+        if(LOGINDATA.LOGINUSER){
+            async function checkpasswordreset(){
+                socket.emit('checkpasswordreset',{LOGINUSER:LOGINDATA.LOGINUSER})
+            }
+        }
+        checkpasswordreset()
     }
 
     socket.on('checkpasswordreset',async(data)=>{
