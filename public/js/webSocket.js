@@ -4,14 +4,10 @@ const socket = io();
 let reconnectAttempts = 0;
 socket.on('disconnect', () => {
     console.log("WebSocket Disconnected");
-    // Refresh the page when the WebSocket connection is lost
-    
     attemptReconnect();
 });
 window.addEventListener('pageshow', function(event) {
     if (event.persisted) {
-        // console.log('Page was cached and is now shown');
-        // Re-establish WebSocket connection here
         window.location.reload();
     }
 });
@@ -23,11 +19,8 @@ socket.on('connect', () => {
         var jwtToken12 = localStorage.getItem('JWTUSER');
     }
     socket.emit('LOGIN23', jwtToken12)
-
-    // console.log("websocket Connected", jwtToken12)
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
-        // console.log(data, "datadatadata123456")
         const {
             host, hostname, href, origin, pathname, port, protocol, search
         } = window.location
@@ -54,53 +47,8 @@ socket.on('connect', () => {
         }
 
         socket.on('LoginCHeckUSerSIde', data => {
-            // console.log(data)
             window.location.reload();
         })
-
-
-        // if(LOGINDATA.LOGINUSER == "" && c == 0){
-        //     window.location.reload();
-        //     c++
-        // }
-        //   console.log(pathname)
-        //   console.log(host, hostname, href, origin ,port, protocol, search)
-        //dev.ollscores.com dev.ollscores.com  https://bigbull9exch.com//admin/userManagement  https://bigbull9exch.com//  http: 
-
-    // console.log(LOGINTOKEN, LOGINUSER)
-    // console.log(window.location.href)
-    // let query = window.location.href.split('?')[1]
-    // let id;
-    // let P = 0;
-    // if(query){
-    //     id = query.split('=')[1]
-    // }
-    // // console.log(id)
-    // if(id){
-    //     socket.emit('load', {P:P, id:id})
-    // }else{
-    //     socket.emit('load', {P:P})
-    // }
-
-    
-    // function togglePopupMain(idname, id, message){
-    //     document.getElementById(idname).classList.toggle("active");
-    //     document.getElementById(id).innerText  = message.toUpperCase()
-    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-    // }
-
-    // $(document).on('click', ".close-btn" ,function(){
-    //     let parentdiv = this.parentNode
-    //     let grandParent = parentdiv.parentNode
-    //     let id = grandParent.id
-    //     document.getElementById(id).classList.remove("active");
-    // })
-
-    // console.log(LOGINDATA,"==>cookie")
-
-
- 
-    
     let popupTimeout; 
 
     function togglePopupMain(idname, id, message) {
@@ -113,7 +61,7 @@ socket.on('connect', () => {
         clearTimeout(popupTimeout);
         popupTimeout = setTimeout(function() {
             popup.classList.remove("active");
-        }, 5000);
+        }, 3000);
     }
 
     
@@ -138,15 +86,12 @@ socket.on('connect', () => {
 
     $('#navmod3 form input[name="utr"]').keyup(function(e){
         function validateUTR(utr) {
-            // Define your UTR validation criteria here
-            var utrPattern = /^[A-Za-z0-9]{12,}$/; // Minimum 12 alphanumeric characters
+            var utrPattern = /^[A-Za-z0-9]{12,}$/; 
 
-            // Check if the UTR matches the pattern
             return utrPattern.test(utr);
         }
 
         let check = validateUTR($(this).val())
-        // console.log(check,'check')
         if(!check){
             $(this).siblings('span.input_err').addClass('error')
             $(this).siblings('span.input_err').text('enter valid utr(minimum 12 digit alpha numarical)')
@@ -598,13 +543,16 @@ socket.on('connect', () => {
     //         localStorage.setItem("new-class", addedClass);
     //     });
     // });
-    function balance(){
-        socket.emit('userLoginBalance', LOGINDATA)
-        setTimeout(()=>{
-            balance()
-          }, 1000)
+    if(LOGINDATA.LOGINUSER){
+        function balance(){
+            socket.emit('userLoginBalance', LOGINDATA)
+            setTimeout(()=>{
+                balance()
+              }, 1000)
+        }
+        balance()
     }
-    balance()
+    
     socket.on('userLoginBalance', async(data) => {
         // console.log(data, "USERDATA")
         let html = `<div class="bet-blns-nav-wrp-amount-num">
@@ -961,7 +909,6 @@ socket.on('connect', () => {
         $(document).ready(function() {
       
             $(".0L").each(function() {
-                    // console.log(this)
                     let id = this.id
                     const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     // if(data.betLimits[0].max_odd < foundItem.odds[0].layPrice1){
