@@ -125,7 +125,7 @@ async function commisiion(data){
                           date:Date.now(),
                           marketName:netLossingCommission[i].marketName,
                           uniqueId,
-                          loginUserId:usercommissiondata3.userId,
+                          loginUserId:user._id,
                           parentIdArray:childUser.parentUsers,
                       }
                       let commissionData = await newCommissionModel.create(commissiondata)
