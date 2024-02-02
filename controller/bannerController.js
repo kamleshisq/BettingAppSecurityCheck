@@ -80,7 +80,7 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
             const image = req.files.file
             // console.log(logo)
             // console.log(image,'==>image')
-            image.mv(`public/banner/${req.body.Name}.png`, (err)=>{
+            image.mv(`public/banner/${req.body.Name}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
 
