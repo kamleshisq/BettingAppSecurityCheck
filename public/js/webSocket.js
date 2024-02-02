@@ -7455,10 +7455,6 @@ socket.on('connect', () => {
                       $(document).ready(function() {
                         $('#myIframe').attr('src', encryptedUrl);
                     });
-                    // window.addEventListener('load', function() {
-                    //     const iframe = document.getElementById('myIframe');
-                    //     iframe.src = encryptedUrl;
-                    //   });
     
                 }catch(err){
                     console.log(err)
@@ -7495,7 +7491,6 @@ socket.on('connect', () => {
         function cashoutCheck(){
             $(document).ready(function(){
                 let id = $('.mo').attr('id')
-                // console.log(id, "111111111111111111111111111111")
                 socket.emit('cashoutCheck', {LOGINDATA, id})
                 setTimeout(()=>{
                     cashoutCheck()
@@ -7517,7 +7512,6 @@ socket.on('connect', () => {
         $(document).on('click', ".cashout", function(e){
             let id = $(this).closest('table').attr('id')
             let eventID = search.split('=')[1]
-            // console.log('Working123456987')
             socket.emit('cashOOut', {LOGINDATA, id, eventID})
         })
 
@@ -7631,9 +7625,6 @@ socket.on('connect', () => {
                 }
             })
             socket.emit("marketnotificationId", marketIds)
-            setTimeout(()=>{
-                marketNotificationId()
-              }, 1000 * 60)
         });
         }
         marketNotificationId()
@@ -7659,9 +7650,6 @@ socket.on('connect', () => {
                 let eventId = search.split('=')[1]
                 // console.log(ids, eventId)
                 socket.emit('OddsCheck', {ids, eventId})
-                setTimeout(()=>{
-                    OddsCheck()
-                  }, 10000)
             })
         }
         OddsCheck()
@@ -7713,7 +7701,7 @@ socket.on('connect', () => {
             socket.emit("eventId", id)
             setTimeout(()=>{
                 eventID()
-              }, 500)
+              }, 1000)
 
         }
         eventID()
@@ -7739,9 +7727,7 @@ socket.on('connect', () => {
                 socket.emit("marketId", {ids, eventId, MATCHinPLAYSTATUS})
               });
               if(limitData.length === 0){
-                setTimeout(()=>{
                     marketId()
-                  }, 1000)
               }else{
                   setTimeout(()=>{
                     marketId()

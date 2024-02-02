@@ -17,7 +17,7 @@ async function getmarketdetails(array){
         })
         .then(res =>res.json())
         .then(result => {
-            Data = result.result
+            Data = result
             // console.log(Data)
         })
     }catch(err){
