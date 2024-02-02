@@ -458,7 +458,7 @@ exports.dashboard = catchAsync(async(req, res, nex) => {
             method: 'get',
             headers: { 'Authorization': `Bearer ` + req.token }
         }).then(res => res.json()).then(result => {
-            // console.log(result.dashboard)
+            console.log(result.dashboard)
             
             res.status(200).render('./adminSideDashboard/dashboard',{
                 title:"Dashboard",
