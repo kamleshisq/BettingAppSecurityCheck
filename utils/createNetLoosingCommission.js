@@ -16,7 +16,6 @@ async function commisiion(data){
     if(commissionMarket.some(item => (item.marketId == data.marketId))){
         console.log('in commission market')
         // let newfilterUser = await commissionModel.distinct('userId', {"Bookmaker.type":'NET_LOSS'});
-        console.log(newfilterUser, "newfilterUsernewfilterUsernewfilterUser")
 
     //   let filterUser = await commissionModel.find({"Bookmaker.type":'NET_LOSS'})
     //   let newfilterUser = filterUser.map(ele => {
