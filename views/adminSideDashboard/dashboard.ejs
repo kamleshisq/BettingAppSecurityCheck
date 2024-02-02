@@ -9,7 +9,70 @@
 <section class="dashboard-main-grid">
   <div class="grid-2">
     <div class="chart inner-box-grid"> <div id="chart"></div> </div>
-    
+    <div class="chart-right">
+        
+        <div class="grid-1">
+          <div class="inner-box-grid white-labels">
+            <div class="hed-data">
+              <h3 class="fix-h3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18 0.5H2C0.9 0.5 0 1.4 0 2.5V16.5C0 17.6 0.9 18.5 2 18.5H18C19.1 18.5 20 17.6 20 16.5V2.5C20 1.4 19.1 0.5 18 0.5ZM7 14.5H4C3.45 14.5 3 14.05 3 13.5C3 12.95 3.45 12.5 4 12.5H7C7.55 12.5 8 12.95 8 13.5C8 14.05 7.55 14.5 7 14.5ZM7 10.5H4C3.45 10.5 3 10.05 3 9.5C3 8.95 3.45 8.5 4 8.5H7C7.55 8.5 8 8.95 8 9.5C8 10.05 7.55 10.5 7 10.5ZM7 6.5H4C3.45 6.5 3 6.05 3 5.5C3 4.95 3.45 4.5 4 4.5H7C7.55 4.5 8 4.95 8 5.5C8 6.05 7.55 6.5 7 6.5ZM16.7 8.62L13.53 11.79C13.14 12.18 12.5 12.18 12.11 11.79L10.7 10.37C10.6074 10.2774 10.534 10.1675 10.4839 10.0465C10.4338 9.92558 10.408 9.79593 10.408 9.665C10.408 9.53407 10.4338 9.40442 10.4839 9.28346C10.534 9.16249 10.6074 9.05258 10.7 8.96C10.7926 8.86742 10.9025 8.79398 11.0235 8.74387C11.1444 8.69377 11.2741 8.66798 11.405 8.66798C11.5359 8.66798 11.6656 8.69377 11.7865 8.74387C11.9075 8.79398 12.0174 8.86742 12.11 8.96L12.82 9.67L15.29 7.2C15.3825 7.1073 15.4924 7.03375 15.6134 6.98357C15.7344 6.93339 15.864 6.90756 15.995 6.90756C16.126 6.90756 16.2557 6.93339 16.3766 6.98357C16.4976 7.03375 16.6075 7.1073 16.7 7.2L16.71 7.21C17.09 7.6 17.09 8.24 16.7 8.62Z" fill="#6359CA"/>
+                </svg> White Labels</h3>
+            </div>
+            <div class="full-data">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Sr No.</th>
+                    <th>Domain</th>
+                    <%for(let i=0; i<data.dashboard.roles.length;i++){%>
+                        <th><%=data.dashboard.roles[i]._id%></th>
+                    <%}%>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%for(let i=0; i<data.dashboard.users.length;i++){%>
+                    <%if((i % 2) == 0){%>
+                      <tr>
+                          <td data-title="Sr No."><%=i + 1%></td>
+                          <td data-title="Domain"><%=data.dashboard.users[i]._id%></td>
+                          <%for(let j=0; j<data.dashboard.roles.length;j++){%>
+                              <%let check = 0%>
+                              <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
+                                  <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
+                                      <td data-title="<%=data.dashboard.roles[j]._id%>" class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
+                                      <%check = 1%>
+                                  <%}%>
+                              <%}%>
+                              <%if(check != 1){%>
+                                  <td  data-title="<%=data.dashboard.roles[j]._id%>" class="text-purple">0</td>
+                              <%}%>
+                          <%}%>
+                      </tr>
+                    <%}else{%>
+                      <tr  >
+                        <td data-title="Sr No." > <%=i + 1%></td>
+                        <td data-title="Domain" ><%=data.dashboard.users[i]._id%></td>
+                        <%for(let j=0; j<data.dashboard.roles.length;j++){%>
+                            <%let check = 0%>
+                            <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
+                                <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
+                                    <td data-title="<%=data.dashboard.roles[j]._id%>" class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
+                                    <%check = 1%>
+                                <%}%>
+                            <%}%>
+                            <%if(check != 1){%>
+                                <td data-title="<%=data.dashboard.roles[j]._id%>" class="text-purple">0</td>
+                            <%}%>
+                        <%}%>
+                    </tr>
+                    <%}%>
+                  <%}%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </div>
    
   </div>
 
