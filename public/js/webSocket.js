@@ -910,6 +910,7 @@ socket.on('connect', () => {
       
             $(".0L").each(function() {
                     let id = this.id
+                    console.log( data.finalResult)
                     const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     // if(data.betLimits[0].max_odd < foundItem.odds[0].layPrice1){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
