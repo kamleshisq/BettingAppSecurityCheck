@@ -1,6 +1,5 @@
 // const { json } = require("express");
 
-const { isArray } = require("util");
 
 const socket = io();
 let reconnectAttempts = 0;
