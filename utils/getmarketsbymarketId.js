@@ -33,7 +33,7 @@ async function getmarketdetails(array){
         })
         .then(res =>res.text())
         .then(result => {
-           console.log(result)
+           console.log('result =>>>>>>', result)
         })
     }
     return Data
