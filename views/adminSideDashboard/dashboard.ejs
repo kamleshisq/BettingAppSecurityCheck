@@ -54,15 +54,30 @@
                   <td>Active Admins</td>
                     <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount%></td>
                 </tr>
+                <%if(data.dashboard.turnOver[0]){%>
                 <tr class="flex-justify blue">
                   <td>Turn Over</td>
-                  <%if(data.dashboard.turnOver[0]){%>
                     <td class="text-purple" id="turnOver"><%=data.dashboard.turnOver[0].totalAmount%></td>
-                  <%}else{%>
                     <td class="text-purple" id="turnOver">0</td>
-                    <%}%>
-                </tr>
-                
+                  </tr>
+                  <tr class="flex-justify">
+                    <td>Profit</td>
+                    <td class="text-purple" id="Profit"><%=data.dashboard.turnOver[0].Income%></td>
+                  </tr> 
+                  <%}else{%>
+                    <tr class="flex-justify blue">
+                      <td>Turn Over</td>
+                        <td class="text-purple" id="turnOver">0</td>
+                      </tr>
+                      <tr class="flex-justify">
+                        <td>Profit</td>
+                        <td class="text-purple" id="Profit">0</td>
+                      </tr>
+                  <%}%>
+                  <tr class="flex-justify blue">
+                    <td>Total Bets</td>
+                      <td class="text-purple" id="betCount"><%=data.dashboard.betCount%></td>
+                  </tr>
               </tbody>
             </table>
         </div>
