@@ -263,7 +263,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     
     if(parentUser.availableBalance < req.body.amount){
         console.log('gothere')
-        return next(new AppError("Insufficient Credit Limit !"))
+        return next(new AppError("Insufficient Credit Limit !", 404))
     }
 
   
