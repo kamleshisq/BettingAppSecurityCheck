@@ -244,6 +244,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
 exports.depositSettle = catchAsync(async(req, res, next) => {
     console.log('WORKING123')
     const childUser = await User.findById(req.body.id);
+    console.log(childUser, "<<<=childUser")
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
@@ -251,13 +252,14 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     //     return next(new AppError("User Account is Locked", 404))
     // }
     const parentUser = await User.findById(childUser.parent_id);
+    console.log(parentUser, "parentUserparentUserparentUserparentUser")
     req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL) * -1
     // // console.log(req.body)
     // // console.log(childUser)
-    if(childUser.role.role_level < parentUser.role.role_level){
-        return next(new AppError("you do not have permission to perform this action", 404))
-    } 
+    // if(childUser.role.role_level < parentUser.role.role_level){
+    //     return next(new AppError("you do not have permission to perform this action", 404))
+    // } 
     
     if(parentUser.availableBalance < req.body.amount){
         return next(new AppError("Insufficient Credit Limit !"))
