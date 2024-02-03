@@ -16,6 +16,9 @@ export const creditDebitSettle = async(data)=>{
                     location.reload(true)
                 }, 100)
                 // return res.data.user;
+            }else{
+                console.log(res, "1232321321321321321")
+
             }
     
         }catch(err){
@@ -37,6 +40,8 @@ export const creditDebitSettle = async(data)=>{
                 $('#myModalSE').modal('toggle')
                 // return res.data.user;
 
+            }else{
+                console.log(res, "1232321321321321321")
             }
     
         }catch(err){
