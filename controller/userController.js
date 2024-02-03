@@ -24,6 +24,7 @@ exports.isOperator = catchAsync(async(req, res, next) => {
     // console.log(req.currentUser, "req.currentUserreq.currentUser")
     if(req.currentUser && req.currentUser.roleName ==='Operator'){
         let parentUser = await User.findById(req.currentUser.parent_id)
+        req.operator = req.currentUser
         req.currentUser = parentUser
     }
     next()
@@ -534,7 +535,7 @@ exports.changePassword = catchAsync(async(req, res, next) => {
     })
 });
 exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
-    let user = await User.findOne({_id:req.currentUser._id}).select('+password')
+    let user = await User.findOne({_id:req.operator._id}).select('+password')
     console.log(req.body, user)
     if(!user){
         return next(new AppError("User not found", 404))
