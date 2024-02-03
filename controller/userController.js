@@ -535,7 +535,7 @@ exports.changePassword = catchAsync(async(req, res, next) => {
 });
 exports.changePasswordAdmin = catchAsync(async(req, res, next) => {
     let user = await User.findOne({_id:req.currentUser._id}).select('+password')
-    console.log(req.body)
+    console.log(req.body, user)
     if(!user){
         return next(new AppError("User not found", 404))
     }
