@@ -11,8 +11,7 @@ class AppError extends Error {
         }
             
     }
+    module.exports = AppError;
     } catch (error) {
         console.log(error)
     }
-
-module.exports = AppError;
