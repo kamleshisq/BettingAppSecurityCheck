@@ -68,6 +68,7 @@ const sendErrorDev = (err, req,res) => {
                 adminStatus
             })
         }else{
+            console.log('GOTEGEFEGFGEFG')
             return res.render('./errorMessage2',{
                 statusCode : err.statusCode,
                 message,
