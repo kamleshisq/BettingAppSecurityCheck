@@ -9759,6 +9759,9 @@ socket.on('connect', () => {
                         socket.emit("betDetails", {data, LOGINDATA})
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
+                        $('.my-exc-inn-colaps-txt-dv').each(function(){
+                            $(this).removeClass('open')
+                        })
                     }
                 }
             }else{
@@ -9773,6 +9776,9 @@ socket.on('connect', () => {
                             socket.emit("betDetails", {data, LOGINDATA})
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
+                            $('.my-exc-inn-colaps-txt-dv').each(function(){
+                                $(this).removeClass('open')
+                            })
                         }
                     }
                 }else{
