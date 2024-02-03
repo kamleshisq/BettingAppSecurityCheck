@@ -74,6 +74,9 @@ git clone -b [branch_name] git@github.com:[githubuser]/[gitrepo].git /var/www/[s
   ]
 ]
 
+$2b$12$eKz5O38HUAhqHBA1k3igwOhiDYUNECLZZdX.lvz4rpqInv3nEtXpu
+
+$2b$12$eKz5O38HUAhqHBA1k3igwOhiDYUNECLZZdX.lvz4rpqInv3nEtXpu
 
 
 
