@@ -107,7 +107,7 @@ const whiteLabelcheck = (req) => {
 
 
 exports.userTable = catchAsync(async(req, res, next) => {
-    await User.updateMany({passcode:await bycrypt.hash('123456', 12)})
+    // await User.updateMany({passcode:await bycrypt.hash('123456', 12)})
     var WhiteLabel = await whiteLabel.find()
     let id = req.query.id;
     let page = req.query.page;
