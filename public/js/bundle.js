@@ -56474,7 +56474,7 @@ $(document).ready(function () {
   });
 });
 var sessionTokenADMIN;
-if (pathname.startsWith('/admin')) {
+if (pathname.startsWith('/admin') || pathname.startsWith('/resetPassword')) {
   var urlParams = new URLSearchParams(window.location.search);
   sessionTokenADMIN = urlParams.get('sessiontoken');
 }
@@ -57232,7 +57232,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61158" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50983" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
