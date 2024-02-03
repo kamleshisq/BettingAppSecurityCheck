@@ -122,10 +122,11 @@ const senderrorProd = (err, req,res) => {
 
 
 module.exports=(err, req, res, next) => {
-    console.log("err.stack");
+    console.log("err.stack", err);
 
     err.statusCode = err.statusCode || 500;
     err.status = err.status || "Error"
+    console.log(process.env.NODE_ENV, "process.env.NODE_ENVprocess.env.NODE_ENVprocess.env.NODE_ENV")
     if(process.env.NODE_ENV === 'development'){
     //    console.log('working', "THIS IS THE ERROE MAIN ")
         sendErrorDev(err, req,res)
