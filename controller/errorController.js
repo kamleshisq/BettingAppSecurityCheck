@@ -38,12 +38,12 @@ const sendErrorDev = (err, req,res) => {
             message : err.message,
         })
     }else{
-        // return res.status(err.statusCode).json({
-        //     status : err.status,
-        // error: err,
-        // message : err.message,
-        // stack: err.stack
-        // })
+        return res.status(err.statusCode).json({
+            status : err.status,
+        error: err,
+        message : err.message,
+        stack: err.stack
+        })
         let mainMassage = "Sorry the page you are looking is doesn't exist. If you think something is broken, click contact us."
         console.log(err, "THis is the ERROR")
         let message = "Opps! Please try again later"
