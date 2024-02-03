@@ -5905,8 +5905,6 @@ var creditDebitSettle = /*#__PURE__*/function () {
               location.reload(true);
             }, 100);
             // return res.data.user;
-          } else {
-            console.log(res, "1232321321321321321");
           }
           _context.next = 12;
           break;
@@ -5935,8 +5933,6 @@ var creditDebitSettle = /*#__PURE__*/function () {
             }, 100);
             $('#myModalSE').modal('toggle');
             // return res.data.user;
-          } else {
-            console.log(_res, "1232321321321321321");
           }
           _context.next = 25;
           break;
