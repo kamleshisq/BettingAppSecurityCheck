@@ -126,7 +126,7 @@ async function mapBet(data){
                 for(let i = 1; i < user.parentUsers.length; i++){
                     // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
                     let thatUser = await userModel.findById(user.parentUsers[i])
-                    console.log(thatUser.userName, i)
+                    console.log(thatUser.userName, i, "asdfghjklsdfghjk")
                     let parentUser1Amount = new Decimal(thatUser.myShare).times(debitAmountForP).dividedBy(100)
                     let parentUser2Amount = new Decimal(thatUser.Share).times(debitAmountForP).dividedBy(100);
                     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
