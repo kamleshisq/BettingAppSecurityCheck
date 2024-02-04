@@ -124,6 +124,7 @@ async function mapBet(data){
 
                 let debitAmountForP = debitCreditAmount
                 for(let i = 1; i < user.parentUsers.length; i++){
+                    console.log(i)
                     // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
                     let thatUser = await userModel.findById(user.parentUsers[i])
                     console.log(thatUser.userName, i, "asdfghjklsdfghjk")
