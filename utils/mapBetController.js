@@ -130,7 +130,7 @@ async function mapBet(data){
                     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                    if(i = 1){
+                    if(i === 1){
                         await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                             $inc: {
                                 downlineBalance: debitCreditAmount,
