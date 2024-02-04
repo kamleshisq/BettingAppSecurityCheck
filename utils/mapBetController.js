@@ -130,26 +130,23 @@ async function mapBet(data){
                     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                    if(i === 1){
-                        await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
-                            $inc: {
-                                downlineBalance: debitCreditAmount,
-                                myPL: -parentUser2Amount,
-                                lifetimePL: -parentUser2Amount,
-                                pointsWL: debitCreditAmount
-                            }
-                        });
-                    }
-                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                    await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                         $inc: {
                             downlineBalance: debitCreditAmount,
-                            myPL: -parentUser1Amount,
-                            uplinePL: -parentUser2Amount,
-                            lifetimePL: -parentUser1Amount,
+                            myPL: -parentUser2Amount,
+                            lifetimePL: -parentUser2Amount,
                             pointsWL: debitCreditAmount
                         }
+                    });
+                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                        $inc : {
+                            uplinePL: -parentUser2Amount,
+                        }
                     })
-                  debitAmountForP = parentUser1Amount
+                    
+                   if(parentUser1Amount !== 0){
+                       debitAmountForP = parentUser1Amount
+                   } 
 
                     // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
                     
