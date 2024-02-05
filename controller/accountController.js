@@ -263,26 +263,24 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         return next(new AppError("Insufficient Credit Limit !"))
     }
     let lifeTimePl = 0
-    let debitAmountForP = -childUser.pointsWL
-    console.log(debitAmountForP, "debitAmountForPdebitAmountForPdebitAmountForP")
-    for(let i = 0; i < childUser.parentUsers.length; i++){
-       let parentUSer = await User.findById(childUser.parentUsers[i])
-       if(i === childUser.parentUsers.length - 1){
-        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
-        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
-       }
-       if(parentUSer.userName != 'admin'){
-           let parentUser1Amount = new Decimal(childUser.myShare).times(debitAmountForP).dividedBy(100)
-            let parentUser2Amount = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100);
-            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-    
-           console.log(parentUSer)
-           if(parentUser1Amount !== 0){
-            debitAmountForP = parentUser1Amount
-       }
-    } 
-    }
+        let debitAmountForP = -childUser.pointsWL
+        for(let i = 0; i < childUser.parentUsers.length; i++){
+           let parentUSer = await User.findById(childUser.parentUsers[i])
+           if(i === childUser.parentUsers.length - 1){
+            lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
+            lifeTimePl = lifeTimePl.toDecimalPlaces(4);
+           }
+           if(parentUSer.userName != 'admin'){
+               let parentUser1Amount = new Decimal(childUser.myShare).times(debitAmountForP).dividedBy(100)
+                let parentUser2Amount = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100);
+                parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+        
+               if(parentUser1Amount !== 0){
+                debitAmountForP = parentUser1Amount
+           }
+        } 
+        }
 
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePllifeTimePl")
     // const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
