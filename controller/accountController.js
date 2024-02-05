@@ -272,28 +272,10 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
         console.log(parentUser1Amount, parentUser2Amount, parentsUser2.userName)
-        if(childUser.roleName !== 'AGENT'){
-            if(parentsUser2.userName === parentUser.userName){
-            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-            lifeTimePl = parentUser2Amount
-            break;
-            }
-        }else{
-            lifeTimePl = parentUser2Amount
-            break;
+        if(parentsUser2.userName === parentUser.userName){
+        console.log(parentUser1Amount, parentUser2Amount, parentsUser2.userName, 'thisONE')
         }
-        // if(parentUser.userName != 'admin'){
-        //     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-        //         if(parentUser1.userName === parentUser.userName){
-        //             lifeTimePl = parentUser1Amount
-        //             break;
-        //         }
-        // }else{
-        //     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-        //     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-        //     lifeTimePl = parentUser2Amount
-        //     break;
-        // }
+        
                     
         if(parentUser1Amount !== 0){
             debitAmountForP = parentUser1Amount
