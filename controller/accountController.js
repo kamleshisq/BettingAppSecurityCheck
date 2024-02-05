@@ -263,7 +263,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         return next(new AppError("Insufficient Credit Limit !"))
     }
     let lifeTimePl = 0
-    let debitAmountForP = childUser.uplinePL
+    let debitAmountForP = -childUser.pointsWL
     console.log(debitAmountForP, "debitAmountForPdebitAmountForPdebitAmountForP")
     for(let i = 1; i < childUser.parentUsers.length; i++){
         let parentUser1 = await User.findById(childUser.parentUsers[i])
