@@ -1,4 +1,4 @@
-let User = require('../model/User');
+let User = require('../model/userModel');
 let accountStatementModel = require('../model/accountStatementByUserModel');
 let Bet = require('../model/betmodel');
 let settlementHistory = require("../model/settelementHistory");
