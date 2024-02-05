@@ -265,7 +265,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     let lifeTimePl = 0
     let debitAmountForP = -childUser.pointsWL
     console.log(debitAmountForP, "debitAmountForPdebitAmountForPdebitAmountForP")
-    for(let i = 1; i < childUser.parentUsers.length; i++){
+    for(let i = 0; i < childUser.parentUsers.length; i++){
         if(i === 1){
             uplinePl = 0
         }
