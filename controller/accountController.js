@@ -268,6 +268,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     for(let i = 1; i < childUser.parentUsers.length; i++){
         let parentUser1 = await User.findById(childUser.parentUsers[i])
         let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+        console.log(parentUser1.userName, parentUser.userName, parentUser1Amount)
         if(parentUser.userName != 'admin'){
             parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                 if(parentUser1.userName === parentUser.userName){
