@@ -289,7 +289,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
             if(i === 1){
                 uplinePl = 0
             }
-            let parentUser1 = await userModel.findById(childUser.parentUsers[i])
+            let parentUser1 = await User.findById(childUser.parentUsers[i])
             let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
             let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
             parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
