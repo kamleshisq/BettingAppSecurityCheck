@@ -115,7 +115,7 @@ async function rollBack(data){
                     if(parentUser1Amount !== 0){
                         debitAmountForP = parentUser1Amount
                     } 
-                    uplinePl = uplinePl + parentUser2Amount
+                    uplinePl = parseFloat(uplinePl) + parseFloat(parentUser2Amount)
                         
                     }
         
