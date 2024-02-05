@@ -472,7 +472,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                             $inc: {
                                 downlineBalance: -exposure,
                                 myPL: parentUser2Amount,
-                                lifetimePL: parentUser2Amount,
                                 pointsWL: -exposure
                             }
                         });
@@ -486,7 +485,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                                 $inc: {
                                     downlineBalance: -exposure,
                                     myPL: parentUser1Amount,
-                                    lifetimePL: parentUser1Amount,
                                     pointsWL: -exposure
                                 }
                             });
@@ -542,7 +540,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                                     $inc: {
                                         downlineBalance: debitCreditAmount,
                                         myPL: -parentUser2Amount,
-                                        lifetimePL: -parentUser2Amount,
                                         pointsWL: debitCreditAmount
                                     }
                                 });
@@ -556,7 +553,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                                         $inc: {
                                             downlineBalance: debitCreditAmount,
                                             myPL: -parentUser1Amount,
-                                            lifetimePL: -parentUser1Amount,
                                             pointsWL: debitCreditAmount
                                         }
                                     });

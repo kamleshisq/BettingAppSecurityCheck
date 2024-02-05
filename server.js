@@ -2425,7 +2425,6 @@ io.on('connection', (socket) => {
                             $inc: {
                                 downlineBalance: -debitCreditAmount,
                                 myPL: parentUser2Amount,
-                                lifetimePL: parentUser2Amount,
                                 pointsWL: -debitCreditAmount
                             }
                         });
@@ -2439,7 +2438,6 @@ io.on('connection', (socket) => {
                                 $inc: {
                                     downlineBalance: -debitCreditAmount,
                                     myPL: parentUser1Amount,
-                                    lifetimePL: parentUser1Amount,
                                     pointsWL: -debitCreditAmount
                                 }
                             });
@@ -2487,7 +2485,6 @@ io.on('connection', (socket) => {
                                 $inc: {
                                     downlineBalance: debitCreditAmount,
                                     myPL: -parentUser2Amount,
-                                    lifetimePL: -parentUser2Amount,
                                     pointsWL: debitCreditAmount
                                 }
                             });
@@ -2501,7 +2498,6 @@ io.on('connection', (socket) => {
                                     $inc: {
                                         downlineBalance: debitCreditAmount,
                                         myPL: -parentUser1Amount,
-                                        lifetimePL: -parentUser1Amount,
                                         pointsWL: debitCreditAmount
                                     }
                                 });

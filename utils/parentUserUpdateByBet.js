@@ -54,7 +54,6 @@ async function updateParents(user, amount, downLevelBalance){
                             $inc: {
                                 downlineBalance: -downLevelBalance,
                                 myPL: parentUser2Amount,
-                                lifetimePL: parentUser2Amount,
                                 pointsWL: -downLevelBalance
                             }
                         });
@@ -68,7 +67,6 @@ async function updateParents(user, amount, downLevelBalance){
                                 $inc: {
                                     downlineBalance: -downLevelBalance,
                                     myPL: parentUser1Amount,
-                                    lifetimePL: parentUser1Amount,
                                     pointsWL: -downLevelBalance
                                 }
                             });

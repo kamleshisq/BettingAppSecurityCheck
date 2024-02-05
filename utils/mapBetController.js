@@ -137,7 +137,6 @@ async function mapBet(data){
                             $inc: {
                                 downlineBalance: debitCreditAmount,
                                 myPL: -parentUser2Amount,
-                                lifetimePL: -parentUser2Amount,
                                 pointsWL: debitCreditAmount
                             }
                         });
@@ -151,7 +150,6 @@ async function mapBet(data){
                                 $inc: {
                                     downlineBalance: debitCreditAmount,
                                     myPL: -parentUser1Amount,
-                                    lifetimePL: -parentUser1Amount,
                                     pointsWL: debitCreditAmount
                                 }
                             });
@@ -293,7 +291,6 @@ async function mapBet(data){
                             $inc: {
                                 downlineBalance: debitCreditAmount,
                                 myPL: -parentUser2Amount,
-                                lifetimePL: -parentUser2Amount,
                                 pointsWL: debitCreditAmount
                             }
                         });
@@ -307,7 +304,6 @@ async function mapBet(data){
                                 $inc: {
                                     downlineBalance: debitCreditAmount,
                                     myPL: -parentUser1Amount,
-                                    lifetimePL: -parentUser1Amount,
                                     pointsWL: debitCreditAmount
                                 }
                             });
@@ -363,7 +359,6 @@ async function mapBet(data){
                                     $inc: {
                                         downlineBalance: debitCreditAmount,
                                         myPL: -parentUser2Amount,
-                                        lifetimePL: -parentUser2Amount,
                                         pointsWL: debitCreditAmount
                                     }
                                 });
@@ -377,7 +372,6 @@ async function mapBet(data){
                                         $inc: {
                                             downlineBalance: debitCreditAmount,
                                             myPL: -parentUser1Amount,
-                                            lifetimePL: -parentUser1Amount,
                                             pointsWL: debitCreditAmount
                                         }
                                     });
@@ -428,7 +422,6 @@ async function mapBet(data){
                             $inc: {
                                 downlineBalance: -exposure,
                                 myPL: parentUser2Amount,
-                                lifetimePL: parentUser2Amount,
                                 pointsWL: -exposure
                             }
                         });
@@ -442,7 +435,6 @@ async function mapBet(data){
                                 $inc: {
                                     downlineBalance: -exposure,
                                     myPL: parentUser1Amount,
-                                    lifetimePL: parentUser1Amount,
                                     pointsWL: -exposure
                                 }
                             });
