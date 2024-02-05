@@ -162,7 +162,7 @@ async function rollBack(data){
                                 });
                                 await User.findByIdAndUpdate(user.parentUsers[i], {
                                     $inc : {
-                                        uplinePL: -parentUser2Amount + uplinePl,
+                                        uplinePL: -parseFloat(parentUser2Amount) + parseFloat(uplinePl),
                                     }
                                 })
                                 if(i === user.parentUsers.length-1 ){
@@ -179,7 +179,7 @@ async function rollBack(data){
                         if(parentUser1Amount !== 0){
                             debitAmountForP = parentUser1Amount
                         } 
-                        uplinePl = uplinePl - parentUser2Amount
+                        uplinePl = parseFloat(uplinePl) - parseFloat(parentUser2Amount)
 
                             // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
                             
