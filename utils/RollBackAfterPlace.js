@@ -1,4 +1,4 @@
-let User = require('../model/userModel');
+let User = require('../model/User');
 let accountStatementModel = require('../model/accountStatementByUserModel');
 let Bet = require('../model/betmodel');
 let settlementHistory = require("../model/settelementHistory");
@@ -82,12 +82,12 @@ async function rollBack(data){
                         if(i === 1){
                             uplinePl = 0
                         }
-                        let parentUser1 = await userModel.findById(user.parentUsers[i])
+                        let parentUser1 = await User.findById(user.parentUsers[i])
                         let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
                         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                            await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            await User.findByIdAndUpdate(user.parentUsers[i - 1], {
                                 $inc: {
                                     downlineBalance: -VoidAmount,
                                     myPL: parentUser2Amount,
@@ -95,13 +95,13 @@ async function rollBack(data){
                                     pointsWL: -VoidAmount
                                 }
                             });
-                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                            await User.findByIdAndUpdate(user.parentUsers[i], {
                                 $inc : {
                                     uplinePL: parentUser2Amount + uplinePl,
                                 }
                             })
                             if(i === user.parentUsers.length-1 ){
-                                await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                                await User.findByIdAndUpdate(user.parentUsers[i], {
                                     $inc: {
                                         downlineBalance: -VoidAmount,
                                         myPL: parentUser1Amount,
@@ -148,12 +148,12 @@ async function rollBack(data){
                             if(i === 1){
                                 uplinePl = 0
                             }
-                            let parentUser1 = await userModel.findById(user.parentUsers[i])
+                            let parentUser1 = await User.findById(user.parentUsers[i])
                             let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
                             let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                             parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                             parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                                await User.findByIdAndUpdate(user.parentUsers[i - 1], {
                                     $inc: {
                                         downlineBalance: VoidAmount,
                                         myPL: -parentUser2Amount,
@@ -161,13 +161,13 @@ async function rollBack(data){
                                         pointsWL: VoidAmount
                                     }
                                 });
-                                await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                                await User.findByIdAndUpdate(user.parentUsers[i], {
                                     $inc : {
                                         uplinePL: -parentUser2Amount + uplinePl,
                                     }
                                 })
                                 if(i === user.parentUsers.length-1 ){
-                                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                                    await User.findByIdAndUpdate(user.parentUsers[i], {
                                         $inc: {
                                             downlineBalance: VoidAmount,
                                             myPL: -parentUser1Amount,
