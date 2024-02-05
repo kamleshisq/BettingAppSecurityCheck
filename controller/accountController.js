@@ -276,11 +276,11 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
                  let parentUser2Amount = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100);
                  parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                  parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                 if(parentUser1Amount !== 0){
+                  debitAmountForP = parentUser1Amount
+             }
             }
         
-               if(parentUser1Amount !== 0){
-                debitAmountForP = parentUser1Amount
-           }
         } 
         }
 
