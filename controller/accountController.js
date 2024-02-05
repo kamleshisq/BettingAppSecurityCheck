@@ -272,8 +272,9 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
         console.log(parentUser1Amount, parentUser2Amount, parentsUser2.userName)
+        console.log(parentsUser2.userName, parentUser.userName)
         if(parentsUser2.userName === parentUser.userName){
-        console.log(parentUser1Amount, parentUser2Amount, parentsUser2.userName, 'thisONE')
+            console.log(parentUser1Amount, parentUser2Amount, parentsUser2.userName, 'thisONE')
         }
         
                     
