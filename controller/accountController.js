@@ -243,7 +243,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
 });
 
 exports.depositSettle = catchAsync(async(req, res, next) => {
-    console.log(req.body)
+    console.log(req.body, req.body)
     // const childUser = await User.findById(req.body.id);
     // if(childUser.transferLock){
     //     return next(new AppError("User Account is Locked", 404))
