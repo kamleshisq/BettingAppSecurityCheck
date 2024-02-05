@@ -242,28 +242,28 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
 });
 
 exports.depositSettle = catchAsync(async(req, res, next) => {
-    console.log(req.body)
-    // const childUser = await User.findById(req.body.id);
-    // if(childUser.transferLock){
+    // console.log(req.body)
+    const childUser = await User.findById(req.body.id);
+    if(childUser.transferLock){
+        return next(new AppError("User Account is Locked", 404))
+    }
+    // if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
     //     return next(new AppError("User Account is Locked", 404))
     // }
-    // // if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
-    // //     return next(new AppError("User Account is Locked", 404))
-    // // }
-    // const parentUser = await User.findById(childUser.parent_id);
-    // req.body.amount = parseFloat(req.body.amount)
-    // req.body.clintPL = parseFloat(req.body.clintPL) * -1
-    // // // console.log(req.body)
-    // // // console.log(childUser)
-    // // if(childUser.role.role_level < parentUser.role.role_level){
-    // //     return next(new AppError("you do not have permission to perform this action", 404))
-    // // } 
+    const parentUser = await User.findById(childUser.parent_id);
+    req.body.amount = parseFloat(req.body.amount)
+    req.body.clintPL = parseFloat(req.body.clintPL) * -1
+    // // console.log(req.body)
+    // // console.log(childUser)
+    // if(childUser.role.role_level < parentUser.role.role_level){
+    //     return next(new AppError("you do not have permission to perform this action", 404))
+    // } 
     
-    // if(parentUser.availableBalance < req.body.amount){
-    //     return next(new AppError("Insufficient Credit Limit !"))
-    // }
+    if(parentUser.availableBalance < req.body.amount){
+        return next(new AppError("Insufficient Credit Limit !"))
+    }
 
-  
+    console.log(req.body)
     // const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
     // await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-req.body.amount}});
     // // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
