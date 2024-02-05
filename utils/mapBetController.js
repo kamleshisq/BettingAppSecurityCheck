@@ -125,7 +125,7 @@ async function mapBet(data){
                 let debitAmountForP = debitCreditAmount
                 let uplinePl
                 for(let i = 1; i < user.parentUsers.length; i++){
-                    if(i = 0){
+                    if(i = 1){
                         uplinePl = 0
                     }
                     console.log(i)
@@ -152,7 +152,7 @@ async function mapBet(data){
                    if(parentUser1Amount !== 0){
                        debitAmountForP = parentUser1Amount
                    } 
-                   uplinePl = -parentUser2Amount
+                   uplinePl = uplinePl - parentUser2Amount
 
                     // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
                     
