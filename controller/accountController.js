@@ -256,8 +256,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     }
     // console.log(req.body.amount - parentUser.uplinePL)
   
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
-    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL, lifetimePL:(req.body.amount - parentUser.uplinePL),myPL:-req.body.amount}});
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, lifetimePL:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
+    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL, lifetimePL:req.body.clintPL,myPL:-req.body.amount}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
     let ParentAccStatement = {}
