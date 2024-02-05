@@ -131,7 +131,20 @@
                                   <%}else{%>
                                     <tr class="acount-stat-tbl-body-tr " data-marketid="" id="rowid-<%=i + 1%>">
                                       <%if(data[i].child_id){%>
-                                        <td title="Transaction">Settlement</td>
+                                        <%if(data[i].startsWith('Chips')){%>
+                                          <%if(data[i].creditDebitamount > 0){%>
+                                            <td title="Transaction">Deposite</td>
+                                          <%}else{%>
+                                            <td title="Transaction">Withdraw</td>
+                                          <%}%>
+                                        <%}else{%>
+                                          <%if(data[i].creditDebitamount > 0){%>
+                                            <td title="Transaction">Settlement Deposite</td>
+                                          <%}else{%>
+                                            <td title="Transaction">Settlement Withdraw</td>
+                                          <%}%>
+                                        <%}%>
+                                        <!-- <td title="Transaction">Settlement</td> -->
                                         <%}else{%>
                                           <%console.log(data[i])%>
                                           <%if(data[i].description.startsWith("Revoke") || data[i].description.startsWith("Settle")){%>
