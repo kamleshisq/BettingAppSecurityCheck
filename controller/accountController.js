@@ -282,7 +282,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
        if(parentUser1Amount !== 0){
            debitAmountForP = parentUser1Amount
        } 
-       uplinePl = parseFloat(uplinePl) - parseFloat(parentUser2Amount)
+      
 
         // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
         
