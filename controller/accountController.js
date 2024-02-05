@@ -271,17 +271,14 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
             lifeTimePl = lifeTimePl.toDecimalPlaces(4);
            }
            if(parentUSer.userName != 'admin'){
-            if(childUser.roleName != 'user'){
                 let parentUser1Amount = new Decimal(childUser.myShare).times(debitAmountForP).dividedBy(100)
                  let parentUser2Amount = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100);
                  parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                  parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
                  if(parentUser1Amount !== 0){
                   debitAmountForP = parentUser1Amount
-             }
-            }
-        
-        } 
+                }
+            } 
         }
 
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePllifeTimePl")
