@@ -254,7 +254,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(parentUser.availableBalance < req.body.amount){
         return next(new AppError("Insufficient Credit Limit !"))
     }
-    console.log(req.body.clintPL - parentUser.uplinePL)
+    console.log(req.body.amount - parentUser.uplinePL)
   
     // const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
     // await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL, lifetimePL:(req.body.clintPL - parentUser.uplinePL),myPL:-req.body.amount}});
