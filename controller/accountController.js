@@ -2,6 +2,7 @@ const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const User = require("../model/userModel");
 const Role = require('./../model/roleModel')
+const Decimal = require('decimal.js');
 // const { required } = require("joi");
 const accountStatement = require('../model/accountStatementByUserModel');
 const betModel = require("../model/betmodel");
