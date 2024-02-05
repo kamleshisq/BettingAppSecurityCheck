@@ -87,6 +87,7 @@ async function rollBack(data){
                         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                        console.log(parentUser1Amount, parentUser2Amount, parentUser1.userName)
                             await User.findByIdAndUpdate(user.parentUsers[i - 1], {
                                 $inc: {
                                     downlineBalance: -VoidAmount,
@@ -100,7 +101,7 @@ async function rollBack(data){
                                     uplinePL: parentUser2Amount + uplinePl,
                                 }
                             })
-                            if(i === user.parentUsers.length-1 ){
+                            if(i === user.parentUsers.length - 1 ){
                                 await User.findByIdAndUpdate(user.parentUsers[i], {
                                     $inc: {
                                         downlineBalance: -VoidAmount,
@@ -115,8 +116,6 @@ async function rollBack(data){
                         debitAmountForP = parentUser1Amount
                     } 
                     uplinePl = uplinePl + parentUser2Amount
-
-                        // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
                         
                     }
         
