@@ -131,7 +131,7 @@
                                   <%}else{%>
                                     <tr class="acount-stat-tbl-body-tr " data-marketid="" id="rowid-<%=i + 1%>">
                                       <%if(data[i].child_id){%>
-                                        <%if(data[i].startsWith('Chips')){%>
+                                        <%if(data[i].description.startsWith('Chips')){%>
                                           <%if(data[i].creditDebitamount > 0){%>
                                             <td title="Transaction">Deposite</td>
                                           <%}else{%>
