@@ -1364,7 +1364,7 @@ socket.on('connect', () => {
         <div class="skin-data green">
             
             <h5>Credit Reference</h5>
-            <h6> ${data.creditReference.toFixed(2)}</h6>
+            <h6> ${data.balance.toFixed(2)}</h6>
         </div>
         <!-- <div class="skin-data green">
           
