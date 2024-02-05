@@ -123,14 +123,18 @@ async function mapBet(data){
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/WON`
 
                 let debitAmountForP = debitCreditAmount
-                let uplinePl = 0
+                let uplinePl
                 for(let i = 1; i < user.parentUsers.length; i++){
+                    if(i = 0){
+                        uplinePl = 0
+                    }
                     console.log(i)
                     let parentUser1 = await userModel.findById(user.parentUsers[i])
                     let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
                     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                    console.log(-parentUser2Amount, uplinePl, -parentUser2Amount + uplinePl, "sdfghjkl")
                         await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                             $inc: {
                                 downlineBalance: debitCreditAmount,
