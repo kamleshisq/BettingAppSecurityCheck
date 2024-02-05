@@ -190,8 +190,8 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
     }
-    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount}})
-    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,myPL:0,pointsWL:0},{
+    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount, lifetimePL:req.body.amount}})
+    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL}, lifetimePL:childUser.myPL,uplinePL:0,myPL:0,pointsWL:0},{
         new:true
     })
     
@@ -242,7 +242,6 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
 });
 
 exports.depositSettle = catchAsync(async(req, res, next) => {
-    // console.log(req.body)
     const childUser = await User.findById(req.body.id);
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
@@ -263,9 +262,9 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         return next(new AppError("Insufficient Credit Limit !"))
     }
 
-    console.log(req.body)
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.amount,lifetimePL:-req.body.amount}, uplinePL:0,pointsWL:0,myPL:0})
-    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-req.body.amount,lifetimePL:req.body.amount}});
+  
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, lifetimePL:childUser.myPL, uplinePL:0,pointsWL:0,myPL:0})
+    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-req.body.amount, lifetimePL:-req.body.amount}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
     let ParentAccStatement = {}
