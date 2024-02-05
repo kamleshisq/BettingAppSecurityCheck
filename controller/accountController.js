@@ -263,6 +263,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         return next(new AppError("Insufficient Credit Limit !"))
     }
     let lifeTimePl = 0
+    if(childUser.roleName === 'user'){
         let debitAmountForP = -childUser.pointsWL
         for(let i = 0; i < childUser.parentUsers.length; i++){
            let parentUSer = await User.findById(childUser.parentUsers[i])
@@ -280,6 +281,30 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
                 }
             } 
         }
+    }else{
+        let debitAmountForP = childUser.pointsWL
+        for(let i = 1; i < childUser.parentUsers.length; i++){
+            if(i === 1){
+                uplinePl = 0
+            }
+            let parentUser1 = await userModel.findById(childUser.parentUsers[i])
+            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+
+                if(i === childUser.parentUsers.length-1 ){
+                    lifeTimePl = parentUser1Amount
+                }
+            
+           if(parentUser1Amount !== 0){
+               debitAmountForP = parentUser1Amount
+           } 
+
+            // console.log(childUser.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
+            
+        }
+    }
 
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePllifeTimePl")
     // const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
