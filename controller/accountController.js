@@ -267,20 +267,32 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     console.log(debitAmountForP, "debitAmountForPdebitAmountForPdebitAmountForP")
     for(let i = 1; i < childUser.parentUsers.length; i++){
         let parentUser1 = await User.findById(childUser.parentUsers[i])
+        let parentsUser2 = await User.findById(childUser.parentUsers[i - 1])
         let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-        console.log(parentUser1.userName, parentUser.userName, parentUser1Amount, parentUser1.myShare)
-        if(parentUser.userName != 'admin'){
-            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-                if(parentUser1.userName === parentUser.userName){
-                    lifeTimePl = parentUser1Amount
-                    break;
-                }
-        }else{
-            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+        let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+        parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+        if(i !== childUser.parentUsers.length - 1){
+            if(parentsUser2.userName === parentUser.userName){
             parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
             lifeTimePl = parentUser2Amount
             break;
+            }
+        }else{
+            lifeTimePl = parentUser2Amount
+            break;
         }
+        // if(parentUser.userName != 'admin'){
+        //     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+        //         if(parentUser1.userName === parentUser.userName){
+        //             lifeTimePl = parentUser1Amount
+        //             break;
+        //         }
+        // }else{
+        //     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+        //     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+        //     lifeTimePl = parentUser2Amount
+        //     break;
+        // }
                     
         if(parentUser1Amount !== 0){
             debitAmountForP = parentUser1Amount
