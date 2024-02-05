@@ -1119,7 +1119,7 @@ io.on('connection', (socket) => {
     socket.on('casionoStatusChange',async(data)=>{
         try{
             let whiteLabel = checkwhiteLabel(data.LOGINDATA)
-            if(data.LOGINDATA.LOGINUSER.userName === 'admin'){
+            if(data.LOGINDATA.LOGINUSER.userName === 'admin' || data.LOGINDATA.LOGINUSER.roleName === 'Operator'){
                 console.log(data)
                 if(data.status){
                     await gameModel.updateMany({game_id:data.id},{status:true})

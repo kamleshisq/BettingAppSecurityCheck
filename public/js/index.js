@@ -121,7 +121,7 @@ $(document).ready(function(){
 
 
 let sessionTokenADMIN
-if(pathname.startsWith('/admin')){
+if(pathname.startsWith('/admin') || pathname.startsWith('/resetPassword')){
     const urlParams = new URLSearchParams(window.location.search);
     sessionTokenADMIN = urlParams.get('sessiontoken')
 }

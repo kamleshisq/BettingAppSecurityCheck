@@ -9759,6 +9759,9 @@ socket.on('connect', () => {
                         socket.emit("betDetails", {data, LOGINDATA})
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
+                        $('.my-exc-inn-colaps-txt-dv').each(function(){
+                            $(this).removeClass('open')
+                        })
                     }
                 }
             }else{
@@ -9773,6 +9776,9 @@ socket.on('connect', () => {
                             socket.emit("betDetails", {data, LOGINDATA})
                         }else{
                             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
+                            $('.my-exc-inn-colaps-txt-dv').each(function(){
+                                $(this).removeClass('open')
+                            })
                         }
                     }
                 }else{
@@ -10083,6 +10089,9 @@ socket.on('connect', () => {
             // if()
         })
         socket.on("betDetails" , (data) => {
+            $('.my-exc-inn-colaps-txt-dv').each(function(){
+                $(this).removeClass('open')
+            })
             marketIdbookDetails( true )
             fencyDetails( false )
             hideLoader()
@@ -10094,9 +10103,6 @@ socket.on('connect', () => {
             //   }
             if(data.result === "Bet placed successfully"){
                 togglePopupMain('popup-1', "redPopUP", data.result.toUpperCase())
-                $('.my-exc-inn-colaps-txt-dv').each(function(){
-                    $(this).removeClass('open')
-                })
             }else{
                 togglePopupMain('popup-2', "redPopUP2", data.result.toUpperCase())
             }

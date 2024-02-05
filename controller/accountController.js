@@ -25,9 +25,9 @@ exports.deposit = catchAsync(async(req, res, next) => {
     req.body.amount = parseFloat(req.body.amount)
     // // console.log(req.body)
     // // console.log(childUser)
-    if(childUser.role.role_level < parentUser.role.role_level){
-        return next(new AppError("you do not have permission to perform this action", 404))
-    } 
+    // if(childUser.role.role_level < parentUser.role.role_level){
+    //     return next(new AppError("you do not have permission to perform this action", 404))
+    // } 
     let userData = {}
     let parentData = {}
     if(parentUser.availableBalance < req.body.amount){
@@ -119,9 +119,9 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
         return next(new AppError("User Account is Locked", 404))
     }
     // // console.log(user)
-    if(childUser.role.role_level < parentUser.role.role_level){
-        return next(new AppError("you do not have permission to perform this action", 404))
-    }
+    // if(childUser.role.role_level < parentUser.role.role_level){
+    //     return next(new AppError("you do not have permission to perform this action", 404))
+    // }
 
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
@@ -183,9 +183,9 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     const childUser = await User.findById(req.body.id);
     const parentUser = await User.findById(childUser.parent_id);
     // // console.log(user)
-    if(childUser.role.role_level < parentUser.role.role_level){
-        return next(new AppError("you do not have permission to perform this action", 404))
-    }
+    // if(childUser.role.role_level < parentUser.role.role_level){
+    //     return next(new AppError("you do not have permission to perform this action", 404))
+    // }
 
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
@@ -254,9 +254,9 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     req.body.clintPL = parseFloat(req.body.clintPL) * -1
     // // console.log(req.body)
     // // console.log(childUser)
-    if(childUser.role.role_level < parentUser.role.role_level){
-        return next(new AppError("you do not have permission to perform this action", 404))
-    } 
+    // if(childUser.role.role_level < parentUser.role.role_level){
+    //     return next(new AppError("you do not have permission to perform this action", 404))
+    // } 
     
     if(parentUser.availableBalance < req.body.amount){
         return next(new AppError("Insufficient Credit Limit !"))
