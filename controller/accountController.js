@@ -266,29 +266,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     let debitAmountForP = -childUser.pointsWL
     console.log(debitAmountForP, "debitAmountForPdebitAmountForPdebitAmountForP")
     for(let i = 0; i < childUser.parentUsers.length; i++){
-       
-        let parentUser1 = await User.findById(childUser.parentUsers[i])
-        let parentUser2 = await User.findById(childUser.parentUsers[i + 1])
-        let parentUser1Amount = new Decimal(parentUser2.myShare).times(debitAmountForP).dividedBy(100)
-        let parentUser2Amount = new Decimal(parentUser2.Share).times(debitAmountForP).dividedBy(100);
-        parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-        parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-        if(parentUser.userName === 'admin'){
-            lifeTimePl = parentUser2Amount
-        }else{
-            if(parentUser.userName === parentUser1.userName){
-                lifeTimePl = parentUser2Amount
-            }
-        }
-            
-        
-       if(parentUser1Amount !== 0){
-           debitAmountForP = parentUser1Amount
-       } 
-      
-
-        // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
-        
+       let parentUSer = await User.findById(childUser.parentUsers[i])
+       console.log(parentUSer)
     }
 
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePllifeTimePl")
