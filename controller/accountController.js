@@ -264,6 +264,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     }
     let lifeTimePl = 0
     let debitAmountForP = childUser.uplinePL
+    console.log(debitAmountForP, "debitAmountForPdebitAmountForPdebitAmountForP")
     for(let i = 1; i < childUser.parentUsers.length; i++){
         let parentUser1 = await User.findById(childUser.parentUsers[i])
         let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
