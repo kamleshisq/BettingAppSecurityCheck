@@ -77,47 +77,34 @@ async function rollBack(data){
                     }
 
                     let debitAmountForP = VoidAmount
-                    let uplinePl
-                    for(let i = 1; i < user.parentUsers.length; i++){
-                        if(i === 1){
-                            uplinePl = 0
-                        }
-                        let parentUser1 = await userModel.findById(user.parentUsers[i])
+                    for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                        let parentUser1 = await User.findById(user.parentUsers[i])
+                        let parentUser2 = await User.findById(user.parentUsers[i - 1])
                         let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
                         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                            await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
-                                $inc: {
-                                    downlineBalance: -VoidAmount,
-                                    myPL: parentUser2Amount,
-                                    lifetimePL: parentUser2Amount,
-                                    pointsWL: -VoidAmount
-                                }
-                            });
-                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                                $inc : {
-                                    uplinePL: parentUser2Amount + uplinePl,
-                                }
-                            })
-                            if(i === user.parentUsers.length-1 ){
-                                await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                                    $inc: {
-                                        downlineBalance: -VoidAmount,
-                                        myPL: parentUser1Amount,
-                                        lifetimePL: parentUser1Amount,
-                                        pointsWL: -VoidAmount
-                                    }
-                                });
-                            }
-                        
-                    if(parentUser1Amount !== 0){
-                        debitAmountForP = parentUser1Amount
-                    } 
-                    uplinePl = uplinePl + parentUser2Amount
-
-                        // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
-                        
+                        await User.findByIdAndUpdate(user.parentUsers[i], {
+                          $inc: {
+                              downlineBalance:  -VoidAmount,
+                              myPL: parentUser1Amount,
+                              uplinePL: parentUser2Amount,
+                              lifetimePL: parentUser1Amount,
+                              pointsWL:  -VoidAmount
+                          }
+                      });
+                  
+                      if (i === 1) {
+                          await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                              $inc: {
+                                  downlineBalance: -VoidAmount,
+                                  myPL: parentUser2Amount,
+                                  lifetimePL: parentUser2Amount,
+                                  pointsWL: -VoidAmount
+                              }
+                          });
+                      }
+                        debitAmountForP = parentUser2Amount
                     }
         
                     await accountStatementModel.create(userAcc);
@@ -143,48 +130,35 @@ async function rollBack(data){
                     }
 
                     let debitAmountForP = VoidAmount
-                    let uplinePl
-                        for(let i = 1; i < user.parentUsers.length; i++){
-                            if(i === 1){
-                                uplinePl = 0
-                            }
-                            let parentUser1 = await userModel.findById(user.parentUsers[i])
-                            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-                            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-                            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-                            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
-                                    $inc: {
-                                        downlineBalance: VoidAmount,
-                                        myPL: -parentUser2Amount,
-                                        lifetimePL: -parentUser2Amount,
-                                        pointsWL: VoidAmount
-                                    }
-                                });
-                                await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                                    $inc : {
-                                        uplinePL: -parentUser2Amount + uplinePl,
-                                    }
-                                })
-                                if(i === user.parentUsers.length-1 ){
-                                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                                        $inc: {
-                                            downlineBalance: VoidAmount,
-                                            myPL: -parentUser1Amount,
-                                            lifetimePL: -parentUser1Amount,
-                                            pointsWL: VoidAmount
-                                        }
-                                    });
-                                }
-                            
-                        if(parentUser1Amount !== 0){
-                            debitAmountForP = parentUser1Amount
-                        } 
-                        uplinePl = uplinePl - parentUser2Amount
-
-                            // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
-                            
-                        }
+                    for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                        let parentUser1 = await User.findById(user.parentUsers[i])
+                        let parentUser2 = await User.findById(user.parentUsers[i - 1])
+                        let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                        let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                        parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                        parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                        await User.findByIdAndUpdate(user.parentUsers[i], {
+                          $inc: {
+                              downlineBalance:  VoidAmount,
+                              myPL: -parentUser1Amount,
+                              uplinePL: -parentUser2Amount,
+                              lifetimePL: -parentUser1Amount,
+                              pointsWL:  VoidAmount
+                          }
+                      });
+                  
+                      if (i === 1) {
+                          await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                              $inc: {
+                                  downlineBalance: VoidAmount,
+                                  myPL: -parentUser2Amount,
+                                  lifetimePL: -parentUser2Amount,
+                                  pointsWL: VoidAmount
+                              }
+                          });
+                      }
+                        debitAmountForP = parentUser2Amount
+                    }
         
                     await accountStatementModel.create(userAcc);
                 }
