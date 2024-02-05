@@ -54,7 +54,7 @@ async function placeBet(data){
         return "You do not have sufficient balance for bet"
     }
     let exposureCHECk = await exposurecheck(check)
-    if((exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
+    if(check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full"
     }
     let openBet = await betmodel.countDocuments({userName:data.LOGINDATA.LOGINUSER.userName, status:'OPEN'})
