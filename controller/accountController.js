@@ -266,22 +266,38 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     let debitAmountForP = -childUser.pointsWL
     console.log(debitAmountForP, "debitAmountForPdebitAmountForPdebitAmountForP")
     for(let i = 1; i < childUser.parentUsers.length; i++){
-        let parentUser1 = await User.findById(childUser.parentUsers[i])
-        let parentsUser2 = await User.findById(childUser.parentUsers[i - 1])
+        if(i === 1){
+            uplinePl = 0
+        }
+        let parentUser1 = await userModel.findById(childUser.parentUsers[i])
         let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-        console.log(parentUser1Amount, parentUser2Amount, parentsUser2.userName)
-        console.log(parentsUser2.userName, parentUser.userName)
-        if(parentsUser2.userName === parentUser.userName){
-            console.log(parentUser1Amount, parentUser2Amount, parentsUser2.userName, 'thisONE')
-        }
+        parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+            // await userModel.findByIdAndUpdate(childUser.parentUsers[i - 1], {
+            //     $inc: {
+            //         downlineBalance: debitCreditAmount,
+            //         myPL: -parentUser2Amount,
+            //         pointsWL: debitCreditAmount
+            //     }
+            // });
+            if(parentUser.userName === 'admin'){
+                lifeTimePl = parentUser2Amount
+                break;
+            }else{
+                if(parentUser1.userName === parentUser.userName){
+                    lifeTimePl = parentUser1Amount
+                }
+            }
+            
         
-                    
-        if(parentUser1Amount !== 0){
-            debitAmountForP = parentUser1Amount
-        } 
-                    
+       if(parentUser1Amount !== 0){
+           debitAmountForP = parentUser1Amount
+       } 
+       uplinePl = parseFloat(uplinePl) - parseFloat(parentUser2Amount)
+
+        // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
+        
     }
 
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePllifeTimePl")
