@@ -283,6 +283,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         }
     }else{
         let debitAmountForP = childUser.pointsWL
+        console.log(childUser.parentUsers)
         for(let i = 1; i < childUser.parentUsers.length; i++){
             if(i === 1){
                 uplinePl = 0
