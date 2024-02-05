@@ -123,6 +123,7 @@ async function mapBet(data){
                 let description = `Bet for ${bets[bet].match}/Result = ${data.result}/WON`
 
                 let debitAmountForP = debitCreditAmount
+                let uplinePl = 0
                 for(let i = 1; i < user.parentUsers.length; i++){
                     console.log(i)
                     let parentUser1 = await userModel.findById(user.parentUsers[i])
@@ -130,23 +131,24 @@ async function mapBet(data){
                     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                    await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
-                        $inc: {
-                            downlineBalance: debitCreditAmount,
-                            myPL: -parentUser2Amount,
-                            lifetimePL: -parentUser2Amount,
-                            pointsWL: debitCreditAmount
-                        }
-                    });
-                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                        $inc : {
-                            uplinePL: -parentUser2Amount,
-                        }
-                    })
+                        await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: debitCreditAmount,
+                                myPL: -parentUser2Amount,
+                                lifetimePL: -parentUser2Amount,
+                                pointsWL: debitCreditAmount
+                            }
+                        });
+                        await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                            $inc : {
+                                uplinePL: -parentUser2Amount + uplinePl,
+                            }
+                        })
                     
                    if(parentUser1Amount !== 0){
                        debitAmountForP = parentUser1Amount
                    } 
+                   uplinePl = -parentUser2Amount
 
                     // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
                     
