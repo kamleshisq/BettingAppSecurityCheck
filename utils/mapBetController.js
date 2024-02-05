@@ -128,14 +128,11 @@ async function mapBet(data){
                     if(i === 1){
                         uplinePl = 0
                     }
-                    console.log(i)
                     let parentUser1 = await userModel.findById(user.parentUsers[i])
-                    console.log(parentUser1.userName, parentUser1.myShare, parentUser1.Share, "parentUser1.ShareparentUser1.ShareparentUser1.Share")
                     let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
                     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                    console.log(-parentUser2Amount, uplinePl, -parentUser2Amount + uplinePl, "sdfghjkl", parentUser1Amount)
                         await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                             $inc: {
                                 downlineBalance: debitCreditAmount,
@@ -149,6 +146,16 @@ async function mapBet(data){
                                 uplinePL: -parentUser2Amount + uplinePl,
                             }
                         })
+                        if(i === user.parentUsers.length-1 ){
+                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                                $inc: {
+                                    downlineBalance: debitCreditAmount,
+                                    myPL: -parentUser1Amount,
+                                    lifetimePL: -parentUser1Amount,
+                                    pointsWL: debitCreditAmount
+                                }
+                            });
+                        }
                     
                    if(parentUser1Amount !== 0){
                        debitAmountForP = parentUser1Amount
