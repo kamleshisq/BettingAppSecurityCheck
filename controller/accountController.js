@@ -275,6 +275,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
         let parentUser2 = await User.findById(childUser.parentUsers[i - 1])
+        console.log(parentUser1Amount, parentUser2Amount,parentUser1.myShare,  parentUser1.Share)
        if(parentUser.userName === 'admin'){
         lifeTimePl = parentUser2Amount
        }
