@@ -274,6 +274,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+        let parentUser2 = await User.findById(childUser.parentUsers[i - 1])
             // await userModel.findByIdAndUpdate(childUser.parentUsers[i - 1], {
             //     $inc: {
             //         downlineBalance: debitCreditAmount,
@@ -281,13 +282,13 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
             //         pointsWL: debitCreditAmount
             //     }
             // });
-            if(parentUser.userName === 'admin'){
-                lifeTimePl = parentUser2Amount
-                break;
-            }else{
-                if(parentUser1.userName === parentUser.userName){
-                    lifeTimePl = parentUser1Amount
+            if(i != childUser.parentUsers.length-1 ){
+                if(parentUser2.userName === parentUser.userName){
+                    lifeTimePl = parentUser2Amount
+                    break;
                 }
+            }else{
+                lifeTimePl = parentUser1Amount
             }
             
         
