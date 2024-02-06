@@ -1530,15 +1530,23 @@ socket.on('connect', () => {
         let num1Input1 = document.getElementById('myShare');
         let num2Input1 = document.getElementById('Share');
         num1Input1.addEventListener('input', () => {
-            const num11 = parseFloat(num1Input1.value);
-            const num21 = visibleValue - num11;
-            num2Input1.value = num21;
+            if(num1Input1.value > visibleValue){
+                alert('please select share lessThan your visible share')
+            }else{
+                const num11 = parseFloat(num1Input1.value);
+                const num21 = visibleValue - num11;
+                num2Input1.value = num21;
+            }
         });
 
         num2Input1.addEventListener('input', () => {
-            const num21 = parseFloat(num2Input1.value);
-            const num11 = visibleValue - num21;
-            num1Input1.value = num11;
+            if(num1Input1.value > visibleValue){
+                alert('please select share lessThan your visible share')
+            }else{
+                const num21 = parseFloat(num2Input1.value);
+                const num11 = visibleValue - num21;
+                num1Input1.value = num11;
+            }
         });
 
 
