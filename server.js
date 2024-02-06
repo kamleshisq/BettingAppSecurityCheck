@@ -8281,7 +8281,7 @@ io.on('connection', (socket) => {
         let events = await Bet.aggregate([
             {
                 $match: {
-                    date:{$gte : new Date(data.fromDate),$lte : new Date(new Date(data.toDate))},
+                    // date:{$gte : new Date(data.fromDate),$lte : new Date(new Date(data.toDate))},
                     gameId:data.sport
                 }
             },
