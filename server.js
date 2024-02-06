@@ -2387,14 +2387,15 @@ io.on('connection', (socket) => {
 
     socket.on('voidBet', async(data) => {
         try{
+            let operatoruserName = data.LOGINDATA.LOGINUSER.userName
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPasscode(data.data.password, user.passcode)
             if(passcheck){
                 let bet = await Bet.findById(data.id)
                 if(bet.status === "OPEN"){
                     let exposure = bet.exposure
-                    await Bet.findByIdAndUpdate(bet.id, {status:"CANCEL", return:0 ,remark:data.data.remark, calcelUser:operatoruserName});
-                    let user = await User.findByIdAndUpdate(bet.userId, {$inc:{exposure:-exposure}})
+                    await Bet.findByIdAndUpdate(bet.id, {status:"CANCEL", returns:0 ,remark:data.data.remark, calcelUser:operatoruserName});
+                    // let user = await User.findByIdAndUpdate(bet.userId, {$inc:{exposure:-exposure}})
                 }else if(bet.status === "WON") {
                 let debitCreditAmount = bet.returns
                 let user = await User.findByIdAndUpdate(bet.userId, {$inc:{availableBalance: -debitCreditAmount, myPL: -debitCreditAmount, uplinePL: debitCreditAmount, pointsWL:-debitCreditAmount}})

@@ -15,7 +15,7 @@ module.exports = () => {
         if(openCasinoBets.length > 0){
             for(const bet in openCasinoBets){
                 let returnAmount = Math.abs(openCasinoBets[bet].returns)
-                await betModel.findByIdAndUpdate(openCasinoBets[bet].id, {status:"CANCEL", return:0 ,remark:'bet cancel due to technical problem'});
+                await betModel.findByIdAndUpdate(openCasinoBets[bet].id, {status:"CANCEL", returns:0 ,remark:'bet cancel due to technical problem'});
                 let user = await userModel.findByIdAndUpdate(openCasinoBets[bet].userId, {$inc:{exposure:-returnAmount, availableBalance:returnAmount}})
                 let description = `Unsettle Bet for ${openCasinoBets[bet].event}/stake = ${openCasinoBets[bet].Stake}/CANCEL due to technical problem`
                 let userAcc = {

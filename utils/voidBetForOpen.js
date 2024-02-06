@@ -59,7 +59,7 @@ async function voidbetBeforePlace(data){
                     for(const bet in bets){
                         let exposure = bets[bet].exposure
 
-                        await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", return:0 ,remark:data.data.remark, calcelUser:operatoruserName});
+                        await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", returns:0 ,remark:data.data.remark, calcelUser:operatoruserName});
                         let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{exposure:-exposure}})
                         let description = `Unsettle Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
                         // let description2 = `Bet for ${bets[bet].match}/stake = ${creditDebitamount}/user = ${user.userName}/CANCEL `
