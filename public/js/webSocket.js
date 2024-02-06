@@ -7949,6 +7949,7 @@ socket.on('connect', () => {
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }else if(check2){
+                        console.log('GOTEHERE')
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -8391,7 +8392,6 @@ socket.on('connect', () => {
                 let parentElement = this.parentNode
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let check2 = data.marketArray.some(item => item == marketId)
-                console.log(check2, "check2check2check2check2")
                 if(this.id == `${section.secId}2` ){
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
@@ -8401,11 +8401,9 @@ socket.on('connect', () => {
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }else if(check2){
-                        console.log('Gotrhhehhhe')
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
-                      console.log(parentElement.classList, "parentElementparentElement")
                       parentElement.classList.add("suspended");
                           $(this).parent().find(".match-status-message").text("market settled")
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
