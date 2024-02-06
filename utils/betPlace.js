@@ -47,7 +47,7 @@ function generateString(length) {
 
 async function placeBet(data){
     let statusSettle = await settelementHistory.find({marketID:data.data.market})
-    if(statusSettle.length === 0){
+    if(statusSettle.length != 0){
         return 'Please try again later, This market is settled'
     }
 
