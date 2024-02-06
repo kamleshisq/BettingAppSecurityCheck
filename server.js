@@ -2392,7 +2392,7 @@ io.on('connection', (socket) => {
             const passcheck = await user.correctPasscode(data.data.password, user.passcode)
             if(passcheck){
                 let bet = await Bet.findById(data.id)
-                if(bet.status === "OPEN"){
+                if(bet.status === "OPEN" || bet.status === "Alert"){
                     let exposure = bet.exposure
                     await Bet.findByIdAndUpdate(bet.id, {status:"CANCEL", returns:0 ,remark:data.data.remark, calcelUser:operatoruserName});
                     // let user = await User.findByIdAndUpdate(bet.userId, {$inc:{exposure:-exposure}})
