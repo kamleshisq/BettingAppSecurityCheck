@@ -197,95 +197,63 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     console.log(childUser, "childUserchildUser")
     if(childUser.roleName !== 'user'){
         let debitAmountForP = -childUser.pointsWL
-        for(let i = 0; i < childUser.parentUsers.length; i++){
-           let parentUSer = await User.findById(childUser.parentUsers[i])
-           if(i === childUser.parentUsers.length - 1){
-            lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
-            lifeTimePl = lifeTimePl.toDecimalPlaces(4);
-           }
-           if(parentUSer.userName != 'admin'){
-                let parentUser1Amount = new Decimal(childUser.myShare).times(debitAmountForP).dividedBy(100)
-                 let parentUser2Amount = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100);
-                 parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-                 parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                 if(parentUser1Amount !== 0){
-                  debitAmountForP = parentUser1Amount
-                }
-            } 
-        }
+        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }else{
         let debitAmountForP = -childUser.pointsWL
-        for(let i = 1; i < childUser.parentUsers.length; i++){
-            if(i === 1){
-                uplinePl = 0
-            }
-            let parentUser1 = await User.findById(childUser.parentUsers[i])
-            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-
-                if(i === childUser.parentUsers.length-1 ){
-                    lifeTimePl = parentUser1Amount
-                }
-            
-           if(parentUser1Amount !== 0){
-               debitAmountForP = parentUser1Amount
-           } 
-
-            // console.log(childUser.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
-            
-        }
+        lifeTimePl = new Decimal(parentUser.myShare).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }
-    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}})
-    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL, lifetimePL:childUser.myPL},uplinePL:0,myPL:0,pointsWL:0},{
-        new:true
-    })
+    console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
+    // await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}})
+    // const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL, lifetimePL:childUser.myPL},uplinePL:0,pointsWL:0},{
+    //     new:true
+    // })
     
-    let childAccStatement = {}
-    let ParentAccStatement = {}
-    let date = Date.now()
+    // let childAccStatement = {}
+    // let ParentAccStatement = {}
+    // let date = Date.now()
 
-    // //for child User//
-    childAccStatement.child_id = childUser.id;
-    childAccStatement.user_id = childUser.id;
-    childAccStatement.parent_id = parentUser.id;
-    childAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
-    childAccStatement.creditDebitamount = -parseFloat(req.body.amount);
-    childAccStatement.balance = (parseFloat(childUser.availableBalance)  - parseFloat(req.body.amount));
-    childAccStatement.date = date
-    childAccStatement.userName = childUser.userName
-    childAccStatement.role_type = childUser.role_type
-    childAccStatement.Remark = req.body.remark
-    childAccStatement.accStype = "Settle"
+    // // //for child User//
+    // childAccStatement.child_id = childUser.id;
+    // childAccStatement.user_id = childUser.id;
+    // childAccStatement.parent_id = parentUser.id;
+    // childAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+    // childAccStatement.creditDebitamount = -parseFloat(req.body.amount);
+    // childAccStatement.balance = (parseFloat(childUser.availableBalance)  - parseFloat(req.body.amount));
+    // childAccStatement.date = date
+    // childAccStatement.userName = childUser.userName
+    // childAccStatement.role_type = childUser.role_type
+    // childAccStatement.Remark = req.body.remark
+    // childAccStatement.accStype = "Settle"
 
-    const accStatementChild = await accountStatement.create(childAccStatement)
-    if(!accStatementChild){
-        return next(new AppError("Ops, Something went wrong Please try again later", 500))
-    }
-    // // console.log(childAccStatement)
-    // // for parent user // 
-    ParentAccStatement.child_id = childUser.id;
-    ParentAccStatement.user_id = parentUser.id;
-    ParentAccStatement.parent_id = parentUser.id;
-    ParentAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
-    ParentAccStatement.creditDebitamount = parseFloat(req.body.amount);
-    ParentAccStatement.balance = (parseFloat(parentUser.availableBalance) + parseFloat(req.body.amount));
-    ParentAccStatement.date = date
-    ParentAccStatement.userName = parentUser.userName;
-    ParentAccStatement.role_type = parentUser.role_type
-    ParentAccStatement.Remark = req.body.remark
-    ParentAccStatement.accStype = "Settle"
+    // const accStatementChild = await accountStatement.create(childAccStatement)
+    // if(!accStatementChild){
+    //     return next(new AppError("Ops, Something went wrong Please try again later", 500))
+    // }
+    // // // console.log(childAccStatement)
+    // // // for parent user // 
+    // ParentAccStatement.child_id = childUser.id;
+    // ParentAccStatement.user_id = parentUser.id;
+    // ParentAccStatement.parent_id = parentUser.id;
+    // ParentAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+    // ParentAccStatement.creditDebitamount = parseFloat(req.body.amount);
+    // ParentAccStatement.balance = (parseFloat(parentUser.availableBalance) + parseFloat(req.body.amount));
+    // ParentAccStatement.date = date
+    // ParentAccStatement.userName = parentUser.userName;
+    // ParentAccStatement.role_type = parentUser.role_type
+    // ParentAccStatement.Remark = req.body.remark
+    // ParentAccStatement.accStype = "Settle"
 
-    // // console.log(ParentAccStatement)
-    const accStatementparent = await accountStatement.create(ParentAccStatement)
-    if(!accStatementparent){
-        return next(new AppError("Ops, Something went wrong Please try again later", 500))
-    }
-    res.status(200).json({
-        status:"success",
-        user
-    })
+    // // // console.log(ParentAccStatement)
+    // const accStatementparent = await accountStatement.create(ParentAccStatement)
+    // if(!accStatementparent){
+    //     return next(new AppError("Ops, Something went wrong Please try again later", 500))
+    // }
+    // res.status(200).json({
+    //     status:"success",
+    //     user
+    // })
 });
 
 exports.depositSettle = catchAsync(async(req, res, next) => {
