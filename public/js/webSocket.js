@@ -8390,6 +8390,7 @@ socket.on('connect', () => {
                 })
                 let parentElement = this.parentNode
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
+                let check2 = data.marketArray.some(item => item == marketId)
                 // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
                     if(!data.status){
@@ -8399,6 +8400,9 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
+                    }else if(check){
+                        parentElement.classList.add("suspended");
+                          $(this).parent().find(".match-status-message").text("market settled")
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
