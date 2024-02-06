@@ -8499,6 +8499,8 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
+                let check2 = data.marketArray.some(item => item == marketId)
+
                 if(this.id == `${section.market_id}1` ){
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
@@ -8507,7 +8509,15 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if (data.forFancy  && data.forFancy.length > 0){
+                    }else if(check2){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("market settled")
+                    }
+                    else if (data.forFancy  && data.forFancy.length > 0){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
