@@ -57,6 +57,7 @@ const bycrypt = require('bcrypt');
 const footerInfoModel = require('../model/footerInfoModel');
 const { consoleBodyAndURL } = require('./walletController');
 const socialinfomodel = require('../model/socialMediaLinks');
+const findvisible = require('../utils/findvisible');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -280,7 +281,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
             status:false
         })
     }
-    // console.log(roles)
+    let visible = await findvisible( req.currentUser )
+    console.log(visible)
     // console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
