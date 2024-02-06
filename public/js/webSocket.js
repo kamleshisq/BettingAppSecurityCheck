@@ -8391,7 +8391,7 @@ socket.on('connect', () => {
                 let parentElement = this.parentNode
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let check2 = data.marketArray.some(item => item == marketId)
-                // console.log(parentElement)
+                console.log(check2, "check2check2check2check2")
                 if(this.id == `${section.secId}2` ){
                     if(!data.status){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
