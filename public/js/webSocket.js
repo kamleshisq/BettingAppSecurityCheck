@@ -1524,11 +1524,11 @@ socket.on('connect', () => {
 
 
 
-        num2Input1.addEventListener('input', () => {
-            const num21 = parseFloat(num2Input1.value);
-            const num11 = 100 - num21;
-            num1Input1.value = num11;
-        });
+        // num2Input1.addEventListener('input', () => {
+        //     const num21 = parseFloat(num2Input1.value);
+        //     const num11 = 100 - num21;
+        //     num1Input1.value = num11;
+        // });
 
 
 
