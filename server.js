@@ -2189,6 +2189,8 @@ io.on('connection', (socket) => {
                     }
             
                     // console.log(resumeSuspendMarkets)
+                    let marketArray = await settlementHistory.distinct('marketID', {marketID:{$in:data.ids}})
+                    console.log(marketArray, "marketArraymarketArraymarketArray")
                     socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
                 }catch(err){
                     console.log(err)
