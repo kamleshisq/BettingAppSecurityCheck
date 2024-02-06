@@ -337,9 +337,9 @@ async function mapBet(data){
                     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
                     await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                         $inc: {
-                            downlineBalance: debitCreditAmount,
+                            downlineBalance: debitAmountForP,
                             myPL: -parentUser2Amount,
-                            pointsWL: debitCreditAmount
+                            pointsWL: debitAmountForP
                         }
                     });
                     await userModel.findByIdAndUpdate(user.parentUsers[i], {
@@ -351,9 +351,9 @@ async function mapBet(data){
                     if(i === user.parentUsers.length-1 ){
                         await userModel.findByIdAndUpdate(user.parentUsers[i], {
                             $inc: {
-                                downlineBalance: debitCreditAmount,
+                                downlineBalance: debitAmountForP,
                                 myPL: -parentUser1Amount,
-                                pointsWL: debitCreditAmount
+                                pointsWL: debitAmountForP
                             }
                         });
                     }
