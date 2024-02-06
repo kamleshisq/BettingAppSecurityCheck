@@ -8405,8 +8405,8 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
-                      console.log(parentElement, "parentElementparentElement")
-                      parentElement.find('.tbl-td-with5').addClass("suspended");
+                      console.log(parentElement.classList, "parentElementparentElement")
+                      parentElement.classList.add("suspended");
                           $(this).parent().find(".match-status-message").text("market settled")
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
