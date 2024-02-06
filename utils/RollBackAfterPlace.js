@@ -77,46 +77,36 @@ async function rollBack(data){
                     }
 
                     let debitAmountForP = VoidAmount
-                    let uplinePl
+                    let uplinePl = 0
                     for(let i = 1; i < user.parentUsers.length; i++){
-                        if(i === 1){
-                            uplinePl = 0
-                        }
                         let parentUser1 = await User.findById(user.parentUsers[i])
                         let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
                         let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                        console.log(parentUser1Amount, parentUser2Amount, parentUser1.userName)
-                            await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                        await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: -VoidAmount,
+                                myPL: parentUser2Amount,
+                                pointsWL: -VoidAmount
+                            }
+                        });
+                        await User.findByIdAndUpdate(user.parentUsers[i], {
+                            $inc : {
+                                uplinePL: parseFloat(parentUser2Amount) + parseFloat(uplinePl),
+                            }
+                        })
+
+                        if(i === user.parentUsers.length-1 ){
+                            await User.findByIdAndUpdate(user.parentUsers[i], {
                                 $inc: {
                                     downlineBalance: -VoidAmount,
-                                    myPL: parentUser2Amount,
-                                    lifetimePL: parentUser2Amount,
+                                    myPL: parentUser1Amount,
                                     pointsWL: -VoidAmount
                                 }
                             });
-                            await User.findByIdAndUpdate(user.parentUsers[i], {
-                                $inc : {
-                                    uplinePL: parseFloat(parentUser2Amount) + uplinePl,
-                                }
-                            })
-                            if(i === user.parentUsers.length - 1 ){
-                                await User.findByIdAndUpdate(user.parentUsers[i], {
-                                    $inc: {
-                                        downlineBalance: -VoidAmount,
-                                        myPL: parentUser1Amount,
-                                        lifetimePL: parentUser1Amount,
-                                        pointsWL: -VoidAmount
-                                    }
-                                });
-                            }
-                        
-                    if(parentUser1Amount !== 0){
-                        debitAmountForP = parentUser1Amount
-                    } 
-                    uplinePl = parseFloat(uplinePl) + parseFloat(parentUser2Amount)
-                        
+                        }
+                        uplinePl = parseFloat(uplinePl) + parseFloat(parentUser2Amount)
                     }
         
                     await accountStatementModel.create(userAcc);
@@ -142,48 +132,37 @@ async function rollBack(data){
                     }
 
                     let debitAmountForP = VoidAmount
-                    let uplinePl
-                        for(let i = 1; i < user.parentUsers.length; i++){
-                            if(i === 1){
-                                uplinePl = 0
+                    let uplinePl = 0
+                    for(let i = 1; i < user.parentUsers.length; i++){
+                        let parentUser1 = await userModel.findById(user.parentUsers[i])
+                        let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                        let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                        parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                        parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                        await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: VoidAmount,
+                                myPL: -parentUser2Amount,
+                                pointsWL: VoidAmount
                             }
-                            let parentUser1 = await User.findById(user.parentUsers[i])
-                            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-                            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-                            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-                            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                                await User.findByIdAndUpdate(user.parentUsers[i - 1], {
-                                    $inc: {
-                                        downlineBalance: VoidAmount,
-                                        myPL: -parentUser2Amount,
-                                        lifetimePL: -parentUser2Amount,
-                                        pointsWL: VoidAmount
-                                    }
-                                });
-                                await User.findByIdAndUpdate(user.parentUsers[i], {
-                                    $inc : {
-                                        uplinePL: -parseFloat(parentUser2Amount) + parseFloat(uplinePl),
-                                    }
-                                })
-                                if(i === user.parentUsers.length-1 ){
-                                    await User.findByIdAndUpdate(user.parentUsers[i], {
-                                        $inc: {
-                                            downlineBalance: VoidAmount,
-                                            myPL: -parentUser1Amount,
-                                            lifetimePL: -parentUser1Amount,
-                                            pointsWL: VoidAmount
-                                        }
-                                    });
-                                }
-                            
-                        if(parentUser1Amount !== 0){
-                            debitAmountForP = parentUser1Amount
-                        } 
-                        uplinePl = parseFloat(uplinePl) - parseFloat(parentUser2Amount)
+                        });
+                        await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                            $inc : {
+                                uplinePL: -parseFloat(parentUser2Amount) + parseFloat(uplinePl),
+                            }
+                        })
 
-                            // console.log(user.parentUsers, "user.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsersuser.parentUsers")
-                            
+                        if(i === user.parentUsers.length-1 ){
+                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                                $inc: {
+                                    downlineBalance: VoidAmount,
+                                    myPL: -parentUser1Amount,
+                                    pointsWL: VoidAmount
+                                }
+                            });
                         }
+                        uplinePl = parseFloat(uplinePl) - parseFloat(parentUser2Amount)
+                    }
         
                     await accountStatementModel.create(userAcc);
                 }
