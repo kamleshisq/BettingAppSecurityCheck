@@ -1473,13 +1473,7 @@ socket.on('connect', () => {
 
     if(pathname.startsWith('/admin/userManagement')){
 
-        let num1Input1 = document.getElementById('myShare');
-        let num2Input1 = document.getElementById('Share');
-        num1Input1.addEventListener('input', () => {
-            const num11 = parseFloat(num1Input1.value);
-            const num21 = 100 - num11;
-            num2Input1.value = num21;
-        });
+       
 
         async function exposureadmin(){
             $(document).ready(function() {
@@ -1530,11 +1524,20 @@ socket.on('connect', () => {
 
         socket.on('visibleValue', data => {
             console.log(data, "visibleValuevisibleValuevisibleValue")
+            visibleValue = data
         })
+
+        let num1Input1 = document.getElementById('myShare');
+        let num2Input1 = document.getElementById('Share');
+        num1Input1.addEventListener('input', () => {
+            const num11 = parseFloat(num1Input1.value);
+            const num21 = visibleValue - num11;
+            num2Input1.value = num21;
+        });
 
         num2Input1.addEventListener('input', () => {
             const num21 = parseFloat(num2Input1.value);
-            const num11 = 100 - num21;
+            const num11 = visibleValue - num21;
             num1Input1.value = num11;
         });
 
