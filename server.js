@@ -8277,6 +8277,7 @@ io.on('connection', (socket) => {
         // }else{
         //     sportList = sportData[1].gameList.find(item => item.sportId == parseInt(data.sport))
         // }
+        console.log(data)
 
         let events = await Bet.aggregate([
             {
