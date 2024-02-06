@@ -2497,7 +2497,7 @@ io.on('connection', (socket) => {
                     }
                     uplinePl = parseFloat(uplinePl) - parseFloat(parentUser2Amount)
                 }
-                        await accountStatementModel.create(userAcc);
+                        await AccModel.create(userAcc);
                 }
                 socket.emit('voidBet', {bet, status:"success"})
             }else{
