@@ -12031,10 +12031,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('visibleValue', async(data) => {
-        console.log(data)
-        if(data.LOGINUSER){
-            let visibleValue = await findvisible(data.LOGINUSER)
-            console.log(visibleValue, "visibleValuevisibleValuevisibleValue")
+        if(data.LOGINDATA.LOGINUSER){
+            let visibleValue = await findvisible(data.LOGINDATA.LOGINUSER)
             socket.emit('visibleValue', visibleValue)
         }
     })
