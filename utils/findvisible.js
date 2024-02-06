@@ -7,6 +7,8 @@ async function findvisible( user ){
         let thatParentUSer = await userModel.findById(user.parentUsers[i])
         visibleofThatUser2 +=  thatParentUSer.Share
     }
+    
+    visibleofThatUser2 += user.Share
 
     let actualVisible = 100 - visibleofThatUser2
     return actualVisible
