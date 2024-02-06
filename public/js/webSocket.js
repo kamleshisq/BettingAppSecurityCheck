@@ -1523,6 +1523,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('click', ".add-user-btn", function(e){
+            console.log('WORKING')
             e.preventDefault()
             socket.emit('visibleValue', {LOGINDATA})
         })
