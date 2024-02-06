@@ -282,7 +282,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         })
     }
     let visible = await findvisible( req.currentUser )
-    console.log(visible)
+    console.log(visible, "asdfghjkl;sdfghjk")
     // console.log(adminBredcumArray, "currentUsercurrentUsercurrentUser")
     res.status(200).render('./userManagement/main',{
         title: "User Management",
