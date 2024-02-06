@@ -293,7 +293,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         WhiteLabel,
         roles,
         unclaimCommission:sum,
-        adminBredcumArray
+        adminBredcumArray,
+        visible
         // userLogin:global._loggedInToken
     })
 
