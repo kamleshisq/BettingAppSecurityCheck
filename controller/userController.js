@@ -226,9 +226,15 @@ exports.createUser = catchAsync(async(req, res, next)=>{
 
     // console.log(req.body)
     if(req.body.share){
+        if(req.body.share < 0){
+            return next(new AppError("Please provide a valide share"))
+        }
         req.body.Share = req.body.share
     }
     if(req.body.Visible){
+        if(req.body.share < 0){
+            return next(new AppError("Please provide a valide Visible share"))
+        }
         req.body.myShare = req.body.Visible
     }
     if(req.body.roleName !== 'user'){
