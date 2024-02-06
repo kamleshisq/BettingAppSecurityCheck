@@ -8389,6 +8389,7 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
+                console.log(parentElement, "parentElementparentElement")
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let check2 = data.marketArray.some(item => item == marketId)
                 console.log(check2, "check2check2check2check2")
