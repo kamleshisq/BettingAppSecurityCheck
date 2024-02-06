@@ -13,6 +13,7 @@ const runnerDataModel = require('../model/runnersData');
 const exposurecheck = require('./checkExpoOfThatUSer');
 const checkLimit = require('./checkOddsLimit');
 const checkMarketWinAmount = require('./checkWinAmountOfThatMarket');
+const settelementHistory = require('../model/settelementHistory');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -45,6 +46,11 @@ function generateString(length) {
     
 
 async function placeBet(data){
+    let statusSettle = await settelementHistory.find({marketID:data.data.market})
+    if(statusSettle.length === 0){
+        return 'Please try again later, This market is settled'
+    }
+
     // console.log(data, "data1")
     if(!data.LOGINDATA.LOGINUSER){
         return "Stake out of range"
