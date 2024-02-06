@@ -233,7 +233,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     }
     if(req.body.Visible){
         if(req.body.Visible < 0){
-            return next(new AppError("Please provide a valid Visible Visible"))
+            return next(new AppError("Please provide a valid  Visible"))
         }
         req.body.myShare = req.body.Visible
     }
