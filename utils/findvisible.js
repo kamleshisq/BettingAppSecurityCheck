@@ -9,7 +9,7 @@ async function findvisible( user ){
     }
 
     let actualVisible = 100 - visibleofThatUser2
-    return 50
+    return actualVisible
 }
 
 module.exports = findvisible
