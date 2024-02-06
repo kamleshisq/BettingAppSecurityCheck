@@ -79,6 +79,7 @@ const voidebundel = require('./utils/voideOPenBetAccoordingfilter');
 const { Socket } = require('engine.io');
 const footerInfoModel = require('./model/footerInfoModel');
 const socialinfomodel = require('./model/socialMediaLinks');
+const findvisible = require('./utils/findvisible');
 // const checkLimit = require('./utils/checkOddsLimit');
 
 // const { date } = require('joi');
@@ -12026,6 +12027,13 @@ io.on('connection', (socket) => {
             }
         }catch(err){
             console.log(err)
+        }
+    })
+
+    socket.on('visibleValue', async(data) => {
+        if(data.LOGINUSER){
+            let visibleValue = await findvisible(data.LOGINUSER)
+            socket.emit('visibleValue', visibleValue)
         }
     })
 
