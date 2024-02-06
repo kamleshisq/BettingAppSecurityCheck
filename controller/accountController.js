@@ -320,7 +320,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0})
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
