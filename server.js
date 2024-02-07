@@ -6832,24 +6832,30 @@ io.on('connection', (socket) => {
                                     winAmount :"$$selection.winAmount",
                                     lossAmount : "$$selection.lossAmount",
                                     winAmount2: {
-                                        $reduce:{
+                                        $map:{
                                             input: { $reverseArray: '$parentArray' },
-                                            initialValue: { value: 0, flag: true },
+                                            // initialValue: { value: 0, flag: true },
+                                            as:'parentArray',
                                             in : { 
                                                 $cond:{ 
                                                     if : {
                                                         $and: [
-                                                          { $eq: ['$$this.parentUSerId', loginId] }, 
+                                                          { $eq: ['$$parentArray.currentLevel', loginId] }, 
                                                           { $eq: ['$$value.flag', true] } 
                                                         ]
                                                       },
                                                       then : { 
                                                         if :{$eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"]},
                                                         then:{
-                                                            $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$this.uplineShare"]}, 100] }]
+                                                            $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$parentArray.uplineShare"]}, 100] }]
                                                         },
                                                         else:{
-                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                            $multiply: ["$$selection.winAmount", { $divide: [{ nextValue: {
+                                                                $arrayElemAt: [
+                                                                  '$values',
+                                                                  { $indexOfArray: ['$values', '$$currentValue'] },
+                                                                ],
+                                                              }}, 100] }]
                                                         }
                                                       },
                                                       else: '$$value'
