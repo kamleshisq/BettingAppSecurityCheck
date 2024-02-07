@@ -6687,7 +6687,7 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             let childrenUSer = await User.distinct('userName', {parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}, roleName:'user'})
             let loginId = data.LOGINDATA.LOGINUSER._id
-            // console.log(childrenUSer)
+            console.log(loginId)
 
             let Bets = await Bet.aggregate([
                 {
