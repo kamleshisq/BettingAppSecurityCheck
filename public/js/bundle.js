@@ -53536,7 +53536,7 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
   var rest = url;
 
   // trim before proceeding.
-  // This is to support parse stuff like "  http://foo.com  \n"
+  // This is to support parse stuff like "http://foo.com  \n"
   rest = rest.trim();
 
   if (!slashesDenoteHost && url.split('#').length === 1) {
