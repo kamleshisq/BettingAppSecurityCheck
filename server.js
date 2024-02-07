@@ -6835,11 +6835,11 @@ io.on('connection', (socket) => {
                                         $reduce: {
                                           input: {
                                             $map: {
-                                              input: { $reverseArray: { $zip: { inputs: ['$parentArray', { $range: [0, { $size: '$parentArray' }] }] } } },
+                                              input: { $reverseArray: '$parentArray' },
                                               as: 'elem',
                                               in: {
-                                                parent: { $arrayElemAt: ['$$elem', 0] },
-                                                index: { $arrayElemAt: ['$$elem', 1] }
+                                                parent: '$$elem',
+                                                index: { $indexOfArray: ['$parentArray', '$$elem'] }
                                               }
                                             }
                                           },
@@ -6866,7 +6866,7 @@ io.on('connection', (socket) => {
                                                       '$$selection.winAmount',
                                                       {
                                                         $divide: [
-                                                          { $arrayElemAt: ['$parentArray.uplineShare', { $add: [1, '$$this.index'] }] },
+                                                          { $arrayElemAt: ['$parentArray.uplineShare', { $subtract: [{ $size: '$parentArray' }, '$$this.index'] }] },
                                                           100
                                                         ]
                                                       }
