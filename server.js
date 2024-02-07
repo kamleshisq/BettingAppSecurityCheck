@@ -6862,22 +6862,21 @@ io.on('connection', (socket) => {
                                                 //   }
                                                 // }
                                               },
-                                              else: {
-                                                 value: '$$value.value'
-                                                // $cond: {
-                                                //   if: { $eq: ['$$value.value', 0]},
-                                                //   then: {
-                                                //     value: 
-                                                //     {
-                                                //       $multiply: [
-                                                //         '$$selection.winAmount',
-                                                //         { $divide: ["$$this.uplineShare", 100] }
-                                                //       ]
-                                                //     },
-                                                //     flag: true
-                                                //   },
-                                                //   else: '$$value.value'
-                                                // }
+                                              else: {                                                 
+                                                $cond: {
+                                                  if: { $eq: ['$$value.value', 0]},
+                                                  then: {
+                                                    value: 
+                                                    {
+                                                      $multiply: [
+                                                        '$$selection.winAmount',
+                                                        { $divide: ["$$this.uplineShare", 100] }
+                                                      ]
+                                                    },
+                                                    flag: true
+                                                  },
+                                                  else: '$$value.value'
+                                                }
                                               }
                                             }
                                           }
