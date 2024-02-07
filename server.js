@@ -6815,7 +6815,7 @@ io.on('connection', (socket) => {
                         "userName": 1, 
                     }
                 },
-               {
+                {
                     $project: { 
                         _id:'$_id',
                         userName: "$userName",
@@ -7137,7 +7137,6 @@ io.on('connection', (socket) => {
                             }
                         }
                     }
-                },
                 },
                 // {
                 //     $unwind: "$selections2"
