@@ -6834,7 +6834,7 @@ io.on('connection', (socket) => {
                                     winAmount2: {
                                         $reduce: {
                                           input: { $reverseArray: '$parentArray' },
-                                          initialValue: { value: 0, flag: false },
+                                          initialValue: { value: 0, flag: true },
                                           in: {
                                             $cond: {
                                               if: {
@@ -6864,7 +6864,7 @@ io.on('connection', (socket) => {
                                                 $cond: {
                                                   if: {
                                                     $and: [
-                                                      { $eq: ['$$value.flag', false] },
+                                                      
                                                       { $eq: ['$$value.value', 0] }
                                                     ]
                                                   },
