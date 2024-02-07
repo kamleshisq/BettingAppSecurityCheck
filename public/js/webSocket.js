@@ -17005,7 +17005,6 @@ socket.on('connect', () => {
                                 if( market[j].title && (market[j].title.toLowerCase().startsWith('book') || market[j].title.toLowerCase().startsWith('toss'))){
                                 html += `
                                 <tr id='${market[j].marketId}'>
-                                <td>${i + j }</td>
                                 <td>${market[j].title}</td>`
                                 if(data.data1.some(item => item.marketId == market[j].marketId)){
                                     html += `<td width="120px"> <div class="on-off-btn-section">
@@ -17029,7 +17028,6 @@ socket.on('connect', () => {
                                 if(marketKey === 'session' && market[j].title && market[j].status == 1 && market[j].bet_allowed == 1 && market[j].game_over == 0 && !market[j].title.startsWith("Only") && market[j].title.includes("Over")){
                                     html += `
                                 <tr id='${market[j].marketId}'>
-                                <td>${i + j }</td>
                                 <td>${market[j].title}</td>`
                                 if(data.data1.some(item => item.marketId == market[j].marketId)){
                                     html += `<td width="120px"> <div class="on-off-btn-section">
