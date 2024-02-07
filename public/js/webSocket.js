@@ -9445,7 +9445,7 @@ socket.on('connect', () => {
                 let IdButton = $(`#${buttonId}`)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
-                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
+                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', Odds);
                 let NewStake = spanId - 100;
                 let result
                 let element = $(this)
@@ -9529,7 +9529,7 @@ socket.on('connect', () => {
                 // console.log(IdButton)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
-                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
+                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', Odds);
                 // let NewStake = parseFloat(spanId) + 100;
                 let NewStake 
                 if(spanId){
