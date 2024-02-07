@@ -6860,7 +6860,7 @@ io.on('connection', (socket) => {
                                                 }
                                               },
                                               else: { 
-                                                value: "$$value.value"
+                                                value: 1.2
 
                                                 // $cond: {
                                                 //   if: {
