@@ -3066,8 +3066,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let featureEventId = []
-    let featureStatusArr = await FeatureventModel.distinct('Id');
+    // let featureEventId = []
+    let featureEventId = await FeatureventModel.distinct('Id');
     // featureStatusArr.map(ele => {
     //     featureEventId.push(parseInt(ele.Id))
     // })
