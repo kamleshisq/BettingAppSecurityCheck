@@ -1079,8 +1079,8 @@ socket.on('connect', () => {
 
     $(document).on("click", ".commission", function(e){
         e.preventDefault()
-        console.log('Working, 123654789')
-        // socket.emit("claimCommission", {LOGINDATA})
+        // console.log('Working, 123654789')
+        socket.emit("claimCommission", {LOGINDATA})
     })
 
     socket.on("claimCommission", data => {

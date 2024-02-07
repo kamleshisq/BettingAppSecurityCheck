@@ -73,7 +73,11 @@ const commissionNew = mongoose.Schema({
         type:[String]
     },
     betId:String,
-    uniqueId:String
+    uniqueId:String,
+    settleStatus:{
+        type:Boolean,
+        default:false
+    }
 })
 
 commissionNew.pre('find', function (next) {
