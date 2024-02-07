@@ -6849,7 +6849,12 @@ io.on('connection', (socket) => {
                                                             $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$this.uplineShare"]}, 100] }]
                                                         },
                                                         else:{
-                                                            $multiply: ["$$selection.winAmount", {$divide: [{ $arrayElemAt: ['$parentArray.uplineShare', { $add: [1, '$$thisIndex'] }] },100]}]
+                                                            $multiply: ["$$selection.winAmount", {
+                                                                $divide: [
+                                                                  { $arrayElemAt: ['$parentArray.uplineShare', { $add: [1, '$$valueIndex'] }] },
+                                                                  100
+                                                                ]
+                                                              }]
                                                         }
                                                       }
                                                 }
