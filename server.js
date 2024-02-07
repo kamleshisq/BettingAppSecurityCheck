@@ -6864,13 +6864,13 @@ io.on('connection', (socket) => {
                                                   if: { $eq: ["$$value.value", 0]
                                                     },
                                                   then: {                                                    
-                                                    value: '$$this.uplineShare'
-                                                    // {
-                                                    //   $multiply: [
-                                                    //     '$$selection.winAmount',
-                                                    //     { $divide: ["$$this.uplineShare", 100] }
-                                                    //   ]
-                                                    // }
+                                                    value: 
+                                                    {
+                                                      $multiply: [
+                                                        '$$selection.winAmount',
+                                                        { $divide: ["$$this.uplineShare", 100] }
+                                                      ]
+                                                    }
                                                   },
                                                   else: {value: "$$value.value"}
                                                 }
@@ -6881,7 +6881,8 @@ io.on('connection', (socket) => {
                                       },
                                     lossAmount2:{
                                         $reduce:{
-                                            input: { $reverseArray: '$parentArray' },
+                                            input : "$parentArray",
+                                            // input: { $reverseArray: '$parentArray' },
                                             initialValue: { value: 0, flag: true },
                                             in: {
 
@@ -6928,7 +6929,8 @@ io.on('connection', (socket) => {
                                     },
                                     exposure:{
                                         $reduce:{ 
-                                            input: { $reverseArray: '$parentArray' },
+                                            input : "$parentArray",
+                                            // input: { $reverseArray: '$parentArray' },
                                             initialValue: { value: 0, flag: true },
                                             in: {
 
