@@ -6835,7 +6835,7 @@ io.on('connection', (socket) => {
                                         $reduce: {
                                             // input : "$parentArray",
                                           input: { $reverseArray: '$parentArray' },
-                                          initialValue: { value: 0, flag: false },
+                                          initialValue: { value: 0, flag: true },
                                           in: {
 
                                             $cond: {
@@ -6868,15 +6868,15 @@ io.on('connection', (socket) => {
                                                     ]
                                                   },                                                
                                                   then: {                                                    
-                                                    value: 
-                                                    {
-                                                      $multiply: [
-                                                        '$$selection.winAmount',
-                                                        { $divide: ["$$this.uplineShare", 100] }
-                                                      ]
-                                                    }
+                                                   value: {value: "$$this.uplineShare"}
+                                                    // {
+                                                    //   $multiply: [
+                                                    //     '$$selection.winAmount',
+                                                    //     { $divide: ["$$this.uplineShare", 100] }
+                                                    //   ]
+                                                    // }
                                                   },
-                                                  else: {value: "$$this.uplineShare"}
+                                                  else: {value: 0}
                                                 }
                                                 // END $cond of Else
                                               }
