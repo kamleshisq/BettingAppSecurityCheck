@@ -7287,10 +7287,10 @@ io.on('connection', (socket) => {
                 for(let i =0; i < Bets.length; i++){
                     console.log(Bets[i].selections)
                 }
-            // let runners = await runnerDataModel.find({eventId:data.eventId})
-            // if(Bets.length > 0){
-            //     socket.emit('checkAdminSideOdds', {Bets, runners})
-            // }
+            let runners = await runnerDataModel.find({eventId:data.eventId})
+            if(Bets.length > 0){
+                socket.emit('checkAdminSideOdds', {Bets, runners})
+            }
         }
     })
 
