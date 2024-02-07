@@ -6852,7 +6852,7 @@ io.on('connection', (socket) => {
                                                             value : {$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}
                                                         }
                                                       },
-                                                      else: "$$value.value"
+                                                      else: "$$value"
                                                 }
                                             }
                                         }
