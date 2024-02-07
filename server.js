@@ -6840,8 +6840,7 @@ io.on('connection', (socket) => {
                                                 $cond:{ 
                                                     if : {
                                                         $and: [
-                                                          { $eq: ['$$parentArray.currentLevel', loginId] }, 
-                                                          { $eq: ['$$value.flag', true] } 
+                                                          { $eq: ['$$parentArray.currentLevel', loginId] },  
                                                         ]
                                                       },
                                                       then : { 
@@ -6858,7 +6857,7 @@ io.on('connection', (socket) => {
                                                               }}, 100] }]
                                                         }
                                                       },
-                                                      else: '$$value'
+                                                     
                                                 }
                                             }
                                         }
