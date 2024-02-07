@@ -9609,7 +9609,7 @@ socket.on('connect', () => {
           })
 
           $(document).ready(function() {
-            $('.set-stake-form-input2').on('change', function() {
+            $('.set-stake-form-input2').on('input', function() {
                 const prevValue = $(this).data('prevValue');
                 console.log('Previous value:', prevValue);
                 $(this).data('prevValue', $(this).val());
