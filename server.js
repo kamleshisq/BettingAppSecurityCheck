@@ -7296,6 +7296,7 @@ io.on('connection', (socket) => {
             // console.log(Bets)
             let runners = await runnerDataModel.find({eventId:data.eventId})
             if(Bets.length > 0){
+                console.log(Bets)
                 socket.emit('checkAdminSideOdds', {Bets, runners})
             }
         }
