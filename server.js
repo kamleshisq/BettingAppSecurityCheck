@@ -6856,7 +6856,7 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }                                                   
                                                   },
-                                                  else: {value: "$$value.value", flag : false}
+                                                  else: {value: 1.2, flag : false}
                                                 }
                                               },
                                               else: {
@@ -6878,7 +6878,7 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }
                                                   },
-                                                  else: {value: "$$value.value"}
+                                                  else: {value: 1.3}
                                                 }
                                               }
                                             }
