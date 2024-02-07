@@ -6687,7 +6687,7 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER){
             let childrenUSer = await User.distinct('userName', {parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}, roleName:'user'})
             let loginId = data.LOGINDATA.LOGINUSER._id
-            console.log(loginId)
+            // console.log(childrenUSer)
 
             let Bets = await Bet.aggregate([
                 {
@@ -6835,24 +6835,55 @@ io.on('connection', (socket) => {
                                         $reduce:{
                                             input: { $reverseArray: '$parentArray' },
                                             initialValue: { value: 0, flag: true },
-                                            in : { 
-                                                $cond:{ 
+                                            in : {
+                                                $cond:{
                                                     if : {
                                                         $and: [
-                                                          { $eq: ['$$this.parentUSerId', loginId] }, 
+                                                          { $ne: ['$$this.parentUSerId', loginId] }, 
                                                           { $eq: ['$$value.flag', true] } 
                                                         ]
                                                       },
-                                                      then : { 
-                                                        if :{$eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"]},
-                                                        then:{
-                                                            $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$this.uplineShare"]}, 100] }]
+                                                    then : {
+                                                        value: { 
+                                                            $cond:{
+                                                                if:{ $eq: ["$$value.value", 0] },
+                                                                then:{
+                                                                    $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                },
+                                                                else:{
+                                                                    $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                }
+                                                            }
                                                         },
-                                                        else:{
-                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
-                                                        }
-                                                      },
-                                                      else: '$$value'
+                                                        flag: true,
+                                                        
+                                                    },
+                                                    else : {
+                                                        value: {
+                                                            $cond : {
+                                                                if : { $eq : ["$$value.value" , 0]},
+                                                                then : {
+                                                                    $cond:{
+                                                                        if : {$eq : ["$$this.parentUSerId", loginId]},
+                                                                        then:{
+                                                                            $cond:{
+                                                                                if:{$eq:['$$this.uplineShare', 0]},
+                                                                                then:0,
+                                                                                else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                            }
+                                                                        },
+                                                                        else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                    }
+                                                                },
+                                                                else : {$cond:{
+                                                                    if : {$eq : ['$$value.flag', true]},
+                                                                    then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
+                                                                    else:"$$value.value"
+                                                                }}
+                                                            }
+                                                        },
+                                                        flag:false
+                                                    }
                                                 }
                                             }
                                         }
