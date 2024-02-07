@@ -304,8 +304,13 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
             }
         }
     ])
+    let realCommission = 0
+    if(settleCommission.length > 0){
+        realCommission = settleCommission[0].totalCommission
+    }
     console.log(settleCommission, "settleCommissionsettleCommissionsettleCommissionsettleCommission")
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
+    lifeTimePl = lifeTimePl + realCommission
     const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0})
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
