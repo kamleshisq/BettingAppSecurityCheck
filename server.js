@@ -6863,7 +6863,7 @@ io.on('connection', (socket) => {
                                                 // }
                                               },
                                               else: {  
-                                              value: "$$selection.winAmount"                                               
+                                              value: "$$value.value"
                                                 // $cond: {
                                                 //   if: { $eq: ['$$value.value', 0]
                                                 //     },
