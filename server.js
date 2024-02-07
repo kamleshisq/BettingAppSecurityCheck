@@ -6860,24 +6860,25 @@ io.on('connection', (socket) => {
                                                 }
                                               },
                                               else: {
-                                                $cond: {
-                                                  if: {
-                                                    $and: [
-                                                      { $eq: ["$$value.value", 0] },
-                                                      { $eq: ['$$value.flag', false] }
-                                                    ]
-                                                  },                                                
-                                                  then: {                                                    
-                                                   value: 1.1
-                                                    // {
-                                                    //   $multiply: [
-                                                    //     '$$selection.winAmount',
-                                                    //     { $divide: ["$$this.uplineShare", 100] }
-                                                    //   ]
-                                                    // }
-                                                  },
-                                                  else: {value: "$$value.value"}
-                                                }
+                                                {value: "$$value.value"}
+                                                // $cond: {
+                                                //   if: {
+                                                //     $and: [
+                                                //       { $eq: ["$$value.value", 0] },
+                                                //       { $eq: ['$$value.flag', false] }
+                                                //     ]
+                                                //   },                                                
+                                                //   then: {                                                    
+                                                //    value: 1.1
+                                                //     // {
+                                                //     //   $multiply: [
+                                                //     //     '$$selection.winAmount',
+                                                //     //     { $divide: ["$$this.uplineShare", 100] }
+                                                //     //   ]
+                                                //     // }
+                                                //   },
+                                                //   else: {value: "$$value.value"}
+                                                // }
                                                 // END $cond of Else
                                               }
                                             }
