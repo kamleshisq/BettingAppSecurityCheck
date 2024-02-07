@@ -3071,7 +3071,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     // featureStatusArr.map(ele => {
     //     featureEventId.push(parseInt(ele.Id))
     // })
-    console.log(featureStatusArr, "featureStatusArrfeatureStatusArrfeatureStatusArrfeatureStatusArr")
+    console.log(featureEventId, "featureStatusArrfeatureStatusArrfeatureStatusArrfeatureStatusArr")
     for(let i = 0; i < cricket.length; i++){
         console.log(`${cricket[i].eventData.eventId}`)
     }
