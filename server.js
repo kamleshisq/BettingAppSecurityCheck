@@ -6836,6 +6836,7 @@ io.on('connection', (socket) => {
                                           input: { $reverseArray: '$parentArray' },
                                           initialValue: { value: 0, flag: true },
                                           in: {
+                                            console.log('winAmount2:', loginId),
                                             $cond: {
                                               if: {
                                                 $and: [
@@ -6864,13 +6865,13 @@ io.on('connection', (socket) => {
                                                 $cond: {
                                                   if: { $eq: ['$$value.value', 0]},
                                                   then: {
-                                                    value: 0,
-                                                    // {
-                                                    //   $multiply: [
-                                                    //     '$$selection.winAmount',
-                                                    //     { $divide: ["$$this.uplineShare", 100] }
-                                                    //   ]
-                                                    // },
+                                                    value: 
+                                                    {
+                                                      $multiply: [
+                                                        '$$selection.winAmount',
+                                                        { $divide: ["$$this.uplineShare", 100] }
+                                                      ]
+                                                    },
                                                     flag: true
                                                   },
                                                   else: '$$value.value'
