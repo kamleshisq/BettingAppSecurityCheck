@@ -6878,7 +6878,7 @@ io.on('connection', (socket) => {
                                                     // },
                                                     flag: true
                                                   },
-                                                  else: '$$value.value'
+                                                  else: {value: "$$selection.winAmount"}
                                                 }
                                               }
                                             }
