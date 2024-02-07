@@ -6868,7 +6868,7 @@ io.on('connection', (socket) => {
                                                     ]
                                                   },                                                
                                                   then: {                                                    
-                                                    value:{value: "$$this.uplineShare"}
+                                                    value:{value: 0.12}
 
                                                     // {
                                                     //   $multiply: [
