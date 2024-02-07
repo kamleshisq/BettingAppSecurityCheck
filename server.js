@@ -6833,7 +6833,7 @@ io.on('connection', (socket) => {
                                     lossAmount : "$$selection.lossAmount",
                                     winAmount2: {
                                         $reduce: {
-                                            input : $parentArray,
+                                            input : "$parentArray",
                                         //   input: { $reverseArray: '$parentArray' },
                                           initialValue: { value: 0, flag: true },
                                           in: {
