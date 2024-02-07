@@ -6849,10 +6849,24 @@ io.on('connection', (socket) => {
                                                             $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$this.uplineShare"]}, 100] }]
                                                         },
                                                         else:{
-                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                            flag: false
+                                                            // $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
                                                         }
                                                       },
-                                                      else: '$$value'
+                                                      else: {
+                                                        $cond:{
+                                                            if:{
+                                                                $and:[
+                                                                    { $eq: ['$$value.flag', false] },
+                                                                    { $eq : ["$$value.value" , 0]}
+                                                                ]
+                                                            },
+                                                            then:{
+                                                                $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                            },
+                                                            else:"$$value.value"
+                                                        }
+                                                      }
                                                 }
                                             }
                                         }
