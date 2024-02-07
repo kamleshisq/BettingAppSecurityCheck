@@ -3073,7 +3073,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     // })
     console.log(featureStatusArr, "featureStatusArrfeatureStatusArrfeatureStatusArrfeatureStatusArr")
     for(let i = 0; i < cricket.length; i++){
-        console.log(cricket[i].eventData.eventId)
+        console.log(`${cricket[i].eventData.eventId}`)
     }
     let LiveCricket = cricket.filter(item => featureEventId.includes(`${item.eventData.eventId}`))
     console.log(LiveCricket)
