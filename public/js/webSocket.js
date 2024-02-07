@@ -9529,6 +9529,7 @@ socket.on('connect', () => {
                 // console.log(IdButton)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                console.log($(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num"), `$(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num")$(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num")$(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num")`)
                 $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', `${Odds}`);
                 // let NewStake = parseFloat(spanId) + 100;
                 let NewStake 
