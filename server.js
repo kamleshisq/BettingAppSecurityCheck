@@ -6833,16 +6833,17 @@ io.on('connection', (socket) => {
                                     lossAmount : "$$selection.lossAmount",
                                     winAmount2: {
                                         $map: {
-                                          input: { $reverseArray: '$parentArray' },
-                                          as: 'parentArray',
+                                          input: { $slice: [{ $reverseArray: '$parentArray' }, 0, { $subtract: [{ $size: '$parentArray' }, 1] }] },
+                                          as: 'currentObject',
                                           in: {
                                             $let: {
                                               vars: {
-                                                currentValue: '$$parentArray.currentLevel',
+                                                currentValue: '$$currentObject',
+                                                nextIndex: { $add: [{ $indexOfArray: ['$parentArray', '$$currentObject'] }, 1] },
                                                 nextValue: {
                                                   $arrayElemAt: [
                                                     '$parentArray',
-                                                    { $subtract: [{ $indexOfArray: ['$parentArray', '$$parentArray'] }, 1] }
+                                                    { $subtract: [{ $size: '$parentArray' }, '$$nextIndex'] }
                                                   ]
                                                 }
                                               },
@@ -6857,8 +6858,6 @@ io.on('connection', (socket) => {
                                                       },
                                                       else: {
                                                         $multiply: ["$$selection.winAmount", { $divide: ["$$nextValue.uplineShare", 100] }]
-                                                        // Handle the nextValue here if necessary
-                                                        // $multiply: ["$$selection.winAmount", { $divide: [{ nextValue: ... }, 100] }]
                                                       }
                                                     }
                                                   },
@@ -6868,7 +6867,7 @@ io.on('connection', (socket) => {
                                             }
                                           }
                                         }
-                                      },
+                                      },                                      
                                     lossAmount2:{
                                         $reduce:{
                                             input: { $reverseArray: '$parentArray' },
