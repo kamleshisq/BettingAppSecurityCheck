@@ -3075,7 +3075,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     for(let i = 0; i < cricket.length; i++){
         console.log(cricket[i].eventData.eventId)
     }
-    let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
+    let LiveCricket = cricket.filter(item => featureEventId.includes(`${item.eventData.eventId}`))
     console.log(LiveCricket)
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
