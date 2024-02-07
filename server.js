@@ -6855,7 +6855,7 @@ io.on('connection', (socket) => {
                                                         },
                                                         flag: true,
                                                       },
-                                                      else: 0
+                                                      else: "$$value.value"
                                                 }
                                             }
                                         }
