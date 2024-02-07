@@ -6846,13 +6846,13 @@ io.on('connection', (socket) => {
                                                       then : { 
                                                         if :{$eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"]},
                                                         then:{
-                                                            value :{ $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$this.uplineShare"]}, 100] }]}
+                                                            $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$this.uplineShare"]}, 100] }]
                                                         },
                                                         else:{
-                                                            value : {$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}
+                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
                                                         }
                                                       },
-                                                      else: "$$value"
+                                                      else: '$$value'
                                                 }
                                             }
                                         }
