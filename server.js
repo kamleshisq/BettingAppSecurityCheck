@@ -6868,14 +6868,13 @@ io.on('connection', (socket) => {
                                                     ]
                                                   },                                                
                                                   then: {                                                    
-                                                    value:{value: 0.12}
-
-                                                    // {
-                                                    //   $multiply: [
-                                                    //     '$$selection.winAmount',
-                                                    //     { $divide: ["$$this.uplineShare", 100] }
-                                                    //   ]
-                                                    // }
+                                                    value: 
+                                                    {
+                                                      $multiply: [
+                                                        '$$selection.winAmount',
+                                                        { $divide: ["$$this.uplineShare", 100] }
+                                                      ]
+                                                    }
                                                   },
                                                   else: {value: "$$this.uplineShare"}
                                                 }
