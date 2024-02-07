@@ -6839,35 +6839,37 @@ io.on('connection', (socket) => {
                                             $let: {
                                               vars: {
                                                 currentValue: '$$currentObject',
-                                                nextIndex: { $add: [{ $indexOfArray: ['$parentArray', '$$currentObject'] }, 1] },
+                                                nextIndex: { $add: [{ $indexOfArray: ['$parentArray', '$$currentObject'] }, 1] }
+                                              },
+                                              in: {
                                                 nextValue: {
                                                   $arrayElemAt: [
                                                     '$parentArray',
                                                     { $subtract: [{ $size: '$parentArray' }, '$$nextIndex'] }
                                                   ]
-                                                }
-                                              },
-                                              in: {
-                                                $cond: {
-                                                  if: { $eq: ['$$currentValue.parentUSerId', loginId] },
-                                                  then: {
-                                                    $cond: {
-                                                      if: { $eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"] },
-                                                      then: {
-                                                        $multiply: ["$$selection.winAmount", { $divide: [{ $subtract: [100, "$$currentValue.uplineShare"] }, 100] }]
-                                                      },
-                                                      else: {
-                                                        $multiply: ["$$selection.winAmount", { $divide: ["$$nextValue.uplineShare", 100] }]
+                                                },
+                                                result: {
+                                                  $cond: {
+                                                    if: { $eq: ['$$currentValue.parentUSerId', loginId] },
+                                                    then: {
+                                                      $cond: {
+                                                        if: { $eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"] },
+                                                        then: {
+                                                          $multiply: ["$$selection.winAmount", { $divide: [{ $subtract: [100, "$$currentValue.uplineShare"] }, 100] }]
+                                                        },
+                                                        else: {
+                                                          $multiply: ["$$selection.winAmount", { $divide: ["$$nextValue.uplineShare", 100] }]
+                                                        }
                                                       }
-                                                    }
-                                                  },
-                                                  else: "$$REMOVE"
+                                                    },
+                                                    else: "$$REMOVE"
+                                                  }
                                                 }
                                               }
                                             }
                                           }
                                         }
-                                      },                                      
+                                      },                                                                            
                                     lossAmount2:{
                                         $reduce:{
                                             input: { $reverseArray: '$parentArray' },
