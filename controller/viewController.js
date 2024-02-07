@@ -3073,6 +3073,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     // })
     console.log(featureStatusArr, "featureStatusArrfeatureStatusArrfeatureStatusArrfeatureStatusArr")
     let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
+    console.log(LiveCricket)
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
