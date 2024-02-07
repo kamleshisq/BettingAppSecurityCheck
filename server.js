@@ -7285,7 +7285,7 @@ io.on('connection', (socket) => {
             // console.log(Bets[0].selections2)
             console.log(Bets)
                 for(let i =0; i < Bets.length; i++){
-                    console.log(Bets[i].selections2)
+                    console.log(Bets[i].selections)
                 }
             // let runners = await runnerDataModel.find({eventId:data.eventId})
             // if(Bets.length > 0){
