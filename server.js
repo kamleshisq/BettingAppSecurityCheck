@@ -6863,17 +6863,17 @@ io.on('connection', (socket) => {
                                               else: {
                                                 $cond: {
                                                   if: {
-                                                    $and: [
-                                                      
+                                                    $and: [                                                      
                                                       { $eq: ['$$value.value', 0] }
                                                     ]
                                                   },
                                                   then: {
                                                     value: {
-                                                      $multiply: [
-                                                        '$$selection.winAmount',
-                                                        { $divide: ["$$this.uplineShare", 100] }
-                                                      ]
+                                                        '$$value.value'
+                                                      // $multiply: [
+                                                      //   '$$selection.winAmount',
+                                                      //   { $divide: ["$$this.uplineShare", 100] }
+                                                      // ]
                                                     },
                                                     flag: true
                                                   },
