@@ -13247,6 +13247,7 @@ socket.on('connect', () => {
                             marketplusminus(data)
                         }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                      $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', spanId);
                       let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
                       $(this)
                           .closest("tr")
@@ -13254,6 +13255,8 @@ socket.on('connect', () => {
                           .text(result2.toFixed(2));
                     }else{
                         $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                      $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', newStake);
+
                         $(this)
                           .closest("tr")
                           .find(".c-gren")
@@ -13324,6 +13327,7 @@ socket.on('connect', () => {
                             marketplusminus(data)
                         }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                      $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', spanId);
                       let result2 = ((parseFloat(spanId) * betValue) / 100)
                       $(this)
                           .closest("tr")
@@ -13331,6 +13335,7 @@ socket.on('connect', () => {
                           .text(result2.toFixed(2));
                     }else{
                         $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', newStake);
                         $(this)
                           .closest("tr")
                           .find(".c-gren")
@@ -13396,6 +13401,7 @@ socket.on('connect', () => {
                             marketplusminus(data)
                         }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                      $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', spanId);
                       let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
                       $(this)
                           .closest("tr")
@@ -13403,6 +13409,7 @@ socket.on('connect', () => {
                           .text(result2.toFixed(2));
                     }else{
                         $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', newStake);
                         $(this)
                           .closest("tr")
                           .find(".c-gren")
@@ -13477,6 +13484,7 @@ socket.on('connect', () => {
                             marketplusminus(data)
                         }
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                      $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', spanId);
                       let result2 = parseFloat(spanId)
                     //   if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
                     //     result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
@@ -13489,6 +13497,7 @@ socket.on('connect', () => {
                           .text(result2.toFixed(2));
                     }else{
                         $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', newStake);
                         $(this)
                           .closest("tr")
                           .find(".c-gren")
@@ -13605,12 +13614,14 @@ socket.on('connect', () => {
                 }
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                    $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', 0);
                     $(this)
                     .closest("tr")
                     .find(".c-gren")
                     .text(0);
                 }else if(NewStake < 0){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                    $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', 0);
                     $(this)
                     .closest("tr")
                     .find(".c-gren")
@@ -13619,6 +13630,7 @@ socket.on('connect', () => {
                 else{
                     // console.log("WORKING")
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                    $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', NewStake);
                     $(this)
                     .closest("tr")
                     .find(".c-gren")
@@ -13631,6 +13643,7 @@ socket.on('connect', () => {
           $(document).on('click','.tbl-td-with5',function(e){
                 // console.log("WORKING")
                 $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
+                $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', 0);
                 $(".minus")
                 .closest("tr")
                 .find(".c-gren")
