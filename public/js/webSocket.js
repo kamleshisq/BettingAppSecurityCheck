@@ -9104,6 +9104,7 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
+                    $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                     var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
                     diff = (parseFloat(diffStake) * betValue) - parseFloat(diffStake);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
@@ -9175,10 +9176,12 @@ socket.on('connect', () => {
                         betValue = parseFloat(
                             $(this).closest("tr").find(".selection-name").text().split('@')[1]
                           );
+                          $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                     }else{
                          betValue = parseFloat(
                           $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                         );
+                        $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                     }
                     // console.log(betValue)
                     var result = ((parseFloat(newStake) * betValue) / 100);
@@ -9248,6 +9251,7 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
+                    $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                     var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
                     diff = parseFloat(spanId)
                     plusMinus = (diff * betValue) - diff;
@@ -9319,6 +9323,7 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
+                    $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                     let result = parseFloat(newStake)
                     diff = parseFloat(spanId)
                     if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
@@ -9403,6 +9408,7 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
+                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                       var result 
                       if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
@@ -9418,6 +9424,7 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
+                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                       let result = parseFloat(spanId)
                     //   if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
                     //        result = (parseFloat(spanId) * 2) - parseFloat(spanId);
@@ -9438,6 +9445,7 @@ socket.on('connect', () => {
                 let IdButton = $(`#${buttonId}`)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                 let NewStake = spanId - 100;
                 let result
                 let element = $(this)
@@ -9513,10 +9521,6 @@ socket.on('connect', () => {
                 }
             })
           })
-
-
-          
-
           
           $(document).ready(function(){
             $(".plus").click(function () {
@@ -9525,6 +9529,7 @@ socket.on('connect', () => {
                 // console.log(IdButton)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").data('prevValue', betValue);
                 // let NewStake = parseFloat(spanId) + 100;
                 let NewStake 
                 if(spanId){
@@ -9600,6 +9605,15 @@ socket.on('connect', () => {
                     .find(".c-gren")
                     .text(result.toFixed(2));
                 }
+            })
+          })
+
+          $(document).ready(function() {
+            $('.set-stake-form-input2').on('change', function() {
+                const prevValue = $(this).data('prevValue');
+                console.log('Previous value:', prevValue);
+                $(this).data('prevValue', $(this).val());
+                console.log('Current value:', $(this).val());
             })
           })
           // Get all the rows with class "acount-stat-tbl-body-tr"
