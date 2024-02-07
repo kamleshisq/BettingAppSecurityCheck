@@ -6833,8 +6833,8 @@ io.on('connection', (socket) => {
                                     lossAmount : "$$selection.lossAmount",
                                     winAmount2: {
                                         $reduce: {
-                                            input : "$parentArray",
-                                        //   input: { $reverseArray: '$parentArray' },
+                                            // input : "$parentArray",
+                                          input: { $reverseArray: '$parentArray' },
                                           initialValue: { value: 0, flag: true },
                                           in: {
 
@@ -6881,8 +6881,8 @@ io.on('connection', (socket) => {
                                       },
                                     lossAmount2:{
                                         $reduce:{
-                                            input : "$parentArray",
-                                            // input: { $reverseArray: '$parentArray' },
+                                            // input : "$parentArray",
+                                            input: { $reverseArray: '$parentArray' },
                                             initialValue: { value: 0, flag: true },
                                             in: {
 
@@ -6929,8 +6929,8 @@ io.on('connection', (socket) => {
                                     },
                                     exposure:{
                                         $reduce:{ 
-                                            input : "$parentArray",
-                                            // input: { $reverseArray: '$parentArray' },
+                                            // input : "$parentArray",
+                                            input: { $reverseArray: '$parentArray' },
                                             initialValue: { value: 0, flag: true },
                                             in: {
 
