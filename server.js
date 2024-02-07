@@ -6878,7 +6878,7 @@ io.on('connection', (socket) => {
                                                     flag:true
                                                   },
                                                  // else: {value: "$$value.value", flag:false}
-                                                   else: {value: }
+                                                   else: {value: 0}
                                                 }
                                                 // END $cond of Else
                                               }
