@@ -6829,7 +6829,7 @@ io.on('connection', (socket) => {
                                     totalAmount: "$$selection.totalAmount",
                                     matchName: "$$selection.matchName",
                                     Stake: "$$selection.Stake",
-                                    winAmount :"$$selection.winAmount",
+                                    winAmount : 6.10,
                                     lossAmount : "$$selection.lossAmount",
                                     winAmount2: {
                                         $reduce: {
