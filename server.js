@@ -6856,13 +6856,19 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }                                                   
                                                   },
-                                                  else: {value: "$$value.value"}
+                                                  else: {value: "$$value.value", flag : false}
                                                 }
                                               },
                                               else: {
                                                 $cond: {
-                                                  if: { $eq: ["$$value.value", 0]
-                                                    },
+                                                  if: {
+                                                    $and: [
+                                                      { $eq: ["$$value.value", 0] },
+                                                      { $eq: ['$$value.flag', false] }
+                                                    ]
+                                                  },
+                                                //    {$and: {[ $eq: ["$$value.value", 0]}, { $eq: ['$$value.flag', true] }
+                                                //     },
                                                   then: {                                                    
                                                     value: 
                                                     {
@@ -6904,13 +6910,17 @@ io.on('connection', (socket) => {
                                                           ]
                                                         }                                                   
                                                       },
-                                                      else: {value: "$$value.value"}
+                                                      else: {value: "$$value.value", flag:false}
                                                     }
                                                   },
                                                   else: {
                                                     $cond: {
-                                                      if: { $eq: ["$$value.value", 0]
-                                                        },
+                                                      if: {
+                                                        $and: [
+                                                          { $eq: ["$$value.value", 0] },
+                                                          { $eq: ['$$value.flag', false] }
+                                                        ]
+                                                      },
                                                       then: {                                                    
                                                         value: 
                                                         {
@@ -6952,13 +6962,17 @@ io.on('connection', (socket) => {
                                                           ]
                                                         }                                                   
                                                       },
-                                                      else: {value: "$$value.value"}
+                                                      else: {value: "$$value.value", flag:false}
                                                     }
                                                   },
                                                   else: {
                                                     $cond: {
-                                                      if: { $eq: ["$$value.value", 0]
-                                                        },
+                                                      if: {
+                                                        $and: [
+                                                          { $eq: ["$$value.value", 0] },
+                                                          { $eq: ['$$value.flag', false] }
+                                                        ]
+                                                      },
                                                       then: {                                                    
                                                         value: 
                                                         {
