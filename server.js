@@ -6925,7 +6925,7 @@ io.on('connection', (socket) => {
                                               }
                                         }
                                     },
-                                    exposure:"$$selection.exposure",
+                                    exposure:{value : "$$selection.exposure"},
                                     // {
                                     //     $reduce:{ 
                                     //         input: { $reverseArray: '$parentArray' },
