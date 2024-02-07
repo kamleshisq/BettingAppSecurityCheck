@@ -4936,7 +4936,7 @@ io.on('connection', (socket) => {
                     // console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
                     let commission = commissionAmount[0].totalCommission
                     user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission}})
-                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission, downlineBalance: commission, myPL:commission}})
+                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission, downlineBalance: commission, myPL:-commission}})
                     // console.log(user)
                     let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
