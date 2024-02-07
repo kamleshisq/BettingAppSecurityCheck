@@ -6846,10 +6846,14 @@ io.on('connection', (socket) => {
                                                       then : { 
                                                         if :{$eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"]},
                                                         then:{
-                                                            $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$this.uplineShare"]}, 100] }]
+                                                            value: { 
+                                                                $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$this.uplineShare"]}, 100] }]
+                                                            },
+                                                            flag: false
                                                         },
                                                         else:{
-                                                            flag: false
+                                                            flag: false,
+                                                            // value : 0
                                                             // $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
                                                         }
                                                       },
@@ -6862,7 +6866,10 @@ io.on('connection', (socket) => {
                                                                 ]
                                                             },
                                                             then:{
-                                                                $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                value:{
+                                                                    $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                },
+                                                                flag:true
                                                             },
                                                             else:"$$value.value"
                                                         }
