@@ -6863,7 +6863,7 @@ io.on('connection', (socket) => {
                                                   if: { $eq: ["$$value.value", 0]
                                                     },
                                                   then: {                                                    
-                                                    value: '$$selection.winAmount'
+                                                    value: '$$this.uplineShare'
                                                     // {
                                                     //   $multiply: [
                                                     //     '$$selection.winAmount',
