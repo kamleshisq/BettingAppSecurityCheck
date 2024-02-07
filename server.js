@@ -6835,7 +6835,7 @@ io.on('connection', (socket) => {
                                         $reduce: {
                                             // input : "$parentArray",
                                           input: { $reverseArray: '$parentArray' },
-                                          initialValue: { value: 0, flag: true },
+                                          initialValue: { value: 0, flag: false },
                                           in: {
 
                                             $cond: {
