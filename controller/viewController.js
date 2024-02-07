@@ -3067,10 +3067,11 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []
-    let featureStatusArr = await FeatureventModel.find();
-    featureStatusArr.map(ele => {
-        featureEventId.push(parseInt(ele.Id))
-    })
+    let featureStatusArr = await FeatureventModel.distinct('Id');
+    // featureStatusArr.map(ele => {
+    //     featureEventId.push(parseInt(ele.Id))
+    // })
+    console.log(featureStatusArr, "featureStatusArrfeatureStatusArrfeatureStatusArrfeatureStatusArr")
     let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
