@@ -6876,7 +6876,7 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }
                                                   },
-                                                  else: {value: "$$value.value"}
+                                                  else: {value: "$$this.uplineShare"}
                                                 }
                                                 // END $cond of Else
                                               }
