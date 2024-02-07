@@ -6832,36 +6832,43 @@ io.on('connection', (socket) => {
                                     winAmount :"$$selection.winAmount",
                                     lossAmount : "$$selection.lossAmount",
                                     winAmount2: {
-                                        $map:{
-                                            input: { $reverseArray: '$parentArray' },
-                                            // initialValue: { value: 0, flag: true },
-                                            as:'parentArray',
-                                            in : { 
-                                                $cond:{ 
-                                                    if : {
-                                                        $and: [
-                                                          { $eq: ['$$parentArray.currentLevel', loginId] },  
-                                                        ]
-                                                      },
-                                                      then : { 
-                                                        if :{$eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"]},
-                                                        then:{
-                                                            $multiply: ["$$selection.winAmount", { $divide: [{$subtract : [100 ,"$$parentArray.uplineShare"]}, 100] }]
-                                                        },
-                                                        else:{
-                                                            $multiply: ["$$selection.winAmount", { $divide: [{ nextValue: {
-                                                                $arrayElemAt: [
-                                                                  '$values',
-                                                                  { $indexOfArray: ['$values', '$$currentValue'] },
-                                                                ],
-                                                              }}, 100] }]
-                                                        }
-                                                      },
-                                                     
+                                        $map: {
+                                          input: { $reverseArray: '$parentArray' },
+                                          as: 'parentArray',
+                                          in: {
+                                            $let: {
+                                              vars: {
+                                                currentValue: '$$parentArray.currentLevel',
+                                                nextValue: {
+                                                  $arrayElemAt: [
+                                                    '$parentArray',
+                                                    { $subtract: [{ $indexOfArray: ['$parentArray', '$$parentArray'] }, 1] }
+                                                  ]
                                                 }
+                                              },
+                                              in: {
+                                                $cond: {
+                                                  if: { $eq: ['$$currentValue.parentUSerId', loginId] },
+                                                  then: {
+                                                    $cond: {
+                                                      if: { $eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"] },
+                                                      then: {
+                                                        $multiply: ["$$selection.winAmount", { $divide: [{ $subtract: [100, "$$currentValue.uplineShare"] }, 100] }]
+                                                      },
+                                                      else: {
+                                                        $multiply: ["$$selection.winAmount", { $divide: ["$$nextValue.uplineShare", 100] }]
+                                                        // Handle the nextValue here if necessary
+                                                        // $multiply: ["$$selection.winAmount", { $divide: [{ nextValue: ... }, 100] }]
+                                                      }
+                                                    }
+                                                  },
+                                                  else: "$$REMOVE"
+                                                }
+                                              }
                                             }
+                                          }
                                         }
-                                    },
+                                      },
                                     lossAmount2:{
                                         $reduce:{
                                             input: { $reverseArray: '$parentArray' },
