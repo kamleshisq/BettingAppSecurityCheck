@@ -6844,8 +6844,7 @@ io.on('connection', (socket) => {
                                                   { $eq: ['$$value.flag', true] }
                                                 ]
                                               },
-                                              then: {
-                                                value: 0
+                                              then: {                                                
                                                 $cond: {
                                                   if: { $eq: [data.LOGINDATA.LOGINUSER.roleName, "AGENT"] },
                                                   then: {
