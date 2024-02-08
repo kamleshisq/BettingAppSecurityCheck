@@ -6788,10 +6788,14 @@ socket.on('connect', () => {
             let html2 = '';
             console.log(data.events, "data.eventsdata.eventsdata.events")
             if(data.events){
-                html2 += `<option value="All" selected> Select Event </option>`
-                for(let i = 0;i<data.events.length;i++){
-                    if(data.events[i]._id){
-                        html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                if(data.events.length === 1){
+                    html2 += `<option value="${data.events[0].eventId}">${data.events[0]._id}</option>`
+                }else{
+                    html2 += `<option value="All" selected> Select Event </option>`
+                    for(let i = 0;i<data.events.length;i++){
+                        if(data.events[i]._id){
+                            html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                        }
                     }
                 }
                 $('#Event').html(html2)
