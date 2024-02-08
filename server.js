@@ -6858,12 +6858,11 @@ io.on('connection', (socket) => {
                                     Stake: "$$selection.Stake",
                                     winAmount :"$$selection.winAmount",
                                     lossAmount : "$$selection.lossAmount",
-									 initialValue: { value: 0, flag: true },
                                     winAmount2: {
                                         $reduce: {
                                             // input : "$parentArray",
                                           input: { $reverseArray: '$parentArray' },
-                                         
+                                          initialValue: { value: 0, flag: true },
                                           in: {											 
                                             $cond: {
                                               if: {
@@ -6883,15 +6882,15 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }                                                   
                                                   },
-                                                  else: {value: "$$selection..value", flag : false}
+                                                  else: {value: "$$value.value", flag : false}
                                                 }
                                               },
                                               else: { // ELSE HERE
                                                 $cond: {
                                                   if: {
                                                     $and: [
-                                                      { $eq: ["$$selection..value", 0] },
-                                                      { $eq: ['$$selection..flag', false] }
+                                                      { $eq: ["$$value.value", 0] },
+                                                      { $eq: ['$$value.flag', false] }
                                                     ]
                                                   },                                              
                                                   then: {                                                    
@@ -6903,7 +6902,7 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }
                                                   },
-                                                  else: {value: "$$selection..value"}
+                                                  else: {value: "$$value.value"}
                                                 }
                                               }
                                             }
@@ -7315,7 +7314,7 @@ io.on('connection', (socket) => {
             // console.log(Bets[0].selections2)
             console.log(Bets)
                 for(let i =0; i < Bets.length; i++){
-                    console.log(Bets[i].selections2[0].winAmount2)
+                    console.log(Bets[i].selections2)
                 }
             // let runners = await runnerDataModel.find({eventId:data.eventId})
             // if(Bets.length > 0){
