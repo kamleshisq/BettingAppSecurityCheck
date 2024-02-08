@@ -259,7 +259,24 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     let UserArray = await User.distinct('userName', {parentUsers:childUser.id})
     await commissionNewModel.updateMany({userName : {$in:UserArray}, commissionStatus : 'Claimed', parrentArrayThatClaid : {$nin:[childUser.id]}}, {$push:{parrentArrayThatClaid:childUser.id}})
     await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}})
-    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,pointsWL:0},{
+    await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId:childUser.id,
+                setleCOMMISSIONMY:true
+            }
+        },{
+            $group:{
+                _id:null,
+                totalCommission: { $sum: "$commission" } 
+            }
+        }
+    ])
+    let totlaCommissionUSer = 0 
+    if(commissionNewModel.length !== 0){
+        totlaCommissionUSer = commissionNewModel[0].totalCommission
+    }
+    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer},uplinePL:0,pointsWL:0},{
         new:true
     })
     
@@ -392,7 +409,24 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     await commissionNewModel.updateMany({userId : childUser.id,commissionStatus : 'Claimed',settleStatus : false}, {settleStatus:true}) 
     let UserArray = await User.distinct('userName', {parentUsers:childUser.id})
     await commissionNewModel.updateMany({userName : {$in:UserArray}, commissionStatus : 'Claimed', parrentArrayThatClaid : {$nin:[childUser.id]}}, {$push:{parrentArrayThatClaid:childUser.id}})
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0})
+    await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId:childUser.id,
+                setleCOMMISSIONMY:true
+            }
+        },{
+            $group:{
+                _id:null,
+                totalCommission: { $sum: "$commission" } 
+            }
+        }
+    ])
+    let totlaCommissionUSer = 0 
+    if(commissionNewModel.length !== 0){
+        totlaCommissionUSer = commissionNewModel[0].totalCommission
+    }
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
