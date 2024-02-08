@@ -321,74 +321,74 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL) * -1
     console.log(req.body)
-    // // console.log(childUser)
-    // if(childUser.role.role_level < parentUser.role.role_level){
-    //     return next(new AppError("you do not have permission to perform this action", 404))
-    // } 
+    // console.log(childUser)
+    if(childUser.role.role_level < parentUser.role.role_level){
+        return next(new AppError("you do not have permission to perform this action", 404))
+    } 
     
-    // if(parentUser.availableBalance < req.body.amount){
-    //     return next(new AppError("Insufficient Credit Limit !"))
-    // }
-    // let settleCommission = await commissionNewModel.aggregate([
-    //     {
-    //         $match:{
-    //             userId : childUser.id,
-    //             commissionStatus : 'Claimed',
-    //             settleStatus : false
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //           _id: null, 
-    //           totalCommission: { $sum: "$commission" } 
-    //         }
-    //     }
-    // ])
-    // console.log(settleCommission)
-    // let realCommission = 0
-    // if(settleCommission.length > 0){
-    //     realCommission = settleCommission[0].totalCommission
-    // }
-    // let lifeTimePl = 0
-    // console.log(childUser, "childUserchildUser")
-    // if(childUser.roleName !== 'user'){
-    //     let userNameArray = await User.distinct('userName', {parentUsers:childUser.id})
-    //     console.log(userNameArray)
-    //     let settleCommissionforChiled = await commissionNewModel.aggregate([
-    //         {
-    //             $match:{
-    //                 userName : {$in:userNameArray},
-    //                 commissionStatus : 'Claimed',
-    //                 parrentArrayThatClaid : {$nin:[childUser.id]}
-    //             }
-    //         },
-    //         {
-    //             $group: {
-    //               _id: null, 
-    //               totalCommission: { $sum: "$commission" } 
-    //             }
-    //         }
-    //     ])
-    //     console.log(settleCommissionforChiled)
-    //     let realCommissionForChild = 0
-    //     if(settleCommissionforChiled.length > 0){
-    //         realCommissionForChild = settleCommissionforChiled[0].totalCommission
-    //     }
-    //     console.log(realCommissionForChild, "realCommissionForChild")
-    //     let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
-    //     console.log(debitAmountForP)
-    //     lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
-    //     lifeTimePl = lifeTimePl.toDecimalPlaces(4);
-    // }else{
-    //     let debitAmountForP = -childUser.pointsWL + realCommission
-    //     lifeTimePl = new Decimal(parentUser.myShare).times(debitAmountForP).dividedBy(100)
-    //     lifeTimePl = lifeTimePl.toDecimalPlaces(4);
-    // }
+    if(parentUser.availableBalance < req.body.amount){
+        return next(new AppError("Insufficient Credit Limit !"))
+    }
+    let settleCommission = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId : childUser.id,
+                commissionStatus : 'Claimed',
+                settleStatus : false
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+        }
+    ])
+    console.log(settleCommission)
+    let realCommission = 0
+    if(settleCommission.length > 0){
+        realCommission = settleCommission[0].totalCommission
+    }
+    let lifeTimePl = 0
+    console.log(childUser, "childUserchildUser")
+    if(childUser.roleName !== 'user'){
+        let userNameArray = await User.distinct('userName', {parentUsers:childUser.id})
+        console.log(userNameArray)
+        let settleCommissionforChiled = await commissionNewModel.aggregate([
+            {
+                $match:{
+                    userName : {$in:userNameArray},
+                    commissionStatus : 'Claimed',
+                    parrentArrayThatClaid : {$nin:[childUser.id]}
+                }
+            },
+            {
+                $group: {
+                  _id: null, 
+                  totalCommission: { $sum: "$commission" } 
+                }
+            }
+        ])
+        console.log(settleCommissionforChiled)
+        let realCommissionForChild = 0
+        if(settleCommissionforChiled.length > 0){
+            realCommissionForChild = settleCommissionforChiled[0].totalCommission
+        }
+        console.log(realCommissionForChild, "realCommissionForChild")
+        let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        console.log(debitAmountForP)
+        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
+    }else{
+        let debitAmountForP = -childUser.pointsWL + realCommission
+        lifeTimePl = new Decimal(parentUser.myShare).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
+    }
     
-    // console.log(realCommission, "settleCommissionsettleCommissionsettleCommissionsettleCommission")
-    // console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
-    // lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
-    // console.log(lifeTimePl, "lifeTimePlFINAL")
+    console.log(realCommission, "settleCommissionsettleCommissionsettleCommissionsettleCommission")
+    console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
+    lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
+    console.log(lifeTimePl, "lifeTimePlFINAL")
     // await commissionNewModel.updateMany({userId : childUser.id,commissionStatus : 'Claimed',settleStatus : false}, {settleStatus:true}) 
     // let UserArray = await User.distinct('userName', {parentUsers:childUser.id})
     // await commissionNewModel.updateMany({userName : {$in:UserArray}, commissionStatus : 'Claimed', parrentArrayThatClaid : {$nin:[childUser.id]}}, {$push:{parrentArrayThatClaid:childUser.id}})
