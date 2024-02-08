@@ -8479,7 +8479,7 @@ socket.on('connect', () => {
                       $(this).parent().find(".match-status-message").text('Result Declared')
                     }else if(check){
                         parentElement.classList.add("suspended");
-                          $(this).parent().find(".match-status-message").text("Suspended")
+                          $(this).parent().find(".match-status-message").text("123")
                     }else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0" ){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
