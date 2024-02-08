@@ -57,6 +57,9 @@ const accountStatementByUser = mongoose.Schema({
     marketId:{
         type:String
     },
+    cancelMarketId:{
+        type:String
+    },
     gameId:{
         type:String
     }
