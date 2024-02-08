@@ -56683,16 +56683,17 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           formDataObj.id = id;
           // console.log(formDataObj)
           if (!(formDataObj.amount == 0)) {
-            _context2.next = 9;
+            _context2.next = 10;
             break;
           }
-          _context2.next = 12;
+          alert('please enter amount greater than 0');
+          _context2.next = 13;
           break;
-        case 9:
+        case 10:
           formDataObj.sessiontoken = sessionTokenADMIN;
-          _context2.next = 12;
+          _context2.next = 13;
           return (0, _debitCredit.debitCredit)(formDataObj);
-        case 12:
+        case 13:
         case "end":
           return _context2.stop();
       }
