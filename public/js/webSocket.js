@@ -6786,6 +6786,7 @@ socket.on('connect', () => {
             let bets = data.betResult;
             let html = '';
             let html2 = '';
+            console.log(data.events, "data.eventsdata.eventsdata.events")
             if(data.events){
                 html2 += `<option value="All" selected> Select Event </option>`
                 for(let i = 0;i<data.events.length;i++){
