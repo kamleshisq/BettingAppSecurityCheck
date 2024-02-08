@@ -8484,8 +8484,8 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
-                      parentElement.classList.add("suspended");
-                          $(this).parent().find(".match-status-message").text("Suspended")
+                    //   parentElement.classList.add("suspended");
+                    //       $(this).parent().find(".match-status-message").text("Suspended")
                     }else if ((macLimitStatus != undefined && macLimitStatus < section.lay)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
