@@ -25,7 +25,7 @@ async function voidbetOPENFORTIMELYVOIDE(data){
             }
         }
         filterData.marketId = data.id
-        console.log(filterData, "filterDATA")
+        console.log(data.filterData, "filterDATA")
         filterData.status = {$in: ['OPEN', 'MAP']}
         let operatoruserName = data.LOGINDATA.LOGINUSER.userName
         if(data.filterData.userName !== data.LOGINDATA.LOGINUSER.userName){
