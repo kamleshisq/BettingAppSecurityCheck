@@ -6902,7 +6902,7 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }
                                                   },
-                                                  else: {value: "$$value.value", flag: false}
+                                                  else: {value: "$$value.value", flag: true}
                                                 }
                                               }
                                             }
