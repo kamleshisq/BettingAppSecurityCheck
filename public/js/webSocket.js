@@ -8459,14 +8459,14 @@ socket.on('connect', () => {
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let check2 = data.marketArray.some(item => item == marketId)
                 if(this.id == `${section.secId}2` ){
-                    // if(!data.status){
-                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                    //     <i class="fa-solid fa-lock"></i>
-                    //   </span>`
-                    //   this.removeAttribute("data-bs-toggle");
-                    //     parentElement.classList.add("suspended");
-                    //     $(this).parent().find(".match-status-message").text("Suspended")
-                    // }else 
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                        parentElement.classList.add("suspended");
+                        $(this).parent().find(".match-status-message").text("123")
+                    }else 
                     if(check2){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
