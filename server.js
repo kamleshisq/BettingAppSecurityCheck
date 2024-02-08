@@ -6858,11 +6858,12 @@ io.on('connection', (socket) => {
                                     Stake: "$$selection.Stake",
                                     winAmount :"$$selection.winAmount",
                                     lossAmount : "$$selection.lossAmount",
+									 initialValue: { value: 0, flag: true },
                                     winAmount2: {
                                         $reduce: {
                                             // input : "$parentArray",
                                           input: { $reverseArray: '$parentArray' },
-                                          initialValue: { value: 0, flag: true },
+                                         
                                           in: {											 
                                             $cond: {
                                               if: {
@@ -6882,15 +6883,15 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }                                                   
                                                   },
-                                                  else: {value: "$$value.flag", flag : false}
+                                                  else: {value: "$$selection..value", flag : false}
                                                 }
                                               },
                                               else: { // ELSE HERE
                                                 $cond: {
                                                   if: {
                                                     $and: [
-                                                      {$eq: ["$$value.value", 0] },
-                                                      {$eq: ['$$value.flag', false] }
+                                                      { $eq: ["$$selection..value", 0] },
+                                                      { $eq: ['$$selection..flag', false] }
                                                     ]
                                                   },                                              
                                                   then: {                                                    
@@ -6902,7 +6903,7 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }
                                                   },
-                                                  else: {value: "$$value.flag"}
+                                                  else: {value: "$$selection..value"}
                                                 }
                                               }
                                             }
