@@ -1182,13 +1182,13 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     //         $limit:(20 - finalresult.length)
                     //      }
                     //  ])
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                         marketidarray.push(bet[0]._id.marketId)
-                         finalresult = finalresult.concat(bet)
-                         if(finalresult.length >= 20){
-                             break
-                         }
-                     }
+                    //  if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                    //      marketidarray.push(bet[0]._id.marketId)
+                    //      finalresult = finalresult.concat(bet)
+                    //      if(finalresult.length >= 20){
+                    //          break
+                    //      }
+                    //  }
                  }else if (userAcc[i].cancelMarketId){
                     if(cancelMarketIdArray.includes(userAcc[i].cancelMarketId)){
                         continue;
