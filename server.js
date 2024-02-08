@@ -1834,6 +1834,8 @@ io.on('connection', (socket) => {
             delete data.filterData.marketName
         }
 
+        console.log(data.filterData.status, "data.filterData.statusdata.filterData.statusdata.filterData.status")
+
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
