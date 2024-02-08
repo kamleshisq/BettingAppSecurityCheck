@@ -6689,7 +6689,7 @@ socket.on('connect', () => {
             // Test the timeString against the regex pattern
             return timeRegex.test(timeString);
           }
-        $('#Fdate,#Tdate,#Sport,#market,#Event').change(function(){
+        $('#Fdate,#Tdate,#Sport,#market,#Event,#marketStatus').change(function(){
             var changedElementId = $(this).attr('id');
             // console.log("working")
             let userName = $('.searchUser').val()
@@ -6734,8 +6734,10 @@ socket.on('connect', () => {
             if(changedElementId  === 'Sport'){
                 filterData.eventId = 'All'
                 filterData.marketName = "All"
+                $('#marketStatus').closest('.input-group').addClass('hide');
             }else if(changedElementId === 'Event'){
                 filterData.marketName = "All"
+                $('#marketStatus').closest('.input-group').removeClass('hide');
             }
             // console.log(data)
             socket.emit('voidBET',data)
