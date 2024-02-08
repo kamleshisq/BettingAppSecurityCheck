@@ -1083,6 +1083,14 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         var day = date.getDate().toString().padStart(2, '0');
         return year + "-" + month + "-" + day;
     }
+    finalresult = accountStatement.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser._id,
+                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+            }
+        }
+    ])
     // async function getmarketwiseaccdata (limit,skip){
     //      let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
     //      let c = 0
