@@ -1210,7 +1210,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     //     j++
     // }
     console.log(finalresult,'finalresul')
-
+    skipvalue = 0
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
         data:finalresult,
