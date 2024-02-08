@@ -6727,11 +6727,6 @@ socket.on('connect', () => {
                     delete filterData[ele]
                 }
             })
-            data.filterData = filterData
-            data.LOGINDATA = LOGINDATA
-            data.page = 0;
-            data.type = type
-
             if(!$('#marketStatus').closest('.input-group').hasClass('hide')){
                let status = $("#marketStatus").val()
                if(status !== "All"){
@@ -6747,7 +6742,12 @@ socket.on('connect', () => {
                 filterData.marketName = "All"
                 $('#marketStatus').closest('.input-group').removeClass('hide');
             }
-            // console.log(data)
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            data.page = 0;
+            data.type = type
+
+            console.log(data)
             socket.emit('voidBET',data)
 
         })
