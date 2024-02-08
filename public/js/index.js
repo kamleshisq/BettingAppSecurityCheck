@@ -335,7 +335,7 @@ $(document).on('submit','.acc-form',async function(e) {
     formDataObj.id = id ;
     // console.log(formDataObj)
     if(formDataObj.amount == 0){
-        alert('please enter amount greater than 0')
+        // alert('please enter amount greater than 0')
     }else{
         formDataObj.sessiontoken = sessionTokenADMIN
         await debitCredit(formDataObj)
