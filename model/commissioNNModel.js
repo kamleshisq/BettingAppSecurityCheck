@@ -83,6 +83,10 @@ const commissionNew = mongoose.Schema({
             type: String
         }],
         default: []
+    },
+    setleCOMMISSIONMY:{
+        type:Boolean,
+        default:true
     }
 })
 

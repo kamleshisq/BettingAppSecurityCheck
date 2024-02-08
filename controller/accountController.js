@@ -254,7 +254,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     }
    
     lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
-    console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
+    // console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
     await commissionNewModel.updateMany({userId : childUser.id,commissionStatus : 'Claimed',settleStatus : false}, {settleStatus:true}) 
     let UserArray = await User.distinct('userName', {parentUsers:childUser.id})
     await commissionNewModel.updateMany({userName : {$in:UserArray}, commissionStatus : 'Claimed', parrentArrayThatClaid : {$nin:[childUser.id]}}, {$push:{parrentArrayThatClaid:childUser.id}})
