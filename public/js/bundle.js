@@ -56682,32 +56682,17 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           formDataObj = Object.fromEntries(fd.entries());
           formDataObj.id = id;
           // console.log(formDataObj)
-          _context2.next = 8;
-          return (0, _debitCredit.debitCredit)(formDataObj);
-        case 8:
-          if (formDataObj.amount == 0) {
-            // alert('please enter amount greater than 0')
-            formDataObj.sessiontoken = sessionTokenADMIN;
-          } else {
-            // var trElements = document.querySelectorAll('tr.trtable');
-            // console.log(trElements)
-            // console.log(user)
-            // trElements.forEach(function(trElement) {
-            //     if (trElement.getAttribute('data-id') === user.id) {
-            //     }
-            // })    
+          if (!(formDataObj.amount == 0)) {
+            _context2.next = 9;
+            break;
           }
-          // const url = window.location.href
-          // const id = url.split("=")[1]
-          // formDataObj.id = id
-          // console.log(formDataObj)
-          // let rowId = $('.rowId').attr('data-rowid')
-
-          // console.log(rowId)
-          // let currentUser = $('#currentUserDetails').data('currentuser')
-          // updateRow(user,rowId,currentUser)
-          // console.log(user)
+          _context2.next = 12;
+          break;
         case 9:
+          formDataObj.sessiontoken = sessionTokenADMIN;
+          _context2.next = 12;
+          return (0, _debitCredit.debitCredit)(formDataObj);
+        case 12:
         case "end":
           return _context2.stop();
       }
@@ -56731,9 +56716,8 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           formDataObj.id = id;
           if (formDataObj.amount == 0) {
             // alert('please enter amount greater than 0')
-          } else {
-            formDataObj.sessiontoken = sessionTokenADMIN;
-          }
+          } else {}
+          formDataObj.sessiontoken = sessionTokenADMIN;
           (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
           // console.log(formDataObj)
           // const url = window.location.href
@@ -56754,7 +56738,7 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 8:
+        case 9:
         case "end":
           return _context3.stop();
       }

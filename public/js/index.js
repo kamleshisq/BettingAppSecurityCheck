@@ -334,11 +334,11 @@ $(document).on('submit','.acc-form',async function(e) {
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
     // console.log(formDataObj)
-    formDataObj.sessiontoken = sessionTokenADMIN
-    await debitCredit(formDataObj) 
     if(formDataObj.amount == 0){
         // alert('please enter amount greater than 0')
     }else{
+        formDataObj.sessiontoken = sessionTokenADMIN
+        await debitCredit(formDataObj) 
         // var trElements = document.querySelectorAll('tr.trtable');
         // console.log(trElements)
         // console.log(user)
@@ -369,8 +369,8 @@ $(document).on('submit','.Settlement-form',async function(e) {
     if(formDataObj.amount == 0){
         // alert('please enter amount greater than 0')
     }else{
-        formDataObj.sessiontoken = sessionTokenADMIN
     }
+    formDataObj.sessiontoken = sessionTokenADMIN
     creditDebitSettle(formDataObj)
     // console.log(formDataObj)
     // const url = window.location.href
