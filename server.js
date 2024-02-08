@@ -1834,7 +1834,7 @@ io.on('connection', (socket) => {
             delete data.filterData.marketName
         }
 
-        console.log(data.filterData.status, "data.filterData.statusdata.filterData.statusdata.filterData.status")
+        // console.log(data.filterData.status, "data.filterData.statusdata.filterData.statusdata.filterData.status")
         if(data.filterData.status == 'Settle'){
             data.filterData.status = {$ne:'OPEN'}
         }
