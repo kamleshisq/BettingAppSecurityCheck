@@ -1921,6 +1921,21 @@ io.on('connection', (socket) => {
                 }
             ])
         }
+        let marketsName 
+        if(data.filterData.eventId){
+            marketsName =  await Bet.aggregate([
+                {
+                    $match: data.filterData
+                },
+                {
+                    $group:{
+                        _id:'$marketName',
+                        eventId:{$first:'$marketName'}
+                    }
+                }
+            ])
+        }
+        console.log(marketsName, "marketsNamemarketsName")
         // let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
         let betResult = await Bet.aggregate([
             {
