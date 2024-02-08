@@ -320,7 +320,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     let lifeTimePl = 0
     console.log(childUser, "childUserchildUser")
     if(childUser.roleName !== 'user'){
-        let userNameArray = await User.distinct('userName', {parent_id:childUser.id})
+        let userNameArray = await User.distinct('userName', {parentUsers:childUser.id})
         console.log(userNameArray)
         let settleCommissionforChiled = await commissionNewModel.aggregate([
             {
