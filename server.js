@@ -6885,7 +6885,7 @@ io.on('connection', (socket) => {
                                                   else: {value: "$$value.value", flag : false}
                                                 }
                                               },
-                                              else: { // ELSE HERE
+                                              else: {/* // ELSE HERE
                                                 $cond: {
                                                   if: {
                                                     $and: [
@@ -6904,7 +6904,7 @@ io.on('connection', (socket) => {
                                                   },
                                                   else: {value: "$$value.value"}
                                                 }
-                                              }
+                                              */}
                                             }
                                           }
                                         }
