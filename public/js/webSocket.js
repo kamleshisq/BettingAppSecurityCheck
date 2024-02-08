@@ -6795,6 +6795,16 @@ socket.on('connect', () => {
                 }
                 $('#Event').html(html2)
             }
+            letMarketNameHtml = ''
+            if(data.marketsName){
+                letMarketNameHtml += `<option value="All" selected="">All</option>`
+                for(let i = 0; i < data.marketsName.length; i++){
+                    if(data.marketsName[i].marketName){
+                        letMarketNameHtml += `<option value="${data.marketsName[i].marketName}">${data.marketsName[i].marketName}</option>`
+                    }
+                }
+                $('#market').html(letMarketNameHtml)
+            }
             for(let i = 0; i < bets.length; i++){
                 // console.log(bets[i])
                 if(bets[i]._id){
