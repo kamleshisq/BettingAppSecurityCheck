@@ -327,7 +327,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
                 $match:{
                     userName : {$in:userNameArray},
                     commissionStatus : 'Claimed',
-                    settleStatus : true
+                    parrentArrayThatClaid : {$nin:[childUser.id]}
                 }
             },
             {
