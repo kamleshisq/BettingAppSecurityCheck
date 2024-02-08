@@ -6749,7 +6749,7 @@ socket.on('connect', () => {
             data.page = 0;
             data.type = type
 
-            console.log(data)
+            // console.log(data)
             socket.emit('voidBET',data)
 
         })
