@@ -279,6 +279,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer},uplinePL:0,pointsWL:0},{
         new:true
     })
+    await commissionNewModel.updateMany({userId:childUser.id,setleCOMMISSIONMY:true}, {setleCOMMISSIONMY:false})
     
     let childAccStatement = {}
     let ParentAccStatement = {}
@@ -427,6 +428,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         totlaCommissionUSer = commissionNewModel[0].totalCommission
     }
     const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
+    await commissionNewModel.updateMany({userId:childUser.id,setleCOMMISSIONMY:true}, {setleCOMMISSIONMY:false})
+
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
