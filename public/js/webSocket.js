@@ -6789,7 +6789,17 @@ socket.on('connect', () => {
             if(data.events){
                 if(data.events.length === 1){
                     // html2 += `<option value="${data.events[0].eventId}">${data.events[0]._id}</option>`
-                    $('#Event').val(data.events[0].eventId)
+                    if ( $('#Event').find('option[value="' + data.events[0].eventId + '"]').length) {
+                        $('#Event').val(data.events[0].eventId)
+                    }else{
+                        html2 += `<option value="All" selected> Select Event </option>`
+                    for(let i = 0;i<data.events.length;i++){
+                        if(data.events[i]._id){
+                            html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                        }
+                    }
+                    $('#Event').html(html2)
+                    }
                 }else{
                     html2 += `<option value="All" selected> Select Event </option>`
                     for(let i = 0;i<data.events.length;i++){
@@ -6806,7 +6816,17 @@ socket.on('connect', () => {
                 if(data.marketsName.length === 1){
 
                     // letMarketNameHtml += `<option value="${data.marketsName[0].marketName}">${data.marketsName[0].marketName}</option>`
-                    $('#market').val(data.marketsName[0].marketName);
+                    if ( $('#market').find('option[value="' + data.marketsName[0].marketName + '"]').length) {
+                        $('#market').val(data.marketsName[0].marketName);
+                    }else{
+                        letMarketNameHtml += `<option value="All" selected="">All</option>`
+                    for(let i = 0; i < data.marketsName.length; i++){
+                        if(data.marketsName[i].marketName){
+                            letMarketNameHtml += `<option value="${data.marketsName[i].marketName}">${data.marketsName[i].marketName}</option>`
+                        }
+                    }
+                    $('#market').html(letMarketNameHtml)
+                    }
                 }else{
                     letMarketNameHtml += `<option value="All" selected="">All</option>`
                     for(let i = 0; i < data.marketsName.length; i++){
