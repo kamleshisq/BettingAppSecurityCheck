@@ -321,6 +321,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     console.log(childUser, "childUserchildUser")
     if(childUser.roleName !== 'user'){
         let userNameArray = await User.distinct('userName', {parent_id:childUser.id})
+        console.log(userNameArray)
         let settleCommissionforChiled = await commissionNewModel.aggregate([
             {
                 $match:{
@@ -336,6 +337,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
                 }
             }
         ])
+        console.log(settleCommissionforChiled)
         let realCommissionForChild = 0
         if(settleCommissionforChiled.length > 0){
             realCommissionForChild = settleCommissionforChiled[0].totalCommission
