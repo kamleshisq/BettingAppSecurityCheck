@@ -357,6 +357,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
     lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
     console.log(lifeTimePl, "lifeTimePlFINAL")
+    await commissionNewModel.updateMany({userId : childUser.id,commissionStatus : 'Claimed',settleStatus : false}, {settleStatus:true}) 
     // const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0})
     // await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}});
     // // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
