@@ -6802,10 +6802,15 @@ socket.on('connect', () => {
             letMarketNameHtml = ''
             console.log(data.marketsName, "data.marketsNamedata.marketsName")
             if(data.marketsName){
-                letMarketNameHtml += `<option value="All" selected="">All</option>`
-                for(let i = 0; i < data.marketsName.length; i++){
-                    if(data.marketsName[i].marketName){
-                        letMarketNameHtml += `<option value="${data.marketsName[i].marketName}">${data.marketsName[i].marketName}</option>`
+                if(data.marketsName.length === 1){
+                    letMarketNameHtml += `<option value="${data.marketsName[0].marketName}">${data.marketsName[0].marketName}</option>`
+
+                }else{
+                    letMarketNameHtml += `<option value="All" selected="">All</option>`
+                    for(let i = 0; i < data.marketsName.length; i++){
+                        if(data.marketsName[i].marketName){
+                            letMarketNameHtml += `<option value="${data.marketsName[i].marketName}">${data.marketsName[i].marketName}</option>`
+                        }
                     }
                 }
                 $('#market').html(letMarketNameHtml)
