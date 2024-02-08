@@ -313,6 +313,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
             }
         }
     ])
+    console.log(settleCommission)
     let realCommission = 0
     if(settleCommission.length > 0){
         realCommission = settleCommission[0].totalCommission
