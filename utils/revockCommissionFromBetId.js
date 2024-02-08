@@ -12,9 +12,9 @@ async function revockCommissionFromBetId( data ){
         if(allCommissionFromThatBEt.length > 0){
             for(let i = 0; i < allCommissionFromThatBEt.length; i++){
                 if(allCommissionFromThatBEt[i].commissionStatus != 'Unclaimed' &&  allCommissionFromThatBEt[i].commissionStatus != 'cancel'){
-                    let user = await User.findByIdAndUpdate(allCommissionFromThatBEt[i].userId, {$inc:{availableBalance: -allCommissionFromThatBEt[i].commission}})
+                    let user = await User.findByIdAndUpdate(allCommissionFromThatBEt[i].userId, {$inc:{availableBalance: -allCommissionFromThatBEt[i].commission, uplinePL:-allCommissionFromThatBEt[i].commission}})
                     if(user){
-                        let parenet = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance: allCommissionFromThatBEt[i].commission, downlineBalance: -allCommissionFromThatBEt[i].commission}})
+                        let parenet = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance: allCommissionFromThatBEt[i].commission, downlineBalance: -allCommissionFromThatBEt[i].commission, myPL:allCommissionFromThatBEt[i].commission}})
                         let desc1 = `Revoke Commisiion for market ${allCommissionFromThatBEt[i].marketName}/${allCommissionFromThatBEt[i].eventName}, ${user.userName}/${parenet.userName}`
                         let desc2 = `Revoke Commisiion of chiled user ${user.userName} for market ${allCommissionFromThatBEt[i].marketName}/${allCommissionFromThatBEt[i].eventName}, ${user.userName}/${parenet.userName}`
                         let childdata = {
