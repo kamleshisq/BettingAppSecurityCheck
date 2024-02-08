@@ -58,7 +58,7 @@ async function voidBET(data){
                 let debitCreditAmount = allBetWithMarketId[bets].returns
                 let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -debitCreditAmount, myPL: -debitCreditAmount, uplinePL: debitCreditAmount, pointsWL:-debitCreditAmount}})
                 let description = `Settled Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
-                await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:operatoruserName})
+                await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL",settleDate:Date.now(), returns:0, remark:data.data.remark, calcelUser:operatoruserName})
                 let userAcc = {
                     "user_id":user._id,
                     "description": description,
@@ -109,7 +109,7 @@ async function voidBET(data){
                 let debitCreditAmount = -(allBetWithMarketId[bets].returns)
                 let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, uplinePL: -debitCreditAmount, pointsWL:debitCreditAmount}})
                 let description = `Settled Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
-                await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:operatoruserName})
+                await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", settleDate:Date.now(),returns:0, remark:data.data.remark, calcelUser:operatoruserName})
                 let userAcc = {
                     "user_id":user._id,
                     "description": description,
