@@ -25,6 +25,7 @@ async function voidbetOPENFORTIMELYVOIDE(data){
             }
         }
         filterData.marketId = data.id
+        console.log(filterData, "filterDATA")
         filterData.status = {$in: ['OPEN', 'MAP']}
         let operatoruserName = data.LOGINDATA.LOGINUSER.userName
         if(data.filterData.userName !== data.LOGINDATA.LOGINUSER.userName){
@@ -40,7 +41,7 @@ async function voidbetOPENFORTIMELYVOIDE(data){
         }
 
         
-        console.log(filterData, "filterDatafilterDatafilterData")
+        // console.log(filterData, "filterDatafilterDatafilterData")
         let bets = await Bet.find(filterData)
         console.log(bets)
         // let checkNotification = await marketnotificationId.findOne({marketId : bets[0].marketId})
