@@ -80,6 +80,7 @@ const { Socket } = require('engine.io');
 const footerInfoModel = require('./model/footerInfoModel');
 const socialinfomodel = require('./model/socialMediaLinks');
 const findvisible = require('./utils/findvisible');
+const revockCommissionFromBetId = require('./utils/revockCommissionFromBetId');
 // const checkLimit = require('./utils/checkOddsLimit');
 
 // const { date } = require('joi');
@@ -2467,6 +2468,7 @@ io.on('connection', (socket) => {
                     uplinePl = parseFloat(uplinePl) + parseFloat(parentUser2Amount)
                 }
                     await AccModel.create(userAcc);
+                    await revockCommissionFromBetId(data.id)
                 }else{
                     let debitCreditAmount = -(bet.returns)
                     let user = await User.findByIdAndUpdate(bet.userId, {$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, uplinePL: -debitCreditAmount, pointsWL:debitCreditAmount}})
@@ -2518,6 +2520,8 @@ io.on('connection', (socket) => {
                     uplinePl = parseFloat(uplinePl) - parseFloat(parentUser2Amount)
                 }
                         await AccModel.create(userAcc);
+                    await revockCommissionFromBetId(data.id)
+
                 }
                 socket.emit('voidBet', {bet, status:"success"})
             }else{

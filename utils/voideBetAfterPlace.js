@@ -6,10 +6,10 @@ const InprogressModel = require('../model/InprogressModel');
 const Decimal = require('decimal.js');
 const commissionNewModel = require('../model/commissioNNModel');
 const revokeCommission = require('./commissionRevocke');
+const revockCommissionFromBetId = require('./revockCommissionFromBetId');
 
 async function voidBET(data){
 //  console.log(data, 444)  
-    revokeCommission(data)
     let allBetWithMarketId = await Bet.find({marketId:data.id})
     await commissionNewModel.updateMany({marketId:data.id,commissionStatus : 'Unclaimed'}, {commissionStatus : 'cancel'})
     let inprogressData = await InprogressModel.findOne({marketId:data.id, progressType:'VoideBet'})
@@ -162,6 +162,8 @@ async function voidBET(data){
             if((checkDelete.settledBet + 1) == checkDelete.length){
                 await InprogressModel.findOneAndDelete({marketId : allBetWithMarketId[bets].marketId, progressType:'VoideBet'})
             }
+
+            await revockCommissionFromBetId(allBetWithMarketId[bets])
         }
         return 'Process Start'
     }catch(err){
