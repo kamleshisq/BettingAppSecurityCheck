@@ -6843,6 +6843,9 @@ socket.on('connect', () => {
                     }
                     $('#market').html(letMarketNameHtml)
                 }
+            }else{
+                letMarketNameHtml += `<option value="All" selected="">All</option>`
+                $('#market').html(letMarketNameHtml)
             }
             for(let i = 0; i < bets.length; i++){
                 // console.log(bets[i])
