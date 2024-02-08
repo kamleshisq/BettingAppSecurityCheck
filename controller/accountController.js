@@ -330,7 +330,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }
     
-    console.log(settleCommission, "settleCommissionsettleCommissionsettleCommissionsettleCommission")
+    console.log(realCommission, "settleCommissionsettleCommissionsettleCommissionsettleCommission")
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
     lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
     console.log(lifeTimePl, "lifeTimePlFINAL")
