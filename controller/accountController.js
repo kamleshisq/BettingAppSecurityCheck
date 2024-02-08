@@ -206,7 +206,27 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
         lifeTimePl = new Decimal(parentUser.myShare).times(debitAmountForP).dividedBy(100)
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }
+    let settleCommission = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId : childUser.id,
+                commissionStatus : 'Claimed',
+                settleStatus : false
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+        }
+    ])
+    let realCommission = 0
+    if(settleCommission.length > 0){
+        realCommission = settleCommission[0].totalCommission
+    }
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
+    lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
     await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}})
     const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,pointsWL:0},{
         new:true
