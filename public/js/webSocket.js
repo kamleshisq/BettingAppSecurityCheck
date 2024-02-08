@@ -6731,6 +6731,8 @@ socket.on('connect', () => {
                let status = $("#marketStatus").val()
                if(status !== "All"){
                 filterData.status = status
+               }else{
+                delete filterData.status
                }
             }
 
