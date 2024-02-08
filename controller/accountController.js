@@ -320,7 +320,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL) * -1
-    // // console.log(req.body)
+    console.log(req.body)
     // // console.log(childUser)
     // if(childUser.role.role_level < parentUser.role.role_level){
     //     return next(new AppError("you do not have permission to perform this action", 404))
