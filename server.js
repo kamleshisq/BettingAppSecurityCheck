@@ -734,7 +734,7 @@ io.on('connection', (socket) => {
                 'accept': 'application/json' },
             }).then(res => res.json())
             .then(json =>{ 
-            // console.log(json)
+            console.log(json)
             socket.emit('Acc1', {json,page:data.page})
             // const data = json.userAcc
             // res.status(200).render('./userAccountStatement/useracount',{
