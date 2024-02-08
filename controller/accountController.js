@@ -340,6 +340,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         if(settleCommissionforChiled.length > 0){
             realCommissionForChild = settleCommissionforChiled[0].totalCommission
         }
+        console.log(realCommissionForChild, "realCommissionForChild")
         let debitAmountForP = -childUser.pointsWL + realCommission - realCommissionForChild
         console.log(debitAmountForP)
         lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
