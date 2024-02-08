@@ -194,18 +194,6 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
         return next(new AppError('withdrow amount must less than available balance',404))
     }
 
-
-    let lifeTimePl = 0
-    console.log(childUser, "childUserchildUser")
-    if(childUser.roleName !== 'user'){
-        let debitAmountForP = -childUser.pointsWL
-        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
-        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
-    }else{
-        let debitAmountForP = -childUser.pointsWL
-        lifeTimePl = new Decimal(parentUser.myShare).times(debitAmountForP).dividedBy(100)
-        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
-    }
     let settleCommission = await commissionNewModel.aggregate([
         {
             $match:{
@@ -221,12 +209,55 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
             }
         }
     ])
+    console.log(settleCommission)
     let realCommission = 0
     if(settleCommission.length > 0){
         realCommission = settleCommission[0].totalCommission
     }
+
+
+    let lifeTimePl = 0
+    console.log(childUser, "childUserchildUser")
+    if(childUser.roleName !== 'user'){
+        let userNameArray = await User.distinct('userName', {parentUsers:childUser.id})
+        console.log(userNameArray)
+        let settleCommissionforChiled = await commissionNewModel.aggregate([
+            {
+                $match:{
+                    userName : {$in:userNameArray},
+                    commissionStatus : 'Claimed',
+                    parrentArrayThatClaid : {$nin:[childUser.id]}
+                }
+            },
+            {
+                $group: {
+                  _id: null, 
+                  totalCommission: { $sum: "$commission" } 
+                }
+            }
+        ])
+        console.log(settleCommissionforChiled)
+        let realCommissionForChild = 0
+        if(settleCommissionforChiled.length > 0){
+            realCommissionForChild = settleCommissionforChiled[0].totalCommission
+        }
+        console.log(realCommissionForChild, "realCommissionForChild")
+        let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        console.log(debitAmountForP)
+        // let debitAmountForP = -childUser.pointsWL
+        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
+    }else{
+        let debitAmountForP = -childUser.pointsWL + realCommission
+        lifeTimePl = new Decimal(parentUser.myShare).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
+    }
+   
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
     lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
+    await commissionNewModel.updateMany({userId : childUser.id,commissionStatus : 'Claimed',settleStatus : false}, {settleStatus:true}) 
+    let UserArray = await User.distinct('userName', {parentUsers:childUser.id})
+    await commissionNewModel.updateMany({userName : {$in:UserArray}, commissionStatus : 'Claimed', parrentArrayThatClaid : {$nin:[childUser.id]}}, {$push:{parrentArrayThatClaid:childUser.id}})
     await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}})
     const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,pointsWL:0},{
         new:true
