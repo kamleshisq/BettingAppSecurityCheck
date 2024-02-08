@@ -324,7 +324,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         let settleCommissionforChiled = await commissionNewModel.aggregate([
             {
                 $match:{
-                    userId : {$in:userNameArray},
+                    userName : {$in:userNameArray},
                     commissionStatus : 'Claimed',
                     settleStatus : true
                 }
