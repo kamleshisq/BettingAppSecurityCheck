@@ -42,42 +42,43 @@ async function voidbetOPENFORTIMELYVOIDE(data){
         
         console.log(filterData, "filterDatafilterDatafilterData")
         let bets = await Bet.find(filterData)
-        let checkNotification = await marketnotificationId.findOne({marketId : bets[0].marketId})
-        if(checkNotification){
-            await marketnotificationId.findOneAndUpdate({marketId : bets[0].marketId}, {message : data.FormData1.Remark} )
-        }else{
-            let timelyNotification = {
-                message : data.FormData1.Remark,
-                userName : operatoruserName,
-                marketId : bets[0].marketId
-            }
-            await marketnotificationId.create(timelyNotification)
-        }
-                    for(const bet in bets){
-                        let exposure = bets[bet].exposure
+        console.log(bets)
+        // let checkNotification = await marketnotificationId.findOne({marketId : bets[0].marketId})
+        // if(checkNotification){
+        //     await marketnotificationId.findOneAndUpdate({marketId : bets[0].marketId}, {message : data.FormData1.Remark} )
+        // }else{
+        //     let timelyNotification = {
+        //         message : data.FormData1.Remark,
+        //         userName : operatoruserName,
+        //         marketId : bets[0].marketId
+        //     }
+        //     await marketnotificationId.create(timelyNotification)
+        // }
+        //             for(const bet in bets){
+        //                 let exposure = bets[bet].exposure
 
-                        await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", returns:0 ,remark:data.FormData1.Remark, calcelUser:operatoruserName});
-                        let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{exposure:-exposure}})
-                        let description = `Unsettle Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
-                        // let description2 = `Bet for ${bets[bet].match}/stake = ${creditDebitamount}/user = ${user.userName}/CANCEL `
-                        let userAcc = {
-                            "user_id":user._id,
-                            "description": description,
-                            "creditDebitamount" : 0,
-                            "balance" : user.availableBalance + 0,
-                            "date" : Date.now(),
-                            "userName" : user.userName,
-                            "role_type" : user.role_type,
-                            "Remark":data.FormData1.Remark,
-                            "stake": bets[bet].Stake,
-                            "transactionId":`${bets[bet].transactionId}`
-                        }
-                    }
-                    // socket.emit('VoidBetIn', {betdata:bets[0], count:bets.length ,status:"success"})
-                    let resultData = {
-                        betdata:bets[0], count:bets.length - 1 ,status:"success"
-                    }
-                    return resultData
+        //                 await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", returns:0 ,remark:data.FormData1.Remark, calcelUser:operatoruserName});
+        //                 let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{exposure:-exposure}})
+        //                 let description = `Unsettle Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
+        //                 // let description2 = `Bet for ${bets[bet].match}/stake = ${creditDebitamount}/user = ${user.userName}/CANCEL `
+        //                 let userAcc = {
+        //                     "user_id":user._id,
+        //                     "description": description,
+        //                     "creditDebitamount" : 0,
+        //                     "balance" : user.availableBalance + 0,
+        //                     "date" : Date.now(),
+        //                     "userName" : user.userName,
+        //                     "role_type" : user.role_type,
+        //                     "Remark":data.FormData1.Remark,
+        //                     "stake": bets[bet].Stake,
+        //                     "transactionId":`${bets[bet].transactionId}`
+        //                 }
+        //             }
+        //             // socket.emit('VoidBetIn', {betdata:bets[0], count:bets.length ,status:"success"})
+        //             let resultData = {
+        //                 betdata:bets[0], count:bets.length - 1 ,status:"success"
+        //             }
+        //             return resultData
     }catch(err){
         console.log(err)
         let resultData = {
