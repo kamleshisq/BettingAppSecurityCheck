@@ -56718,8 +56718,8 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
             // alert('please enter amount greater than 0')
           } else {
             formDataObj.sessiontoken = sessionTokenADMIN;
-            (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
           }
+          (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
           // console.log(formDataObj)
           // const url = window.location.href
           // const id = url.split("=")[1]
@@ -56739,7 +56739,7 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 7:
+        case 8:
         case "end":
           return _context3.stop();
       }
