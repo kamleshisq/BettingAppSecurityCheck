@@ -6882,15 +6882,15 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }                                                   
                                                   },
-                                                  else: {value: "$$value.flag", flag : false}
+                                                  else: {value: "$$value.value", flag : false}
                                                 }
                                               },
                                               else: { // ELSE HERE
                                                 $cond: {
                                                   if: {
                                                     $and: [
-                                                      {$eq: ["$$value.value", 0] },
-                                                      {$eq: ['$$value.flag', false] }
+                                                      { $eq: ["$$value.value", 0] },
+                                                      { $eq: ['$$value.flag', false] }
                                                     ]
                                                   },                                              
                                                   then: {                                                    
@@ -6902,7 +6902,7 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }
                                                   },
-                                                  else: {value: "$$value.flag"}
+                                                  else: {value: "$$value.value"}
                                                 }
                                               }
                                             }
@@ -7314,7 +7314,7 @@ io.on('connection', (socket) => {
             // console.log(Bets[0].selections2)
             console.log(Bets)
                 for(let i =0; i < Bets.length; i++){
-                    console.log(Bets[i].selections2[0].winAmount2)
+                    console.log(Bets[i].selections2)
                 }
             // let runners = await runnerDataModel.find({eventId:data.eventId})
             // if(Bets.length > 0){
