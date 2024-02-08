@@ -6818,7 +6818,7 @@ socket.on('connect', () => {
                     }
                     $('#Event').html(html2)
                     }
-                }else{
+                }else if(data.events.length === 0) {
                     html2 += `<option value="All" selected> Select Event </option>`
                     for(let i = 0;i<data.events.length;i++){
                         if(data.events[i]._id){
