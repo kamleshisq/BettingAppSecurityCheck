@@ -6690,6 +6690,7 @@ socket.on('connect', () => {
             return timeRegex.test(timeString);
           }
         $('#Fdate,#Tdate,#Sport,#market,#Event').change(function(){
+            var changedElementId = $(this).attr('id');
             // console.log("working")
             let userName = $('.searchUser').val()
             sport = $("#Sport").val()
@@ -6730,6 +6731,12 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             data.page = 0;
             data.type = type
+            if(changedElementId  === 'Sport'){
+                filterData.eventId = 'All'
+                filterData.marketName = "All"
+            }else if(changedElementId === 'Event'){
+                filterData.marketName = "All"
+            }
             // console.log(data)
             socket.emit('voidBET',data)
 
