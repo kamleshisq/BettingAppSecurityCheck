@@ -6731,6 +6731,14 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             data.page = 0;
             data.type = type
+
+            if(!$('#marketStatus').closest('.input-group').hasClass('hide')){
+               let status = $("#marketStatus").val()
+               if(status !== "All"){
+                filterData.status = status
+               }
+            }
+
             if(changedElementId  === 'Sport'){
                 filterData.eventId = 'All'
                 filterData.marketName = "All"
