@@ -1828,7 +1828,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('voidBET', async(data)=>{
-        data.filterData.status = 'OPEN'
+        // data.filterData.status = 'OPEN'
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
