@@ -6864,7 +6864,7 @@ io.on('connection', (socket) => {
                                           input: { $reverseArray: '$parentArray' },
                                           initialValue: { value: 0, flag: true },
                                           in: {
-											  value: '$parentArray',
+											  value: { $reverseArray: '$parentArray' },
 											  flag:data.LOGINDATA.LOGINUSER.roleName
 											  /*
 
