@@ -6788,7 +6788,8 @@ socket.on('connect', () => {
             let html2 = '';
             if(data.events){
                 if(data.events.length === 1){
-                    html2 += `<option value="${data.events[0].eventId}">${data.events[0]._id}</option>`
+                    // html2 += `<option value="${data.events[0].eventId}">${data.events[0]._id}</option>`
+                    $('#Event').val(data.events[0].eventId)
                 }else{
                     html2 += `<option value="All" selected> Select Event </option>`
                     for(let i = 0;i<data.events.length;i++){
@@ -6796,15 +6797,16 @@ socket.on('connect', () => {
                             html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
                         }
                     }
+                    $('#Event').html(html2)
                 }
-                $('#Event').html(html2)
             }
             letMarketNameHtml = ''
             console.log(data.marketsName, "data.marketsNamedata.marketsName")
             if(data.marketsName){
                 if(data.marketsName.length === 1){
-                    letMarketNameHtml += `<option value="${data.marketsName[0].marketName}">${data.marketsName[0].marketName}</option>`
 
+                    // letMarketNameHtml += `<option value="${data.marketsName[0].marketName}">${data.marketsName[0].marketName}</option>`
+                    $('#market').val(data.marketsName[0].marketName);
                 }else{
                     letMarketNameHtml += `<option value="All" selected="">All</option>`
                     for(let i = 0; i < data.marketsName.length; i++){
@@ -6812,8 +6814,8 @@ socket.on('connect', () => {
                             letMarketNameHtml += `<option value="${data.marketsName[i].marketName}">${data.marketsName[i].marketName}</option>`
                         }
                     }
+                    $('#market').html(letMarketNameHtml)
                 }
-                $('#market').html(letMarketNameHtml)
             }
             for(let i = 0; i < bets.length; i++){
                 // console.log(bets[i])
