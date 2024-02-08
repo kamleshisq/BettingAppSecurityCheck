@@ -6863,8 +6863,7 @@ io.on('connection', (socket) => {
                                             // input : "$parentArray",
                                           input: { $reverseArray: '$parentArray' },
                                           initialValue: { value: 0, flag: true },
-                                          in: {
-
+                                          in: {											 
                                             $cond: {
                                               if: {
                                                 $and: [
@@ -6883,19 +6882,17 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }                                                   
                                                   },
-                                                  else: {value: "$$value.value", flag : false}
+                                                  else: {value: "$$value.flag", flag : false}
                                                 }
                                               },
-                                              else: {
+                                              else: { // ELSE HERE
                                                 $cond: {
                                                   if: {
                                                     $and: [
-                                                      { $eq: ["$$value.value", 0] },
-                                                      { $eq: ['$$value.flag', false] }
+                                                      {$eq: ["$$value.value", 0] },
+                                                      {$eq: ['$$value.flag', false] }
                                                     ]
-                                                  },
-                                                //    {$and: {[ $eq: ["$$value.value", 0]}, { $eq: ['$$value.flag', true] }
-                                                //     },
+                                                  },                                              
                                                   then: {                                                    
                                                     value: 
                                                     {
@@ -6905,7 +6902,7 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }
                                                   },
-                                                  else: {value: "$$value.value"}
+                                                  else: {value: "$$value.flag"}
                                                 }
                                               }
                                             }
@@ -7317,7 +7314,7 @@ io.on('connection', (socket) => {
             // console.log(Bets[0].selections2)
             console.log(Bets)
                 for(let i =0; i < Bets.length; i++){
-                    console.log(Bets[i].selections2)
+                    console.log(Bets[i].selections2[0].winAmount2)
                 }
             // let runners = await runnerDataModel.find({eventId:data.eventId})
             // if(Bets.length > 0){
