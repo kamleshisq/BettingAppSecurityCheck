@@ -6878,7 +6878,7 @@ io.on('connection', (socket) => {
                                                     value: {
                                                       $multiply: [
                                                         '$$selection.winAmount',
-                                                        { $divide: [{ $subtract: [100, "$$this.uplineShare"] }, 100] }
+                                                        { $divide: [data.LOGINDATA.LOGINUSER.myShare, 100] }
                                                       ]
                                                     }                                                   
                                                   },
