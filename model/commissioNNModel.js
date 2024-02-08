@@ -77,6 +77,12 @@ const commissionNew = mongoose.Schema({
     settleStatus:{
         type:Boolean,
         default:false
+    },
+    parrentArrayThatClaid:{
+        type: [{
+            type: String
+        }],
+        default: []
     }
 })
 
