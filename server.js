@@ -6863,11 +6863,7 @@ io.on('connection', (socket) => {
                                             // input : "$parentArray",
                                           input: { $reverseArray: '$parentArray' },
                                           initialValue: { value: 0, flag: true },
-                                          in: {
-											  value:'$$this.parentUSerId',
-											  flag: loginId
-											  /*
-
+                                          in: {											 
                                             $cond: {
                                               if: {
                                                 $and: [
@@ -6886,19 +6882,17 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }                                                   
                                                   },
-                                                  else: {value: "$$value.value", flag : false}
+                                                  else: {value: "$$value.flag", flag : false}
                                                 }
                                               },
-                                              else: {
+                                              else: { // ELSE HERE
                                                 $cond: {
                                                   if: {
                                                     $and: [
-                                                      { $eq: ["$$value.value", 0] },
-                                                      { $eq: ['$$value.flag', false] }
+                                                      {$eq: ["$$value.value", 0] },
+                                                      {$eq: ['$$value.flag', false] }
                                                     ]
-                                                  },
-                                                //    {$and: {[ $eq: ["$$value.value", 0]}, { $eq: ['$$value.flag', true] }
-                                                //     },
+                                                  },                                              
                                                   then: {                                                    
                                                     value: 
                                                     {
@@ -6908,11 +6902,11 @@ io.on('connection', (socket) => {
                                                       ]
                                                     }
                                                   },
-                                                  else: {value: "$$value.value"}
+                                                  else: {value: "$$value.flag"}
                                                 }
                                               }
                                             }
-                                          */}
+                                          }
                                         }
                                       },
                                     lossAmount2:{
