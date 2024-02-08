@@ -6793,8 +6793,8 @@ socket.on('connect', () => {
                         html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
                     }
                 }
-                $('#Event').html(html2)
             }
+            $('#Event').html(html2)
             letMarketNameHtml = ''
             if(data.marketsName){
                 letMarketNameHtml += `<option value="All" selected="">All</option>`
@@ -6803,8 +6803,8 @@ socket.on('connect', () => {
                         letMarketNameHtml += `<option value="${data.marketsName[i].marketName}">${data.marketsName[i].marketName}</option>`
                     }
                 }
-                $('#market').html(letMarketNameHtml)
             }
+            $('#market').html(letMarketNameHtml)
             for(let i = 0; i < bets.length; i++){
                 // console.log(bets[i])
                 if(bets[i]._id){
