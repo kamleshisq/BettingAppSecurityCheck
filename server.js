@@ -1930,7 +1930,7 @@ io.on('connection', (socket) => {
                 {
                     $group:{
                         _id:'$marketName',
-                        eventId:{$first:'$marketName'}
+                        marketName:{$first:'$marketName'}
                     }
                 }
             ])
