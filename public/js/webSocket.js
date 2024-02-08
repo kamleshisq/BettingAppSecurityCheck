@@ -6803,7 +6803,7 @@ socket.on('connect', () => {
             let bets = data.betResult;
             let html = '';
             let html2 = '';
-            console.log(data.events, "data.eventsdata.eventsdata.events")
+            // console.log(data.events, "data.eventsdata.eventsdata.events")
             if(data.events){
                 if(data.events.length === 1){
                     // html2 += `<option value="${data.events[0].eventId}">${data.events[0]._id}</option>`
@@ -6829,7 +6829,7 @@ socket.on('connect', () => {
                 }
             }
             letMarketNameHtml = ''
-            // console.log(data.marketsName, "data.marketsNamedata.marketsName")
+            console.log(data.marketsName, "data.marketsNamedata.marketsName")
             if(data.marketsName){
                 if(data.marketsName.length === 1){
 
