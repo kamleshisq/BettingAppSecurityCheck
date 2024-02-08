@@ -56682,17 +56682,32 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           formDataObj = Object.fromEntries(fd.entries());
           formDataObj.id = id;
           // console.log(formDataObj)
-          if (!(formDataObj.amount == 0)) {
-            _context2.next = 9;
-            break;
-          }
-          _context2.next = 12;
-          break;
-        case 9:
-          formDataObj.sessiontoken = sessionTokenADMIN;
-          _context2.next = 12;
+          _context2.next = 8;
           return (0, _debitCredit.debitCredit)(formDataObj);
-        case 12:
+        case 8:
+          if (formDataObj.amount == 0) {
+            // alert('please enter amount greater than 0')
+          } else {
+            formDataObj.sessiontoken = sessionTokenADMIN;
+            // var trElements = document.querySelectorAll('tr.trtable');
+            // console.log(trElements)
+            // console.log(user)
+            // trElements.forEach(function(trElement) {
+            //     if (trElement.getAttribute('data-id') === user.id) {
+            //     }
+            // })    
+          }
+          // const url = window.location.href
+          // const id = url.split("=")[1]
+          // formDataObj.id = id
+          // console.log(formDataObj)
+          // let rowId = $('.rowId').attr('data-rowid')
+
+          // console.log(rowId)
+          // let currentUser = $('#currentUserDetails').data('currentuser')
+          // updateRow(user,rowId,currentUser)
+          // console.log(user)
+        case 9:
         case "end":
           return _context2.stop();
       }
