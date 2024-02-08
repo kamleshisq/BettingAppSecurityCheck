@@ -6785,9 +6785,9 @@ socket.on('connect', () => {
             }                
             let bets = data.betResult;
             let html = '';
-            let html2 = '<option value="All" selected> Select Event </option>';
+            let html2 = '';
             if(data.events){
-                // html2 += `<option value="All" selected> Select Event </option>`
+                html2 += `<option value="All" selected> Select Event </option>`
                 for(let i = 0;i<data.events.length;i++){
                     if(data.events[i]._id){
                         html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
@@ -6795,9 +6795,9 @@ socket.on('connect', () => {
                 }
             }
             $('#Event').html(html2)
-            letMarketNameHtml = '<option value="All" selected="">All</option>'
+            letMarketNameHtml = ''
             if(data.marketsName){
-                // letMarketNameHtml += `<option value="All" selected="">All</option>`
+                letMarketNameHtml += `<option value="All" selected="">All</option>`
                 for(let i = 0; i < data.marketsName.length; i++){
                     if(data.marketsName[i].marketName){
                         letMarketNameHtml += `<option value="${data.marketsName[i].marketName}">${data.marketsName[i].marketName}</option>`
