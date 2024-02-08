@@ -4987,7 +4987,7 @@ io.on('connection', (socket) => {
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
-                    await newCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {commissionStatus:'Claimed', settleStatus:true , claimeDate: Date.now()})
+                    await newCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
                     socket.emit("claimCommission", "Success")
                 }catch(err){
                     console.log(err)
@@ -8382,7 +8382,7 @@ io.on('connection', (socket) => {
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
-                    await newCommissionModel.updateMany({userId:operationUser._id}, {commissionStatus:'Claimed', claimeDate: Date.now(), settleStatus:true})
+                    await newCommissionModel.updateMany({userId:operationUser._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
                     socket.emit("claimCommissionAdmin", "Success")
                 }catch(err){
                     console.log(err)
