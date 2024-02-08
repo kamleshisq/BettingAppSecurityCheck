@@ -298,17 +298,6 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(parentUser.availableBalance < req.body.amount){
         return next(new AppError("Insufficient Credit Limit !"))
     }
-    let lifeTimePl = 0
-    console.log(childUser, "childUserchildUser")
-    if(childUser.roleName !== 'user'){
-        let debitAmountForP = -childUser.pointsWL
-        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
-        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
-    }else{
-        let debitAmountForP = -childUser.pointsWL
-        lifeTimePl = new Decimal(parentUser.myShare).times(debitAmountForP).dividedBy(100)
-        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
-    }
     let settleCommission = await commissionNewModel.aggregate([
         {
             $match:{
@@ -328,6 +317,18 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(settleCommission.length > 0){
         realCommission = settleCommission[0].totalCommission
     }
+    let lifeTimePl = 0
+    console.log(childUser, "childUserchildUser")
+    if(childUser.roleName !== 'user'){
+        let debitAmountForP = -childUser.pointsWL + realCommission
+        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
+    }else{
+        let debitAmountForP = -childUser.pointsWL + realCommission
+        lifeTimePl = new Decimal(parentUser.myShare).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = lifeTimePl.toDecimalPlaces(4);
+    }
+    
     console.log(settleCommission, "settleCommissionsettleCommissionsettleCommissionsettleCommission")
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
     lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
