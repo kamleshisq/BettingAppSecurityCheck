@@ -56687,8 +56687,8 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
         case 8:
           if (formDataObj.amount == 0) {
             // alert('please enter amount greater than 0')
-          } else {
             formDataObj.sessiontoken = sessionTokenADMIN;
+          } else {
             // var trElements = document.querySelectorAll('tr.trtable');
             // console.log(trElements)
             // console.log(user)
