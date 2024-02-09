@@ -9711,7 +9711,7 @@ socket.on('connect', () => {
                     $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
                     let result
                     let element = $(this)
-                    let staleDiff = 100
+                    let staleDiff = Math.abs(oldValue - newValue)
                     if($(this).closest('tr').hasClass('back-inplaymatch')){
                         if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                             result = (NewStake * Odds) - NewStake;
