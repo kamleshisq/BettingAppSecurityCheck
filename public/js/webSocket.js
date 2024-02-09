@@ -7945,12 +7945,11 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 console.log(id,  marketId, "id")
                 let section = null;
-                let thatMarket = data.finalResult.items.find(item => {
-                    item.marketId = marketId
-                    // section = item.odds.find(odd => odd.selectionId == id);
-                    // return section !== undefined;
+                data.finalResult.items.some(item => {
+                    section = item.odds.find(odd => odd.selectionId == id);
+                    return section !== undefined;
                 });
-                console.log(thatMarket, 'thatMarket')
+                console.log(section)
                 if(this.id == `${section.selectionId}1` ){
 
                     if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
