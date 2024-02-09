@@ -7572,8 +7572,6 @@ socket.on('connect', () => {
         //   });
 
         $(document).ready(function(){
-
-            console.log('WORKING')
             $("table .button").click(function(){
               $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
               $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
@@ -8793,6 +8791,7 @@ socket.on('connect', () => {
         let clickTime
         $(document).ready(function () {
             $(".button").click(function () {
+                console.log('WORKING')
                 clickTime = Date.now()
                 const urlParams = new URLSearchParams(window.location.search);
 
