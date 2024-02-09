@@ -4043,6 +4043,8 @@ socket.on('connect', () => {
                 data.LOGINDATA = LOGINDATA
                 $('.pageLink').attr('data-page',1)
                 $('.wrapper').hide()
+                let sessionToken = URLSearchParams(window.location.search);
+                data.sessiontoken =  sessionToken.get('sessiontoken')
                 // console.log(data, 456)
                 // console.log(data)
                 socket.emit( "AccountScroll1", data)
