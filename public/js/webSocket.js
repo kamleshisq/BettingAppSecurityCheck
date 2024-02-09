@@ -13278,6 +13278,7 @@ socket.on('connect', () => {
                 let element = $(this)
                 let diffStake 
                 let plusMinus
+                console.log('WORKIGEOFHGHSD')
             if($(this).closest('tr').hasClass('back-inplaymatch')){
                 if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue")){
                     var spanId = $(this).attr("id");
