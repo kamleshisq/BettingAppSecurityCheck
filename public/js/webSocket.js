@@ -9699,6 +9699,85 @@ socket.on('connect', () => {
                 console.log('Previous value:', prevValue);
                 $(this).data('prevValue', $(this).val());
                 console.log('Current value:', $(this).val());
+                let oldValue = prevValue
+                let newValue = $(this).val()
+                if(oldValue > newValue){
+                    let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                    let IdButton = $(`#${buttonId}`)
+                    let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
+                    let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                    let NewStake = newValue
+                    $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
+                    let result
+                    let element = $(this)
+                    let staleDiff = 100
+                    if($(this).closest('tr').hasClass('back-inplaymatch')){
+                        if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                            result = (NewStake * Odds) - NewStake;
+                            resultDiff = (staleDiff * Odds) - staleDiff;
+                        }else{
+                            var escapedId = buttonId.replace(/\./g, '\\.');
+                            let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                            if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                                Odds = parseFloat(
+                                    $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                                  );
+                            }
+                            result = (NewStake * Odds) / 100
+                            resultDiff = (staleDiff * Odds) / 100
+                        }
+                        let data = {
+                            result : resultDiff,
+                            element,
+                            status:false,
+                            NewStake : staleDiff,
+                            check : NewStake
+                        }
+                        Onlyminus(data)
+                    }else{
+                        result = NewStake
+                        let resultDiff = 100
+    
+                        if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                            plusMinus = (100 * Odds) - 100;
+                             
+                        }else{
+                            plusMinus = (100 * Odds) / 100
+                        }
+                        let data = {
+                            result:resultDiff,
+                            element,
+                            status:true,
+                            NewStake : 100,
+                            plusMinus,
+                            check:NewStake
+                        }
+                        Onlyminus(data)
+                    }
+                    if(!spanId){
+                        $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(0);
+                    }else if(NewStake < 0){
+                        $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(0);
+                    }
+                    else{
+                        // console.log("WORKING")
+                        $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(result.toFixed(2));
+                    }
+                }else{
+
+                }
             })
           })
           // Get all the rows with class "acount-stat-tbl-body-tr"
