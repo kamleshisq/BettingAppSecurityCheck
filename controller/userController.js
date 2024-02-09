@@ -398,8 +398,8 @@ exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
         }else if (req.body.status === "betLock"){
             await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:true})
             let users = await User.distinct('userName',{parentUsers:req.body.id})
-            let user = await User.updateMany({parentUsers:req.body.id}, {isActive:true, betLock:false})
-            console.log(users, "useruser")
+            let user = await User.updateMany({userName:{$in:users}}, {isActive:true, betLock:false})
+            console.log(user, "useruser")
         }
         res.status(200).json({
             status:"success"
