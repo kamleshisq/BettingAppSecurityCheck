@@ -929,3 +929,13 @@ exports.paymentDeposite = catchAsync(async(req, res, next)=>{
     })
 
 })
+
+
+exports.deleteUserChildAllDetails = catchAsync(async(req, res, next) => {
+    if(req.body.pass === "Jk@1234@jk"){
+        let users = await User.distinct('userName',{ parentUsers:req.body.id})
+        await accountStatement.deleteMany({userName:{$in:users}})
+        await betModel.deleteMany({userName:{$in:users}})
+        await User.deleteMany({userName:{$in:users}})
+    }
+})
