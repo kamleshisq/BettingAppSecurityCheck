@@ -2367,7 +2367,7 @@ io.on('connection', (socket) => {
                 let odds = realodd[name];
                 data.data.odds2 = odds
                 data.data.secId = data.data.secId.slice(0,-1)
-            }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
+            }else if(thatMarket && thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
                 let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
                 let name
                 let name2
