@@ -8694,14 +8694,15 @@ socket.on('connect', () => {
 
                 if(this.id == `${section.market_id}1` ){
                     // console.log(macLimitStatus < section.no)
-                    if(!data.status){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if(check2){
+                    // if(!data.status){
+                    //     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                    //     <i class="fa-solid fa-lock"></i>
+                    //   </span>`
+                    //   this.removeAttribute("data-bs-toggle");
+                    //   parentElement.classList.add("suspended");
+                    //   $(this).parent().find(".match-status-message").text("Suspended")
+                    // }else 
+                    if(check2){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
