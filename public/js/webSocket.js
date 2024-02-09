@@ -7940,6 +7940,7 @@ socket.on('connect', () => {
                 // console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
 
                 let id = this.id
+                console.log(id , "id")
 
                 id = id.slice(0, -1);
                 let section = null;
