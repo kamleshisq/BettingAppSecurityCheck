@@ -13349,7 +13349,7 @@ socket.on('connect', () => {
                         marketplusminus(data)
                     }
                 }else{
-                    // console.log(IdButton)
+                    console.log(IdButton)
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
