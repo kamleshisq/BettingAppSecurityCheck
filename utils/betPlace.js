@@ -315,7 +315,7 @@ if(data.data.odds2){
     // }
     console.log(exposureCHECk,check.exposureLimit )
     if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + creditDebitamount) > check.exposureLimit){
-        return "Please try again later, Your exposure Limit is full"
+        return "Please try again later, Your exposure Limit is full dfdf"
     }
     if(check.availableBalance < (exposureCHECk + creditDebitamount)){
         return "You do not have sufficient balance for bet"
