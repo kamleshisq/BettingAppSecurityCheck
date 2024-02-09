@@ -2354,7 +2354,7 @@ io.on('connection', (socket) => {
                     data.data.odds = odds
                     data.data.bettype2 = 'LAY'
                 }
-            }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
+            }else if(thatMarket && thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
                 let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
                 let name
                 if(data.data.secId.slice(-1) > 3){
