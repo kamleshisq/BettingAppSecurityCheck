@@ -391,16 +391,16 @@ exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
     try{
         if(req.body.status === "suspended"){
             await User.findByIdAndUpdate(req.body.id, {isActive:false, betLock:true})
-            await User.updateMany({parentUsers:req.body.id}, {isActive:false, betLock:true})
+            await User.updateMany({parentUsers:req.body.id}, {isActive:false})
+            await User.updateMany({parentUsers:req.body.id}, {betLock:true})
         }else if (req.body.status === "active"){
             await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:false})
-            await User.updateMany({parentUsers:req.body.id}, {isActive:true, betLock:false})
+            await User.updateMany({parentUsers:req.body.id}, {isActive:true})
+            await User.updateMany({parentUsers:req.body.id}, {betLock:false})
         }else if (req.body.status === "betLock"){
             await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:true})
-            let user1 =await User.updateMany({parentUsers:req.body.id}, {isActive:true})
-            let user = await User.updateMany({parentUsers:req.body.id}, {betLock:true})
-            // let user = await User.updateMany({userName:{$in:users}}, {$set: {isActive:true, betLock:false}})
-            console.log(user,user1 ,"useruser")
+            await User.updateMany({parentUsers:req.body.id}, {isActive:true})
+            await User.updateMany({parentUsers:req.body.id}, {betLock:true})
         }
         res.status(200).json({
             status:"success"
