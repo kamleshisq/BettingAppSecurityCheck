@@ -1009,7 +1009,7 @@ socket.on('connect', () => {
             $(".2B").each(function() {
                     let id = this.id
                     const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    console.log($(this).find('.tbl-td-bg-blu-spn').text())
+                    // console.log($(this).find('.tbl-td-bg-blu-spn').text())
                     // if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
                     //     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                     //                 <i class="fa-solid fa-lock"></i>
