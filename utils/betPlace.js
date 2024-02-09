@@ -314,8 +314,14 @@ if(data.data.odds2){
     //     return 'Win Amount out of range'
     // }
     console.log(exposureCHECk,check.exposureLimit )
-    if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
+    if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + creditDebitamount) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full"
+    }
+    if(check.availableBalance < (exposureCHECk + creditDebitamount)){
+        return "You do not have sufficient balance for bet"
+    }
+    if(check.availableBalance < creditDebitamount){
+        return "You do not have sufficient balance for bet"
     }
 
     // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
