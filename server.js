@@ -2307,8 +2307,8 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        console.log(data, "DATA")
-        console.time('start')
+        // console.log(data, "DATA")
+        // console.time('start')
         const startTimestamp = performance.now(); 
         let delay = await oddsLimitCHeck({eventId:data.data.eventId, ids:[data.data.market]})
         // console.log(delay, "delay")
@@ -2316,7 +2316,7 @@ io.on('connection', (socket) => {
         if(delay[0] && delay[0].Limits!= 0 && delay[0].Limits.delay){
             delayReal = delay[0].Limits.delay - 0.5 
         }
-        console.log(delayReal, "delayRealdelayRealdelayReal")
+        // console.log(delayReal, "delayRealdelayRealdelayReal")
             setTimeout(async function(){
                 // console.log(data)
             let multimarketstatus = false
@@ -2403,7 +2403,7 @@ io.on('connection', (socket) => {
             }
             // console.log(openBet, "openBet")
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
-            console.timeEnd('start')
+            // console.timeEnd('start')
             socket.emit("betDetails", {result, openBet, user})
 
         }, delayReal * 1000);
