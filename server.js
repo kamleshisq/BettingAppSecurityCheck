@@ -2308,6 +2308,7 @@ io.on('connection', (socket) => {
 
     socket.on('betDetails', async(data) => {
         console.log(data, "DATA")
+        console.time('start')
         const startTimestamp = performance.now(); 
         let delay = await oddsLimitCHeck({eventId:data.data.eventId, ids:[data.data.market]})
         // console.log(delay, "delay")
@@ -2402,6 +2403,7 @@ io.on('connection', (socket) => {
             }
             // console.log(openBet, "openBet")
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+            console.timeEnd('start')
             socket.emit("betDetails", {result, openBet, user})
 
         }, delayReal * 1000);
