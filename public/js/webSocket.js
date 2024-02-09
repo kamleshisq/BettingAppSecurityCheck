@@ -7520,6 +7520,13 @@ socket.on('connect', () => {
             socket.emit("marketIdbookDetailsFANCY", {LOGINDATA, eventId, status})
         }
 
+        $(document).ready(function () {
+            $('.nww-bet-slip-wrp .set-stake-form-input2').keypress(function (e) {
+                var charCode = (e.which) ? e.which : event.keyCode
+                if (String.fromCharCode(charCode).match(/[^0-9]/g))
+                    return false;
+            });
+        });
 
         if(document.getElementById('myIframe')){
             let channelId = document.getElementById('myIframe').getAttribute('data-id');
