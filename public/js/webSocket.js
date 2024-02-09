@@ -7930,6 +7930,7 @@ socket.on('connect', () => {
 
             $(".goal_Blue").each(function() {
                 let marketId = $(this).closest('table').attr('id')
+                console.log(marketId, "marketIdmarketId")
                 let macLimitStatus 
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
