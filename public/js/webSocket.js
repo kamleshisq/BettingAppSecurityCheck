@@ -9707,7 +9707,6 @@ socket.on('connect', () => {
                     let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                     let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                     let NewStake = newValue
-                    console.log(NewStake, "NewStakeNewStakeNewStake")
                     $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
                     let result
                     let element = $(this)
@@ -9749,7 +9748,7 @@ socket.on('connect', () => {
                             result:resultDiff,
                             element,
                             status:true,
-                            NewStake : 100,
+                            NewStake :  Math.abs(oldValue - newValue),
                             plusMinus,
                             check:NewStake
                         }
@@ -9777,7 +9776,80 @@ socket.on('connect', () => {
                         .text(result.toFixed(2));
                     }
                 }else{
+                    let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                    let IdButton = $(`#${buttonId}`)
+                    let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
+                    let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                    let NewStake = newValue
+                    $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
+                    let result
+                    let element = $(this)
+                    let plusMinus = 0
+                    let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
+                    if($(this).closest('tr').hasClass('back-inplaymatch')){
+                    let diff = 0
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                        result = (NewStake * Odds) - NewStake;
+                        diff = (100 * Odds) - 100;
+                    }else{
+                        var escapedId = buttonId.replace(/\./g, '\\.');
+                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                            Odds = parseFloat(
+                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                            );
+                        }
+                        result = (NewStake * Odds) / 100
+                        diff = (100 * Odds) / 100
+                    }
+                    let data = {
+                        result : diff,
+                        element,
+                        status:false,
+                        NewStake :  Math.abs(oldValue - newValue)
+                    }
+                    marketplusminus(data)
+                }else{
+                    result = NewStake
+                    let diff =  Math.abs(oldValue - newValue)
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                        plusMinus = (100 * Odds) - 100;
+                        
+                    }else{
+                        plusMinus = (100 * Odds) / 100
+                    }
+                    let data = {
+                        result : diff ,
+                        element,
+                        status:true,
+                        NewStake :  Math.abs(oldValue - newValue),
+                        plusMinus
+                    }
+                    marketplusminus(data)
+                }
+                // console.log(result)
 
+                if(!spanId){
+                    $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                    $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(result.toFixed(2));
+                }else if(NewStake < 0){
+                    $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                    $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(0);
+                }
+                else{
+                    // console.log("WORKING")
+                    $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                    $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(result.toFixed(2));
+                }
                 }
             })
           })
