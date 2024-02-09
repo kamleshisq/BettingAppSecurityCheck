@@ -8468,6 +8468,7 @@ socket.on('connect', () => {
                     //     $(this).parent().find(".match-status-message").text("Suspended")
                     // }else 
                     if(check2){
+                        console.log('gothere')
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
