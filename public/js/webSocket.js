@@ -7940,9 +7940,9 @@ socket.on('connect', () => {
                 // console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
 
                 let id = this.id
-                console.log(id , "id")
-
+                
                 id = id.slice(0, -1);
+                console.log(id , "id")
                 let section = null;
                 data.finalResult.items.some(item => {
                     section = item.odds.find(odd => odd.selectionId == id);
