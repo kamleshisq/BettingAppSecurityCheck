@@ -7949,74 +7949,81 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
-                console.log(section)
-                if(this.id == `${section.selectionId}1` ){
-
-                    if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      $(this).addClass('lock-span')
-                    }else{
-                        this.setAttribute("data-bs-toggle", "collapse");
-                        if(first){
-                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                // console.log(section)
+                if(section){
+                    if(this.id == `${section.selectionId}1` ){
+    
+                        if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
+                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                            <i class="fa-solid fa-lock"></i>
+                          </span>`
+                          this.removeAttribute("data-bs-toggle");
+                          $(this).addClass('lock-span')
                         }else{
-                            let htmldiv = $('<div>').html(this.innerHTML)
-                            let data1 = htmldiv.find('span:first').text()
-                             let data2 = htmldiv.find('span:first').next().text().trim()
-                            // console.log(data2, "data2data2data2data2")
-                            if(data1 != section.backPrice1 || data2 != section.backSize1){
+                            this.setAttribute("data-bs-toggle", "collapse");
+                            if(first){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                                this.style.backgroundColor = 'blanchedalmond';
+                            }else{
+                                let htmldiv = $('<div>').html(this.innerHTML)
+                                let data1 = htmldiv.find('span:first').text()
+                                 let data2 = htmldiv.find('span:first').next().text().trim()
+                                // console.log(data2, "data2data2data2data2")
+                                if(data1 != section.backPrice1 || data2 != section.backSize1){
+                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                                    this.style.backgroundColor = 'blanchedalmond';
+                                }
                             }
+                            // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }
-                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                    }
-                }else if(this.id == `${section.selectionId}2`){
-                    if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0" || (macLimitStatus && macLimitStatus < section.backPrice2)){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                    }else{
-                        this.setAttribute("data-bs-toggle", "collapse");
-                        if(first){
-                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                    }else if(this.id == `${section.selectionId}2`){
+                        if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0" || (macLimitStatus && macLimitStatus < section.backPrice2)){
+                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                            <i class="fa-solid fa-lock"></i>
+                          </span>`
+                          this.removeAttribute("data-bs-toggle");
                         }else{
-
-                            let htmldiv = $('<div>').html(this.innerHTML)
-                            let data1 = htmldiv.find('span:first').text()
-                             let data2 = htmldiv.find('span:first').next().text().trim()
-                            if(data1 != section.backPrice2 || data2 !=  section.backSize2){
+                            this.setAttribute("data-bs-toggle", "collapse");
+                            if(first){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
-                                this.style.backgroundColor = 'blanchedalmond';
+                            }else{
+    
+                                let htmldiv = $('<div>').html(this.innerHTML)
+                                let data1 = htmldiv.find('span:first').text()
+                                 let data2 = htmldiv.find('span:first').next().text().trim()
+                                if(data1 != section.backPrice2 || data2 !=  section.backSize2){
+                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                                    this.style.backgroundColor = 'blanchedalmond';
+                                }
                             }
+                            // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }
-                        // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
-                    }
-                }else if (this.id == `${section.selectionId}3`){
-                    if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0" || (macLimitStatus && macLimitStatus < section.backPrice3)){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                    }else{
-                        this.setAttribute("data-bs-toggle", "collapse");
-                        if(first){
-                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                    }else if (this.id == `${section.selectionId}3`){
+                        if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0" || (macLimitStatus && macLimitStatus < section.backPrice3)){
+                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                            <i class="fa-solid fa-lock"></i>
+                          </span>`
+                          this.removeAttribute("data-bs-toggle");
                         }else{
-                            let htmldiv = $('<div>').html(this.innerHTML)
-                            let data1 = htmldiv.find('span:first').text()
-                             let data2 = htmldiv.find('span:first').next().text().trim()
-                            // console.log(data1)
-                            if(data1 != section.backPrice3 || data2 != section.backSize3){
+                            this.setAttribute("data-bs-toggle", "collapse");
+                            if(first){
                                 this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
-                                this.style.backgroundColor = 'blanchedalmond';
+                            }else{
+                                let htmldiv = $('<div>').html(this.innerHTML)
+                                let data1 = htmldiv.find('span:first').text()
+                                 let data2 = htmldiv.find('span:first').next().text().trim()
+                                // console.log(data1)
+                                if(data1 != section.backPrice3 || data2 != section.backSize3){
+                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                                    this.style.backgroundColor = 'blanchedalmond';
+                                }
                             }
                         }
                     }
+                }else{
+                    this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                            <i class="fa-solid fa-lock"></i>
+                          </span>`
+                          this.removeAttribute("data-bs-toggle");
                 }
             })
 
