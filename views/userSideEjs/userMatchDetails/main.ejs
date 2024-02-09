@@ -28,6 +28,10 @@
                           <%if(match.marketList.winner != null){%>
                             <%-include('./winner')%>
                           <%}%>
+
+                          <%if(match.marketList.goals != null){%>
+                            <%-include('./goals')%>
+                          <%}%>
                           
                           <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
                             <%-include("./fency")%>

@@ -10,7 +10,7 @@ exports.createPosition = catchAsync(async(req, res, next) => {
             data.video = false
             const image = req.files.image
             // console.log(logo)
-            image.mv(`public/img/${req.body.position}.png`, (err)=>{
+            image.mv(`public/img/${req.body.position}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
         }else if(req.files.image.mimetype.startsWith('video')){
@@ -51,7 +51,7 @@ exports.updatePosition = catchAsync(async(req, res, next) => {
             data.video = false
             const image = req.files.image
             // console.log(logo)
-            image.mv(`public/img/${req.body.position}.png`, (err)=>{
+            image.mv(`public/img/${req.body.position}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
         }else if(req.files.image.mimetype.startsWith('video')){

@@ -38,7 +38,7 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
     }else if (req.body.table == 'myModal7'){
         if(req.files && req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
-            image.mv(`public/logo/${req.currentUser.whiteLabel}1.png`, (err)=>{
+            image.mv(`public/logo/${req.currentUser.whiteLabel}1.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
@@ -57,7 +57,7 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
     }else if (req.body.table == 'myModa18'){
         if(req.files && req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
-            image.mv(`public/logo/${req.currentUser.whiteLabel}2.png`, (err)=>{
+            image.mv(`public/logo/${req.currentUser.whiteLabel}2.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
