@@ -8475,7 +8475,7 @@ socket.on('connect', () => {
                       parentElement.classList.add("suspended");
                           $(this).parent().find(".match-status-message").text("market settled")
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
-                        console.log('got here')
+                        // console.log('got here')
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
@@ -8505,7 +8505,7 @@ socket.on('connect', () => {
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                         // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
                     }
-                    if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0") && data.status){
+                    if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0")){
                         parentElement.classList.remove("suspended")
                         $(this).parent().find(".match-status-message").text("")
                     }
