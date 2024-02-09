@@ -4046,8 +4046,8 @@ socket.on('connect', () => {
                 let sessionToken = URLSearchParams(window.location.search);
                 data.sessiontoken =  sessionToken.get('sessiontoken')
                 // console.log(data, 456)
-                // console.log(data)
-                socket.emit( "AccountScroll1", data)
+                console.log(data, "qwertyuiop")
+                // socket.emit( "AccountScroll1", data)
         })
 
         $('#Fdate,#Tdate').change(function(){
