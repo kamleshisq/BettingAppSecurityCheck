@@ -2794,7 +2794,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let marketids = ["1.224619107"];
+    let marketids = ["1.224640116"];
     // console.log(body)
     var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
     fetch(fullUrl, {
