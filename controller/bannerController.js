@@ -8,7 +8,7 @@ exports.createBanner = catchAsync(async(req, res, next) => {
         if(req.files.banner.mimetype.startsWith('image')){
             const image = req.files.banner
             // console.log(logo)
-            image.mv(`public/banner/${req.body.bannerName}.png`, (err)=>{
+            image.mv(`public/banner/${req.body.bannerName}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
             req.body.banner = req.body.bannerName
@@ -37,10 +37,10 @@ exports.createMedia = catchAsync(async(req, res, next) => {
         if(req.files.img.mimetype.startsWith('image')){
             const image = req.files.img
             // console.log(logo)
-            image.mv(`public/banner/${req.body.name}.png`, (err)=>{
+            image.mv(`public/banner/${req.body.name}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
-            let pathname = `/banner/${req.body.name}.png`
+            let pathname = `/banner/${req.body.name}.webp`
             req.body.banner = req.body.name
             let whiteLabel = process.env.whiteLabelName
             if(req.currentUser.role_type == 1){
