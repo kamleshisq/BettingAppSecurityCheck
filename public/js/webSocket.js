@@ -7572,6 +7572,8 @@ socket.on('connect', () => {
         //   });
 
         $(document).ready(function(){
+
+            console.log('WORKING')
             $("table .button").click(function(){
               $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
               $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
