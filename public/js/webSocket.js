@@ -7930,6 +7930,7 @@ socket.on('connect', () => {
 
             $(".goal_Blue").each(function() {
                 let marketId = $(this).closest('table').attr('id')
+                // console.log(marketId, "marketIdmarketId")
                 let macLimitStatus 
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
@@ -7940,9 +7941,9 @@ socket.on('connect', () => {
                 // console.log(macLimitStatus, "macLimitStatusmacLimitStatusmacLimitStatus")
 
                 let id = this.id
-                console.log(id , "id")
-
+                
                 id = id.slice(0, -1);
+                console.log(id,  marketId, "id")
                 let section = null;
                 data.finalResult.items.some(item => {
                     section = item.odds.find(odd => odd.selectionId == id);
