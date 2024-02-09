@@ -18,7 +18,7 @@ exports.createNewSlider = catchAsync(async(req, res, next) => {
             const image = req.files.backgroundImage
             // console.log(logo)
             req.body.backGroundImage = req.body.name.split(' ')[0]
-            image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.png`, (err)=>{
+            image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
@@ -39,7 +39,7 @@ exports.addImage = catchAsync(async(req, res, next) =>{
     if(req.files){
         if(req.files.image.mimetype.startsWith('image')){
             const image = req.files.image
-            image.mv(`public/sliderImages/${req.body.menuName}.png`, (err)=>{
+            image.mv(`public/sliderImages/${req.body.menuName}.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
@@ -81,7 +81,7 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                 if(req.files.file.mimetype.startsWith('image')){
                     const image = req.files.file
                     // console.log(logo)
-                    image.mv(`public/sliderImages/${req.body.name}.png`, (err)=>{
+                    image.mv(`public/sliderImages/${req.body.name}.webp`, (err)=>{
                         if(err) 
                         return next(new AppError("Something went wrong please try again later", 400))
                     })
@@ -101,8 +101,8 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                     return next(new AppError("Please upload an image file", 400))
                 }
             }else{
-            let originalImage = `public/sliderImages/${slider.images[index].name}.png`
-            let updatedPath = `public/sliderImages/${req.body.name}.png`
+            let originalImage = `public/sliderImages/${slider.images[index].name}.webp`
+            let updatedPath = `public/sliderImages/${req.body.name}.webp`
             fs.rename(originalImage, updatedPath, (err) => {
                 if (err) {
                   console.error('Error renaming file:', err);
@@ -143,7 +143,7 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
         if(req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
             // console.log(logo)
-            image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.png`, (err)=>{
+            image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.webp`, (err)=>{
                 req.body.backGroundImage = req.body.name.split(' ')[0]
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
