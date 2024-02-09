@@ -7950,7 +7950,7 @@ socket.on('connect', () => {
                     // section = item.odds.find(odd => odd.selectionId == id);
                     // return section !== undefined;
                 });
-                console.log(thatMarket)
+                console.log(thatMarket, 'thatMarket')
                 if(this.id == `${section.selectionId}1` ){
 
                     if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0" || (macLimitStatus && macLimitStatus < section.backPrice1)){
