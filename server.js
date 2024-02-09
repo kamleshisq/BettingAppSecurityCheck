@@ -2329,7 +2329,7 @@ io.on('connection', (socket) => {
             // data.data.oldData = data.data.odds
             data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
             let thatMarket = marketDetails.data.items[0]
-            console.log(thatMarket)
+            console.log(thatMarket, "thatMarket")
             if(data.data.secId.startsWith('odd_Even_')){
                 if(data.data.secId == "odd_Even_Yes"){
                     let odds
