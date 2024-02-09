@@ -7311,6 +7311,7 @@ io.on('connection', (socket) => {
         //     childrenUsername1.push(ele1.userName) 
         // })
         // let checkBET = await Bet.findOne({marketId:data.marketId})
+        console.log(data.id, "data.id")
         if(forcheck.length > 0){
             if(data.marketId.slice(-2).startsWith('OE')){
                 let betData = await Bet.aggregate([
