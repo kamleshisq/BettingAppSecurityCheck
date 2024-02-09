@@ -715,8 +715,8 @@ io.on('connection', (socket) => {
         }else{
             operatorId = data.LOGINDATA.LOGINUSER._id
         }
+        console.log(data)
         if(data.id){
-            // console.log()
             fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&sessiontoken=" + data.sessiontoken
         }else{
             fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement1?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&sessiontoken=" + data.sessiontoken
