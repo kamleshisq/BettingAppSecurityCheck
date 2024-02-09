@@ -5251,159 +5251,157 @@ io.on('connection', (socket) => {
                                             winAmount :"$$selection.winAmount",
                                             lossAmount : "$$selection.lossAmount",
                                             winAmount2: {
-                                                $reduce:{
-                                                    input:'$parentArray',
-                                                    initialValue: { value: 0, flag: true },
-                                                    in : {
-                                                        $cond:{
-                                                            if : {
-                                                                $and: [
-                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
-                                                                  { $eq: ['$$value.flag', true] } 
-                                                                ]
-                                                              },
-                                                            then : {
-                                                                value: { 
-                                                                    $cond:{
-                                                                        if:{ $eq: ["$$value.value", 0] },
-                                                                        then:{
-                                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
-                                                                        },
-                                                                        else:{
-                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
-                                                                        }
-                                                                    }
-                                                                },
-                                                                flag: true,
-                                                                
-                                                            },
-                                                            else : {
-                                                                value: {
-                                                                    $cond : {
-                                                                        if : { $eq : ["$$value.value" , 0]},
-                                                                        then : {
-                                                                            $cond:{
-                                                                                if : {$eq : ["$parentId", ele.id]},
-                                                                                then:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                                else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
-                                                                            }
-                                                                        },
-                                                                        else :{$cond:{
-                                                                            if : {$eq : ['$$value.flag', true]},
-                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                            else:"$$value.value"
-                                                                        }}
-                                                                        
-                                                                    }
-                                                                },
-                                                                flag:false
-                                                            }
+                                                $reduce: {
+                                                    // input : "$parentArray",
+                                                  input: { $reverseArray: '$parentArray' },
+                                                  initialValue: { value: 0, flag: true },
+                                                  in: {											 
+                                                    $cond: {
+                                                      if: {
+                                                        $and: [
+                                                          { $eq: ['$$this.parentUSerId', ele.id] },
+                                                          { $eq: ['$$value.flag', true] }
+                                                        ]
+                                                      },
+                                                      then: {                                                
+                                                        $cond: {
+                                                          if: { $eq: [ele.roleName, "AGENT"] },
+                                                          then: {
+                                                            value: {
+                                                              $multiply: [
+                                                                '$$selection.winAmount',
+                                                                { $divide: [ele.myShare, 100] }
+                                                              ]
+                                                            }                                                   
+                                                          },
+                                                          else: {value: "$$value.value", flag : false}
                                                         }
+                                                      },
+                                                      else: { // ELSE HERE
+                                                        $cond: {
+                                                          if: {
+                                                            $and: [
+                                                              { $eq: ["$$value.value", 0] },
+                                                              { $eq: ['$$value.flag', false] }
+                                                            ]
+                                                          },                                              
+                                                          then: {                                                    
+                                                            value: 
+                                                            {
+                                                              $multiply: [
+                                                                '$$selection.winAmount',
+                                                                { $divide: ["$$this.uplineShare", 100] }
+                                                              ]
+                                                            }
+                                                          },
+                                                          else: {value: "$$value.value", flag: true}
+                                                        }
+                                                      }
                                                     }
+                                                  }
                                                 }
-                                            },
+                                              },
                                             lossAmount2:{
                                                 $reduce:{
-                                                    input:'$parentArray',
+                                                    // input : "$parentArray",
+                                                    input: { $reverseArray: '$parentArray' },
                                                     initialValue: { value: 0, flag: true },
-                                                    in : {
-                                                        $cond:{
-                                                            if : {
+                                                    in: {
+                                                        $cond: {
+                                                          if: {
+                                                            $and: [
+                                                              { $eq: ['$$this.parentUSerId', ele.id] },
+                                                              { $eq: ['$$value.flag', true] }
+                                                            ]
+                                                          },
+                                                          then: {                                                
+                                                            $cond: {
+                                                              if: { $eq: [ele.roleName, "AGENT"] },
+                                                              then: {
+                                                                value: {
+                                                                  $multiply: [
+                                                                    '$$selection.lossAmount',
+                                                                    { $divide: [ele.myShare, 100] }
+                                                                  ]
+                                                                }                                                   
+                                                              },
+                                                              else: {value: "$$value.value", flag : false}
+                                                            }
+                                                          },
+                                                          else: {
+                                                            $cond: {
+                                                              if: {
                                                                 $and: [
-                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
-                                                                  { $eq: ['$$value.flag', true] } 
+                                                                  { $eq: ["$$value.value", 0] },
+                                                                  { $eq: ['$$value.flag', false] }
                                                                 ]
                                                               },
-                                                            then : {
-                                                                value: { 
-                                                                    $cond:{
-                                                                        if:{ $eq: ["$$value.value", 0] },
-                                                                        then:{
-                                                                            $multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]
-                                                                        },
-                                                                        else:{
-                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
-                                                                        }
-                                                                    }
-                                                                },
-                                                                flag: true,
-                                                                
-                                                            },
-                                                            else : {
-                                                                value: {
-                                                                    $cond : {
-                                                                        if : { $eq : ["$$value.value" , 0]},
-                                                                        then : {
-                                                                            $cond:{
-                                                                                if : {$eq : ["$parentId", ele.id]},
-                                                                                then:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                                else:{$subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
-                                                                            }
-                                                                        },
-                                                                        else :{$cond:{
-                                                                            if : {$eq : ['$$value.flag', true]},
-                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                            else:"$$value.value"
-                                                                        }}
-                                                                        
-                                                                    }
-                                                                },
-                                                                flag:false
+                                                              then: {                                                    
+                                                                value: 
+                                                                {
+                                                                  $multiply: [
+                                                                    '$$selection.lossAmount',
+                                                                    { $divide: ["$$this.uplineShare", 100] }
+                                                                  ]
+                                                                }
+                                                              },
+                                                              else: {value: "$$value.value", flag: true}
                                                             }
+                                                          }
                                                         }
-                                                    }
+                                                      }
                                                 }
                                             },
-                                            exposure: {
-                                                $reduce:{
-                                                    input:'$parentArray',
+                                            exposure:{
+                                                $reduce:{ 
+                                                    // input : "$parentArray",
+                                                    input: { $reverseArray: '$parentArray' },
                                                     initialValue: { value: 0, flag: true },
-                                                    in : {
-                                                        $cond:{
-                                                            if : {
+                                                    in: {
+        
+                                                        $cond: {
+                                                          if: {
+                                                            $and: [
+                                                              { $eq: ['$$this.parentUSerId', ele.id] },
+                                                              { $eq: ['$$value.flag', true] }
+                                                            ]
+                                                          },
+                                                          then: {                                                
+                                                            $cond: {
+                                                              if: { $eq: [ele.roleName, "AGENT"] },
+                                                              then: {
+                                                                value: {
+                                                                  $multiply: [
+                                                                    '$$selection.exposure',
+                                                                    { $divide: [ele.myShare, 100] }
+                                                                  ]
+                                                                }                                                   
+                                                              },
+                                                              else: {value: "$$value.value", flag:false}
+                                                            }
+                                                          },
+                                                          else: {
+                                                            $cond: {
+                                                              if: {
                                                                 $and: [
-                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
-                                                                  { $eq: ['$$value.flag', true] } 
+                                                                  { $eq: ["$$value.value", 0] },
+                                                                  { $eq: ['$$value.flag', false] }
                                                                 ]
                                                               },
-                                                            then : {
-                                                                value: { 
-                                                                    $cond:{
-                                                                        if:{ $eq: ["$$value.value", 0] },
-                                                                        then:{
-                                                                            $multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]
-                                                                        },
-                                                                        else:{
-                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
-                                                                        }
-                                                                    }
-                                                                },
-                                                                flag: true,
-                                                                
-                                                            },
-                                                            else : {
-                                                                value: {
-                                                                    $cond : {
-                                                                        if : { $eq : ["$$value.value" , 0]},
-                                                                        then : {
-                                                                            $cond:{
-                                                                                if : {$eq : ["$parentId", ele.id]},
-                                                                                then:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                                else:{$subtract : ["$$selection.exposure",{$multiply: ["$$selection.exposure", { $divide: ["$$this.uplineShare", 100] }]}]}
-                                                                            }
-                                                                        },
-                                                                        else :{$cond:{
-                                                                            if : {$eq : ['$$value.flag', true]},
-                                                                            then: {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                            else:"$$value.value"
-                                                                        }}
-                                                                        
-                                                                    }
-                                                                },
-                                                                flag:false
+                                                              then: {                                                    
+                                                                value: 
+                                                                {
+                                                                  $multiply: [
+                                                                    '$$selection.exposure',
+                                                                    { $divide: ["$$this.uplineShare", 100] }
+                                                                  ]
+                                                                }
+                                                              },
+                                                              else: {value: "$$value.value", flag: true}
                                                             }
+                                                          }
                                                         }
-                                                    }
+                                                      }
                                                 }
                                             },
                                         }
