@@ -315,7 +315,7 @@ if(data.data.odds2){
     // }
     console.log(creditDebitamount)
     console.log(exposureCHECk,check.exposureLimit,  parseFloat(exposureCHECk + creditDebitamount), check.exposureLimit , parseFloat(exposureCHECk + creditDebitamount) > check.exposureLimit)
-    if(check.exposureLimit && check.exposureLimit !== 0 && parseFloat(exposureCHECk + creditDebitamount) > check.exposureLimit){
+    if(check.exposureLimit && check.exposureLimit !== 0 && (parseFloat(exposureCHECk) + parseFloat(creditDebitamount)) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full dfdf"
     }
     if(check.availableBalance < (exposureCHECk + creditDebitamount)){
