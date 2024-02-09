@@ -2325,7 +2325,7 @@ io.on('connection', (socket) => {
                 multimarketstatus = true
             }
             let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-            // console.log(marketDetails.data.items)
+            console.log(marketDetails)
             // data.data.oldData = data.data.odds
             data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
             let thatMarket = marketDetails.data.items[0]
