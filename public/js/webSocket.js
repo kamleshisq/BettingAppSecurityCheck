@@ -9473,6 +9473,7 @@ socket.on('connect', () => {
 
           $(document).ready(function () {
             $(".set-stake-form-input2").change(function () {
+                console.log('WORKING')
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
