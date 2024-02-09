@@ -313,6 +313,10 @@ if(data.data.odds2){
     // if(WinAmount > limitData.max_profit){
     //     return 'Win Amount out of range'
     // }
+    console.log(exposureCHECk,check.exposureLimit )
+    if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
+        return "Please try again later, Your exposure Limit is full"
+    }
 
     // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
 //FOR BETPLACE PARENTSID ARRAY DATA
