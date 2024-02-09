@@ -13332,7 +13332,6 @@ socket.on('connect', () => {
                           .text(result2.toFixed(2));
                     }else{
                         $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
-                        console.log(newStake, "newStakenewStakenewStake")
                       $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', newStake);
 
                         $(this)
@@ -13413,6 +13412,7 @@ socket.on('connect', () => {
                           .text(result2.toFixed(2));
                     }else{
                         $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        console.log(newStake, "newStakenewStakenewStake")
                         $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', newStake);
                         $(this)
                           .closest("tr")
