@@ -340,9 +340,9 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     req.body.clintPL = parseFloat(req.body.clintPL) * -1
     console.log(req.body)
     // console.log(childUser)
-    if(childUser.role.role_level < parentUser.role.role_level){
-        return next(new AppError("you do not have permission to perform this action", 404))
-    } 
+    // if(childUser.role.role_level < parentUser.role.role_level){
+    //     return next(new AppError("you do not have permission to perform this action", 404))
+    // } 
     
     if(parentUser.availableBalance < req.body.amount){
         return next(new AppError("Insufficient Credit Limit !"))
