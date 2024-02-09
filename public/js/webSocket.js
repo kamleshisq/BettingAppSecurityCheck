@@ -9473,7 +9473,6 @@ socket.on('connect', () => {
 
           $(document).ready(function () {
             $(".set-stake-form-input2").change(function () {
-                console.log('WORKING')
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
@@ -13333,6 +13332,7 @@ socket.on('connect', () => {
                           .text(result2.toFixed(2));
                     }else{
                         $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        console.log(newStake, "newStakenewStakenewStake")
                       $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', newStake);
 
                         $(this)
