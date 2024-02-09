@@ -7445,7 +7445,7 @@ io.on('connection', (socket) => {
                             },
                             totalWinAmount:{
                                 $reduce:{
-                                    input:'$parentArray',
+                                    input: { $reverseArray: '$parentArray' },
                                     initialValue: { value: 0, flag: true },
                                     in : { 
                                         $cond:{
@@ -7661,7 +7661,7 @@ io.on('connection', (socket) => {
                             uniqueRuns:"$uniqueRuns",
                             totalAmount:{
                                 $reduce:{
-                                    input:'$parentArray',
+                                    input: { $reverseArray: '$parentArray' },
                                     initialValue: { value: 0, flag: true },
                                     in : { 
                                         $cond:{
@@ -7750,7 +7750,7 @@ io.on('connection', (socket) => {
                             },
                             totalWinAmount:{
                                 $reduce:{
-                                    input:'$parentArray',
+                                    input: { $reverseArray: '$parentArray' },
                                     initialValue: { value: 0, flag: true },
                                     in : { 
                                         $cond:{
