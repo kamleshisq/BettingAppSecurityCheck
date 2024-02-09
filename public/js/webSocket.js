@@ -8321,6 +8321,7 @@ socket.on('connect', () => {
                     }
 
                 }else{
+                    let parentElement = this.parentNode
                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     <i class="fa-solid fa-lock"></i>
                   </span>`
