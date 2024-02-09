@@ -2314,7 +2314,7 @@ io.on('connection', (socket) => {
         // console.log(delay, "delay")
         let delayReal = 0
         if(delay[0] && delay[0].Limits!= 0 && delay[0].Limits.delay){
-            delayReal = delay[0].Limits.delay - 0.7 
+            delayReal = delay[0].Limits.delay - 0.5 
         }
         console.log(delayReal, "delayRealdelayRealdelayReal")
             setTimeout(async function(){
