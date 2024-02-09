@@ -391,10 +391,14 @@ exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
     try{
         if(req.body.status === "suspended"){
             await User.findByIdAndUpdate(req.body.id, {isActive:false, betLock:true})
+            await User.updateMany({parentUsers:req.body.id}, {isActive:false, betLock:true})
         }else if (req.body.status === "active"){
             await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:false})
+            await User.updateMany({parentUsers:req.body.id}, {isActive:true, betLock:false})
         }else if (req.body.status === "betLock"){
             await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:true})
+            let user = await User.updateMany({parentUsers:req.body.id}, {isActive:true, betLock:false})
+            console.log(user, "useruser")
         }
         res.status(200).json({
             status:"success"
@@ -403,25 +407,6 @@ exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
         console.log(err)
         return next(new AppError("Please try again leter", 404))
     }
-    // if(userDetails.isActive){
-    //     res.status(200).json({
-    //         status:"success",
-    //         message:"User is already active"
-    //     })
-    // }else{
-    //     const user = await User.findByIdAndUpdate(req.body.id, {isActive:true})
-    //     if(!user){
-    //         res.status(404).json({
-    //             status:'error',
-    //             message:"Ops, something went wrong please try again"
-    //         })
-    //     }else{
-    //         res.status(200).json({
-    //             status:"success",
-    //             user
-    //         })
-    //     }
-    // }
 })
 
 exports.getAllUser = catchAsync(async(req, res, next) => {
