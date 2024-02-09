@@ -318,7 +318,7 @@ if(data.data.odds2){
     if(check.exposureLimit && check.exposureLimit !== 0 && (parseFloat(exposureCHECk) + parseFloat(creditDebitamount)) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full dfdf"
     }
-    if(check.availableBalance < (exposureCHECk + creditDebitamount)){
+    if(check.availableBalance < (parseFloat(exposureCHECk) + parseFloat(creditDebitamount))){
         return "You do not have sufficient balance for bet"
     }
     if(check.availableBalance < creditDebitamount){
