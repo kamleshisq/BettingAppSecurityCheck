@@ -8486,8 +8486,8 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
-                    //   parentElement.classList.add("suspended");
-                    //       $(this).parent().find(".match-status-message").text("Suspended")
+                      parentElement.classList.add("suspended");
+                          $(this).parent().find(".match-status-message").text("Suspended")
                     }else if ((macLimitStatus != undefined && macLimitStatus < section.lay)){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -8500,10 +8500,7 @@ socket.on('connect', () => {
                         this.setAttribute("data-bs-toggle", "collapse");
                             parentElement.classList.remove("suspended")
                             $(this).parent().find(".match-status-message").text("")
-                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.lay}</b></span> <span> ${section.laySize}</span>`
-                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
-                        // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
                     }
                     if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0")){
                         parentElement.classList.remove("suspended")
