@@ -8791,7 +8791,8 @@ socket.on('connect', () => {
         let clickTime
         $(document).ready(function () {
             $(".button").click(function () {
-                console.log('WORKING')
+                // console.log('WORKING')
+                $(this).closest('tr').next().find('.set-stake-form-input2').data('0')
                 clickTime = Date.now()
                 const urlParams = new URLSearchParams(window.location.search);
 
