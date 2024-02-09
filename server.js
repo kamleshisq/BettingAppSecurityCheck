@@ -7838,45 +7838,45 @@ io.on('connection', (socket) => {
                             }
                         }
                     },
-                    // {
-                    //     $project:{
-                    //         _id:0,
-                    //         secId: "$secId",
-                    //         runs: "$runs",
-                    //         totalAmount:"$totalAmount.value",
-                    //         totalWinAmount:"$totalWinAmount.value",
-                    //         uniqueRuns:"$uniqueRuns",
-                    //     }
-                    // },
-                    // {
-                    //     $group: {
-                    //       _id: null,
-                    //       uniqueRuns: { $addToSet: "$runs" },
-                    //       data: { $push: "$$ROOT" } 
-                    //     }
-                    //   },
-                    //   {
-                    //     $project: {
-                    //       _id: 0, 
-                    //       uniqueRuns: 1,
-                    //       data: 1 
-                    //     }
-                    //   },
-                    //   {
-                    //     $unwind: "$uniqueRuns" 
-                    //   },
-                    //   {
-                    //     $sort: {
-                    //       "uniqueRuns": 1 
-                    //     }
-                    //   },
-                    //   {
-                    //     $group: {
-                    //       _id: null,
-                    //       uniqueRuns: { $push: "$uniqueRuns" },
-                    //       data: { $push: "$data" }
-                    //     }
-                    //   },
+                    {
+                        $project:{
+                            _id:0,
+                            secId: "$secId",
+                            runs: "$runs",
+                            totalAmount:"$totalAmount.value",
+                            totalWinAmount:"$totalWinAmount.value",
+                            uniqueRuns:"$uniqueRuns",
+                        }
+                    },
+                    {
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $addToSet: "$runs" },
+                          data: { $push: "$$ROOT" } 
+                        }
+                      },
+                      {
+                        $project: {
+                          _id: 0, 
+                          uniqueRuns: 1,
+                          data: 1 
+                        }
+                      },
+                      {
+                        $unwind: "$uniqueRuns" 
+                      },
+                      {
+                        $sort: {
+                          "uniqueRuns": 1 
+                        }
+                      },
+                      {
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $push: "$uniqueRuns" },
+                          data: { $push: "$data" }
+                        }
+                      },
                     
                     
                     
