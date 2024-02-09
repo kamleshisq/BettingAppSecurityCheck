@@ -7880,7 +7880,7 @@ io.on('connection', (socket) => {
                     
                     
                   ])
-
+                  console.log(betData)
                   betData =  betData[0]
                 let dataToshow = []
                 for(let i = 0; i < betData.uniqueRuns.length; i++){ 
