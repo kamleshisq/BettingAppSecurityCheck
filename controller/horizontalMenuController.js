@@ -9,7 +9,7 @@ exports.createHorizontalMenu = catchAsybc(async(req, res, next) => {
         if(req.files.Icon.mimetype.startsWith('image')){
             const image = req.files.Icon
             // console.log(logo)
-            image.mv(`public/imgForHMenu/${req.body.menuName}.png`, (err)=>{
+            image.mv(`public/imgForHMenu/${req.body.menuName}.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
                 // console.log(err)
@@ -50,7 +50,7 @@ exports.updateHorizontalMenu = catchAsybc(async(req, res, next) => {
         if(req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
             // console.log(logo)
-            image.mv(`public/imgForHMenu/${req.body.menuName}.png`, (err)=>{
+            image.mv(`public/imgForHMenu/${req.body.menuName}.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
                 // console.log(err)
