@@ -9707,6 +9707,7 @@ socket.on('connect', () => {
                     let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                     let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                     let NewStake = newValue
+                    console.log(NewStake, "NewStakeNewStakeNewStake")
                     $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
                     let result
                     let element = $(this)
