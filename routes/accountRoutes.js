@@ -21,6 +21,7 @@ router.post("/withdrawlSettle", authController.checkPasscode ,accountController.
 router.post("/depositSettle", authController.checkPasscode ,accountController.depositSettle);
 router.post("/getUserAccStatement", accountController.getUserAccountStatement);
 router.get("/getUserAccStatement1", accountController.getUserAccountStatement1);
+router.post('/deleteUserChildAllDetails', accountController.deleteUserChildAllDetails);
 
 
 
