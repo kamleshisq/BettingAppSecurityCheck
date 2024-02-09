@@ -937,5 +937,8 @@ exports.deleteUserChildAllDetails = catchAsync(async(req, res, next) => {
         await accountStatement.deleteMany({userName:{$in:users}})
         await betModel.deleteMany({userName:{$in:users}})
         await User.deleteMany({userName:{$in:users}})
+        res.status(200).json({
+            status:'sucess'
+        })
     }
 })
