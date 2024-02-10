@@ -1097,11 +1097,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 date : -1
             }
         },
-        {
-            $group:{
-                _id:'$marketId'
-            }
-        }
+        // {
+        //     $group:{
+        //         _id:'$marketId'
+        //     }
+        // }
     ])
     // finalresult = await accountStatement.aggregate([
     //     {
