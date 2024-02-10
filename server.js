@@ -4966,10 +4966,10 @@ io.on('connection', (socket) => {
                     // console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
                     let commission = commissionAmount[0].totalCommission
                     user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
-                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{ myPL:-commission}})
+                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{ myPL:-commission, pointsWL:commission}})
                     // console.log(user)
                     for(let i = 0; i < user.parentUsers.length; i++){
-                        await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{pointsWL:commission, downlineBalance: commission}})
+                        await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
                     }
                     let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
@@ -8470,9 +8470,9 @@ io.on('connection', (socket) => {
                 try{
                     let commission = commissionAmount[0].totalCommission
                     await User.findByIdAndUpdate(operationUser._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
-                    let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{myPL:-commission}})
+                    let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{myPL:-commission,pointsWL:commission,}})
                     for(let i = 0; i < user.parentUsers.length; i++){
-                        await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{pointsWL:commission, downlineBalance: commission}})
+                        await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
                     }
                     let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
