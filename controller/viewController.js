@@ -1083,6 +1083,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         var day = date.getDate().toString().padStart(2, '0');
         return year + "-" + month + "-" + day;
     }
+    finalresult = await accountStatement.find({user_id:req.currentUser._id})
     // finalresult = await accountStatement.aggregate([
     //     {
     //         $match:{
