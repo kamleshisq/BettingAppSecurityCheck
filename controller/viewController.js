@@ -58,6 +58,7 @@ const footerInfoModel = require('../model/footerInfoModel');
 const { consoleBodyAndURL } = require('./walletController');
 const socialinfomodel = require('../model/socialMediaLinks');
 const findvisible = require('../utils/findvisible');
+const { date } = require('joi');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -1084,6 +1085,24 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         return year + "-" + month + "-" + day;
     }
     finalresult = await accountStatement.find({user_id:req.currentUser._id})
+    finalresult = await accountStatement.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser._id,
+                // date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+            }
+        },
+        {
+            sort:{
+                date : -1
+            }
+        },
+        {
+            $group:{
+                _id:'$marketId'
+            }
+        }
+    ])
     // finalresult = await accountStatement.aggregate([
     //     {
     //         $match:{
