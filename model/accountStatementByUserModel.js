@@ -62,6 +62,12 @@ const accountStatementByUser = mongoose.Schema({
     },
     gameId:{
         type:String
+    },
+    cacelMarketId:{
+        type:String
+    },
+    rollbackMarketId:{
+        type:String
     }
 })
 
