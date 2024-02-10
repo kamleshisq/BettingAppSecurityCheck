@@ -1085,166 +1085,166 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         return year + "-" + month + "-" + day;
     }
     finalresult = await accountStatement.find({user_id:req.currentUser._id})
-    finalresult = await accountStatement.aggregate([
-        {
-            $match:{
-                user_id:req.currentUser._id,
-                // date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
-            }
-        },
-        {
-            $sort:{
-                date : -1
-            }
-        },
-        {
-            $group:{
-                _id:'$marketId',
-                // balance:{$first:balance},
-                match:{$first:event},
-                creditDebitamount:{$sum:creditDebitamount},
-                transactionId:{$first:'$transactionId'}
-
-            }
-        }
-    ])
     // finalresult = await accountStatement.aggregate([
     //     {
     //         $match:{
     //             user_id:req.currentUser._id,
-    //             date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+    //             // date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
     //         }
     //     },
     //     {
+    //         $sort:{
+    //             date : -1
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:'$marketId',
+    //             balance:{$first:balance},
+    //             match:{$first:event},
+    //             creditDebitamount:{$sum:creditDebitamount},
+    //             transactionId:{$first:'$transactionId'}
 
+    //         }
     //     }
     // ])
-    // async function getmarketwiseaccdata (limit,skip){
-    //      let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
-    //      let c = 0
-    //      if(userAcc.length == 0){
-    //         userAccflage = false
-    //      }
-    //      if(userAccflage){
-    //          for(let i = 0;i<userAcc.length;i++){
-    //             c++
-    //              if(userAcc[i].gameId){
-    //                 finalresult.push(userAcc[i])
-    //                 if(finalresult.length >= 20){
-    //                         break
-    //                 }
-    //              }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
-    //                 if(marketidarray.includes(userAcc[i].marketId)){
-    //                     continue;
-    //                 }
-    //                  let bet = await betModel.aggregate([
-    //                      {
-    //                          $match:{
-    //                              userId:req.currentUser._id.toString(),
-    //                              eventId:{$exists:'eventId'},
-    //                              $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-    //                              closingBalance:{$exists:true}
+    finalresult = await accountStatement.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser._id,
+                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+            }
+        },
+        {
 
-    //                          }
-    //                      },
-    //                      {
-    //                         $sort:{settleDate:-1}
-    //                      },
-    //                      {
-    //                          $group:{
-    //                              _id:{
-    //                                  eventId:"$eventId",
-    //                                  marketId:"$marketId",
-    //                                  date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-    //                              },
-    //                              match:{$first:'$match'},
-    //                              marketName:{$first:'$marketName'},
-    //                              stake:{$first:'$Stake'},
-    //                              creditDebitamount:{$sum:'$returns'},
-    //                              balance:{$first:'$closingBalance'},
-    //                              transactionId:{$first:'$transactionId'}
-    //                          }
-    //                      },
-    //                      {
-    //                         $sort:{settleDate:-1}
-    //                      },
-    //                      {
-    //                         $limit:(20 - finalresult.length)
-    //                      }
-    //                  ])
-    //                  if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-    //                      marketidarray.push(bet[0]._id.marketId)
-    //                      finalresult = finalresult.concat(bet)
-    //                      if(finalresult.length >= 20){
-    //                          break
-    //                      }
-    //                  }
-    //              }else if(userAcc[i].marketId){
-    //                 if(marketidarray.includes(userAcc[i].marketId)){
-    //                     continue;
-    //                 }
-    //                  let bet = await betModel.aggregate([
-    //                      {
-    //                          $match:{
-    //                              userId:req.currentUser._id.toString(),
-    //                              $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-    //                              closingBalance:{$exists:true}
-    //                          }
-    //                      },
-    //                      {
-    //                         $sort:{settleDate:-1}
-    //                      },
-    //                      {
-    //                          $group:{
-    //                              _id:{
-    //                                  eventId:"$eventId",
-    //                                  marketId:"$marketId",
-    //                                  date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-    //                              },
-    //                              match:{$first:'$match'},
-    //                              marketName:{$first:'$marketName'},
-    //                              stake:{$first:'$Stake'},
-    //                              creditDebitamount:{$sum:'$returns'},
-    //                              balance:{$first:'$closingBalance'},
-    //                              transactionId:{$first:'$transactionId'}
-    //                          }
-    //                      },
-    //                      {
-    //                         $sort:{settleDate:-1}
-    //                      },
-    //                      {
-    //                         $limit:(20 - finalresult.length)
-    //                      }
-    //                  ])
-    //                  if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-    //                      marketidarray.push(bet[0]._id.marketId)
-    //                      finalresult = finalresult.concat(bet)
-    //                      if(finalresult.length >= 20){
-    //                          break
-    //                      }
-    //                  }
-    //              }else{
-    //                  finalresult.push(userAcc[i])
-    //                  if(finalresult.length >= 20){
-    //                          break
-    //                  }
-    //              }
+        }
+    ])
+    async function getmarketwiseaccdata (limit,skip){
+         let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
+         let c = 0
+         if(userAcc.length == 0){
+            userAccflage = false
+         }
+         if(userAccflage){
+             for(let i = 0;i<userAcc.length;i++){
+                c++
+                 if(userAcc[i].gameId){
+                    finalresult.push(userAcc[i])
+                    if(finalresult.length >= 20){
+                            break
+                    }
+                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
+                    if(marketidarray.includes(userAcc[i].marketId)){
+                        continue;
+                    }
+                     let bet = await betModel.aggregate([
+                         {
+                             $match:{
+                                 userId:req.currentUser._id.toString(),
+                                 eventId:{$exists:'eventId'},
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 closingBalance:{$exists:true}
+
+                             }
+                         },
+                         {
+                            $sort:{settleDate:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$first:'$closingBalance'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{settleDate:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].marketId){
+                    if(marketidarray.includes(userAcc[i].marketId)){
+                        continue;
+                    }
+                     let bet = await betModel.aggregate([
+                         {
+                             $match:{
+                                 userId:req.currentUser._id.toString(),
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 closingBalance:{$exists:true}
+                             }
+                         },
+                         {
+                            $sort:{settleDate:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$first:'$closingBalance'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{settleDate:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else{
+                     finalresult.push(userAcc[i])
+                     if(finalresult.length >= 20){
+                             break
+                     }
+                 }
                  
-    //          }
-    //      }
-    //     return c
-    // }
-    // let j = 0
-    // let skipvalue = 0;
-    // while(finalresult.length < 20){
-    //     skip = j * limit
-    //     let result = await getmarketwiseaccdata(limit,skip)
-    //     skipvalue = skipvalue + result
-    //     if(!userAccflage){
-    //         break
-    //     }
-    //     j++
-    // }
+             }
+         }
+        return c
+    }
+    let j = 0
+    let skipvalue = 0;
+    while(finalresult.length < 20){
+        skip = j * limit
+        let result = await getmarketwiseaccdata(limit,skip)
+        skipvalue = skipvalue + result
+        if(!userAccflage){
+            break
+        }
+        j++
+    }
     console.log(finalresult,'finalresul')
     skipvalue = 0
         res.status(200).render("./userSideEjs/AccountStatements/main", {
