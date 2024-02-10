@@ -1097,16 +1097,16 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                 date : -1
             }
         },
-        {
-            $group:{
-                _id:'$marketId',
-                balance:{$first:balance},
-                match:{$first:event},
-                creditDebitamount:{$sum:creditDebitamount},
-                transactionId:{$first:'$transactionId'}
+        // {
+        //     $group:{
+        //         _id:'$marketId',
+        //         balance:{$first:balance},
+        //         match:{$first:event},
+        //         creditDebitamount:{$sum:creditDebitamount},
+        //         transactionId:{$first:'$transactionId'}
 
-            }
-        }
+        //     }
+        // }
     ])
     // finalresult = await accountStatement.aggregate([
     //     {
