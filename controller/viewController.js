@@ -1085,25 +1085,29 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         return year + "-" + month + "-" + day;
     }
     finalresult = await accountStatement.find({user_id:req.currentUser._id})
-    // finalresult = await accountStatement.aggregate([
-    //     {
-    //         $match:{
-    //             user_id:req.currentUser._id,
-    //             // date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
-    //         }
-    //     },
-    //     {
-    //         $sort:{
-    //             date : -1
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:'$marketId',
+    finalresult = await accountStatement.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser._id,
+                // date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+            }
+        },
+        {
+            $sort:{
+                date : -1
+            }
+        },
+        {
+            $group:{
+                _id:'$marketId',
+                balance:{$first:balance},
+                match:{$first:event},
+                creditDebitamount:{$sum:creditDebitamount},
+                transactionId:{$first:'$transactionId'}
 
-    //         }
-    //     }
-    // ])
+            }
+        }
+    ])
     // finalresult = await accountStatement.aggregate([
     //     {
     //         $match:{
