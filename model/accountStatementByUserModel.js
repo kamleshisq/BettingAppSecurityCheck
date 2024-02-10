@@ -68,6 +68,12 @@ const accountStatementByUser = mongoose.Schema({
     },
     rollbackMarketId:{
         type:String
+    },
+    event:{
+        type:String
+    },
+    marketType:{
+        type:String
     }
 })
 
