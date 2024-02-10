@@ -8469,7 +8469,7 @@ io.on('connection', (socket) => {
             if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
                     let commission = commissionAmount[0].totalCommission
-                    await User.findByIdAndUpdate(operationUser._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:-commission}})
+                    await User.findByIdAndUpdate(operationUser._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
                     let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{myPL:-commission}})
                     for(let i = 0; i < user.parentUsers.length; i++){
                         await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
