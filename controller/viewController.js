@@ -58,7 +58,6 @@ const footerInfoModel = require('../model/footerInfoModel');
 const { consoleBodyAndURL } = require('./walletController');
 const socialinfomodel = require('../model/socialMediaLinks');
 const findvisible = require('../utils/findvisible');
-const { date } = require('joi');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -1084,41 +1083,17 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         var day = date.getDate().toString().padStart(2, '0');
         return year + "-" + month + "-" + day;
     }
-    finalresult = await accountStatement.find({user_id:req.currentUser._id})
     // finalresult = await accountStatement.aggregate([
     //     {
     //         $match:{
     //             user_id:req.currentUser._id,
-    //             // date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+    //             date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
     //         }
     //     },
     //     {
-    //         $sort:{
-    //             date : -1
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:'$marketId',
-    //             balance:{$first:balance},
-    //             match:{$first:event},
-    //             creditDebitamount:{$sum:creditDebitamount},
-    //             transactionId:{$first:'$transactionId'}
 
-    //         }
     //     }
     // ])
-    finalresult = await accountStatement.aggregate([
-        {
-            $match:{
-                user_id:req.currentUser._id,
-                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
-            }
-        },
-        {
-
-        }
-    ])
     async function getmarketwiseaccdata (limit,skip){
          let userAcc = await accountStatement.find({user_id:req.currentUser._id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
@@ -1246,7 +1221,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         j++
     }
     console.log(finalresult,'finalresul')
-    skipvalue = 0
+    // skipvalue = 0
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
         data:finalresult,
