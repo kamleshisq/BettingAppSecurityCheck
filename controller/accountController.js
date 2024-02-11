@@ -242,7 +242,8 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
             realCommissionForChild = settleCommissionforChiled[0].totalCommission
         }
         console.log(realCommissionForChild, "realCommissionForChild")
-        let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        // let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        let debitAmountForP = -childUser.pointsWL + realCommission 
         console.log(debitAmountForP)
         // let debitAmountForP = -childUser.pointsWL
         lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
