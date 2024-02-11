@@ -363,7 +363,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     let lifeTimePl = 0
     console.log(childUser, "childUserchildUser")
     if(childUser.roleName !== 'user'){
-        let userNameArray = await User.distinct('userName', {parentUsers:childUser.id})
+        let userNameArray = await User.distinct('userName', {parent_id:childUser.id})
         console.log(userNameArray)
         let settleCommissionforChiled = await commissionNewModel.aggregate([
             {
@@ -386,8 +386,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
             realCommissionForChild = settleCommissionforChiled[0].totalCommission
         }
         console.log(realCommissionForChild, "realCommissionForChild")
-        // let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
-        let debitAmountForP = -childUser.pointsWL 
+        let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        // let debitAmountForP = -childUser.pointsWL 
         console.log(debitAmountForP)
         lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
