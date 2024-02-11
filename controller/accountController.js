@@ -401,7 +401,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     console.log(realCommission, "settleCommissionsettleCommissionsettleCommissionsettleCommission")
     console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
     lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
-    console.log(lifeTimePl, req.body.clintPL,"lifeTimePlFINAL", totlaCommissionUSer)
+    console.log(lifeTimePl, req.body.clintPL,"lifeTimePlFINAL")
     // await commissionNewModel.updateMany({userId : childUser.id,commissionStatus : 'Claimed',settleStatus : false}, {settleStatus:true}) 
     // let UserArray = await User.distinct('userName', {parentUsers:childUser.id})
     // await commissionNewModel.updateMany({userName : {$in:UserArray}, commissionStatus : 'Claimed', parrentArrayThatClaid : {$nin:[childUser.id]}}, {$push:{parrentArrayThatClaid:childUser.id}})
