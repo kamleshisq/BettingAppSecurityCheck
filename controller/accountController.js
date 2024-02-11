@@ -409,7 +409,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId:childUser.id,
-                setleCOMMISSIONMY:true
+                setleCOMMISSIONMY:true,
+                commissionStatus: 'Claimed'
             }
         },{
             $group:{
