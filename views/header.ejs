@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  document.documentElement.className = 'js';
+</script>
 <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
@@ -97,6 +100,22 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
 
 </head>
 <body id="body-pd" class="fix-width-body" >
+  <%let JsStatus=false%>
+  <script>
+    // If JavaScript is enabled, render the full page
+    if (document.documentElement.classList.contains('js')) {
+      JsStatus = true
+        // document.write('<h1>JavaScript is enabled!</h1>');
+        // Place your regular HTML content here
+    } else {
+        // If JavaScript is not enabled, render a blank page
+        document.write('<h1>JavaScript is not enabled!</h1>');
+        JsStatus = false
+        // Optionally, redirect to a blank page
+        // window.location.href = 'blank.html';
+    }
+</script>
+<%if(JsStatus){%>
   <div class="container-fluid">
   <header class="header body-pd" id="header" data-logindata="<%=JSON.stringify(loginData)%>">
     <div class="menu-top social-media ">
@@ -419,6 +438,7 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
         </nav>
     </div>
   </header>
+<%}%>
 
 <script>
   // var currentDate = date.moment().format('D-MM-YYYY');
