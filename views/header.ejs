@@ -468,6 +468,11 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
     $(this).find("ul").toggleClass("open-ul");
   })
 </script>
+<script>
+  document.addEventListener('contextmenu', event => {
+    event.preventDefault();
+  });
+</script>
 
 <!-- <script>
   document.addEventListener("DOMContentLoaded", function() {
