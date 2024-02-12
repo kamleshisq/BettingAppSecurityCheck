@@ -76,8 +76,10 @@ async function voidBET(data){
                     "Remark":"-",
                     "stake": allBetWithMarketId[bets].Stake,
                     "transactionId":`${allBetWithMarketId[bets].transactionId}`,
-                    "cacelMarketId":bets[bet].marketId,
-                    "uniqueTransectionIDbyMARKETID":uniqueMarketId
+                    "cacelMarketId":allBetWithMarketId[bets].marketId,
+                    "uniqueTransectionIDbyMARKETID":uniqueMarketId,
+                    "marketType":`${allBetWithMarketId[bets].marketName}`,
+                    "event":`${allBetWithMarketId[bets].match}`,
                 }
 
                 let debitAmountForP = debitCreditAmount
@@ -129,8 +131,10 @@ async function voidBET(data){
                     "Remark":"-",
                     "stake": allBetWithMarketId[bets].Stake,
                     "transactionId":`${allBetWithMarketId[bets].transactionId}`,
-                    "cacelMarketId":bets[bet].marketId,
-                    "uniqueTransectionIDbyMARKETID":uniqueMarketId
+                    "cacelMarketId":allBetWithMarketId[bets].marketId,
+                    "uniqueTransectionIDbyMARKETID":uniqueMarketId,
+                    "marketType":`${allBetWithMarketId[bets].marketName}`,
+                    "event":`${allBetWithMarketId[bets].match}`,
                 }
 
                 let debitAmountForP = debitCreditAmount
