@@ -99,14 +99,7 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
 
 </head>
-<noscript>
-  <style type="text/css">
-      .fix-width-body {display:none;}
-  </style>
-  <div class="noscriptmsg">
-  You don't have javascript enabled.  Good luck with that.
-  </div>
-</noscript>
+
 <body id="body-pd" class="fix-width-body" >
   <script>
     // If JavaScript is enabled, render the full page
@@ -122,6 +115,14 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
         // window.location.href = 'blank.html';
     }
 </script>
+<noscript>
+  <style type="text/css">
+      .container-fluid {display:none;}
+  </style>
+  <div class="noscriptmsg">
+  You don't have javascript enabled.  Good luck with that.
+  </div>
+</noscript>
 
   <div class="container-fluid">
   <header class="header body-pd" id="header" data-logindata="<%=JSON.stringify(loginData)%>">
