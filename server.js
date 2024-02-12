@@ -2417,6 +2417,12 @@ io.on('connection', (socket) => {
             let operatoruserName = data.LOGINDATA.LOGINUSER.userName
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPasscode(data.data.password, user.passcode)
+            function generateUniqueIdByMARKETID() {
+                const timestamp = new Date().getTime();
+                const uniqueId = data.id + '-' + timestamp + '-' + uuid.v4();
+                return uniqueId
+              }
+              let uniqueMarketId = generateUniqueIdByMARKETID()
             if(passcheck){
                 let bet = await Bet.findById(data.id)
                 if(bet.status === "OPEN" || bet.status === "Alert"){
@@ -2438,7 +2444,11 @@ io.on('connection', (socket) => {
                     "role_type" : user.role_type,
                     "Remark":"-",
                     "stake": bet.Stake,
-                    "transactionId":`${bet.transactionId}`
+                    "transactionId":`${bet.transactionId}`,
+                    "marketType":`${bet.marketName}`,
+                    "cacelMarketId":bet.marketId,
+                    "event":`${bet.match}`,
+                    "uniqueTransectionIDbyMARKETID":uniqueMarketId
                 }
 
                 let debitAmountForP = debitCreditAmount
@@ -2490,7 +2500,11 @@ io.on('connection', (socket) => {
                         "role_type" : user.role_type,
                         "Remark":"-",
                         "stake": bet.Stake,
-                        "transactionId":`${bet.transactionId}`
+                        "transactionId":`${bet.transactionId}`,
+                        "marketType":`${bet.marketName}`,
+                        "cacelMarketId":bet.marketId,
+                        "event":`${bet.match}`,
+                        "uniqueTransectionIDbyMARKETID":uniqueMarketId
                     }
     
                     let debitAmountForP = debitCreditAmount
