@@ -120,11 +120,20 @@
     </style>
     <%} %>
   </head>
+  <noscript>
+    <style type="text/css">
+        .container-fluid {display:none;}
+    </style>
+    <div class="noscriptmsg">
+    You don't have javascript enabled.  Good luck with that.
+    </div>
+  </noscript>
   <%if(loginData){%>
-    <body>
+    <body class="BODY">
       <%}else{%>
-    <body >
+    <body class="BODY">
   <%}%>
+ 
   <div class="main-loader"><div class="loader"></div></div>
     <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <div class="popup" id="popup-1">
