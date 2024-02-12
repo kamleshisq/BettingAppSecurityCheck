@@ -115,6 +115,7 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
         // window.location.href = 'blank.html';
     }
 </script>
+<%console.log(JsStatus)%>
 <%if(JsStatus){%>
   <div class="container-fluid">
   <header class="header body-pd" id="header" data-logindata="<%=JSON.stringify(loginData)%>">
