@@ -9,6 +9,7 @@ const newCommissionModel = require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
 const runnerDataModel = require("../model/runnersData");
 const commitssionData = require('./createNetLoosingCommission');
+const uuid = require('uuid');
 const { use } = require('../app');
 
 async function mapBet(data){
@@ -65,8 +66,12 @@ async function mapBet(data){
         marketName : `${bets[0].marketName}`
       }
       await settlementHistory.create(dataForHistory)
-
-      
+      function generateUniqueIdByMARKETID() {
+        const timestamp = new Date().getTime();
+        const uniqueId = data.id + '-' + timestamp + '-' + uuid.v4();
+        return uniqueId
+      }
+      let uniqueMarketId = generateUniqueIdByMARKETID()
 
       try{ 
         for(const bet in bets){ 
@@ -169,7 +174,8 @@ async function mapBet(data){
                 "transactionId":`${bets[bet].transactionId}`,
                 "marketId":`${bets[bet].marketId}`,
                 "event":`${bets[bet].match}`,
-                "marketType":`${bets[bet].marketName}`
+                "marketType":`${bets[bet].marketName}`,
+                "uniqueTransectionIDbyMARKETID":uniqueMarketId
               })
 
 
@@ -316,7 +322,8 @@ async function mapBet(data){
                   "transactionId":`${bets[bet].transactionId}`,
                   "marketId":`${bets[bet].marketId}`,
                   "event":`${bets[bet].match}`,
-                  "marketType":`${bets[bet].marketName}`
+                  "marketType":`${bets[bet].marketName}`,
+                  "uniqueTransectionIDbyMARKETID":uniqueMarketId
                 })
             }else if (((parseInt(bets[bet].selectionName.split('@')[1],10) <=  parseInt(data.result, 10)) && bets[bet].bettype2 == 'BACK') || ((parseInt(bets[bet].selectionName.split('@')[1],10) > parseInt(data.result, 10)) && bets[bet].bettype2 == "LAY")){
                 console.log('FANCY') 
@@ -377,7 +384,8 @@ async function mapBet(data){
                           "transactionId":`${bets[bet].transactionId}`,
                           "marketId":`${bets[bet].marketId}`,
                           "event":`${bets[bet].match}`,
-                          "marketType":`${bets[bet].marketName}`
+                          "marketType":`${bets[bet].marketName}`,
+                          "uniqueTransectionIDbyMARKETID":uniqueMarketId
                         })
             }else{
                 console.log('LOOSE')
@@ -433,7 +441,8 @@ async function mapBet(data){
                     "transactionId":`${bets[bet].transactionId}`,
                     "marketId":`${bets[bet].marketId}`,
                     "event":`${bets[bet].match}`,
-                    "marketType":`${bets[bet].marketName}`
+                    "marketType":`${bets[bet].marketName}`,
+                    "uniqueTransectionIDbyMARKETID":uniqueMarketId
                 })
 
                 //EntryWise Loosing Commiission
