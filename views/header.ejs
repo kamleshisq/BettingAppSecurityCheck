@@ -100,7 +100,6 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
 
 </head>
 <body id="body-pd" class="fix-width-body" >
-  <%let JsStatus=false%>
   <script>
     // If JavaScript is enabled, render the full page
     if (document.documentElement.classList.contains('js')) {
@@ -115,8 +114,7 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
         // window.location.href = 'blank.html';
     }
 </script>
-<%console.log(JsStatus)%>
-<%if(JsStatus){%>
+
   <div class="container-fluid">
   <header class="header body-pd" id="header" data-logindata="<%=JSON.stringify(loginData)%>">
     <div class="menu-top social-media ">
@@ -439,7 +437,6 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
         </nav>
     </div>
   </header>
-<%}%>
 
 <script>
   // var currentDate = date.moment().format('D-MM-YYYY');
