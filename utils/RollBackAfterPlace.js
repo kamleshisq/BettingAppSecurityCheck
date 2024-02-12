@@ -53,6 +53,12 @@ async function rollBack(data){
           }
           await settlementHistory.create(dataForHistory)
         // console.log(dataForHistory)
+        function generateUniqueIdByMARKETID() {
+            const timestamp = new Date().getTime();
+            const uniqueId = data.id + '-' + timestamp + '-' + uuid.v4();
+            return uniqueId
+          }
+          let uniqueMarketId = generateUniqueIdByMARKETID()
         try{
             for(const bets in allBetWithMarketId){
                 if(allBetWithMarketId[bets].status === 'WON'){
@@ -76,7 +82,8 @@ async function rollBack(data){
                         "type":'ROLLBACK',
                         "marketType":`${allBetWithMarketId[bets].marketName}`,
                         "event":`${allBetWithMarketId[bets].match}`,
-                        "rollbackMarketId":`${allBetWithMarketId[bets].marketId}`
+                        "rollbackMarketId":`${allBetWithMarketId[bets].marketId}`,
+                        "uniqueTransectionIDbyMARKETID":uniqueMarketId
                     }
 
                     let debitAmountForP = VoidAmount
@@ -135,7 +142,9 @@ async function rollBack(data){
                         "type":'ROLLBACK',
                         "marketType":`${allBetWithMarketId[bets].marketName}`,
                         "event":`${allBetWithMarketId[bets].match}`,
-                        "rollbackMarketId":`${allBetWithMarketId[bets].marketId}`
+                        "rollbackMarketId":`${allBetWithMarketId[bets].marketId}`,
+                        "uniqueTransectionIDbyMARKETID":uniqueMarketId
+                        
                     }
 
                     let debitAmountForP = VoidAmount
