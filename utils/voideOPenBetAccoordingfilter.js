@@ -87,6 +87,8 @@ async function voidbetOPENFORTIMELYVOIDE(data){
                                 "stake": bets[bet].Stake,
                                 "transactionId":`${bets[bet].transactionId}`,
                                 "cacelMarketId":bets[bet].marketId,
+                                "marketType":`${bets[bet].marketName}`,
+                                "event":`${bets[bet].match}`,
                                 "uniqueTransectionIDbyMARKETID":uniqueMarketId
                             }
                             let debitAmountForP = debitCreditAmount
@@ -139,6 +141,8 @@ async function voidbetOPENFORTIMELYVOIDE(data){
                                 "stake": bets[bet].Stake,
                                 "transactionId":`${bets[bet].transactionId}`,
                                 "cacelMarketId":bets[bet].marketId,
+                                "marketType":`${bets[bet].marketName}`,
+                                "event":`${bets[bet].match}`,
                                 "uniqueTransectionIDbyMARKETID":uniqueMarketId
                             }
                             let debitAmountForP = debitCreditAmount
