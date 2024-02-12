@@ -1188,7 +1188,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $sort:{settleDate:-1}
+                            $sort:{date:-1}
                          },
                          {
                             $limit:(20 - finalresult.length)
@@ -1233,7 +1233,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              }
                          },
                          {
-                            $sort:{settleDate:-1}
+                            $sort:{date:-1}
                          },
                          {
                             $limit:(20 - finalresult.length)
