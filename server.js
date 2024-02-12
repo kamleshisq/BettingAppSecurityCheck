@@ -9930,7 +9930,7 @@ io.on('connection', (socket) => {
         // console.log(data)
         if(data.LOGINDATA.LOGINUSER && data.LOGINDATA.IP){
             console.log(data.LOGINDATA.IP, "data.LOGINDATA.IP")
-            let ip = data.LOGINDATA.IP.split('::ffff:')[1];
+            let ip = req.socket.remoteAddress;
             let eventId = data.search.split('=')[1]
             let StreamData = await streamModel.findOne({eventId:eventId})
             let srs = ''
