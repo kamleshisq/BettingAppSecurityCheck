@@ -7,7 +7,7 @@ const Decimal = require('decimal.js');
 const commissionNewModel = require('../model/commissioNNModel');
 const revokeCommission = require('./commissionRevocke');
 const revockCommissionFromBetId = require('./revockCommissionFromBetId');
-
+const uuid = require('uuid');
 async function voidBET(data){
 //  console.log(data, 444)  
     let allBetWithMarketId = await Bet.find({marketId:data.id})
@@ -51,6 +51,12 @@ async function voidBET(data){
       }
       await settlementHistory.create(dataForHistory)
     // console.log(dataForHistory, 121212)
+    function generateUniqueIdByMARKETID() {
+        const timestamp = new Date().getTime();
+        const uniqueId = allBetWithMarketId[0].marketId + '-' + timestamp + '-' + uuid.v4();
+        return uniqueId
+      }
+      let uniqueMarketId = generateUniqueIdByMARKETID()
     try{
         for(const bets in allBetWithMarketId){
             console.log('WORKING wwwwwwwww')
@@ -69,7 +75,9 @@ async function voidBET(data){
                     "role_type" : user.role_type,
                     "Remark":"-",
                     "stake": allBetWithMarketId[bets].Stake,
-                    "transactionId":`${allBetWithMarketId[bets].transactionId}`
+                    "transactionId":`${allBetWithMarketId[bets].transactionId}`,
+                    "cacelMarketId":bets[bet].marketId,
+                    "uniqueTransectionIDbyMARKETID":uniqueMarketId
                 }
 
                 let debitAmountForP = debitCreditAmount
@@ -120,7 +128,9 @@ async function voidBET(data){
                     "role_type" : user.role_type,
                     "Remark":"-",
                     "stake": allBetWithMarketId[bets].Stake,
-                    "transactionId":`${allBetWithMarketId[bets].transactionId}`
+                    "transactionId":`${allBetWithMarketId[bets].transactionId}`,
+                    "cacelMarketId":bets[bet].marketId,
+                    "uniqueTransectionIDbyMARKETID":uniqueMarketId
                 }
 
                 let debitAmountForP = debitCreditAmount
