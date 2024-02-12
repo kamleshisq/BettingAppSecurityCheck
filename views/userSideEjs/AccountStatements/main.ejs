@@ -110,7 +110,11 @@
                                       
                                   <%}else if(data[i]._id.marketId){%>
                                     <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
-                                      <td title="Transaction">Bet Settlement</td>
+                                      <%if(data[i]._id.rollbackMarketId){%>
+                                        <td title="Transaction">Bet Settlement</td>
+                                      <%}else{%>
+                                        <td title="Transaction">Open Bet Rollback</td>
+                                      <%}%>
                                         <%if(data[i].match){%>
                                           <td title="Event"><%=data[i].match%></td>
                                         <%}else{%>
