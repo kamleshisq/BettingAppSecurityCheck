@@ -1176,7 +1176,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  _id:{
                                      eventId:"$eventId",
                                      marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} },
+                                     uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID'
                                  },
                                  match:{$first:'$event'},
                                  marketName:{$first:'$marketType'},
