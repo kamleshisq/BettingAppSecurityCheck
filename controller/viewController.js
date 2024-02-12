@@ -1174,10 +1174,10 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          {
                              $group:{
                                  _id:{
+                                     uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                      eventId:"$eventId",
                                      marketId:"$marketId",
                                      date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} },
-                                     uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID'
                                  },
                                  match:{$first:'$event'},
                                  marketName:{$first:'$marketType'},
@@ -1219,6 +1219,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          {
                              $group:{
                                  _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                      eventId:"$eventId",
                                      marketId:"$rollbackMarketId",
                                      date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
