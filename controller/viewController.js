@@ -1194,8 +1194,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0].uniqueTransectionIDbyMARKETID)){
-                         marketidarray.push(bet[0].uniqueTransectionIDbyMARKETID)
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break
@@ -1240,8 +1240,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0].uniqueTransectionIDbyMARKETID)){
-                         rollBackMarketIDArray.push(bet[0].uniqueTransectionIDbyMARKETID)
+                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break
