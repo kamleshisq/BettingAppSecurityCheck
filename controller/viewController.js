@@ -2816,7 +2816,7 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {/*
 
 
 
-        let marketIds = ["1.224730357"];//await getmarketIds()
+        let marketIds = ["1.224469353"];//await getmarketIds()
         let body = JSON.stringify(marketIds)
         // console.log(marketIds,'marketIds')
         
