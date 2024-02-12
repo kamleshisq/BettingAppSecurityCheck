@@ -2839,7 +2839,7 @@ exports.getBetLimitPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSportList = catchAsync(async(req, res, next) => {
-    var fullUrl = 'http://127.0.0.1:8084/api/v1/getsportdata';
+    var fullUrl = 'http://127.0.0.1:8883/api/v1/getsportdata';
     fetch(fullUrl, {
         method: 'GET',
         headers:{
@@ -2859,7 +2859,7 @@ exports.getSportList = catchAsync(async(req, res, next) => {
 
 
 exports.getCricketData = catchAsync(async(req, res, next) => {
-    var fullUrl = "http://127.0.0.1:8084/api/v1/getcricketdata";
+    var fullUrl = "http://127.0.0.1:8883/api/v1/getcricketdata";
     fetch(fullUrl, {
         method: 'GET',
         headers:{
@@ -2893,7 +2893,7 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
 	
     let marketids = ["1.224469353"];
     // console.log(body)
-    var fullUrl = 'http://127.0.0.1:8084/api/v1/getmarketdata';
+    var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 

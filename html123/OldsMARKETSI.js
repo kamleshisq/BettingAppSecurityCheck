@@ -5,7 +5,7 @@ async function getmarketdetails(array){
     let marketids = array;
     try{
 
-        var fullUrl = 'http://127.0.0.1:8084/api/v1/getmarketdata';
+        var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
         await fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -22,7 +22,7 @@ async function getmarketdetails(array){
         })
     }catch(err){
         console.log(err, "fetchERROr")
-        var fullUrl = 'http://127.0.0.1:8084/api/v1/getmarketdata';
+        var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
         await fetch(fullUrl, {
             method: 'POST',
             headers: { 
