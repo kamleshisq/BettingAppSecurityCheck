@@ -7,33 +7,14 @@
 <link rel="stylesheet" type="text/css" href="http://dev.ollscores.com/css/responsive.css" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="js/bundle.js"></script>
-<script>
-  document.documentElement.className = 'js';
-</script>
 </head>
 <body>
-  <script>
-    // If JavaScript is not enabled, redirect to a blank page
-    if (!document.documentElement.classList.contains('js')) {
-        // window.location.href = 'blank.html';
-        console.log('WORKING')
-    }
-</script>
-  <!-- <script>
-    // If JavaScript is enabled, render the full page
-    if (document.documentElement.classList.contains('js')) {
-      JsStatus = true
-        // document.write('<h1>JavaScript is enabled!</h1>');
-        // Place your regular HTML content here
-    } else {
-        // If JavaScript is not enabled, render a blank page
-        document.write('<h1>JavaScript is not enabled!</h1>');
-        JsStatus = false
-        // Optionally, redirect to a blank page
-        // window.location.href = 'blank.html';
-    }
-</script> -->
+  <%let jsStatus = false%>
+  <noscript>
+    Sorry, JavaScript is not supported by your browser!
+</noscript>
 
+<%if(jsStatus){%>
   <div class="loginForm-section">
     <div class="loginForm-wraper">
       <span class="adminSide-logo" >
@@ -56,6 +37,7 @@
       </form>
     </div>
 </div>
+<%}%>
 
 
 <!--================================== JAVASCRIPT ==================================-->
