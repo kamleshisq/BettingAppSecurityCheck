@@ -2330,82 +2330,84 @@ io.on('connection', (socket) => {
             data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
             let thatMarket = marketDetails.data.items[0]
             console.log(thatMarket, "thatMarket")
-            if(data.data.secId.startsWith('odd_Even_')){
-                if(data.data.secId == "odd_Even_Yes"){
-                    let odds
-                    if(thatMarket.odd){
-                        odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
-                        data.data.selectionName = thatMarket.title + "@" + odds
+            if(thatMarket){
+                if(data.data.secId.startsWith('odd_Even_')){
+                    if(data.data.secId == "odd_Even_Yes"){
+                        let odds
+                        if(thatMarket.odd){
+                            odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
+                            data.data.selectionName = thatMarket.title + "@" + odds
+                        }else{
+                            odds = thatMarket.yes_rate
+                            data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
+                        }
+                        data.data.odds = odds
+                        data.data.bettype2 = 'BACK'
+                        
                     }else{
-                        odds = thatMarket.yes_rate
-                        data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
+                        let odds
+                        if(thatMarket.even){
+                            odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
+                            data.data.selectionName = thatMarket.title + "@" + odds
+        
+                        }else{
+                            odds = thatMarket.no_rate
+                            data.data.selectionName = thatMarket.title + "@" + thatMarket.no
+        
+                        }
+                        data.data.odds = odds
+                        data.data.bettype2 = 'LAY'
                     }
-                    data.data.odds = odds
-                    data.data.bettype2 = 'BACK'
-                    
-                }else{
-                    let odds
-                    if(thatMarket.even){
-                        odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
-                        data.data.selectionName = thatMarket.title + "@" + odds
-    
+                }else if(thatMarket && thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
+                    let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
+                    let name
+                    if(data.data.secId.slice(-1) > 3){
+                        name = `layPrice${data.data.secId.slice(-1) - 3}`
+                        data.data.bettype2 = 'LAY'
                     }else{
-                        odds = thatMarket.no_rate
-                        data.data.selectionName = thatMarket.title + "@" + thatMarket.no
-    
+                        name = `backPrice${data.data.secId.slice(-1)}`
+                        data.data.bettype2 = 'BACK'
                     }
-                    data.data.odds = odds
-                    data.data.bettype2 = 'LAY'
+                    let odds = realodd[name];
+                    data.data.odds2 = odds
+                    data.data.secId = data.data.secId.slice(0,-1)
+                }else if(thatMarket && thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
+                    let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
+                    let name
+                    let name2
+                    if(data.data.secId.slice(-1) == 2){
+                        name = `layPrice${data.data.secId.slice(-1) - 3}`
+                        name =  name.slice(0, -2)
+        
+                        data.data.bettype2 = 'LAY'
+                        name2 = 'lay'
+                    }else{
+                        name = `backPrice${data.data.secId.slice(-1)}`
+                        name = name.slice(0, -1)
+                        data.data.bettype2 = 'BACK'
+                        name2 = 'back'
+                    }
+                    console.log(realodd, name)
+                    let odds = realodd[name2];
+                    data.data.odds2 = odds
+                    data.data.secId = data.data.secId.slice(0,-1)
                 }
-            }else if(thatMarket && thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
-                let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
-                let name
-                if(data.data.secId.slice(-1) > 3){
-                    name = `layPrice${data.data.secId.slice(-1) - 3}`
-                    data.data.bettype2 = 'LAY'
+                console.log(data ,'++++++==>DATA', multimarketstatus)
+                let result = await placeBet(data)
+                const endTimestamp = performance.now();
+                const elapsedTimeInSeconds = (endTimestamp - startTimestamp) / 1000;
+                console.log(`The 'placeBet' function took ${elapsedTimeInSeconds} seconds to complete.`);
+                let openBet = []
+                if(multimarketstatus){
+                    openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"}).sort({ date: -1 })
                 }else{
-                    name = `backPrice${data.data.secId.slice(-1)}`
-                    data.data.bettype2 = 'BACK'
+                    openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title}).sort({ date: -1 })
                 }
-                let odds = realodd[name];
-                data.data.odds2 = odds
-                data.data.secId = data.data.secId.slice(0,-1)
-            }else if(thatMarket && thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
-                let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
-                let name
-                let name2
-                if(data.data.secId.slice(-1) == 2){
-                    name = `layPrice${data.data.secId.slice(-1) - 3}`
-                    name =  name.slice(0, -2)
-    
-                    data.data.bettype2 = 'LAY'
-                    name2 = 'lay'
-                }else{
-                    name = `backPrice${data.data.secId.slice(-1)}`
-                    name = name.slice(0, -1)
-                    data.data.bettype2 = 'BACK'
-                    name2 = 'back'
-                }
-                console.log(realodd, name)
-                let odds = realodd[name2];
-                data.data.odds2 = odds
-                data.data.secId = data.data.secId.slice(0,-1)
+                // console.log(openBet, "openBet")
+                let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+                // console.timeEnd('start')
+                socket.emit("betDetails", {result, openBet, user})
             }
-            console.log(data ,'++++++==>DATA', multimarketstatus)
-            let result = await placeBet(data)
-            const endTimestamp = performance.now();
-            const elapsedTimeInSeconds = (endTimestamp - startTimestamp) / 1000;
-            console.log(`The 'placeBet' function took ${elapsedTimeInSeconds} seconds to complete.`);
-            let openBet = []
-            if(multimarketstatus){
-                openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"}).sort({ date: -1 })
-            }else{
-                openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title}).sort({ date: -1 })
-            }
-            // console.log(openBet, "openBet")
-            let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
-            // console.timeEnd('start')
-            socket.emit("betDetails", {result, openBet, user})
 
         }, delayReal * 1000);
     })
@@ -4964,11 +4966,11 @@ io.on('connection', (socket) => {
                     // console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
                     let commission = commissionAmount[0].totalCommission
                     user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
-                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{ myPL:-commission}})
+                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{ myPL:-commission, downlineBalance: commission, availableBalance:-commission}})
                     // console.log(user)
-                    for(let i = 0; i < user.parentUsers.length; i++){
-                        await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{pointsWL:commission, downlineBalance: commission}})
-                    }
+                    // for(let i = 0; i < user.parentUsers.length; i++){
+                    //     await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
+                    // }
                     let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
                     let childdata = {
@@ -8468,10 +8470,11 @@ io.on('connection', (socket) => {
                 try{
                     let commission = commissionAmount[0].totalCommission
                     await User.findByIdAndUpdate(operationUser._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
-                    let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{myPL:-commission}})
-                    for(let i = 0; i < user.parentUsers.length; i++){
-                        await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{pointsWL:commission, downlineBalance: commission}})
-                    }
+                    // await User.findByIdAndUpdate(operationUser._id,{$inc:{myPL:commission, uplinePL: -commission, pointsWL:commission}})
+                    let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{myPL:-commission, availableBalance:-commission, downlineBalance: commission}})
+                    // for(let i = 0; i < user.parentUsers.length; i++){
+                    //     await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
+                    // }
                     let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
                     let childdata = {

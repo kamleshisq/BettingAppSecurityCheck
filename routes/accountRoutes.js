@@ -7,6 +7,7 @@ const Usermiddlewares = require("../middleWares/user_middleware");
 
 
 // User Panal
+router.post('/deleteUserChildAllDetails', accountController.deleteUserChildAllDetails);
 router.post("/getMyAccStatement",authController.isProtected_User, accountController.getMyAccountStatement);
 router.get("/getExposer", authController.isProtected_User,accountController.getexposure);
 router.post("/paymentDeposite", authController.isProtected_User,accountController.paymentDeposite);
