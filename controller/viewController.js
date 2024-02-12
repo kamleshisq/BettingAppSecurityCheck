@@ -1227,7 +1227,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                 //  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$creditDebitamount'},
                                  balance:{$first:'$balance'},
-                                 transactionId:{$first:'$transactionId'}
+                                 transactionId:{$first:'$transactionId'},
+                                 rollbackMarketId:{$first:'$rollbackMarketId'}
                              }
                          },
                          {
