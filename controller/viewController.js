@@ -1157,7 +1157,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      }
                  }else if(userAcc[i].marketId){
-                    if(marketidarray.includes(userAcc[i].marketId)){
+                    if(marketidarray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
                         continue;
                     }
                      let bet = await accountStatement.aggregate([
@@ -1194,15 +1194,15 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                         marketidarray.push(bet[0]._id.marketId)
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0].uniqueTransectionIDbyMARKETID)){
+                         marketidarray.push(bet[0].uniqueTransectionIDbyMARKETID)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break
                          }
                      }
                  }else if(userAcc[i].rollbackMarketId){
-                    if(rollBackMarketIDArray.includes(userAcc[i].rollbackMarketId)){
+                    if(rollBackMarketIDArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
                         continue;
                     }
                      let bet = await accountStatement.aggregate([
@@ -1239,8 +1239,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.rollbackMarketId)){
-                         rollBackMarketIDArray.push(bet[0]._id.rollbackMarketId)
+                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0].uniqueTransectionIDbyMARKETID)){
+                         rollBackMarketIDArray.push(bet[0].uniqueTransectionIDbyMARKETID)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break
