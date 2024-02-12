@@ -1121,7 +1121,6 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  eventId:{$exists:'eventId'},
                                  $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
                                  closingBalance:{$exists:true},
-                                 rollbackMarketId:{$exists:true}
 
                              }
                          },
@@ -1166,7 +1165,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              $match:{
                                 user_id:new ObjectId(req.currentUser._id.toString()),
                                  $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                                 balance:{$exists:true}
+                                 balance:{$exists:true},
+                                 rollbackMarketId:{$exists:true}
                              }
                          },
                          {
