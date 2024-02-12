@@ -58,6 +58,7 @@ const footerInfoModel = require('../model/footerInfoModel');
 const { consoleBodyAndURL } = require('./walletController');
 const socialinfomodel = require('../model/socialMediaLinks');
 const findvisible = require('../utils/findvisible');
+const { ObjectId } = require('mongodb');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -1158,16 +1159,16 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                     if(marketidarray.includes(userAcc[i].marketId)){
                         continue;
                     }
-                     let bet = await betModel.aggregate([
+                     let bet = await accountStatement.aggregate([
                          {
                              $match:{
-                                 userId:req.currentUser._id.toString(),
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                                 closingBalance:{$exists:true}
+                                user_id:new ObjectId(req.currentUser._id.toString()),
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 balance:{$exists:true}
                              }
                          },
                          {
-                            $sort:{settleDate:-1}
+                            $sort:{date:-1}
                          },
                          {
                              $group:{
@@ -1176,11 +1177,11 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                      marketId:"$marketId",
                                      date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
                                  },
-                                 match:{$first:'$match'},
-                                 marketName:{$first:'$marketName'},
-                                 stake:{$first:'$Stake'},
-                                 creditDebitamount:{$sum:'$returns'},
-                                 balance:{$first:'$closingBalance'},
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
                                  transactionId:{$first:'$transactionId'}
                              }
                          },
@@ -2743,7 +2744,7 @@ exports.getBetLimitPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSportList = catchAsync(async(req, res, next) => {
-    var fullUrl = 'http://127.0.0.1:8883/api/v1/getsportdata';
+    var fullUrl = 'http://127.0.0.1:8084/api/v1/getsportdata';
     fetch(fullUrl, {
         method: 'GET',
         headers:{
@@ -2763,7 +2764,7 @@ exports.getSportList = catchAsync(async(req, res, next) => {
 
 
 exports.getCricketData = catchAsync(async(req, res, next) => {
-    var fullUrl = "http://127.0.0.1:8883/api/v1/getcricketdata";
+    var fullUrl = "http://127.0.0.1:8084/api/v1/getcricketdata";
     fetch(fullUrl, {
         method: 'GET',
         headers:{
