@@ -8,6 +8,22 @@
 <script type="text/javascript" src="js/bundle.js"></script>
 </head>
 <body>
+  <%let JsStatus=false%>
+  <script>
+    // If JavaScript is enabled, render the full page
+    if (document.documentElement.classList.contains('js')) {
+      JsStatus = true
+        // document.write('<h1>JavaScript is enabled!</h1>');
+        // Place your regular HTML content here
+    } else {
+        // If JavaScript is not enabled, render a blank page
+        document.write('<h1>JavaScript is not enabled!</h1>');
+        JsStatus = false
+        // Optionally, redirect to a blank page
+        // window.location.href = 'blank.html';
+    }
+</script>
+<%if(JsStatus){%>
   <div class="loginForm-section">
     <div class="loginForm-wraper">
       <span class="adminSide-logo" >
@@ -30,6 +46,8 @@
       </form>
     </div>
 </div>
+<%}%>
+
 
 <!--================================== JAVASCRIPT ==================================-->
 
