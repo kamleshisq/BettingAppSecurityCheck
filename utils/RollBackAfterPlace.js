@@ -6,6 +6,7 @@ const InprogressModel = require('../model/InprogressModel');
 let Decimal = require('decimal.js');
 const commissionNewModel = require('../model/commissioNNModel');
 const revokeCommission = require('./commissionRevocke');
+const uuid = require('uuid');
 
 
 async function rollBack(data){
