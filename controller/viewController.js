@@ -1219,7 +1219,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              $group:{
                                  _id:{
                                      eventId:"$eventId",
-                                     rollbackMarketId:"$rollbackMarketId",
+                                     marketId:"$rollbackMarketId",
                                      date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
                                  },
                                  match:{$first:'$event'},
