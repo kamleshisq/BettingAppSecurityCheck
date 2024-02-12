@@ -2793,10 +2793,11 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 //     // })
 // });
 
-exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {/*
-    let marketids = ["1.224640116"];
+exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
+	
+    let marketids = ["1.224469353"];
     // console.log(body)
-    var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
+    var fullUrl = 'http://127.0.0.1:8084/api/v1/getmarketdata';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
@@ -2812,10 +2813,10 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {/*
             result
         })
     })
-*/
 
 
 
+/*
         let marketIds = ["1.224469353"];//await getmarketIds()
         let body = JSON.stringify(marketIds)
         // console.log(marketIds,'marketIds')
@@ -2845,7 +2846,7 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {/*
             }catch(err){
                 console.log(err, "errr")
             }
-        
+        */
 
 
         
