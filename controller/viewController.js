@@ -1072,6 +1072,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
    
     let finalresult = []
     let marketidarray = [];
+    let rollBackMarketIDArray = [];
     let userAccflage = true
     var today = new Date(new Date().getTime() + ((24 * 60 * 60 * 1000)-1));
     var todayFormatted = formatDate(today);
@@ -1199,7 +1200,52 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                              break
                          }
                      }
-                 }else{
+                 }else if(userAcc[i].rollbackMarketId){
+                    if(rollBackMarketIDArray.includes(userAcc[i].rollbackMarketId)){
+                        continue;
+                    }
+                     let bet = await accountStatement.aggregate([
+                         {
+                             $match:{
+                                user_id:new ObjectId(req.currentUser._id.toString()),
+                                 $and:[{rollbackMarketId:{$exists:true}},{rollbackMarketId:userAcc[i].rollbackMarketId},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 balance:{$exists:true}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     rollbackMarketId:"$rollbackMarketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{settleDate:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.rollbackMarketId)){
+                         rollBackMarketIDArray.push(bet[0]._id.rollbackMarketId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }
+                 else{
                      finalresult.push(userAcc[i])
                      if(finalresult.length >= 20){
                              break
