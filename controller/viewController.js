@@ -2793,7 +2793,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 //     // })
 // });
 
-exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
+exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {/*
     let marketids = ["1.224640116"];
     // console.log(body)
     var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
@@ -2812,6 +2812,46 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
             result
         })
     })
+*/
+
+
+
+        let marketIds = ["1.224730357"];//await getmarketIds()
+        let body = JSON.stringify(marketIds)
+        // console.log(marketIds,'marketIds')
+        
+            console.log('market odds cron')
+            try{
+                var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
+                    fetch(fullUrl, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'accept': 'application/json'
+                            },
+                        body 
+                    })
+                    .then(res =>res.json())
+                    .then(async(result) => {
+                        let date = new Date()
+                        let data = JSON.stringify(result)
+						
+                        console.log(data,'Data')
+						 res.status(200).json({ data  })
+                        //await client.set(key, data)
+                        // await client.disconnect();
+                        //await marketodds.create({data,date})
+                    })
+            }catch(err){
+                console.log(err, "errr")
+            }
+        
+
+
+        
+    
+
+
 });
 
 
