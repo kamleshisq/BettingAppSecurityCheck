@@ -242,7 +242,8 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
             realCommissionForChild = settleCommissionforChiled[0].totalCommission
         }
         console.log(realCommissionForChild, "realCommissionForChild")
-        let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        // let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        let debitAmountForP = -childUser.pointsWL + realCommission 
         console.log(debitAmountForP)
         // let debitAmountForP = -childUser.pointsWL
         lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
@@ -263,7 +264,8 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId:childUser.id,
-                setleCOMMISSIONMY:true
+                setleCOMMISSIONMY:true,
+                commissionStatus: 'Claimed'
             }
         },{
             $group:{
@@ -332,17 +334,10 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
-    // if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
-    //     return next(new AppError("User Account is Locked", 404))
-    // }
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL) * -1
     console.log(req.body)
-    // console.log(childUser)
-    // if(childUser.role.role_level < parentUser.role.role_level){
-    //     return next(new AppError("you do not have permission to perform this action", 404))
-    // } 
     
     if(parentUser.availableBalance < req.body.amount){
         return next(new AppError("Insufficient Credit Limit !"))
@@ -370,7 +365,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     let lifeTimePl = 0
     console.log(childUser, "childUserchildUser")
     if(childUser.roleName !== 'user'){
-        let userNameArray = await User.distinct('userName', {parentUsers:childUser.id})
+        let userNameArray = await User.distinct('userName', {parent_id:childUser.id})
         console.log(userNameArray)
         let settleCommissionforChiled = await commissionNewModel.aggregate([
             {
@@ -393,7 +388,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
             realCommissionForChild = settleCommissionforChiled[0].totalCommission
         }
         console.log(realCommissionForChild, "realCommissionForChild")
-        let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        // let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
+        let debitAmountForP = -childUser.pointsWL + realCommission
         console.log(debitAmountForP)
         lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
@@ -414,7 +410,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         {
             $match:{
                 userId:childUser.id,
-                setleCOMMISSIONMY:true
+                setleCOMMISSIONMY:true,
+                commissionStatus: 'Claimed'
             }
         },{
             $group:{
@@ -427,6 +424,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(comm.length !== 0){
         totlaCommissionUSer = comm[0].totalCommission
     }
+    console.log(totlaCommissionUSer)
     const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
     await commissionNewModel.updateMany({userId:childUser.id,setleCOMMISSIONMY:true}, {setleCOMMISSIONMY:false})
 
