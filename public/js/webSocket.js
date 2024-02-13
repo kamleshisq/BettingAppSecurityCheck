@@ -19027,6 +19027,7 @@ socket.on('connect', () => {
             
             let ubcC = 1;
             socket.on('UerBook', async(data) => {
+                console.log(data, "datadata")
                 if(data.Bets.length > 0){
                     console.log(data, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
                     if(data.runn && data.runn.length > 3){
