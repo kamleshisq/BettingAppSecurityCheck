@@ -10822,7 +10822,9 @@ io.on('connection', (socket) => {
             ])
 
             let marketIds = await Bet.distinct('marketId', {status: "OPEN", eventId: data.eventId,})
+            console.log(marketIds, "marketIdsmarketIdsmarketIds")
             let runnerData = await runnerDataModel.find({marketId:{$in:marketIds}})
+            console.log(runnerData, "runnerDatarunnerDatarunnerData")
             // console.log(runnerData)
             for(let i = 0; i < betsMarketIdWise.length; i++){
                 let currentMarketrunnersData = runnerData.find(item => item.marketId == betsMarketIdWise[i]._id)
