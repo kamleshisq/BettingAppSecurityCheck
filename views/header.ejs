@@ -462,6 +462,13 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
 </script>
 
 <script>
+  let sessionStorage = sessionStorage.getItem('sessiontoken')
+  if(!sessionStorage){
+    window.location.href = '/adminlogin'
+  }
+</script>
+
+<script>
   $(document).on("click", ".dropdown-link .nav_link", function(e){
     $(this).siblings('.dropdown-menu').toggleClass("open");
     $(this).toggleClass("active");
