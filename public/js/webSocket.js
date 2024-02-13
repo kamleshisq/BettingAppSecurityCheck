@@ -19426,6 +19426,7 @@ socket.on('connect', () => {
                         }
                         document.getElementById('match_odd').innerHTML = html
                        }else{
+                        console.log(runn)
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
                         let html = `<tr class="headDetail"><th>User name</th>
