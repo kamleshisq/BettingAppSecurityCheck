@@ -1493,46 +1493,46 @@ socket.on('connect', () => {
 
        
 
-        async function exposureadmin(){
-            $(document).ready(function() {
-                var ids = [];
+        // async function exposureadmin(){
+        //     $(document).ready(function() {
+        //         var ids = [];
           
-                $(".trtable").each(function() {
-                  ids.push($(this).data('id'));
-                });
-                // console.log(ids)
-                socket.emit("exposureadmin", {ids})
-              });
-              setTimeout(()=>{
-                exposureadmin()
-              }, 1000 * 10)
-        }
+        //         $(".trtable").each(function() {
+        //           ids.push($(this).data('id'));
+        //         });
+        //         // console.log(ids)
+        //         socket.emit("exposureadmin", {ids})
+        //       });
+        //       setTimeout(()=>{
+        //         exposureadmin()
+        //       }, 1000 * 10)
+        // }
 
-        exposureadmin()
+        // exposureadmin()
 
-        socket.on('exposureadmin', data => {
-            $(".trtable").each(function() {
-                let trID = $(this).data('id')
-                let thatDATA = data.find(item => item.id === trID)
-                if(thatDATA){
-                    if(LOGINDATA.LOGINUSER.roleName == "Admin"){
-                        if(thatDATA.totalExposure === -0){
-                            $(this).find('td:eq(9)').text(0)
-                        }else{
-                            $(this).find('td:eq(9)').text(thatDATA.totalExposure)
+        // socket.on('exposureadmin', data => {
+        //     $(".trtable").each(function() {
+        //         let trID = $(this).data('id')
+        //         let thatDATA = data.find(item => item.id === trID)
+        //         if(thatDATA){
+        //             if(LOGINDATA.LOGINUSER.roleName == "Admin"){
+        //                 if(thatDATA.totalExposure === -0){
+        //                     $(this).find('td:eq(9)').text(0)
+        //                 }else{
+        //                     $(this).find('td:eq(9)').text(thatDATA.totalExposure)
     
-                        }
-                    }else{
-                        if(thatDATA.totalExposure === -0){
-                            $(this).find('td:eq(8)').text(0)
-                        }else{
-                            $(this).find('td:eq(8)').text(thatDATA.totalExposure)
+        //                 }
+        //             }else{
+        //                 if(thatDATA.totalExposure === -0){
+        //                     $(this).find('td:eq(8)').text(0)
+        //                 }else{
+        //                     $(this).find('td:eq(8)').text(thatDATA.totalExposure)
     
-                        }
-                    }
-                }
-              });
-        })
+        //                 }
+        //             }
+        //         }
+        //       });
+        // })
 
         $(document).on('click', ".add-user-btn", function(e){
             e.preventDefault()
@@ -2465,7 +2465,7 @@ socket.on('connect', () => {
                     ids.push($(this).data('id'));
                   });
                   // console.log(ids)
-                  socket.emit("exposureadmin", {ids})
+                //   socket.emit("exposureadmin", {ids})
             
                 // html = '';
                 // for(let i=0;i<data.Rows;i++){
