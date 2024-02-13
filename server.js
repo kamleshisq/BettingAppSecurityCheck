@@ -10738,7 +10738,8 @@ io.on('connection', (socket) => {
                                         if: {
                                                 $or: [
                                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                                 ]
                                             },
                                         then:{
@@ -10758,7 +10759,8 @@ io.on('connection', (socket) => {
                                         if: {
                                                 $or: [
                                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                                 ]
                                             },
                                         then:{
