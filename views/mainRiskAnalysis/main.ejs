@@ -114,6 +114,7 @@
 
             <%if(match.marketList.goals != null){%>
                 <%for(let i = 0; i < match.marketList.goals.length; i++){%>
+                    <%if(match.marketList.goals[i].status === 1){%>
                     <div class="bets-table">
                         <div class="title">
                             <div class="text-left market" id="<%=match.marketList.goals[i].marketId%>"><strong><%=match.marketList.goals[i].title%></strong></div>
@@ -191,6 +192,7 @@
                           <%}%>
                         </table>
                     </div>
+                <%}%>
                 <%}%>
               <%}%>
             <!-- winner -->
