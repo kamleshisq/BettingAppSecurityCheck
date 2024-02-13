@@ -9442,7 +9442,7 @@ socket.on('connect', () => {
                 let diffStake 
                 let plusMinus
             if($(this).closest('tr').hasClass('back-inplaymatch')){
-                if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue")){
+                if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue") || IdButton.hasClass("goal_Blue")){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -9594,7 +9594,7 @@ socket.on('connect', () => {
                     }
                 }
             }else{
-                if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red")){
+                if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red") || IdButton.hasClass('goal_Red')){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -9685,7 +9685,7 @@ socket.on('connect', () => {
                     );
                     let result = parseFloat(newStake)
                     diff = parseFloat(spanId)
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (diffStake * betValue) / 100
                     }else{
                         plusMinus = (diffStake * betValue) / 100
@@ -9772,7 +9772,7 @@ socket.on('connect', () => {
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
                       var result 
-                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
                       }else{
                         result = (parseFloat(spanId) * betValue) / 100
@@ -9812,7 +9812,7 @@ socket.on('connect', () => {
                 let element = $(this)
                 let staleDiff = 100
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         resultDiff = (staleDiff * Odds) - staleDiff;
                     }else{
@@ -9838,7 +9838,7 @@ socket.on('connect', () => {
                     result = NewStake
                     let resultDiff = 100
 
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                          
                     }else{
@@ -9904,7 +9904,7 @@ socket.on('connect', () => {
                 let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     let diff = 0
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         diff = (100 * Odds) - 100;
                     }else{
@@ -9928,7 +9928,7 @@ socket.on('connect', () => {
                 }else{
                     result = NewStake
                     let diff = 100
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                          
                     }else{
@@ -9988,7 +9988,7 @@ socket.on('connect', () => {
                     let element = $(this)
                     let staleDiff = Math.abs(oldValue - newValue)
                     if($(this).closest('tr').hasClass('back-inplaymatch')){
-                        if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                        if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')|| IdButton.hasClass("goal_Blue") ){
                             result = (NewStake * Odds) - NewStake;
                             resultDiff = (staleDiff * Odds) - staleDiff;
                         }else{
@@ -10014,7 +10014,7 @@ socket.on('connect', () => {
                         result = NewStake
                         let resultDiff = 100
     
-                        if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                        if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                             plusMinus = (100 * Odds) - 100;
                              
                         }else{
@@ -10064,7 +10064,7 @@ socket.on('connect', () => {
                     let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
                     if($(this).closest('tr').hasClass('back-inplaymatch')){
                     let diff = 0
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         diff = (100 * Odds) - 100;
                     }else{
@@ -10088,7 +10088,7 @@ socket.on('connect', () => {
                 }else{
                     result = NewStake
                     let diff =  Math.abs(oldValue - newValue)
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                         
                     }else{
@@ -13724,7 +13724,7 @@ socket.on('connect', () => {
                 let plusMinus
                 console.log('WORKIGEOFHGHSD')
             if($(this).closest('tr').hasClass('back-inplaymatch')){
-                if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue")){
+                if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue") || IdButton.hasClass("goal_Blue")){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -13875,7 +13875,7 @@ socket.on('connect', () => {
                     }
                 }
             }else{
-                if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red")){
+                if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red") || IdButton.hasClass('goal_Red')){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -13964,7 +13964,7 @@ socket.on('connect', () => {
                     );
                     let result = parseFloat(newStake)
                     diff = parseFloat(spanId)
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (diffStake * betValue) / 100
                     }else{
                         plusMinus = (diffStake * betValue) / 100
@@ -14049,7 +14049,7 @@ socket.on('connect', () => {
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
                       var result 
-                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
                       }else{
                         result = (parseFloat(spanId) * betValue) / 100
@@ -14088,7 +14088,7 @@ socket.on('connect', () => {
                 let element = $(this)
                 let staleDiff = 100
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         resultDiff = (staleDiff * Odds) - staleDiff;
                     }else{
@@ -14114,7 +14114,7 @@ socket.on('connect', () => {
                     result = NewStake
                     let resultDiff = 100
 
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                          
                     }else{
@@ -14195,7 +14195,7 @@ socket.on('connect', () => {
                 let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     let diff = 0
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         diff = (100 * Odds) - 100;
                     }else{
@@ -14219,7 +14219,7 @@ socket.on('connect', () => {
                 }else{
                     result = NewStake
                     let diff = 100
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                          
                     }else{
