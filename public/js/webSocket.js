@@ -11362,9 +11362,9 @@ socket.on('connect', () => {
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                 }else if(userAcc[i]._id.marketId){
                         html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">`
-                        if(data[i].rollbackMarketId){
+                        if(userAcc[i].rollbackMarketId){
                             html += `<td title="Transaction">Settle Bet Rollback</td>`
-                        }else if(data[i].cacelMarketId){
+                        }else if(userAcc[i].cacelMarketId){
                             html += `<td title="Transaction">Settle Bet Void</td>`
                         }else{
                             html += `<td title="Transaction">Bet Settlement</td>`
