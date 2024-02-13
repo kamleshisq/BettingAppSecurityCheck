@@ -111,6 +111,88 @@
               </div>
             <%}%>
 
+
+            <%if(match.marketList.goals != null){%>
+                <%for(let i = 0; i < match.marketList.goals.length; i++){%>
+                    <div class="bets-table">
+                        <div class="title">
+                            <div class="text-left market" id="<%=match.marketList.goals[i].marketId%>"><strong><%=match.marketList.goals[i].title%></strong></div>
+                            <div class="text-right">
+                              <!-- <strong>Min : 100, Max : 1000</strong> -->
+                              <div class="btn-group" >
+                                  <%
+                                      let suspendCheck = suspend.some(item => item.marketId == match.marketList.goals[i].marketId)
+                                  %>
+                                  <%if(suspendCheck){%>
+                                      <button class="min-max-modal Suspend-Resume" id="<%=match.marketList.goals[i].marketId%>" >Resume</button>
+                                  <%}else{%>
+                                      <button class="min-max-modal Suspend-Resume" id="<%=match.marketList.goals[i].marketId%>" >Suspend</button>
+                                  <%}%>
+                                  <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                                  <button class="min-max-modal BookList" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Book</button>
+                                  <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.goals[i].marketId%>&sessiontoken=<%=sessiontoken%>">Bets</button>
+                              </div>
+                              </div>
+                              <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.goals[i].marketId%>">Bets</button></div> -->
+                        </div>
+                            <% let runners = JSON.parse(match.marketList.goals[i].runners); %>
+                          <% const runners1 = []; %>
+                          <%const secIds = []; %>
+                          <%runners.forEach(item => {%>
+                              <%runners1.push(item.runner);%>
+                              <%secIds.push(item.secId);%>
+                          <%});%>
+                        <table>
+                          <tr>
+                            <th>Market</th>
+                            <th>
+                              <div class="bets-option-btn">
+                                <div class="bets-btn-group">Back</div>
+                                <div class="bets-btn-group">Lay</div>
+                              </div>
+                            </th>
+                          </tr>
+                          <%for(let i = 0; i < runners1.length; i++){%>
+                            <tr>
+                              <td><%=runners1[i]%></td>
+                              <td>
+                                <div class="bets-option-btn">
+                                  <div class="bets-btn-group">
+                                      <div class="bets-btn match_odd_Blue" id="<%=secIds[i]%>3">
+                                          <strong>1.54</strong>
+                                          <span class="small">469</span>
+                                      </div>                                    
+                                      <div class="bets-btn match_odd_Blue" id="<%=secIds[i]%>2">
+                                          <strong>1.54</strong>
+                                          <span class="small">469</span>
+                                      </div>                                    
+                                      <div class="bets-btn match_odd_Blue" id="<%=secIds[i]%>1">
+                                          <strong>1.54</strong>
+                                          <span class="small">469</span>
+                                      </div>
+                                  </div>
+                                  <div class="bets-btn-group pink">
+                                      <div class="bets-btn match_odd_Red" id="<%=secIds[i]%>4">
+                                          <strong>1.54</strong>
+                                          <span class="small">469</span>
+                                      </div>                                    
+                                      <div class="bets-btn match_odd_Red" id="<%=secIds[i]%>5">
+                                          <strong>1.54</strong>
+                                          <span class="small">469</span>
+                                      </div>                                    
+                                      <div class="bets-btn match_odd_Red" id="<%=secIds[i]%>6">
+                                          <strong>1.54</strong>
+                                          <span class="small">469</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              </td>
+                            </tr>
+                          <%}%>
+                        </table>
+                    </div>
+                <%}%>
+              <%}%>
             <!-- winner -->
             <%if(match.marketList.winner != null){%>
                 <div class="bets-table">
