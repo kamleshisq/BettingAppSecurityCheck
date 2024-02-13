@@ -1662,6 +1662,74 @@ io.on('connection', (socket) => {
         }
         socket.emit("ACCSEARCHRES", {user, page})
     })
+    socket.on("SearchACCSDM", async(data) => {
+        let page = data.page
+        if(!page){
+            page = 0
+        }
+        limit = 10
+        // console.log(data)
+        let roles;
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            console.log(parentUser, "parentUser", parentUser._id)
+            roles = await Role.find({role_level: {$gt:parentUser.role.role_level}});
+            operatorId = parentUser.id
+        }else{
+            roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+            operatorId = data.LOGINDATA.LOGINUSER._id
+        }
+        let userNames = await User.distinct('userName', {parent_id:operatorId})
+        // console.log(roles)
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        // console.log(role_type, 123)
+        
+        var regexp = new RegExp(data.x, 'i');
+
+        let user = await User.aggregate([
+            {
+                $match:{
+                    userName:regexp,
+                    parentUsers:{$elemMatch:{$eq:operatorId}},
+                    userName:{$in:userNames}
+                }
+            },
+            {
+                $sort:{
+                    userName:-1,
+                    _id:-1
+                }
+            },
+            {
+                $skip:(page*limit)
+            },{
+                $limit:limit
+            }
+        ])
+
+        // if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+        //         user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
+        // }else{
+        //         // let role_Type = {
+        //         //     $in:role_type
+        //         // }
+        //         // let xfiletr  = {}
+        //         // xfiletr.role_Type = role_Type
+        //         // xfiletr.userName = regexp
+        //         // console.log(data.filterData)
+        //         // console.log(xfiletr)
+        //         user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
+        // }
+        page++
+        if(user.length === 0 ){
+            page = null
+        }
+        socket.emit("ACCSEARCHRES", {user, page})
+    })
     socket.on("SearchACC1", async(data) => {
         let page = data.page
         if(!page){

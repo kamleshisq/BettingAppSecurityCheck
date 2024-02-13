@@ -2967,7 +2967,7 @@ socket.on('connect', () => {
                 if($(this).val().length >= 3 ){
                     let x = $(this).val(); 
                     // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
+                    socket.emit("SearchACCSDM", {x, LOGINDATA})
                 }else{
                     document.getElementById('search').innerHTML = ``
                     document.getElementById("button").innerHTML = ''
@@ -2979,7 +2979,7 @@ socket.on('connect', () => {
             e.preventDefault()
             let page = $(this).attr("id")
             let x = $("#searchUser").val()
-            socket.emit("SearchACC", {x, LOGINDATA, page})
+            socket.emit("SearchACCSDM", {x, LOGINDATA, page})
         })
         let model 
 
