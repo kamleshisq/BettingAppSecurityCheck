@@ -917,7 +917,7 @@ socket.on('connect', () => {
                     //                 <i class="fa-solid fa-lock"></i>
                     //               </span>`
                     // }else 
-                    if (foundItem.odds[0].layPrice1 == "-"){
+                    if (foundItem.odds[0].layPrice1 == "-" || foundItem.odds[0].layPrice1 == 0){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -942,7 +942,7 @@ socket.on('connect', () => {
                 //                     <i class="fa-solid fa-lock"></i>
                 //                   </span>`
                 // }else 
-                if (foundItem.odds[0].backPrice1 == "-"){
+                if (foundItem.odds[0].backPrice1 == "-" || foundItem.odds[0].backPrice1 == 0){
                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -966,7 +966,7 @@ socket.on('connect', () => {
                     //                 <i class="fa-solid fa-lock"></i>
                     //               </span>`
                     // }else 
-                    if (foundItem.odds[1].layPrice1 == "-"){
+                    if (foundItem.odds[1].layPrice1 == "-" || foundItem.odds[1].layPrice1 == 0){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -990,7 +990,7 @@ socket.on('connect', () => {
                 //                     <i class="fa-solid fa-lock"></i>
                 //                   </span>`
                 // }else 
-                if (foundItem.odds[1].backPrice1 == "-"){
+                if (foundItem.odds[1].backPrice1 == "-" || foundItem.odds[1].backPrice1 == 0){
                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -1024,7 +1024,7 @@ socket.on('connect', () => {
                     if(id === '58805'){
                         console.log(foundItem)
                     }
-                    if (foundItem.odds[2].backPrice1 == "-"){
+                    if (foundItem.odds[2].backPrice1 == "-" || foundItem.odds[2].backPrice1 == 0){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -1055,7 +1055,7 @@ socket.on('connect', () => {
                 //                     <i class="fa-solid fa-lock"></i>
                 //                   </span>`
                 // }else 
-                if (foundItem.odds[2].layPrice1 == "-"){
+                if (foundItem.odds[2].layPrice1 == "-" || foundItem.odds[2].layPrice1 == 0){
                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
