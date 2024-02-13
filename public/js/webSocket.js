@@ -2389,7 +2389,7 @@ socket.on('connect', () => {
                         }
 
                         html += `<td> ${response[i].uplinePL}</td>`
-                        if(data.currentUser.roleName != 'user'){
+                        if(response[i].roleName != 'user'){
                             html += `<td>0</td>`
                         }else{
                             html += `<td>${response[i].exposure}</td>`
