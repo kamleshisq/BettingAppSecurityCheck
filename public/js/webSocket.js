@@ -2388,6 +2388,11 @@ socket.on('connect', () => {
                         }
 
                         html += `<td> ${response[i].uplinePL}</td>`
+                        if(data.currentUser.roleName != 'user'){
+                            html += `<td>0</td>`
+                        }else{
+                            html += `<td>${response[i].exposure}</td>`
+                        }
                         // <td> 0</td>
                         // if(data.currentUser.roleName == "Admin"){
                         //     let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text().trim()
