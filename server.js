@@ -3009,7 +3009,7 @@ io.on('connection', (socket) => {
     async function getmarketwiseaccdata (limit,skip){
         // console.log('in getmarketwise accdata ',limit,skip)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-        // console.log(userAcc, "userAccuserAccuserAcc")
+        console.log(userAcc, "userAccuserAccuserAcc")
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
@@ -3079,7 +3079,7 @@ io.on('connection', (socket) => {
                          {
                              $match:{
                                 user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
-                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{settleDate:filter.date}],
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
                                  balance:{$exists:true}
                              }
                          },
@@ -3126,7 +3126,7 @@ io.on('connection', (socket) => {
                          {
                              $match:{
                                 user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
-                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{settleDate:filter.date}],
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
                                  balance:{$exists:true}
                              }
                          },
@@ -3174,7 +3174,7 @@ io.on('connection', (socket) => {
                          {
                              $match:{
                                 user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
-                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{settleDate:filter.date}],
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
                                  balance:{$exists:true}
                              }
                          },
