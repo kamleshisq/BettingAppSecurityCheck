@@ -809,6 +809,7 @@ io.on('connection', (socket) => {
         async function getmarketwiseaccdata (limit,skip){
             // console.log('in getmarketwise accdata ',limit,skip)
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+            console.log(userAcc, "userAccuserAccuserAccuserAcc")
              let c = 0
              if(userAcc.length == 0){
                 userAccflage = false
@@ -1035,7 +1036,6 @@ io.on('connection', (socket) => {
                 }
                 j++
             }
-            console.log(finalresult, "userAccuserAccuserAcc")
         }{
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
             if(finalresult.length > 0){
