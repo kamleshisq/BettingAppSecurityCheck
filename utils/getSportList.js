@@ -3,7 +3,7 @@ const fetch = require("node-fetch")
 
 async function getSportList(){
     let DATA
-    var fullUrl = 'http://127.0.0.1:8084/api/v1/getsportdata';
+    var fullUrl = 'http://127.0.0.1:8883/api/v1/getsportdata';
     await fetch(fullUrl, {
         method: 'GET',
         headers:{
