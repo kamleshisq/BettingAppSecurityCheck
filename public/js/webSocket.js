@@ -1015,6 +1015,7 @@ socket.on('connect', () => {
                     //                 <i class="fa-solid fa-lock"></i>
                     //               </span>`
                     // }else 
+                    console.log(foundItem)
                     if (foundItem.odds[2].backPrice1 == "-"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
