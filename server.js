@@ -3241,7 +3241,7 @@ io.on('connection', (socket) => {
         console.log(userAcc, "userAccuserAccuserAccuserAccuserAccuserAccuserAcc")
         finalresult = userAcc
     }
-    console.log(finalresult, 'finalresult')
+    console.log(finalresult, 'finalresult', skipvalue)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})
 
     })
