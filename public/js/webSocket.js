@@ -11300,6 +11300,7 @@ socket.on('connect', () => {
 
         let count = 20;
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
+            console.log(count)
             // console.log(data, "datadatadatadataewrre")
             if(data.userAcc.length > 0){
                 $('.skipid').attr('data-skipid',data.skipvalue)
@@ -11445,6 +11446,7 @@ socket.on('connect', () => {
                 }
                 html += `<td></td><td></td></tr>`
             }
+            count = count + 20
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
             }else{
