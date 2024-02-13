@@ -19427,8 +19427,8 @@ socket.on('connect', () => {
                         document.getElementById('match_odd').innerHTML = html
                        }else{
                         console.log(data.runn)
-                        let team1 = data.runn[0].toLowerCase()
-                        let team2 = data.runn[1].toLowerCase()
+                        let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                         let html = `<tr class="headDetail"><th>User name</th>
                         <th>${team1}</th>
                         <th>${team2}</th></tr>`
