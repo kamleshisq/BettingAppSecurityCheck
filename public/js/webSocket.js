@@ -2960,9 +2960,9 @@ socket.on('connect', () => {
           });
 
         // console.log($('.searchUser'))
-        $('.searchUser').keyup(function(){
+        $('.searchUsersdm').keyup(function(){
             // console.log('working')
-            if($(this).hasClass("searchUser")){
+            if($(this).hasClass("searchUsersdm")){
                 // console.log($(this).val())
                 if($(this).val().length >= 3 ){
                     let x = $(this).val(); 
