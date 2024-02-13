@@ -1043,6 +1043,7 @@ io.on('connection', (socket) => {
                 finalresult = userAcc
             }
         }
+        console.log(userAcc, "userAccuserAccuserAcc")
         json.status = 'success'
         json.finalresult = finalresult
         socket.emit('Acc2', {json,page:data.page,user,skipvalue})
