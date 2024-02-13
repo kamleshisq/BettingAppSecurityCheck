@@ -11493,7 +11493,7 @@ socket.on('connect', () => {
                     <td>Stake</td>
                     <td>Status</td>
                     <td>Result</td>
-                    <td>Return</td>
+                    <td colspan="1">Return</td>
                 </tr>`
                     }
                     if(data.bets[i].bettype2 == 'BACK'){
