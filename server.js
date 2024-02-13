@@ -3153,7 +3153,8 @@ io.on('connection', (socket) => {
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
                                  balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$transactionId'}
+                                 transactionId:{$first:'$transactionId'},
+                                 date:{$first:'$date'}
                              }
                          },
                          {
@@ -3200,7 +3201,8 @@ io.on('connection', (socket) => {
                                 //  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$creditDebitamount'},
                                  balance:{$first:'$balance'},
-                                 transactionId:{$first:'$transactionId'}
+                                 transactionId:{$first:'$transactionId'},
+                                 date:{$first:'$date'}
                              }
                          },
                          {
@@ -3248,7 +3250,8 @@ io.on('connection', (socket) => {
                                  creditDebitamount:{$sum:'$creditDebitamount'},
                                  balance:{$first:'$balance'},
                                  transactionId:{$first:'$transactionId'},
-                                 rollbackMarketId:{$first:'$rollbackMarketId'}
+                                 rollbackMarketId:{$first:'$rollbackMarketId'},
+                                 date:{$first:'$date'}
                              }
                          },
                          {
@@ -3296,7 +3299,8 @@ io.on('connection', (socket) => {
                                  creditDebitamount:{$sum:'$creditDebitamount'},
                                  balance:{$first:'$balance'},
                                  transactionId:{$first:'$transactionId'},
-                                 cacelMarketId:{$first:'$cacelMarketId'}
+                                 cacelMarketId:{$first:'$cacelMarketId'},
+                                 date:{$first:'$date'}
                              }
                          },
                          {
