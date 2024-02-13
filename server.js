@@ -1251,7 +1251,12 @@ io.on('connection', (socket) => {
     socket.on('ElementID',async(data)=>{
         console.log(data, "ddddddddddddddatata")
         let filter = {}
-        filter.userName = data.userid
+        if(data.userName){
+            filter.userName = data.userName
+        }else{
+            filter.userName = data.userid
+
+        }
         if(data.gameId && !data.marketId){
             filter.transactionId=data.gameId
         }else if(data.marketId && !data.gameId){
