@@ -1250,6 +1250,29 @@ io.on('connection', (socket) => {
 
     socket.on('ElementID',async(data)=>{
         console.log(data, "ddddddddddddddatata")
+        if(data.gameId === 'undefined'){
+            delete data.gameId
+        }
+
+        if(data.marketId === 'undefined'){
+            delete data.marketId
+        }
+
+        if(data.id === 'undefined'){
+            delete data.id
+        }
+        if(data.Fdate === 'undefined'){
+            delete data.Fdate
+        }
+        if(data.Tdate === 'undefined'){
+            delete data.Tdate
+        }
+        if(data.gametype === 'undefined'){
+            delete data.gametype
+        }
+        if(data.userid === 'undefined'){
+            delete data.userid
+        }
         let filter = {}
         if(data.userName){
             filter.userName = data.userName
