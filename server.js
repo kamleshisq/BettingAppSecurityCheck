@@ -2934,7 +2934,7 @@ io.on('connection', (socket) => {
     // const ObjectId = mongoose.Types.ObjectId
     // filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
     filter.user_id = data.LOGINDATA.LOGINUSER._id
-    // filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]
+    filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
         filter.date = {
             $gt : new Date(data.filterData.fromDate)
@@ -3007,6 +3007,7 @@ io.on('connection', (socket) => {
     async function getmarketwiseaccdata (limit,skip){
         console.log('in getmarketwise accdata ',limit,skip)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+        console.log(userAcc, "userAccuserAccuserAcc")
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
