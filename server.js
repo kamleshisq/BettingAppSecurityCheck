@@ -806,11 +806,9 @@ io.on('connection', (socket) => {
         let CancelArray = [];
         let userAccflage = true
     
-        console.log(filter,'filter')
         async function getmarketwiseaccdata (limit,skip){
             // console.log('in getmarketwise accdata ',limit,skip)
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-            console.log(userAcc, "userAccuserAccuserAcc")
              let c = 0
              if(userAcc.length == 0){
                 userAccflage = false
@@ -864,7 +862,6 @@ io.on('connection', (socket) => {
                              }
                          ])
                          let accounts = []
-                         console.log('inuseracc sport book',bet,accounts)
                          if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                              marketidarray.push(bet[0]._id.marketId)
                              finalresult = finalresult.concat(bet)
@@ -1033,8 +1030,6 @@ io.on('connection', (socket) => {
                 skip = (limit * j) + data.skipid 
                 let result = await getmarketwiseaccdata(limit,skip)
                 skipvalue = skipvalue + result
-                console.log(skipvalue,j,'skipvalue')
-                console.log(finalresult.length,'finalresult.length')
                 if(!userAccflage){
                     break
                 }
@@ -1042,7 +1037,6 @@ io.on('connection', (socket) => {
             }
         }{
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-            console.log(userAcc, "userAccuserAccuserAccuserAccuserAcc")
             if(finalresult.length > 0){
                 finalresult.concat(userAcc)
             }else{
