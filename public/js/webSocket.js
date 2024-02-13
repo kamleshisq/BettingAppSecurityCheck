@@ -19107,8 +19107,8 @@ socket.on('connect', () => {
                     if(data.Bets[0].userName){ 
                         // console.log('working', data.check)
                         if(data.check){   
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let team1 = data.runn[0].runner.toLowerCase()
+                            let team2 = data.runn[1].runner.toLowerCase()
                             // let team3 = 
                             let html = ''
                             for(let i = 0; i < data.Bets.length; i++){
@@ -19243,8 +19243,8 @@ socket.on('connect', () => {
                             let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
                             $('#match_odd').find(string).after(html)
                         }else{
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                             let html = '';
                             for(let i = 0; i < data.Bets.length; i++){
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
