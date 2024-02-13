@@ -2294,7 +2294,7 @@ socket.on('connect', () => {
 
         let count = 11;
         socket.on('getOwnChild',(data) => {
-            console.log(data, "VV")
+            // console.log(data, "VV")
             // console.log(data.refreshStatus)
             // console.log(data)
             // console.log('rows',data.result)
