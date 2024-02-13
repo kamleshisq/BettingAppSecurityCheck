@@ -3137,6 +3137,7 @@ socket.on('connect', () => {
         data.LOGINDATA = LOGINDATA
 
         $(document).on("click", ".searchList", function(){
+            console.log('WORKING')
             document.getElementById("searchUser").value = this.textContent
             searchU = true
             data.id = this.id
