@@ -1071,9 +1071,10 @@ exports.liveMarketStream = catchAsync(async(req, res, next) => {
 })
 
 exports.getscoreiframe = catchAsync(async(req, res, next) => {
-    if(req.query.eventId){
+    if(req.query.eventId && req.query.sport){
         res.status(200).render('./iframeScore', {
-            id : req.query.eventId
+            id : req.query.eventId,
+            sport : req.query.sport
         })
     }
 })
