@@ -11392,7 +11392,21 @@ socket.on('connect', () => {
                 }else if(!userAcc[i]._id.marketId && !userAcc[i].gameId && !userAcc[i].description.toLowerCase().startsWith('bet for')) {
                     html += `<tr class="acount-stat-tbl-body-tr" data-id="" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].child_id){
-                        html += `<td title="Transaction">Settlement</td>`
+                        if(userAcc[i].description.startsWith('Chips')){
+                            if(userAcc[i].creditDebitamount > 0){
+                                html += `<td title="Transaction">Deposite</td>`
+                            }else{
+                                html += `<td title="Transaction">Withdraw</td>`
+                            }
+
+                        }else{
+                            if(userAcc[i].creditDebitamount > 0){
+                                html += `<td title="Transaction">Settlement Deposit</td>`
+                            }else{
+                                html += `<td title="Transaction">Settlement Withdraw</td>`
+                            }
+                        }
+
                     }else{
                         html += `<td title="Transaction">Commission Settlement</td>`
                     }
