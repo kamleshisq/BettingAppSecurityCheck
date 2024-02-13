@@ -51,6 +51,7 @@
                   <tr>
                     <!-- <th>S.No</th> -->
                     <th>Date</th>
+                    <th>Transaction</th>
                     <th>From / To</th>
                     <th>Opening Balance</th>
                     <th>Amount</th>
@@ -77,6 +78,19 @@
                   <tr>
                     
                     <td class="text-nowrap" ><%=formattedTime%></td>
+                    <%if(data[i].description.startsWith('Chips')){%>
+                      <%if(data[i].creditDebitamount > 0){%>
+                        <td >Deposit</td>
+                      <%}else{%>
+                        <td >Withdraw</td>
+                      <%}%>
+                    <%}else{%>
+                      <%if(data[i].creditDebitamount > 0){%>
+                        <td >Settlement Deposit</td>
+                      <%}else{%>
+                        <td >Settlement Withdraw</td>
+                      <%}%>
+                    <%}%>
                     <%if(data[i].creditDebitamount > 0){%>
                     <%if(data[i].parent_id){%>
                     <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
