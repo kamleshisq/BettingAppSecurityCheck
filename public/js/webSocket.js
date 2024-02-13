@@ -11361,8 +11361,14 @@ socket.on('connect', () => {
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                 }else if(userAcc[i]._id.marketId){
-                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">
-                        <td title="Transaction">Bet Settlement</td>`
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">`
+                        if(data[i].rollbackMarketId){
+                            html += `<td title="Transaction">Settle Bet Rollback</td>`
+                        }else if(data[i].cacelMarketId){
+                            html += `<td title="Transaction">Settle Bet Void</td>`
+                        }else{
+                            html += `<td title="Transaction">Bet Settlement</td>`
+                        }
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
