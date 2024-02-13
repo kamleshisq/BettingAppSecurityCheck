@@ -19441,7 +19441,7 @@ socket.on('connect', () => {
                             }
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                             let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            // console.log(team1Data, team2Data, "team2Datateam2Data")
+                            console.log(team1Data, team2Data, "team2Datateam2Data")
                             if(team1Data){
                                 if (team1Data.winAmount > 0){
                                     html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
