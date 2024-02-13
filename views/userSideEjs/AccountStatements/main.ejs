@@ -63,10 +63,6 @@
                         <tbody class="acount-stat-tbl-body">
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
-                              <%
-                                    console.log(data[i].date)
-                                    
-                                %>
                                 <%if(data[i].gameId){%>
                                 <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameid="<%=data[i].transactionId%>" id="rowid-<%=i + 1%>">
                                     <%if(data[i].creditDebitamount > 0){%>
