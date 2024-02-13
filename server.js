@@ -1021,6 +1021,7 @@ io.on('connection', (socket) => {
                      }
                      
                  }
+                 console.log(finalresult, "finalresultfinalresultfinalresult")
              }
             return c
         }
