@@ -11311,6 +11311,16 @@ socket.on('connect', () => {
             let userAcc = data.userAcc;
             let html = '';
             for(let i = 0; i < userAcc.length; i++){
+                var date = new Date(userAcc[i].date);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
                 if(userAcc[i].gameId){
                         html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="${userAcc[i].transactionId}" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].creditDebitamount > 0){
@@ -11318,6 +11328,7 @@ socket.on('connect', () => {
                     }else if(userAcc[i].creditDebitamount < 0 ){
                         html += `<td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>`
                     }
+                    html += `<td title="Date">${formattedTime}</td>`
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
@@ -11340,12 +11351,13 @@ socket.on('connect', () => {
                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
                         html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" id="rowid-${i + 1 + count}">
                         <td title="Transaction">Sport Book Bet Settlement</td>`
-                  
+                        html += `<td title="Date">${formattedTime}</td>`
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
                         html += `<td title="Event">-</td>`
                     }
+                    
                     if(userAcc[i].marketName){
                         html += `<td title="Market Type">${userAcc[i].marketName}</td>`
                     }else{
@@ -11369,6 +11381,7 @@ socket.on('connect', () => {
                         }else{
                             html += `<td title="Transaction">Bet Settlement</td>`
                         }
+                        html += `<td title="Date">${formattedTime}</td>`
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
@@ -11410,6 +11423,7 @@ socket.on('connect', () => {
                     }else{
                         html += `<td title="Transaction">Commission Settlement</td>`
                     }
+                    html += `<td title="Date">${formattedTime}</td>`
                         html += `<td title="Event">-</td>`
                         html += `<td title="Market Type">-</td>`
                     if(userAcc[i].creditDebitamount > 0){
