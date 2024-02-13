@@ -462,9 +462,9 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
 </script>
 
 <script>
-  let sessionStorage = sessionStorage.getItem('sessiontoken')
-  console.log(sessionStorage, "sessionStoragesessionStoragesessionStoragesessionStorage")
-  if(!sessionStorage){
+  let sessionStorage2forcheck = sessionStorage.getItem('sessiontoken')
+  console.log(sessionStorage2forcheck, "sessionStoragesessionStoragesessionStoragesessionStorage")
+  if(!sessionStorage2forcheck){
     window.location.href = '/adminlogin'
   }
 </script>
