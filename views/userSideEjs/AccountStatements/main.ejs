@@ -64,7 +64,7 @@
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
                               <%
-                                    <!-- var timestamp = `${data[i].time}`;  -->
+                                    console.log(data[i])
                                     var date = new Date(data[i].date);
                                     var options = { 
                                         year: 'numeric',
@@ -105,7 +105,6 @@
                                   <%}else if(data[i].transactionId && data[i].transaction Id.length > 16 && data[i]._id.marketId){%>
                                     <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" data-gameid="<%=data[i]._id.eventId%>" id="rowid-<%=i + 1%>">
                                     <td title="Transaction">Sport Book Bet Settlement</td>
-                                    <td title="Date" ><%=formattedTime%></td>
                                     <td title="Date" ><%=formattedTime%></td>
                                     <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
