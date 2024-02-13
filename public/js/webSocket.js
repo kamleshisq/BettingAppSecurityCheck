@@ -11443,7 +11443,7 @@ socket.on('connect', () => {
 
                     }
                 }
-                html += `<td></td></tr>`
+                html += `<td></td><td></td></tr>`
             }
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
