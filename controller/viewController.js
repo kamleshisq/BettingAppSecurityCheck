@@ -605,7 +605,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         return year + "-" + month + "-" + day;
     }
     async function getmarketwiseaccdata (limit,skip){
-        console.log(limit, "limitlimitlimitlimitlimitlimitlimitlimit")
+        // console.log(limit, "limitlimitlimitlimitlimitlimitlimitlimit")
         console.log('in getmarketwiseaccdata function')
          let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
          let c = 0
@@ -1055,6 +1055,21 @@ exports.edit = catchAsync(async(req, res, next) => {
         user
     })
 })
+
+exports.liveMarketStream = catchAsync(async(req, res, next) => {
+    let fullUrl = "https://dapi.fstlive.video/api/ChannelMaster/getActiveChannelMasters";
+    fetch(fullUrl, {
+        method: 'POST'
+    })
+    .then(res =>res.json())
+    .then(result => {
+        // console.log(result)
+        res.status(200).json({
+            result
+        })
+    })
+})
+
 
 exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // let id = req.originalUrl.split("=")[1]
