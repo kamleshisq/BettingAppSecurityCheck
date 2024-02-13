@@ -16251,8 +16251,8 @@ socket.on('connect', () => {
                 }
             }
             // console.log('elementId',modelId)
-            console.log(userid,'userid')
-            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
+            console.log(userid,marketId)
+            // socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
         socket.on('getMyBetDetails',(data)=>{
