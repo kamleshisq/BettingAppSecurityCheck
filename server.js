@@ -877,7 +877,7 @@ io.on('connection', (socket) => {
                          let bet = await AccModel.aggregate([
                              {
                                  $match:{
-                                    user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                    user_id:new ObjectId(data.id),
                                      $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
                                      balance:{$exists:true}
                                  }
@@ -924,7 +924,7 @@ io.on('connection', (socket) => {
                          let bet = await AccModel.aggregate([
                              {
                                  $match:{
-                                    user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                    user_id:new ObjectId(data.id),
                                      $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
                                      balance:{$exists:true}
                                  }
@@ -972,7 +972,7 @@ io.on('connection', (socket) => {
                          let bet = await AccModel.aggregate([
                              {
                                  $match:{
-                                    user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                    user_id:new ObjectId(data.id),
                                      $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
                                      balance:{$exists:true}
                                  }
