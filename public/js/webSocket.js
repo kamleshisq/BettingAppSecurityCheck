@@ -10419,6 +10419,7 @@ socket.on('connect', () => {
            
       })
         socket.on('marketIdbookDetails', data => {
+            console.log(data, "datadatadata")
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
                     let team1Data
