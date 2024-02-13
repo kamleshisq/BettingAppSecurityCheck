@@ -2924,7 +2924,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
-        console.log(data)
+        // console.log(data)
     let limit = 20;
     let page = data.page;
     let skip;
@@ -2994,7 +2994,7 @@ io.on('connection', (socket) => {
         filter.gameId = {$exists:false}
         filterstatus = false
     }
-    console.log('filter',filter)
+    // console.log('filter',filter)
     
 
     // console.log(filter)
@@ -3006,9 +3006,9 @@ io.on('connection', (socket) => {
 
 
     async function getmarketwiseaccdata (limit,skip){
-        console.log('in getmarketwise accdata ',limit,skip)
+        // console.log('in getmarketwise accdata ',limit,skip)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-        console.log(userAcc, "userAccuserAccuserAcc")
+        // console.log(userAcc, "userAccuserAccuserAcc")
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
@@ -3204,7 +3204,7 @@ io.on('connection', (socket) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     console.log('inuseracc marketid',bet)
+                    //  console.log('inuseracc marketid',bet)
                      if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
                          CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                          finalresult = finalresult.concat(bet)
@@ -3239,10 +3239,10 @@ io.on('connection', (socket) => {
     }else{
         skip = 0
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-        console.log(userAcc, "userAccuserAccuserAccuserAccuserAccuserAccuserAcc")
+        // console.log(userAcc, "userAccuserAccuserAccuserAccuserAccuserAccuserAcc")
         finalresult = userAcc
     }
-    console.log(finalresult, 'finalresult', skipvalue)
+    // console.log(finalresult, 'finalresult', skipvalue)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})
 
     })
