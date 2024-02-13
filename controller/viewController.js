@@ -1178,14 +1178,15 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                      uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                      eventId:"$eventId",
                                      marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} },
+                                    //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} },
                                  },
                                  match:{$first:'$event'},
                                  marketName:{$first:'$marketType'},
                                 //  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$creditDebitamount'},
                                  balance:{$first:'$balance'},
-                                 transactionId:{$first:'$transactionId'}
+                                 transactionId:{$first:'$transactionId'},
+                                 date:{$first:'$date'},
                              }
                          },
                          {
@@ -1223,7 +1224,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                     uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                      eventId:"$eventId",
                                      marketId:"$rollbackMarketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                    //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                  },
                                  match:{$first:'$event'},
                                  marketName:{$first:'$marketType'},
@@ -1231,7 +1232,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  creditDebitamount:{$sum:'$creditDebitamount'},
                                  balance:{$first:'$balance'},
                                  transactionId:{$first:'$transactionId'},
-                                 rollbackMarketId:{$first:'$rollbackMarketId'}
+                                 rollbackMarketId:{$first:'$rollbackMarketId'},
+                                 date:{$first:'$date'},
                              }
                          },
                          {
@@ -1269,7 +1271,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                     uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                      eventId:"$eventId",
                                      marketId:"$cacelMarketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                    //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                  },
                                  match:{$first:'$event'},
                                  marketName:{$first:'$marketType'},
@@ -1277,7 +1279,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                                  creditDebitamount:{$sum:'$creditDebitamount'},
                                  balance:{$first:'$balance'},
                                  transactionId:{$first:'$transactionId'},
-                                 cacelMarketId:{$first:'$cacelMarketId'}
+                                 cacelMarketId:{$first:'$cacelMarketId'},
+                                 date:{$first:'$date'},
                              }
                          },
                          {
