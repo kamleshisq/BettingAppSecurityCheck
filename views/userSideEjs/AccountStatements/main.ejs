@@ -65,16 +65,7 @@
                             <%for(let i = 0; i < data.length; i++){%>
                               <%
                                     console.log(data[i].date)
-                                    var date = new Date(data[i].date);
-                                    var options = { 
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: 'numeric',
-                                        minute: 'numeric',
-                                        hour12: true
-                                    };
-                                    var formattedTime = date.toLocaleString('en-US', options);
+                                    
                                 %>
                                 <%if(data[i].gameId){%>
                                 <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameid="<%=data[i].transactionId%>" id="rowid-<%=i + 1%>">
