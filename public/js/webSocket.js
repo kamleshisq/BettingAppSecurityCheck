@@ -3442,8 +3442,8 @@ socket.on('connect', () => {
                     gametype = 'negative'
                 }
             }
-            // console.log('elementId',modelId)
-            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
+            console.log('elementId',modelId)
+            // socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
         socket.on('getMyBetDetails',(data)=>{
@@ -16251,8 +16251,8 @@ socket.on('connect', () => {
                 }
             }
             // console.log('elementId',modelId)
-            console.log(userid,marketId, gameId)
-            // socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
+            // console.log(userid,marketId, gameId)
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
         socket.on('getMyBetDetails',(data)=>{
