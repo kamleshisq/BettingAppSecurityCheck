@@ -1680,7 +1680,7 @@ io.on('connection', (socket) => {
             roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
             operatorId = data.LOGINDATA.LOGINUSER._id
         }
-        let userNames = await User.distinct('userName', {parent_id:operatorId})
+        let userNames = await User.distinct('id', {parent_id:operatorId})
         // console.log(roles)
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
@@ -1695,7 +1695,7 @@ io.on('connection', (socket) => {
                 $match:{
                     userName:regexp,
                     parentUsers:{$elemMatch:{$eq:operatorId}},
-                    userName:{$in:userNames}
+                    id:{$in:userNames}
                 }
             },
             {
