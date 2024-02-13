@@ -4199,6 +4199,19 @@ socket.on('connect', () => {
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
                         <td class="text-nowrap" >${formattedTime}</td>`
+                        if(data.json.userAcc[i].description.startsWith('Chips')){
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else{
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
@@ -4249,6 +4262,19 @@ socket.on('connect', () => {
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td class="text-nowrap" >${formattedTime}</td>`
+                        if(data.json.userAcc[i].description.startsWith('Chips')){
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else{
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                            
                             if(data.json.userAcc[i].parent_id){
