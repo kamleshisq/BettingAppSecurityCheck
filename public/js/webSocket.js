@@ -18653,8 +18653,8 @@ socket.on('connect', () => {
                     }else{
                         if(data.Bets[0].userName){ 
                             if(data.check){   
-                                let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                                let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                                let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                                 // let team3 = 
                                 let html = ''
                                 for(let i = 0; i < data.Bets.length; i++){
@@ -18788,8 +18788,8 @@ socket.on('connect', () => {
                                 let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
                                 $('#match_odd_Book').find(string).after(html)
                             }else{
-                                let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                                let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                                let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                                 let html = '';
                                 for(let i = 0; i < data.Bets.length; i++){
                                     // console.log(data.Bets[i].Bets[0])
@@ -18845,8 +18845,8 @@ socket.on('connect', () => {
                         }else{
                            if(data.check){
         
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                             let html = `<tr class="headDetail"><th>User name</th>
                             <th>${team1}</th>
                             <th>${team2}</th>
@@ -18972,8 +18972,8 @@ socket.on('connect', () => {
                             }
                             document.getElementById('match_odd_Book').innerHTML = html
                            }else{
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                             let html = `<tr class="headDetail"><th>User name</th>
                             <th>${team1}</th>
                             <th>${team2}</th></tr>`
