@@ -2389,21 +2389,21 @@ socket.on('connect', () => {
 
                         html += `<td> ${response[i].uplinePL}</td>`
                         // <td> 0</td>
-                        if(data.currentUser.roleName == "Admin"){
-                            let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text().trim()
-                            if(trtdexp){
-                                html += `<td> ${trtdexp}</td>`
-                            }else{
-                                html += `<td> 0</td>`
-                            }
-                        }else{
-                            let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(8)').text().trim()
-                            if(trtdexp){
-                                html += `<td> ${trtdexp}</td>`
-                            }else{
-                                html += `<td> 0</td>`
-                            }
-                        }
+                        // if(data.currentUser.roleName == "Admin"){
+                        //     let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text().trim()
+                        //     if(trtdexp){
+                        //         html += `<td> ${trtdexp}</td>`
+                        //     }else{
+                        //         html += `<td> 0</td>`
+                        //     }
+                        // }else{
+                        //     let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(8)').text().trim()
+                        //     if(trtdexp){
+                        //         html += `<td> ${trtdexp}</td>`
+                        //     }else{
+                        //         html += `<td> 0</td>`
+                        //     }
+                        // }
                         html += `<td>
                         <div class="btn-group">
                         `
