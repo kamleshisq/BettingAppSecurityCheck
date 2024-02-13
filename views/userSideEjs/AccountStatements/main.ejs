@@ -83,7 +83,7 @@
                                     <%}else if(data[i].creditDebitamount < 0){%>
                                       <td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>
                                     <%}%>
-                                      <td title="Date" ><%=formattedTime%></td>
+                                       
                                     <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
                                     <%}else{%>
@@ -105,7 +105,7 @@
                                   <%}else if(data[i].transactionId && data[i].transaction Id.length > 16 && data[i]._id.marketId){%>
                                     <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" data-gameid="<%=data[i]._id.eventId%>" id="rowid-<%=i + 1%>">
                                     <td title="Transaction">Sport Book Bet Settlement</td>
-                                    <td title="Date" ><%=formattedTime%></td>
+                                     
                                     <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
                                     <%}else{%>
@@ -133,7 +133,7 @@
                                         <%}else{%>
                                           <td title="Transaction">Bet Settlement</td>
                                       <%}%>
-                                      <td title="Date" ><%=formattedTime%></td>
+                                       
                                         <%if(data[i].match){%>
                                           <td title="Event"><%=data[i].match%></td>
                                         <%}else{%>
@@ -168,7 +168,7 @@
                                           <%}%>
                                         <%}%>
                                         <!-- <td title="Transaction">Settlement</td> -->
-                                        <td title="Date" ><%=formattedTime%></td>
+                                         
                                         <%}else{%>
                                           <%console.log(data[i])%>
                                           <%if(data[i].description.startsWith("Revoke") || data[i].description.startsWith("Settle")){%>
