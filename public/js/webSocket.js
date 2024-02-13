@@ -2449,7 +2449,7 @@ socket.on('connect', () => {
                     }
                     html += `</tbody>`
                     $('#load-more').show()
-
+                    console.log('gitghhejjhjhjhjhjh')
                     $('#table12').html(html)
                     if(response.length == 0){
                         $('#load-more').hide()
