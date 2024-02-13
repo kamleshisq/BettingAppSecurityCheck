@@ -3442,8 +3442,8 @@ socket.on('connect', () => {
                     gametype = 'negative'
                 }
             }
-            console.log('elementId',modelId)
-            // socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
+            // console.log('elementId',modelId)
+            socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
         socket.on('getMyBetDetails',(data)=>{
