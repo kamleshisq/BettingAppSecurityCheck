@@ -1681,7 +1681,7 @@ io.on('connection', (socket) => {
             operatorId = data.LOGINDATA.LOGINUSER._id
         }
         let userNames = await User.distinct('id', {parent_id:operatorId})
-        // console.log(roles)
+        console.log(userNames)
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
             role_type.push(roles[i].role_type)
