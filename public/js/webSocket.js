@@ -1042,7 +1042,14 @@ socket.on('connect', () => {
 
             $(".2L").each(function() {
                 let id = this.id
-                const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                // const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                let marketId = $(this).closest('tr').find('td:first').attr('id')
+                    let foundItem 
+                    if(marketId){
+                        foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
+                    }else{
+                        foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    }
                 // if(data.betLimits[0].max_odd < foundItem.odds[2].layPrice1){
                 //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                 //                     <i class="fa-solid fa-lock"></i>
