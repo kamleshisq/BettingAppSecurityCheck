@@ -126,7 +126,7 @@ async function checkExposure(data){
                         status: "OPEN",
                         userName:userData.userName,
                         marketName: {
-                            $regex: /^(match|book|winn|toss)/i
+                            $regex: /^(match|book|winn|toss|over\/under)/i
                         }
                         
                     }
@@ -147,7 +147,8 @@ async function checkExposure(data){
                                         if: {
                                                 $or: [
                                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                                 ]
                                             },
                                         then:{
@@ -167,7 +168,8 @@ async function checkExposure(data){
                                         if: {
                                                 $or: [
                                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                                 ]
                                             },
                                         then:{
