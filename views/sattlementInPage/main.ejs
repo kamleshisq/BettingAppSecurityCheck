@@ -54,7 +54,7 @@
                 <%for(let i = 0; i < betsEventWiseOpen.length; i++){ %>
                 <tr>
                   <td><%= betsEventWiseOpen[i].marketName%></td>
-                  <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM" && !betsEventWiseOpen[i].marketName.toLowerCase().startsWith('winn')){%>
+                  <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM" && !betsEventWiseOpen[i].marketName.toLowerCase().startsWith('winn') || && !betsEventWiseOpen[i].marketName.toLowerCase().startsWith('over/under')){%>
                     <td>
                     <%if(betsEventWiseOpen[i].marketId.slice(-2).startsWith('OE')){%>
                       <select class="selectOption" >
