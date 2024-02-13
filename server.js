@@ -2935,7 +2935,7 @@ io.on('connection', (socket) => {
     // filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
     filter.user_id = data.LOGINDATA.LOGINUSER._id
     filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]
-    console.log(data.filterData.fromDate)
+    console.log(data.filterData.fromDate, data.filterData.toDate)
     // if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
     //     filter.date = {
     //         $gt : new Date(data.filterData.fromDate)
