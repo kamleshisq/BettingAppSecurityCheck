@@ -11485,6 +11485,7 @@ socket.on('connect', () => {
                 for(let i = 0;i<data.bets.length;i++){
                     if(i == 0){
                         html += ` <tr class="addedaccountstatmentRowHeader-${data.rowid} addedasrowheader">
+                        <td>Date</td>
                     <td class="">Event</td>
                     <td>Mrket Type</td>
                     <td>Bet On</td>
@@ -11500,6 +11501,17 @@ socket.on('connect', () => {
                     }else{
                         html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody lay">`
                     }
+                    var date = new Date(data.bets[i].date);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
+                                    html += `<td>${formattedTime}</td>`
                     if(data.bets[i].marketId){
                         html += `<td>${data.bets[i].match}</td>
                         <td>${data.bets[i].marketName}</td>
