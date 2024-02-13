@@ -1073,6 +1073,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     let finalresult = []
     let marketidarray = [];
     let rollBackMarketIDArray = [];
+    let  CancelArray = [];
     let userAccflage = true
     var today = new Date(new Date().getTime() + ((24 * 60 * 60 * 1000)-1));
     var todayFormatted = formatDate(today);
@@ -1248,7 +1249,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      }
                  }else if(userAcc[i].cacelMarketId){
-                    if(rollBackMarketIDArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                    if(CancelArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
                         continue;
                     }
                      let bet = await accountStatement.aggregate([
@@ -1286,8 +1287,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
-                         rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                     if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break

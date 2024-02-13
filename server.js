@@ -2925,223 +2925,323 @@ io.on('connection', (socket) => {
 
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
         console.log(data)
-    // let limit = 20;
-    // let page = data.page;
-    // let skip;
-    // // console.log(data.filterData)
-    // // console.log(data.LOGINDATA.LOGINUSER)
-    // let filter = {}
-    // // const ObjectId = mongoose.Types.ObjectId
-    // // filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
-    // filter.user_id = data.LOGINDATA.LOGINUSER._id
+    let limit = 20;
+    let page = data.page;
+    let skip;
+    // console.log(data.filterData)
+    // console.log(data.LOGINDATA.LOGINUSER)
+    let filter = {}
+    // const ObjectId = mongoose.Types.ObjectId
+    // filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
+    filter.user_id = data.LOGINDATA.LOGINUSER._id
     // filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]
-    // if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
-    //     filter.date = {
-    //         $gt : new Date(data.filterData.fromDate)
-    //     }
-    // }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
-    //     filter.date = {
-    //         $lt : new Date(data.filterData.toDate)
-    //     }
-    // }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
-    //     filter.date = {
-    //         $gte : new Date(data.filterData.fromDate),
-    //         $lt : new Date(data.filterData.toDate)
-    //     }
-    // }
-    // let filterstatus = true
-    // if(data.filterData.type === "bsettlement"){
-    //     // filter.$expr = {
-    //     //     $eq: [{ $strLenCP: "$transactionId" }, 16]
-    //     //   }
-    //     filter.$expr = {
-    //         $and: [
-    //             { $eq: [{ $type: "$transactionId" }, "string"] },
-    //             { $eq: [{ $strLenCP: "$transactionId" }, 16] }
-    //           ]
-    //       }
-    // }else if (data.filterData.type === "deposit"){
-    //     filter.accStype = {$exists:false}
-    //     filter.creditDebitamount={$gt:0}
-    //     filter.marketId = {$exists:false}
-    //     filter.gameId = {$exists:false}
-    //     filter.stake = {$exists:false}
-    //     filter.user_id = new ObjectId(filter.user_id)
-    //     filterstatus = false
-    // }else if(data.filterData.type === "withdraw"){
-    //     filter.accStype = {$exists:false}
-    //     filter.creditDebitamount={$lte:0}
-    //     filter.marketId = {$exists:false}
-    //     filter.gameId = {$exists:false}
-    //     filter.stake = {$exists:false}
-    //     filter.user_id = new ObjectId(filter.user_id)
-    //     filterstatus = false
-    // }else if (data.filterData.type === "sdeposit"){
-    //     filter.accStype = {$exists:true}
-    //     filter.creditDebitamount={$gt:0}
-    //     filter.marketId = {$exists:false}
-    //     filter.stake = {$exists:false}
-    //     filter.user_id = new ObjectId(filter.user_id)
-    //     filter.gameId = {$exists:false}
-    //     filterstatus = false
-    // }else if(data.filterData.type === "swithdraw"){
-    //     filter.accStype = {$exists:true}
-    //     filter.creditDebitamount={$lte:0}
-    //     filter.marketId = {$exists:false}
-    //     filter.stake = {$exists:false}
-    //     filter.user_id = new ObjectId(filter.user_id)
-    //     filter.gameId = {$exists:false}
-    //     filterstatus = false
-    // }
-    // console.log('filter',filter)
+    if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
+        filter.date = {
+            $gt : new Date(data.filterData.fromDate)
+        }
+    }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
+        filter.date = {
+            $lt : new Date(data.filterData.toDate)
+        }
+    }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
+        filter.date = {
+            $gte : new Date(data.filterData.fromDate),
+            $lt : new Date(data.filterData.toDate)
+        }
+    }
+    let filterstatus = true
+    if(data.filterData.type === "bsettlement"){
+        // filter.$expr = {
+        //     $eq: [{ $strLenCP: "$transactionId" }, 16]
+        //   }
+        filter.$expr = {
+            $and: [
+                { $eq: [{ $type: "$transactionId" }, "string"] },
+                { $eq: [{ $strLenCP: "$transactionId" }, 16] }
+              ]
+          }
+    }else if (data.filterData.type === "deposit"){
+        filter.accStype = {$exists:false}
+        filter.creditDebitamount={$gt:0}
+        filter.marketId = {$exists:false}
+        filter.gameId = {$exists:false}
+        filter.stake = {$exists:false}
+        filter.user_id = new ObjectId(filter.user_id)
+        filterstatus = false
+    }else if(data.filterData.type === "withdraw"){
+        filter.accStype = {$exists:false}
+        filter.creditDebitamount={$lte:0}
+        filter.marketId = {$exists:false}
+        filter.gameId = {$exists:false}
+        filter.stake = {$exists:false}
+        filter.user_id = new ObjectId(filter.user_id)
+        filterstatus = false
+    }else if (data.filterData.type === "sdeposit"){
+        filter.accStype = {$exists:true}
+        filter.creditDebitamount={$gt:0}
+        filter.marketId = {$exists:false}
+        filter.stake = {$exists:false}
+        filter.user_id = new ObjectId(filter.user_id)
+        filter.gameId = {$exists:false}
+        filterstatus = false
+    }else if(data.filterData.type === "swithdraw"){
+        filter.accStype = {$exists:true}
+        filter.creditDebitamount={$lte:0}
+        filter.marketId = {$exists:false}
+        filter.stake = {$exists:false}
+        filter.user_id = new ObjectId(filter.user_id)
+        filter.gameId = {$exists:false}
+        filterstatus = false
+    }
+    console.log('filter',filter)
     
 
-    // // console.log(filter)
-    // let finalresult = []
-    // let marketidarray = [];
-    // let userAccflage = true
+    // console.log(filter)
+    let finalresult = []
+    let marketidarray = [];
+    let rollBackMarketIDArray = [];
+    let  CancelArray = [];
+    let userAccflage = true
 
 
-    // async function getmarketwiseaccdata (limit,skip){
-    //     console.log('in getmarketwise accdata ',limit,skip)
-    //     let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-    //      let c = 0
-    //      if(userAcc.length == 0){
-    //         userAccflage = false
-    //      }
-    //      if(userAccflage){
-    //         for(let i = 0;i<userAcc.length;i++){
-    //             c++
-    //              if(userAcc[i].gameId){
-    //                 finalresult.push(userAcc[i])
-    //                  if(finalresult.length >= 20){
-    //                          break
-    //                  }
+    async function getmarketwiseaccdata (limit,skip){
+        console.log('in getmarketwise accdata ',limit,skip)
+        let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+         let c = 0
+         if(userAcc.length == 0){
+            userAccflage = false
+         }
+         if(userAccflage){
+            for(let i = 0;i<userAcc.length;i++){
+                c++
+                 if(userAcc[i].gameId){
+                    finalresult.push(userAcc[i])
+                     if(finalresult.length >= 20){
+                             break
+                     }
                     
-    //              }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
-    //                 if(marketidarray.includes(userAcc[i].marketId)){
-    //                     continue;
-    //                 }
-    //                  let bet = await Bet.aggregate([
-    //                      {
-    //                          $match:{
-    //                              userId:data.LOGINDATA.LOGINUSER._id.toString(),
-    //                              eventId:{$exists:'eventId'},
-    //                              $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
-    //                              closingBalance:{$exists:true}
+                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
+                    if(marketidarray.includes(userAcc[i].marketId)){
+                        continue;
+                    }
+                     let bet = await Bet.aggregate([
+                         {
+                             $match:{
+                                 userId:data.LOGINDATA.LOGINUSER._id.toString(),
+                                 eventId:{$exists:'eventId'},
+                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
+                                 closingBalance:{$exists:true}
 
-    //                          }
-    //                      },
-    //                     {
-    //                         $sort:{settleDate:-1}
-    //                      },
-    //                      {
-    //                          $group:{
-    //                              _id:{
-    //                                  eventId:"$eventId",
-    //                                  marketId:"$marketId",
-    //                                  date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-    //                              },
-    //                              match:{$first:'$match'},
-    //                              marketName:{$first:'$marketName'},
-    //                              stake:{$first:'$Stake'},
-    //                              creditDebitamount:{$sum:'$returns'},
-    //                              balance:{$first:'$closingBalance'},
-    //                              transactionId:{$first:'$transactionId'}
-    //                          }
-    //                      },
-    //                      {
-    //                         $sort:{settleDate:-1}
-    //                      },
-    //                      {
-    //                         $limit:(20 - finalresult.length)
-    //                      }
-    //                  ])
-    //                  let accounts = []
-    //                  console.log('inuseracc sport book',bet,accounts)
-    //                  if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-    //                      marketidarray.push(bet[0]._id.marketId)
-    //                      finalresult = finalresult.concat(bet)
-    //                      if(finalresult.length >= 20){
-    //                          break
-    //                      }
-    //                  }
-    //              }else if(userAcc[i].marketId){
-    //                 if(marketidarray.includes(userAcc[i].marketId)){
-    //                     continue;
-    //                 }
-    //                  let bet = await Bet.aggregate([
-    //                      {
-    //                          $match:{
-    //                              userId:data.LOGINDATA.LOGINUSER._id.toString(),
-    //                              $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
-    //                              closingBalance:{$exists:true}
-    //                          }
-    //                      },
-    //                     {
-    //                         $sort:{settleDate:-1}
-    //                      },
-    //                      {
-    //                          $group:{
-    //                              _id:{
-    //                                  eventId:"$eventId",
-    //                                  marketId:"$marketId",
-    //                                  date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-    //                              },
-    //                              match:{$first:'$match'},
-    //                              marketName:{$first:'$marketName'},
-    //                              stake:{$first:'$Stake'},
-    //                              creditDebitamount:{$sum:'$returns'},
-    //                              balance:{$first:'$closingBalance'},
-    //                              transactionId:{$first:'$transactionId'}
-    //                          }
-    //                      },
-    //                      {
-    //                         $sort:{settleDate:-1}
-    //                      },
-    //                      {
-    //                         $limit:(20 - finalresult.length)
-    //                      }
-    //                  ])
-    //                  console.log('inuseracc marketid',bet)
-    //                  if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-    //                      marketidarray.push(bet[0]._id.marketId)
-    //                      finalresult = finalresult.concat(bet)
-    //                      if(finalresult.length >= 20){
-    //                          break
-    //                      }
-    //                  }
-    //              }else{
-    //                  finalresult.push(userAcc[i])
-    //                  if(finalresult.length >= 20){
-    //                          break
-    //                  }
-    //              }
+                             }
+                         },
+                        {
+                            $sort:{settleDate:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                     eventId:"$eventId",
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                 },
+                                 match:{$first:'$match'},
+                                 marketName:{$first:'$marketName'},
+                                 stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$returns'},
+                                 balance:{$first:'$closingBalance'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{settleDate:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     let accounts = []
+                     console.log('inuseracc sport book',bet,accounts)
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                         marketidarray.push(bet[0]._id.marketId)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].marketId){
+                    if(marketidarray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                        continue;
+                    }
+                     let bet = await AccModel.aggregate([
+                         {
+                             $match:{
+                                user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{settleDate:filter.date}],
+                                 balance:{$exists:true}
+                             }
+                         },
+                        {
+                            $sort:{date:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                     eventId:"$eventId",
+                                     marketId:"$marketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     console.log('inuseracc marketid',bet)
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }
+                 else if(userAcc[i].rollbackMarketId){
+                    if(rollBackMarketIDArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                        continue;
+                    }
+                     let bet = await AccModel.aggregate([
+                         {
+                             $match:{
+                                user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{settleDate:filter.date}],
+                                 balance:{$exists:true}
+                             }
+                         },
+                        {
+                            $sort:{date:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                     eventId:"$eventId",
+                                     marketId:"$rollbackMarketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'},
+                                 rollbackMarketId:{$first:'$rollbackMarketId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     console.log('inuseracc marketid',bet)
+                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }
+                 else if(userAcc[i].cacelMarketId){
+                    if(CancelArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                        continue;
+                    }
+                     let bet = await AccModel.aggregate([
+                         {
+                             $match:{
+                                user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{settleDate:filter.date}],
+                                 balance:{$exists:true}
+                             }
+                         },
+                        {
+                            $sort:{date:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                     eventId:"$eventId",
+                                     marketId:"$cacelMarketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'},
+                                 cacelMarketId:{$first:'$cacelMarketId'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     console.log('inuseracc marketid',bet)
+                     if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }
+                 else{
+                     finalresult.push(userAcc[i])
+                     if(finalresult.length >= 20){
+                             break
+                     }
+                 }
                  
-    //          }
-    //      }
-    //     return c
-    // }
-    // let j = 0
-    // let skipvalue = data.skipid;
-    // if(filterstatus){
-    //     while(finalresult.length < 20){
-    //         skip = (limit * j) + data.skipid 
-    //         let result = await getmarketwiseaccdata(limit,skip)
-    //         skipvalue = skipvalue + result
-    //         if(!userAccflage){
-    //             break
-    //         }
-    //         j++
-    //     }
-    // }else{
-    //     skip = 0
-    //     let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-    //     console.log(userAcc, "userAccuserAccuserAccuserAccuserAccuserAccuserAcc")
-    //     finalresult = userAcc
-    // }
-    // console.log(finalresult, 'finalresult')
-    // socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})
+             }
+         }
+        return c
+    }
+    let j = 0
+    let skipvalue = data.skipid;
+    if(filterstatus){
+        while(finalresult.length < 20){
+            skip = (limit * j) + data.skipid 
+            let result = await getmarketwiseaccdata(limit,skip)
+            skipvalue = skipvalue + result
+            if(!userAccflage){
+                break
+            }
+            j++
+        }
+    }else{
+        skip = 0
+        let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+        console.log(userAcc, "userAccuserAccuserAccuserAccuserAccuserAccuserAcc")
+        finalresult = userAcc
+    }
+    console.log(finalresult, 'finalresult')
+    socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})
 
     })
 
