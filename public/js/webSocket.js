@@ -3136,17 +3136,7 @@ socket.on('connect', () => {
         }      
         data.LOGINDATA = LOGINDATA
 
-        $(document).on("click", ".searchList", function(){
-            console.log('WORKING')
-            document.getElementById("searchUser").value = this.textContent
-            searchU = true
-            data.id = this.id
-            SUSER = this.id
-            data.page = 0
-            $('.pageLink').attr('data-page',1)
-            $('.wrapper').hide()
-            socket.emit( "AccountScroll", data)
-        })
+        
 
         $('#Fdate,#Tdate,#transaction_type').change(function(){
             let page = 0;
@@ -3166,6 +3156,19 @@ socket.on('connect', () => {
             data.page = page
             data.Transaction_type = Transaction_type
             socket.emit('AccountScroll',data)        
+        })
+
+
+        $(document).on("click", ".searchList", function(){
+            console.log('WORKING')
+            document.getElementById("searchUserSdm").value = this.textContent
+            searchU = true
+            data.id = this.id
+            SUSER = this.id
+            data.page = 0
+            $('.pageLink').attr('data-page',1)
+            $('.wrapper').hide()
+            socket.emit( "AccountScroll", data)
         })
 
         $('#load-more').click(function(e){
