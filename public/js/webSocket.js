@@ -1011,7 +1011,7 @@ socket.on('connect', () => {
                     let marketId = $(this).closest('tr').find('td:first').attr('id')
                     let foundItem 
                     if(marketId){
-                        foundItem = data.finalResult.items.find(item.market_id === marketId)
+                        foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
                     }else{
                         foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     }
