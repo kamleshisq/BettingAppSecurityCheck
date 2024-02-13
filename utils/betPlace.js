@@ -64,9 +64,9 @@ async function placeBet(data){
         return "Please try again later, Your exposure Limit is full"
     }
     let openBet = await betmodel.countDocuments({userName:data.LOGINDATA.LOGINUSER.userName, status:'OPEN'})
-    console.log(openBet, "openBetopenBetopenBet")
+    // console.log(openBet, "openBetopenBetopenBet")
     let betLimitcheck = await betLimitModel.findOne({type : 'Sport'}) 
-    console.log(betLimitcheck, "betLimitcheckbetLimitcheck")
+    // console.log(betLimitcheck, "betLimitcheckbetLimitcheck")
     if(betLimitcheck && betLimitcheck.max_bet != 0){
         if(betLimitcheck.max_bet <= openBet){
             return "Please try again later, Your Betlimit Limit is full"
@@ -138,7 +138,7 @@ async function placeBet(data){
             }
       }}
 
-
+console.log(marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 let betPlaceData = {}
 
 //FOR SPORT NAME 
