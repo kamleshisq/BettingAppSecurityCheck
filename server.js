@@ -697,6 +697,9 @@ io.on('connection', (socket) => {
             if(data.page){
                 page = data.page
             }
+            if(data.id){
+                filter.child_id = new ObjectId(data.id)
+            }
             let userAcc = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
             json = {
                 status : 'success',
