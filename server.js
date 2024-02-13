@@ -1695,7 +1695,7 @@ io.on('connection', (socket) => {
                 $match:{
                     userName:regexp,
                     parentUsers:{$elemMatch:{$eq:operatorId}},
-                    id:{$in:userNames}
+                    _id:{$in:userNames}
                 }
             },
             {
