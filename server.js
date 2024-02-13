@@ -1680,7 +1680,7 @@ io.on('connection', (socket) => {
             roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
             operatorId = data.LOGINDATA.LOGINUSER._id
         }
-        let userNames = await User.distinct('id', {parent_id:operatorId})
+        let userNames = await User.distinct('_id', {parent_id:operatorId})
         console.log(userNames)
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
