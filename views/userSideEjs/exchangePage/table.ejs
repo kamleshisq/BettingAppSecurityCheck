@@ -343,6 +343,7 @@
                           <%}%>
                         </td>
                         <%}else{%>
+                      <%console.log('GOTHERE', footbalSeries[i].matchdata[j].eventData.name)%>
                           <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
                             <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
                             <td style="border-bottom: 0px;"  class="2B" id="<%=secIds[2]%>"></td>
@@ -363,7 +364,6 @@
                             </td>
                         <%}%>
                     <%}else{%>
-                      <%console.log('GOTHERE', footbalSeries[i].matchdata[j].eventData.name)%>
                       <td style="border-bottom: 0px;">
                         <span class="tbl-td-bg-blu-spn mylock-data">
                           <i class="fa-solid fa-lock"></i>
