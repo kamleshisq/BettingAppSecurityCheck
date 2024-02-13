@@ -3630,7 +3630,7 @@ socket.on('connect', () => {
          let count1 = 11
          socket.on("Acc2", async(data) => {
             $('.skipid').attr('data-skipid',data.skipvalue)
-            console.log(data)
+            // console.log(data)
             if(data.json.status == "success" && data.user){
                 let html = "";
                 let html1 = "";
@@ -3672,6 +3672,39 @@ socket.on('connect', () => {
                     // console.log(abc)
                         html += `<tr style="text-align: center;">
                         <td class="text-nowrap" >${formattedTime}</td>`
+                        if(data[i].gameId){
+                            if(data[i].creditDebitamount > 0){
+                                html += `<td>Casino Bet  Settlement</td>`
+                            }else{
+                                html += `<td>Casino Bet Placement</td>`
+                            }
+                        }else if (data[i].transactionId && data[i].transactionId.length > 16 && data[i]._id.marketId){
+                            html += `<td>Sport Book Bet Settlement</td>`
+                        }else if(data[i]._id.marketId){
+                            if(data[i].rollbackMarketId){
+                                html += `<td >Settle Bet Rollback</td>`
+                              }else if(data[i].cacelMarketId){
+                                html += `<td >Settle Bet Void</td>`
+                                }else{
+                                  html += `<td >Bet Settlement</td>`
+                              }
+                        }else{
+                            if(data[i].child_id){
+                                if(data[i].description.startsWith('Chips')){
+                                    if(data[i].creditDebitamount > 0){
+                                        html += `<td >Deposit</td>`
+                                    }else{
+                                        html += `<td >Withdraw</td>`
+                                    }
+                                }else{
+                                    if(data[i].creditDebitamount > 0){
+                                        html += `<td >Settlement Deposit</td>`
+                                    }else{
+                                        html += `<td >Settlement Withdraw</td>`
+                                    }
+                                }
+                            }
+                        }
                         if(data.json.finalresult[i].transactionId){
                             if(data.json.finalresult[i].match){
                                 html += `<td>${data.json.finalresult[i].match}</td>`
