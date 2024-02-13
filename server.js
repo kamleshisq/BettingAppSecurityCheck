@@ -1035,6 +1035,7 @@ io.on('connection', (socket) => {
                 }
                 j++
             }
+            console.log(finalresult, "userAccuserAccuserAcc")
         }{
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
             if(finalresult.length > 0){
@@ -1043,7 +1044,6 @@ io.on('connection', (socket) => {
                 finalresult = userAcc
             }
         }
-        console.log(finalresult, "userAccuserAccuserAcc")
         json.status = 'success'
         json.finalresult = finalresult
         socket.emit('Acc2', {json,page:data.page,user,skipvalue})
