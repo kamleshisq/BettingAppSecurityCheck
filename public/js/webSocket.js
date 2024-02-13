@@ -11533,9 +11533,9 @@ socket.on('connect', () => {
                         html += `<td title="Result">-</td>`
                         }
                       if(data.bets[i].returns > 0){
-                        html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
+                        html += `<td title="Credit/Debit" class="c-gren" colspan="1">${data.bets[i].returns}</td>`
                       }else{
-                        html += `<td title="Credit/Debit" class="c-reed">${data.bets[i].returns}</td>`
+                        html += `<td title="Credit/Debit" class="c-reed" colspan="1">${data.bets[i].returns}</td>`
                       }
 
                       
