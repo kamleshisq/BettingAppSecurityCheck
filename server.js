@@ -809,7 +809,7 @@ io.on('connection', (socket) => {
         async function getmarketwiseaccdata (limit,skip){
             // console.log('in getmarketwise accdata ',limit,skip)
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-            console.log(userAcc, "userAccuserAccuserAccuserAcc")
+            // console.log(userAcc, "userAccuserAccuserAccuserAcc")
              let c = 0
              if(userAcc.length == 0){
                 userAccflage = false
@@ -866,7 +866,7 @@ io.on('connection', (socket) => {
                          if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                              marketidarray.push(bet[0]._id.marketId)
                              finalresult = finalresult.concat(bet)
-                             if(finalresult.length >= 20){
+                             if(finalresult.length >= 10){
                                  break
                              }
                          }
@@ -912,7 +912,7 @@ io.on('connection', (socket) => {
                          if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
                              marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                              finalresult = finalresult.concat(bet)
-                             if(finalresult.length >= 20){
+                             if(finalresult.length >= 10){
                                  break
                              }
                          }
@@ -960,7 +960,7 @@ io.on('connection', (socket) => {
                          if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
                              rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                              finalresult = finalresult.concat(bet)
-                             if(finalresult.length >= 20){
+                             if(finalresult.length >= 10){
                                  break
                              }
                          }
@@ -1008,14 +1008,14 @@ io.on('connection', (socket) => {
                          if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
                              CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                              finalresult = finalresult.concat(bet)
-                             if(finalresult.length >= 20){
+                             if(finalresult.length >= 10){
                                  break
                              }
                          }
                      }
                      else{
                          finalresult.push(userAcc[i])
-                         if(finalresult.length >= 20){
+                         if(finalresult.length >= 10){
                                  break
                          }
                      }
