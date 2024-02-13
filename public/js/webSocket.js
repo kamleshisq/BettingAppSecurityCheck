@@ -11493,7 +11493,7 @@ socket.on('connect', () => {
                     <td>Stake</td>
                     <td>Status</td>
                     <td>Result</td>
-                    <td colspan="1">Return</td>
+                    <td  >Return</td>
                 </tr>`
                     }
                     if(data.bets[i].bettype2 == 'BACK'){
@@ -11533,9 +11533,9 @@ socket.on('connect', () => {
                         html += `<td title="Result">-</td>`
                         }
                       if(data.bets[i].returns > 0){
-                        html += `<td title="Credit/Debit" class="c-gren" colspan="1">${data.bets[i].returns}</td>`
+                        html += `<td title="Credit/Debit" class="c-gren"  >${data.bets[i].returns}</td>`
                       }else{
-                        html += `<td title="Credit/Debit" class="c-reed" colspan="1">${data.bets[i].returns}</td>`
+                        html += `<td title="Credit/Debit" class="c-reed"  >${data.bets[i].returns}</td>`
                       }
 
                       
