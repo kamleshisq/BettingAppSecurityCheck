@@ -110,7 +110,7 @@ async function mapBet(data){
                 let debitCreditAmount;
                 let exposure = bets[bet].exposure
                 if(bets[bet].bettype2 == 'BACK'){
-                    if(bets[bet].marketName.toLowerCase().startsWith('match') || bets[bet].marketName.toLowerCase().startsWith('winne')){
+                    if(bets[bet].marketName.toLowerCase().startsWith('match') || bets[bet].marketName.toLowerCase().startsWith('winne') || bets[bet].marketName.toLowerCase().startsWith("over/under")){
                       debitCreditAmount = parseFloat((bets[bet].Stake * bets[bet].oddValue).toFixed(2)) - bets[bet].Stake
                     }else{
                       debitCreditAmount = parseFloat(bets[bet].Stake * bets[bet].oddValue/100).toFixed(2)
