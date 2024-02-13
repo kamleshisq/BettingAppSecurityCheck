@@ -26,6 +26,7 @@ router.get('/liveMarkets', viewController.liveAllMarkets)
 router.get('/liveAllMarkets2', viewController.liveAllMarkets2)
 router.post('/getFancyBookDATA', viewController.getFancyBookDATA)
 router.get('/liveMarketStream', viewController.liveMarketStream)
+router.get('/getscoreiframe', viewController.getscoreiframe)
 
 // Admin Panal 
 

@@ -1070,6 +1070,14 @@ exports.liveMarketStream = catchAsync(async(req, res, next) => {
     })
 })
 
+exports.getscoreiframe = catchAsync(async(req, res, next) => {
+    if(req.query.eventId){
+        res.status(200).render('./iframeScore', {
+            id : req.query.eventId
+        })
+    }
+})
+
 
 exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // let id = req.originalUrl.split("=")[1]
