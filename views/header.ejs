@@ -463,6 +463,7 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
 
 <script>
   let sessionStorage = sessionStorage.getItem('sessiontoken')
+  console.log(sessionStorage, "sessionStoragesessionStoragesessionStoragesessionStorage")
   if(!sessionStorage){
     window.location.href = '/adminlogin'
   }
