@@ -310,122 +310,124 @@
                     </div>
                 </div>
               <div id="HORSE RACING" class="tabcontent">
-                <%if(betsDetails)%>
-                <div class="row">
-                  <form action="">
-                    <div class="table-top-from-data">
-                    <div class="input-group">
-                        <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="FdateACC">
-                        <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateACC">
-                        <select id="selectACC" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
-                          <option selected>All Reports</option>
-                          <option value="Deposit">Deposit</option>
-                          <option value="Withdraw">Withdraw</option>
-                          <option value="SDeposit">Settlement Deposit</option>
-                          <option value="SWithdraw">Settlement Withdraw</option>
-                          <option value="bsettlement">bet settlement</option>
-                      </select>
+                <%if(betsDetails.roleName != "user"){%>
+                <%}else{%>
+                  <div class="row">
+                    <form action="">
+                      <div class="table-top-from-data">
+                      <div class="input-group">
+                          <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="FdateACC">
+                          <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateACC">
+                          <select id="selectACC" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
+                            <option selected>All Reports</option>
+                            <option value="Deposit">Deposit</option>
+                            <option value="Withdraw">Withdraw</option>
+                            <option value="SDeposit">Settlement Deposit</option>
+                            <option value="SWithdraw">Settlement Withdraw</option>
+                            <option value="bsettlement">bet settlement</option>
+                        </select>
+                      </div>
+                      <div class="btn-group">
+                        <button  id="downloadBtnACC" class="btn acount-stat-ro-titl-form-btnn load">Download PDF </button>
+                      <button  id="pdfDownloadACC" class="btn acount-stat-ro-titl-form-btnn load">Download CSV</button>
+                      </div>
                     </div>
-                    <div class="btn-group">
-                      <button  id="downloadBtnACC" class="btn acount-stat-ro-titl-form-btnn load">Download PDF </button>
-                    <button  id="pdfDownloadACC" class="btn acount-stat-ro-titl-form-btnn load">Download CSV</button>
-                    </div>
-                  </div>
-                  </form>
-                  <div class="pageIdACC" data-pageid="1"></div>
-                  <section>
-                    <div class="container-fluid">
-                        <div class="row">
-                        </div>
-                        <div class="table-data-section">
-                          <table class="acount-stat-tbl" id="table12">
-  
-                            <thead class="acount-stat-tbl-hed">
-                                <tr class="acount-stat-tbl-hed-tr">
-                                    <th class="bod-red-lft">Date & Time</th>
-                                    <th>Event</th>
-                                    <th>Market Type</th>
-                                    <th>Credit</th>
-                                    <th>Debit</th>
-                                    <th>Closing Balance</th>
-                                    <th>Transaction ID</th>
-                                </tr>
-                            </thead>
+                    </form>
+                    <div class="pageIdACC" data-pageid="1"></div>
+                    <section>
+                      <div class="container-fluid">
+                          <div class="row">
+                          </div>
+                          <div class="table-data-section">
+                            <table class="acount-stat-tbl" id="table12">
     
-                            <tbody class="acount-stat-tbl-body">
-                                <%if(ACCount.length != 0){%>
-                                <%for(let i = 0; i < ACCount.length; i++){%>
-                                    <%
-                                        <!-- var timestamp = `${ACCount[i].time}`;  -->
-                                        var date = new Date(ACCount[i].date);
-                                        var options = { 
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                            hour: 'numeric',
-                                            minute: 'numeric',
-                                            hour12: true
-                                        };
-                                        var formattedTime = date.toLocaleString('en-US', options);
-                                    %>
-                                    <tr class="acount-stat-tbl-body-tr">
-                                        <td class="date-time"><%=formattedTime%></td>
-                                        <%if(ACCount[i].transactionId){%>
-                                          <%if(ACCount[i].match){%>
-                                              <td><%=ACCount[i].match%></td>
-                                          <%}else{%>
-                                              <td>-</td>
-                                          <%}%>
-                                          <%if(ACCount[i].marketName){%>
-                                              <td><%=ACCount[i].marketName%></td>
-                                          <%}else{%>
-                                              <td>-</td>
-                                          <%}%>
-                                      <%}else{%>
-                                          <td>-</td><td>-</td>
-              
-                                      <%}%>
-                                        <%if(ACCount[i].creditDebitamount > 0){%>
-                                            <td class="c-gren"><%=ACCount[i].creditDebitamount%></td>
-                                            <td>0</td>
+                              <thead class="acount-stat-tbl-hed">
+                                  <tr class="acount-stat-tbl-hed-tr">
+                                      <th class="bod-red-lft">Date & Time</th>
+                                      <th>Event</th>
+                                      <th>Market Type</th>
+                                      <th>Credit</th>
+                                      <th>Debit</th>
+                                      <th>Closing Balance</th>
+                                      <th>Transaction ID</th>
+                                  </tr>
+                              </thead>
+      
+                              <tbody class="acount-stat-tbl-body">
+                                  <%if(ACCount.length != 0){%>
+                                  <%for(let i = 0; i < ACCount.length; i++){%>
+                                      <%
+                                          <!-- var timestamp = `${ACCount[i].time}`;  -->
+                                          var date = new Date(ACCount[i].date);
+                                          var options = { 
+                                              year: 'numeric',
+                                              month: 'long',
+                                              day: 'numeric',
+                                              hour: 'numeric',
+                                              minute: 'numeric',
+                                              hour12: true
+                                          };
+                                          var formattedTime = date.toLocaleString('en-US', options);
+                                      %>
+                                      <tr class="acount-stat-tbl-body-tr">
+                                          <td class="date-time"><%=formattedTime%></td>
+                                          <%if(ACCount[i].transactionId){%>
+                                            <%if(ACCount[i].match){%>
+                                                <td><%=ACCount[i].match%></td>
+                                            <%}else{%>
+                                                <td>-</td>
+                                            <%}%>
+                                            <%if(ACCount[i].marketName){%>
+                                                <td><%=ACCount[i].marketName%></td>
+                                            <%}else{%>
+                                                <td>-</td>
+                                            <%}%>
                                         <%}else{%>
-                                            <td>0</td>
-                                            <td class="c-reed"><%=ACCount[i].creditDebitamount%></td>
+                                            <td>-</td><td>-</td>
+                
                                         <%}%>
-                                        <td><%=ACCount[i].balance%></td>
-                                        <%if(ACCount[i].gameId){%>
                                           <%if(ACCount[i].creditDebitamount > 0){%>
-                                          <td><a class="ownAccDetails positive" data-gameid="<%=ACCount[i].transactionId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
-                                        <%}else{%>
-                                          <td><a class="ownAccDetails negative" data-gameid="<%=ACCount[i].transactionId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
-                                        <%}%>
-                                        <%}else if(ACCount[i].transactionId && ACCount[i].transactionId.length > 16 && ACCount[i]._id.marketId){%>
-                                          <td><a class="ownAccDetails" data-marketid="<%=ACCount[i]._id.marketId%>" data-gameid="<%=ACCount[i]._id.eventId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
-                                        <%}else if(ACCount[i]._id.marketId){%>
-                                          <td><a class="ownAccDetails" data-marketid="<%=ACCount[i]._id.marketId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
-                                        <%}else{%>
-                                          <td><a class="ownAccDetails" data-id="<%=ACCount[i]._id%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
-                                        <%}%>
-                                    </tr>
-                                    <%}%>
-                                    <%}else{%>
-                                      <tr class="empty_table">
-                                        <td>No record found</td>
+                                              <td class="c-gren"><%=ACCount[i].creditDebitamount%></td>
+                                              <td>0</td>
+                                          <%}else{%>
+                                              <td>0</td>
+                                              <td class="c-reed"><%=ACCount[i].creditDebitamount%></td>
+                                          <%}%>
+                                          <td><%=ACCount[i].balance%></td>
+                                          <%if(ACCount[i].gameId){%>
+                                            <%if(ACCount[i].creditDebitamount > 0){%>
+                                            <td><a class="ownAccDetails positive" data-gameid="<%=ACCount[i].transactionId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <%}else{%>
+                                            <td><a class="ownAccDetails negative" data-gameid="<%=ACCount[i].transactionId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <%}%>
+                                          <%}else if(ACCount[i].transactionId && ACCount[i].transactionId.length > 16 && ACCount[i]._id.marketId){%>
+                                            <td><a class="ownAccDetails" data-marketid="<%=ACCount[i]._id.marketId%>" data-gameid="<%=ACCount[i]._id.eventId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <%}else if(ACCount[i]._id.marketId){%>
+                                            <td><a class="ownAccDetails" data-marketid="<%=ACCount[i]._id.marketId%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <%}else{%>
+                                            <td><a class="ownAccDetails" data-id="<%=ACCount[i]._id%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=ACCount[i].transactionId%>&nbsp;</a></td>
+                                          <%}%>
                                       </tr>
-                                    <%}%>
-                            </tbody>
-    
-                        </table>
-                        <%if(ACCount.length != 0){%>
-                          <div class="loadMorediveACC" >
-                              <a id="loadMoreACC">Load More</a>
-                          </div>
-                        <%}%>
-                          </div>
-                    </div>
-                    <div class="skipid" data-skipid="<%=skipvalue%>"></div>
-                </section>
-                </div>
+                                      <%}%>
+                                      <%}else{%>
+                                        <tr class="empty_table">
+                                          <td>No record found</td>
+                                        </tr>
+                                      <%}%>
+                              </tbody>
+      
+                          </table>
+                          <%if(ACCount.length != 0){%>
+                            <div class="loadMorediveACC" >
+                                <a id="loadMoreACC">Load More</a>
+                            </div>
+                          <%}%>
+                            </div>
+                      </div>
+                      <div class="skipid" data-skipid="<%=skipvalue%>"></div>
+                  </section>
+                  </div>
+                <%}%>
               </div>
               <div id="Greyhound" class="tabcontent">
                 <div class="row">
