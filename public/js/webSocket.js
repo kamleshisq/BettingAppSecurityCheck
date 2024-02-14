@@ -11262,6 +11262,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.length; i++){
                 html += `<li><a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${data[i].id}">${data[i].game_name}</a></li>`
             }
+            console.log(data)
             document.getElementById('search').innerHTML = html
         })
     }
