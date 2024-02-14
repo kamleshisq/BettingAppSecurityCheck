@@ -11261,8 +11261,8 @@ socket.on('connect', () => {
             let html = ``
             if(LOGINDATA.LOGINUSER){
                 for(let i = 0; i < data.length; i++){
-                    console.log(data)
-                    html += `<li><a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${data[i].id}">${data[i].game_name}</a></li>`
+                    // console.log(data)
+                    html += `<li><a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${data[i]._id}">${data[i].game_name}</a></li>`
                 }
             }else{
                 for(let i = 0; i < data.length; i++){
