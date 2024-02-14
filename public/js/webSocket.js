@@ -10151,7 +10151,7 @@ socket.on('connect', () => {
                             .text(0);
                         }
                         else{
-                            // console.log("WORKING")
+                            console.log("result", result)
                             $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                             $(this)
                             .closest("tr")
