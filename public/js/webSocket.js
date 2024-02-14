@@ -10184,6 +10184,7 @@ socket.on('connect', () => {
                             result = (NewStake * Odds) / 100
                             diff = (100 * Odds) / 100
                         }
+                        console.log(Math.abs(oldValue - newValue))
                         let data = {
                             result : diff,
                             element,
