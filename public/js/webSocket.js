@@ -10109,12 +10109,11 @@ socket.on('connect', () => {
                                 resultDiff = (staleDiff * Odds) / 100
                             }
                             let data = {
+                                result : resultDiff,
                                 element,
                                 status:false,
                                 NewStake : staleDiff,
-                                check : NewStake,
-                                plusMinus:resultDiff,
-                                result:staleDiff
+                                check : NewStake
                             }
                             Onlyminus(data)
                         }else{
