@@ -11255,6 +11255,15 @@ socket.on('connect', () => {
                 }
             }
         })
+
+        socket.on('gameSearcch', data => {
+            $('.wrapper').show()
+            let html = ``
+            for(let i = 0; i < data.length; i++){
+                html += `<li class="searchList" id="${data[i].game_name}">${data[i].game_name}</li>`
+            }
+            document.getElementById('search').innerHTML = html
+        })
     }
 
 
