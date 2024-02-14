@@ -4355,11 +4355,12 @@ exports.IndianCasino = catchAsync(async(req, res, next) => {
 exports.virtualsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    const data = await promotionModel.find();
-    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
+    const data = await promotionModel.find({whiteLabelName:whiteLabel});
+
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel, category:{$regex: /Virtual/i}});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
