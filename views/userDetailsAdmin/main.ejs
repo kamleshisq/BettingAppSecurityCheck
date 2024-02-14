@@ -350,7 +350,156 @@
                                       <th>Remarks</th>
                                   </tr>
                               </thead>
-      
+                              <tbody class="new-body">
+                                <%if(ACCount.length !== 0){%>
+                                <%for(let i = 0; i < ACCount.length; i++){%>
+                                <% let date = new Date(ACCount[i].date)%>
+                                <% 
+                                var options = { 
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    hour12: true
+                                  };
+                                  var formattedTime = date.toLocaleString('en-US', options);
+                                  %>
+                                <%if((i%2 == 0)){%>
+                                <tr>
+                                  
+                                  <td class="text-nowrap" ><%=formattedTime%></td>
+                                  <%if(ACCount[i].description.startsWith('Chips')){%>
+                                    <%if(ACCount[i].creditDebitamount > 0){%>
+                                      <td >Deposit</td>
+                                    <%}else{%>
+                                      <td >Withdraw</td>
+                                    <%}%>
+                                  <%}else if(ACCount[i].child_id) {%>
+                                    <%if(ACCount[i].creditDebitamount > 0){%>
+                                      <td >Settlement Deposit</td>
+                                    <%}else{%>
+                                      <td >Settlement Withdraw</td>
+                                    <%}%>
+                                  <%}else{%>
+                                    <td>commission Settlement</td>
+                                  <%}%>
+                                  <%if(ACCount[i].creditDebitamount > 0){%>
+                                  <%if(ACCount[i].parent_id){%>
+                                  <%if(ACCount[i].parent_id.userName == ACCount[i].user_id.userName){%>
+                                  <%if(ACCount[i].child_id == null){ %>
+                                  <td>-/<%=ACCount[i].parent_id.userName%></td>
+                                  <%}else{ %>
+                                  <td><%=ACCount[i].child_id.userName%>/<%=ACCount[i].parent_id.userName%></td>
+                                  <%} %>
+                                  <%}else{%>
+                                  <%if(ACCount[i].child_id == null){ %>
+                                  <td><%=ACCount[i].parent_id.userName%>/-</td>
+                                  <%}else{ %>
+                                  <td><%=ACCount[i].parent_id.userName%>/<%=ACCount[i].child_id.userName%></td>
+                                  <%} %>
+                                  <%}%>
+                                  <%}else{%>
+                                  <td>-</td>  
+                                  <%}%>
+                                  <%}else{%>
+                                  <%if(ACCount[i].parent_id){%>
+                                  <%if(ACCount[i].parent_id.userName == ACCount[i].user_id.userName){%>
+                                  <%if(ACCount[i].child_id == null){ %>
+                                  <td><%=ACCount[i].parent_id.userName%>/-</td>
+                                  <%}else{ %>
+                                  <td><%=ACCount[i].parent_id.userName%>/<%=ACCount[i].child_id.userName%></td>
+                                  <%} %>
+                                  <%}else{%>
+                                  <%if(ACCount[i].child_id == null){ %>
+                                  <td>-/<%=ACCount[i].parent_id.userName%></td>
+                                  <%}else{ %>
+                                  <td><%=ACCount[i].child_id.userName%>/<%=ACCount[i].parent_id.userName%></td>
+                                  <%} %>
+                                  <%}%>
+                                  <%}else{%>
+                                  <td>-</td>  
+                                  <%}%>
+                                  <%}%>
+                                  <td><%=(ACCount[i].balance - ACCount[i].creditDebitamount).toFixed(2)%></td>
+                                  <td><%=ACCount[i].creditDebitamount%></td>
+                                  <td><%=ACCount[i].balance%></td>
+                                  <%if(ACCount[i].Remark){%>
+                                    <td><%=ACCount[i].Remark%></td>
+                                  <%}else{%>
+                                    <td>-</td>
+                                  <%}%>
+                                </tr>
+                                <%}else{%>
+                                <tr>
+                                  <td class="text-nowrap" ><%=formattedTime%></td>
+                                  <%if(ACCount[i].description.startsWith('Chips')){%>
+                                    <%if(ACCount[i].creditDebitamount > 0){%>
+                                      <td >Deposit</td>
+                                    <%}else{%>
+                                      <td >Withdraw</td>
+                                    <%}%>
+                                  <%}else if(ACCount[i].child_id) {%>
+                                    <%if(ACCount[i].creditDebitamount > 0){%>
+                                      <td >Settlement Deposit</td>
+                                    <%}else{%>
+                                      <td >Settlement Withdraw</td>
+                                    <%}%>
+                                  <%}else{%>
+                                    <td>commission Settlement</td>
+                                  <%}%>
+                                  <%if(ACCount[i].creditDebitamount > 0){%>
+                                  <%if(ACCount[i].parent_id){%>
+                                  <%if(ACCount[i].parent_id.userName == ACCount[i].user_id.userName){%>
+                                  <%if(ACCount[i].child_id == null){ %>
+                                  <td>-/<%=ACCount[i].parent_id.userName%></td>
+                                  <%}else{ %>
+                                  <td><%=ACCount[i].child_id.userName%>/<%=ACCount[i].parent_id.userName%></td>
+                                  <%} %>
+                                  <%}else{%>
+                                  <%if(ACCount[i].child_id == null){ %>
+                                  <td><%=ACCount[i].parent_id.userName%>/-</td>
+                                  <%}else{ %>
+                                  <td><%=ACCount[i].parent_id.userName%>/<%=ACCount[i].child_id.userName%></td>
+                                  <%} %>
+                                  <%}%>
+                                  <%}else{%>
+                                  <td>-</td>  
+                                  <%}%>
+                                  <%}else{%>
+                                  <%if(ACCount[i].parent_id){%>
+                                  <%if(ACCount[i].parent_id.userName == ACCount[i].user_id.userName){%>
+                                  <%if(ACCount[i].child_id == null){ %>
+                                  <td><%=ACCount[i].parent_id.userName%>/-</td>
+                                  <%}else{ %>
+                                  <td><%=ACCount[i].parent_id.userName%>/<%=ACCount[i].child_id.userName%></td>
+                                  <%} %>
+                                  <%}else{%>
+                                  <%if(ACCount[i].child_id == null){ %>
+                                  <td>-/<%=ACCount[i].parent_id.userName%></td>
+                                  <%}else{ %>
+                                  <td><%=ACCount[i].child_id.userName%>/<%=ACCount[i].parent_id.userName%></td>
+                                  <%} %>
+                                  <%}%>
+                                  <%}else{%>
+                                  <td>-</td>  
+                                  <%}%>
+                                  <%}%>
+                                  <td><%=(ACCount[i].balance - ACCount[i].creditDebitamount).toFixed(2)%></td>
+                                  <td><%=ACCount[i].creditDebitamount%></td>
+                                  <td><%=ACCount[i].balance%></td>
+                                  <%if(ACCount[i].Remark){%>
+                                    <td><%=ACCount[i].Remark%></td>
+                                  <%}else{%>
+                                    <td>-</td>
+                                  <%}%>
+                                </tr>
+                                <%}%>
+                                <%}%>
+                                <%}else{%>
+                                  <tr class="empty_table"><td>No record found</td></tr>
+                                <%}%>
+                              </tbody>
                               
       
                           </table>
