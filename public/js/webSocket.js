@@ -4237,12 +4237,14 @@ socket.on('connect', () => {
                             }else{
                               html += `<td >Withdraw</td>`
                             }
-                          }else{
+                          }else if(data[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
                             }else{
                               html += `<td >Settlement Withdraw</td>`
                             }
+                          }else{
+                            html += `<td>commission Settlement</td>`
                           }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             if(data.json.userAcc[i].parent_id){
@@ -4300,12 +4302,14 @@ socket.on('connect', () => {
                             }else{
                               html += `<td >Withdraw</td>`
                             }
-                          }else{
+                          }else if(data[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
                             }else{
                               html += `<td >Settlement Withdraw</td>`
                             }
+                          }else{
+                            html += `<td>commission Settlement</td>`
                           }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                            
