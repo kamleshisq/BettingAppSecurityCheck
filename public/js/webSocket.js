@@ -4237,7 +4237,7 @@ socket.on('connect', () => {
                             }else{
                               html += `<td >Withdraw</td>`
                             }
-                          }else if(data[i].child_id) {
+                          }else if(data.json.userAcc[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
                             }else{
@@ -4302,7 +4302,7 @@ socket.on('connect', () => {
                             }else{
                               html += `<td >Withdraw</td>`
                             }
-                          }else if(data[i].child_id) {
+                          }else if(data.json.userAcc[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
                             }else{
