@@ -84,12 +84,14 @@
                       <%}else{%>
                         <td >Withdraw</td>
                       <%}%>
-                    <%}else{%>
+                    <%}else if(data[i].child_id) {%>
                       <%if(data[i].creditDebitamount > 0){%>
                         <td >Settlement Deposit</td>
                       <%}else{%>
                         <td >Settlement Withdraw</td>
                       <%}%>
+                    <%}else{%>
+                      <td>commission Settlement</td>
                     <%}%>
                     <%if(data[i].creditDebitamount > 0){%>
                     <%if(data[i].parent_id){%>
