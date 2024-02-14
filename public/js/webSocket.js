@@ -10191,6 +10191,7 @@ socket.on('connect', () => {
                             status:false,
                             NewStake :  Math.abs(oldValue - newValue)
                         }
+                        console.log(data, "data")
                         marketplusminus(data)
                     }else{
                         result = NewStake
