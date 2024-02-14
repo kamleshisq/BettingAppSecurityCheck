@@ -571,7 +571,119 @@
                                           };
                                           var formattedTime = date.toLocaleString('en-US', options);
                                       %>
-                                      
+                                      <%if(ACCount[i].gameId){%>
+                                        <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameid="<%=ACCount[i].transactionId%>" id="rowid-<%=i + 1%>">
+                                            <%if(ACCount[i].creditDebitamount > 0){%>
+                                              <td title="Transaction" class="positive transactiontype">Casino Bet  Settlement</td>
+                                            <%}else if(ACCount[i].creditDebitamount < 0){%>
+                                              <td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>
+                                            <%}%>
+                                              <td title="Date" ><%=formattedTime%></td>
+                                            <%if(ACCount[i].match){%>
+                                              <td title="Event"><%=ACCount[i].match%></td>
+                                            <%}else{%>
+                                              <td title="Event">-</td>
+                                            <%}%>
+                                            <%if(ACCount[i].marketName){%>
+                                              <td title="Market Type"><%=ACCount[i].marketName%></td>
+                                            <%}else{%>
+                                              <td title="Market Type">-</td>
+                                            <%}%>
+                                            <%if(ACCount[i].creditDebitamount > 0){%>
+                                                <td title="Credit/Debit" class="c-gren"><%=ACCount[i].creditDebitamount%></td>
+                                            <%}else{%>
+                                                <td title="Credit/Debit" class="c-reed"><%=ACCount[i].creditDebitamount%></td>
+                                            <%}%>
+                                              <td title="Closing Balance"><%=ACCount[i].balance%></td>
+                                              <td title="Transaction ID"><%=ACCount[i].transactionId%></td>
+                                              
+                                          <%}else if(ACCount[i].transactionId && ACCount[i].transactionId.length > 16 && ACCount[i]._id.marketId){%>
+                                            <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=ACCount[i]._id.marketId%>" data-gameid="<%=ACCount[i]._id.eventId%>" id="rowid-<%=i + 1%>">
+                                            <td title="Transaction">Sport Book Bet Settlement</td>
+                                            <td title="Date" ><%=formattedTime%></td>
+                                            <!-- <td title="Date" ><%=formattedTime%></td> -->
+                                            <%if(ACCount[i].match){%>
+                                              <td title="Event"><%=ACCount[i].match%></td>
+                                            <%}else{%>
+                                              <td title="Event">-</td>
+                                            <%}%>
+                                            <%if(ACCount[i].marketName){%>
+                                              <td title="Market Type"><%=ACCount[i].marketName%></td>
+                                            <%}else{%>
+                                              <td title="Market Type">-</td>
+                                            <%}%>
+                                            <%if(ACCount[i].creditDebitamount > 0){%>
+                                                <td title="Credit/Debit" class="c-gren"><%=ACCount[i].creditDebitamount%></td>
+                                            <%}else{%>
+                                                <td title="Credit/Debit" class="c-reed"><%=ACCount[i].creditDebitamount%></td>
+                                            <%}%>
+                                              <td title="Closing Balance"><%=ACCount[i].balance%></td>
+                                              <td title="Transaction ID"><%=ACCount[i].transactionId%></td>
+                                              
+                                          <%}else if(ACCount[i]._id.marketId){%>
+                                            <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=ACCount[i]._id.marketId%>" id="rowid-<%=i + 1%>">
+                                              <%if(ACCount[i].rollbackMarketId){%>
+                                                <td title="Transaction">Settle Bet Rollback</td>
+                                              <%}else if(ACCount[i].cacelMarketId){%>
+                                                <td title="Transaction">Settle Bet Void</td>
+                                                <%}else{%>
+                                                  <td title="Transaction">Bet Settlement</td>
+                                              <%}%>
+                                              <td title="Date" ><%=formattedTime%></td>
+                                                <%if(ACCount[i].match){%>
+                                                  <td title="Event"><%=ACCount[i].match%></td>
+                                                <%}else{%>
+                                                  <td title="Event">-</td>
+                                                <%}%>
+                                                <%if(ACCount[i].marketName){%>
+                                                  <td title="Market Type"><%=ACCount[i].marketName%></td>
+                                                <%}else{%>
+                                                  <td title="Market Type">-</td>
+                                                <%}%>
+                                                <%if(ACCount[i].creditDebitamount > 0){%>
+                                                    <td title="Credit/Debit" class="c-gren"><%=ACCount[i].creditDebitamount%></td>
+                                                <%}else{%>
+                                                    <td title="Credit/Debit" class="c-reed"><%=ACCount[i].creditDebitamount%></td>
+                                                <%}%>
+                                                  <td title="Closing Balance"><%=ACCount[i].balance%></td>
+                                                  <td title="Transaction ID"><%=ACCount[i].transactionId%></td>
+                                          <%}else{%>
+                                            <tr class="acount-stat-tbl-body-tr " data-marketid="" id="rowid-<%=i + 1%>">
+                                              <%if(ACCount[i].child_id){%>
+                                                <%if(ACCount[i].description.startsWith('Chips')){%>
+                                                  <%if(ACCount[i].creditDebitamount > 0){%>
+                                                    <td title="Transaction">Deposit</td>
+                                                  <%}else{%>
+                                                    <td title="Transaction">Withdraw</td>
+                                                  <%}%>
+                                                <%}else{%>
+                                                  <%if(ACCount[i].creditDebitamount > 0){%>
+                                                    <td title="Transaction">Settlement Deposit</td>
+                                                  <%}else{%>
+                                                    <td title="Transaction">Settlement Withdraw</td>
+                                                  <%}%>
+                                                <%}%>
+                                                <!-- <td title="Transaction">Settlement</td> -->
+                                                <%}else{%>
+                                                  <%console.log(ACCount[i])%>
+                                                  <%if(ACCount[i].description.startsWith("Revoke") || ACCount[i].description.startsWith("Settle")){%>
+                                                    <td title="Transaction"><%=ACCount[i].description%></td>
+                                                    <%}else{%>
+                                                      <td title="Transaction">Commission Settlement</td>
+                                                      <%}%>
+                                                      <%}%>
+                                                      <td title="Date" ><%=formattedTime%></td>
+                                            <td title="Event">-</td>
+                                            <td title="Market Type">-</td>
+                                            <%if(ACCount[i].creditDebitamount > 0){%>
+                                                <td title="Credit" class="c-gren"><%=ACCount[i].creditDebitamount%></td>
+                                            <%}else{%>
+                                                <td title="Debit" class="c-reed"><%=ACCount[i].creditDebitamount%></td>
+                                            <%}%>
+                                            <td title="Closing Balance"><%=ACCount[i].balance%></td>
+                                            <td title="Transaction ID">-</td>
+                                          <%}%>
+                                          <td></td><td></td></tr>
                                       <%}%>
                                       <%}else{%>
                                         <tr class="empty_table">
