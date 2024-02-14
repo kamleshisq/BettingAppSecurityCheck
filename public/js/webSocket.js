@@ -10080,7 +10080,7 @@ socket.on('connect', () => {
                 console.log('Previous value:', prevValue);
                 $(this).data('prevValue', $(this).val());
                 console.log('Current value:', $(this).val());
-                if(prevValue && $(this).val() != 0){
+                if($(this).val() != 0){
                     let oldValue = prevValue
                     let newValue = $(this).val()
                     if(oldValue > newValue){
