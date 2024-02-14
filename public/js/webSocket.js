@@ -10182,7 +10182,7 @@ socket.on('connect', () => {
                                 );
                             }
                             result = (NewStake * Odds) / 100
-                            diff = (Math.abs(oldValue - newValue) * Odds) / Math.abs(oldValue - newValue)
+                            diff = (Math.abs(oldValue - newValue) * Odds) / 100
                         }
                         // console.log(Math.abs(oldValue - newValue))
                         let data = {
