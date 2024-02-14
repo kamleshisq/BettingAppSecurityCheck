@@ -10233,6 +10233,8 @@ socket.on('connect', () => {
                         .text(result.toFixed(2));
                     }
                     }
+                }else{
+                    marketIdbookDetails( false )
                 }
             })
           })
