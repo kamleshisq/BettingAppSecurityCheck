@@ -11259,8 +11259,14 @@ socket.on('connect', () => {
         socket.on('gameSearcch', data => {
             $('.wrapper').show()
             let html = ``
-            for(let i = 0; i < data.length; i++){
-                html += `<li><a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${data[i].id}">${data[i].game_name}</a></li>`
+            if(LOGINDATA.LOGINUSER){
+                for(let i = 0; i < data.length; i++){
+                    html += `<li><a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${data[i].id}">${data[i].game_name}</a></li>`
+                }
+            }else{
+                for(let i = 0; i < data.length; i++){
+                    <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">${data[i].game_name}</a>
+                }
             }
             console.log(data)
             document.getElementById('search').innerHTML = html
