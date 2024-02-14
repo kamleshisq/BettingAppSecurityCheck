@@ -12496,13 +12496,13 @@ io.on('connection', (socket) => {
 
     socket.on('gameSearcch', async(data) => {
         console.log(data)
-        if(data.LOGINDATA.LOGINUSER){
-            let whiteLabel = data.LOGINDATA.LOGINUSER.whiteLabel
+        // if(data.LOGINDATA.LOGINUSER){
+            let whiteLabel = process.env.whiteLabelName
             let regExpress = new RegExp(data.x, 'i');
             let games = await gameModel.find({whiteLabelName:whiteLabel, game_name: regExpress})
             // console.log(games)
             socket.emit('gameSearcch', games)
-        }
+        // }
     })
 
 })
