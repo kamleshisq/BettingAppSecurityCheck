@@ -11239,6 +11239,22 @@ socket.on('connect', () => {
 
 
           })
+
+          $('.gameSearcch').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("gameSearcch")){
+
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("gameSearcch", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
     }
 
 
