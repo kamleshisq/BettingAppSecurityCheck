@@ -11252,12 +11252,14 @@ socket.on('connect', () => {
                 }else{
                     document.getElementById('search').innerHTML = ``
                     // document.getElementById("button").innerHTML = ''
+                    $('.wrapper').addClass('hide')
                 }
             }
         })
 
         socket.on('gameSearcch', data => {
             $('.wrapper').show()
+            $('.wrapper').removeClass('hide')
             let html = ``
             if(LOGINDATA.LOGINUSER){
                 for(let i = 0; i < data.length; i++){
