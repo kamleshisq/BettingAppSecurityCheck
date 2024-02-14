@@ -4299,8 +4299,8 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.royalGamingPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find({provider_name:"RG",whiteLabelName:whiteLabel});
@@ -4309,6 +4309,33 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/royalGamingPage/main",{
+        title:'Royal Games',
+        user,
+        verticalMenus,
+        data,
+        check:"Royal Casino",
+        games,
+        userLog,
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
+    })
+});
+
+
+exports.IndianCasino = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let whiteLabel = whiteLabelcheck(req)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    const data = await promotionModel.find();
+    let games = await gameModel.find({provider_name:"RG",whiteLabelName:whiteLabel});
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
+    res.status(200).render("./userSideEjs/IndianCasino/main",{
         title:'Royal Games',
         user,
         verticalMenus,

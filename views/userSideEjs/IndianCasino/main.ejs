@@ -1,0 +1,321 @@
+<%-include("../headers")%>
+
+
+      <!-- ----= CARDS CONTENT SECTION START =-----   -->
+
+      <div class="liv-casino-txt-ro-contnr-neww">
+        <div class="liv-casino-nav-tab-txtdv">
+          <div class="tab-content liv-casino-nav-tab-txtwrp" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+              <div class="liv-casino-nav-tab-txtcards-dv">
+                <%for(let i = 0; i < games.length; i++){%>
+                  <div class="col-lg-3 col-md-6 col-6 cardspg-col">
+                    <div class="cardspg-col-txt">
+                        <div class="cardspg-col-txt-imgdv-wrp">
+                            <span class="cardspg-col-txt-bg-anim-spn"></span>
+                            <img class="img-fluid cards-pg-game-img" src="<%=games[i].url_thumb%>" alt="">
+                            <%if(user){%>
+                              <a class="cardspg-col-txt-playnow-btn" href="/cards?gameId=<%=games[i]._id%>">PLAY NOW</a>
+                              <%}else{%>
+                              <!-- <a class="cardspg-col-txt-playnow-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                              <a class="cardspg-col-txt-playnow-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                              <%}%>
+                        </div>
+                    </div>
+                  </div>
+                <%}%>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- ----= CARDS CONTENT SECTION END =-----   -->
+
+      <!-- ----= SIDEBAR SECTION START =-----   -->
+      <%-include('../sideBar')%>
+
+      <!-- ----= SIDEBAR SECTION END =-----   -->
+
+      <div class="mbl-botom-mnu-spacer"></div>
+      <!-- ----= MOBILE BOTTOM MENU SECTION START =-----   -->
+      <%-include("../mobileMenu")%>
+      <!-- ----= MOBILE BOTTOM MENU SECTION END =-----   -->
+
+
+      <!-- ----=MODEL1 SECTION START =-----   -->
+      <!-- Modal -->
+      <%-include('../loginBox')%>
+      <%-include('../registration')%>
+      <%-include('../updatePass')%>
+      <%-include("../stakeLabel")%>
+      <%-include("../stakeLabel")%>
+      
+      <!-- ----=MODEL1 SECTION END =-----   -->
+
+    </main>
+
+    <!-- JQUERY  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+      integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- JQUERY  -->
+
+    <!-- AOS ANIMATION CDN  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+      integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      AOS.init({
+        duration: 1200,
+      });
+    </script>
+    <!-- AOS ANIMATION CDN  -->
+
+    <!-- SLICK SLIDER CDN  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+      integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      $(".hiroslide").slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        arrows: true,
+        dots: false,
+        speed: 500,
+        infinite: true,
+        autoplaySpeed: 5000,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: false,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+
+      $(".hiroslide2").slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        arrows: false,
+        dots: true,
+        speed: 300,
+        infinite: true,
+        autoplaySpeed: 1500,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+
+      $(".testimonial").slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
+        dots: true,
+        speed: 300,
+        infinite: true,
+        autoplaySpeed: 3000,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+    </script>
+
+    <!-- SLICK SLIDER CDN  -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    
+    <!-- <script>
+      $('#offsetmenubtnn').click(function() {
+          $('#offsetmenubody').css({
+              'transform': 'translateX(0px)',
+              'transition': 'all 0.3s ease-in-out',
+          });
+      });
+    </script> -->
+
+    <script>
+      $(document).ready(function(){
+        $("#offsetmenubtnn").click(function(){
+          $("#offsetmenubody").toggleClass("offset-mnu-width");
+        });
+      });
+    </script>
+    
+    <script>
+      $(document).ready(function(){
+        $("#offsetmenubtnn").click(function(){
+          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $("#offsertmnuclosbtn").click(function(){
+          $("#offsetmenubody").toggleClass("offset-mnu-width");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $("#offsertmnuclosbtn").click(function(){
+          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+        });
+      });
+    </script>
+    
+    <!-- <script>
+      $(document).ready(function(){
+        $("#botommainmnubtnn").click(function(){
+          $("#botommnuwrp").toggleClass("botom-mnu-wrp");
+        });
+      });
+    </script> -->
+
+    <!-- ---------- CAPTCHA CODE ----------  -->
+    <script>
+      // Generate a random CAPTCHA code
+      function generateCaptcha() {
+        var captcha = '';
+        var possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for (var i = 0; i < 6; i++) {
+          captcha += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+        }
+        return captcha;
+      }
+    
+      // Display the CAPTCHA code on the page
+      function displayCaptcha() {
+        var captchaCode = document.getElementById('captchaCode');
+        captcha = generateCaptcha();
+        captchaCode.textContent = captcha;
+      }
+    
+      // Validate the user's input
+      function validateCaptcha() {
+        var userInput = document.getElementById('captchaInput').value;
+        if (userInput === captcha) {
+          alert('CAPTCHA code is correct. Form submitted!');
+        } else {
+          alert('CAPTCHA code is incorrect. Please try again.');
+          displayCaptcha(); // Refresh CAPTCHA on incorrect input
+        }
+        return false; // Prevent form submission
+      }
+    
+      // Refresh the CAPTCHA code
+      document.getElementById('refreshCaptcha').addEventListener('click', displayCaptcha);
+    
+      // Generate a new CAPTCHA code when the page loads
+      var captcha = generateCaptcha();
+      displayCaptcha();
+    
+      // Attach the validation function to the form's submit event
+      document.getElementById('captchaForm').addEventListener('submit', validateCaptcha);
+    </script>
+    
+    
+    <!-- ---------- CAPTCHA CODE ----------  -->
+
+
+  </body>
+</html>
