@@ -12494,6 +12494,10 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('gameSearcch', async(data) => {
+        console.log(data)
+    })
+
 })
 
 http.listen(process.env.port,()=> {
