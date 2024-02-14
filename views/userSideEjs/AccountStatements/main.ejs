@@ -169,15 +169,15 @@
                                           <%}%>
                                         <%}%>
                                         <!-- <td title="Transaction">Settlement</td> -->
-                                        <td title="Date" ><%=formattedTime%></td>
                                         <%}else{%>
                                           <%console.log(data[i])%>
                                           <%if(data[i].description.startsWith("Revoke") || data[i].description.startsWith("Settle")){%>
                                             <td title="Transaction"><%=data[i].description%></td>
                                             <%}else{%>
                                               <td title="Transaction">Commission Settlement</td>
-                                          <%}%>
-                                      <%}%>
+                                              <%}%>
+                                              <%}%>
+                                              <td title="Date" ><%=formattedTime%></td>
                                     <td title="Event">-</td>
                                     <td title="Market Type">-</td>
                                     <%if(data[i].creditDebitamount > 0){%>
