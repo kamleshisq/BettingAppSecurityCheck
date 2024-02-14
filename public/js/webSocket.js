@@ -11260,7 +11260,7 @@ socket.on('connect', () => {
             $('.wrapper').show()
             let html = ``
             for(let i = 0; i < data.length; i++){
-                html += `<li class="searchList" id="${data[i].game_name}">${data[i].game_name}</li>`
+                html += `<li><a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${data[i].id}">${data[i].game_name}</a></li>`
             }
             document.getElementById('search').innerHTML = html
         })
