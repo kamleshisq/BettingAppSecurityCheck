@@ -10195,7 +10195,7 @@ socket.on('connect', () => {
                         console.log(data, "data")
                         marketplusminus(data)
                     }else{
-                        let result = NewStake
+                        let result = Math.abs(oldValue - newValue)
                         let diff =  Math.abs(oldValue - newValue)
                         if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                             plusMinus = (diff * Odds) - diff;
@@ -10228,7 +10228,7 @@ socket.on('connect', () => {
                         .text(0);
                     }
                     else{
-                        // console.log("WORKING")
+                        console.log(result)
                         $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                         $(this)
                         .closest("tr")
