@@ -11251,7 +11251,7 @@ socket.on('connect', () => {
                     socket.emit("gameSearcch", {x, LOGINDATA})
                 }else{
                     document.getElementById('search').innerHTML = ``
-                    document.getElementById("button").innerHTML = ''
+                    // document.getElementById("button").innerHTML = ''
                 }
             }
         })
