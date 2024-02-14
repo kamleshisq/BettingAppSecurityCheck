@@ -10194,7 +10194,7 @@ socket.on('connect', () => {
                         console.log(data, "data")
                         marketplusminus(data)
                     }else{
-                        result = NewStake
+                        let result = NewStake
                         let diff =  Math.abs(oldValue - newValue)
                         if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                             plusMinus = (100 * Odds) - 100;
