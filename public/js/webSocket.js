@@ -11270,7 +11270,7 @@ socket.on('connect', () => {
                 }
             }else{
                 for(let i = 0; i < data.length; i++){
-                    html += `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">${data[i].game_name}</a>`
+                    html += `<li><a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">${data[i].game_name}</a></li>`
                 }
             }
             // console.log(data)
