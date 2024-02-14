@@ -10233,7 +10233,7 @@ socket.on('connect', () => {
                         $(this)
                         .closest("tr")
                         .find(".c-gren")
-                        .text(result.toFixed(2));
+                        .text(parseFloat(result).toFixed(2));
                     }
                     }
                 }else{
