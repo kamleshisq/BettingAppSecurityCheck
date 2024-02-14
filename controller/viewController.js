@@ -4303,6 +4303,7 @@ exports.royalGamingPage = catchAsync(async(req, res, next) => {
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
+    console.log(data, "datadata")
     let games = await gameModel.find({provider_name:"RG",whiteLabelName:whiteLabel, status:true});
     let userLog
     if(user){
