@@ -590,157 +590,176 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         ])
     }
 
+
     let finalresult = []
-    let marketidarray = [];
-    let userAccflage = true
-    var today = new Date();
-    var todayFormatted = formatDate(today);
-    var tomorrow = new Date();
-    tomorrow.setDate(today.getDate() - 7);
-    var tomorrowFormatted = formatDate(tomorrow);
-    function formatDate(date) {
-        var year = date.getFullYear();
-        var month = (date.getMonth() + 1).toString().padStart(2, '0');
-        var day = date.getDate().toString().padStart(2, '0');
-        return year + "-" + month + "-" + day;
-    }
-    async function getmarketwiseaccdata (limit,skip){
-        // console.log(limit, "limitlimitlimitlimitlimitlimitlimitlimit")
-        console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
-         let c = 0
-         if(userAcc.length == 0){
-            userAccflage = false
-         }
-         if(userAccflage){
-             for(let i = 0;i<userAcc.length;i++){
-                c++
-                 if(userAcc[i].gameId){
-                    
-                    finalresult.push(userAcc[i])
-                    if(finalresult.length >= 10){
-                            break
-                    }
-
-                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
-                    if(marketidarray.includes(userAcc[i].marketId)){
-                        continue;
-                    }
-                     let bet = await betModel.aggregate([
-                         {
-                             $match:{
-                                 userId:req.query.id.toString(),
-                                 eventId:{$exists:'eventId'},
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                                 closingBalance:{$exists:true}
-
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                             $group:{
-                                 _id:{
-                                     eventId:"$eventId",
-                                     marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-                                 },
-                                 match:{$first:'$match'},
-                                 marketName:{$first:'$marketName'},
-                                 stake:{$first:'$Stake'},
-                                 creditDebitamount:{$sum:'$returns'},
-                                 balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$transactionId'},
-                                 date:{ $max: "$settleDate" }
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                            $limit:(10 - finalresult.length)
-                         }
-                     ])
-
-                     console.log('inuseracc sport book',bet)
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                         marketidarray.push(bet[0]._id.marketId)
-                         finalresult = finalresult.concat(bet)
-                         if(finalresult.length >= 10){
-                             break
-                         }
-                     }
-                 }else if(userAcc[i].marketId){
-                    if(marketidarray.includes(userAcc[i].marketId)){
-                        continue;
-                    }
-                     let bet = await betModel.aggregate([
-                         {
-                             $match:{
-                                 userId:req.query.id.toString(),
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                                 closingBalance:{$exists:true}
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                             $group:{
-                                 _id:{
-                                     eventId:"$eventId",
-                                     marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-                                 },
-                                 match:{$first:'$match'},
-                                 marketName:{$first:'$marketName'},
-                                 stake:{$first:'$Stake'},
-                                 creditDebitamount:{$sum:'$returns'},
-                                 balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$transactionId'},
-                                 date:{ $max: "$settleDate" }
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                            $limit:(10 - finalresult.length)
-                         }
-                     ])
-                     console.log('inuseracc marketid',bet)
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                         marketidarray.push(bet[0]._id.marketId)
-                         finalresult = finalresult.concat(bet)
-                         if(finalresult.length >= 10){
-                             break
-                         }
-                     }
-                 }else{
-                     finalresult.push(userAcc[i])
-                     if(finalresult.length >= 10){
-                             break
-                     }
-                 }
-                 
-             }
-         }
-        return c
-    }
-    let j = 0
-    let skipvalue = 0;
-    while(finalresult.length < 10){
-        skip = j * limit
-        let result = await getmarketwiseaccdata(limit,skip)
-        skipvalue = skipvalue + result
-        console.log(skipvalue,j,'skipvalue')
-        console.log(finalresult.length,'finalresult.length')
-        if(!userAccflage){
-            break
+    if(userDetails.roleName != "user"){
+        let marketidarray = [];
+        let userAccflage = true
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
         }
-        j++
+        async function getmarketwiseaccdata (limit,skip){
+            // console.log(limit, "limitlimitlimitlimitlimitlimitlimitlimit")
+            console.log('in getmarketwiseaccdata function')
+             let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
+             let c = 0
+             if(userAcc.length == 0){
+                userAccflage = false
+             }
+             if(userAccflage){
+                 for(let i = 0;i<userAcc.length;i++){
+                    c++
+                     if(userAcc[i].gameId){
+                        
+                        finalresult.push(userAcc[i])
+                        if(finalresult.length >= 10){
+                                break
+                        }
+    
+                     }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
+                        if(marketidarray.includes(userAcc[i].marketId)){
+                            continue;
+                        }
+                         let bet = await betModel.aggregate([
+                             {
+                                 $match:{
+                                     userId:req.query.id.toString(),
+                                     eventId:{$exists:'eventId'},
+                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                     closingBalance:{$exists:true}
+    
+                                 }
+                             },
+                             {
+                                $sort:{settleDate:-1}
+                             },
+                             {
+                                 $group:{
+                                     _id:{
+                                         eventId:"$eventId",
+                                         marketId:"$marketId",
+                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                     },
+                                     match:{$first:'$match'},
+                                     marketName:{$first:'$marketName'},
+                                     stake:{$first:'$Stake'},
+                                     creditDebitamount:{$sum:'$returns'},
+                                     balance:{$first:'$closingBalance'},
+                                     transactionId:{$first:'$transactionId'},
+                                     date:{ $max: "$settleDate" }
+                                 }
+                             },
+                             {
+                                $sort:{settleDate:-1}
+                             },
+                             {
+                                $limit:(10 - finalresult.length)
+                             }
+                         ])
+    
+                         console.log('inuseracc sport book',bet)
+                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                             marketidarray.push(bet[0]._id.marketId)
+                             finalresult = finalresult.concat(bet)
+                             if(finalresult.length >= 10){
+                                 break
+                             }
+                         }
+                     }else if(userAcc[i].marketId){
+                        if(marketidarray.includes(userAcc[i].marketId)){
+                            continue;
+                        }
+                         let bet = await betModel.aggregate([
+                             {
+                                 $match:{
+                                     userId:req.query.id.toString(),
+                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                     closingBalance:{$exists:true}
+                                 }
+                             },
+                             {
+                                $sort:{settleDate:-1}
+                             },
+                             {
+                                 $group:{
+                                     _id:{
+                                         eventId:"$eventId",
+                                         marketId:"$marketId",
+                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                     },
+                                     match:{$first:'$match'},
+                                     marketName:{$first:'$marketName'},
+                                     stake:{$first:'$Stake'},
+                                     creditDebitamount:{$sum:'$returns'},
+                                     balance:{$first:'$closingBalance'},
+                                     transactionId:{$first:'$transactionId'},
+                                     date:{ $max: "$settleDate" }
+                                 }
+                             },
+                             {
+                                $sort:{settleDate:-1}
+                             },
+                             {
+                                $limit:(10 - finalresult.length)
+                             }
+                         ])
+                         console.log('inuseracc marketid',bet)
+                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                             marketidarray.push(bet[0]._id.marketId)
+                             finalresult = finalresult.concat(bet)
+                             if(finalresult.length >= 10){
+                                 break
+                             }
+                         }
+                     }else{
+                         finalresult.push(userAcc[i])
+                         if(finalresult.length >= 10){
+                                 break
+                         }
+                     }
+                     
+                 }
+             }
+            return c
+        }
+        let j = 0
+        let skipvalue = 0;
+        while(finalresult.length < 10){
+            skip = j * limit
+            let result = await getmarketwiseaccdata(limit,skip)
+            skipvalue = skipvalue + result
+            console.log(skipvalue,j,'skipvalue')
+            console.log(finalresult.length,'finalresult.length')
+            if(!userAccflage){
+                break
+            }
+            j++
+        }
+    }else{
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+        let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}).sort({date: -1}).skip(skip).limit(limit)
+        finalresult = userAcc
     }
+
+
     let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).limit(limit)
     // console.log(bets)
     // console.log(betsDetails)
