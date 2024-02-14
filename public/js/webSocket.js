@@ -10197,10 +10197,10 @@ socket.on('connect', () => {
                         let result = NewStake
                         let diff =  Math.abs(oldValue - newValue)
                         if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
-                            plusMinus = (100 * Odds) - 100;
+                            plusMinus = (diff * Odds) - diff;
                             
                         }else{
-                            plusMinus = (100 * Odds) / 100
+                            plusMinus = (diff * Odds) / 100
                         }
                         let data = {
                             result : diff ,
