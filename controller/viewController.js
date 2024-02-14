@@ -4330,7 +4330,8 @@ exports.IndianCasino = catchAsync(async(req, res, next) => {
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true, game_name: { $regex: /indian/i }});
+    let games = await gameModel.find({status:true, game_name: { $regex: /india/i }});
+    console.log(games)
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
