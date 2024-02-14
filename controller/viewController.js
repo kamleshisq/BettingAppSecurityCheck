@@ -590,7 +590,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         ])
     }
 
-
+    let skipvalue
     let finalresult = []
     if(userDetails.roleName != "user"){
         let marketidarray = [];
@@ -731,7 +731,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
             return c
         }
         let j = 0
-        let skipvalue = 0;
+        skipvalue = 0;
         while(finalresult.length < 10){
             skip = j * limit
             let result = await getmarketwiseaccdata(limit,skip)
@@ -757,6 +757,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         }
         let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}).sort({date: -1}).skip(skip).limit(limit)
         finalresult = userAcc
+        skipvalue = limit
     }
 
 
