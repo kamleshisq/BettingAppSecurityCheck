@@ -10109,7 +10109,6 @@ socket.on('connect', () => {
                                 resultDiff = (staleDiff * Odds) / 100
                             }
                             let data = {
-                                result : resultDiff,
                                 element,
                                 status:false,
                                 NewStake : staleDiff,
@@ -10119,15 +10118,16 @@ socket.on('connect', () => {
                         }else{
                             result = NewStake
                             let resultDiff = 100
-        
+                            let staleDiff = Math.abs(oldValue - newValue)
+                            let plusMinus
                             if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
-                                plusMinus = (100 * Odds) - 100;
+                                plusMinus = (staleDiff * Odds) - staleDiff;
                                  
                             }else{
-                                plusMinus = (100 * Odds) / 100
+                                plusMinus = (staleDiff * Odds) / 100
                             }
                             let data = {
-                                result:resultDiff,
+                                result:plusMinus,
                                 element,
                                 status:true,
                                 NewStake :  Math.abs(oldValue - newValue),
