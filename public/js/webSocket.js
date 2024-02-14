@@ -3733,6 +3733,8 @@ socket.on('connect', () => {
                                         html += `<td >Settlement Withdraw</td>`
                                     }
                                 }
+                            }else{
+                                html += `<td >Commission Settlement</td>`
                             }
                         }
                         if(data.json.finalresult[i].transactionId){
