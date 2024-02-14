@@ -16183,7 +16183,7 @@ socket.on('connect', () => {
                 }else{
                     $('.new-body').append(html)         
                 }
-               
+                $('.loadMoredive').attr('style', '')
             }else{
                 // console.log("working")
                 let html;
@@ -16196,7 +16196,7 @@ socket.on('connect', () => {
                     $('.new-body').html("")
                 }
                 $('.loadMoredive').hide()
-
+                
             }
           })
 
