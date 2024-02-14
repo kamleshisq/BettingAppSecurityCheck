@@ -592,7 +592,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
 
     let skipvalue
     let finalresult = []
-    if(userDetails.roleName != "user"){
+    if(userDetails.roleName === "user"){
         let marketidarray = [];
         let userAccflage = true
         var today = new Date();
