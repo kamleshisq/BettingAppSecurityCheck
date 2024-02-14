@@ -11259,8 +11259,10 @@ socket.on('connect', () => {
 
         socket.on('gameSearcch', data => {
             $('.wrapper').show()
-            $('.wrapper').removeClass('hide')
             let html = ``
+            if(data.length != 0){
+                $('.wrapper').removeClass('hide')
+            }
             if(LOGINDATA.LOGINUSER){
                 for(let i = 0; i < data.length; i++){
                     // console.log(data)
