@@ -10172,7 +10172,7 @@ socket.on('connect', () => {
                         let diff = 0
                         if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                             result = (NewStake * Odds) - NewStake;
-                            diff = (100 * Odds) - 100;
+                            diff = (Math.abs(oldValue - newValue) * Odds) - Math.abs(oldValue - newValue);
                         }else{
                             var escapedId = buttonId.replace(/\./g, '\\.');
                             let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
@@ -10182,7 +10182,7 @@ socket.on('connect', () => {
                                 );
                             }
                             result = (NewStake * Odds) / 100
-                            diff = (100 * Odds) / 100
+                            diff = (Math.abs(oldValue - newValue) * Odds) / Math.abs(oldValue - newValue)
                         }
                         console.log(Math.abs(oldValue - newValue))
                         let data = {
