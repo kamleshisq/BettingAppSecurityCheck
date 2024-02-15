@@ -4558,7 +4558,10 @@ io.on('connection', (socket) => {
             let marketidarray = [];
             let userAccflage = true
         
-        
+        let thatUser = await User.findById(filter.user_id)
+        if(thatUser && thatUser.roleName != "user"){
+            finalresult = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+        }else{
             async function getmarketwiseaccdata (limit,skip){
                  let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
                  let c = 0
@@ -4690,6 +4693,7 @@ io.on('connection', (socket) => {
                     j++
                 }
             }
+        }
             console.log(finalresult, "finalresultfinalresultfinalresultfinalresultfinalresultfinalresult")
             socket.emit("ACCSTATEMENTADMINSIDE", {userAcc:finalresult, skipvalue,page})
 
