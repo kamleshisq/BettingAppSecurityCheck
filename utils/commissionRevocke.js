@@ -13,9 +13,9 @@ async function revokeCommission(data){
     console.log(claimedCommission, "claimedCommissionclaimedCommissionclaimedCommission")
     if(claimedCommission.length > 0){
         for(const i in claimedCommission){
-            let user = await User.findByIdAndUpdate(claimedCommission[i].userId, {$inc:{availableBalance: -claimedCommission[i].commission}})
+            let user = await User.findByIdAndUpdate(claimedCommission[i].userId, {$inc:{availableBalance: -claimedCommission[i].commission, myPL: -claimedCommission[i].commission, uplinePL: claimedCommission[i].commission, pointsWL:-claimedCommission[i].commission}})
             if(user){
-                let parenet = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance: claimedCommission[i].commission, downlineBalance: -claimedCommission[i].commission}})
+                let parenet = await User.findByIdAndUpdate(user.parent_id, {$inc:{availableBalance: claimedCommission[i].commission, downlineBalance: -claimedCommission[i].commission, myPL:claimedCommission[i].commission}})
                 let desc1 = `Revoke Commisiion for market ${claimedCommission[i].marketName}/${claimedCommission[i].eventName}, ${user.userName}/${parenet.userName}`
                 let desc2 = `Revoke Commisiion of chiled user ${user.userName} for market ${claimedCommission[i].marketName}/${claimedCommission[i].eventName}, ${user.userName}/${parenet.userName}`
                 let childdata = {
