@@ -16188,7 +16188,7 @@ socket.on('connect', () => {
                 let page = data.page
                 let bets = data.bets;
                 let html = '';
-                 for(let i = 0; i < bets.length; i++){
+                for(let i = 0; i < bets.length; i++){
                     var date = new Date(bets[i].date);
                     var options = { 
                         year: 'numeric',
@@ -16530,8 +16530,8 @@ socket.on('connect', () => {
             if(data.userAcc.length > 0){
                 console.log(userAcc, "data.userAccdata.userAccdata.userAcc")
             
-             for(let i = 0; i < userAcc.length; i++){
-                    var date = new Date(userAcc[i].date);
+                for(let i = 0; i < userAcc.length; i++){
+                    let date = new Date(userAcc[i].date);
                     var options = { 
                         year: 'numeric',
                         month: 'long',
@@ -16539,55 +16539,141 @@ socket.on('connect', () => {
                         hour: 'numeric',
                         minute: 'numeric',
                         hour12: true
-                    };
-                    var formattedTime = date.toLocaleString('en-US', options);
-                   
-                    html += `<tr class="acount-stat-tbl-body-tr">`
-                    html += `<td class="date-time">${formattedTime}</td>`
-                    if(userAcc[i].transactionId){
-                        if(userAcc[i].match){
-                            html += `<td>${userAcc[i].match}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
-                        if(userAcc[i].marketName){
-                            html += `<td>${userAcc[i].marketName}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
-                    }else{
-                        html += `<td>-</td><td>-</td>`
-
-                    }
-                    
-                    if(userAcc[i].creditDebitamount > 0){
-                        html += `<td>${userAcc[i].creditDebitamount}</td>
-                        <td>0</td>`
-                    }else{
-                        html += ` <td>0</td>
-                        <td>${userAcc[i].creditDebitamount}</td>`
-                    }
-                    if(userAcc[i].gameId){
+                      };
+                      var formattedTime = date.toLocaleString('en-US', options);
+                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
+                    // console.log(abc)
+                    if((i%2)==0){
+                        html += `<tr style="text-align: center;" class="blue" >
+                        <td class="text-nowrap" >${formattedTime}</td>`
+                        if(userAcc[i].description.startsWith('Chips')){
+                            if(userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else if(userAcc[i].child_id) {
+                            if(userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }else{
+                            html += `<td>commission Settlement</td>`
+                          }
                         if(userAcc[i].creditDebitamount > 0){
-                            html += `<td>${userAcc[i].balance}</td>
-                            <td><a class="ownAccDetails positive" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
-                        }else{
-                            html += `<td>${userAcc[i].balance}</td>
-                            <td><a class="ownAccDetails negative" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                            if(userAcc[i].parent_id){
+                                if(userAcc[i].parent_id.userName == userAcc[i].user_id.userName){
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>-/${userAcc[i].parent_id.userName}</td>`
+                                    }else{
+                                        html += `<td>${userAcc[i].child_id.userName}/${userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].child_id == null){
+                                        html += `${userAcc[i].parent_id.userName}/-`
+                                    }else{
 
+                                        html += `<td>${userAcc[i].parent_id.userName}/${userAcc[i].child_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += "<td>-</td>"
+                            }
+                        }else{
+                            if(userAcc[i].parent_id){
+                                if(userAcc[i].parent_id.userName == userAcc[i].user_id.userName){
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>${userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+
+                                        html += `<td>${userAcc[i].parent_id.userName}/${userAcc[i].child_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>-/${userAcc[i].parent_id.userName}</td>`
+                                    }else{
+
+                                        html += `<td>${userAcc[i].child_id.userName}/${userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td>-</td>`
+                            }
                         }
-                    }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
-                        html += `<td>${userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
-                    }else if (userAcc[i]._id.marketId){
-                        console.log('WORKINGGGGGG')
-                        html += `<td>${userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}"  style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                        html += `<td>${(userAcc[i].balance - userAcc[i].creditDebitamount).toFixed(2)}</td>
+                        <td>${userAcc[i].creditDebitamount}</td><td>${userAcc[i].balance}</td>`
+                        if(userAcc[i].Remark){
+                            html += `<td>${userAcc[i].Remark}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
                     }else{
-                        html += `<td>${userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" data-id="${userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                        html += `<tr style="text-align: center;" >
+                        <td class="text-nowrap" >${formattedTime}</td>`
+                        if(userAcc[i].description.startsWith('Chips')){
+                            if(userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else if(userAcc[i].child_id) {
+                            if(userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }else{
+                            html += `<td>commission Settlement</td>`
+                          }
+                        if(userAcc[i].creditDebitamount > 0){
+                           
+                            if(userAcc[i].parent_id){
+                                if(userAcc[i].parent_id.userName == userAcc[i].user_id.userName){
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>-/${userAcc[i].parent_id.userName}</td>`
+                                    }else{
+                                        html += `<td>${userAcc[i].child_id.userName}/${userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>${userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+                                        html += `<td>${userAcc[i].parent_id.userName}/${userAcc[i].child_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += "<td>-</td>"
+                            }
+                        }else{
+                            if(userAcc[i].parent_id){
+                                if(userAcc[i].parent_id.userName == userAcc[i].user_id.userName){
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>${userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+                                        html += `<td>${userAcc[i].parent_id.userName}/${userAcc[i].child_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>-/${userAcc[i].parent_id.userName}</td>`
+                                    }else{
+
+                                        html += `<td>${userAcc[i].child_id.userName}/${userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td>-</td>`
+                            }
+                        }
+                        html += `<td>${(userAcc[i].balance - userAcc[i].creditDebitamount).toFixed(2)}</td>
+                        <td>${userAcc[i].creditDebitamount}</td><td>${userAcc[i].balance}</td>`
+                        if(userAcc[i].Remark){
+                            html += `<td>${userAcc[i].Remark}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
                     }
-            }
+                }
             if(data.page == 0){
                
                 $('.acount-stat-tbl-body').html(html)
