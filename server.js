@@ -4556,6 +4556,8 @@ io.on('connection', (socket) => {
             }
             let finalresult = []
             let marketidarray = [];
+            let rollBackMarketIDArray = [];
+            let CancelArray = [];
             let userAccflage = true
             let thatUser = await User.findById(filter.user_id)
             let userrole = thatUser.roleName
