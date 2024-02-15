@@ -16528,7 +16528,7 @@ socket.on('connect', () => {
             let html = '';
 
             if(data.userAcc.length > 0){
-                console.log(data.userAcc, "data.userAccdata.userAccdata.userAcc")
+                console.log(userAcc, "data.userAccdata.userAccdata.userAcc")
             
              for(let i = 0; i < userAcc.length; i++){
                     var date = new Date(userAcc[i].date);
