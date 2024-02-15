@@ -65,7 +65,8 @@
                                     </div>
                                   </div>
                                   <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <option selected value="All">All</option>
+                                    <option selected value="providers">All Providers</option>
+                                    <option  value="All">All</option>
                                     <%for(let i = 0; i < filterData.length; i++){%>
                                       <option value="<%=filterData[i]._id%>"><%=filterData[i].sub_provider_name%></option>
                                     <%}%>
