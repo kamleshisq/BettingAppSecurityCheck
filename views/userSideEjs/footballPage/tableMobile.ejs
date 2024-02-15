@@ -23,7 +23,11 @@
           };
           var formattedTime = date.toLocaleString('en-US', options);
             %>
-          <div class="exch-mob-data-tbl-card-wrp">
+            <%if(footbalSeries[i].matchdata[j].marketList.match_odd != null){%>
+              <div class="exch-mob-data-tbl-card-wrp" id="<%=footbalSeries[i].matchdata[j].marketList.match_odd.marketId%>" >
+            <%}else{%>
+              <div class="exch-mob-data-tbl-card-wrp"  >
+            <%}%>
             <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=footbalSeries[i].matchdata[j].eventData.eventId%>">
               <div class="top-mobile-table-data">
                 <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
