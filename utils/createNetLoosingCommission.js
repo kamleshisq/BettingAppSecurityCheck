@@ -110,6 +110,7 @@ async function commisiion(data){
                 if (commissionChild[0] && commissionChild[0].Bookmaker &&commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
                     commissionPer = commissionChild[0].Bookmaker.percentage
                 }
+                console.log(commissionPer, thatUserWinAmount, childUser.userName)
                 let commissionCoin = ((commissionPer * thatUserWinAmount)/100).toFixed(4)
                 if(commissionPer > 0){
                   let commissiondata = {
