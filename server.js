@@ -3107,8 +3107,11 @@ io.on('connection', (socket) => {
         let whiteLabel = checkwhiteLabel(data.LOGINDATA);
         if(data.selectedValue === "All"){
              games = await gameModel.find({whiteLabelName:whiteLabel,status:true})
-        }else{
-            games = await gameModel.find({provider_name:data.selectedValue,whiteLabelName:whiteLabel,status:true})
+        }else if (data.selectedValue === "providers"){
+            games = await gameModel.find({whiteLabelName:whiteLabel,status:true})
+        }
+        else{
+            games = await gameModel.find({game_name:{$regex: /Lobby/i},whiteLabelName:whiteLabel,status:true})
         }
         let fevGames = []
         if(data.LOGINDATA.LOGINUSER != "" && data.LOGINDATA.LOGINUSER != undefined){
