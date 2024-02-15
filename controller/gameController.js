@@ -5,27 +5,27 @@ const fs = require('fs')
 const path = require('path')
 const SHA256 = require('../utils/sha256')
 const fetch = require("node-fetch") 
-const XLSX = require('xlsx');
-const workbook = XLSX.readFile("/var/www/LiveBettingApp/bettingApp/xlsfiles/GameList.xlsx");
-const sheetName = workbook.SheetNames[0];
-const worksheet = workbook.Sheets[sheetName];
-const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+// const XLSX = require('xlsx');
+// const workbook = XLSX.readFile("/var/www/LiveBettingApp/bettingApp/xlsfiles/GameList.xlsx");
+// const sheetName = workbook.SheetNames[0];
+// const worksheet = workbook.Sheets[sheetName];
+// const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
 // console.log(data[2])
 
 exports.addXlsFIle = catchAsync(async(req, res, next) => {
     for(let i = 3; i < data.length; i++){
         // console.log(data[i])
-        let data1 = {};
-        data1.provider_name = data[i][3];
-        data1.sub_provider_name = data[i][4];
-        data1.category = data[i][2];
-        data1.game_code = data[i][7];
-        data1.game_id = (data[i][0] * 1)
-        data1.game_name = data[i][1]
-        data1.url_thumb = data[i][6]
-        data1.whiteLabelName = 'dev.ollscores.com'
-        await gameModel.create(data1)
+        // let data1 = {};
+        // data1.provider_name = data[i][3];
+        // data1.sub_provider_name = data[i][4];
+        // data1.category = data[i][2];
+        // data1.game_code = data[i][7];
+        // data1.game_id = (data[i][0] * 1)
+        // data1.game_name = data[i][1]
+        // data1.url_thumb = data[i][6]
+        // data1.whiteLabelName = 'dev.ollscores.com'
+        // await gameModel.create(data1)
         // console.log(data1)
 
 
