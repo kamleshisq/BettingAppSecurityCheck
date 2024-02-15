@@ -10,7 +10,7 @@
                 <div class="exchange-pg-main-col-big col-lg-9 col-md-9 col-12">
                     <div class="exchange-pg-main-col-big-wrp">
                         <section class="exchange-pg-banner-sec">
-                          <%let topbanner = data.find(item => item.position === "virtual_sport")%>
+                          <%let topbanner = data.find(item => item.position.toLowerCase() === "virtual_sport")%>
                           <%console.log(topbanner)%>
                             <%if(topbanner){%>
                               <div class="exchange-pg-banner-sec-wrp promotionLink" id="<%=topbanner._id%>">
