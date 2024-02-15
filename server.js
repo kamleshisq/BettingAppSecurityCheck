@@ -4561,6 +4561,7 @@ io.on('connection', (socket) => {
             let userAccflage = true
             let thatUser = await User.findById(filter.user_id)
             let userrole = thatUser.roleName
+            let skipvalue
         if(thatUser && thatUser.roleName != "user"){
             finalresult = await AccModel.find(filter).sort({date: -1}).skip(data.skipid).limit(limit)
             skipvalue = parseFloat(data.skipid) + 10
@@ -4788,7 +4789,7 @@ io.on('connection', (socket) => {
                 return c
             }
             let j = 0
-            let skipvalue = data.skipid;
+            skipvalue = data.skipid;
             if(filterstatus){
                 while(finalresult.length < 10){
                     skip = (limit * j) + data.skipid 
