@@ -4560,7 +4560,7 @@ io.on('connection', (socket) => {
         
         let thatUser = await User.findById(filter.user_id)
         if(thatUser && thatUser.roleName != "user"){
-            finalresult = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+            finalresult = await AccModel.find(filter).sort({date: -1}).skip(data.skipid).limit(limit)
             skipvalue = parseFloat(data.skipid) + 10
         }else{
             async function getmarketwiseaccdata (limit,skip){
