@@ -1014,6 +1014,7 @@ socket.on('connect', () => {
                     if(marketId){
                         foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
                     }else{
+                        // let marketId = $(this).closest('tr')
                         foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     }
                     // console.log($(this).find('.tbl-td-bg-blu-spn').text())
