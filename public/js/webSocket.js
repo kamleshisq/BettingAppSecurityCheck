@@ -1016,8 +1016,6 @@ socket.on('connect', () => {
                     }else{
                         // let marketId = $(this).closest('tr')
                         marketId = $(this).closest('.exch-mob-data-tbl-card-wrp').attr('id')
-
-                        console.log(marketId)
                         if(marketId){
                             foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
                         }else{
@@ -1054,11 +1052,19 @@ socket.on('connect', () => {
                 let id = this.id
                 // const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                 let marketId = $(this).closest('tr').find('td:first').attr('id')
+                    // console.log(marketId)
                     let foundItem 
                     if(marketId){
                         foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
                     }else{
-                        foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        // let marketId = $(this).closest('tr')
+                        marketId = $(this).closest('.exch-mob-data-tbl-card-wrp').attr('id')
+                        if(marketId){
+                            foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
+                        }else{
+
+                            foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        }
                     }
                 // if(data.betLimits[0].max_odd < foundItem.odds[2].layPrice1){
                 //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
