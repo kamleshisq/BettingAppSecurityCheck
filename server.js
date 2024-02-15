@@ -4521,6 +4521,7 @@ io.on('connection', (socket) => {
                 // filter.$expr = {
                 //     $eq: [{ $strLenCP: "$transactionId" }, 16]
                 // }
+                filter.transactionId = {$exists:true}
             }else if (data.filterData.type === "Deposit"){
                 filter.accStype = {$exists:false}
                 filter.creditDebitamount={$gt:0}
