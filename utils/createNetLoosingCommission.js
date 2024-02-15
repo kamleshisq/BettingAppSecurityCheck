@@ -102,7 +102,7 @@ async function commisiion(data){
             let uplinePlCOMMIDDDION = 0
             for(let j = 1; j < user.parentUsers.length; j++){
               let childUser = await userModel.findById(user.parentUsers[j])
-              let parentUser2Amount = new Decimal(childUser.Share).times(netLossingCommission[i].returns).dividedBy(100);
+              let parentUser2Amount = new Decimal(childUser.Share).times(Math.abs(netLossingCommission[i].returns)).dividedBy(100);
               let thatUserWinAmount = Math.abs(parentUser2Amount) + uplinePlCOMMIDDDION
               let commissionChild = await commissionModel.find({userId:user.parentUsers[j]})
               if(commissionChild.length > 0){
@@ -133,9 +133,9 @@ async function commisiion(data){
                       parentIdArray:childUser.parentUsers,
                   }
                   let commissionData = await newCommissionModel.create(commissiondata)
-                  uplinePlCOMMIDDDION = Math.abs(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
                 }
               }
+              uplinePlCOMMIDDDION = Math.abs(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
             }
           }catch(err){
               console.log(err)
