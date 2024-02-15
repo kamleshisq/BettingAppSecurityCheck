@@ -6,6 +6,7 @@ const InprogressModel = require('../model/InprogressModel');
 let Decimal = require('decimal.js');
 const commissionNewModel = require('../model/commissioNNModel');
 const revokeCommission = require('./commissionRevocke');
+const revokeCommissionFromBetId = require('./revockCommissionFromBetId');
 const uuid = require('uuid');
 
 
@@ -13,7 +14,7 @@ async function rollBack(data){
     // console.log(data, "rollBack Data")
    
         let allBetWithMarketId = await Bet.find({marketId:data.id, status:{$ne:'CANCEL'}})
-        revokeCommission(data)
+        // revokeCommission(data)
         // await commissionNewModel.updateMany({marketId:data.id, commissionType: 'Win Commission', commissionStatus : 'Unclaimed'}, {commissionStatus : 'Unclaimed'})
         await commissionNewModel.deleteMany({marketId:data.id, commissionStatus : 'Unclaimed'})
         let InProgress = await InprogressModel.findOne({marketId : allBetWithMarketId[0].marketId, progressType:'RollBack'})
@@ -183,7 +184,7 @@ async function rollBack(data){
         
                     await accountStatementModel.create(userAcc);
                 }
-
+                await revokeCommissionFromBetId(allBetWithMarketId[bets])
                 let checkDelete = await InprogressModel.findOneAndUpdate({marketId : allBetWithMarketId[bets].marketId, progressType:'RollBack'}, {$inc:{settledBet:1}})
                 // console.log(checkDelete, '<======== checkDelete')
                 if((checkDelete.settledBet + 1) == checkDelete.length){
