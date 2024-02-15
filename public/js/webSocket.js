@@ -1016,8 +1016,14 @@ socket.on('connect', () => {
                     }else{
                         // let marketId = $(this).closest('tr')
                         marketId = $(this).closest('.exch-mob-data-tbl-card-wrp').attr('id')
+
                         console.log(marketId)
-                        foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        if(marketId){
+                            foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
+                        }else{
+
+                            foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        }
                     }
                     // console.log($(this).find('.tbl-td-bg-blu-spn').text())
                     // if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
