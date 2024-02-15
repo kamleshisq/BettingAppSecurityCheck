@@ -619,7 +619,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                    c++
                     if(userAcc[i].gameId){
                        finalresult.push(userAcc[i])
-                       if(finalresult.length >= 20){
+                       if(finalresult.length >= 10){
                                break
                        }
                     }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
@@ -658,13 +658,13 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                                $sort:{settleDate:-1}
                             },
                             {
-                               $limit:(20 - finalresult.length)
+                               $limit:(10 - finalresult.length)
                             }
                         ])
                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                             marketidarray.push(bet[0]._id.marketId)
                             finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 20){
+                            if(finalresult.length >= 10){
                                 break
                             }
                         }
@@ -704,13 +704,13 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                                $sort:{date:-1}
                             },
                             {
-                               $limit:(20 - finalresult.length)
+                               $limit:(10 - finalresult.length)
                             }
                         ])
                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
                             marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                             finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 20){
+                            if(finalresult.length >= 10){
                                 break
                             }
                         }
@@ -751,13 +751,13 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                                $sort:{date:-1}
                             },
                             {
-                               $limit:(20 - finalresult.length)
+                               $limit:(10 - finalresult.length)
                             }
                         ])
                         if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
                             rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                             finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 20){
+                            if(finalresult.length >= 10){
                                 break
                             }
                         }
@@ -798,20 +798,20 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                                $sort:{date:-1}
                             },
                             {
-                               $limit:(20 - finalresult.length)
+                               $limit:(10 - finalresult.length)
                             }
                         ])
                         if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
                             CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                             finalresult = finalresult.concat(bet)
-                            if(finalresult.length >= 20){
+                            if(finalresult.length >= 10){
                                 break
                             }
                         }
                     }
                     else{
                         finalresult.push(userAcc[i])
-                        if(finalresult.length >= 20){
+                        if(finalresult.length >= 10){
                                 break
                         }
                     }
