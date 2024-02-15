@@ -105,34 +105,36 @@ async function commisiion(data){
               let parentUser2Amount = new Decimal(childUser.Share).times(netLossingCommission[i].returns).dividedBy(100);
               let thatUserWinAmount = Math.abs(parentUser2Amount) + uplinePlCOMMIDDDION
               let commissionChild = await commissionModel.find({userId:user.parentUsers[j]})
-              let commissionPer = 0
-              if (commissionChild[0] && commissionChild[0].Bookmaker &&commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
-                  commissionPer = commissionChild[0].Bookmaker.percentage
-              }
-              let commissionCoin = ((commissionPer * thatUserWinAmount)/100).toFixed(4)
-              if(commissionPer > 0 && commissionCoin < 0){
-                let commissiondata = {
-                    userName : childUser.userName,
-                    userId : user.parentUsers[j],
-                    eventId : netLossingCommission[i].eventId,
-                    sportId : netLossingCommission[i].gameId,
-                    seriesName : netLossingCommission[i].event,
-                    marketId : netLossingCommission[i].marketId,
-                    eventDate : new Date(netLossingCommission[i].eventDate),
-                    eventName : netLossingCommission[i].match,
-                    commission : commissionCoin,
-                    upline : 100,
-                    commissionType: 'Net Losing Commission',
-                    commissionPercentage:commissionPer,
-                    date:Date.now(),
-                    marketName:netLossingCommission[i].marketName,
-                    uniqueId,
-                    loginUserId:user._id,
-                    parentIdArray:childUser.parentUsers,
+              if(commissionChild.length > 0){
+                let commissionPer = 0
+                if (commissionChild[0] && commissionChild[0].Bookmaker &&commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
+                    commissionPer = commissionChild[0].Bookmaker.percentage
                 }
-                let commissionData = await newCommissionModel.create(commissiondata)
-                uplinePlCOMMIDDDION = parseFloat(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
-            }
+                let commissionCoin = ((commissionPer * thatUserWinAmount)/100).toFixed(4)
+                if(commissionPer > 0){
+                  let commissiondata = {
+                      userName : childUser.userName,
+                      userId : user.parentUsers[j],
+                      eventId : netLossingCommission[i].eventId,
+                      sportId : netLossingCommission[i].gameId,
+                      seriesName : netLossingCommission[i].event,
+                      marketId : netLossingCommission[i].marketId,
+                      eventDate : new Date(netLossingCommission[i].eventDate),
+                      eventName : netLossingCommission[i].match,
+                      commission : commissionCoin,
+                      upline : 100,
+                      commissionType: 'Net Losing Commission',
+                      commissionPercentage:commissionPer,
+                      date:Date.now(),
+                      marketName:netLossingCommission[i].marketName,
+                      uniqueId,
+                      loginUserId:user._id,
+                      parentIdArray:childUser.parentUsers,
+                  }
+                  let commissionData = await newCommissionModel.create(commissiondata)
+                  uplinePlCOMMIDDDION = Math.abs(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
+                }
+              }
             }
           }catch(err){
               console.log(err)
