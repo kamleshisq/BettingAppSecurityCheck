@@ -1009,12 +1009,14 @@ socket.on('connect', () => {
             $(".2B").each(function() {
                     let id = this.id
                     let marketId = $(this).closest('tr').find('td:first').attr('id')
-                    console.log(marketId)
+                    // console.log(marketId)
                     let foundItem 
                     if(marketId){
                         foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
                     }else{
                         // let marketId = $(this).closest('tr')
+                        marketId = $(this).closest('.exch-mob-data-tbl-card-wrp').attr('id')
+                        console.log(marketId)
                         foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     }
                     // console.log($(this).find('.tbl-td-bg-blu-spn').text())
