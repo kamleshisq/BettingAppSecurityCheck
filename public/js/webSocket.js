@@ -16676,6 +16676,104 @@ socket.on('connect', () => {
                 }
             }else{
                 console.log(userAcc, "userAccuserAcc")
+                for(let i = 0; i < userAcc.length; i++){
+                    let date = new Date(userAcc[i].date);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
+                    // console.log(abc)
+                        html += `<tr style="text-align: center;">
+                        <td class="text-nowrap" >${formattedTime}</td>`
+                        if(userAcc[i].gameId){
+                            if(userAcc[i].creditDebitamount > 0){
+                                html += `<td>Casino Bet  Settlement</td>`
+                            }else{
+                                html += `<td>Casino Bet Placement</td>`
+                            }
+                        }else if (userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
+                            html += `<td>Sport Book Bet Settlement</td>`
+                        }else if(userAcc[i]._id.marketId){
+                            if(userAcc[i].rollbackMarketId){
+                                html += `<td >Settle Bet Rollback</td>`
+                              }else if(userAcc[i].cacelMarketId){
+                                html += `<td >Settle Bet Void</td>`
+                                }else{
+                                  html += `<td >Bet Settlement</td>`
+                              }
+                        }else{
+                            if(userAcc[i].child_id){
+                                if(userAcc[i].description.startsWith('Chips')){
+                                    if(userAcc[i].creditDebitamount > 0){
+                                        html += `<td >Deposit</td>`
+                                    }else{
+                                        html += `<td >Withdraw</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].creditDebitamount > 0){
+                                        html += `<td >Settlement Deposit</td>`
+                                    }else{
+                                        html += `<td >Settlement Withdraw</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td >Commission Settlement</td>`
+                            }
+                        }
+                        if(userAcc[i].transactionId){
+                            if(userAcc[i].match){
+                                html += `<td>${userAcc[i].match}</td>`
+                            }else{
+                                html += `<td>-</td>`
+                            }
+                            if(userAcc[i].marketName){
+                                html += `<td>${userAcc[i].marketName}</td>`
+                            }else{
+                                html += `<td>-</td>`
+                            }
+                        }else{
+                            html += `<td>-</td><td>-</td>`
+
+                        }
+                        if(userAcc[i].creditDebitamount > 0){
+                            html += `<td class="c-gren">${userAcc[i].creditDebitamount}</td>
+                            <td>0</td>`
+                        }else{
+                            html += `<td>0</td><td class="c-reed">${userAcc[i].creditDebitamount}</td>`
+                        }
+                        if(userAcc[i].gameId){
+                            if(userAcc[i].creditDebitamount > 0){
+                                html += `<td>${userAcc[i].balance}</td>
+                                <td><a class="ownAccDetails positive" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                            }else{
+                                html += `<td>${userAcc[i].balance}</td>
+                                <td><a class="ownAccDetails negative" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+
+                            }
+                        }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
+                            html += `<td>${userAcc[i].balance}</td>
+                            <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                        }else if( userAcc[i]._id.marketId){
+                            html += `<td>${userAcc[i].balance}</td>
+                            <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                        }
+                        else{
+                            if(userAcc[i].transactionId){
+
+                                html += `<td>${userAcc[i].balance}</td>
+                                <td><a class="ownAccDetails" data-id="${userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                            }else{
+                                html += `<td>${userAcc[i].balance}</td>
+                                <td>-</td>`
+                            }
+                        }
+                }
             }
             if(data.page == 0){
                
