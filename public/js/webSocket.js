@@ -1009,6 +1009,7 @@ socket.on('connect', () => {
             $(".2B").each(function() {
                     let id = this.id
                     let marketId = $(this).closest('tr').find('td:first').attr('id')
+                    console.log(marketId)
                     let foundItem 
                     if(marketId){
                         foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
