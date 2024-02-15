@@ -16528,8 +16528,8 @@ socket.on('connect', () => {
             let html = '';
 
             if(data.userAcc.length > 0){
-                console.log(userAcc, "data.userAccdata.userAccdata.userAcc")
-            
+                // console.log(userAcc, "data.userAccdata.userAccdata.userAcc")
+            if(data.userrole != 'user'){
                 for(let i = 0; i < userAcc.length; i++){
                     let date = new Date(userAcc[i].date);
                     var options = { 
@@ -16674,6 +16674,9 @@ socket.on('connect', () => {
                         }
                     }
                 }
+            }else{
+                console.log(userAcc, "userAccuserAcc")
+            }
             if(data.page == 0){
                
                 $('.acount-stat-tbl-body').html(html)
