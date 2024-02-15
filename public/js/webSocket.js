@@ -16741,12 +16741,12 @@ socket.on('connect', () => {
                             html += `<td>-</td><td>-</td>`
 
                         }
-                        if(userAcc[i].creditDebitamount > 0){
-                            html += `<td class="c-gren">${userAcc[i].creditDebitamount}</td>
-                            <td>0</td>`
-                        }else{
-                            html += `<td>0</td><td class="c-reed">${userAcc[i].creditDebitamount}</td>`
-                        }
+                        html += `<td class="c-gren">${userAcc[i].creditDebitamount}</td>`
+                        // if(userAcc[i].creditDebitamount > 0){
+                        //     <td>0</td>`
+                        // }else{
+                        //     html += `<td>0</td><td class="c-reed">${userAcc[i].creditDebitamount}</td>`
+                        // }
                         if(userAcc[i].gameId){
                             if(userAcc[i].creditDebitamount > 0){
                                 html += `<td>${userAcc[i].balance}</td>
