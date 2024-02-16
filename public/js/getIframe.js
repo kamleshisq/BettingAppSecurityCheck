@@ -15,6 +15,7 @@ export const getIframe = async(data) => {
                 "Origin":"http://ollscores.com",
                 "Referer":"http://ollscores.com"},
         });
+        console.log(res, "VVVVVVV")
         // if(res.data.status === 'success'){
         //     alert('data update successfully!!!!');
         //     $(".popup_body").removeClass("popup_body_show");
