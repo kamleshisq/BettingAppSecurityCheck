@@ -6454,9 +6454,15 @@ socket.on('connect', () => {
             // console.log(data)
             socket.emit('betMoniter',data)
         }
+
         $('.refresh').click(function(e){
            refreshBetMonitorPage()
         })
+
+        setInterval(()=>{
+            refreshBetMonitorPage()
+        }, 1000)
+
       
             
         let count = 11
