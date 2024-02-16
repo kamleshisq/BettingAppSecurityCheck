@@ -1859,6 +1859,10 @@ io.on('connection', (socket) => {
             delete data.filterData.marketName
         }
 
+        if(!data.filterData.status){
+            data.filterData.status = 'OPEN'
+        }
+
         if(data.filterData.ip){
             data.filterData.ip = data.filterData.ip.trim()
         }
