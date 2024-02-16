@@ -72,6 +72,11 @@ async function commisiion(data){
                       commissionPer = commission[0].Bookmaker.percentage
                   }
                   let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
+                  if(commissionCoin && commission[0].Bookmaker.limit && commission[0].Bookmaker.limit != 0){
+                    if (commissionCoin > commission[0].Bookmaker.limit){
+                        commissionCoin = commission[0].Bookmaker.limit
+                    }
+                }
                   if(commissionPer > 0 && commissionCoin < 0){
                       let commissiondata = {
                           userName : user.userName,
@@ -112,6 +117,11 @@ async function commisiion(data){
                 }
                 console.log(commissionPer, thatUserWinAmount, childUser.userName)
                 let commissionCoin = ((commissionPer * thatUserWinAmount)/100).toFixed(4)
+                if(commissionCoin && commissionChild[0].Bookmaker.limit && commissionChild[0].Bookmaker.limit != 0){
+                  if (commissionCoin > commissionChild[0].Bookmaker.limit){
+                      commissionCoin = commissionChild[0].Bookmaker.limit
+                  }
+              }
                 if(commissionPer > 0){
                   let commissiondata = {
                       userName : childUser.userName,
