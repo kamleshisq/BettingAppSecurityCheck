@@ -1686,6 +1686,8 @@ socket.on('connect', () => {
                         form.find('[name="LimitBookMaker"]').val(0)
                     }
                 }else{
+                    let modleName = "#myModal2"
+                    let form = $(modleName).find('.form-data')
                     $('[name="BookmakerStatus"]').prop('checked', false);
                     $('[name="fencyStatus"]').prop('checked', false);
                     $('[name="matchOddsStatus"]').prop('checked', false);
