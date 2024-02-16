@@ -130,7 +130,7 @@ if(pathname.startsWith('/admin') || pathname.startsWith('/resetPassword')){
 if(document.getElementById('myIframe')){
     let channelId = document.getElementById('myIframe').getAttribute('data-id');
     const urlParams = new URLSearchParams(window.location.search);
-    eventId = urlParams.get('id')
+    let eventId = urlParams.get('id')
     console.log(channelId, eventId, "sdfghjkl;")
 }
 

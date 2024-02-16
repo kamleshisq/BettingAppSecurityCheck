@@ -56481,8 +56481,8 @@ if (pathname.startsWith('/admin') || pathname.startsWith('/resetPassword')) {
 if (document.getElementById('myIframe')) {
   var channelId = document.getElementById('myIframe').getAttribute('data-id');
   var _urlParams = new URLSearchParams(window.location.search);
-  eventId = _urlParams.get('id');
-  console.log(channelId, eventId, "sdf");
+  var eventId = _urlParams.get('id');
+  console.log(channelId, eventId, "sdfghjkl;");
 }
 $(document).on('click', '.passcodemsgbox', function (e) {
   console.log('hewr');
