@@ -7689,32 +7689,33 @@ socket.on('connect', () => {
             });
         });
 
-        if(document.getElementById('myIframe')){
-            let channelId = document.getElementById('myIframe').getAttribute('data-id');
-            // console.log(channelId, "channelIdchannelIdchannelId")
-            socket.emit('channelId', {channelId, search, LOGINDATA})
+        // if(document.getElementById('myIframe')){
+        //     let channelId = document.getElementById('myIframe').getAttribute('data-id');
+        //     // console.log(channelId, "channelIdchannelIdchannelId")
+        //     socket.emit('channelId', {channelId, search, LOGINDATA})
     
-            socket.on('channelId', data => {
-                console.log(data, "WORKING")
-                try{
-                    function xorEncrypt(input, key) {
-                        let output = '';
-                        for (let i = 0; i < input.length; i++) {
-                          output += String.fromCharCode(input.charCodeAt(i) ^ key);
-                        }
-                        return output;
-                      }
-                      const encryptionKey = 'JK';
-                      const encryptedUrl = xorEncrypt(data, encryptionKey);
-                      $(document).ready(function() {
-                        $('#myIframe').attr('src', encryptedUrl);
-                    });
+        //     socket.on('channelId', data => {
+        //         console.log(data, "WORKING")
+        //         try{
+        //             function xorEncrypt(input, key) {
+        //                 let output = '';
+        //                 for (let i = 0; i < input.length; i++) {
+        //                   output += String.fromCharCode(input.charCodeAt(i) ^ key);
+        //                 }
+        //                 return output;
+        //               }
+        //               const encryptionKey = 'JK';
+        //               const encryptedUrl = xorEncrypt(data, encryptionKey);
+
+        //               $(document).ready(function() {
+        //                 $('#myIframe').attr('src', encryptedUrl);
+        //             });
     
-                }catch(err){
-                    console.log(err)
-                }
-            })
-        }
+        //         }catch(err){
+        //             console.log(err)
+        //         }
+        //     })
+        // }
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
         //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
