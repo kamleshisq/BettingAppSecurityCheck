@@ -622,7 +622,7 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("AccountScroll", async(data)=>{
-        // console.log(data, "DATA")
+        console.log(data, "DATA")
         let fullUrl
         let operatorId;
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
@@ -635,7 +635,7 @@ io.on('connection', (socket) => {
             if(data.id){
     
                 // console.log()
-                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
+                fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus
             }else{
                 fullUrl = `http://127.0.0.1:${process.env.port}/api/v1/Account/getUserAccStatement?id=` + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
     
@@ -696,6 +696,9 @@ io.on('connection', (socket) => {
             page = 0
             if(data.page){
                 page = data.page
+            }
+            if(data.id){
+                filter.child_id = new ObjectId(data.id)
             }
             let userAcc = await AccModel.find(filter).sort({date:-1}).skip(page*10).limit(10)
             json = {
@@ -802,12 +805,14 @@ io.on('connection', (socket) => {
         }
         let finalresult = []
         let marketidarray = [];
+        let rollBackMarketIDArray = [];
+        let CancelArray = [];
         let userAccflage = true
     
-        console.log(filter,'filter')
         async function getmarketwiseaccdata (limit,skip){
-            console.log('in getmarketwise accdata ',limit,skip, filter.$expr)
-             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+            // console.log('in getmarketwise accdata ',limit,skip)
+            let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+            // console.log(userAcc, "userAccuserAccuserAccuserAcc")
              let c = 0
              if(userAcc.length == 0){
                 userAccflage = false
@@ -817,9 +822,10 @@ io.on('connection', (socket) => {
                     c++
                      if(userAcc[i].gameId){
                         finalresult.push(userAcc[i])
-                        if(finalresult.length >= 10){
-                                break
-                        }
+                         if(finalresult.length >= 20){
+                                 break
+                         }
+                        
                      }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
                         if(marketidarray.includes(userAcc[i].marketId)){
                             continue;
@@ -827,14 +833,14 @@ io.on('connection', (socket) => {
                          let bet = await Bet.aggregate([
                              {
                                  $match:{
-                                     userId:data.id.toString(),
+                                     userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                      eventId:{$exists:'eventId'},
-                                     $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
+                                     $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
                                      closingBalance:{$exists:true}
     
                                  }
                              },
-                             {
+                            {
                                 $sort:{settleDate:-1}
                              },
                              {
@@ -846,21 +852,20 @@ io.on('connection', (socket) => {
                                      },
                                      match:{$first:'$match'},
                                      marketName:{$first:'$marketName'},
+                                     stake:{$first:'$Stake'},
                                      creditDebitamount:{$sum:'$returns'},
                                      balance:{$first:'$closingBalance'},
-                                     transactionId:{$first:'$transactionId'},
-                                     date:{ $max: "$settleDate" }
+                                     transactionId:{$first:'$transactionId'}
                                  }
                              },
                              {
                                 $sort:{settleDate:-1}
                              },
                              {
-                                $limit:(10 - finalresult.length)
+                                $limit:(20 - finalresult.length)
                              }
                          ])
-    
-                         console.log('inuseracc sport book',bet)
+                         let accounts = []
                          if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                              marketidarray.push(bet[0]._id.marketId)
                              finalresult = finalresult.concat(bet)
@@ -869,51 +874,152 @@ io.on('connection', (socket) => {
                              }
                          }
                      }else if(userAcc[i].marketId){
-                        if(marketidarray.includes(userAcc[i].marketId)){
+                        if(marketidarray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
                             continue;
                         }
-                         let bet = await Bet.aggregate([
+                         let bet = await AccModel.aggregate([
                              {
                                  $match:{
-                                     userId:data.id.toString(),
-                                     $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
-                                     closingBalance:{$exists:true}
+                                    user_id:new ObjectId(data.id),
+                                     $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                     balance:{$exists:true}
                                  }
                              },
-                             {
-                                $sort:{settleDate:-1}
+                            {
+                                $sort:{date:-1}
                              },
                              {
                                  $group:{
                                      _id:{
+                                        uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                          eventId:"$eventId",
                                          marketId:"$marketId",
-                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                      },
-                                     match:{$first:'$match'},
-                                     marketName:{$first:'$marketName'},
-                                     creditDebitamount:{$sum:'$returns'},
-                                     balance:{$first:'$closingBalance'},
+                                     match:{$first:'$event'},
+                                     marketName:{$first:'$marketType'},
+                                    //  stake:{$first:'$Stake'},
+                                     creditDebitamount:{$sum:'$creditDebitamount'},
+                                     balance:{$first:'$balance'},
                                      transactionId:{$first:'$transactionId'},
-                                     date:{ $max: "$settleDate" }
+                                     date:{$first:'$date'}
                                  }
                              },
                              {
-                                $sort:{settleDate:-1}
+                                $sort:{date:-1}
                              },
                              {
-                                $limit:(10 - finalresult.length)
+                                $limit:(20 - finalresult.length)
                              }
                          ])
-                         console.log('inuseracc marketid',bet)
-                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                             marketidarray.push(bet[0]._id.marketId)
+                        //  console.log('inuseracc marketid',bet)
+                         if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                             marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                              finalresult = finalresult.concat(bet)
                              if(finalresult.length >= 10){
                                  break
                              }
                          }
-                     }else{
+                     }
+                     else if(userAcc[i].rollbackMarketId){
+                        if(rollBackMarketIDArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                            continue;
+                        }
+                         let bet = await AccModel.aggregate([
+                             {
+                                 $match:{
+                                    user_id:new ObjectId(data.id),
+                                     $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                     balance:{$exists:true}
+                                 }
+                             },
+                            {
+                                $sort:{date:-1}
+                             },
+                             {
+                                 $group:{
+                                     _id:{
+                                        uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                         eventId:"$eventId",
+                                         marketId:"$rollbackMarketId",
+                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                     },
+                                     match:{$first:'$event'},
+                                     marketName:{$first:'$marketType'},
+                                    //  stake:{$first:'$Stake'},
+                                     creditDebitamount:{$sum:'$creditDebitamount'},
+                                     balance:{$first:'$balance'},
+                                     transactionId:{$first:'$transactionId'},
+                                     rollbackMarketId:{$first:'$rollbackMarketId'},
+                                     date:{$first:'$date'}
+                                 }
+                             },
+                             {
+                                $sort:{date:-1}
+                             },
+                             {
+                                $limit:(20 - finalresult.length)
+                             }
+                         ])
+                        //  console.log('inuseracc marketid',bet)
+                         if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                             rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                             finalresult = finalresult.concat(bet)
+                             if(finalresult.length >= 10){
+                                 break
+                             }
+                         }
+                     }
+                     else if(userAcc[i].cacelMarketId){
+                        if(CancelArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                            continue;
+                        }
+                         let bet = await AccModel.aggregate([
+                             {
+                                 $match:{
+                                    user_id:new ObjectId(data.id),
+                                     $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                     balance:{$exists:true}
+                                 }
+                             },
+                            {
+                                $sort:{date:-1}
+                             },
+                             {
+                                 $group:{
+                                     _id:{
+                                        uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                         eventId:"$eventId",
+                                         marketId:"$cacelMarketId",
+                                         date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                     },
+                                     match:{$first:'$event'},
+                                     marketName:{$first:'$marketType'},
+                                    //  stake:{$first:'$Stake'},
+                                     creditDebitamount:{$sum:'$creditDebitamount'},
+                                     balance:{$first:'$balance'},
+                                     transactionId:{$first:'$transactionId'},
+                                     cacelMarketId:{$first:'$cacelMarketId'},
+                                     date:{$first:'$date'}
+                                 }
+                             },
+                             {
+                                $sort:{date:-1}
+                             },
+                             {
+                                $limit:(20 - finalresult.length)
+                             }
+                         ])
+                        //  console.log('inuseracc marketid',bet)
+                         if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                             CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                             finalresult = finalresult.concat(bet)
+                             if(finalresult.length >= 10){
+                                 break
+                             }
+                         }
+                     }
+                     else{
                          finalresult.push(userAcc[i])
                          if(finalresult.length >= 10){
                                  break
@@ -921,6 +1027,7 @@ io.on('connection', (socket) => {
                      }
                      
                  }
+                 console.log(finalresult, "finalresultfinalresultfinalresult")
              }
             return c
         }
@@ -931,8 +1038,6 @@ io.on('connection', (socket) => {
                 skip = (limit * j) + data.skipid 
                 let result = await getmarketwiseaccdata(limit,skip)
                 skipvalue = skipvalue + result
-                console.log(skipvalue,j,'skipvalue')
-                console.log(finalresult.length,'finalresult.length')
                 if(!userAccflage){
                     break
                 }
@@ -940,7 +1045,6 @@ io.on('connection', (socket) => {
             }
         }{
             let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-            console.log(userAcc, "userAccuserAccuserAccuserAccuserAcc")
             if(finalresult.length > 0){
                 finalresult.concat(userAcc)
             }else{
@@ -1149,8 +1253,36 @@ io.on('connection', (socket) => {
 
     socket.on('ElementID',async(data)=>{
         console.log(data, "ddddddddddddddatata")
+        if(data.gameId === 'undefined'){
+            delete data.gameId
+        }
+
+        if(data.marketId === 'undefined'){
+            delete data.marketId
+        }
+
+        if(data.id === 'undefined'){
+            delete data.id
+        }
+        if(data.Fdate === 'undefined'){
+            delete data.Fdate
+        }
+        if(data.Tdate === 'undefined'){
+            delete data.Tdate
+        }
+        if(data.gametype === 'undefined'){
+            delete data.gametype
+        }
+        if(data.userid === 'undefined'){
+            delete data.userid
+        }
         let filter = {}
-        filter.userName = data.userid
+        if(data.userName){
+            filter.userName = data.userName
+        }else{
+            filter.userName = data.userid
+
+        }
         if(data.gameId && !data.marketId){
             filter.transactionId=data.gameId
         }else if(data.marketId && !data.gameId){
@@ -1533,6 +1665,74 @@ io.on('connection', (socket) => {
         }
         socket.emit("ACCSEARCHRES", {user, page})
     })
+    socket.on("SearchACCSDM", async(data) => {
+        let page = data.page
+        if(!page){
+            page = 0
+        }
+        limit = 10
+        // console.log(data)
+        let roles;
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            console.log(parentUser, "parentUser", parentUser._id)
+            roles = await Role.find({role_level: {$gt:parentUser.role.role_level}});
+            operatorId = parentUser.id
+        }else{
+            roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+            operatorId = data.LOGINDATA.LOGINUSER._id
+        }
+        let userNames = await User.distinct('_id', {parent_id:operatorId})
+        console.log(userNames)
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        // console.log(role_type, 123)
+        
+        var regexp = new RegExp(data.x, 'i');
+
+        let user = await User.aggregate([
+            {
+                $match:{
+                    userName:regexp,
+                    parentUsers:{$elemMatch:{$eq:operatorId}},
+                    _id:{$in:userNames}
+                }
+            },
+            {
+                $sort:{
+                    userName:-1,
+                    _id:-1
+                }
+            },
+            {
+                $skip:(page*limit)
+            },{
+                $limit:limit
+            }
+        ])
+
+        // if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+        //         user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
+        // }else{
+        //         // let role_Type = {
+        //         //     $in:role_type
+        //         // }
+        //         // let xfiletr  = {}
+        //         // xfiletr.role_Type = role_Type
+        //         // xfiletr.userName = regexp
+        //         // console.log(data.filterData)
+        //         // console.log(xfiletr)
+        //         user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
+        // }
+        page++
+        if(user.length === 0 ){
+            page = null
+        }
+        socket.emit("ACCSEARCHRES", {user, page})
+    })
     socket.on("SearchACC1", async(data) => {
         let page = data.page
         if(!page){
@@ -1654,9 +1854,13 @@ io.on('connection', (socket) => {
 
 
     socket.on('betMoniter',async(data)=>{
-        console.log(data.filterData)
+        // console.log(data.filterData)
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
+        }
+
+        if(!data.filterData.status){
+            data.filterData.status = 'OPEN'
         }
 
         if(data.filterData.ip){
@@ -2417,6 +2621,12 @@ io.on('connection', (socket) => {
             let operatoruserName = data.LOGINDATA.LOGINUSER.userName
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPasscode(data.data.password, user.passcode)
+            function generateUniqueIdByMARKETID() {
+                const timestamp = new Date().getTime();
+                const uniqueId = data.id + '-' + timestamp + '-' + uuid.v4();
+                return uniqueId
+              }
+              let uniqueMarketId = generateUniqueIdByMARKETID()
             if(passcheck){
                 let bet = await Bet.findById(data.id)
                 if(bet.status === "OPEN" || bet.status === "Alert"){
@@ -2438,7 +2648,11 @@ io.on('connection', (socket) => {
                     "role_type" : user.role_type,
                     "Remark":"-",
                     "stake": bet.Stake,
-                    "transactionId":`${bet.transactionId}`
+                    "transactionId":`${bet.transactionId}`,
+                    "marketType":`${bet.marketName}`,
+                    "cacelMarketId":bet.marketId,
+                    "event":`${bet.match}`,
+                    "uniqueTransectionIDbyMARKETID":uniqueMarketId
                 }
 
                 let debitAmountForP = debitCreditAmount
@@ -2490,7 +2704,11 @@ io.on('connection', (socket) => {
                         "role_type" : user.role_type,
                         "Remark":"-",
                         "stake": bet.Stake,
-                        "transactionId":`${bet.transactionId}`
+                        "transactionId":`${bet.transactionId}`,
+                        "marketType":`${bet.marketName}`,
+                        "cacelMarketId":bet.marketId,
+                        "event":`${bet.match}`,
+                        "uniqueTransectionIDbyMARKETID":uniqueMarketId
                     }
     
                     let debitAmountForP = debitCreditAmount
@@ -2893,7 +3111,10 @@ io.on('connection', (socket) => {
         let whiteLabel = checkwhiteLabel(data.LOGINDATA);
         if(data.selectedValue === "All"){
              games = await gameModel.find({whiteLabelName:whiteLabel,status:true})
-        }else{
+        }else if (data.selectedValue === "providers"){
+            games = await gameModel.find({whiteLabelName:whiteLabel,status:true, game_name:{$regex: /Lobby/i}})
+        }
+        else{
             games = await gameModel.find({provider_name:data.selectedValue,whiteLabelName:whiteLabel,status:true})
         }
         let fevGames = []
@@ -2910,7 +3131,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
-        console.log(data)
+        // console.log(data)
     let limit = 20;
     let page = data.page;
     let skip;
@@ -2921,20 +3142,22 @@ io.on('connection', (socket) => {
     // filter.user_id = new ObjectId(data.LOGINDATA.LOGINUSER._id)
     filter.user_id = data.LOGINDATA.LOGINUSER._id
     filter.$or=[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]
+    console.log(data.filterData.fromDate, data.filterData.toDate)
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
         filter.date = {
             $gt : new Date(data.filterData.fromDate)
         }
     }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
         filter.date = {
-            $lt : new Date(data.filterData.toDate)
+            $lte : new Date(data.filterData.toDate)
         }
     }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
         filter.date = {
             $gte : new Date(data.filterData.fromDate),
-            $lt : new Date(data.filterData.toDate)
+            $lte : new Date(data.filterData.toDate)
         }
     }
+    console.log(filter.date)
     let filterstatus = true
     if(data.filterData.type === "bsettlement"){
         // filter.$expr = {
@@ -2979,18 +3202,21 @@ io.on('connection', (socket) => {
         filter.gameId = {$exists:false}
         filterstatus = false
     }
-    console.log('filter',filter)
+    // console.log('filter',filter)
     
 
     // console.log(filter)
     let finalresult = []
     let marketidarray = [];
+    let rollBackMarketIDArray = [];
+    let  CancelArray = [];
     let userAccflage = true
 
 
     async function getmarketwiseaccdata (limit,skip){
-        console.log('in getmarketwise accdata ',limit,skip)
+        // console.log('in getmarketwise accdata ',limit,skip)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+        console.log(userAcc, "userAccuserAccuserAcc")
          let c = 0
          if(userAcc.length == 0){
             userAccflage = false
@@ -3033,7 +3259,8 @@ io.on('connection', (socket) => {
                                  stake:{$first:'$Stake'},
                                  creditDebitamount:{$sum:'$returns'},
                                  balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$transactionId'}
+                                 transactionId:{$first:'$transactionId'},
+                                 date:{$first:'$date'}
                              }
                          },
                          {
@@ -3053,51 +3280,152 @@ io.on('connection', (socket) => {
                          }
                      }
                  }else if(userAcc[i].marketId){
-                    if(marketidarray.includes(userAcc[i].marketId)){
+                    if(marketidarray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
                         continue;
                     }
-                     let bet = await Bet.aggregate([
+                     let bet = await AccModel.aggregate([
                          {
                              $match:{
-                                 userId:data.LOGINDATA.LOGINUSER._id.toString(),
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
-                                 closingBalance:{$exists:true}
+                                user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                 balance:{$exists:true}
                              }
                          },
                         {
-                            $sort:{settleDate:-1}
+                            $sort:{date:-1}
                          },
                          {
                              $group:{
                                  _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                      eventId:"$eventId",
                                      marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                  },
-                                 match:{$first:'$match'},
-                                 marketName:{$first:'$marketName'},
-                                 stake:{$first:'$Stake'},
-                                 creditDebitamount:{$sum:'$returns'},
-                                 balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$transactionId'}
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'},
+                                 date:{$first:'$date'}
                              }
                          },
                          {
-                            $sort:{settleDate:-1}
+                            $sort:{date:-1}
                          },
                          {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     console.log('inuseracc marketid',bet)
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                         marketidarray.push(bet[0]._id.marketId)
+                    //  console.log('inuseracc marketid',bet)
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break
                          }
                      }
-                 }else{
+                 }
+                 else if(userAcc[i].rollbackMarketId){
+                    if(rollBackMarketIDArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                        continue;
+                    }
+                     let bet = await AccModel.aggregate([
+                         {
+                             $match:{
+                                user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                 balance:{$exists:true}
+                             }
+                         },
+                        {
+                            $sort:{date:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                     eventId:"$eventId",
+                                     marketId:"$rollbackMarketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'},
+                                 rollbackMarketId:{$first:'$rollbackMarketId'},
+                                 date:{$first:'$date'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                    //  console.log('inuseracc marketid',bet)
+                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }
+                 else if(userAcc[i].cacelMarketId){
+                    if(CancelArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                        continue;
+                    }
+                     let bet = await AccModel.aggregate([
+                         {
+                             $match:{
+                                user_id:new ObjectId(data.LOGINDATA.LOGINUSER._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                 balance:{$exists:true}
+                             }
+                         },
+                        {
+                            $sort:{date:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                     eventId:"$eventId",
+                                     marketId:"$cacelMarketId",
+                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'},
+                                 cacelMarketId:{$first:'$cacelMarketId'},
+                                 date:{$first:'$date'}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                    //  console.log('inuseracc marketid',bet)
+                     if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }
+                 else{
                      finalresult.push(userAcc[i])
                      if(finalresult.length >= 20){
                              break
@@ -3123,10 +3451,10 @@ io.on('connection', (socket) => {
     }else{
         skip = 0
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
-        console.log(userAcc, "userAccuserAccuserAccuserAccuserAccuserAccuserAcc")
+        // console.log(userAcc, "userAccuserAccuserAccuserAccuserAccuserAccuserAcc")
         finalresult = userAcc
     }
-    console.log(finalresult, 'finalresult')
+    // console.log(finalresult, 'finalresult', skipvalue)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc:finalresult, page,skipvalue})
 
     })
@@ -4194,9 +4522,10 @@ io.on('connection', (socket) => {
             }
             let filterstatus = true
             if(data.filterData.type === "bsettlement"){
-                filter.$expr = {
-                    $eq: [{ $strLenCP: "$transactionId" }, 16]
-                }
+                // filter.$expr = {
+                //     $eq: [{ $strLenCP: "$transactionId" }, 16]
+                // }
+                filter.transactionId = {$exists:true}
             }else if (data.filterData.type === "Deposit"){
                 filter.accStype = {$exists:false}
                 filter.creditDebitamount={$gt:0}
@@ -4232,11 +4561,20 @@ io.on('connection', (socket) => {
             }
             let finalresult = []
             let marketidarray = [];
+            let rollBackMarketIDArray = [];
+            let CancelArray = [];
             let userAccflage = true
-        
-        
+            let thatUser = await User.findById(filter.user_id)
+            let userrole = thatUser.roleName
+            let skipvalue
+        if(thatUser && thatUser.roleName != "user"){
+            finalresult = await AccModel.find(filter).sort({date: -1}).skip(data.skipid).limit(limit)
+            skipvalue = parseFloat(data.skipid) + 10
+        }else{
             async function getmarketwiseaccdata (limit,skip){
-                 let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+                // console.log('in getmarketwise accdata ',limit,skip)
+                let userAcc = await AccModel.find(filter).sort({date: -1}).skip(skip).limit(limit)
+                // console.log(userAcc, "userAccuserAccuserAccuserAcc")
                  let c = 0
                  if(userAcc.length == 0){
                     userAccflage = false
@@ -4245,11 +4583,11 @@ io.on('connection', (socket) => {
                     for(let i = 0;i<userAcc.length;i++){
                         c++
                          if(userAcc[i].gameId){
-                            
                             finalresult.push(userAcc[i])
-                            if(finalresult.length >= 10){
-                                    break
-                            }
+                             if(finalresult.length >= 20){
+                                     break
+                             }
+                            
                          }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
                             if(marketidarray.includes(userAcc[i].marketId)){
                                 continue;
@@ -4257,14 +4595,14 @@ io.on('connection', (socket) => {
                              let bet = await Bet.aggregate([
                                  {
                                      $match:{
-                                         userId:data.id.toString(),
+                                         userId:data.LOGINDATA.LOGINUSER._id.toString(),
                                          eventId:{$exists:'eventId'},
-                                         $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
+                                         $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:filter.date}],
                                          closingBalance:{$exists:true}
         
                                      }
                                  },
-                                 {
+                                {
                                     $sort:{settleDate:-1}
                                  },
                                  {
@@ -4276,20 +4614,20 @@ io.on('connection', (socket) => {
                                          },
                                          match:{$first:'$match'},
                                          marketName:{$first:'$marketName'},
+                                         stake:{$first:'$Stake'},
                                          creditDebitamount:{$sum:'$returns'},
                                          balance:{$first:'$closingBalance'},
-                                         transactionId:{$first:'$transactionId'},
-                                         date:{ $max: "$settleDate" }
+                                         transactionId:{$first:'$transactionId'}
                                      }
                                  },
                                  {
                                     $sort:{settleDate:-1}
                                  },
                                  {
-                                    $limit:(10 - finalresult.length)
+                                    $limit:(20 - finalresult.length)
                                  }
                              ])
-        
+                             let accounts = []
                              if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
                                  marketidarray.push(bet[0]._id.marketId)
                                  finalresult = finalresult.concat(bet)
@@ -4298,51 +4636,152 @@ io.on('connection', (socket) => {
                                  }
                              }
                          }else if(userAcc[i].marketId){
-                            if(marketidarray.includes(userAcc[i].marketId)){
+                            if(marketidarray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
                                 continue;
                             }
-                             let bet = await Bet.aggregate([
+                             let bet = await AccModel.aggregate([
                                  {
                                      $match:{
-                                         userId:data.id.toString(),
-                                         $and:[{marketId:userAcc[i].marketId},{settleDate:filter.date}],
-                                         closingBalance:{$exists:true}
+                                        user_id:new ObjectId(data.id),
+                                         $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                         balance:{$exists:true}
                                      }
                                  },
-                                 {
-                                    $sort:{settleDate:-1}
+                                {
+                                    $sort:{date:-1}
                                  },
                                  {
                                      $group:{
                                          _id:{
+                                            uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                              eventId:"$eventId",
                                              marketId:"$marketId",
-                                             date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                             date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
                                          },
-                                         match:{$first:'$match'},
-                                         marketName:{$first:'$marketName'},
-                                         creditDebitamount:{$sum:'$returns'},
-                                         balance:{$first:'$closingBalance'},
+                                         match:{$first:'$event'},
+                                         marketName:{$first:'$marketType'},
+                                        //  stake:{$first:'$Stake'},
+                                         creditDebitamount:{$sum:'$creditDebitamount'},
+                                         balance:{$first:'$balance'},
                                          transactionId:{$first:'$transactionId'},
-                                         date:{ $max: "$settleDate" }
+                                         date:{$first:'$date'}
                                      }
                                  },
                                  {
-                                    $sort:{settleDate:-1}
+                                    $sort:{date:-1}
                                  },
                                  {
-                                    $limit:(10 - finalresult.length)
+                                    $limit:(20 - finalresult.length)
                                  }
                              ])
-                             console.log('inuseracc marketid',bet)
-                             if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                                 marketidarray.push(bet[0]._id.marketId)
+                            //  console.log('inuseracc marketid',bet)
+                             if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                                 marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                                  finalresult = finalresult.concat(bet)
                                  if(finalresult.length >= 10){
                                      break
                                  }
                              }
-                         }else{
+                         }
+                         else if(userAcc[i].rollbackMarketId){
+                            if(rollBackMarketIDArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                                continue;
+                            }
+                             let bet = await AccModel.aggregate([
+                                 {
+                                     $match:{
+                                        user_id:new ObjectId(data.id),
+                                         $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                         balance:{$exists:true}
+                                     }
+                                 },
+                                {
+                                    $sort:{date:-1}
+                                 },
+                                 {
+                                     $group:{
+                                         _id:{
+                                            uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                             eventId:"$eventId",
+                                             marketId:"$rollbackMarketId",
+                                             date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                         },
+                                         match:{$first:'$event'},
+                                         marketName:{$first:'$marketType'},
+                                        //  stake:{$first:'$Stake'},
+                                         creditDebitamount:{$sum:'$creditDebitamount'},
+                                         balance:{$first:'$balance'},
+                                         transactionId:{$first:'$transactionId'},
+                                         rollbackMarketId:{$first:'$rollbackMarketId'},
+                                         date:{$first:'$date'}
+                                     }
+                                 },
+                                 {
+                                    $sort:{date:-1}
+                                 },
+                                 {
+                                    $limit:(20 - finalresult.length)
+                                 }
+                             ])
+                            //  console.log('inuseracc marketid',bet)
+                             if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                                 rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                                 finalresult = finalresult.concat(bet)
+                                 if(finalresult.length >= 10){
+                                     break
+                                 }
+                             }
+                         }
+                         else if(userAcc[i].cacelMarketId){
+                            if(CancelArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                                continue;
+                            }
+                             let bet = await AccModel.aggregate([
+                                 {
+                                     $match:{
+                                        user_id:new ObjectId(data.id),
+                                         $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$exists:true}},{date:filter.date}],
+                                         balance:{$exists:true}
+                                     }
+                                 },
+                                {
+                                    $sort:{date:-1}
+                                 },
+                                 {
+                                     $group:{
+                                         _id:{
+                                            uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                             eventId:"$eventId",
+                                             marketId:"$cacelMarketId",
+                                             date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                         },
+                                         match:{$first:'$event'},
+                                         marketName:{$first:'$marketType'},
+                                        //  stake:{$first:'$Stake'},
+                                         creditDebitamount:{$sum:'$creditDebitamount'},
+                                         balance:{$first:'$balance'},
+                                         transactionId:{$first:'$transactionId'},
+                                         cacelMarketId:{$first:'$cacelMarketId'},
+                                         date:{$first:'$date'}
+                                     }
+                                 },
+                                 {
+                                    $sort:{date:-1}
+                                 },
+                                 {
+                                    $limit:(20 - finalresult.length)
+                                 }
+                             ])
+                            //  console.log('inuseracc marketid',bet)
+                             if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                                 CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                                 finalresult = finalresult.concat(bet)
+                                 if(finalresult.length >= 10){
+                                     break
+                                 }
+                             }
+                         }
+                         else{
                              finalresult.push(userAcc[i])
                              if(finalresult.length >= 10){
                                      break
@@ -4350,11 +4789,12 @@ io.on('connection', (socket) => {
                          }
                          
                      }
+                     console.log(finalresult, "finalresultfinalresultfinalresult")
                  }
                 return c
             }
             let j = 0
-            let skipvalue = data.skipid;
+            skipvalue = data.skipid;
             if(filterstatus){
                 while(finalresult.length < 10){
                     skip = (limit * j) + data.skipid 
@@ -4365,9 +4805,18 @@ io.on('connection', (socket) => {
                     }
                     j++
                 }
+            }else{
+                console.log("got here ")
+                let userAcc = await AccModel.find(filter).sort({date: -1}).skip(data.skipid).limit(limit)
+                if(finalresult.length > 0){
+                    finalresult.concat(userAcc)
+                }else{
+                    finalresult = userAcc
+                }
             }
+        }
             console.log(finalresult, "finalresultfinalresultfinalresultfinalresultfinalresultfinalresult")
-            socket.emit("ACCSTATEMENTADMINSIDE", {userAcc:finalresult, skipvalue,page})
+            socket.emit("ACCSTATEMENTADMINSIDE", {userAcc:finalresult, skipvalue,page, userrole})
 
         }catch(err){
             console.log(err)
@@ -4638,12 +5087,23 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateCommission", async(data) => {
-        // console.log(data)
+        console.log(data, "DATAAAAA")
+        if(data.data.LimitBookMaker){
+            data.data.LimitBookMaker = parseFloat(data.data.LimitBookMaker)
+        }else{
+            data.data.LimitBookMaker = 0
+        }
+
+        if(data.data.LimitFancy){
+            data.data.LimitFancy = parseFloat(data.data.LimitFancy)
+        }else{
+            data.data.LimitFancy = 0
+        }
         try{
             let newValues = {
-                matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
-                Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus},
-                fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus}
+                // matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
+                Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus, limit:data.data.LimitBookMaker},
+                fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus, limit:data.data.LimitFancy}
             }
             let newdata
             if(!await commissionModel.findOne({userId:data.data.id})){
@@ -5132,7 +5592,7 @@ io.on('connection', (socket) => {
                                             if : {$eq: ['$bettype2', "BACK"]},
                                             then:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                                     then:{
                                                         $sum: {
                                                             $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -5147,7 +5607,7 @@ io.on('connection', (socket) => {
                                             },
                                             else:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                                     then:{
                                                         $sum: {
                                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -5551,7 +6011,7 @@ io.on('connection', (socket) => {
                                                 if : {$eq: ['$bettype2', "BACK"]},
                                                 then:{
                                                     $cond:{
-                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                                         then:{
                                                             $sum: {
                                                                 $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -5566,7 +6026,7 @@ io.on('connection', (socket) => {
                                                 },
                                                 else:{
                                                     $cond:{
-                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                                         then:{
                                                             $sum: {
                                                                $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -5845,7 +6305,7 @@ io.on('connection', (socket) => {
                                             if : {$eq: ['$bettype2', "BACK"]},
                                             then:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                                     then:{
                                                         $sum: {
                                                             $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -5860,7 +6320,7 @@ io.on('connection', (socket) => {
                                             },
                                             else:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                                     then:{
                                                         $sum: {
                                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -6263,7 +6723,7 @@ io.on('connection', (socket) => {
                                                 if : {$eq: ['$bettype2', "BACK"]},
                                                 then:{
                                                     $cond:{
-                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                                         then:{
                                                             $sum: {
                                                                 $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -6278,7 +6738,7 @@ io.on('connection', (socket) => {
                                                 },
                                                 else:{
                                                     $cond:{
-                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                                         then:{
                                                             $sum: {
                                                                $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -6719,7 +7179,7 @@ io.on('connection', (socket) => {
                                     if : {$eq: ['$bettype2', "BACK"]},
                                     then:{
                                         $cond:{
-                                            if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                            if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                             then:{
                                                 $sum: {
                                                     $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
@@ -6734,7 +7194,7 @@ io.on('connection', (socket) => {
                                     },
                                     else:{
                                         $cond:{
-                                            if: { $regexMatch: { input: "$marketName", regex: /^(match|winn)/i } },
+                                            if: { $regexMatch: { input: "$marketName", regex: /^(match|winn|over\/under)/i } },
                                             then:{
                                                 $sum: {
                                                    $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
@@ -9140,7 +9600,7 @@ io.on('connection', (socket) => {
                         status: "OPEN",
                         userName:userData.userName,
                         marketName: {
-                            $regex: /^(match|book|winn|toss)/i
+                            $regex: /^(match|book|winn|toss|over\/under)/i
                         }
                         
                     }
@@ -9161,7 +9621,8 @@ io.on('connection', (socket) => {
                                         if: {
                                                 $or: [
                                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                                 ]
                                             },
                                         then:{
@@ -9181,7 +9642,8 @@ io.on('connection', (socket) => {
                                         if: {
                                                 $or: [
                                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                                 ]
                                             },
                                         then:{
@@ -9929,7 +10391,8 @@ io.on('connection', (socket) => {
 
         // console.log(data)
         if(data.LOGINDATA.LOGINUSER && data.LOGINDATA.IP){
-            let ip = data.LOGINDATA.IP.split('::ffff:')[1];
+            console.log(data.LOGINDATA.IP, "data.LOGINDATA.IP")
+            let ip = data.LOGINDATA.IP;
             let eventId = data.search.split('=')[1]
             let StreamData = await streamModel.findOne({eventId:eventId})
             let srs = ''
@@ -10723,7 +11186,8 @@ io.on('connection', (socket) => {
                                         if: {
                                                 $or: [
                                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                                 ]
                                             },
                                         then:{
@@ -10743,7 +11207,8 @@ io.on('connection', (socket) => {
                                         if: {
                                                 $or: [
                                                     { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                    { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                    { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                                 ]
                                             },
                                         then:{
@@ -10807,7 +11272,9 @@ io.on('connection', (socket) => {
             ])
 
             let marketIds = await Bet.distinct('marketId', {status: "OPEN", eventId: data.eventId,})
+            console.log(marketIds, "marketIdsmarketIdsmarketIds")
             let runnerData = await runnerDataModel.find({marketId:{$in:marketIds}})
+            console.log(runnerData, "runnerDatarunnerDatarunnerData")
             // console.log(runnerData)
             for(let i = 0; i < betsMarketIdWise.length; i++){
                 let currentMarketrunnersData = runnerData.find(item => item.marketId == betsMarketIdWise[i]._id)
@@ -12164,6 +12631,17 @@ io.on('connection', (socket) => {
             let visibleValue = await findvisible(data.LOGINDATA.LOGINUSER)
             socket.emit('visibleValue', visibleValue)
         }
+    })
+
+    socket.on('gameSearcch', async(data) => {
+        // if(data.LOGINDATA.LOGINUSER){
+            let whiteLabel = process.env.whiteLabelName
+            let regExpress = new RegExp(data.x, 'i');
+            console.log(whiteLabel)
+            let games = await gameModel.find({whiteLabelName:whiteLabel, game_name: regExpress})
+            // console.log(games)
+            socket.emit('gameSearcch', games)
+        // }
     })
 
 })

@@ -9,6 +9,7 @@ import {creditDebitSettle} from "./creditDebitSettle"
 import { editUser } from "./editUser";
 // import { betLockStatus } from "./batLockStatus";
 import { createRole } from "./createRole";
+import axios from "axios";
 import { updateRole } from "./updateRoleByaxios";
 import {deleteRole} from "./deleteRole"
 import { updatePassword } from "./updatePASSWORD";
@@ -36,6 +37,7 @@ import { notificationsss } from "./notificationsss";
 import { updateBasicDetails } from "./updateBasicDetails";
 import { createMedia } from "./createMedia";
 import session from "express-session";
+import { getIframe } from "./getIframe";
 // import { func } from "joi";
 
 
@@ -127,7 +129,22 @@ if(pathname.startsWith('/admin') || pathname.startsWith('/resetPassword')){
 }
 
 
-
+if(document.getElementById('myIframe')){
+    let channelId = document.getElementById('myIframe').getAttribute('data-id');
+    const urlParams = new URLSearchParams(window.location.search);
+    let eventId = urlParams.get('id')
+    console.log(channelId, eventId, "sdfghjkl;")
+    let ip
+    axios.get('https://api.ipify.org?format=json')
+  .then(response => {
+    console.log('Your IP address is:', response.data.ip);
+    ip = response.data.ip
+    let data = getIframe({ipv4:ip, id:channelId})
+  })
+  .catch(error => {
+    console.error('Error fetching IP address:', error);
+  });
+}
 
 
 $(document).on('click','.passcodemsgbox',function(e){

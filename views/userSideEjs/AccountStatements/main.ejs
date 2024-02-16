@@ -44,11 +44,12 @@
 
             <div class="acount-stat-ro2">
                 <div class="acount-stat-tbl-txt-wrp userSide-Table">
-                    <table class="acount-stat-tbl" id="table12">
+                    <table class="acount-stat-tbl account-statment-user" id="table12">
 
                         <thead class="acount-stat-tbl-hed">
                             <tr class="acount-stat-tbl-hed-tr">
                                 <th class="bod-red-lft">Transaction</th>
+                                <th>Date</th>
                                 <th>Event</th>
                                 <th>Market Type</th>
                                 <th>Credit/Debit</th>
@@ -62,6 +63,19 @@
                         <tbody class="acount-stat-tbl-body">
                             <%if(data.length != 0){%>
                             <%for(let i = 0; i < data.length; i++){%>
+                              <%
+                                    <!-- var timestamp = `${data[i].time}`;  -->
+                                    var date = new Date(data[i].date);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
+                                %>
                                 <%if(data[i].gameId){%>
                                 <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameid="<%=data[i].transactionId%>" id="rowid-<%=i + 1%>">
                                     <%if(data[i].creditDebitamount > 0){%>
@@ -69,6 +83,7 @@
                                     <%}else if(data[i].creditDebitamount < 0){%>
                                       <td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>
                                     <%}%>
+                                      <td title="Date" ><%=formattedTime%></td>
                                     <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
                                     <%}else{%>
@@ -90,6 +105,8 @@
                                   <%}else if(data[i].transactionId && data[i].transactionId.length > 16 && data[i]._id.marketId){%>
                                     <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" data-gameid="<%=data[i]._id.eventId%>" id="rowid-<%=i + 1%>">
                                     <td title="Transaction">Sport Book Bet Settlement</td>
+                                    <td title="Date" ><%=formattedTime%></td>
+                                    <!-- <td title="Date" ><%=formattedTime%></td> -->
                                     <%if(data[i].match){%>
                                       <td title="Event"><%=data[i].match%></td>
                                     <%}else{%>
@@ -110,7 +127,14 @@
                                       
                                   <%}else if(data[i]._id.marketId){%>
                                     <tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="<%=data[i]._id.marketId%>" id="rowid-<%=i + 1%>">
-                                      <td title="Transaction">Bet Settlement</td>
+                                      <%if(data[i].rollbackMarketId){%>
+                                        <td title="Transaction">Settle Bet Rollback</td>
+                                      <%}else if(data[i].cacelMarketId){%>
+                                        <td title="Transaction">Settle Bet Void</td>
+                                        <%}else{%>
+                                          <td title="Transaction">Bet Settlement</td>
+                                      <%}%>
+                                      <td title="Date" ><%=formattedTime%></td>
                                         <%if(data[i].match){%>
                                           <td title="Event"><%=data[i].match%></td>
                                         <%}else{%>
@@ -133,13 +157,13 @@
                                       <%if(data[i].child_id){%>
                                         <%if(data[i].description.startsWith('Chips')){%>
                                           <%if(data[i].creditDebitamount > 0){%>
-                                            <td title="Transaction">Deposite</td>
+                                            <td title="Transaction">Deposit</td>
                                           <%}else{%>
                                             <td title="Transaction">Withdraw</td>
                                           <%}%>
                                         <%}else{%>
                                           <%if(data[i].creditDebitamount > 0){%>
-                                            <td title="Transaction">Settlement Deposite</td>
+                                            <td title="Transaction">Settlement Deposit</td>
                                           <%}else{%>
                                             <td title="Transaction">Settlement Withdraw</td>
                                           <%}%>
@@ -151,8 +175,9 @@
                                             <td title="Transaction"><%=data[i].description%></td>
                                             <%}else{%>
                                               <td title="Transaction">Commission Settlement</td>
-                                          <%}%>
-                                      <%}%>
+                                              <%}%>
+                                              <%}%>
+                                              <td title="Date" ><%=formattedTime%></td>
                                     <td title="Event">-</td>
                                     <td title="Market Type">-</td>
                                     <%if(data[i].creditDebitamount > 0){%>

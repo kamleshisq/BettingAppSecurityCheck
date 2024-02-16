@@ -7,6 +7,7 @@ const Decimal =  require('decimal.js');
 const commissionNewModel = require('../model/commissioNNModel');
 const marketnotificationId = require('../model/timelyVoideNotification');
 const revockCommissionFromBetId = require('./revockCommissionFromBetId');
+const uuid = require('uuid');
 
 
 async function voidbetOPENFORTIMELYVOIDE(data){
@@ -58,6 +59,14 @@ async function voidbetOPENFORTIMELYVOIDE(data){
             }
             await marketnotificationId.create(timelyNotification)
         }
+
+        function generateUniqueIdByMARKETID() {
+            const timestamp = new Date().getTime();
+            const uniqueId = bets[0].marketId + '-' + timestamp + '-' + uuid.v4();
+            return uniqueId
+          }
+          let uniqueMarketId = generateUniqueIdByMARKETID()
+
                     for(const bet in bets){
                         if(bets[bet].status == "OPEN"){
                             await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", returns:0 ,remark:data.FormData1.Remark, calcelUser:operatoruserName});
@@ -77,7 +86,10 @@ async function voidbetOPENFORTIMELYVOIDE(data){
                                 "Remark":"-",
                                 "stake": bets[bet].Stake,
                                 "transactionId":`${bets[bet].transactionId}`,
-                                "cancelMarketId":bets[bet].marketId
+                                "cacelMarketId":bets[bet].marketId,
+                                "marketType":`${bets[bet].marketName}`,
+                                "event":`${bets[bet].match}`,
+                                "uniqueTransectionIDbyMARKETID":uniqueMarketId
                             }
                             let debitAmountForP = debitCreditAmount
                             let uplinePl = 0
@@ -128,7 +140,10 @@ async function voidbetOPENFORTIMELYVOIDE(data){
                                 "Remark":"-",
                                 "stake": bets[bet].Stake,
                                 "transactionId":`${bets[bet].transactionId}`,
-                                "cancelMarketId":bets[bet].marketId
+                                "cacelMarketId":bets[bet].marketId,
+                                "marketType":`${bets[bet].marketName}`,
+                                "event":`${bets[bet].match}`,
+                                "uniqueTransectionIDbyMARKETID":uniqueMarketId
                             }
                             let debitAmountForP = debitCreditAmount
                             let uplinePl = 0

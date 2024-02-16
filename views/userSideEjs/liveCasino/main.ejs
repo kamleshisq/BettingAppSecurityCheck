@@ -44,7 +44,7 @@
                                 </ul>
                                 
                               </div>
-                              <div class="liv-casino-nav-serchcol">
+                              <div class="liv-casino-nav-serchcol mobile">
                                 <div class="input-group input-group-sm flex-nowrap liv-casino-nav-serchcol-inputgrop">
                                   <!-- <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
                                   <span class="input-group-text" id="addon-wrapping">
@@ -53,8 +53,20 @@
                                 </div>
                                 
                                 <div class="input-group flex-nowrap liv-casino-nav-serchcol-inputgrop2">
+                                  <div class="main-game-serach" >
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                    </div>
+                                    <input type="text" id="gameSearcch" list="text_editors" class="form-select-sm gameSearcch" placeholder="search Game" >
+                                    <div class="wrapper hide game-serach">
+                                      <ul id="search" class="games">
+                                        
+                                      </ul>
+                                    </div>
+                                  </div>
                                   <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <option selected value="All">All</option>
+                                    <option selected value="providers">All Providers</option>
+                                    <option  value="All">All</option>
                                     <%for(let i = 0; i < filterData.length; i++){%>
                                       <option value="<%=filterData[i]._id%>"><%=filterData[i].sub_provider_name%></option>
                                     <%}%>

@@ -53,8 +53,10 @@
                   <h5>Live Stream</h5>
                 </div>
                 <div class="exchange-pg-rit-ro-livetv-dv-wrp">
+                  <%if(user){ %>
                   <%if(status){%>
                     <iframe src="<%=src%>" id="myIframe" data-id="<%=channel%>" class="my-livestrem-ifream"></iframe>
+                  <%}%>
                   <%}%>
                 </div>
               </div>

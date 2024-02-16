@@ -8,7 +8,14 @@
         </div>
     </div>
   </section>
-
+    <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Operator"){ %>
+   <label >WhiteLabel</label>
+                  <select id="whiteLabel" name="whiteLabel" class="form-control ml0">
+                    <%for(let i = 0; i < WhiteLabel.length; i++){ %>
+                      <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
+                    <%} %>
+                  </select>
+ <%} %>
   <section>
     <div class="container-fluid">
       <div class="table-data-section CMD__website">

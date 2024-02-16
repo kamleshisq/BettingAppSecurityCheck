@@ -2,9 +2,9 @@ const fetch = require('node-fetch');
 
 async function getLiveStream(id, ipv4){
     let DATA
-    // console.log(id)
+    console.log(ipv4, "fffsfffs")
     let body = {
-            "ipv4":`172.105.58.243`,
+            "ipv4":`${ipv4}`,
             "channel":`${id}`
         };
     var fullUrl = `https://api2.dbm9.com/api/tv-stream`;

@@ -64,9 +64,9 @@ async function placeBet(data){
         return "Please try again later, Your exposure Limit is full"
     }
     let openBet = await betmodel.countDocuments({userName:data.LOGINDATA.LOGINUSER.userName, status:'OPEN'})
-    console.log(openBet, "openBetopenBetopenBet")
+    // console.log(openBet, "openBetopenBetopenBet")
     let betLimitcheck = await betLimitModel.findOne({type : 'Sport'}) 
-    console.log(betLimitcheck, "betLimitcheckbetLimitcheck")
+    // console.log(betLimitcheck, "betLimitcheckbetLimitcheck")
     if(betLimitcheck && betLimitcheck.max_bet != 0){
         if(betLimitcheck.max_bet <= openBet){
             return "Please try again later, Your Betlimit Limit is full"
@@ -138,7 +138,7 @@ async function placeBet(data){
             }
       }}
 
-
+// console.log(marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 let betPlaceData = {}
 
 //FOR SPORT NAME 
@@ -245,7 +245,7 @@ if(data.data.spoetId == 1){
 
 // console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 // FOR ODDS LIMIT
-if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
+if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')|| marketDetails.title.toLowerCase().startsWith('over/under') ){
     if(data.data.bettype2 === 'BACK'){
         let OddChake = (data.data.odds * 1) + (0.15) 
         // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
@@ -287,7 +287,7 @@ if(data.data.odds2){
     let creditDebitamount
     let WinAmount
     if(data.data.bettype2 === "BACK"){
-        if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
+        if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne') || marketDetails.title.toLowerCase().startsWith('over/under')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
             WinAmount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
@@ -299,14 +299,14 @@ if(data.data.odds2){
             WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
     }else{
-        if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')){
+        if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne') || marketDetails.title.toLowerCase().startsWith('over/under')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }else{
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
-        WinAmount = (parseFloat(data.data.stake)).toFixed(2)
+        WinAmount = (parseFloat(data.data.stake)).toFixed(2)    
     }
     // console.log(WinAmount, "WinAmountWinAmountWinAmount")
 
@@ -339,7 +339,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
 }
 
 // console.log(marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
-if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd'))|| marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+if(marketDetails.title.toLowerCase().startsWith('winner') ||( marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd'))|| marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('over/under')){
     // console.log('WORKING13546')
     let check = await runnerDataModel.findOne({marketId:marketDetails.marketId})
     if(!check){

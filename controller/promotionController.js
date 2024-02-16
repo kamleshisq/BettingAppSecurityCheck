@@ -33,7 +33,7 @@ exports.createPosition = catchAsync(async(req, res, next) => {
         if(req.currentUser.role_type == 1){
             whiteLabel = "1"
         }
-        req.body.whiteLabelName = whiteLabel
+        data.whiteLabelName = whiteLabel
         const newPosition = await promotion.create(data)
         res.status(200).json({
             status:"success",

@@ -23,7 +23,11 @@
           };
           var formattedTime = date.toLocaleString('en-US', options);
             %>
-          <div class="exch-mob-data-tbl-card-wrp">
+            <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){%>
+              <div class="exch-mob-data-tbl-card-wrp" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" >
+            <%}else{%>
+              <div class="exch-mob-data-tbl-card-wrp"  >
+            <%}%>
             <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>">
               <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
                 <div class="top-mobile-table-data">
@@ -91,12 +95,12 @@
                     <%if(user && userMultimarkets != null && cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
                       <%let check = userMultimarkets.marketIds.find(item => item == cricketSeries[i].matchdata[j].marketList.match_odd.marketId) %>
                       <%if(check){%>
-                      <button class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="https://bigbull9exch.com/assets/img/exchange/Vector2.svg" alt=""/></button> 
+                      <button class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://dev.ollscores.com/assets/img/exchange/Vector2.svg" alt=""/></button> 
                       <%}else{%>
-                      <button class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="https://bigbull9exch.com/assets/img/exchange/Vector.png" alt=""/></button> 
+                      <button class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" ><img src="http://dev.ollscores.com/assets/img/exchange/Vector.png" alt=""/></button> 
                       <%}%>
                     <%}else{%>
-                      <button class="multi_market"  ><img src="https://bigbull9exch.com/assets/img/exchange/Vector.png" alt=""/></button> 
+                      <button class="multi_market"  ><img src="http://dev.ollscores.com/assets/img/exchange/Vector.png" alt=""/></button> 
                     <%}%>
                   </span>
                 </div>

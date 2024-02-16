@@ -1,0 +1,5 @@
+db.users.updateMany({userName:'newtestingsdm'}, {$set:{availableBalance:500000, downlineBalance:500000}})
+db.users.updateMany({userName:'testingnewsm'}, {$set:{availableBalance:250000, downlineBalance:250000}})
+db.users.updateMany({userName:'testingnewdm'}, {$set:{availableBalance:100000, downlineBalance:150000}})
+db.users.updateMany({userName:'testingnewagent'}, {$set:{availableBalance:29000, downlineBalance:121000}})
+db.users.updateMany({userName:'testingnewuser1'}, {$set:{availableBalance:100000}})

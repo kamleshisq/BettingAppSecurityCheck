@@ -1,4 +1,5 @@
 <%for(let i = 0; i < match.marketList.goals.length; i++){%>
+  <%if(match.marketList.goals[i].status == 1){%>
     <div class="exchange-pg-inn-banner-col2">
         <div class="exchange-pg-inn-banner-col-titi-wrpp">
           <div class="exchange-pg-inn-banner-col-titi">
@@ -110,4 +111,5 @@
        
       
     </div>
+    <%}%>
 <%}%>

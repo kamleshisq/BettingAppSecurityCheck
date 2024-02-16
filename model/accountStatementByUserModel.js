@@ -74,6 +74,9 @@ const accountStatementByUser = mongoose.Schema({
     },
     marketType:{
         type:String
+    },
+    uniqueTransectionIDbyMARKETID:{
+        type:String
     }
 })
 

@@ -917,7 +917,7 @@ socket.on('connect', () => {
                     //                 <i class="fa-solid fa-lock"></i>
                     //               </span>`
                     // }else 
-                    if (foundItem.odds[0].layPrice1 == "-"){
+                    if (foundItem.odds[0].layPrice1 == "-" || foundItem.odds[0].layPrice1 == 0){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -942,7 +942,7 @@ socket.on('connect', () => {
                 //                     <i class="fa-solid fa-lock"></i>
                 //                   </span>`
                 // }else 
-                if (foundItem.odds[0].backPrice1 == "-"){
+                if (foundItem.odds[0].backPrice1 == "-" || foundItem.odds[0].backPrice1 == 0){
                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -966,7 +966,7 @@ socket.on('connect', () => {
                     //                 <i class="fa-solid fa-lock"></i>
                     //               </span>`
                     // }else 
-                    if (foundItem.odds[1].layPrice1 == "-"){
+                    if (foundItem.odds[1].layPrice1 == "-" || foundItem.odds[1].layPrice1 == 0){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -990,7 +990,7 @@ socket.on('connect', () => {
                 //                     <i class="fa-solid fa-lock"></i>
                 //                   </span>`
                 // }else 
-                if (foundItem.odds[1].backPrice1 == "-"){
+                if (foundItem.odds[1].backPrice1 == "-" || foundItem.odds[1].backPrice1 == 0){
                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -1008,14 +1008,31 @@ socket.on('connect', () => {
 
             $(".2B").each(function() {
                     let id = this.id
-                    const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    let marketId = $(this).closest('tr').find('td:first').attr('id')
+                    // console.log(marketId)
+                    let foundItem 
+                    if(marketId){
+                        foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
+                    }else{
+                        // let marketId = $(this).closest('tr')
+                        marketId = $(this).closest('.exch-mob-data-tbl-card-wrp').attr('id')
+                        if(marketId){
+                            foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
+                        }else{
+
+                            foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        }
+                    }
                     // console.log($(this).find('.tbl-td-bg-blu-spn').text())
                     // if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
                     //     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                     //                 <i class="fa-solid fa-lock"></i>
                     //               </span>`
                     // }else 
-                    if (foundItem.odds[2].backPrice1 == "-"){
+                    // if(id === '58805'){
+                    //     // console.log(foundItem)
+                    // }
+                    if (foundItem.odds[2].backPrice1 == "-" || foundItem.odds[2].backPrice1 == 0){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -1033,13 +1050,28 @@ socket.on('connect', () => {
 
             $(".2L").each(function() {
                 let id = this.id
-                const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                // const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                let marketId = $(this).closest('tr').find('td:first').attr('id')
+                    // console.log(marketId)
+                    let foundItem 
+                    if(marketId){
+                        foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
+                    }else{
+                        // let marketId = $(this).closest('tr')
+                        marketId = $(this).closest('.exch-mob-data-tbl-card-wrp').attr('id')
+                        if(marketId){
+                            foundItem = data.finalResult.items.find(item  => item.market_id === marketId)
+                        }else{
+
+                            foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        }
+                    }
                 // if(data.betLimits[0].max_odd < foundItem.odds[2].layPrice1){
                 //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                 //                     <i class="fa-solid fa-lock"></i>
                 //                   </span>`
                 // }else 
-                if (foundItem.odds[2].layPrice1 == "-"){
+                if (foundItem.odds[2].layPrice1 == "-" || foundItem.odds[2].layPrice1 == 0){
                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                                     <i class="fa-solid fa-lock"></i>
                                   </span>`
@@ -1477,46 +1509,46 @@ socket.on('connect', () => {
 
        
 
-        async function exposureadmin(){
-            $(document).ready(function() {
-                var ids = [];
+        // async function exposureadmin(){
+        //     $(document).ready(function() {
+        //         var ids = [];
           
-                $(".trtable").each(function() {
-                  ids.push($(this).data('id'));
-                });
-                // console.log(ids)
-                socket.emit("exposureadmin", {ids})
-              });
-              setTimeout(()=>{
-                exposureadmin()
-              }, 1000 * 10)
-        }
+        //         $(".trtable").each(function() {
+        //           ids.push($(this).data('id'));
+        //         });
+        //         // console.log(ids)
+        //         socket.emit("exposureadmin", {ids})
+        //       });
+        //       setTimeout(()=>{
+        //         exposureadmin()
+        //       }, 1000 * 10)
+        // }
 
-        exposureadmin()
+        // exposureadmin()
 
-        socket.on('exposureadmin', data => {
-            $(".trtable").each(function() {
-                let trID = $(this).data('id')
-                let thatDATA = data.find(item => item.id === trID)
-                if(thatDATA){
-                    if(LOGINDATA.LOGINUSER.roleName == "Admin"){
-                        if(thatDATA.totalExposure === -0){
-                            $(this).find('td:eq(9)').text(0)
-                        }else{
-                            $(this).find('td:eq(9)').text(thatDATA.totalExposure)
+        // socket.on('exposureadmin', data => {
+        //     $(".trtable").each(function() {
+        //         let trID = $(this).data('id')
+        //         let thatDATA = data.find(item => item.id === trID)
+        //         if(thatDATA){
+        //             if(LOGINDATA.LOGINUSER.roleName == "Admin"){
+        //                 if(thatDATA.totalExposure === -0){
+        //                     $(this).find('td:eq(9)').text(0)
+        //                 }else{
+        //                     $(this).find('td:eq(9)').text(thatDATA.totalExposure)
     
-                        }
-                    }else{
-                        if(thatDATA.totalExposure === -0){
-                            $(this).find('td:eq(8)').text(0)
-                        }else{
-                            $(this).find('td:eq(8)').text(thatDATA.totalExposure)
+        //                 }
+        //             }else{
+        //                 if(thatDATA.totalExposure === -0){
+        //                     $(this).find('td:eq(8)').text(0)
+        //                 }else{
+        //                     $(this).find('td:eq(8)').text(thatDATA.totalExposure)
     
-                        }
-                    }
-                }
-              });
-        })
+        //                 }
+        //             }
+        //         }
+        //       });
+        // })
 
         $(document).on('click', ".add-user-btn", function(e){
             e.preventDefault()
@@ -1642,10 +1674,25 @@ socket.on('connect', () => {
                     form.find('select[name="Bookmaker"]').val(`${data.commissionData[0].Bookmaker.percentage}`)
                     form.find('select[name="fency"]').val(`${data.commissionData[0].fency.percentage}`)
                     form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
+                    if(data.commissionData[0].fency.limit){
+                        form.find('[name="LimitFancy"]').val(`${data.commissionData[0].fency.limit}`)
+                    }else{
+                        form.find('[name="LimitFancy"]').val(0)
+                    }
+
+                    if(data.commissionData[0].Bookmaker.limit){
+                        form.find('[name="LimitBookMaker"]').val(`${data.commissionData[0].Bookmaker.limit}`)
+                    }else{
+                        form.find('[name="LimitBookMaker"]').val(0)
+                    }
                 }else{
+                    let modleName = "#myModal2"
+                    let form = $(modleName).find('.form-data')
                     $('[name="BookmakerStatus"]').prop('checked', false);
                     $('[name="fencyStatus"]').prop('checked', false);
                     $('[name="matchOddsStatus"]').prop('checked', false);
+                    form.find('[name="LimitFancy"]').val(0)
+                    form.find('[name="LimitBookMaker"]').val(0)
                   let  optionhtml = `<option value="0.025">0.025</option>
                         <option value="0.05">0.05</option>
                         <option value="0.075">0.075</option>
@@ -2278,6 +2325,7 @@ socket.on('connect', () => {
 
         let count = 11;
         socket.on('getOwnChild',(data) => {
+            // console.log(data, "VV")
             // console.log(data.refreshStatus)
             // console.log(data)
             // console.log('rows',data.result)
@@ -2372,22 +2420,27 @@ socket.on('connect', () => {
                         }
 
                         html += `<td> ${response[i].uplinePL}</td>`
-                        // <td> 0</td>
-                        if(data.currentUser.roleName == "Admin"){
-                            let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text().trim()
-                            if(trtdexp){
-                                html += `<td> ${trtdexp}</td>`
-                            }else{
-                                html += `<td> 0</td>`
-                            }
+                        if(response[i].roleName != 'user'){
+                            html += `<td>0</td>`
                         }else{
-                            let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(8)').text().trim()
-                            if(trtdexp){
-                                html += `<td> ${trtdexp}</td>`
-                            }else{
-                                html += `<td> 0</td>`
-                            }
+                            html += `<td>${response[i].exposure}</td>`
                         }
+                        // <td> 0</td>
+                        // if(data.currentUser.roleName == "Admin"){
+                        //     let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(9)').text().trim()
+                        //     if(trtdexp){
+                        //         html += `<td> ${trtdexp}</td>`
+                        //     }else{
+                        //         html += `<td> 0</td>`
+                        //     }
+                        // }else{
+                        //     let trtdexp = $(`.trtable[data-id="${response[i]._id}"]`).find('td:eq(8)').text().trim()
+                        //     if(trtdexp){
+                        //         html += `<td> ${trtdexp}</td>`
+                        //     }else{
+                        //         html += `<td> 0</td>`
+                        //     }
+                        // }
                         html += `<td>
                         <div class="btn-group">
                         `
@@ -2427,7 +2480,7 @@ socket.on('connect', () => {
                     }
                     html += `</tbody>`
                     $('#load-more').show()
-
+                    console.log('gitghhejjhjhjhjhjh')
                     $('#table12').html(html)
                     if(response.length == 0){
                         $('#load-more').hide()
@@ -2444,7 +2497,7 @@ socket.on('connect', () => {
                     ids.push($(this).data('id'));
                   });
                   // console.log(ids)
-                  socket.emit("exposureadmin", {ids})
+                //   socket.emit("exposureadmin", {ids})
             
                 // html = '';
                 // for(let i=0;i<data.Rows;i++){
@@ -2938,14 +2991,14 @@ socket.on('connect', () => {
           });
 
         // console.log($('.searchUser'))
-        $('.searchUser').keyup(function(){
+        $('.searchUsersdm').keyup(function(){
             // console.log('working')
-            if($(this).hasClass("searchUser")){
+            if($(this).hasClass("searchUsersdm")){
                 // console.log($(this).val())
                 if($(this).val().length >= 3 ){
                     let x = $(this).val(); 
                     // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
+                    socket.emit("SearchACCSDM", {x, LOGINDATA})
                 }else{
                     document.getElementById('search').innerHTML = ``
                     document.getElementById("button").innerHTML = ''
@@ -2957,7 +3010,7 @@ socket.on('connect', () => {
             e.preventDefault()
             let page = $(this).attr("id")
             let x = $("#searchUser").val()
-            socket.emit("SearchACC", {x, LOGINDATA, page})
+            socket.emit("SearchACCSDM", {x, LOGINDATA, page})
         })
         let model 
 
@@ -3114,16 +3167,7 @@ socket.on('connect', () => {
         }      
         data.LOGINDATA = LOGINDATA
 
-        $(document).on("click", ".searchList", function(){
-            document.getElementById("searchUser").value = this.textContent
-            searchU = true
-            data.id = this.id
-            SUSER = this.id
-            data.page = 0
-            $('.pageLink').attr('data-page',1)
-            $('.wrapper').hide()
-            socket.emit( "AccountScroll", data)
-        })
+        
 
         $('#Fdate,#Tdate,#transaction_type').change(function(){
             let page = 0;
@@ -3143,6 +3187,19 @@ socket.on('connect', () => {
             data.page = page
             data.Transaction_type = Transaction_type
             socket.emit('AccountScroll',data)        
+        })
+
+
+        $(document).on("click", ".searchList", function(){
+            console.log('WORKING')
+            document.getElementById("searchUserSdm").value = this.textContent
+            searchU = true
+            data.id = this.id
+            SUSER = this.id
+            data.page = 0
+            $('.pageLink').attr('data-page',1)
+            $('.wrapper').hide()
+            socket.emit( "AccountScroll", data)
         })
 
         $('#load-more').click(function(e){
@@ -3177,6 +3234,21 @@ socket.on('connect', () => {
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
                         <td class="text-nowrap" >${formattedTime}</td>`
+                        if(data.json.userAcc[i].description.startsWith('Chips')){
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else if(data.json.userAcc[i].child_id) {
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }else{
+                            html += `<td>commission Settlement</td>`
+                          }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
@@ -3227,6 +3299,21 @@ socket.on('connect', () => {
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td class="text-nowrap" >${formattedTime}</td>`
+                        if(data.json.userAcc[i].description.startsWith('Chips')){
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else if(data.json.userAcc[i].child_id) {
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }else{
+                            html += `<td>commission Settlement</td>`
+                          }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                            
                             if(data.json.userAcc[i].parent_id){
@@ -3608,7 +3695,7 @@ socket.on('connect', () => {
          let count1 = 11
          socket.on("Acc2", async(data) => {
             $('.skipid').attr('data-skipid',data.skipvalue)
-            console.log(data)
+            // console.log(data)
             if(data.json.status == "success" && data.user){
                 let html = "";
                 let html1 = "";
@@ -3650,6 +3737,41 @@ socket.on('connect', () => {
                     // console.log(abc)
                         html += `<tr style="text-align: center;">
                         <td class="text-nowrap" >${formattedTime}</td>`
+                        if(data.json.finalresult[i].gameId){
+                            if(data.json.finalresult[i].creditDebitamount > 0){
+                                html += `<td>Casino Bet  Settlement</td>`
+                            }else{
+                                html += `<td>Casino Bet Placement</td>`
+                            }
+                        }else if (data.json.finalresult[i].transactionId && data.json.finalresult[i].transactionId.length > 16 && data.json.finalresult[i]._id.marketId){
+                            html += `<td>Sport Book Bet Settlement</td>`
+                        }else if(data.json.finalresult[i]._id.marketId){
+                            if(data.json.finalresult[i].rollbackMarketId){
+                                html += `<td >Settle Bet Rollback</td>`
+                              }else if(data.json.finalresult[i].cacelMarketId){
+                                html += `<td >Settle Bet Void</td>`
+                                }else{
+                                  html += `<td >Bet Settlement</td>`
+                              }
+                        }else{
+                            if(data.json.finalresult[i].child_id){
+                                if(data.json.finalresult[i].description.startsWith('Chips')){
+                                    if(data.json.finalresult[i].creditDebitamount > 0){
+                                        html += `<td >Deposit</td>`
+                                    }else{
+                                        html += `<td >Withdraw</td>`
+                                    }
+                                }else{
+                                    if(data.json.finalresult[i].creditDebitamount > 0){
+                                        html += `<td >Settlement Deposit</td>`
+                                    }else{
+                                        html += `<td >Settlement Withdraw</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td >Commission Settlement</td>`
+                            }
+                        }
                         if(data.json.finalresult[i].transactionId){
                             if(data.json.finalresult[i].match){
                                 html += `<td>${data.json.finalresult[i].match}</td>`
@@ -4144,6 +4266,21 @@ socket.on('connect', () => {
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
                         <td class="text-nowrap" >${formattedTime}</td>`
+                        if(data.json.userAcc[i].description.startsWith('Chips')){
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else if(data.json.userAcc[i].child_id) {
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }else{
+                            html += `<td>commission Settlement</td>`
+                          }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
@@ -4194,6 +4331,21 @@ socket.on('connect', () => {
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td class="text-nowrap" >${formattedTime}</td>`
+                        if(data.json.userAcc[i].description.startsWith('Chips')){
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else if(data.json.userAcc[i].child_id) {
+                            if(data.json.userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }else{
+                            html += `<td>commission Settlement</td>`
+                          }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                            
                             if(data.json.userAcc[i].parent_id){
@@ -6317,9 +6469,15 @@ socket.on('connect', () => {
             // console.log(data)
             socket.emit('betMoniter',data)
         }
+
         $('.refresh').click(function(e){
            refreshBetMonitorPage()
         })
+
+        setInterval(()=>{
+            refreshBetMonitorPage()
+        }, 1000)
+
       
             
         let count = 11
@@ -7531,32 +7689,33 @@ socket.on('connect', () => {
             });
         });
 
-        if(document.getElementById('myIframe')){
-            let channelId = document.getElementById('myIframe').getAttribute('data-id');
-            // console.log(channelId, "channelIdchannelIdchannelId")
-            socket.emit('channelId', {channelId, search, LOGINDATA})
+        // if(document.getElementById('myIframe')){
+        //     let channelId = document.getElementById('myIframe').getAttribute('data-id');
+        //     // console.log(channelId, "channelIdchannelIdchannelId")
+        //     socket.emit('channelId', {channelId, search, LOGINDATA})
     
-            socket.on('channelId', data => {
-                console.log(data, "WORKING")
-                try{
-                    function xorEncrypt(input, key) {
-                        let output = '';
-                        for (let i = 0; i < input.length; i++) {
-                          output += String.fromCharCode(input.charCodeAt(i) ^ key);
-                        }
-                        return output;
-                      }
-                      const encryptionKey = 'JK';
-                      const encryptedUrl = xorEncrypt(data, encryptionKey);
-                      $(document).ready(function() {
-                        $('#myIframe').attr('src', encryptedUrl);
-                    });
+        //     socket.on('channelId', data => {
+        //         console.log(data, "WORKING")
+        //         try{
+        //             function xorEncrypt(input, key) {
+        //                 let output = '';
+        //                 for (let i = 0; i < input.length; i++) {
+        //                   output += String.fromCharCode(input.charCodeAt(i) ^ key);
+        //                 }
+        //                 return output;
+        //               }
+        //               const encryptionKey = 'JK';
+        //               const encryptedUrl = xorEncrypt(data, encryptionKey);
+
+        //               $(document).ready(function() {
+        //                 $('#myIframe').attr('src', encryptedUrl);
+        //             });
     
-                }catch(err){
-                    console.log(err)
-                }
-            })
-        }
+        //         }catch(err){
+        //             console.log(err)
+        //         }
+        //     })
+        // }
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
         //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
@@ -9062,7 +9221,7 @@ socket.on('connect', () => {
                 }
                 let eventId = urlParams.get('id');
                 socket.emit('checkDelay', {eventId, marketId})
-            if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
+            if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red') || this.classList.contains('goal_Blue') || this.classList.contains('goal_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
                 let secondPTag = $(this).closest("tr").next().find(".beton");
@@ -9070,7 +9229,7 @@ socket.on('connect', () => {
                 let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
                 let secId = this.id
                 let secId2;
-                if($(this).hasClass('match_odd_Blue')){
+                if($(this).hasClass('match_odd_Blue') || this.classList.contains('goal_Blue')){
                   secId2 = secId.slice(0,-1) + '1'
                   }else{
                   secId2 = secId.slice(0,-1) + '4'
@@ -9426,7 +9585,7 @@ socket.on('connect', () => {
                 let diffStake 
                 let plusMinus
             if($(this).closest('tr').hasClass('back-inplaymatch')){
-                if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue")){
+                if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue") || IdButton.hasClass("goal_Blue")){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -9578,7 +9737,7 @@ socket.on('connect', () => {
                     }
                 }
             }else{
-                if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red")){
+                if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red") || IdButton.hasClass('goal_Red')){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -9669,7 +9828,7 @@ socket.on('connect', () => {
                     );
                     let result = parseFloat(newStake)
                     diff = parseFloat(spanId)
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (diffStake * betValue) / 100
                     }else{
                         plusMinus = (diffStake * betValue) / 100
@@ -9756,7 +9915,7 @@ socket.on('connect', () => {
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
                       var result 
-                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
                       }else{
                         result = (parseFloat(spanId) * betValue) / 100
@@ -9796,7 +9955,7 @@ socket.on('connect', () => {
                 let element = $(this)
                 let staleDiff = 100
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         resultDiff = (staleDiff * Odds) - staleDiff;
                     }else{
@@ -9822,7 +9981,7 @@ socket.on('connect', () => {
                     result = NewStake
                     let resultDiff = 100
 
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                          
                     }else{
@@ -9888,7 +10047,7 @@ socket.on('connect', () => {
                 let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     let diff = 0
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         diff = (100 * Odds) - 100;
                     }else{
@@ -9912,7 +10071,7 @@ socket.on('connect', () => {
                 }else{
                     result = NewStake
                     let diff = 100
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                          
                     }else{
@@ -9959,67 +10118,146 @@ socket.on('connect', () => {
                 console.log('Previous value:', prevValue);
                 $(this).data('prevValue', $(this).val());
                 console.log('Current value:', $(this).val());
-                let oldValue = prevValue
-                let newValue = $(this).val()
-                if(oldValue > newValue){
-                    let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
-                    let IdButton = $(`#${buttonId}`)
-                    let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
-                    let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
-                    let NewStake = newValue
-                    $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
-                    let result
-                    let element = $(this)
-                    let staleDiff = Math.abs(oldValue - newValue)
-                    if($(this).closest('tr').hasClass('back-inplaymatch')){
-                        if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                if($(this).val() != 0){
+                    let oldValue = prevValue
+                    let newValue = $(this).val()
+                    if(oldValue > newValue){
+                        let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                        let IdButton = $(`#${buttonId}`)
+                        let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
+                        let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                        let NewStake = newValue
+                        $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
+                        let result
+                        let element = $(this)
+                        let staleDiff = Math.abs(oldValue - newValue)
+                        if($(this).closest('tr').hasClass('back-inplaymatch')){
+                            if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')|| IdButton.hasClass("goal_Blue") ){
+                                result = (NewStake * Odds) - NewStake;
+                                resultDiff = (staleDiff * Odds) - staleDiff;
+                            }else{
+                                var escapedId = buttonId.replace(/\./g, '\\.');
+                                let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                                if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                                    Odds = parseFloat(
+                                        $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                                      );
+                                }
+                                result = (NewStake * Odds) / 100
+                                resultDiff = (staleDiff * Odds) / 100
+                            }
+                            let data = {
+                                result : resultDiff,
+                                element,
+                                status:false,
+                                NewStake : staleDiff,
+                                check : NewStake
+                            }
+                            Onlyminus(data)
+                        }else{
+                            result = NewStake
+                            let resultDiff = Math.abs(oldValue - newValue)
+                            let staleDiff = Math.abs(oldValue - newValue)
+                            let plusMinus
+                            if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
+                                plusMinus = (staleDiff * Odds) - staleDiff;
+                                 
+                            }else{
+                                plusMinus = (staleDiff * Odds) / 100
+                            }
+                            let data = {
+                                result:resultDiff,
+                                element,
+                                status:true,
+                                NewStake :  Math.abs(oldValue - newValue),
+                                plusMinus,
+                                check:NewStake
+                            }
+                            Onlyminus(data)
+                        }
+                        if(!spanId){
+                            $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                            $(this)
+                            .closest("tr")
+                            .find(".c-gren")
+                            .text(0);
+                        }else if(NewStake < 0){
+                            $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                            $(this)
+                            .closest("tr")
+                            .find(".c-gren")
+                            .text(0);
+                        }
+                        else{
+                            console.log("result", result)
+                            $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                            $(this)
+                            .closest("tr")
+                            .find(".c-gren")
+                            .text(parseFloat(result).toFixed(2));
+                        }
+                    }else{
+                        let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                        let IdButton = $(`#${buttonId}`)
+                        let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
+                        let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                        let NewStake = newValue
+                        $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
+                        let result
+                        let element = $(this)
+                        let plusMinus = 0
+                        let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
+                        if($(this).closest('tr').hasClass('back-inplaymatch')){
+                        let diff = 0
+                        if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                             result = (NewStake * Odds) - NewStake;
-                            resultDiff = (staleDiff * Odds) - staleDiff;
+                            diff = (Math.abs(oldValue - newValue) * Odds) - Math.abs(oldValue - newValue);
                         }else{
                             var escapedId = buttonId.replace(/\./g, '\\.');
                             let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
                             if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
                                 Odds = parseFloat(
                                     $(this).closest("tr").find(".selection-name").text().split('@')[1]
-                                  );
+                                );
                             }
                             result = (NewStake * Odds) / 100
-                            resultDiff = (staleDiff * Odds) / 100
+                            diff = (Math.abs(oldValue - newValue) * Odds) / 100
                         }
+                        // console.log(Math.abs(oldValue - newValue))
                         let data = {
-                            result : resultDiff,
+                            result : diff,
                             element,
                             status:false,
-                            NewStake : staleDiff,
-                            check : NewStake
+                            NewStake :  Math.abs(oldValue - newValue)
                         }
-                        Onlyminus(data)
+                        console.log(data, "data")
+                        marketplusminus(data)
                     }else{
-                        result = NewStake
-                        let resultDiff = 100
-    
-                        if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
-                            plusMinus = (100 * Odds) - 100;
-                             
+                        result = Math.abs(oldValue - newValue)
+                        let diff =  Math.abs(oldValue - newValue)
+                        if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
+                            plusMinus = (diff * Odds) - diff;
+                            
                         }else{
-                            plusMinus = (100 * Odds) / 100
+                            plusMinus = (diff * Odds) / 100
                         }
                         let data = {
-                            result:resultDiff,
+                            result : diff ,
                             element,
                             status:true,
                             NewStake :  Math.abs(oldValue - newValue),
-                            plusMinus,
-                            check:NewStake
+                            plusMinus
                         }
-                        Onlyminus(data)
+                        marketplusminus(data)
                     }
+                    // console.log(result)
+    
                     if(!spanId){
-                        $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                        $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                         $(this)
                         .closest("tr")
                         .find(".c-gren")
-                        .text(0);
+                        .text(result.toFixed(2));
                     }else if(NewStake < 0){
                         $(this).closest("tr").find('.set-stake-form-input2').val(0)
                         $(this)
@@ -10028,88 +10266,16 @@ socket.on('connect', () => {
                         .text(0);
                     }
                     else{
-                        // console.log("WORKING")
+                        console.log(result)
                         $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                         $(this)
                         .closest("tr")
                         .find(".c-gren")
-                        .text(result.toFixed(2));
+                        .text(parseFloat(result).toFixed(2));
+                    }
                     }
                 }else{
-                    let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
-                    let IdButton = $(`#${buttonId}`)
-                    let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
-                    let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
-                    let NewStake = newValue
-                    $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
-                    let result
-                    let element = $(this)
-                    let plusMinus = 0
-                    let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
-                    if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    let diff = 0
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
-                        result = (NewStake * Odds) - NewStake;
-                        diff = (100 * Odds) - 100;
-                    }else{
-                        var escapedId = buttonId.replace(/\./g, '\\.');
-                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
-                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
-                            Odds = parseFloat(
-                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
-                            );
-                        }
-                        result = (NewStake * Odds) / 100
-                        diff = (100 * Odds) / 100
-                    }
-                    let data = {
-                        result : diff,
-                        element,
-                        status:false,
-                        NewStake :  Math.abs(oldValue - newValue)
-                    }
-                    marketplusminus(data)
-                }else{
-                    result = NewStake
-                    let diff =  Math.abs(oldValue - newValue)
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
-                        plusMinus = (100 * Odds) - 100;
-                        
-                    }else{
-                        plusMinus = (100 * Odds) / 100
-                    }
-                    let data = {
-                        result : diff ,
-                        element,
-                        status:true,
-                        NewStake :  Math.abs(oldValue - newValue),
-                        plusMinus
-                    }
-                    marketplusminus(data)
-                }
-                // console.log(result)
-
-                if(!spanId){
-                    $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
-                    $(this)
-                    .closest("tr")
-                    .find(".c-gren")
-                    .text(result.toFixed(2));
-                }else if(NewStake < 0){
-                    $(this).closest("tr").find('.set-stake-form-input2').val(0)
-                    $(this)
-                    .closest("tr")
-                    .find(".c-gren")
-                    .text(0);
-                }
-                else{
-                    // console.log("WORKING")
-                    $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
-                    $(this)
-                    .closest("tr")
-                    .find(".c-gren")
-                    .text(result.toFixed(2));
-                }
+                    marketIdbookDetails( false )
                 }
             })
           })
@@ -10403,6 +10569,7 @@ socket.on('connect', () => {
            
       })
         socket.on('marketIdbookDetails', data => {
+            console.log(data, "datadatadata")
             if(data && data.betsMarketIdWise && data.betsMarketIdWise.length != 0){
                 for(let i = 0; i < data.betsMarketIdWise.length; i++){
                     let team1Data
@@ -11117,6 +11284,43 @@ socket.on('connect', () => {
 
 
           })
+
+          $('.gameSearcch').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("gameSearcch")){
+
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("gameSearcch", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    // document.getElementById("button").innerHTML = ''
+                    $('.wrapper').addClass('hide')
+                }
+            }
+        })
+
+        socket.on('gameSearcch', data => {
+            $('.wrapper').show()
+            let html = ``
+            if(data.length != 0){
+                $('.wrapper').removeClass('hide')
+            }
+            if(LOGINDATA.LOGINUSER){
+                for(let i = 0; i < data.length; i++){
+                    // console.log(data)
+                    html += `<li><a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${data[i]._id}">${data[i].game_name}</a></li>`
+                }
+            }else{
+                for(let i = 0; i < data.length; i++){
+                    html += `<li><a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">${data[i].game_name}</a></li>`
+                }
+            }
+            // console.log(data)
+            document.getElementById('search').innerHTML = html
+        })
     }
 
 
@@ -11277,7 +11481,8 @@ socket.on('connect', () => {
 
         let count = 20;
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
-            console.log(data, "datadatadatadataewrre")
+            console.log(count)
+            // console.log(data, "datadatadatadataewrre")
             if(data.userAcc.length > 0){
                 $('.skipid').attr('data-skipid',data.skipvalue)
             // console.log(data.page)
@@ -11288,6 +11493,16 @@ socket.on('connect', () => {
             let userAcc = data.userAcc;
             let html = '';
             for(let i = 0; i < userAcc.length; i++){
+                var date = new Date(userAcc[i].date);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
                 if(userAcc[i].gameId){
                         html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-gameId="${userAcc[i].transactionId}" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].creditDebitamount > 0){
@@ -11295,6 +11510,7 @@ socket.on('connect', () => {
                     }else if(userAcc[i].creditDebitamount < 0 ){
                         html += `<td title="Transaction" class="transactiontype negative">Casino Bet Placement</td>`
                     }
+                    html += `<td title="Date">${formattedTime}</td>`
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
@@ -11317,12 +11533,13 @@ socket.on('connect', () => {
                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
                         html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" id="rowid-${i + 1 + count}">
                         <td title="Transaction">Sport Book Bet Settlement</td>`
-                  
+                        html += `<td title="Date">${formattedTime}</td>`
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
                         html += `<td title="Event">-</td>`
                     }
+                    
                     if(userAcc[i].marketName){
                         html += `<td title="Market Type">${userAcc[i].marketName}</td>`
                     }else{
@@ -11338,8 +11555,15 @@ socket.on('connect', () => {
                     html += `<td title="Closing Balance" >${userAcc[i].balance}</td>
                     <td title="Transaction ID">${userAcc[i].transactionId}</td>`
                 }else if(userAcc[i]._id.marketId){
-                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">
-                        <td title="Transaction">Bet Settlement</td>`
+                        html += `<tr class="acount-stat-tbl-body-tr rowtoggle_AccountStatment" data-marketid="${userAcc[i]._id.marketId}" id="rowid-${i + 1 + count}">`
+                        if(userAcc[i].rollbackMarketId){
+                            html += `<td title="Transaction">Settle Bet Rollback</td>`
+                        }else if(userAcc[i].cacelMarketId){
+                            html += `<td title="Transaction">Settle Bet Void</td>`
+                        }else{
+                            html += `<td title="Transaction">Bet Settlement</td>`
+                        }
+                        html += `<td title="Date">${formattedTime}</td>`
                     if(userAcc[i].match){
                         html += `<td title="Event">${userAcc[i].match}</td>`
                     }else{
@@ -11363,10 +11587,25 @@ socket.on('connect', () => {
                 }else if(!userAcc[i]._id.marketId && !userAcc[i].gameId && !userAcc[i].description.toLowerCase().startsWith('bet for')) {
                     html += `<tr class="acount-stat-tbl-body-tr" data-id="" id="rowid-${i + 1 + count}">`
                     if(userAcc[i].child_id){
-                        html += `<td title="Transaction">Settlement</td>`
+                        if(userAcc[i].description.startsWith('Chips')){
+                            if(userAcc[i].creditDebitamount > 0){
+                                html += `<td title="Transaction">Deposite</td>`
+                            }else{
+                                html += `<td title="Transaction">Withdraw</td>`
+                            }
+
+                        }else{
+                            if(userAcc[i].creditDebitamount > 0){
+                                html += `<td title="Transaction">Settlement Deposit</td>`
+                            }else{
+                                html += `<td title="Transaction">Settlement Withdraw</td>`
+                            }
+                        }
+
                     }else{
                         html += `<td title="Transaction">Commission Settlement</td>`
                     }
+                    html += `<td title="Date">${formattedTime}</td>`
                         html += `<td title="Event">-</td>`
                         html += `<td title="Market Type">-</td>`
                     if(userAcc[i].creditDebitamount > 0){
@@ -11386,8 +11625,9 @@ socket.on('connect', () => {
 
                     }
                 }
-                html += `<td></td></tr>`
+                html += `<td></td><td></td></tr>`
             }
+            count = count + 20
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
             }else{
@@ -11442,6 +11682,7 @@ socket.on('connect', () => {
                 for(let i = 0;i<data.bets.length;i++){
                     if(i == 0){
                         html += ` <tr class="addedaccountstatmentRowHeader-${data.rowid} addedasrowheader">
+                        <td>Date</td>
                     <td class="">Event</td>
                     <td>Mrket Type</td>
                     <td>Bet On</td>
@@ -11449,7 +11690,7 @@ socket.on('connect', () => {
                     <td>Stake</td>
                     <td>Status</td>
                     <td>Result</td>
-                    <td>Return</td>
+                    <td  >Return</td>
                 </tr>`
                     }
                     if(data.bets[i].bettype2 == 'BACK'){
@@ -11457,6 +11698,17 @@ socket.on('connect', () => {
                     }else{
                         html += ` <tr class="addedaccountstatmentRowbody-${data.rowid} addedasbody lay">`
                     }
+                    var date = new Date(data.bets[i].date);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
+                                    html += `<td>${formattedTime}</td>`
                     if(data.bets[i].marketId){
                         html += `<td>${data.bets[i].match}</td>
                         <td>${data.bets[i].marketName}</td>
@@ -11478,9 +11730,9 @@ socket.on('connect', () => {
                         html += `<td title="Result">-</td>`
                         }
                       if(data.bets[i].returns > 0){
-                        html += `<td title="Credit/Debit" class="c-gren">${data.bets[i].returns}</td>`
+                        html += `<td title="Credit/Debit" class="c-gren"  >${data.bets[i].returns}</td>`
                       }else{
-                        html += `<td title="Credit/Debit" class="c-reed">${data.bets[i].returns}</td>`
+                        html += `<td title="Credit/Debit" class="c-reed"  >${data.bets[i].returns}</td>`
                       }
 
                       
@@ -13707,7 +13959,7 @@ socket.on('connect', () => {
                 let plusMinus
                 console.log('WORKIGEOFHGHSD')
             if($(this).closest('tr').hasClass('back-inplaymatch')){
-                if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue")){
+                if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass("winner_Blue") || IdButton.hasClass("goal_Blue")){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -13858,7 +14110,7 @@ socket.on('connect', () => {
                     }
                 }
             }else{
-                if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red")){
+                if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass("winner_Red") || IdButton.hasClass('goal_Red')){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -13947,7 +14199,7 @@ socket.on('connect', () => {
                     );
                     let result = parseFloat(newStake)
                     diff = parseFloat(spanId)
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (diffStake * betValue) / 100
                     }else{
                         plusMinus = (diffStake * betValue) / 100
@@ -14032,7 +14284,7 @@ socket.on('connect', () => {
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
                       var result 
-                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
                       }else{
                         result = (parseFloat(spanId) * betValue) / 100
@@ -14071,7 +14323,7 @@ socket.on('connect', () => {
                 let element = $(this)
                 let staleDiff = 100
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         resultDiff = (staleDiff * Odds) - staleDiff;
                     }else{
@@ -14097,7 +14349,7 @@ socket.on('connect', () => {
                     result = NewStake
                     let resultDiff = 100
 
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                          
                     }else{
@@ -14178,7 +14430,7 @@ socket.on('connect', () => {
                 let oldResult = $(this).closest("tr").find('.set-stake-form-input2').val()
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     let diff = 0
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
                         result = (NewStake * Odds) - NewStake;
                         diff = (100 * Odds) - 100;
                     }else{
@@ -14202,7 +14454,7 @@ socket.on('connect', () => {
                 }else{
                     result = NewStake
                     let diff = 100
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Blue')){
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
                         plusMinus = (100 * Odds) - 100;
                          
                     }else{
@@ -15958,7 +16210,7 @@ socket.on('connect', () => {
                 let page = data.page
                 let bets = data.bets;
                 let html = '';
-                 for(let i = 0; i < bets.length; i++){
+                for(let i = 0; i < bets.length; i++){
                     var date = new Date(bets[i].date);
                     var options = { 
                         year: 'numeric',
@@ -16013,7 +16265,7 @@ socket.on('connect', () => {
                 }else{
                     $('.new-body').append(html)         
                 }
-               
+                $('.loadMoredive').attr('style', '')
             }else{
                 // console.log("working")
                 let html;
@@ -16026,7 +16278,7 @@ socket.on('connect', () => {
                     $('.new-body').html("")
                 }
                 $('.loadMoredive').hide()
-
+                
             }
           })
 
@@ -16147,7 +16399,7 @@ socket.on('connect', () => {
                 }
             }
             // console.log('elementId',modelId)
-            console.log(userid,'userid')
+            // console.log(userid,marketId, gameId)
             socket.emit("ElementID", {gameId,marketId,id,Fdate,Tdate,gametype,userid})
         })
 
@@ -16298,10 +16550,156 @@ socket.on('connect', () => {
             let html = '';
 
             if(data.userAcc.length > 0){
-                console.log(data.userAcc, "data.userAccdata.userAccdata.userAcc")
-            
-             for(let i = 0; i < userAcc.length; i++){
-                    var date = new Date(userAcc[i].date);
+                // console.log(userAcc, "data.userAccdata.userAccdata.userAcc")
+            if(data.userrole != 'user'){
+                for(let i = 0; i < userAcc.length; i++){
+                    let date = new Date(userAcc[i].date);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                      };
+                      var formattedTime = date.toLocaleString('en-US', options);
+                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
+                    // console.log(abc)
+                    if((i%2)==0){
+                        html += `<tr style="text-align: center;" class="blue" >
+                        <td class="text-nowrap" >${formattedTime}</td>`
+                        if(userAcc[i].description.startsWith('Chips')){
+                            if(userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else if(userAcc[i].child_id) {
+                            if(userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }else{
+                            html += `<td>commission Settlement</td>`
+                          }
+                        if(userAcc[i].creditDebitamount > 0){
+                            if(userAcc[i].parent_id){
+                                if(userAcc[i].parent_id.userName == userAcc[i].user_id.userName){
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>-/${userAcc[i].parent_id.userName}</td>`
+                                    }else{
+                                        html += `<td>${userAcc[i].child_id.userName}/${userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].child_id == null){
+                                        html += `${userAcc[i].parent_id.userName}/-`
+                                    }else{
+
+                                        html += `<td>${userAcc[i].parent_id.userName}/${userAcc[i].child_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += "<td>-</td>"
+                            }
+                        }else{
+                            if(userAcc[i].parent_id){
+                                if(userAcc[i].parent_id.userName == userAcc[i].user_id.userName){
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>${userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+
+                                        html += `<td>${userAcc[i].parent_id.userName}/${userAcc[i].child_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>-/${userAcc[i].parent_id.userName}</td>`
+                                    }else{
+
+                                        html += `<td>${userAcc[i].child_id.userName}/${userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td>-</td>`
+                            }
+                        }
+                        html += `<td>${(userAcc[i].balance - userAcc[i].creditDebitamount).toFixed(2)}</td>
+                        <td>${userAcc[i].creditDebitamount}</td><td>${userAcc[i].balance}</td>`
+                        if(userAcc[i].Remark){
+                            html += `<td>${userAcc[i].Remark}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
+                    }else{
+                        html += `<tr style="text-align: center;" >
+                        <td class="text-nowrap" >${formattedTime}</td>`
+                        if(userAcc[i].description.startsWith('Chips')){
+                            if(userAcc[i].creditDebitamount > 0){
+                              html += `<td >Deposit</td>`
+                            }else{
+                              html += `<td >Withdraw</td>`
+                            }
+                          }else if(userAcc[i].child_id) {
+                            if(userAcc[i].creditDebitamount > 0){
+                              html += `<td >Settlement Deposit</td>`
+                            }else{
+                              html += `<td >Settlement Withdraw</td>`
+                            }
+                          }else{
+                            html += `<td>commission Settlement</td>`
+                          }
+                        if(userAcc[i].creditDebitamount > 0){
+                           
+                            if(userAcc[i].parent_id){
+                                if(userAcc[i].parent_id.userName == userAcc[i].user_id.userName){
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>-/${userAcc[i].parent_id.userName}</td>`
+                                    }else{
+                                        html += `<td>${userAcc[i].child_id.userName}/${userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>${userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+                                        html += `<td>${userAcc[i].parent_id.userName}/${userAcc[i].child_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += "<td>-</td>"
+                            }
+                        }else{
+                            if(userAcc[i].parent_id){
+                                if(userAcc[i].parent_id.userName == userAcc[i].user_id.userName){
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>${userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+                                        html += `<td>${userAcc[i].parent_id.userName}/${userAcc[i].child_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].child_id == null){
+                                        html += `<td>-/${userAcc[i].parent_id.userName}</td>`
+                                    }else{
+
+                                        html += `<td>${userAcc[i].child_id.userName}/${userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td>-</td>`
+                            }
+                        }
+                        html += `<td>${(userAcc[i].balance - userAcc[i].creditDebitamount).toFixed(2)}</td>
+                        <td>${userAcc[i].creditDebitamount}</td><td>${userAcc[i].balance}</td>`
+                        if(userAcc[i].Remark){
+                            html += `<td>${userAcc[i].Remark}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
+                    }
+                }
+            }else{
+                console.log(userAcc, "userAccuserAcc")
+                for(let i = 0; i < userAcc.length; i++){
+                    let date = new Date(userAcc[i].date);
                     var options = { 
                         year: 'numeric',
                         month: 'long',
@@ -16311,52 +16709,93 @@ socket.on('connect', () => {
                         hour12: true
                     };
                     var formattedTime = date.toLocaleString('en-US', options);
-                   
-                    html += `<tr class="acount-stat-tbl-body-tr">`
-                    html += `<td class="date-time">${formattedTime}</td>`
-                    if(userAcc[i].transactionId){
-                        if(userAcc[i].match){
-                            html += `<td>${userAcc[i].match}</td>`
+                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
+                    // console.log(abc)
+                        html += `<tr style="text-align: center;">
+                        <td class="text-nowrap" >${formattedTime}</td>`
+                        if(userAcc[i].gameId){
+                            if(userAcc[i].creditDebitamount > 0){
+                                html += `<td>Casino Bet  Settlement</td>`
+                            }else{
+                                html += `<td>Casino Bet Placement</td>`
+                            }
+                        }else if (userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
+                            html += `<td>Sport Book Bet Settlement</td>`
+                        }else if(userAcc[i]._id.marketId){
+                            if(userAcc[i].rollbackMarketId){
+                                html += `<td >Settle Bet Rollback</td>`
+                              }else if(userAcc[i].cacelMarketId){
+                                html += `<td >Settle Bet Void</td>`
+                                }else{
+                                  html += `<td >Bet Settlement</td>`
+                              }
                         }else{
-                            html += `<td>-</td>`
+                            if(userAcc[i].child_id){
+                                if(userAcc[i].description.startsWith('Chips')){
+                                    if(userAcc[i].creditDebitamount > 0){
+                                        html += `<td >Deposit</td>`
+                                    }else{
+                                        html += `<td >Withdraw</td>`
+                                    }
+                                }else{
+                                    if(userAcc[i].creditDebitamount > 0){
+                                        html += `<td >Settlement Deposit</td>`
+                                    }else{
+                                        html += `<td >Settlement Withdraw</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td >Commission Settlement</td>`
+                            }
                         }
-                        if(userAcc[i].marketName){
-                            html += `<td>${userAcc[i].marketName}</td>`
+                        if(userAcc[i].transactionId){
+                            if(userAcc[i].match){
+                                html += `<td>${userAcc[i].match}</td>`
+                            }else{
+                                html += `<td>-</td>`
+                            }
+                            if(userAcc[i].marketName){
+                                html += `<td>${userAcc[i].marketName}</td>`
+                            }else{
+                                html += `<td>-</td>`
+                            }
                         }else{
-                            html += `<td>-</td>`
-                        }
-                    }else{
-                        html += `<td>-</td><td>-</td>`
+                            html += `<td>-</td><td>-</td>`
 
-                    }
-                    
-                    if(userAcc[i].creditDebitamount > 0){
-                        html += `<td>${userAcc[i].creditDebitamount}</td>
-                        <td>0</td>`
-                    }else{
-                        html += ` <td>0</td>
-                        <td>${userAcc[i].creditDebitamount}</td>`
-                    }
-                    if(userAcc[i].gameId){
-                        if(userAcc[i].creditDebitamount > 0){
-                            html += `<td>${userAcc[i].balance}</td>
-                            <td><a class="ownAccDetails positive" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
-                        }else{
-                            html += `<td>${userAcc[i].balance}</td>
-                            <td><a class="ownAccDetails negative" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
-
                         }
-                    }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
-                        html += `<td>${userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
-                    }else if (userAcc[i]._id.marketId){
-                        console.log('WORKINGGGGGG')
-                        html += `<td>${userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}"  style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
-                    }else{
-                        html += `<td>${userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" data-id="${userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
-                    }
+                        html += `<td class="c-gren">${userAcc[i].creditDebitamount}</td>`
+                        // if(userAcc[i].creditDebitamount > 0){
+                        //     <td>0</td>`
+                        // }else{
+                        //     html += `<td>0</td><td class="c-reed">${userAcc[i].creditDebitamount}</td>`
+                        // }
+                        if(userAcc[i].gameId){
+                            if(userAcc[i].creditDebitamount > 0){
+                                html += `<td>${userAcc[i].balance}</td>
+                                <td><a class="ownAccDetails positive" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                            }else{
+                                html += `<td>${userAcc[i].balance}</td>
+                                <td><a class="ownAccDetails negative" data-gameid="${userAcc[i].transactionId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+
+                            }
+                        }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i]._id.marketId){
+                            html += `<td>${userAcc[i].balance}</td>
+                            <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                        }else if( userAcc[i]._id.marketId){
+                            html += `<td>${userAcc[i].balance}</td>
+                            <td><a class="ownAccDetails" data-marketid="${userAcc[i]._id.marketId}" data-gameid="${userAcc[i]._id.eventId}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                        }
+                        else{
+                            if(userAcc[i].transactionId){
+
+                                html += `<td>${userAcc[i].balance}</td>
+                                <td><a class="ownAccDetails" data-id="${userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${userAcc[i].transactionId}&nbsp;</a></td>`
+                            }else{
+                                html += `<td>${userAcc[i].balance}</td>
+                                <td>-</td>`
+                            }
+                        }
+                }
             }
             if(data.page == 0){
                
@@ -16945,7 +17384,7 @@ socket.on('connect', () => {
                 }
                 html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
-                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM"){
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under"){
                     if(data.betdata.marketId.slice(-2).startsWith('OE')){
                         html += `<td>
                         <select class="selectOption" >
@@ -17109,7 +17548,7 @@ socket.on('connect', () => {
                   </thead>`}
                 html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
-                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM"){
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under"){
                     if(data.betdata.marketId.slice(-2).startsWith('OE')){
                         html += `<td>
                         <select class="selectOption" >
@@ -18630,8 +19069,8 @@ socket.on('connect', () => {
                     }else{
                         if(data.Bets[0].userName){ 
                             if(data.check){   
-                                let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                                let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                                let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                                 // let team3 = 
                                 let html = ''
                                 for(let i = 0; i < data.Bets.length; i++){
@@ -18765,8 +19204,8 @@ socket.on('connect', () => {
                                 let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
                                 $('#match_odd_Book').find(string).after(html)
                             }else{
-                                let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                                let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                                let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                                 let html = '';
                                 for(let i = 0; i < data.Bets.length; i++){
                                     // console.log(data.Bets[i].Bets[0])
@@ -18822,8 +19261,8 @@ socket.on('connect', () => {
                         }else{
                            if(data.check){
         
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                             let html = `<tr class="headDetail"><th>User name</th>
                             <th>${team1}</th>
                             <th>${team2}</th>
@@ -18949,8 +19388,8 @@ socket.on('connect', () => {
                             }
                             document.getElementById('match_odd_Book').innerHTML = html
                            }else{
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                             let html = `<tr class="headDetail"><th>User name</th>
                             <th>${team1}</th>
                             <th>${team2}</th></tr>`
@@ -19004,6 +19443,7 @@ socket.on('connect', () => {
             
             let ubcC = 1;
             socket.on('UerBook', async(data) => {
+                console.log(data, "datadata")
                 if(data.Bets.length > 0){
                     console.log(data, data.runn.length,"data.Bets[0].userNamedata.Bets[0].userNamedata.Bets[0].userName")
                     if(data.runn && data.runn.length > 3){
@@ -19083,8 +19523,8 @@ socket.on('connect', () => {
                     if(data.Bets[0].userName){ 
                         // console.log('working', data.check)
                         if(data.check){   
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let team1 = data.runn[0].runner.toLowerCase()
+                            let team2 = data.runn[1].runner.toLowerCase()
                             // let team3 = 
                             let html = ''
                             for(let i = 0; i < data.Bets.length; i++){
@@ -19219,8 +19659,8 @@ socket.on('connect', () => {
                             let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
                             $('#match_odd').find(string).after(html)
                         }else{
-                            let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                            let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                            let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                             let html = '';
                             for(let i = 0; i < data.Bets.length; i++){
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
@@ -19402,8 +19842,9 @@ socket.on('connect', () => {
                         }
                         document.getElementById('match_odd').innerHTML = html
                        }else{
-                        let team1 = data.matchName.split(' v ')[0].toLowerCase()
-                        let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                        console.log(data.runn)
+                        let team1 = data.runn[0].runner.toLowerCase()
+                        let team2 = data.runn[1].runner.toLowerCase()
                         let html = `<tr class="headDetail"><th>User name</th>
                         <th>${team1}</th>
                         <th>${team2}</th></tr>`
@@ -19417,7 +19858,7 @@ socket.on('connect', () => {
                             }
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                             let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                            // console.log(team1Data, team2Data, "team2Datateam2Data")
+                            console.log(team1Data, team2Data, "team2Datateam2Data")
                             if(team1Data){
                                 if (team1Data.winAmount > 0){
                                     html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`

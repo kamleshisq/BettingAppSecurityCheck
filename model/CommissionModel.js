@@ -18,6 +18,9 @@ const commission = mongoose.Schema({
         status:{
             type:Boolean,
             default:false
+        },
+        limit:{
+            type:Number
         }
     },
     Bookmaker:{
@@ -32,6 +35,9 @@ const commission = mongoose.Schema({
         status:{
             type:Boolean,
             default:false
+        },
+        limit:{
+            type:Number
         }
     },
     fency:{
@@ -46,6 +52,9 @@ const commission = mongoose.Schema({
         status:{
             type:Boolean,
             default:false
+        },
+        limit:{
+            type:Number
         }
     }
 })

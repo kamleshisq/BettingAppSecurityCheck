@@ -6,12 +6,12 @@
       <div class="new-head"> 
         <h3 class="main-heading">My Account Statement</h3>
         <div class="rowId" data-rowid="1"></div>
-        <!-- <form action="">
+        <form action="">
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
-            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+            <input type="text" id="searchUserSdm" onkeyup="myFunction()" list=text_editors class="form-control searchUsersdm" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
             <div class="wrapper">
               <ul id="search" class="users">
               </ul>
@@ -19,7 +19,7 @@
               </ul>
             </div>
           </div>
-        </form> -->
+        </form>
       </div>
       <%- include("../loginUserAdminsideDetails") %>
   </section>
@@ -64,6 +64,7 @@
             <thead>
               <tr>
                 <th>Date</th>
+                <th>Transaction</th>
                 <th>From / To</th>
                 <th>Opening Balance</th>
                 <th>Amount</th>
@@ -89,6 +90,21 @@
               <%if((i%2 == 0)){%>
               <tr>
                 <td class="text-nowrap" ><%=formattedTime%></td>
+                <%if(data[i].description.startsWith('Chips')){%>
+                  <%if(data[i].creditDebitamount > 0){%>
+                    <td >Deposit</td>
+                  <%}else{%>
+                    <td >Withdraw</td>
+                  <%}%>
+                <%}else if(data[i].child_id) {%>
+                  <%if(data[i].creditDebitamount > 0){%>
+                    <td >Settlement Deposit</td>
+                  <%}else{%>
+                    <td >Settlement Withdraw</td>
+                  <%}%>
+                <%}else{%>
+                  <td>commission Settlement</td>
+                <%}%>
                 <%if(data[i].creditDebitamount > 0){%>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
@@ -138,6 +154,21 @@
               <%}else{%>
               <tr>
                 <td class="text-nowrap" ><%=formattedTime%></td>
+                <%if(data[i].description.startsWith('Chips')){%>
+                  <%if(data[i].creditDebitamount > 0){%>
+                    <td >Deposit</td>
+                  <%}else{%>
+                    <td >Withdraw</td>
+                  <%}%>
+                <%}else if(data[i].child_id) {%>
+                  <%if(data[i].creditDebitamount > 0){%>
+                    <td >Settlement Deposit</td>
+                  <%}else{%>
+                    <td >Settlement Withdraw</td>
+                  <%}%>
+                <%}else{%>
+                  <td>commission Settlement</td>
+                <%}%>
                 <%if(data[i].creditDebitamount > 0){%>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>

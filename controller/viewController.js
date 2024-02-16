@@ -58,6 +58,7 @@ const footerInfoModel = require('../model/footerInfoModel');
 const { consoleBodyAndURL } = require('./walletController');
 const socialinfomodel = require('../model/socialMediaLinks');
 const findvisible = require('../utils/findvisible');
+const { ObjectId } = require('mongodb');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -589,157 +590,267 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         ])
     }
 
+    let skipvalue
     let finalresult = []
-    let marketidarray = [];
-    let userAccflage = true
-    var today = new Date();
-    var todayFormatted = formatDate(today);
-    var tomorrow = new Date();
-    tomorrow.setDate(today.getDate() - 7);
-    var tomorrowFormatted = formatDate(tomorrow);
-    function formatDate(date) {
-        var year = date.getFullYear();
-        var month = (date.getMonth() + 1).toString().padStart(2, '0');
-        var day = date.getDate().toString().padStart(2, '0');
-        return year + "-" + month + "-" + day;
-    }
-    async function getmarketwiseaccdata (limit,skip){
-        console.log(limit, "limitlimitlimitlimitlimitlimitlimitlimit")
-        console.log('in getmarketwiseaccdata function')
-         let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
-         let c = 0
-         if(userAcc.length == 0){
-            userAccflage = false
-         }
-         if(userAccflage){
-             for(let i = 0;i<userAcc.length;i++){
-                c++
-                 if(userAcc[i].gameId){
-                    
-                    finalresult.push(userAcc[i])
-                    if(finalresult.length >= 10){
-                            break
-                    }
-
-                 }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
-                    if(marketidarray.includes(userAcc[i].marketId)){
-                        continue;
-                    }
-                     let bet = await betModel.aggregate([
-                         {
-                             $match:{
-                                 userId:req.query.id.toString(),
-                                 eventId:{$exists:'eventId'},
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                                 closingBalance:{$exists:true}
-
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                             $group:{
-                                 _id:{
-                                     eventId:"$eventId",
-                                     marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-                                 },
-                                 match:{$first:'$match'},
-                                 marketName:{$first:'$marketName'},
-                                 stake:{$first:'$Stake'},
-                                 creditDebitamount:{$sum:'$returns'},
-                                 balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$transactionId'},
-                                 date:{ $max: "$settleDate" }
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                            $limit:(10 - finalresult.length)
-                         }
-                     ])
-
-                     console.log('inuseracc sport book',bet)
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                         marketidarray.push(bet[0]._id.marketId)
-                         finalresult = finalresult.concat(bet)
-                         if(finalresult.length >= 10){
-                             break
-                         }
-                     }
-                 }else if(userAcc[i].marketId){
-                    if(marketidarray.includes(userAcc[i].marketId)){
-                        continue;
-                    }
-                     let bet = await betModel.aggregate([
-                         {
-                             $match:{
-                                 userId:req.query.id.toString(),
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                                 closingBalance:{$exists:true}
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                             $group:{
-                                 _id:{
-                                     eventId:"$eventId",
-                                     marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
-                                 },
-                                 match:{$first:'$match'},
-                                 marketName:{$first:'$marketName'},
-                                 stake:{$first:'$Stake'},
-                                 creditDebitamount:{$sum:'$returns'},
-                                 balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$transactionId'},
-                                 date:{ $max: "$settleDate" }
-                             }
-                         },
-                         {
-                            $sort:{settleDate:-1}
-                         },
-                         {
-                            $limit:(10 - finalresult.length)
-                         }
-                     ])
-                     console.log('inuseracc marketid',bet)
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                         marketidarray.push(bet[0]._id.marketId)
-                         finalresult = finalresult.concat(bet)
-                         if(finalresult.length >= 10){
-                             break
-                         }
-                     }
-                 }else{
-                     finalresult.push(userAcc[i])
-                     if(finalresult.length >= 10){
-                             break
-                     }
-                 }
-                 
-             }
-         }
-        return c
-    }
-    let j = 0
-    let skipvalue = 0;
-    while(finalresult.length < 10){
-        skip = j * limit
-        let result = await getmarketwiseaccdata(limit,skip)
-        skipvalue = skipvalue + result
-        console.log(skipvalue,j,'skipvalue')
-        console.log(finalresult.length,'finalresult.length')
-        if(!userAccflage){
-            break
+    if(userDetails.roleName === "user"){
+        let marketidarray = [];
+        let CancelArray = [];
+        let rollBackMarketIDArray = [];
+        let userAccflage = true
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
         }
-        j++
+        async function getmarketwiseaccdata (limit,skip){
+            let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},$or:[{marketId:{$exists:true}},{gameId:{$exists:true}},{child_id:{$exists:true}}, {user_id:{$exists:true}}]}).sort({date: -1}).skip(skip).limit(limit)
+            let c = 0
+            if(userAcc.length == 0){
+               userAccflage = false
+            }
+            if(userAccflage){
+                for(let i = 0;i<userAcc.length;i++){
+                   c++
+                    if(userAcc[i].gameId){
+                       finalresult.push(userAcc[i])
+                       if(finalresult.length >= 10){
+                               break
+                       }
+                    }else if(userAcc[i].transactionId && userAcc[i].transactionId.length > 16 && userAcc[i].marketId){
+                       if(marketidarray.includes(userAcc[i].marketId)){
+                           continue;
+                       }
+                        let bet = await betModel.aggregate([
+                            {
+                                $match:{
+                                    userId:req.query.id.toString(),
+                                    eventId:{$exists:'eventId'},
+                                    $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                    closingBalance:{$exists:true}
+   
+                                }
+                            },
+                            {
+                               $sort:{settleDate:-1}
+                            },
+                            {
+                                $group:{
+                                    _id:{
+                                        eventId:"$eventId",
+                                        marketId:"$marketId",
+                                        date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                    },
+                                    match:{$first:'$match'},
+                                    marketName:{$first:'$marketName'},
+                                    stake:{$first:'$Stake'},
+                                    creditDebitamount:{$sum:'$returns'},
+                                    balance:{$first:'$closingBalance'},
+                                    transactionId:{$first:'$transactionId'}
+                                }
+                            },
+                            {
+                               $sort:{settleDate:-1}
+                            },
+                            {
+                               $limit:(10 - finalresult.length)
+                            }
+                        ])
+                        if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
+                            marketidarray.push(bet[0]._id.marketId)
+                            finalresult = finalresult.concat(bet)
+                            if(finalresult.length >= 10){
+                                break
+                            }
+                        }
+                    }else if(userAcc[i].marketId){
+                       if(marketidarray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                           continue;
+                       }
+                        let bet = await accountStatement.aggregate([
+                            {
+                                $match:{
+                                   user_id:new ObjectId(req.query.id.toString()),
+                                    $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                    balance:{$exists:true}
+                                }
+                            },
+                            {
+                               $sort:{date:-1}
+                            },
+                            {
+                                $group:{
+                                    _id:{
+                                        uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                        eventId:"$eventId",
+                                        marketId:"$marketId",
+                                       //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} },
+                                    },
+                                    match:{$first:'$event'},
+                                    marketName:{$first:'$marketType'},
+                                   //  stake:{$first:'$Stake'},
+                                    creditDebitamount:{$sum:'$creditDebitamount'},
+                                    balance:{$first:'$balance'},
+                                    transactionId:{$first:'$transactionId'},
+                                    date:{$first:'$date'},
+                                }
+                            },
+                            {
+                               $sort:{date:-1}
+                            },
+                            {
+                               $limit:(10 - finalresult.length)
+                            }
+                        ])
+                        if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                            marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                            finalresult = finalresult.concat(bet)
+                            if(finalresult.length >= 10){
+                                break
+                            }
+                        }
+                    }else if(userAcc[i].rollbackMarketId){
+                       if(rollBackMarketIDArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                           continue;
+                       }
+                        let bet = await accountStatement.aggregate([
+                            {
+                                $match:{
+                                   user_id:new ObjectId(req.query.id.toString()),
+                                    $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                    balance:{$exists:true}
+                                }
+                            },
+                            {
+                               $sort:{date:-1}
+                            },
+                            {
+                                $group:{
+                                    _id:{
+                                       uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                        eventId:"$eventId",
+                                        marketId:"$rollbackMarketId",
+                                       //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                    },
+                                    match:{$first:'$event'},
+                                    marketName:{$first:'$marketType'},
+                                   //  stake:{$first:'$Stake'},
+                                    creditDebitamount:{$sum:'$creditDebitamount'},
+                                    balance:{$first:'$balance'},
+                                    transactionId:{$first:'$transactionId'},
+                                    rollbackMarketId:{$first:'$rollbackMarketId'},
+                                    date:{$first:'$date'},
+                                }
+                            },
+                            {
+                               $sort:{date:-1}
+                            },
+                            {
+                               $limit:(10 - finalresult.length)
+                            }
+                        ])
+                        if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                            rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                            finalresult = finalresult.concat(bet)
+                            if(finalresult.length >= 10){
+                                break
+                            }
+                        }
+                    }else if(userAcc[i].cacelMarketId){
+                       if(CancelArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                           continue;
+                       }
+                        let bet = await accountStatement.aggregate([
+                            {
+                                $match:{
+                                   user_id:new ObjectId(req.query.id.toString()),
+                                    $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                    balance:{$exists:true}
+                                }
+                            },
+                            {
+                               $sort:{date:-1}
+                            },
+                            {
+                                $group:{
+                                    _id:{
+                                       uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                        eventId:"$eventId",
+                                        marketId:"$cacelMarketId",
+                                       //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                    },
+                                    match:{$first:'$event'},
+                                    marketName:{$first:'$marketType'},
+                                   //  stake:{$first:'$Stake'},
+                                    creditDebitamount:{$sum:'$creditDebitamount'},
+                                    balance:{$first:'$balance'},
+                                    transactionId:{$first:'$transactionId'},
+                                    cacelMarketId:{$first:'$cacelMarketId'},
+                                    date:{$first:'$date'},
+                                }
+                            },
+                            {
+                               $sort:{date:-1}
+                            },
+                            {
+                               $limit:(10 - finalresult.length)
+                            }
+                        ])
+                        if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                            CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                            finalresult = finalresult.concat(bet)
+                            if(finalresult.length >= 10){
+                                break
+                            }
+                        }
+                    }
+                    else{
+                        finalresult.push(userAcc[i])
+                        if(finalresult.length >= 10){
+                                break
+                        }
+                    }
+                    
+                }
+            }
+           return c
+       }
+        let j = 0
+        skipvalue = 0;
+        while(finalresult.length < 10){
+            skip = j * limit
+            let result = await getmarketwiseaccdata(limit,skip)
+            skipvalue = skipvalue + result
+            console.log(skipvalue,j,'skipvalue')
+            console.log(finalresult.length,'finalresult.length')
+            if(!userAccflage){
+                break
+            }
+            j++
+        }
+    }else{
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+        let userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}).sort({date: -1}).skip(skip).limit(limit)
+        finalresult = userAcc
+        skipvalue = limit
     }
+
+
     let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).limit(limit)
     // console.log(bets)
     // console.log(betsDetails)
@@ -1055,6 +1166,30 @@ exports.edit = catchAsync(async(req, res, next) => {
     })
 })
 
+exports.liveMarketStream = catchAsync(async(req, res, next) => {
+    let fullUrl = "https://dapi.fstlive.video/api/ChannelMaster/getActiveChannelMasters";
+    fetch(fullUrl, {
+        method: 'POST'
+    })
+    .then(res =>res.json())
+    .then(result => {
+        console.log(result)
+        res.status(200).json({
+            result
+        })
+    })
+})
+
+exports.getscoreiframe = catchAsync(async(req, res, next) => {
+    if(req.query.eventId && req.query.sport){
+        res.status(200).render('./iframeScore', {
+            id : req.query.eventId,
+            sport : req.query.sport
+        })
+    }
+})
+
+
 exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // let id = req.originalUrl.split("=")[1]
     let userLog
@@ -1071,6 +1206,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
    
     let finalresult = []
     let marketidarray = [];
+    let rollBackMarketIDArray = [];
+    let  CancelArray = [];
     let userAccflage = true
     var today = new Date(new Date().getTime() + ((24 * 60 * 60 * 1000)-1));
     var todayFormatted = formatDate(today);
@@ -1155,50 +1292,147 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
                          }
                      }
                  }else if(userAcc[i].marketId){
-                    if(marketidarray.includes(userAcc[i].marketId)){
+                    if(marketidarray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
                         continue;
                     }
-                     let bet = await betModel.aggregate([
+                     let bet = await accountStatement.aggregate([
                          {
                              $match:{
-                                 userId:req.currentUser._id.toString(),
-                                 $and:[{marketId:{$exists:true}},{marketId:userAcc[i].marketId},{settleDate:{$exists:true}},{settleDate:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
-                                 closingBalance:{$exists:true}
+                                user_id:new ObjectId(req.currentUser._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 balance:{$exists:true}
                              }
                          },
                          {
-                            $sort:{settleDate:-1}
+                            $sort:{date:-1}
                          },
                          {
                              $group:{
                                  _id:{
+                                     uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
                                      eventId:"$eventId",
                                      marketId:"$marketId",
-                                     date:{ $dateToString: { format: "%d-%m-%Y", date: "$settleDate"} }
+                                    //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} },
                                  },
-                                 match:{$first:'$match'},
-                                 marketName:{$first:'$marketName'},
-                                 stake:{$first:'$Stake'},
-                                 creditDebitamount:{$sum:'$returns'},
-                                 balance:{$first:'$closingBalance'},
-                                 transactionId:{$first:'$transactionId'}
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'},
+                                 date:{$first:'$date'},
                              }
                          },
                          {
-                            $sort:{settleDate:-1}
+                            $sort:{date:-1}
                          },
                          {
                             $limit:(20 - finalresult.length)
                          }
                      ])
-                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.marketId)){
-                         marketidarray.push(bet[0]._id.marketId)
+                     if(bet.length !== 0 && !marketidarray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         marketidarray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
                          finalresult = finalresult.concat(bet)
                          if(finalresult.length >= 20){
                              break
                          }
                      }
-                 }else{
+                 }else if(userAcc[i].rollbackMarketId){
+                    if(rollBackMarketIDArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                        continue;
+                    }
+                     let bet = await accountStatement.aggregate([
+                         {
+                             $match:{
+                                user_id:new ObjectId(req.currentUser._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 balance:{$exists:true}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                     eventId:"$eventId",
+                                     marketId:"$rollbackMarketId",
+                                    //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'},
+                                 rollbackMarketId:{$first:'$rollbackMarketId'},
+                                 date:{$first:'$date'},
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     if(bet.length !== 0 && !rollBackMarketIDArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         rollBackMarketIDArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }else if(userAcc[i].cacelMarketId){
+                    if(CancelArray.includes(userAcc[i].uniqueTransectionIDbyMARKETID)){
+                        continue;
+                    }
+                     let bet = await accountStatement.aggregate([
+                         {
+                             $match:{
+                                user_id:new ObjectId(req.currentUser._id.toString()),
+                                 $and:[{uniqueTransectionIDbyMARKETID:{$exists:true}},{uniqueTransectionIDbyMARKETID:userAcc[i].uniqueTransectionIDbyMARKETID},{date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                                 balance:{$exists:true}
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                             $group:{
+                                 _id:{
+                                    uniqueTransectionIDbyMARKETID:'$uniqueTransectionIDbyMARKETID',
+                                     eventId:"$eventId",
+                                     marketId:"$cacelMarketId",
+                                    //  date:{ $dateToString: { format: "%d-%m-%Y", date: "$date"} }
+                                 },
+                                 match:{$first:'$event'},
+                                 marketName:{$first:'$marketType'},
+                                //  stake:{$first:'$Stake'},
+                                 creditDebitamount:{$sum:'$creditDebitamount'},
+                                 balance:{$first:'$balance'},
+                                 transactionId:{$first:'$transactionId'},
+                                 cacelMarketId:{$first:'$cacelMarketId'},
+                                 date:{$first:'$date'},
+                             }
+                         },
+                         {
+                            $sort:{date:-1}
+                         },
+                         {
+                            $limit:(20 - finalresult.length)
+                         }
+                     ])
+                     if(bet.length !== 0 && !CancelArray.includes(bet[0]._id.uniqueTransectionIDbyMARKETID)){
+                         CancelArray.push(bet[0]._id.uniqueTransectionIDbyMARKETID)
+                         finalresult = finalresult.concat(bet)
+                         if(finalresult.length >= 20){
+                             break
+                         }
+                     }
+                 }
+                 else{
                      finalresult.push(userAcc[i])
                      if(finalresult.length >= 20){
                              break
@@ -1220,7 +1454,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         }
         j++
     }
-    console.log(finalresult,'finalresul')
+    console.log(finalresult,'finalresul', skipvalue)
     // skipvalue = 0
         res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
@@ -2794,7 +3028,8 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let marketids = ["1.224640116"];
+	
+    let marketids = ["1.224469353"];
     // console.log(body)
     var fullUrl = 'http://127.0.0.1:8883/api/v1/getmarketdata';
     fetch(fullUrl, {
@@ -2812,6 +3047,46 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
             result
         })
     })
+
+
+
+/*
+        let marketIds = ["1.224469353"];//await getmarketIds()
+        let body = JSON.stringify(marketIds)
+        // console.log(marketIds,'marketIds')
+        
+            console.log('market odds cron')
+            try{
+                var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
+                    fetch(fullUrl, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'accept': 'application/json'
+                            },
+                        body 
+                    })
+                    .then(res =>res.json())
+                    .then(async(result) => {
+                        let date = new Date()
+                        let data = JSON.stringify(result)
+						
+                        console.log(data,'Data')
+						 res.status(200).json({ data  })
+                        //await client.set(key, data)
+                        // await client.disconnect();
+                        //await marketodds.create({data,date})
+                    })
+            }catch(err){
+                console.log(err, "errr")
+            }
+        */
+
+
+        
+    
+
+
 });
 
 
@@ -3032,14 +3307,15 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-    let pages = await pagesModel.find({whiteLabelName:whiteLabel})
-    let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabel}).sort({num:1})
-    let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
-    let banner = await bannerModel.find({whiteLabelName:whiteLabel})
-    let sliders = await sliderModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
+    let whiteLabelChk = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabelChk})
+    let pages = await pagesModel.find({whiteLabelName:whiteLabelChk})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabelChk}).sort({num:1})
+    let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabelChk}).sort({Number:1})
+    let banner = await bannerModel.find({whiteLabelName:whiteLabelChk})
+    let sliders = await sliderModel.find({whiteLabelName:whiteLabelChk}).sort({Number:1})
+	let WhiteLabel = await whiteLabel.find()
     res.status(200).render("./Cms/cms",{
         title:"Home Page Management",
         user,
@@ -3051,7 +3327,8 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
         pages,
         sliders,
         basicDetails,
-        colorCode
+        colorCode,
+		WhiteLabel
     })
 });
 
@@ -3345,11 +3622,11 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.cardsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel, category:{$regex: /slot/i}});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -4024,11 +4301,12 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.royalGamingPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    const data = await promotionModel.find();
-    let games = await gameModel.find({provider_name:"RG",whiteLabelName:whiteLabel});
+    const data = await promotionModel.find({whiteLabelName:whiteLabel});
+    console.log(data, "datadata")
+    let games = await gameModel.find({provider_name:"RG",whiteLabelName:whiteLabel, status:true});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -4048,14 +4326,43 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 });
 
 
+exports.IndianCasino = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let whiteLabel = whiteLabelcheck(req)
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    const data = await promotionModel.find();
+    let games = await gameModel.find({ game_name: { $regex: /india/i }, status:true, whiteLabelName: whiteLabel});
+    // console.log(games)
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
+    res.status(200).render("./userSideEjs/IndianCasino/main",{
+        title:'Royal Games',
+        user,
+        verticalMenus,
+        data,
+        check:"Royal Casino",
+        games,
+        userLog,
+        notifications:req.notifications,
+        basicDetails,
+        colorCode
+    })
+});
+
+
 exports.virtualsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
-    const data = await promotionModel.find();
-    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
+    const data = await promotionModel.find({whiteLabelName:whiteLabel});
+
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel, category:{$regex: /Virtual/i}});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -4078,9 +4385,9 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 exports.OthersGames = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
     if(user){
@@ -4103,11 +4410,11 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel});
+    let games = await gameModel.find({status:true,whiteLabelName:whiteLabel, game_name:{$regex: /Lobby/i}});
     // console.log(games.length, "qwsdfghjkkkkkkkkkkk")
     let userLog
     let gamesFe = []

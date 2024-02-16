@@ -25,6 +25,8 @@ router.get("/htmlDATA", viewController.getHTMLSCOREIFRm);
 router.get('/liveMarkets', viewController.liveAllMarkets)
 router.get('/liveAllMarkets2', viewController.liveAllMarkets2)
 router.post('/getFancyBookDATA', viewController.getFancyBookDATA)
+router.get('/liveMarketStream', viewController.liveMarketStream)
+router.get('/getscoreiframe', viewController.getscoreiframe)
 
 // Admin Panal 
 
@@ -115,6 +117,7 @@ router.get('/exchange/inPlay', authController.isLogin, notificationController.my
 router.get("/allCards", authController.isLogin, notificationController.myNotifications ,viewController.cardsPage);
 router.get("/slots", authController.isLogin, notificationController.myNotifications ,viewController.cardsPage);
 router.get("/Royal_casino", authController.isLogin, notificationController.myNotifications ,viewController.royalGamingPage);
+router.get("/indian_casino", authController.isLogin, notificationController.myNotifications ,viewController.IndianCasino);
 router.get("/virtuals", authController.isLogin, notificationController.myNotifications ,viewController.virtualsPage);
 router.get("/OtherGames", authController.isLogin, notificationController.myNotifications ,viewController.OthersGames);
 router.get("/cards", authController.isProtected_User, notificationController.myNotifications ,viewController.getCardInplayGame);
