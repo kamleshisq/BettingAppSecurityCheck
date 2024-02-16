@@ -18,6 +18,8 @@ const globalSettingModel = require('../model/globalSetting')
 const footerInfomodel =  require('../model/footerInfoModel')
 const socialInfoModel = require('../model/socialMediaLinks');
 const bycrypt = require('bcrypt');
+const fs = require("fs"); 
+const path = "/var/www/LiveBettingApp/"; 
 
 exports.isOperator = catchAsync(async(req, res, next) => {
 
@@ -50,8 +52,27 @@ exports.createUser = catchAsync(async(req, res, next)=>{
             }
             await whiteLabel.create(data)
         }else{
-            await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
+            await whiteLabel.create({whiteLabelName:req.body.whiteLabel,whitelabelpath:req.body.whiteLabel})
         }
+		var Newpath=path+req.body.whiteLabel;
+			fs.access(Newpath, (error) => {    
+			  // To check if the given directory  
+			  // already exists or not 
+			  if (error) { 
+				// If current directory does not exist 
+				// then create it 
+				fs.mkdir(Newpath, (error) => { 
+				  if (error) { 
+					console.log(error); 
+				  } else { 
+					console.log("New Directory created successfully !!"); 
+				  } 
+				}); 
+			  } else { 
+				console.log("Given Directory already exists !!"); 
+			  } 
+			}); 
+			
             let banners = await Benners.find({whiteLabelName:"1"})
             let promosions = await Promossion.find({whiteLabelName:"1"})
             let pages = await PageModel.find({whiteLabelName:"1"})

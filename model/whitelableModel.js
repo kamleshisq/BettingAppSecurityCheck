@@ -10,6 +10,9 @@ const whiteLabelSchema = mongoose.Schema({
     B2C_Status:{
         type:Boolean,
         default:false
+    },
+	 whitelabelpath:{
+        type:String
     }
 })
 
