@@ -5087,26 +5087,26 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateCommission", async(data) => {
-        // console.log(data)
-        try{
-            let newValues = {
-                matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
-                Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus},
-                fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus}
-            }
-            let newdata
-            if(!await commissionModel.findOne({userId:data.data.id})){
-                newValues.userId = data.data.id
-                newdata = await commissionModel.create(newValues)
-            }else{
+        console.log(data, "DATAAAAA")
+        // try{
+        //     let newValues = {
+        //         matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
+        //         Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus},
+        //         fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus}
+        //     }
+        //     let newdata
+        //     if(!await commissionModel.findOne({userId:data.data.id})){
+        //         newValues.userId = data.data.id
+        //         newdata = await commissionModel.create(newValues)
+        //     }else{
 
-                newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
-            }
+        //         newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
+        //     }
 
-        socket.emit("updateCommission",{newdata, status:"success"})
-        }catch(err){
-            socket.emit("updateCommission",{message:"err", status:"error"})
-        }
+        // socket.emit("updateCommission",{newdata, status:"success"})
+        // }catch(err){
+        //     socket.emit("updateCommission",{message:"err", status:"error"})
+        // }
     })
 
     socket.on("CommissionRReport", async(data) => {
