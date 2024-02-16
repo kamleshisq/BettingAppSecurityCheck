@@ -3315,6 +3315,7 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
     let banner = await bannerModel.find({whiteLabelName:whiteLabel})
     let sliders = await sliderModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
+	var WhiteLabel = await whiteLabel.find()
     res.status(200).render("./Cms/cms",{
         title:"Home Page Management",
         user,
@@ -3326,7 +3327,8 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
         pages,
         sliders,
         basicDetails,
-        colorCode
+        colorCode,
+		WhiteLabel
     })
 });
 
