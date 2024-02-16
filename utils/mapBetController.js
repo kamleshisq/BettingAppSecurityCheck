@@ -256,9 +256,9 @@ async function mapBet(data){
                                         betId:bets[bet].id
                                     }
                                     let commissionData = await newCommissionModel.create(commissiondata)
-                                    uplinePlCOMMIDDDION = parseFloat(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
                                 }
                             }
+                            uplinePlCOMMIDDDION = parseFloat(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
                         }
                     }catch(err){
                         console.log(err)
@@ -528,9 +528,9 @@ async function mapBet(data){
                                         betId:bets[bet].id
                                     }
                                     let commissionData = await newCommissionModel.create(commissiondata)
-                                    uplinePlCOMMIDDDION = parseFloat(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
                                 }
                             }
+                            uplinePlCOMMIDDDION = parseFloat(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
                         }                          
                       }catch(err){
                           console.log(err)
@@ -631,8 +631,8 @@ async function mapBet(data){
                                     }
                                     let commissionData = await newCommissionModel.create(commissiondata)
                                 }
-                                uplinePlCOMMIDDDION = parseFloat(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
                             }
+                            uplinePlCOMMIDDDION = parseFloat(uplinePlCOMMIDDDION) +  Math.abs(parentUser2Amount)
                         }
                     }catch(err){
                         console.log(err)
