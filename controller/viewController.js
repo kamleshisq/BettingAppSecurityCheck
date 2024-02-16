@@ -3307,14 +3307,14 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-    let pages = await pagesModel.find({whiteLabelName:whiteLabel})
-    let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabel}).sort({num:1})
-    let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
-    let banner = await bannerModel.find({whiteLabelName:whiteLabel})
-    let sliders = await sliderModel.find({whiteLabelName:whiteLabel}).sort({Number:1})
+    let whiteLabelChk = whiteLabelcheck(req)
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabelChk})
+    let pages = await pagesModel.find({whiteLabelName:whiteLabelChk})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabelChk}).sort({num:1})
+    let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabelChk}).sort({Number:1})
+    let banner = await bannerModel.find({whiteLabelName:whiteLabelChk})
+    let sliders = await sliderModel.find({whiteLabelName:whiteLabelChk}).sort({Number:1})
 	let WhiteLabel = await whiteLabel.find()
     res.status(200).render("./Cms/cms",{
         title:"Home Page Management",
