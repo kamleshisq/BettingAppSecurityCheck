@@ -1854,7 +1854,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('betMoniter',async(data)=>{
-        console.log(data.filterData)
+        // console.log(data.filterData)
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
