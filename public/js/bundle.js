@@ -56478,6 +56478,12 @@ if (pathname.startsWith('/admin') || pathname.startsWith('/resetPassword')) {
   var urlParams = new URLSearchParams(window.location.search);
   sessionTokenADMIN = urlParams.get('sessiontoken');
 }
+if (document.getElementById('myIframe')) {
+  var channelId = document.getElementById('myIframe').getAttribute('data-id');
+  var _urlParams = new URLSearchParams(window.location.search);
+  eventId = _urlParams.get('id');
+  console.log(channelId, eventId);
+}
 $(document).on('click', '.passcodemsgbox', function (e) {
   console.log('hewr');
   function copyElementTextToClipboard(elementId) {
