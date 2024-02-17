@@ -24093,10 +24093,14 @@ socket.on('connect', () => {
 		
 		$(document).on("change", "#whiteLabel", function(e){
 			e.preventDefault();
-			var pathname = window.location.pathname; // Returns path only (/path/example.html)
-			var url      = window.location.href;     // Returns full URL (https://example.com/path/example.html)
-			var origin   = window.location.origin;			
-			window.location=url+"&selwhitelbl="+$(this).val();           
+			var url      = window.location.href;  
+			var SelectedWhiteLabel = $(this).val();
+			// Add or update the selwhitelbl parameter in the URL
+			var newUrl = updateUrlParameter(url, 'selwhitelbl', SelectedWhiteLabel);
+			
+			// Redirect to the updated URL
+			window.location.href = newUrl;		
+//			window.location=url+"&selwhitelbl="+$(this).val();           
          });
 		 var urlParams = new URLSearchParams(window.location.search);
 		 var reqParam = urlParams.get('selwhitelbl');
@@ -24106,6 +24110,14 @@ socket.on('connect', () => {
       });
 })
 })
+// Function to update URL parameters
+function updateUrlParameter(url, param, value) {
+    var pattern = new RegExp('(' + param + '=).*?(&|$)');
+    if (url.match(pattern)) {
+        return url.replace(pattern, '$1' + value + '$2');
+    }
+    return url + (url.indexOf('?') > -1 ? '&' : '?') + param + '=' + value;
+}
 
 
 function attemptReconnect() {
