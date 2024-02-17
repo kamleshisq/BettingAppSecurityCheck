@@ -3307,6 +3307,13 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+	let cookieValue = req.cookies.WhiteLabelSelected;
+	let queryParameterValue = req.query.selwhitelbl; 
+	if(user.roleName === "Admin" || user.roleName === "Operator"){
+		
+		console.log(cookieValue);
+		console.log(queryParameterValue);
+	}
     let whiteLabelChk = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
 let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabelChk})

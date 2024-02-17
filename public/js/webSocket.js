@@ -24108,7 +24108,7 @@ socket.on('connect', () => {
 		 {
 		 	reqParam = getCookie("WhiteLabelSelected");
 		 }
-		 if(reqParam=="" || reqParam==null)
+		 if(reqParam!="" || reqParam!=null)
 		 {
 		 	$('#whiteLabel option[value="'+reqParam+'"]').attr('selected', 'selected');
 		 }
