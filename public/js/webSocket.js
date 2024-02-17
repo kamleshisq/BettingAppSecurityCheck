@@ -24104,8 +24104,9 @@ socket.on('connect', () => {
          });
 		 var urlParams = new URLSearchParams(window.location.search);
 		 var reqParam = urlParams.get('selwhitelbl');
+		 
 		 console.log(reqParam); 
-		 $('#whiteLabel option:eq('+reqParam+')').prop('selected', true)
+		 $('#whiteLabel option:eq('+reqParam+')').attr('selected', 'selected')
 		
       });
 })
