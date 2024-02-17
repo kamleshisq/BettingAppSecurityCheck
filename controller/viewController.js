@@ -3309,14 +3309,23 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
 	let cookieValue = req.cookies.WhiteLabelSelected;
 	let queryParameterValue = req.query.selwhitelbl; 
+	let Wlbl = '';
+	
+	// Bydefault Use login WhiteLable is assign
+	let whiteLabelChk = whiteLabelcheck(req)
 	if(user.roleName === "Admin" || user.roleName === "Operator"){
 		
-		console.log(cookieValue);
-		console.log(queryParameterValue);
+		if(queryParameterValue !='' && queryParameterValue!=null)
+			Wlbl = queryParameterValue;
+		else if(cookieValue !='' && cookieValue!=null)
+			Wlbl = cookieValue;
+			
+		if(Wlbl !='' && Wlbl!=null)
+			whiteLabelChk=Wlbl;
 	}
-    let whiteLabelChk = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabelChk})
+	
+	let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
+	let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabelChk})
     let pages = await pagesModel.find({whiteLabelName:whiteLabelChk})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName:whiteLabelChk}).sort({num:1})
     let hosriZontalMenu = await horizontalMenuModel.find({whiteLabelName:whiteLabelChk}).sort({Number:1})
