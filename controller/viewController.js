@@ -2200,10 +2200,26 @@ const hashedOutput = SHA256(privateKey, textToSign);
 });
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
-    let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-    const data = await promotionModel.find({whiteLabelName:whiteLabel})
+    //let whiteLabel = whiteLabelcheck(req)
+		// Bydefault Use login WhiteLable is assign
+	let whiteLabelChk = whiteLabelcheck(req)
+	let cookieValue = req.cookies.WhiteLabelSelected;
+	let queryParameterValue = req.query.selwhitelbl; 
+	let Wlbl = '';	
+	if(user.roleName === "Admin" || user.roleName === "Operator"){
+		
+		if(queryParameterValue !='' && queryParameterValue!=null)
+			Wlbl = queryParameterValue;
+		else if(cookieValue !='' && cookieValue!=null)
+			Wlbl = cookieValue;
+			
+		if(Wlbl !='' && Wlbl!=null)
+			whiteLabelChk=Wlbl;
+	}
+	
+let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
+let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabelChk})
+    const data = await promotionModel.find({whiteLabelName:whiteLabelChk})
     let currentUser = req.currentUser
     res.status(200).render("./promotion/promotion",{
         title:"Promotion",
@@ -3307,12 +3323,11 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-	let cookieValue = req.cookies.WhiteLabelSelected;
-	let queryParameterValue = req.query.selwhitelbl; 
-	let Wlbl = '';
-	
 	// Bydefault Use login WhiteLable is assign
 	let whiteLabelChk = whiteLabelcheck(req)
+	let cookieValue = req.cookies.WhiteLabelSelected;
+	let queryParameterValue = req.query.selwhitelbl; 
+	let Wlbl = '';	
 	if(user.roleName === "Admin" || user.roleName === "Operator"){
 		
 		if(queryParameterValue !='' && queryParameterValue!=null)
@@ -3351,10 +3366,26 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
 
 exports.getPageManagement = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let whiteLabel = whiteLabelcheck(req)
-    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-    const pages = await pagesModel.find({whiteLabelName:whiteLabel})
+	//    let whiteLabel = whiteLabelcheck(req)
+	// Bydefault Use login WhiteLable is assign
+	let whiteLabelChk = whiteLabelcheck(req)
+	let cookieValue = req.cookies.WhiteLabelSelected;
+	let queryParameterValue = req.query.selwhitelbl; 
+	let Wlbl = '';	
+	if(user.roleName === "Admin" || user.roleName === "Operator"){
+		
+		if(queryParameterValue !='' && queryParameterValue!=null)
+			Wlbl = queryParameterValue;
+		else if(cookieValue !='' && cookieValue!=null)
+			Wlbl = cookieValue;
+			
+		if(Wlbl !='' && Wlbl!=null)
+			whiteLabelChk=Wlbl;
+	}
+	
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabelChk})
+    const pages = await pagesModel.find({whiteLabelName:whiteLabelChk})
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
         user,
@@ -4739,11 +4770,27 @@ let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
 
 
 exports.gameRulesPage = catchAsync(async(req, res, next) => {
-    let user = req.currentUser
-    let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-    let rules = await gamrRuleModel.find({whiteLabelName:whiteLabel})
+	let user = req.currentUser
+	//let whiteLabel = whiteLabelcheck(req)
+	// Bydefault Use login WhiteLable is assign
+	let whiteLabelChk = whiteLabelcheck(req)
+	let cookieValue = req.cookies.WhiteLabelSelected;
+	let queryParameterValue = req.query.selwhitelbl; 
+	let Wlbl = '';	
+	if(user.roleName === "Admin" || user.roleName === "Operator"){
+		
+		if(queryParameterValue !='' && queryParameterValue!=null)
+			Wlbl = queryParameterValue;
+		else if(cookieValue !='' && cookieValue!=null)
+			Wlbl = cookieValue;
+			
+		if(Wlbl !='' && Wlbl!=null)
+			whiteLabelChk=Wlbl;
+	}
+	
+	let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
+	let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabelChk})
+    let rules = await gamrRuleModel.find({whiteLabelName:whiteLabelChk})
     res.status(200).render("./Cms/ruleManager",{
         title:"Rules Management",
         user,
@@ -7026,11 +7073,27 @@ exports.getHTMLSCOREIFRm = catchAsync(async(req, res, next) => {
 
 exports.getGlobalSetting = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let whiteLabel = whiteLabelcheck(req)
-    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-    const colorcode = await colorCodeModel.findOne({whitelabel:whiteLabel })
-    let footerContectDetaisl = await footerInfoModel.find({whiteLabelName:whiteLabel})
-    let socialMedia = await socialinfomodel.find({whiteLabelName:whiteLabel})
+    //let whiteLabel = whiteLabelcheck(req)
+	// Bydefault Use login WhiteLable is assign
+	let whiteLabelChk = whiteLabelcheck(req)
+	let cookieValue = req.cookies.WhiteLabelSelected;
+	let queryParameterValue = req.query.selwhitelbl; 
+	let Wlbl = '';	
+	if(user.roleName === "Admin" || user.roleName === "Operator"){
+		
+		if(queryParameterValue !='' && queryParameterValue!=null)
+			Wlbl = queryParameterValue;
+		else if(cookieValue !='' && cookieValue!=null)
+			Wlbl = cookieValue;
+			
+		if(Wlbl !='' && Wlbl!=null)
+			whiteLabelChk=Wlbl;
+	}
+	
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabelChk })
+    const colorcode = await colorCodeModel.findOne({whitelabel:whiteLabelChk })
+    let footerContectDetaisl = await footerInfoModel.find({whiteLabelName:whiteLabelChk})
+    let socialMedia = await socialinfomodel.find({whiteLabelName:whiteLabelChk})
     console.log(footerContectDetaisl, "footerContectDetaislfooterContectDetaislfooterContectDetaisl")
     res.status(200).render("./globalSettings/main",{
         title:"Global settings",
