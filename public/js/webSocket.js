@@ -24097,7 +24097,7 @@ socket.on('connect', () => {
 var url      = window.location.href;     // Returns full URL (https://example.com/path/example.html)
 var origin   = window.location.origin;
 
-window.location=url+"selwhitelbl="+$(this).va();
+window.location=url+"selwhitelbl="+$(this).val();
 
            
          })
