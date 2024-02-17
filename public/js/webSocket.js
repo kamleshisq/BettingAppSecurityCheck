@@ -24092,15 +24092,16 @@ socket.on('connect', () => {
         setTimeout(function() { $(".main-loader").addClass("hide");}, 600);
 		
 		$(document).on("change", "#whiteLabel", function(e){
-             e.preventDefault();
-			 var pathname = window.location.pathname; // Returns path only (/path/example.html)
-var url      = window.location.href;     // Returns full URL (https://example.com/path/example.html)
-var origin   = window.location.origin;
-
-window.location=url+"&selwhitelbl="+$(this).val();
-
-           
-         })
+			e.preventDefault();
+			var pathname = window.location.pathname; // Returns path only (/path/example.html)
+			var url      = window.location.href;     // Returns full URL (https://example.com/path/example.html)
+			var origin   = window.location.origin;			
+			window.location=url+"&selwhitelbl="+$(this).val();           
+         });
+		 var urlParams = new URLSearchParams(window.location.search);
+		 var reqParam = urlParams.get('selwhitelbl');
+		 console.log(reqParam); 
+		 $('#whiteLabel option:eq('+reqParam+')').prop('selected', true)
 		
       });
 })
