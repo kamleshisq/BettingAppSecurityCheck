@@ -24089,9 +24089,21 @@ socket.on('connect', () => {
 
 
     $(document).ready(function() {
-        setTimeout(function() {
-          $(".main-loader").addClass("hide");
-        }, 600);
+        setTimeout(function() { $(".main-loader").addClass("hide");}, 600);
+		
+		$(document).on("change", "#whiteLabel", function(e){
+             e.preventDefault();
+			 var pathname = window.location.pathname; // Returns path only (/path/example.html)
+var url      = window.location.href;     // Returns full URL (https://example.com/path/example.html)
+var origin   = window.location.origin;
+
+console.log(pathname);
+console.log(url);
+console.log(origin);
+
+           
+         })
+		
       });
 })
 })
