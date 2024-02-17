@@ -24106,7 +24106,7 @@ socket.on('connect', () => {
 		 var reqParam = urlParams.get('selwhitelbl');
 		 
 		 console.log(reqParam); 
-		 $('#whiteLabel option:eq('+reqParam+')').attr('selected', 'selected')
+		 $('#whiteLabel option[value="'+reqParam+'"]').attr('selected', 'selected')
 		
       });
 })
