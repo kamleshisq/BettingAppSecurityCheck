@@ -9,7 +9,7 @@
     </div>
   </section>
     <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Operator"){ %>
-   <label >Select WhiteLabel to Edit its content</label>
+   <label ><h3>Select WhiteLabel to Edit its content</h3></label>
                   <select id="whiteLabel" name="whiteLabel" class="form-control ml0">
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
