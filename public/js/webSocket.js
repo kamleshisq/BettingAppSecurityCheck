@@ -24089,13 +24089,63 @@ socket.on('connect', () => {
 
 
     $(document).ready(function() {
-        setTimeout(function() {
-          $(".main-loader").addClass("hide");
-        }, 600);
+        setTimeout(function() { $(".main-loader").addClass("hide");}, 600);
+		
+		$(document).on("change", "#whiteLabel", function(e){
+			e.preventDefault();
+			var url      = window.location.href;  
+			var SelectedWhiteLabel = $(this).val();
+			// Add or update the selwhitelbl parameter in the URL
+			var newUrl = updateUrlParameter(url, 'selwhitelbl', SelectedWhiteLabel);
+			setCookie("WhiteLabelSelected",SelectedWhiteLabel,3);
+			// Redirect to the updated URL
+			window.location.href = newUrl;		
+//			window.location=url+"&selwhitelbl="+$(this).val();           
+         });
+		 var urlParams = new URLSearchParams(window.location.search);
+		 var reqParam = urlParams.get('selwhitelbl');
+		 if(reqParam=="" || reqParam==null)
+		 {
+		 	reqParam = getCookie("WhiteLabelSelected");
+		 }
+		 if(reqParam!="" || reqParam!=null)
+		 {
+		 	$('#whiteLabel option[value="'+reqParam+'"]').attr('selected', 'selected');
+		 }
+		 
+		
       });
 })
 })
-
+// Function to update URL parameters
+function updateUrlParameter(url, param, value) {
+    var pattern = new RegExp('(' + param + '=).*?(&|$)');
+    if (url.match(pattern)) {
+        return url.replace(pattern, '$1' + value + '$2');
+    }
+    return url + (url.indexOf('?') > -1 ? '&' : '?') + param + '=' + value;
+}
+function setCookie(cname, cvalue, hours) {
+  const d = new Date();
+  d.setTime(d.getTime() + (hours*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
 function attemptReconnect() {
     const maxReconnectAttempts = 5; // Maximum number of reconnect attempts
