@@ -127,6 +127,11 @@ async function checkLimit(data){
                             }
                         }else{
                             thatMarketLimit = betLimit
+                            if(marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss')){
+                                thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/bookMaker`})
+                            }else{
+                                thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/matchOdds`})
+                            }
                         }
                     }else{
                         if (thatMarketLimit.max_stake === 0 && betLimit.max_stake !== 0) {
