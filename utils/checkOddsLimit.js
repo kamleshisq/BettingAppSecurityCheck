@@ -126,7 +126,8 @@ async function checkLimit(data){
                                 }
                             }
                         }else{
-                            thatMarketLimit = betLimit
+                            // thatMarketLimit = betLimit
+                            console.log(marketsDetails.data.items[i], "marketsDetails.data.items[i]")
                             if(marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss')){
                                 thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/bookMaker`})
                             }else{
