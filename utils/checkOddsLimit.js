@@ -80,7 +80,7 @@ async function checkLimit(data){
 
             // console.log(betLimit, "gotHERE")
             let marketsDetails = await getmarketDetails(IDS)
-            // console.log(marketsDetails.data.items)
+            console.log(marketsDetails.data.items)
             let sendData = []
             if(marketsDetails.data && marketsDetails.data.items){
                 for(let i = 0; i < marketsDetails.data.items.length; i++){
