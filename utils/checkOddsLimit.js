@@ -66,6 +66,7 @@ async function checkLimit(data){
                     }
                 }
             };
+            let marketsDetails = await getmarketDetails(IDS)
 
             if (!betLimit || (betLimit && (betLimit.max_stake === 0 || betLimit.max_profit === 0 || betLimit.max_odd === 0 || betLimit.delay === 0 || betLimit.min_stake === 0))) {
                 await checkAndUpdateIfZero(thatMatch.eventData.league);
@@ -79,7 +80,6 @@ async function checkLimit(data){
 
 
             // console.log(betLimit, "gotHERE")
-            let marketsDetails = await getmarketDetails(IDS)
             // console.log(marketsDetails.data.items)
             let sendData = []
             if(marketsDetails.data && marketsDetails.data.items){
