@@ -7907,6 +7907,9 @@ socket.on('connect', () => {
                 socket.emit('OddsCheck', {ids, eventId})
             })
         }
+        setInterval(()=>{
+            OddsCheck()
+        }, 5000)
         OddsCheck()
         let limitData = []
         socket.on('OddsCheck', data => {
