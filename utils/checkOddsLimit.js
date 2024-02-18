@@ -134,6 +134,11 @@ async function checkLimit(data){
                             }
                         }
                     }else{
+                        if(marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss')){
+                            thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/bookMaker`})
+                        }else{
+                            thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/matchOdds`})
+                        }
                         if (thatMarketLimit.max_stake === 0 && betLimit.max_stake !== 0) {
                             thatMarketLimit.max_stake = betLimit.max_stake;
                         }
