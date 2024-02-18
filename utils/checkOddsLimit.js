@@ -127,36 +127,8 @@ async function checkLimit(data){
                             }
                         }else{
                             thatMarketLimit = betLimit
-                            console.log(marketsDetails.data.items[i], "marketsDetails.data.items[i]")
-                            if( marketsDetails.data.items[i].title &&(marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss'))){
-                                thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/bookMaker`})
-                            }else{
-                                thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/matchOdds`})
-                            }
-                            if (thatMarketLimit.max_stake === 0 && betLimit.max_stake !== 0) {
-                                thatMarketLimit.max_stake = betLimit.max_stake;
-                            }
-                            if (thatMarketLimit.max_profit === 0 && betLimit.max_profit !== 0) {
-                                thatMarketLimit.max_profit = betLimit.max_profit;
-                            }
-                            if (thatMarketLimit.max_odd === 0 && betLimit.max_odd !== 0) {
-                                thatMarketLimit.max_odd = betLimit.max_odd;
-                            }
-                            if (thatMarketLimit.delay === 0 && betLimit.delay !== 0) {
-                                thatMarketLimit.delay = betLimit.delay;
-                            }
-                            if (thatMarketLimit.min_stake === 0 && betLimit.min_stake !== 0) {
-                                thatMarketLimit.min_stake = betLimit.min_stake;
-                            }
-
                         }
                     }else{
-                        console.log(marketsDetails.data.items[i], "marketsDetails.data.items[i]")
-                        if(marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss')){
-                            thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/bookMaker`})
-                        }else{
-                            thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/matchOdds`})
-                        }
                         if (thatMarketLimit.max_stake === 0 && betLimit.max_stake !== 0) {
                             thatMarketLimit.max_stake = betLimit.max_stake;
                         }
@@ -176,7 +148,7 @@ async function checkLimit(data){
                     pushData.Limits = thatMarketLimit
                     sendData.push(pushData)
                 }
-                console.log(sendData, "hghg")
+                // console.log(sendData, "hghg")
                 return sendData
             }else{
                 return 'ERR'
