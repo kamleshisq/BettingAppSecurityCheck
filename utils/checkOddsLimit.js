@@ -70,8 +70,19 @@ async function checkLimit(data){
                 }
             };
 
+            let ThatName 
+
+            if(marketsDetails.data.items[i].title && (marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss'))){
+                ThatName = `${sport_name}/bookMaker`
+            }else if (marketsDetails.data.items[i].title && !marketsDetails.data.items[i].title.toLowerCase().startsWith('book') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('toss') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('winn')){
+                ThatName = `${sport_name}/fency`
+            }else {
+                ThatName = `${sport_name}/matchOdds`
+            }
+
             if (!betLimit || (betLimit && (betLimit.max_stake === 0 || betLimit.max_profit === 0 || betLimit.max_odd === 0 || betLimit.delay === 0 || betLimit.min_stake === 0))) {
                 await checkAndUpdateIfZero(thatMatch.eventData.league);
+                await checkAndUpdateIfZero(ThatName);
                 await checkAndUpdateIfZero(sport_name);
                 await checkAndUpdateIfZero('Sport');
                 await checkAndUpdateIfZero('Home');
