@@ -80,7 +80,7 @@ async function checkLimit(data){
 
             // console.log(betLimit, "gotHERE")
             let marketsDetails = await getmarketDetails(IDS)
-            console.log(marketsDetails.data.items)
+            // console.log(marketsDetails.data.items)
             let sendData = []
             if(marketsDetails.data && marketsDetails.data.items){
                 for(let i = 0; i < marketsDetails.data.items.length; i++){
@@ -126,13 +126,13 @@ async function checkLimit(data){
                                 }
                             }
                         }else{
-                            // thatMarketLimit = betLimit
+                            thatMarketLimit = betLimit
                             console.log(marketsDetails.data.items[i], "marketsDetails.data.items[i]")
-                            if(marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss')){
-                                thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/bookMaker`})
-                            }else{
-                                thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/matchOdds`})
-                            }
+                            // if(marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss')){
+                            //     thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/bookMaker`})
+                            // }else{
+                            //     thatMarketLimit = await betLimitModel.findOne({type : `${sport_name}/matchOdds`})
+                            // }
                         }
                     }else{
                         console.log(marketsDetails.data.items[i], "marketsDetails.data.items[i]")
