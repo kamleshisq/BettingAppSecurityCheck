@@ -24,6 +24,8 @@ async function checkLimit(data){
             }else if (thatMatch.eventData.sportId == 2){
                 sport_name = "Tennis"
             }
+            let marketsDetails = await getmarketDetails(IDS)
+            let sendData = []
             
             // let betLimit = await betLimitModel.findOne({type:thatMatch.eventData.name})
             // if(!betLimit){
@@ -39,7 +41,8 @@ async function checkLimit(data){
             //     }
             // }
             // console.log('gotHERE')
-
+            if(marketsDetails.data && marketsDetails.data.items){
+                for(let i = 0; i < marketsDetails.data.items.length; i++){
             let betLimit = await betLimitModel.findOne({ type: thatMatch.eventData.name });
 
             const checkAndUpdateIfZero = async (type) => {
@@ -67,8 +70,19 @@ async function checkLimit(data){
                 }
             };
 
+            let ThatName 
+
+            if(marketsDetails.data.items[i].title && (marketsDetails.data.items[i].title.toLowerCase().startsWith('book') || marketsDetails.data.items[i].title.toLowerCase().startsWith('toss'))){
+                ThatName = `${sport_name}/bookMaker`
+            }else if (marketsDetails.data.items[i].title && !marketsDetails.data.items[i].title.toLowerCase().startsWith('book') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('toss') && !marketsDetails.data.items[i].title.toLowerCase().startsWith('winn')){
+                ThatName = `${sport_name}/fency`
+            }else {
+                ThatName = `${sport_name}/matchOdds`
+            }
+
             if (!betLimit || (betLimit && (betLimit.max_stake === 0 || betLimit.max_profit === 0 || betLimit.max_odd === 0 || betLimit.delay === 0 || betLimit.min_stake === 0))) {
                 await checkAndUpdateIfZero(thatMatch.eventData.league);
+                await checkAndUpdateIfZero(ThatName);
                 await checkAndUpdateIfZero(sport_name);
                 await checkAndUpdateIfZero('Sport');
                 await checkAndUpdateIfZero('Home');
@@ -79,11 +93,8 @@ async function checkLimit(data){
 
 
             // console.log(betLimit, "gotHERE")
-            let marketsDetails = await getmarketDetails(IDS)
             // console.log(marketsDetails.data.items)
-            let sendData = []
-            if(marketsDetails.data && marketsDetails.data.items){
-                for(let i = 0; i < marketsDetails.data.items.length; i++){
+           
                     let pushData = {}
                     pushData.marketId = marketsDetails.data.items[i].market_id
                     let thatMarketLimit = await betLimitModel.findOne({type:marketsDetails.data.items[i].market_id})

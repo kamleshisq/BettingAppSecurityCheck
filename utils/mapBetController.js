@@ -239,6 +239,7 @@ async function mapBet(data){
                                     commissionPer = commissionChild[0].matchOdd.percentage
                                 }
                                 let commissionCoin = ((commissionPer * Math.abs(thatUserWinAmount))/100).toFixed(4)
+                                // let commissionCoin = ((commissionPer * Math.abs(debitCreditAmount))/100).toFixed(4)
                                 if(commissionCoin && commissionChild[0].matchOdd.limit && commissionChild[0].matchOdd.limit != 0){
                                     if (commissionCoin > commissionChild[0].matchOdd.limit){
                                         commissionCoin = commissionChild[0].matchOdd.limit
@@ -521,6 +522,7 @@ async function mapBet(data){
                                     commissionPer = commissionChild[0].Bookmaker.percentage
                                 }
                                 let commissionCoin = ((commissionPer * Math.abs(thatUserWinAmount))/100).toFixed(4)
+                                // let commissionCoin = ((commissionPer * Math.abs(exposure))/100).toFixed(4)
                                 if(commissionCoin && commissionChild[0].Bookmaker.limit && commissionChild[0].Bookmaker.limit != 0){
                                     if (commissionCoin > commissionChild[0].Bookmaker.limit){
                                         commissionCoin = commissionChild[0].Bookmaker.limit
@@ -646,6 +648,7 @@ async function mapBet(data){
                                 commissionPer = commissionChild[0].fency.percentage
                                 }
                                 let commissionCoin = ((commissionPer * Math.abs(thatUserWinAmount))/100).toFixed(4)
+                                // let commissionCoin = ((commissionPer * Math.abs(thatBet.returns))/100).toFixed(4)
                                 if(statyusTyoe){
                                     if(commissionCoin && commissionChild[0].Bookmaker.limit && commissionChild[0].Bookmaker.limit != 0){
                                         if (commissionCoin > commissionChild[0].Bookmaker.limit){
