@@ -10867,6 +10867,7 @@ socket.on('connect', () => {
                 <thead>
                   <tr class="thead-border my-open-bet-trr">
                     <th>Selection</th>
+                    <th>Market</th>
                     <th>Odds</th>
                     <th>Stake</th>
                   </tr>
@@ -10884,6 +10885,7 @@ socket.on('connect', () => {
                     let oddValue2 = data.openBet[0].oddValue
                     html2 += `<td>${selectionName}@${oddValue2}</td>
                       <td>${ oddValue1 }</td>
+                      <td>${ data.openBet[0].marketName}</td>
                       <td>${ data.openBet[0].Stake }</td>
                     </tr>
                   </tbody>
@@ -10891,6 +10893,7 @@ socket.on('connect', () => {
                 }else{
                     html2 += `<td>${ data.openBet[0].selectionName}</td>
                       <td>${ data.openBet[0].oddValue }</td>
+                      <td>${ data.openBet[0].marketName}</td>
                       <td>${ data.openBet[0].Stake }</td>
                     </tr>
                   </tbody>
