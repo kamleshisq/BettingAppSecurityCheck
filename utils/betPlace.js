@@ -209,7 +209,7 @@ if(catalogSuspend != 0){
     return `Please try again later`
 }
 
-let checkingMarket = await suspendResume.countDocuments({marketId:data.data.market, status: true})
+let checkingMarket = await suspendResume.countDocuments({marketId:data.data.market, status: false})
 console.log(checkingMarket)
 if(checkingMarket != 0){
 return `Please try again later`
