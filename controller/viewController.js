@@ -3418,25 +3418,27 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let liveFootBall = footBall.filter(item => featureEventId.includes(`${item.eventData.eventId}`));
     let liveTennis = Tennis.filter(item => featureEventId.includes(`${item.eventData.eventId}`))
-    let upcomintCricket = cricket.some(item => item.eventData.type != "IN_PLAY")
-    let upcomintFootball = footBall.some(item => item.eventData.type != "IN_PLAY")
-    let upcomintTennis = Tennis.some(item => item.eventData.type != "IN_PLAY")
+    let upcomintCricket = cricket.some(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
+    let upcomintFootball = footBall.some(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
+    let upcomintTennis = Tennis.some(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     let userMultimarkets
     let cricketSeries = [];
     let footbalSeries = [];
     let tennisSeries = []; 
     Tennis.forEach(match => {
-        let seriesIndex = tennisSeries.findIndex(series => series.series === match.eventData.league);
-        if (seriesIndex === -1) {
-            tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
-        } else {
-            tennisSeries[seriesIndex].matchdata.push(match);
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
+            let seriesIndex = tennisSeries.findIndex(series => series.series === match.eventData.league);
+            if (seriesIndex === -1) {
+                tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
+            } else {
+                tennisSeries[seriesIndex].matchdata.push(match);
+            }
         }
     });
     footBall.forEach(match => {
