@@ -66,12 +66,12 @@ exports.myNotifications = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         let user = req.currentUser;
         const today = new Date();
-        let notifications = await notificationModel.find({userId:{$in:user.parentUsers},startDate: { $lte: today },endDate: { $gte: today }})
+        let notifications = await notificationModel.find({userId:{$in:user.parentUsers}})
         req.notifications = notifications
         next()
     }else{
         const today = new Date();
-        let notifications = await notificationModel.find({userId:{$in:"6492fd6cd09db28e00761691"},startDate: { $lte: today },endDate: { $gte: today }})
+        let notifications = await notificationModel.find({userId:{$in:"6492fd6cd09db28e00761691"}})
         req.notifications = notifications
         // console.log('WORKINGNOTIFICATION')
         next()
