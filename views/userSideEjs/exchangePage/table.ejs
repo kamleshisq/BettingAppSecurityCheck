@@ -222,7 +222,8 @@
                 var date = new Date(timestamp * 1000);
                 var options = { 
                   day: '2-digit',
-                  month: 'short',
+                  month: 'long', // Use 'long' to get the full month name
+                  year: 'numeric',
                   hour: 'numeric',
                   minute: 'numeric',
                   hour12: true // This ensures the time is displayed in AM/PM format
