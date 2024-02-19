@@ -337,7 +337,6 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL) * -1
-    console.log(req.body)
     
     if(parentUser.availableBalance < req.body.amount){
         return next(new AppError("Insufficient Credit Limit !"))
@@ -357,16 +356,13 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(settleCommission)
     let realCommission = 0
     if(settleCommission.length > 0){
         realCommission = settleCommission[0].totalCommission
     }
     let lifeTimePl = 0
-    console.log(childUser, "childUserchildUser")
     if(childUser.roleName !== 'user'){
         let userNameArray = await User.distinct('userName', {parent_id:childUser.id})
-        console.log(userNameArray)
         let settleCommissionforChiled = await commissionNewModel.aggregate([
             {
                 $match:{
@@ -382,15 +378,12 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
                 }
             }
         ])
-        console.log(settleCommissionforChiled)
         let realCommissionForChild = 0
         if(settleCommissionforChiled.length > 0){
             realCommissionForChild = settleCommissionforChiled[0].totalCommission
         }
-        console.log(realCommissionForChild, "realCommissionForChild")
         // let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
         let debitAmountForP = -childUser.pointsWL + realCommission
-        console.log(debitAmountForP)
         lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }else{
@@ -399,10 +392,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }
     
-    console.log(realCommission, "settleCommissionsettleCommissionsettleCommissionsettleCommission")
-    console.log(lifeTimePl, "lifeTimePllifeTimePllifeTimePllifeTimePl")
     lifeTimePl = parseFloat(lifeTimePl) - parseFloat(realCommission)
-    console.log(lifeTimePl, req.body.clintPL,"lifeTimePlFINAL")
     await commissionNewModel.updateMany({userId : childUser.id,commissionStatus : 'Claimed',settleStatus : false}, {settleStatus:true}) 
     let UserArray = await User.distinct('userName', {parentUsers:childUser.id})
     await commissionNewModel.updateMany({userName : {$in:UserArray}, commissionStatus : 'Claimed', parrentArrayThatClaid : {$nin:[childUser.id]}}, {$push:{parrentArrayThatClaid:childUser.id}})
@@ -424,7 +414,6 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(comm.length !== 0){
         totlaCommissionUSer = comm[0].totalCommission
     }
-    console.log(totlaCommissionUSer)
     const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
     await commissionNewModel.updateMany({userId:childUser.id,setleCOMMISSIONMY:true}, {setleCOMMISSIONMY:false})
 
