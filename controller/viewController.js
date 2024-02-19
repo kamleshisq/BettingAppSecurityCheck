@@ -3993,6 +3993,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         ipv4 = ip
     }
     let whiteLabel = whiteLabelcheck(req)
+    
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
@@ -4021,6 +4022,14 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
                 mainMassage:"Opps! Please try again later"
             })
         }
+    }
+    let catalog = await catalogController.countDocuments({Id:{$in:[match.eventData.eventId, match.eventData.compId]}})
+    if(catalog != 0 ){
+        return res.render('./errorMessage2',{
+            statusCode : 404,
+            message:"The match you are looking for is no more live",
+            mainMassage:"Opps! Please try again later"
+        })
     }
     let src
     let status = false
