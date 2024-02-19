@@ -56546,23 +56546,24 @@ if (pathname.startsWith('/admin') || pathname.startsWith('/resetPassword')) {
   var urlParams = new URLSearchParams(window.location.search);
   sessionTokenADMIN = urlParams.get('sessiontoken');
 }
-if (document.getElementById('myIframe')) {
-  var channelId = document.getElementById('myIframe').getAttribute('data-id');
-  var _urlParams = new URLSearchParams(window.location.search);
-  var eventId = _urlParams.get('id');
-  console.log(channelId, eventId, "sdfghjkl;");
-  var ip;
-  _axios.default.get('https://api.ipify.org?format=json').then(function (response) {
-    console.log('Your IP address is:', response.data.ip);
-    ip = response.data.ip;
-    var data = (0, _getIframe.getIframe)({
-      ipv4: ip,
-      id: channelId
-    });
-  }).catch(function (error) {
-    console.error('Error fetching IP address:', error);
-  });
-}
+
+// if(document.getElementById('myIframe')){
+//     let channelId = document.getElementById('myIframe').getAttribute('data-id');
+//     const urlParams = new URLSearchParams(window.location.search);
+//     let eventId = urlParams.get('id')
+//     console.log(channelId, eventId, "sdfghjkl;")
+//     let ip
+//     axios.get('https://api.ipify.org?format=json')
+//   .then(response => {
+//     console.log('Your IP address is:', response.data.ip);
+//     ip = response.data.ip
+//     let data = getIframe({ipv4:ip, id:channelId})
+//   })
+//   .catch(error => {
+//     console.error('Error fetching IP address:', error);
+//   });
+// }
+
 $(document).on('click', '.passcodemsgbox', function (e) {
   console.log('hewr');
   function copyElementTextToClipboard(elementId) {
