@@ -16118,6 +16118,10 @@ socket.on('connect', () => {
             socket.emit("Wallet", {maxCreditReference, transferLock, id})
         })
 
+        socket.on('Wallet', data => {
+            alert(data.message)
+        })
+
         $(document).on('click', '.kycPdf', function(e){
             e.preventDefault()
             let id = $(this).attr('id')
