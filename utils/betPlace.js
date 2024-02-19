@@ -212,7 +212,13 @@ if(catalogSuspend != 0){
 let checkingMarket = await suspendResume.countDocuments({marketId:data.data.market, status: false})
 console.log(checkingMarket)
 if(checkingMarket != 0){
-return `We caught you bro, market is suspended :-)`
+    return `We caught you bro, market is suspended :-)`
+}
+if(data.data.market.endsWith('OE') || data.data.market.endsWith('F2')){
+    let checkingMarket = await suspendResume.countDocuments({marketId:`${liveBetGame.eventData.eventId}/FANCY`, status: false})
+    if(checkingMarket != 0){
+        return `We caught you bro, market is suspended :-)`
+    }
 }
 
 
