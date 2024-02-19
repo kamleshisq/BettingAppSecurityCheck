@@ -82,11 +82,11 @@
                                     <%if(userDetails.roleName != 'user'){%>
                                     <div class="row">
                                       <div class="col form-group">
-                                        <label for="myShare">User Share</label>
+                                        <label for="myShare">Share <b><%= userDetails.myShare + userDetails.Share%></b></label>
                                         <input type="number" readonly id="myShare" name="myShare" placeholder="<%=userDetails.myShare%>" value="<%=userDetails.myShare%>">
                                       </div>
                                       <div class="col form-group">
-                                          <label for="Share">Upline Share</label>
+                                          <label for="Share">My Share</label>
                                           <input type="number" readonly id="Share" name="Share" placeholder="<%=userDetails.Share%>" value="<%=userDetails.Share%>">
                                       </div>
                                     </div>
