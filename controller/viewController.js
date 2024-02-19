@@ -3442,14 +3442,17 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         }
     });
     footBall.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let seriesIndex = footbalSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             footbalSeries.push({ series: match.eventData.league, matchdata: [match] });
         } else {
             footbalSeries[seriesIndex].matchdata.push(match);
         }
+    }
     });
     cricket.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let fancyCount = 0
             if(match.marketList.session != null){
                 let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
@@ -3466,6 +3469,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         } else {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
+    }
     });
     // console.log(footbalSeries);
     if(user){
