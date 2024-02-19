@@ -18,9 +18,9 @@ exports.deposit = catchAsync(async(req, res, next) => {
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
-    // if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
-    //     return next(new AppError("User Account is Locked", 404))
-    // }
+    if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
+        return next(new AppError("User Account credit refrence is full", 404))
+    }
     const parentUser = await User.findById(childUser.parent_id);
     if(parentUser.transferLock){
         return next(new AppError("Your Account is Locked", 404))
@@ -125,6 +125,10 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     // if(childUser.role.role_level < parentUser.role.role_level){
     //     return next(new AppError("you do not have permission to perform this action", 404))
     // }
+
+    if((parentUser.creditReference + req.body.amount) > parentUser.maxCreditReference){
+        return next(new AppError("Admin Account credit refrence is full", 404))
+    }
 
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
