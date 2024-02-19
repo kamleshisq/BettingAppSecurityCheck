@@ -4424,8 +4424,13 @@ io.on('connection', (socket) => {
 
     socket.on("Wallet", async(data) => {
         try{
-            await User.findByIdAndUpdate(data.id, {maxCreditReference:data.maxCreditReference, transferLock:data.transferLock})
-            socket.emit("myShare", {maxCreditReference:data.maxCreditReference, transferLock:data.transferLock, status:"success"})
+            let check = User.findById(data.id)
+            if(data.maxCreditReference < check.balance){
+                socket.emit("Wallet", {message:'Please enter max credit reference more than current credit reference', status:"error"})
+            }else{
+                await User.findByIdAndUpdate(data.id, {maxCreditReference:data.maxCreditReference, transferLock:data.transferLock})
+                socket.emit("myShare", {maxCreditReference:data.maxCreditReference, transferLock:data.transferLock, status:"success"})
+            }
         }catch(err){
             console.log(err)
             socket.emit("Wallet",{message:"Please try again later", status:"error"})
