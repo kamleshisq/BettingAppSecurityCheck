@@ -4424,7 +4424,7 @@ io.on('connection', (socket) => {
 
     socket.on("Wallet", async(data) => {
         try{
-            let check = User.findById(data.id)
+            let check = await User.findById(data.id)
             console.log(check)
             console.log(data.maxCreditReference < check.balance, check.balance, data.maxCreditReference)
             if(data.maxCreditReference < check.balance){
