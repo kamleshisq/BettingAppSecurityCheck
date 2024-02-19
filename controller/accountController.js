@@ -384,7 +384,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         }
         // let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
         let debitAmountForP = -childUser.pointsWL + realCommission
-        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = new Decimal(100 - childUser.myShare).times(debitAmountForP).dividedBy(100)
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }else{
         let debitAmountForP = -childUser.pointsWL + realCommission
