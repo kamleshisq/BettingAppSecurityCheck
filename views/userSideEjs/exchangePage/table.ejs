@@ -218,8 +218,8 @@
                 <%if(!catalog.some(item => item.Id == footbalSeries[i].matchdata[j].eventData.eventId)){ %>
                 <%
                 
-                var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
-                var date = new Date(timestamp);
+                var timestamp = Math.abs(footbalSeries[i].matchdata[j].eventData.time); 
+                var date = new Date(timestamp * 1000);
                 var options = { 
                   day: '2-digit',
                   month: 'short',
