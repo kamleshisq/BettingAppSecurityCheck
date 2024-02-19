@@ -2562,7 +2562,7 @@ io.on('connection', (socket) => {
                         data.data.odds = odds
                         data.data.bettype2 = 'LAY'
                     }
-                }else if(thatMarket && thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM' && !thatMarket.title.toLowerCase().startsWith('bookm')){
+                }else if(thatMarket && thatMarket.title && thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM' && !thatMarket.title.toLowerCase().startsWith('bookm')){
                     let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
                     let name
                     if(data.data.secId.slice(-1) > 3){
@@ -2575,7 +2575,7 @@ io.on('connection', (socket) => {
                     let odds = realodd[name];
                     data.data.odds2 = odds
                     data.data.secId = data.data.secId.slice(0,-1)
-                }else if(thatMarket && thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title == 'BOOKMAKER 0% COMM' || thatMarket.title.toLowerCase().startsWith('bookm')){
+                }else if(thatMarket && thatMarket.title && thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title == 'BOOKMAKER 0% COMM' || thatMarket.title.toLowerCase().startsWith('bookm')){
                     let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
                     let name
                     let name2
