@@ -5,9 +5,9 @@ const userModel = require('../model/userModel');
 
 exports.createNewNotification = catchAsync(async(req, res, next) => {
     // console.log(req.body)
-    if(req.body.Sdate === req.body.Edate){
-        return next(new AppError("Both starting and ending date are same that is not acceptable", 404))
-    }
+    // if(req.body.Sdate === req.body.Edate){
+    //     return next(new AppError("Both starting and ending date are same that is not acceptable", 404))
+    // }
 
     let ID = req.body.userId
     let currentUser = await userModel.findById(ID)
@@ -17,8 +17,8 @@ exports.createNewNotification = catchAsync(async(req, res, next) => {
     let data = {
         title : req.body.title,
         message : req.body.message,
-        startDate : new Date(req.body.Sdate),
-        endDate : new Date(req.body.Edate),
+        // startDate : new Date(req.body.Sdate),
+        // endDate : new Date(req.body.Edate),
         userId : ID
     }
     // console.log(data)
