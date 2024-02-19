@@ -14,6 +14,8 @@ const exposurecheck = require('./checkExpoOfThatUSer');
 const checkLimit = require('./checkOddsLimit');
 const checkMarketWinAmount = require('./checkWinAmountOfThatMarket');
 const settelementHistory = require('../model/settelementHistory');
+const cataLog = require('../model/catalogControllModel');
+const suspendResume = require('../model/resumeSuspendMarket');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -201,6 +203,15 @@ if(data.data.spoetId == 1){
             return `Stake out of range`
         }
     }
+let catalogSuspend = await cataLog.countDocuments({Id:{$in:[liveBetGame.eventData.eventId, liveBetGame.eventData.compId]}, status: true})
+
+if(catalogSuspend != 0){
+    return `Please try again later`
+}
+
+let checkingMarket = await suspendResume.countDocuments({marketId:data.data.market, status: true})
+if(checkingMarket != 0){
+return `Please try again later`}
 
 
 
