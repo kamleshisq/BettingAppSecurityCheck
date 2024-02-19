@@ -206,13 +206,13 @@ if(data.data.spoetId == 1){
 let catalogSuspend = await cataLog.countDocuments({Id:{$in:[liveBetGame.eventData.eventId, liveBetGame.eventData.compId]}, status: true})
 
 if(catalogSuspend != 0){
-    return `Please try again later`
+    return `We caught you bro, Event is suspended :-)`
 }
 
 let checkingMarket = await suspendResume.countDocuments({marketId:data.data.market, status: false})
 console.log(checkingMarket)
 if(checkingMarket != 0){
-return `Please try again later`
+return `We caught you bro, market is suspended :-)`
 }
 
 
