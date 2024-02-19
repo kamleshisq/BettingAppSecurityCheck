@@ -3477,9 +3477,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         liveFootBall,
         liveTennis,
         LiveCricket,
-        upcomintCricket,
-        upcomintFootball,
-        upcomintTennis,
+       
         userLog,
         notifications:req.notifications,
         userMultimarkets,
