@@ -222,6 +222,12 @@ if(data.data.market.endsWith('OE') || data.data.market.endsWith('F2')){
 }
 
 
+if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) && liveBetGame.eventData.type != "IN_PLAY"){
+    return `We caught you bro, market is suspended :-)`
+}
+
+
+
 
 
 // FOR STAKE RANGE
