@@ -3746,9 +3746,9 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
 exports.TennisPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
@@ -3758,7 +3758,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         featureEventId.push(parseInt(ele.Id))
     })
     let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
-    let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
     const data = await promotionModel.find();
     let userLog
     let userMultimarkets
@@ -3768,6 +3768,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     }
     let tennisSeries = [];
     Tennis.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let fancyCount = 0
         if(match.marketList.session != null){
             let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
@@ -3783,7 +3784,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
         } else {
             tennisSeries[seriesIndex].matchdata.push(match);
-        }
+        }}
     });
     let catalog = await catalogController.find()
 
