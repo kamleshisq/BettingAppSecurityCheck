@@ -3692,9 +3692,9 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
 exports.footBallPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
@@ -3704,7 +3704,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         featureEventId.push(parseInt(ele.Id))
     })
     let liveFootBall = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
-    let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
     const data = await promotionModel.find();
     let userLog
     let userMultimarkets
@@ -3714,12 +3714,13 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     }
     let footbalSeries = [];
     footBall.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let seriesIndex = footbalSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             footbalSeries.push({ series: match.eventData.league, matchdata: [match] });
         } else {
             footbalSeries[seriesIndex].matchdata.push(match);
-        }
+        }}
     });
     let catalog = await catalogController.find()
 
