@@ -8890,6 +8890,7 @@ socket.on('connect', () => {
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let check2 = data.marketArray.some(item => item == marketId)
                 if(this.id == `${section.secId}2` ){
+                    console.log(section.lay)
                     // if(!data.status){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
