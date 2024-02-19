@@ -3410,17 +3410,14 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     // for(let i = 0; i < cricket.length; i++){
     //     console.log(`${cricket[i].eventData.eventId}`)
     // }
-    let LiveCricket = cricket.filter(item => featureEventId.includes(`${item.eventData.eventId}` && (item.eventData.type === 'IN_PLAY' || item.eventData.type === 'UPCOMING')))
+    let LiveCricket = cricket.filter(item => featureEventId.includes(`${item.eventData.eventId}`))
     // console.log(LiveCricket)
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveFootBall = footBall.filter(item => featureEventId.includes(`${item.eventData.eventId}`  && (item.eventData.type === 'IN_PLAY' || item.eventData.type === 'UPCOMING')));
-    let liveTennis = Tennis.filter(item => featureEventId.includes(`${item.eventData.eventId}` && (item.eventData.type === 'IN_PLAY' || item.eventData.type === 'UPCOMING')))
-    let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
-    let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
-    let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
+    let liveFootBall = footBall.filter(item => featureEventId.includes(`${item.eventData.eventId}`));
+    let liveTennis = Tennis.filter(item => featureEventId.includes(`${item.eventData.eventId}`))
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
