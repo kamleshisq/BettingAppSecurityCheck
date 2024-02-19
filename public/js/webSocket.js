@@ -10867,8 +10867,8 @@ socket.on('connect', () => {
                 <thead>
                   <tr class="thead-border my-open-bet-trr">
                     <th>Selection</th>
-                    <th>Market</th>
                     <th>Odds</th>
+                    <th>Market</th>
                     <th>Stake</th>
                   </tr>
                 </thead>
