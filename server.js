@@ -4425,6 +4425,7 @@ io.on('connection', (socket) => {
     socket.on("Wallet", async(data) => {
         try{
             let check = User.findById(data.id)
+            console.log(data.maxCreditReference < check.balance, check.balance, data.maxCreditReference)
             if(data.maxCreditReference < check.balance){
                 socket.emit("Wallet", {message:'Please enter max credit reference more than current credit reference', status:"error"})
             }else{
