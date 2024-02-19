@@ -414,7 +414,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(comm.length !== 0){
         totlaCommissionUSer = comm[0].totalCommission
     }
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer - lifeTimePl, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
     await commissionNewModel.updateMany({userId:childUser.id,setleCOMMISSIONMY:true}, {setleCOMMISSIONMY:false})
 
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}});
