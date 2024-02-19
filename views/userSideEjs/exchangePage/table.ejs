@@ -215,7 +215,6 @@
           <tbody class="acount-stat-tbl-body">
               <tr class="series-title"><td colspan="9"><p><%=footbalSeries[i].series%></p></td></tr>
               <%for(let j = 0; j < footbalSeries[i].matchdata.length; j++){%>
-                <%if( footbalSeries[i].matchdata[j].eventData.type === 'UPCOMING' || footbalSeries[i].matchdata[j].eventData.type === 'IN_PLAY'){%>
                 <%if(!catalog.some(item => item.Id == footbalSeries[i].matchdata[j].eventData.eventId)){ %>
                 <%
                 
@@ -402,7 +401,6 @@
                     <%} %>
                 </tr>
               
-              <%} %>
               <%} %>
               <%} %>
           </tbody>
