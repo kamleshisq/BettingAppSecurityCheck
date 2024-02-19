@@ -384,7 +384,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
         }
         // let debitAmountForP = -childUser.pointsWL + realCommission + realCommissionForChild
         let debitAmountForP = -childUser.pointsWL + realCommission
-        lifeTimePl = new Decimal(100 - childUser.myShare).times(debitAmountForP).dividedBy(100)
+        lifeTimePl = new Decimal(childUser.Share).times(debitAmountForP).dividedBy(100)
         lifeTimePl = lifeTimePl.toDecimalPlaces(4);
     }else{
         let debitAmountForP = -childUser.pointsWL + realCommission
@@ -414,7 +414,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(comm.length !== 0){
         totlaCommissionUSer = comm[0].totalCommission
     }
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer - lifeTimePl, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
     await commissionNewModel.updateMany({userId:childUser.id,setleCOMMISSIONMY:true}, {setleCOMMISSIONMY:false})
 
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}});
