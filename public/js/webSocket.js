@@ -10914,11 +10914,13 @@ socket.on('connect', () => {
                         let oddValue2 = data.openBet[i].oddValue
                         html2 += `<td>${selectionName}@${oddValue2}</td>
                         <td>${ oddValue1 }</td>
+                        <td>${ data.openBet[i].marketName}</td>
                         <td>${ data.openBet[i].Stake }</td>
                       </tr>`
                     }else{
                         html2 += `<td>${ data.openBet[i].selectionName}</td>
                         <td>${ data.openBet[i].oddValue }</td>
+                        <td>${ data.openBet[i].marketName}</td>
                         <td>${ data.openBet[i].Stake }</td>
                       </tr>`
                     }
