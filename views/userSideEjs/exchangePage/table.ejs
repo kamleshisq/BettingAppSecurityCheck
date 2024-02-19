@@ -1,4 +1,4 @@
-<%if(LiveCricket.length > 0 || upcomintCricket.length > 0){%>
+<%if(LiveCricket.length > 0 || upcomintCricket){%>
   <div class="exchange-pg-tbl-ro2 data-with-series">
   <%for(let i = 0; i < cricketSeries.length; i++){%>
     <%if(cricketSeries[i].series != "1"){ %>
@@ -195,7 +195,7 @@
   </div>
 <%}%>
 
-<%if(liveFootBall.length > 0 || upcomintFootball.length > 0){%>
+<%if(liveFootBall.length > 0 || upcomintFootball){%>
   <div class="exchange-pg-tbl-ro2 data-with-series">
     <%for(let i = 0; i < footbalSeries.length; i++){%>
       <%if(footbalSeries[i].series != "1"){ %>
@@ -413,7 +413,7 @@
     </div>
 <%}%>
 
-<%if(liveTennis.length > 0 || upcomintTennis.length > 0){%>
+<%if(liveTennis.length > 0 || upcomintTennis){%>
   <div class="exchange-pg-tbl-ro2 data-with-series">
     <%for(let i = 0; i < tennisSeries.length; i++){%>
       <%if(tennisSeries[i].series != "1"){ %>

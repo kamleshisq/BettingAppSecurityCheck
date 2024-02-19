@@ -3418,6 +3418,9 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let liveFootBall = footBall.filter(item => featureEventId.includes(`${item.eventData.eventId}`));
     let liveTennis = Tennis.filter(item => featureEventId.includes(`${item.eventData.eventId}`))
+    let upcomintCricket = cricket.some(item => item.eventData.type != "IN_PLAY")
+    let upcomintFootball = footBall.some(item => item.eventData.type != "IN_PLAY")
+    let upcomintTennis = Tennis.some(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
 let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
@@ -3477,7 +3480,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         liveFootBall,
         liveTennis,
         LiveCricket,
-       
+        upcomintCricket,
+        upcomintFootball,
+        upcomintTennis,
         userLog,
         notifications:req.notifications,
         userMultimarkets,
