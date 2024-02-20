@@ -88,8 +88,12 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.files)
 	let WhiteLBL= getWhiteLabelDetails("",req);
 	let path="public/banner/"
-	if(WhiteLBL.whitelabelpath!='')
-		path = "/var/www/LiveBettingApp/"+WhiteLBL.whitelabelpath+"/bettingApp/public/banner/"
+	if(WhiteLBL.whitelabelpath!='' || true)
+		path = "/var/www/LiveBettingApp/"+WhiteLBL.whitelabelpath+"/bettingApp/public/banner/";
+		
+	
+		
+	console.log(path);
 	
     if(req.body.check){
         req.body.status = true
@@ -100,7 +104,7 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
         if(req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
             // console.log(logo)
-            // console.log(image,'==>image')
+             console.log(image,'==>image')
             image.mv(`path+${req.body.Name}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
