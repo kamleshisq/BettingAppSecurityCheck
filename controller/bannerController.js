@@ -88,8 +88,9 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.files)
 	let WhiteLBL= getWhiteLabelDetails("",req);
 	let path="public/banner/"
+	
 	if(WhiteLBL.whitelabelpath!='' || true)
-		path = "/var/www/LiveBettingApp/"+WhiteLBL.whitelabelpath+"/bettingApp/public/banner/";
+		path = "/var/www/LiveBettingApp/dev.ollscores.com/bettingApp/public/banner/";
 		
 	
 		
