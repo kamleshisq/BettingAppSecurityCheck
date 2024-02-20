@@ -67,6 +67,7 @@ socket.on('connect', () => {
 
 
     function toggleadminSide(message, status ){
+        console.log(message, status)
             var text = message;
             if(status){
                 $("#success").fadeIn(500);
