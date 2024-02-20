@@ -26,7 +26,7 @@ exports.deposit = catchAsync(async(req, res, next) => {
         return next(new AppError("Your Account is Locked", 404))
     }
     req.body.amount = parseFloat(req.body.amount)
-    console.log(parentUser.maxLimitForChildUser, childUser.balance, req.body.amount)
+    // console.log(parentUser.maxLimitForChildUser, childUser.balance, req.body.amount)
     if(parentUser.maxLimitForChildUser && (Math.abs(childUser.balance) + Math.abs(req.body.amount) > parentUser.maxLimitForChildUser)){
         return next(new AppError(`ParentUser limit for user credit Reference is less then ${parentUser.maxLimitForChildUser}`, 404))
     }
@@ -126,10 +126,16 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     if(parentUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
+    if(parentUser.roleName != 'admin'){
+        let upperParentUSer = await User.findById(parentUser.parent_id)
+        if(upperParentUSer){
+            if(upperParentUSer.maxLimitForChildUser && (Math.abs(parentUser.balance) + Math.abs(req.body.amount) > upperParentUSer.maxLimitForChildUser)){
+                return next(new AppError(`ParentUser limit for credit Reference is less then ${upperParentUSer.maxLimitForChildUser}`, 404))
+            }
+        }
 
-    if(parentUser.maxLimitForChildUser && (Math.abs(parentUser.balance) + Math.abs(req.body.amount) < parentUser.maxLimitForChildUser)){
-        return next(new AppError(`ParentUser limit for user credit Reference is less then ${parentUser.maxLimitForChildUser}`, 404))
     }
+
 
     // if(parentUser.maxLimitForChildUser && (parentUser.maxLimitForChildUser < req.body.amount)){
     //     return next(new AppError(`ParentUser limit for user credit Reference is less then ${parentUser.maxLimitForChildUser}`, 404))
