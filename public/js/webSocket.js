@@ -85,7 +85,7 @@ socket.on('connect', () => {
             }
             setTimeout(function () {
                 $(".alert-popup").fadeOut(500);
-            }, 3000);
+            }, 1500);
     }
     
 
