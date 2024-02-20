@@ -10001,6 +10001,9 @@ io.on('connection', (socket) => {
         try{
             let check
             let white
+            if(data.LOGINDATA.LOGINUSER.roleName ==  'Operator'){
+                data.LOGINDATA.LOGINUSER.roleName = 1
+            }
             if(data.LOGINDATA.LOGINUSER.whiteLabel === "1"){
                 check = await resumeSuspendModel.findOne({marketId:data.id, whiteLabel:'1'})
                 white = "1"
