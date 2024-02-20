@@ -399,17 +399,18 @@ async function checkExpoOfThatMarket( bet ){
                 },
                 exposure:{
                     // $sum:'$exposure'
-                    $sum: { 
-                        $cond: { 
-                            $sum: '$exposure' 
-                            // if : {$eq: ['$bettype2', "BACK"]},
-                            // then : {
-                            // },
-                            // else : {
-                            //     $multiply: ['$Stake', -1]
-                            // }
-                        }
-                    }
+                    $sum: '$exposure' 
+                    // { 
+                    //     $cond: { 
+                    //         if : {$eq: ['$bettype2', "BACK"]},
+                    //         then : {
+                    //             $sum: '$exposure' 
+                    //         },
+                    //         else : {
+                    //             $multiply: ['$Stake', -1]
+                    //         }
+                    //     }
+                    // }
                 }
             },
             },
