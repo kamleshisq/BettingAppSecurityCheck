@@ -6,11 +6,15 @@ const whiteLabel = require('../model/whitelableModel');
 
 async function getWhiteLabelDetails(Wlbl,req)
 {
+	console.log("Before condition");
+	console.log(Wlbl);
+	
 	if(Wlbl == "" || Wlbl == null)
 	{
 		let cookieValue = req.cookies.WhiteLabelSelected;
 		let queryParameterValue = req.query.selwhitelbl; 
-		let Wlbl = '';	
+		
+			console.log(cookieValue+" == "+ queryParameterValue);		
 		if(queryParameterValue !='' && queryParameterValue!=null)
 			Wlbl = queryParameterValue;
 		else if(cookieValue !='' && cookieValue!=null)
