@@ -14,7 +14,7 @@ async function getWhiteLabelDetails(Wlbl,req)
 		let cookieValue = req.cookies.WhiteLabelSelected;
 		let queryParameterValue = req.query.selwhitelbl; 
 		
-			console.log(cookieValue+" == "+ queryParameterValue);		
+			console.log(req.query);		
 		if(queryParameterValue !='' && queryParameterValue!=null)
 			Wlbl = queryParameterValue;
 		else if(cookieValue !='' && cookieValue!=null)
