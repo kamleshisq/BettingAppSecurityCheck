@@ -26,6 +26,11 @@ exports.deposit = catchAsync(async(req, res, next) => {
         return next(new AppError("Your Account is Locked", 404))
     }
     req.body.amount = parseFloat(req.body.amount)
+
+    if(childUser.maxLimitForChildUser && (Math.abs(childUser.balance) + Math.abs(req.body.amount) < childUser.maxLimitForChildUser)){
+        return next(new AppError(`ParentUser limit for user credit Reference is less then ${childUser.maxLimitForChildUser}`, 404))
+    }
+    
     // // console.log(req.body)
     // // console.log(childUser)
     // if(childUser.role.role_level < parentUser.role.role_level){
@@ -121,6 +126,14 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     if(parentUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
+
+    if(parentUser.maxLimitForChildUser && (Math.abs(parentUser.balance) + Math.abs(req.body.amount) < parentUser.maxLimitForChildUser)){
+        return next(new AppError(`ParentUser limit for user credit Reference is less then ${parentUser.maxLimitForChildUser}`, 404))
+    }
+
+    // if(parentUser.maxLimitForChildUser && (parentUser.maxLimitForChildUser < req.body.amount)){
+    //     return next(new AppError(`ParentUser limit for user credit Reference is less then ${parentUser.maxLimitForChildUser}`, 404))
+    // }
     // // console.log(user)
     // if(childUser.role.role_level < parentUser.role.role_level){
     //     return next(new AppError("you do not have permission to perform this action", 404))

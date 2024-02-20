@@ -224,10 +224,10 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     //     return next(new AppError("You do not have permission to perform this action", 404))
     // }
 
-    if(user_type.role_level === 5){
-        if(req.currentUser.maxLimitForChildUser && req.currentUser.maxLimitForChildUser < req.body.Credit){
-            return next(new AppError(`Your limit for user credit Reference is less then ${req.currentUser.maxLimitForChildUser}`, 404))
-        }
+    // if(user_type.role_level === 5){
+    // }
+    if(req.currentUser.maxLimitForChildUser && req.currentUser.maxLimitForChildUser < req.body.Credit){
+        return next(new AppError(`Your limit for user credit Reference is less then ${req.currentUser.maxLimitForChildUser}`, 404))
     }
     if(!req.body.whiteLabel){
         return next(new AppError("please provide a white lable for user", 404))
