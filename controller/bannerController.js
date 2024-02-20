@@ -9,11 +9,7 @@ async function getWhiteLabelDetails(Wlbl,req)
 	if(Wlbl == "" || Wlbl == null)
 	{
 		let cookieValue = req.cookies.WhiteLabelSelected;		
-		let urlParams = new URLSearchParams(window.location.search);
-		let queryParameterValue = urlParams.get('selwhitelbl');		
-		if(queryParameterValue !='' && queryParameterValue!=null)
-			Wlbl = queryParameterValue;
-		else if(cookieValue !='' && cookieValue!=null)
+		if(cookieValue !='' && cookieValue!=null)
 			Wlbl = cookieValue;
 	}
 	
