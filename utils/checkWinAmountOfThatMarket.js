@@ -344,7 +344,8 @@ async function checkExpoOfThatMarket( bet ){
                                     if: {
                                             $or: [
                                                 { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                             ]
                                         },
                                     then:{
@@ -364,20 +365,19 @@ async function checkExpoOfThatMarket( bet ){
                                     if: {
                                             $or: [
                                                 { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } },
+                                                { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
                                             ]
                                         },
                                     then:{
-                                        $sum: "$Stake"
-                                        // {
-                                        //     $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
-                                        // }
+                                        $sum: {
+                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                        }
                                     },
                                     else:{
-                                        $sum: "$Stake"
-                                        // { 
-                                        //     $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
-                                        // }
+                                        $sum: { 
+                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                        }
                                     }
                                 }
                             }
@@ -399,18 +399,17 @@ async function checkExpoOfThatMarket( bet ){
                 },
                 exposure:{
                     // $sum:'$exposure'
-                    $sum: '$exposure' 
-                    // { 
-                    //     $cond: { 
-                    //         if : {$eq: ['$bettype2', "BACK"]},
-                    //         then : {
-                    //             $sum: '$exposure' 
-                    //         },
-                    //         else : {
-                    //             $multiply: ['$Stake', -1]
-                    //         }
-                    //     }
-                    // }
+                    $sum: { 
+                        $cond: { 
+                            if : {$eq: ['$bettype2', "BACK"]},
+                            then : {
+                                $sum: '$exposure' 
+                            },
+                            else : {
+                                $multiply: ['$Stake', -1]
+                            }
+                        }
+                    }
                 }
             },
             },
