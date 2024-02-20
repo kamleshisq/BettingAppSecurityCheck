@@ -1,10 +1,42 @@
 const sliderModel = require('../model/sliderModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require("../utils/AppError");
-const fs = require('fs')
+const fs = require('fs');
+const whiteLabel = require('../model/whitelableModel');
+
+async function getWhiteLabelDetails(Wlbl,req)
+{	
+	if(Wlbl == "" || Wlbl == null)
+	{
+		let cookieValue = req.cookies.WhiteLabelSelected;		
+		if(cookieValue !='' && cookieValue!=null)
+			Wlbl = cookieValue;
+	}
+	
+	var WhiteLabelInfo = await whiteLabel.findOne({whiteLabelName:Wlbl});
+	//console.log(WhiteLabelInfo.whiteLabelName);
+	//whitelabelpath
+	return WhiteLabelInfo;
+}
 
 exports.createNewSlider = catchAsync(async(req, res, next) => {
     let whiteLabel = process.env.whiteLabelName
+	
+	/***/
+	let path="public/sliderBackgroundImages/";	
+	if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
+	{
+		let WhiteLBL= getWhiteLabelDetails("",req);		
+		if(WhiteLBL.whitelabelpath!='')
+		path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/sliderBackgroundImages/`;
+		
+		if(WhiteLBL.whiteLabelName !='')
+		{
+			whiteLabel = WhiteLBL.whiteLabelName;
+		}
+	}
+	/***/
+				
     if(req.currentUser.role_type == 1){
         whiteLabel = "1"
     }
@@ -16,9 +48,11 @@ exports.createNewSlider = catchAsync(async(req, res, next) => {
     if(req.files){
         if(req.files.backgroundImage.mimetype.startsWith('image')){
             const image = req.files.backgroundImage
-            // console.log(logo)
             req.body.backGroundImage = req.body.name.split(' ')[0]
-            image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.webp`, (err)=>{
+			
+			
+			
+            image.mv(`${path}/${req.body.name.split(' ')[0]}.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
@@ -39,7 +73,25 @@ exports.addImage = catchAsync(async(req, res, next) =>{
     if(req.files){
         if(req.files.image.mimetype.startsWith('image')){
             const image = req.files.image
-            image.mv(`public/sliderImages/${req.body.menuName}.webp`, (err)=>{
+			
+			/***/
+			let path="public/sliderImages/";	
+			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
+			{
+				let WhiteLBL= getWhiteLabelDetails("",req);		
+				if(WhiteLBL.whitelabelpath!='')
+					path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/sliderImages/`;
+				
+				/*if(WhiteLBL.whiteLabelName !='')
+				{
+					whiteLabel = WhiteLBL.whiteLabelName;
+				}*/
+			}
+			/***/
+	
+	
+			
+            image.mv(`${path}${req.body.menuName}.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
@@ -69,6 +121,21 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 exports.editSliderinImage =  catchAsync(async(req, res, next) => {
     let name = req.body.id.split("//")[1]
     let whiteLabel = process.env.whiteLabelName
+	/***/
+	let path="public/sliderImages/";	
+	if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
+	{
+		let WhiteLBL= getWhiteLabelDetails("",req);		
+		if(WhiteLBL.whitelabelpath!='')
+			path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/sliderImages/`;
+		
+		if(WhiteLBL.whiteLabelName !='')
+		{
+			whiteLabel = WhiteLBL.whiteLabelName;
+		}
+	}
+	/***/
+	
     if(req.currentUser.role_type == 1){
         whiteLabel = "1"
     }
@@ -81,7 +148,7 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                 if(req.files.file.mimetype.startsWith('image')){
                     const image = req.files.file
                     // console.log(logo)
-                    image.mv(`public/sliderImages/${req.body.name}.webp`, (err)=>{
+                    image.mv(`${path}${req.body.name}.webp`, (err)=>{
                         if(err) 
                         return next(new AppError("Something went wrong please try again later", 400))
                     })
@@ -101,8 +168,8 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                     return next(new AppError("Please upload an image file", 400))
                 }
             }else{
-            let originalImage = `public/sliderImages/${slider.images[index].name}.webp`
-            let updatedPath = `public/sliderImages/${req.body.name}.webp`
+            let originalImage = `${path}${slider.images[index].name}.webp`
+            let updatedPath = `${path}${req.body.name}.webp`
             fs.rename(originalImage, updatedPath, (err) => {
                 if (err) {
                   console.error('Error renaming file:', err);
@@ -135,6 +202,21 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
 exports.updateSlider = catchAsync(async(req, res, next) => {
     // console.log('WORKING12365479987')
     let whiteLabel = process.env.whiteLabelName
+	/***/
+	let path="public/sliderBackgroundImages/";	
+	if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
+	{
+		let WhiteLBL= getWhiteLabelDetails("",req);		
+		if(WhiteLBL.whitelabelpath!='')
+			path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/sliderBackgroundImages/`;
+		
+		if(WhiteLBL.whiteLabelName !='')
+		{
+			whiteLabel = WhiteLBL.whiteLabelName;
+		}
+	}
+	/***/
+	
     if(req.currentUser.role_type == 1){
         whiteLabel = "1"
     }
@@ -143,7 +225,7 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
         if(req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
             // console.log(logo)
-            image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.webp`, (err)=>{
+            image.mv(`${path}${req.body.name.split(' ')[0]}.webp`, (err)=>{
                 req.body.backGroundImage = req.body.name.split(' ')[0]
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))

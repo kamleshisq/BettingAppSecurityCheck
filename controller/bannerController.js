@@ -23,13 +23,30 @@ exports.createBanner = catchAsync(async(req, res, next) => {
     if(req.files){
         if(req.files.banner.mimetype.startsWith('image')){
             const image = req.files.banner
-            // console.log(logo)
-            image.mv(`public/banner/${req.body.bannerName}.webp`, (err)=>{
+			let whiteLabel = process.env.whiteLabelName
+			/**/			
+			let path="public/banner/"	
+			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
+			{
+				let WhiteLBL= getWhiteLabelDetails("",req);
+				if(WhiteLBL.whitelabelpath!='')
+					path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/banner/`;
+					
+				if(WhiteLBL.whiteLabelName !='')
+				{
+					whiteLabel = WhiteLBL.whiteLabelName;
+				}
+			}			
+			/**/
+			
+            image.mv(`${path}${req.body.bannerName}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
             req.body.banner = req.body.bannerName
-            let whiteLabel = process.env.whiteLabelName
-            if(req.currentUser.role_type == 1){
+            
+			
+            if(req.currentUser.role_type == 1)
+			{
                 whiteLabel = "1"
             }
             req.body.whiteLabelName = whiteLabel
@@ -53,12 +70,28 @@ exports.createMedia = catchAsync(async(req, res, next) => {
         if(req.files.img.mimetype.startsWith('image')){
             const image = req.files.img
             // console.log(logo)
-            image.mv(`public/banner/${req.body.name}.webp`, (err)=>{
+			let WhiteLBL= getWhiteLabelDetails("",req);
+			let path="public/banner/"	
+			if(WhiteLBL.whitelabelpath!='')
+				path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/banner/`;
+		
+            image.mv(`${path}${req.body.name}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
+			
             let pathname = `/banner/${req.body.name}.webp`
             req.body.banner = req.body.name
-            let whiteLabel = process.env.whiteLabelName
+            
+			let whiteLabel = process.env.whiteLabelName
+			
+			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
+			{
+				if(WhiteLBL.whiteLabelName !='')
+				{
+					whiteLabel = WhiteLBL.whiteLabelName;
+				}
+			}
+			
             if(req.currentUser.role_type == 1){
                 whiteLabel = "1"
             }
@@ -87,10 +120,9 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.body)
     // console.log(req.files)
 	let WhiteLBL= getWhiteLabelDetails("",req);
-	let path="public/banner/"
-	
+	let path="public/banner/"	
 	if(WhiteLBL.whitelabelpath!='')
-		path = "/var/www/LiveBettingApp/dev.ollscores.com/bettingApp/public/banner/";
+		path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/banner/`;
 	
     if(req.body.check){
         req.body.status = true
