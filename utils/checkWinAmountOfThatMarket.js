@@ -440,6 +440,7 @@ async function checkExpoOfThatMarket( bet ){
                 betsMarketIdWise[0].selections.push(objectTopush)
             }else{
                 if(bet.bettype2 === "LAY"){
+                    console.log(betsMarketIdWise[0].selections[index])
                     betsMarketIdWise[0].selections[index].totalAmount = betsMarketIdWise[0].selections[index].totalAmount - parseFloat(bet.WinAmount)
                     betsMarketIdWise[0].selections[index].exposure = betsMarketIdWise[0].selections[index].exposure + parseFloat(bet.exposure)
                     betsMarketIdWise[0].selections[index].Stake = betsMarketIdWise[0].selections[index].Stake - bet.Stake
