@@ -19,6 +19,7 @@ async function getWhiteLabelDetails(Wlbl,req)
 	
 	var WhiteLabelInfo = await whiteLabel.findOne({whiteLabelName:Wlbl});
 	console.log("Inside the function");
+	console.log(Wlbl);
 	console.log(WhiteLabelInfo);
 }
 
