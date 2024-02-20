@@ -127,7 +127,7 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
         return next(new AppError("User Account is Locked", 404))
     }
     console.log(parentUser, "parentUserparentUserparentUser")
-    if(parentUser.roleName != 'admin'){
+    if(parentUser.roleName != 'Admin'){
         let upperParentUSer = await User.findById(parentUser.parent_id)
         if(upperParentUSer){
             if(upperParentUSer.maxLimitForChildUser && (Math.abs(parentUser.balance) + Math.abs(req.body.amount) > upperParentUSer.maxLimitForChildUser)){
