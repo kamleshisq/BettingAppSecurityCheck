@@ -171,7 +171,10 @@ async function checkExpoOfThatMarket( bet ){
                 }
               },
         ])
-        console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
+        console.log(betDetails[0].data[0],bet)
+        // let thatData = betDetails[0].data[0].find()
+        
+
         let dataToshow = []
         if(betDetails.length != 0){
             betDetails = betDetails[0]
