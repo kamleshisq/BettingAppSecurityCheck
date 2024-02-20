@@ -468,7 +468,7 @@ async function checkExpoOfThatMarket( bet ){
                     // console.log(amount)
                     showData.push(amount)
                 }
-                // console.log(showData, "showDatashowDatashowData")
+                console.log(showData, "showDatashowDatashowData")
                 WinAmount = Math.max(...showData);
         }
     }

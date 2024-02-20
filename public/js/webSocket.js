@@ -83,6 +83,9 @@ socket.on('connect', () => {
                 $(".alert-popup").fadeOut(500);
             });
             }
+            setTimeout(function () {
+                $(".alert-popup").fadeOut(500);
+            }, 1500);
     }
     
 
@@ -18116,7 +18119,8 @@ socket.on('connect', () => {
           })
       
           socket.on("commissionMarketbyId", data =>{
-                alert(data.msg)
+            toggleadminSide(data.msg, true)
+                // alert(data.msg)
           })
     }
 
