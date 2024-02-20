@@ -88,8 +88,9 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.files)
 	let WhiteLBL= getWhiteLabelDetails("",req);
 	let path="public/banner/"
+	
 	if(WhiteLBL.whitelabelpath!='')
-		path = "/var/www/LiveBettingApp/"+WhiteLBL.whitelabelpath+"/bettingApp/public/banner/"
+		path = "/var/www/LiveBettingApp/dev.ollscores.com/bettingApp/public/banner/";
 	
     if(req.body.check){
         req.body.status = true
@@ -101,7 +102,7 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
             const image = req.files.file
             // console.log(logo)
             // console.log(image,'==>image')
-            image.mv(`path+${req.body.Name}.webp`, (err)=>{
+            image.mv(`${path}${req.body.Name}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
 
