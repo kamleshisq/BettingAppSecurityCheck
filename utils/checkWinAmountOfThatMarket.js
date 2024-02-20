@@ -275,7 +275,8 @@ async function checkExpoOfThatMarket( bet ){
         console.log(dataToshow, "dataToshowdataToshow")
         const sortedData = dataToshow.sort((a, b) => b.sum - a.sum);
         const highestSum = sortedData[0];
-        console.log(highestSum, "highestSumhighestSumhighestSum")
+        console.log(highestSum, "highestSumhighestSumhighestSum", bet)
+        // if(bet.)
         // socket.emit('getFancyBookDATAuserSide', {dataToshow, status:'Fancy'})
     }
    }else{
