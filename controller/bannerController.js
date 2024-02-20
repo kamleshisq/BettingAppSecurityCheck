@@ -4,7 +4,7 @@ const AppError = require("../utils/AppError");
 const socialinfomodel = require('../model/socialMediaLinks');
 const whiteLabel = require('../model/whitelableModel');
 
-async function getWhiteLabelDetails(Wlbl)
+async function getWhiteLabelDetails(Wlbl,req)
 {	
 	if(Wlbl == "" || Wlbl == null)
 	{
@@ -90,7 +90,7 @@ exports.createMedia = catchAsync(async(req, res, next) => {
 exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.body)
     // console.log(req.files)
-	getWhiteLabelDetails("");
+	getWhiteLabelDetails("",req);
 	
     if(req.body.check){
         req.body.status = true
