@@ -94,18 +94,6 @@ let updatedURL = currentURL + separator + `sessiontoken=${sessionStorage.getItem
 <script src="/js/main.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/webSocket.js"></script>
-<style>
-  .alert-popup { position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: #f9f9f9c7; z-index: 1111;}
-  .alert-popup .popup-content{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff; box-shadow: 0 0 50px 0px #9999995e; border-radius: 10px; padding: 30px; width: 100%; max-width: 400px; text-align: center; }
-  .alert-popup .popup-content p{font-size: 16px; margin: 0 0; padding: 0;}
-  .alert-popup .close-popup { position: absolute; right: -10px; background: #000; color: #fff; height: 30px; width: 30px; border: 0; line-height: normal; top: -10px; border-radius: 30px; cursor: pointer;}
-  .alert-popup#success .close-popup{background: #155724;}
-  .alert-popup#success .popup-content{background: #d4edda; border: 1px solid #c3e6cb;}
-  .alert-popup#success .popup-content p{color: #155724;}
-  .alert-popup#error .close-popup{background: #721c24;}
-  .alert-popup#error .popup-content{background: #f8d7da; border: 1px solid #f5c6cb;}
-  .alert-popup#error .popup-content p{color: #721c24;}
-</style>
 <div class="alert-popup" id="success" style="display: none;"> </div>
 <div class="alert-popup" id="error" style="display: none;"> </div>
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> -->
