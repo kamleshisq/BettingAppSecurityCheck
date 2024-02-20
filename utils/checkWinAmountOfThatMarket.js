@@ -368,14 +368,16 @@ async function checkExpoOfThatMarket( bet ){
                                             ]
                                         },
                                     then:{
-                                        $sum: {
-                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
-                                        }
+                                        $sum: "$Stake"
+                                        // {
+                                        //     $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                        // }
                                     },
                                     else:{
-                                        $sum: { 
-                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
-                                        }
+                                        $sum: "$Stake"
+                                        // { 
+                                        //     $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                        // }
                                     }
                                 }
                             }
@@ -404,7 +406,27 @@ async function checkExpoOfThatMarket( bet ){
                                 $sum: '$exposure' 
                             },
                             else : {
-                                $multiply: ['$Stake', -1]
+                                // $multiply: ['$Stake', -1]
+                                $cond:{
+                                    if: {
+                                            $or: [
+                                                { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } }
+                                            ]
+                                        },
+                                    then:{
+                                        $sum:
+                                        {
+                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                        }
+                                    },
+                                    else:{
+                                        $sum: 
+                                        { 
+                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
