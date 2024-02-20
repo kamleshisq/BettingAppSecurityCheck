@@ -18600,13 +18600,41 @@ socket.on('connect', () => {
                     }else{
                         html += '<tr class="lay" >'
                     }
+                     var options = { 
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    second: 'numeric',
+                                    hour12: true
+                                };
+                                var formattedTime = date.toLocaleString('en-US', options);
                     html += `
-                    <td>${data.data[i].userName}</td>
-                    <td class="date-time" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
-                    <td>${data.data[i].marketName}</td>
-                    <!-- <td>${data.data[i].userName}</td> -->
-                    <td>${data.data[i].oddValue}</td>
-                    <td>${data.data[i].Stake}</td>
+                    <td>${formattedTime}</td>
+                    <td class="date-time" >${data.data[i].userName}</td>`
+                    if(data.data[i].match){
+                        html += `<td>${data.data[i].match}</td>`
+                        if(data.data[i].selectionName.includes('@')){
+                          
+                          let oddValue1 = data.data[i].selectionName.split('@')[1]
+                          let selectionName = data.data[i].selectionName.split('@')[0]
+                          let oddValue2 = data.data[i].oddValue
+                          
+                          html += `<td>${data.data[i].marketName - oddValue2}</td>
+                          <td>${oddValue1}</td>`
+                        }else{
+                          html += `<td>${data.data[i].marketName - data.data[i].selectionName} </td>
+                          <td>${data.data[i].oddValue}</td>`
+                        }
+                      }else{
+                          html += `<td>-</td>
+                          <td>-</td>
+                          <td>-</td>`
+                      }
+                    html += `<td>${data.data[i].Stake}</td>
+                    <td>${data.data[i].status}</td>
+                    <td>${data.data[i].ip}</td>
                     <td><div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${data.data[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489 489" xml:space="preserve">
                     <g>
                       <g>
