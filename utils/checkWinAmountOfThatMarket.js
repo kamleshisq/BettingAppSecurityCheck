@@ -451,7 +451,7 @@ async function checkExpoOfThatMarket( bet ){
             let showData = []
             for(let j = 0; j < betsMarketIdWise[0].runnersData.length; j++){
                     let checkRunn = betsMarketIdWise[0].selections.find(item => item.selectionName == betsMarketIdWise[0].runnersData[j].runner)
-                    // console.log(checkRunn, 123456789)
+                    console.log(checkRunn, 123456789)
                     let amount = 0
                     if(checkRunn){
                         amount = checkRunn.totalAmount
@@ -465,7 +465,7 @@ async function checkExpoOfThatMarket( bet ){
                             amount = amount - betsMarketIdWise[0].selections[run].exposure
                         }
                     }
-                    // console.log(amount)
+                    console.log(amount, "AMOUNT")
                     showData.push(amount)
                 }
                 console.log(showData, "showDatashowDatashowData")
