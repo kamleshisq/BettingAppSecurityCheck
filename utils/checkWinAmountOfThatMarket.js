@@ -429,6 +429,7 @@ async function checkExpoOfThatMarket( bet ){
 
         if(betsMarketIdWise.length > 0){
             let index = betsMarketIdWise[0].selections.findIndex(item => item.selectionName === bet.selectionName)
+            console.log(bet, "betbetbetbetbet12132")
             if(index === -1){
                 let objectTopush = {
                     selectionName : bet.selectionName,
