@@ -18621,10 +18621,10 @@ socket.on('connect', () => {
                           let selectionName = data.data[i].selectionName.split('@')[0]
                           let oddValue2 = data.data[i].oddValue
                           
-                          html += `<td>${data.data[i].marketName - oddValue2}</td>
+                          html += `<td>${data.data[i].marketName} - ${oddValue2}</td>
                           <td>${oddValue1}</td>`
                         }else{
-                          html += `<td>${data.data[i].marketName - data.data[i].selectionName} </td>
+                          html += `<td>${data.data[i].marketName} - ${data.data[i].selectionName} </td>
                           <td>${data.data[i].oddValue}</td>`
                         }
                       }else{
