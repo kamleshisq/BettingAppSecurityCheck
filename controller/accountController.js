@@ -27,8 +27,8 @@ exports.deposit = catchAsync(async(req, res, next) => {
     }
     req.body.amount = parseFloat(req.body.amount)
 
-    if(childUser.maxLimitForChildUser && (Math.abs(childUser.balance) + Math.abs(req.body.amount) < childUser.maxLimitForChildUser)){
-        return next(new AppError(`ParentUser limit for user credit Reference is less then ${childUser.maxLimitForChildUser}`, 404))
+    if(parentUser.maxLimitForChildUser && (Math.abs(childUser.balance) + Math.abs(req.body.amount) < parentUser.maxLimitForChildUser)){
+        return next(new AppError(`ParentUser limit for user credit Reference is less then ${parentUser.maxLimitForChildUser}`, 404))
     }
     
     // // console.log(req.body)
