@@ -17,7 +17,8 @@ async function getWhiteLabelDetails(Wlbl,req)
 			Wlbl = cookieValue;
 	}
 	
-	var WhiteLabelInfo = await whiteLabel.find({whiteLabelName:Wlbl});
+	var WhiteLabelInfo = await whiteLabel.findOne({whiteLabelName:Wlbl});
+	console.log("Inside the function");
 	console.log(WhiteLabelInfo);
 }
 
