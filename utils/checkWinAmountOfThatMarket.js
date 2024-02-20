@@ -171,7 +171,7 @@ async function checkExpoOfThatMarket( bet ){
                 }
               },
         ])
-        // console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
+        console.log(betDetails[0].data, "betDetailsbetDetailsbetDetails")
         let dataToshow = []
         if(betDetails.length != 0){
             betDetails = betDetails[0]
@@ -272,11 +272,6 @@ async function checkExpoOfThatMarket( bet ){
                 }
             }
         }
-        console.log(dataToshow, "dataToshowdataToshow")
-        const sortedData = dataToshow.sort((a, b) => b.sum - a.sum);
-        const highestSum = sortedData[0];
-        console.log(highestSum, "highestSumhighestSumhighestSum", bet)
-        // if(bet.)
         // socket.emit('getFancyBookDATAuserSide', {dataToshow, status:'Fancy'})
     }
    }else{
