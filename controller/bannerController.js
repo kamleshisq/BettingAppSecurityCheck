@@ -14,9 +14,9 @@ async function getWhiteLabelDetails(Wlbl,req)
 	}
 	
 	var WhiteLabelInfo = await whiteLabel.findOne({whiteLabelName:Wlbl});
-	console.log("Inside the function");
-	console.log(Wlbl);
-	console.log(WhiteLabelInfo.whiteLabelName);
+	//console.log(WhiteLabelInfo.whiteLabelName);
+	//whitelabelpath
+	return WhiteLabelInfo;
 }
 
 exports.createBanner = catchAsync(async(req, res, next) => {
@@ -86,7 +86,10 @@ exports.createMedia = catchAsync(async(req, res, next) => {
 exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.body)
     // console.log(req.files)
-	getWhiteLabelDetails("",req);
+	let WhiteLBL= getWhiteLabelDetails("",req);
+	let path="public/banner/"
+	if(WhiteLBL.whitelabelpath!='')
+		path = "/var/www/LiveBettingApp/"+WhiteLBL.whitelabelpath+"/public/banner/"
 	
     if(req.body.check){
         req.body.status = true
@@ -98,7 +101,7 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
             const image = req.files.file
             // console.log(logo)
             // console.log(image,'==>image')
-            image.mv(`public/banner/${req.body.Name}.webp`, (err)=>{
+            image.mv(`path+${req.body.Name}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
 
