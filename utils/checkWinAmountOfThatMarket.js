@@ -309,7 +309,7 @@ async function checkExpoOfThatMarket( bet ){
                             }
                         }
                     }
-                // console.log(dataToshow)
+                console.log(dataToshow, "1212122")
                 let maxSumObject = dataToshow.reduce((max, current) => 
                     current.sum > max.sum ? current : max,
                     { sum: -Infinity }
