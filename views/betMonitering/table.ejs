@@ -29,14 +29,15 @@
       <%}%>
       <td><%=i + 1%></td>
       <%
-        var options = { 
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          hour12: true
-      };
+      var options = { 
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+    };
       var formattedTime = date.toLocaleString('en-US', options);
       %>
       <td class="date-time" ><%=formattedTime%></td>
