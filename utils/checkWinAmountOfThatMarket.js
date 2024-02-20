@@ -4,7 +4,7 @@ const runnerDataModel = require('../model/runnersData');
 
 
 async function checkExpoOfThatMarket( bet ){
-   let winAmount = 0
+   let WinAmount = 0
    if(bet.secId.toLowerCase().startsWith('odd_even')){
     if(bet.marketId.slice(-2).startsWith('OE')){
         let betDetails = await Bet.aggregate([
