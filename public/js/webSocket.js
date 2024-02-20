@@ -6506,6 +6506,7 @@ socket.on('connect', () => {
                     day: 'numeric',
                     hour: 'numeric',
                     minute: 'numeric',
+                    second: 'numeric',
                     hour12: true
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
