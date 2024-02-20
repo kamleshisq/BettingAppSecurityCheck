@@ -126,7 +126,7 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     if(parentUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
-    console.log(parentUser)
+    console.log(parentUser, "parentUserparentUserparentUser")
     if(parentUser.roleName != 'admin'){
         let upperParentUSer = await User.findById(parentUser.parent_id)
         if(upperParentUSer){
