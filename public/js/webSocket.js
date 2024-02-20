@@ -65,6 +65,24 @@ socket.on('connect', () => {
         }, 3000);
     }
 
+
+    function toggleadminSide(message, status ){
+            var text = message;
+            if(status){
+                $("#success").fadeIn(500);
+                $("#success").html("<div class='popup-content'><button class='close-popup'>X</button><p>"+text+"</p> </div>");
+                $("#success .close-popup").click(function() {
+                $(".alert-popup").fadeOut(500);
+            });
+            }
+            else{
+                $("#error").fadeIn(500);
+                $("#error").html("<div class='popup-content'><button class='close-popup'>X</button><p>"+text+"</p> </div>");
+                $("#error .close-popup").click(function() {
+                $(".alert-popup").fadeOut(500);
+            });
+            }
+    }
     
 
     $('.button').click(function (event) {
@@ -16126,7 +16144,13 @@ socket.on('connect', () => {
         })
 
         socket.on('Wallet', data => {
-            alert(data.message)
+            if(data.status == 'sucess'){
+                toggleadminSide(data.message, true)
+
+            }else{
+                toggleadminSide(data.message, false)
+
+            }
         })
 
         $(document).on('click', '.kycPdf', function(e){
