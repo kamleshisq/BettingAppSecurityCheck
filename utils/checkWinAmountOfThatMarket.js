@@ -486,7 +486,7 @@ async function checkExpoOfThatMarket( bet ){
     }
 
     console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
-    // return WinAmount
+    return WinAmount
 }
 
 
