@@ -16149,7 +16149,7 @@ socket.on('connect', () => {
 
         socket.on('Wallet', data => {
             if(data.status == 'sucess'){
-                toggleadminSide(data.message, false)
+                toggleadminSide(data.message, true)
 
             }else{
                 toggleadminSide(data.message, false)
