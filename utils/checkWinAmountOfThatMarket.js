@@ -1,3 +1,8 @@
+const User = require('../model/userModel');
+const Bet = require('../model/betmodel');
+const runnerDataModel = require('../model/runnersData');
+
+
 async function checkExpoOfThatMarket( bet ){
     // console.log(bet, 123456789)
     let WinAmount = parseFloat(bet.WinAmount)
@@ -484,3 +489,6 @@ async function checkExpoOfThatMarket( bet ){
     console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
     return WinAmount
 }
+
+
+module.exports = checkExpoOfThatMarket
