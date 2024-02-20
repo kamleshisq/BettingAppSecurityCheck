@@ -62,6 +62,9 @@ async function placeBet(data){
     if(check.availableBalance < parseFloat(data.data.stake)){
         return "You do not have sufficient balance for bet"
     }
+    if(check.betLock){
+        return "Please try again later, You don't have permission to Place Bet"
+    }
     let exposureCHECk = await exposurecheck(check)
     if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
         return "Please try again later, Your exposure Limit is full"
