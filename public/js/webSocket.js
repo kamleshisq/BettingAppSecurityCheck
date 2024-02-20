@@ -18119,7 +18119,7 @@ socket.on('connect', () => {
           })
       
           socket.on("commissionMarketbyId", data =>{
-            toggleadminSide(data.message, true)
+            toggleadminSide(data.msg, true)
                 // alert(data.msg)
           })
     }
