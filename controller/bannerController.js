@@ -4,17 +4,13 @@ const AppError = require("../utils/AppError");
 const socialinfomodel = require('../model/socialMediaLinks');
 const whiteLabel = require('../model/whitelableModel');
 
-async function getWhiteLabelDetails(Wlbl,req)
-{
-	console.log("Before condition");
-	console.log(Wlbl);
-	
+async function getWhiteLabelDetails(Wlbl)
+{	
 	if(Wlbl == "" || Wlbl == null)
 	{
-		let cookieValue = req.cookies.WhiteLabelSelected;
-		let queryParameterValue = req.query.selwhitelbl; 
-		
-			console.log(req.query);		
+		let cookieValue = req.cookies.WhiteLabelSelected;		
+		let urlParams = new URLSearchParams(window.location.search);
+		let queryParameterValue = urlParams.get('selwhitelbl');		
 		if(queryParameterValue !='' && queryParameterValue!=null)
 			Wlbl = queryParameterValue;
 		else if(cookieValue !='' && cookieValue!=null)
@@ -24,7 +20,7 @@ async function getWhiteLabelDetails(Wlbl,req)
 	var WhiteLabelInfo = await whiteLabel.findOne({whiteLabelName:Wlbl});
 	console.log("Inside the function");
 	console.log(Wlbl);
-	console.log(WhiteLabelInfo);
+	console.log(WhiteLabelInfo.whiteLabelName);
 }
 
 exports.createBanner = catchAsync(async(req, res, next) => {
@@ -94,7 +90,7 @@ exports.createMedia = catchAsync(async(req, res, next) => {
 exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.body)
     // console.log(req.files)
-	getWhiteLabelDetails("",req);
+	getWhiteLabelDetails("");
 	
     if(req.body.check){
         req.body.status = true
