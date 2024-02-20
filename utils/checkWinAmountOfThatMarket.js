@@ -450,6 +450,7 @@ async function checkExpoOfThatMarket( bet ){
                     betsMarketIdWise[0].selections[index].Stake = betsMarketIdWise[0].selections[index].Stake - bet.Stake
                 }
             }
+            onsole.log(betsMarketIdWise[0].selections[index], bet)
             let runnerData = await runnerDataModel.findOne({marketId:bet.marketId})
             if(runnerData){
                 betsMarketIdWise[0].runnersData = JSON.parse(runnerData.runners)
