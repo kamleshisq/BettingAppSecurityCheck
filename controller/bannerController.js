@@ -89,7 +89,7 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
 	let WhiteLBL= getWhiteLabelDetails("",req);
 	let path="public/banner/"
 	if(WhiteLBL.whitelabelpath!='')
-		path = "/var/www/LiveBettingApp/"+WhiteLBL.whitelabelpath+"/public/banner/"
+		path = "/var/www/LiveBettingApp/"+WhiteLBL.whitelabelpath+"/bettingApp/public/banner/"
 	
     if(req.body.check){
         req.body.status = true
