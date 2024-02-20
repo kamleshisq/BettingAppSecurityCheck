@@ -58,6 +58,7 @@ async function placeBet(data){
         return "Stake out of range"
     }
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
+    console.log(check, "checkcheckcheck")
     if(check.availableBalance < parseFloat(data.data.stake)){
         return "You do not have sufficient balance for bet"
     }
