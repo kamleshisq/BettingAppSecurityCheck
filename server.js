@@ -4433,6 +4433,7 @@ io.on('connection', (socket) => {
             // }
             await User.findByIdAndUpdate(data.id, {maxLimitForChildUser:data.maxCreditReference, transferLock:data.transferLock})
             socket.emit("myShare", {maxCreditReference:data.maxCreditReference, transferLock:data.transferLock, status:"success"})
+            socket.emit("Wallet",{message:"Updated", status:"sucess"})
         }catch(err){
             console.log(err)
             socket.emit("Wallet",{message:"Please try again later", status:"error"})
