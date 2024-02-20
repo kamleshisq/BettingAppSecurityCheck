@@ -2,6 +2,24 @@ const bannerModel =  require("../model/bannerModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 const socialinfomodel = require('../model/socialMediaLinks');
+const whiteLabel = require('../model/whitelableModel');
+
+async function getWhiteLabelDetails(Wlbl,req)
+{
+	if(Wlbl == "" || Wlbl == null)
+	{
+		let cookieValue = req.cookies.WhiteLabelSelected;
+		let queryParameterValue = req.query.selwhitelbl; 
+		let Wlbl = '';	
+		if(queryParameterValue !='' && queryParameterValue!=null)
+			Wlbl = queryParameterValue;
+		else if(cookieValue !='' && cookieValue!=null)
+			Wlbl = cookieValue;
+	}
+	
+	var WhiteLabelInfo = await whiteLabel.find({whiteLabelName:Wlbl});
+	console.log(WhiteLabelInfo);
+}
 
 exports.createBanner = catchAsync(async(req, res, next) => {
     if(req.files){
@@ -70,6 +88,8 @@ exports.createMedia = catchAsync(async(req, res, next) => {
 exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.body)
     // console.log(req.files)
+	getWhiteLabelDetails("",req);
+	
     if(req.body.check){
         req.body.status = true
     }else{
