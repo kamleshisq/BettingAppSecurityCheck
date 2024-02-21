@@ -1,4 +1,5 @@
-import toggleadminSide from "./adminSideCustomPopup";
+import { toggleadminSide } from "./adminSideCustomPopup";
+
 export const betLockStatus = (data) => {
     let url = !data.betLock ? '/api/v1/users/updateUserStatusBettingLock' : '/api/v1/users/updateUserStatusBettingUnlock';
     let message = !data.betLock ? 'user lock successfully' : 'user unlock successfully'

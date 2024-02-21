@@ -1,5 +1,5 @@
 import axios from "axios";
-import toggleadminSide from "./adminSideCustomPopup";
+import { toggleadminSide } from "./adminSideCustomPopup";
 
 export const createBanner = async(data)=>{
     try{

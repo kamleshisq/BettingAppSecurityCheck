@@ -1,5 +1,5 @@
 import axios from "axios";
-import toggleadminSide from "./adminSideCustomPopup";
+import { toggleadminSide } from "./adminSideCustomPopup";
 export const createSlider = async(data)=>{
     try{
         const res = await axios({

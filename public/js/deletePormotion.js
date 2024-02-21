@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toggleadminSide } from "./adminSideCustomPopup";
 
 export const deletePromotion = async(data)=>{
     // console.log(data)
@@ -10,7 +11,7 @@ export const deletePromotion = async(data)=>{
         });
         // console.log(res)
         if(res.data.status === 'success'){
-            alert('deleted successfully!!!!');
+            toggleadminSide('deleted successfully!!!!',true);
                 window.setTimeout(()=>{
                     location.reload();
                 }, 100)
@@ -18,6 +19,6 @@ export const deletePromotion = async(data)=>{
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }
