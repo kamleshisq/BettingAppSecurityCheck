@@ -206,7 +206,8 @@ socket.on('connect', () => {
             }
 
         }else{
-            alert(data.msg)
+			toggleadminSide(data.msg, false);
+            //alert(data.msg)
             
         }
     })
@@ -864,7 +865,8 @@ socket.on('connect', () => {
 
     socket.on("alertMessage", async(data) => {
         // console.log(data)
-        alert(data)
+        //alert(data)
+		toggleadminSide(data,true);
     })
 
     $(document).on('click', ".promotionLink", function(){
@@ -1341,9 +1343,11 @@ socket.on('connect', () => {
 
     socket.on('UpdateBetLimit', data => {
         if(data.status == "err"){
-            alert(data.message)
+            //alert(data.message)
+			toggleadminSide(data.message,false);
         }else{
-            alert("updated!!")
+			//alert("updated!!")
+			toggleadminSide("Updated",true);
             window.location.reload()
         }
     })
@@ -1493,7 +1497,8 @@ socket.on('connect', () => {
         })
 
         socket.on('editMyProfile',async(data)=>{
-            alert(data.msg)
+//            alert(data.msg)
+			toggleadminSide(data.msg,true);
             location.reload(true)
         })
 
@@ -1506,10 +1511,11 @@ socket.on('connect', () => {
         })
 
         socket.on('editMyPassword',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
             if(data.status == 'success'){
-
-                location.reload(true)
+				setTimeout(function() {location.reload(true)}, 3000);
+                
             }
         })
 
@@ -1587,7 +1593,8 @@ socket.on('connect', () => {
         let num2Input1 = document.getElementById('Share');
         num1Input1.addEventListener('input', () => {
             if(num1Input1.value > visibleValue){
-                alert('please select share lessThan your visible share')
+               // alert('please select share lessThan your visible share')
+			   toggleadminSide('please select share lessThan your visible share',false);
             }else{
                 const num11 = parseFloat(num1Input1.value);
                 const num21 = visibleValue - num11;
@@ -1597,7 +1604,8 @@ socket.on('connect', () => {
 
         num2Input1.addEventListener('input', () => {
             if(num1Input1.value > visibleValue){
-                alert('please select share lessThan your visible share')
+                //alert('please select share lessThan your visible share')
+				toggleadminSide('please select share lessThan your visible share',false);
             }else{
                 const num21 = parseFloat(num2Input1.value);
                 const num11 = visibleValue - num21;
@@ -1621,7 +1629,9 @@ socket.on('connect', () => {
             // console.log(data)
             
             if(data.status === "error"){
-                alert("Please try again later")
+                //alert("Please try again later")
+				toggleadminSide('Please try again later',false);
+				
             }else{
                 // console.log(data)
                 if(data.commissionData.length != 0){
@@ -1758,9 +1768,11 @@ socket.on('connect', () => {
 
         socket.on("updateCommission", async(data) =>  {
             if(data.status === "error"){
-                alert("Please try again later")
+               // alert("Please try again later")
+				toggleadminSide('Please try again later',false);
             }else{
-                alert("Updated!!")
+               // alert("Updated!!")
+				toggleadminSide('Updated',true);
             }
         })
 
@@ -1850,7 +1862,8 @@ socket.on('connect', () => {
 
         socket.on("getUserDetaisl", data => {
             if(data.status === "error"){
-                alert("Please Try again leter")
+                //alert("Please Try again leter")
+				toggleadminSide('Please Try again leter',false);
             }else{
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
@@ -2021,9 +2034,11 @@ socket.on('connect', () => {
         })
         socket.on("BetLockUnlock", data => {
             if(data.status === "error"){
-                alert("Please Try again leter")
+                //alert("Please Try again leter")
+				toggleadminSide('Please Try again leter',false);
             }else if (data.status){
-                alert("Bet Locked Successfully")
+                //alert("Bet Locked Successfully")
+				toggleadminSide('Bet Locked Successfully',true);
                 let row = $('#'+data.rowid)
                 row.find('.betLockStatus').addClass("Locked")
                 // let element = document.getElementsByClassName("betLockStatus")
@@ -2031,7 +2046,8 @@ socket.on('connect', () => {
                 //     element[i].classList.add("Locked");
                 //   }
             }else if (!data.status){
-                alert("Bet Unlocked Successfully")
+                //alert("Bet Unlocked Successfully")
+				toggleadminSide('Bet Unlocked Successfully',true);
                 let row = $('#'+data.rowid)
                 row.find('.betLockStatus').removeClass("Locked")
                 // let elements = document.getElementsByClassName("betLockStatus")
@@ -2130,7 +2146,8 @@ socket.on('connect', () => {
 
         socket.on("getUserDetaisl111", data => {
             if(data.status === "error"){
-                alert("Please Try again leter")
+                //alert("Please Try again leter")
+				toggleadminSide('Please Try again leter',false);
             }else{
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
@@ -2191,7 +2208,8 @@ socket.on('connect', () => {
 
         socket.on("userStatus", data => {
             if(data.status === "error"){
-                alert("Please try again later")
+                //alert("Please try again later")
+				toggleadminSide('Please Try again leter',false);
             }else{
                 let modleName = "#myModal4"
                 let form = $(modleName).find('.form-data')
@@ -2237,9 +2255,11 @@ socket.on('connect', () => {
 
         socket.on('changeExp', data => {
             if(data.message){
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,true);
             }else{
-                alert('Please try again leter')
+               // alert('Please try again leter')
+				toggleadminSide('Please Try again leter',false);
             }
         })
         // socket.on('getOwnChild',(data) => {
@@ -2609,22 +2629,19 @@ socket.on('connect', () => {
 
     socket.on('claimCommissionAdmin', data => {
         if(data == "error"){
-            alert("Please try again leter")
+            //alert("Please try again leter")
+			toggleadminSide("Please try again leter",false);
         }else{
-            alert('commission claimed successfully')
+            //alert('commission claimed successfully')
+			toggleadminSide('commission claimed successfully',true);
             $('.COMMISSIONADMIN').text('Claim Commission (0)')
         }
     })
 
     $('#load-more').click(function(e){
         let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-
         let page = parseInt($('.rowId').attr('data-rowid'));
-
-
-        $('.rowId').attr('data-rowid',page + 1)
-       
-                
+		$('.rowId').attr('data-rowid',page + 1)
         socket.emit("search", {filterData,page,id, LOGINDATA })
         
     })
@@ -2714,7 +2731,8 @@ socket.on('connect', () => {
         // })
 
         socket.on('searchErr',(data) => {
-            alert(data.message)
+            //alert(data.message)
+			toggleadminSide(data.message,false);
         })
 
 
@@ -2847,9 +2865,11 @@ socket.on('connect', () => {
         })
 
         socket.on('editOperatorPermission',async(data)=>{
-            alert(data.msg)
-            if(data.status == 'success'){
-                location.reload(true)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
+            if(data.status == 'success')
+			{               
+				setTimeout(function(){ location.reload(true) }, 3000);
             }
         })
 
@@ -5005,14 +5025,16 @@ socket.on('connect', () => {
         socket.on('casionoStatusChange',async(data)=>{
             if(data.status == 'success'){
                 if(data.message){
-                    alert(data.message)
+					//alert(data.message)
+					toggleadminSide(data.message,true);
                     console.log(elementchange_status[0], "elementchange_statuselementchange_statuselementchange_status")
                     elementchange_status[0].checked = false;
                     $(elementchange_status).parents('.switch').removeClass("on");
                     // console.log(elementchange_status)
                 }
             }else{
-                alert('somthig watn wrong!!')
+                //alert('somthig watn wrong!!');
+				toggleadminSide('somthig watn wrong!!',false);
             }
         })
     }
@@ -6054,7 +6076,8 @@ socket.on('connect', () => {
 
         socket.on("SelectLogoutUserId", (data) => {
             // console.log(data)
-            alert("User Logout")
+           // alert("User Logout")
+			toggleadminSide('User Logout',true)
                 window.setTimeout(()=>{
                     window.location.reload(true)
                 },500)
@@ -6683,10 +6706,12 @@ socket.on('connect', () => {
 
     socket.on('alertBet', async(data) => {
         if(data.status == "fail"){
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,false);
             $('#myModal2').modal('toggle')
         }else{
-            alert('Bet alert Successfully !!')
+            //alert('Bet alert Successfully !!')
+			toggleadminSide("Bet alert Successfully !!",true);
             $('#myModal2').modal('toggle')
             refreshBetMonitorPage()
         }
@@ -7110,9 +7135,11 @@ socket.on('connect', () => {
 
         socket.on('timelyVoideBEt', async(data) => {
             if(data.status === "err"){
-                alert(data.message)
+               // alert(data.message)
+				toggleadminSide(data.message,false);
             }else{
-                alert('Bet Voided Successfully !!')
+                //alert('Bet Voided Successfully !!')
+				toggleadminSide('Bet Voided Successfully !!',true);
                 setTimeout(function() {
                     window.close();
                 }, 2000);
@@ -7239,10 +7266,13 @@ socket.on('connect', () => {
 
         socket.on('createNotification', async(data)=>{
             if(data.status != "success"){
-                alert(data.message)
+//                alert(data.message)
+				toggleadminSide(data.message,false);
             }else{
-                alert("Notification added successfully")
-                window.location.reload(true)
+//                alert("Notification added successfully")
+				toggleadminSide("Notification added successfully",true);
+				setTimeout(function(){ window.location.reload(true) }, 3000);
+               
             }
         })
 
@@ -7273,18 +7303,21 @@ socket.on('connect', () => {
                 }
                 document.getElementById(`${data.id}`).innerHTML = html
             }else{
-                alert(data)
+				toggleadminSide(data,false);
+//                alert(data)
             }
         })
 
         socket.on('deleteNotification', async(data)=>{
             if(data.status === 'success'){
-                alert("Deleted successfully")
+                //alert("Deleted successfully")
+				toggleadminSide("Deleted successfully",true);
                 window.setTimeout(()=>{
                     window.location.reload(true)
                 },500)
             }else{
-                alert(data.message)
+				toggleadminSide(data.message,false);
+                //alert(data.message)
             }
         })
 
@@ -7378,13 +7411,15 @@ socket.on('connect', () => {
         socket.on("createVerticalMenu", async(data)=>{
             // console.log(data)
             if(data.status === "success"){
-                alert("Menu Added Successfully")
+                //alert("Menu Added Successfully")
+				toggleadminSide("Menu Added Successfully",true);
                     window.setTimeout(()=>{
                         // window.location = '/admin/cms'
                         window.location.reload()
                     },500)
             }else{
-                alert(`${data.err.message}`)
+                //alert(`${data.err.message}`)
+				toggleadminSide(`${data.err.message}`,false);
             }
         })
 
@@ -7433,7 +7468,8 @@ socket.on('connect', () => {
         });
         
         socket.on("updateVerticalMenu", async(data)=>{
-            alert(`${data}`)
+            //alert(`${data}`)
+			toggleadminSide(`${data}`,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },500)
@@ -7450,7 +7486,8 @@ socket.on('connect', () => {
         })
 
         socket.on("deleteVerticalMenu", async(data) => {
-            alert("Menu Deleted Successfully")
+           // alert("Menu Deleted Successfully")
+			toggleadminSide("Menu Deleted Successfully",true);
             window.setTimeout(()=>{
                 window.location.reload()
             },500)
@@ -7525,7 +7562,8 @@ socket.on('connect', () => {
         })
 
         socket.on("deleteBanner", data =>{
-            alert(data)
+            //alert(data)
+			toggleadminSide(data,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },200)
@@ -7564,7 +7602,8 @@ socket.on('connect', () => {
             }
         })
         socket.on("dleteImageSport", async(data)=>{
-            alert(data)
+            //alert(data)
+			toggleadminSide(data,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },200)
@@ -7584,7 +7623,8 @@ socket.on('connect', () => {
 
         socket.on('editImageSport', data => {
             if(data == "Please try again later"){
-                alert(data)
+                //alert(data)
+				toggleadminSide(data,false);
             }else{
                 let modleName = "#EditSliderInImage"
                 let form = $(modleName).find('.editImageSportForm')
@@ -7601,7 +7641,8 @@ socket.on('connect', () => {
         })
 
         socket.on('UpdateSport', async(data) => {
-            alert(data)
+//            alert(data)
+			toggleadminSide(data,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },200)
@@ -7619,7 +7660,8 @@ socket.on('connect', () => {
             }
         })
         socket.on('deleteSlider', async(data) => {
-            alert(data)
+            //alert(data)
+			toggleadminSide(data,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },200)
