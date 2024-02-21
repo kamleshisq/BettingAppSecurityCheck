@@ -137,6 +137,9 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 
     }
 
+    if(childUser.availableBalance < req.body.amount){
+        return next(new AppError("Insufficient Credit Limit !"))
+    }
 
     // if(parentUser.maxLimitForChildUser && (parentUser.maxLimitForChildUser < req.body.amount)){
     //     return next(new AppError(`ParentUser limit for user credit Reference is less then ${parentUser.maxLimitForChildUser}`, 404))
