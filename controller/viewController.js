@@ -529,11 +529,9 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
 });
 
 exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
-    // console.log(req.query.id)
     let currentUser = req.currentUser
     let userDetails = await User.findById(req.query.id)
-    // if(userDetails.roleName)
-    // console.log(userDetails)
+  
     let limit = 10
     let skip = 0
     let bets
