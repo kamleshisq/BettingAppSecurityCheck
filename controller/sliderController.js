@@ -88,8 +88,8 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 				}*/
 			}
 			/***/
-	
-	
+	console.log("PATH ----");
+	console.log(path);
 			
             image.mv(`${path}${req.body.menuName}.webp`, (err)=>{
                 if(err) 
