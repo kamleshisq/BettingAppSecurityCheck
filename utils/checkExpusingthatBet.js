@@ -442,12 +442,23 @@ async function checkExpoOfThatMarketincludingBet( bet ){
         if(betsMarketIdWise.length > 0){
             let index = betsMarketIdWise[0].selections.findIndex(item => item.selectionName === bet.selectionName)
             if(index === -1){
-                let objectTopush = {
-                    selectionName : bet.selectionName,
-                    totalAmount : parseFloat(bet.WinAmount),
-                    exposure : parseFloat(bet.exposure),
-                    matchName : bet.match,
-                    Stake : -bet.Stake
+                let objectTopush
+                if(bet.bettype2 === "LAY"){
+                    objectTopush = {
+                        selectionName : bet.selectionName,
+                        totalAmount :  - parseFloat(bet.exposure),
+                        exposure : -parseFloat(bet.WinAmount),
+                        matchName : bet.match,
+                        Stake : -bet.Stake
+                    }
+                }else{
+                    objectTopush = {
+                        selectionName : bet.selectionName,
+                        totalAmount : parseFloat(bet.WinAmount),
+                        exposure : parseFloat(bet.exposure),
+                        matchName : bet.match,
+                        Stake : -bet.Stake
+                    }
                 }
                 betsMarketIdWise[0].selections.push(objectTopush)
             }else{
