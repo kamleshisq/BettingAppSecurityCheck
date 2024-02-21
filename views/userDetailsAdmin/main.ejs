@@ -370,14 +370,18 @@
                                   
                                   <td class="text-nowrap" ><%=formattedTime%></td>
                                   <%if(ACCount[i].description.startsWith('Chips')){%>
-                                    <%if(ACCount[i].creditDebitamount > 0){%>
-                                      <td >Deposit</td>
-                                    <%}else{%>
-                                      <%if(ACCount[i].user_id == ACCount[i].child_id){%>
-                                        <td >Withdraw</td>
-                                      <%}else{%>
+                                    <%if(ACCount[i].user_id == ACCount[i].child_id){%>
+                                      <%if(ACCount[i].creditDebitamount > 0){%>
                                         <td >Deposit</td>
+                                      <%}else{%>
+                                        <td >Withdraw</td>
+                                      <%}%>
 
+                                    <%}else{%>
+                                      <%if(ACCount[i].creditDebitamount > 0){%>
+                                        <td >Withdraw</td>
+                                        <%}else{%>
+                                          <td >Deposit</td>
                                       <%}%>
                                     <%}%>
                                   <%}else if(ACCount[i].child_id) {%>
@@ -439,14 +443,18 @@
                                 <tr>
                                   <td class="text-nowrap" ><%=formattedTime%></td>
                                   <%if(ACCount[i].description.startsWith('Chips')){%>
-                                    <%if(ACCount[i].creditDebitamount > 0){%>
-                                      <td >Deposit</td>
-                                    <%}else{%>
-                                      <%if(ACCount[i].user_id == ACCount[i].child_id){%>
-                                        <td >Withdraw</td>
-                                      <%}else{%>
+                                    <%if(ACCount[i].user_id == ACCount[i].child_id){%>
+                                      <%if(ACCount[i].creditDebitamount > 0){%>
                                         <td >Deposit</td>
+                                      <%}else{%>
+                                        <td >Withdraw</td>
+                                      <%}%>
 
+                                    <%}else{%>
+                                      <%if(ACCount[i].creditDebitamount > 0){%>
+                                        <td >Withdraw</td>
+                                        <%}else{%>
+                                          <td >Deposit</td>
                                       <%}%>
                                     <%}%>
                                   <%}else if(ACCount[i].child_id) {%>
