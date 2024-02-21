@@ -4,7 +4,7 @@ const runnerData = require('../model/runnersData');
 
 
 async function checkExposureWithoutThatMarket(data, bet){
-// console.log('WORKING')
+console.log(bet)
 if(data){
     let userData = await User.findById(data.id)
     if(userData && userData.userName){
@@ -15,7 +15,7 @@ if(data){
                     userName:userData.userName,
                     marketId:{
                         $regex: /OE$/,
-                        $ne: `${bet}`
+                        $ne: bet
                     }
                     
                 }
@@ -76,7 +76,7 @@ if(data){
                     userName:userData.userName,
                     marketId:{
                         $regex: /F2$/,
-                        $ne: `${bet}`
+                        $ne: bet
                     }
                     
                 }
@@ -133,7 +133,7 @@ if(data){
                     userName:userData.userName,
                     marketName: {
                         $regex: /^(match|book|winn|toss|over\/under)/i,
-                        $ne: `${bet}`
+                        $ne: bet
                     }
                     
                 }
