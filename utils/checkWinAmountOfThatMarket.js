@@ -208,7 +208,7 @@ async function checkExpoOfThatMarket( bet ){
                         betDetails[0].data[0].push(objectPUsh)
                     }
                 }
-                // console.log(betDetails[0].data[0], betDetails[0].uniqueRuns)
+                console.log(betDetails[0].data[0], betDetails[0].uniqueRuns)
                 let dataToshow = []
                     if(betDetails.length != 0){
                         betDetails = betDetails[0]
