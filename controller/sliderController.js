@@ -93,7 +93,9 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 				
             image.mv(`${path}${req.body.menuName}.webp`, (err)=>{
                 if(err) 
-                return next(new AppError("Something went wrong please try again later", 400))
+				{
+                	return next(new AppError("Something went wrong please try again later", 400))
+				}
             })
             let slider = await sliderModel.findById(req.body.id)
             let check = slider.images.find(item => item.name == req.body.menuName)
