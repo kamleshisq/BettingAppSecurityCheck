@@ -473,7 +473,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     }
     let looseAmount = await checkExposureincludingBet(betPlaceData)
     console.log(looseAmount, "looseAmountlooseAmount")
-    if(check.availableBalance < Math.abs(looseAmount)){
+    if( Math.abs(looseAmount) != 0 && (check.availableBalance < Math.abs(looseAmount))){
         return "You do not have sufficient balance for bet"
     }
     // return 'checking'
