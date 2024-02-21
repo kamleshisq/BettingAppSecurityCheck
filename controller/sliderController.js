@@ -89,8 +89,7 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 				}*/
 			}
 			/***/
-	console.log("PATH ----");
-	console.log(WhiteLBL.whitelabelpath);
+	
 				
             image.mv(`${path}${req.body.menuName}.webp`, (err)=>{
                 if(err) 
