@@ -469,7 +469,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     if(data23 >= limitData.max_profit){
         return 'Win Amount out of range'
     }
-    return 'checking'
+    // return 'checking'
     // return 'Please try again leter market SUSPENDED'
     // console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
 // FOR ACC STATEMENTS DATA 
