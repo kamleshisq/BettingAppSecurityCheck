@@ -188,7 +188,7 @@ async function checkExpoOfThatMarket( bet ){
                   },
             ])
             if(betDetails.length > 0){
-
+                console.log(betDetails[0].data[0], " betDetails[0].data[0] betDetails[0].data[0]")
                 let runtopush = parseFloat(bet.selectionName.split('@')[1])
                 let objectPUsh = {
                     secId : bet.secId,
