@@ -386,6 +386,7 @@ $(document).on('submit','.Settlement-form',async function(e) {
     if(formDataObj.amount == 0){
         alert('please enter amount greater than 0')
     }else{
+        console.log('got here')
         formDataObj.sessiontoken = sessionTokenADMIN
         creditDebitSettle(formDataObj)
     }
