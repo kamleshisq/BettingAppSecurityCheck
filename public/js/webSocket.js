@@ -7974,7 +7974,7 @@ socket.on('connect', () => {
         }
         setInterval(()=>{
             OddsCheck()
-        }, 5000)
+        }, 1000)
         OddsCheck()
         let limitData = []
         socket.on('OddsCheck', data => {
