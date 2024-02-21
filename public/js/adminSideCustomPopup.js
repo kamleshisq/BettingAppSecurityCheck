@@ -1,5 +1,5 @@
-import toggleadminSide from "./adminSideCustomPopup";
-export function toggleadminSide(message, status ){
+// import toggleadminSide from "./adminSideCustomPopup";
+export const toggleadminSide = (message, status ) => {
         //console.log(message, status)
             var text = message;
             if(status){
