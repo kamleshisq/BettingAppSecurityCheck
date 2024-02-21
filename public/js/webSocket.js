@@ -17575,7 +17575,7 @@ socket.on('connect', () => {
                 }
                 html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
-                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under"){
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under" && !data.betdata.marketName.toLowerCase().startsWith('bookm')){
                     if(data.betdata.marketId.slice(-2).startsWith('OE')){
                         html += `<td>
                         <select class="selectOption" >
@@ -17743,7 +17743,7 @@ socket.on('connect', () => {
                   </thead>`}
                 html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
-                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under"){
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under" && !data.betdata.marketName.toLowerCase().startsWith('bookm')){
                     if(data.betdata.marketId.slice(-2).startsWith('OE')){
                         html += `<td>
                         <select class="selectOption" >
