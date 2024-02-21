@@ -4309,11 +4309,28 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" class="blue" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].description.startsWith('Chips')){
-                            if(data.json.userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+
+                            if(data.json.userAcc[i].user_id.userName == data.json.userAcc[i].child_id.userName){
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Deposit</td>`
+                                }else{
+                                  html += `<td >Withdraw</td>`
+                                }
+        
+                              }else{
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Withdraw</td>`
+                                  }else{
+                                    html += `<td >Deposit</td>`
+                                }
+                              }
+
+
+                            // if(data.json.userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
                           }else if(data.json.userAcc[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
@@ -4374,11 +4391,26 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].description.startsWith('Chips')){
-                            if(data.json.userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+
+                            if(data.json.userAcc[i].user_id.userName == data.json.userAcc[i].child_id.userName){
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Deposit</td>`
+                                }else{
+                                  html += `<td >Withdraw</td>`
+                                }
+        
+                              }else{
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Withdraw</td>`
+                                  }else{
+                                    html += `<td >Deposit</td>`
+                                }
+                              }
+                            // if(data.json.userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
                           }else if(data.json.userAcc[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
