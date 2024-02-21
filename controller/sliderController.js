@@ -79,6 +79,8 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
 			{
 				let WhiteLBL= getWhiteLabelDetails("",req);		
+				console.log("PATH ----");
+	console.log(WhiteLBL.whitelabelpath);
 				if(WhiteLBL.whitelabelpath!='')
 					path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/sliderImages/`;
 				
@@ -88,8 +90,7 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 				}*/
 			}
 			/***/
-	console.log("PATH ----");
-	console.log(path);
+	
 				
             image.mv(`${path}${req.body.menuName}.webp`, (err)=>{
                 if(err) 
