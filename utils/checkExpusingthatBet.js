@@ -496,7 +496,7 @@ async function checkExpoOfThatMarketincludingBet( bet ){
         }
     }
 
-    console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
+    // console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
     return WinAmount
 }
 
