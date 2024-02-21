@@ -389,25 +389,6 @@ $(document).on('submit','.Settlement-form',async function(e) {
         formDataObj.sessiontoken = sessionTokenADMIN
         creditDebitSettle(formDataObj)
     }
-    // console.log(formDataObj)
-    // const url = window.location.href
-    // const id = url.split("=")[1]
-    // formDataObj.id = id
-    // console.log(formDataObj)
-    // let rowId = $('.rowId').attr('data-rowid')
-    // const user = await creditDebitSettle(formDataObj)
-    // var trElements = document.querySelectorAll('tr.trtable');
-    // // console.log(trElements)
-    // // console.log(user)
-    // trElements.forEach(function(trElement) {
-    //     if (trElement.getAttribute('data-id') === user.id) {
-    //         console.log(trElement, 4545445454)
-    //     }
-    // })
-    // console.log(rowId)
-    // let currentUser = $('#currentUserDetails').data('currentuser')
-    // updateRow(user,rowId,currentUser)
-    // console.log(user)
 })
 
 // $('.edit-form').submit(function(e){
