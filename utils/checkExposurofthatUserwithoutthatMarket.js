@@ -4,7 +4,7 @@ const runnerData = require('../model/runnersData');
 
 
 async function checkExposureWithoutThatMarket(data, bet){
-console.log(bet)
+console.log(bet, "betbetbetbet")
 if(data){
     let userData = await User.findById(data.id)
     if(userData && userData.userName){
