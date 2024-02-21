@@ -2390,7 +2390,7 @@ socket.on('connect', () => {
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
                         "<th>Points W/L</th>"+
-                        "<th>Upline P/L</th>"+
+                        "<th>Client P/L (%)</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
                     "</tr></thead>"
@@ -2403,7 +2403,7 @@ socket.on('connect', () => {
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
                         "<th>Points W/L</th>"+
-                        "<th>Upline P/L</th>"+
+                        "<th>Client P/L (%)</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
                     "</tr></thead>"
@@ -2461,7 +2461,7 @@ socket.on('connect', () => {
 
                         }
 
-                        html += `<td> ${response[i].uplinePL}</td>`
+                        html += `<td> ${response[i].myPL}</td>`
                         if(response[i].roleName != 'user'){
                             html += `<td>0</td>`
                         }else{
