@@ -15043,7 +15043,8 @@ socket.on('connect', () => {
               </tr>`
               $('#table123').append(html)
             }else{
-                alert("Something wrong, please try again later")
+                //alert("Something wrong, please try again later")
+				toggleadminSide("Something wrong, please try again later",false);
             }
         })
 
@@ -15093,7 +15094,8 @@ socket.on('connect', () => {
 
         socket.on("updateRules", data =>{
             if(data === "err"){
-                alert("Something wrong, please try again later")
+                //alert("Something wrong, please try again later")
+				toggleadminSide("Something wrong, please try again later",false);
             }else{
                 // console.log(data)
                 const trElement = $(`tr:has(button#${data._id})`);
@@ -15102,7 +15104,8 @@ socket.on('connect', () => {
                     trElement.find('td:eq(1)').text(`${data.name}`);
                     // trElement.find('td:eq(1)').text(`${data.description}`);
                 }
-                alert("Updated!!")
+                //alert("Updated!!")
+				toggleadminSide("Updated",true);
 
             }
         })
@@ -15695,7 +15698,8 @@ socket.on('connect', () => {
 
         socket.on("FUndData", async(data) => {
             if(data.status === "error"){
-                alert("Please Try again later")
+                //alert("Please Try again later")
+				toggleadminSide("Please Try again later",false);
             }else{
                 window.location.reload()
                 // $('#myModaladduser').modal('toggle');
@@ -16096,11 +16100,13 @@ socket.on('connect', () => {
 
         socket.on('voidBet', async(data) => {
             if(data.status === "fail"){
-                alert(data.msg)
+                //alert(data.msg)
+				toggleadminSide(data.msg,false);
             }else{
-                alert('Bet Voided Successfully !!')
+                //alert('Bet Voided Successfully !!')
+				toggleadminSide('Bet Voided Successfully !!',true);
                 $('#myModal2').modal('toggle')
-                location.reload(true)
+                setTimeout(function(){location.reload(true)}, 1500);
 
             }
         })
@@ -16118,7 +16124,8 @@ socket.on('connect', () => {
         
         socket.on("acceptBet", (data)=>{
             if(data.status === "fail"){
-                alert("Please try again later")
+                //alert("Please try again later")
+				toggleadminSide('Please try again later',false);
             }else{
                location.reload(true)
             }
@@ -16219,9 +16226,11 @@ socket.on('connect', () => {
 
         socket.on("maxCreditReference", data =>{
             if(data.status === "error"){
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,false);
             }else{
-                alert("Updated")
+                //alert("Updated")
+				toggleadminSide("Updated",true);
                 $(".Wallet").find('input[name="maxCreditReference"]').val(data.maxCreditReference)
                 // $(".Wallet").find('select[name="transferLock"]').val(data.transferLock)
             }
@@ -17397,9 +17406,11 @@ socket.on('connect', () => {
     
         socket.on('VoidBetIn2', data => {
             if(data.status === "error"){
-                alert("Please try again later")
+//                alert("Please try again later")
+				toggleadminSide("Please try again later",false);
             }else{ 
-                alert(data.msg)
+                //alert(data.msg)
+				toggleadminSide(data.msg,true);
                 let html = ``
                 if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
                   html += `
@@ -17446,12 +17457,15 @@ socket.on('connect', () => {
     
         socket.on('ROLLBACKDETAILS', data => {
             if(data.status === "error"){
-                alert("Please try again later")
+				toggleadminSide("Please try again later",false);
+                //alert("Please try again later")
             }else if(data.status === "err"){
-                alert(data.msg)
+                //alert(data.msg)
+				toggleadminSide(data.msg,false);
             }else { 
                 // console.log(data)
-                alert(data.message)
+//                alert(data.message)
+				toggleadminSide(data.message,true);
                 // const deleteButton = document.getElementById(data.id);
                 // const row = deleteButton.closest('tr'); 
                 // const table = row.parentNode;
@@ -17555,12 +17569,15 @@ socket.on('connect', () => {
         socket.on("VoidBetIn", async(data) => {
             if(data.status === "error"){
                 if(data.message){
-                    alert(data.message)
+                    //alert(data.message)
+					toggleadminSide(data.message,false);
                 }else{
-                    alert("Please try again later")
+                    //alert("Please try again later")
+					toggleadminSide("Please try again later",false);
                 }
             }else{
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,true);
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
                 if (row) {
@@ -17608,7 +17625,8 @@ socket.on('connect', () => {
     
         socket.on('unmapBet', data => {
             if(data.status === "error"){
-                alert(data.message.toUpperCase())
+               // alert(data.message.toUpperCase())
+				toggleadminSide(data.message.toUpperCase(),false);
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
                 const row = deleteButton.closest('tr'); 
@@ -17691,7 +17709,8 @@ socket.on('connect', () => {
                 }else{
                     document.getElementById('open-market-table').innerHTML = html
                 }
-                alert('Bet Unmaped Successfully')
+                //alert('Bet Unmaped Successfully')
+				toggleadminSide('Bet Unmaped Successfully',true);
             }
         })
     
@@ -17706,9 +17725,11 @@ socket.on('connect', () => {
         socket.on('Settle', data => {
             // console.log(data)
             if(data.status === "error"){
-                alert(data.message.toUpperCase())
+                //alert(data.message.toUpperCase())
+				toggleadminSide(data.message.toUpperCase(),false);
             }else{
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,true);
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
                 const table = row.parentNode;
@@ -17762,7 +17783,8 @@ socket.on('connect', () => {
     
         socket.on("VoidBetIn22", async(data) => {
             if(data.status === "error"){
-                alert(data.message.toUpperCase())
+                //alert(data.message.toUpperCase())
+				toggleadminSide(data.message.toUpperCase(),false);
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
                 const row = deleteButton.closest('tr'); 
@@ -17810,7 +17832,8 @@ socket.on('connect', () => {
                     document.getElementById('mapped-market-table').innerHTML = html
                 }
                 // document.getElementById('mapped-market-table').innerHTML = html
-                alert('Bets Maped Successfully')
+                //alert('Bets Maped Successfully')
+				toggleadminSide('Bets Maped Successfully',true);
             }
         })
     
@@ -18773,9 +18796,11 @@ socket.on('connect', () => {
 
             socket.on("alertBet", async(data) => {
                 if(data.status === "fail"){
-                    alert(data.msg)
+                   // alert(data.msg)
+					toggleadminSide(data.msg,false);
                 }else{
-                    alert('Bet alert successfully')
+                    //alert('Bet alert successfully')
+					toggleadminSide('Bet alert successfully',true);
                     const deleteButton = document.getElementById(data.bet._id);
                     const row = deleteButton.closest('tr'); 
                     if (row) {
@@ -20225,7 +20250,8 @@ socket.on('connect', () => {
     })
     socket.on("alertBet", async(data) => {
         if(data.status === "error"){
-            alert("Please try again later")
+            //alert("Please try again later")
+			toggleadminSide("Please try again later",false);
         }else{
             // console.log(data.bet._id)
             const deleteButton = document.getElementById(data.bet._id);
@@ -21336,9 +21362,11 @@ socket.on('connect', () => {
 
         socket.on('eventNotification2', data => {
             if(data.status === "err"){
-                alert('Please try again later')
+                //alert('Please try again later')
+				toggleadminSide("Please try again later",false);
             }else{
-                alert('Notification Updated successfully!!!')
+				toggleadminSide("Notification Updated successfully",true);
+                //alert('Notification Updated successfully!!!')
             }
         })
     }
@@ -21419,10 +21447,13 @@ socket.on('connect', () => {
 
          socket.on('updateBetLimitMarket', data => {
             if(data.status == "err"){
-                alert('please try again leter')
+                //alert('please try again leter')
+				toggleadminSide("Please try again later",false);
             }else{
-                alert('updated!')
-                window.location.reload()
+                //alert('updated!')
+				toggleadminSide("Updated",true);
+				setTimeout(function(){window.location.reload() }, 3000);
+                
             }
          })
 
@@ -21446,8 +21477,10 @@ socket.on('connect', () => {
 
         socket.on('addnewStream',async(data)=>{
             if(data.status == 'success'){
-                alert(data.msg)
-                window.location.reload(true)
+				toggleadminSide(data.msg,true);
+				setTimeout(function(){window.location.reload(true) }, 3000);
+               // alert(data.msg)
+                //window.location.reload(true)
 
             }
         })
@@ -21479,8 +21512,10 @@ socket.on('connect', () => {
 
         socket.on('delteStreame',async(data)=>{
             if(data.status == 'success'){
-                alert('stream deleted successfully')
-                window.location.reload(true)
+                //alert('stream deleted successfully')
+                //window.location.reload(true)
+				toggleadminSide('stream deleted successfully',true);
+				setTimeout(function(){window.location.reload(true) }, 3000);
             }
         })
 
@@ -21520,8 +21555,10 @@ socket.on('connect', () => {
         socket.on('editStream',async(data) =>{
             // console.log(data)
             if(data.status == 'success'){
-                alert('stream updated successfully')
-                location.reload(true)
+                //alert('stream updated successfully')
+                //location.reload(true)
+				toggleadminSide('stream updated successfully',true);
+				setTimeout(function(){location.reload(true)}, 3000);
             }
         })
     }
@@ -21647,9 +21684,10 @@ socket.on('connect', () => {
         })
 
         socket.on('editpaymentMethod',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);				
             if(data.status == 'success'){
-                location.reload(true)
+                setTimeout(function(){location.reload(true)}, 3000);
             }
         })
 
@@ -21671,10 +21709,11 @@ socket.on('connect', () => {
         })
 
         socket.on('addpaymentMethod',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
             if(data.status == 'success'){
                 $('#myModal').modal('toggle')
-                location.reload(true)
+                setTimeout(function(){location.reload(true)}, 3000);
             }
         })
 
@@ -21690,9 +21729,11 @@ socket.on('connect', () => {
         })
 
         socket.on('deletePaymentMethod',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
             if(data.status == 'success'){
-                location.reload(true)
+                //location.reload(true)
+				setTimeout(function(){location.reload(true)}, 3000);
             }
         })
         $(document).on('click','.status_check_payment',function(){
@@ -21713,7 +21754,8 @@ socket.on('connect', () => {
         })
 
         socket.on('paymentmethodStatusChange',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
         })
 
      
@@ -21799,7 +21841,8 @@ socket.on('connect', () => {
                 }
                 $('.tbody').html(html)
             }else{
-                alert(data.msg)
+                //alert(data.msg)
+				toggleadminSide(data.msg,false);
             }
         })
 
@@ -22041,7 +22084,7 @@ socket.on('connect', () => {
         socket.on('getpaymentapprovalreqdata',async(data)=>{
             // console.log(data)
             if(data.status == 'fail'){
-                alert(data.msg)
+                toggleadminSide(data.msg,false);
             }else{
                 let form = $('#myModaladduser .paymentreq_form')
                 form.find('input[name="approvedamount"]').val(data.result.amount)
@@ -22063,7 +22106,7 @@ socket.on('connect', () => {
         socket.on('getpaymentdenyreqdata',async(data)=>{
             // console.log(data)
             if(data.status == 'fail'){
-                alert(data.msg)
+                toggleadminSide(data.msg,false);
             }else{
                 let form = $('#myModal2 .denypaymentreq_form')
                 form.find('input[name="id"]').val(data.result._id)
@@ -22091,11 +22134,12 @@ socket.on('connect', () => {
 
         socket.on('acceptpaymetnreq',async(data)=>{
             if(data.status == 'fail'){
-                alert(data.msg)
+                toggleadminSide(data.msg,false);
             }else{
-                alert(data.msg)
+                toggleadminSide(data.msg,true);
                 $('#myModaladduser').modal('toggle')
-                location.reload(true)
+                
+				setTimeout(function(){location.reload(true)}, 3000);
             }
         })
 
@@ -22111,9 +22155,10 @@ socket.on('connect', () => {
 
         socket.on('deniePaymentReq',async(data)=>{
             // console.log(data.err)
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
             if(data.status == 'success'){
-                location.reload(true)
+                setTimeout(function(){location.reload(true)}, 3000);
             }
         })
 
@@ -22702,7 +22747,8 @@ socket.on('connect', () => {
                 // console.log(data, "datadatadata")
                 socket.emit('reqApproveUpdate', {LOGINDATA, data})
             }else{
-                alert('Please tick the checkbox')
+                //alert('Please tick the checkbox')
+				toggleadminSide('Please tick the checkbox',false);
             }
         })
 
@@ -22715,7 +22761,8 @@ socket.on('connect', () => {
                 data.id = $(this).attr('id')
                 socket.emit('reqCancelUpdate', {LOGINDATA, data})
             }else{
-                alert('Please tick the checkbox')
+                //alert('Please tick the checkbox')
+				toggleadminSide('Please tick the checkbox',false);
             }
         })
 
@@ -22730,20 +22777,22 @@ socket.on('connect', () => {
                 let date = new Date(data.date123)
                 let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
                 $(`#${data.updatedReq._id}`).find('td:eq(6)').text(`Transferred Date :- ${formetedDate}`)
-                alert('Status Updated!')
+                //alert('Status Updated!')
+				toggleadminSide('Status Updated!',true);
             }
         })
 
 
         socket.on('reqCancelUpdate', async(data) => {
             if(data.status === 'err'){
-                alert(data.msg)
+				toggleadminSide(data.msg,false);
             }else{
                 $(`#${data.cancelUpdate._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
                 let date = new Date(data.date1234)
                 let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
                 $(`#${data.cancelUpdate._id}`).find('td:eq(6)').text(`Cancel Date :- ${formetedDate}`)
-                alert('Request cancel sucessfully!!')
+               // alert('Request cancel sucessfully!!')
+				toggleadminSide('Request cancel sucessfully!!',true);
             }
         })
 
@@ -22902,12 +22951,14 @@ socket.on('connect', () => {
 
         socket.on('colorCode', data => {
             if(data.status === "sucess"){
-                alert('updated!!')
+//                alert('updated!!')
+				toggleadminSide('updated!!',true);
                 setTimeout(()=>{
                     window.location.reload()
                 }, 1000)
             }else{
-                alert('Please try again later')
+				toggleadminSide('Please try again later',false);
+//                alert('Please try again later')
             }
         })
 
@@ -22947,8 +22998,8 @@ socket.on('connect', () => {
 
         socket.on('updateMedea', data => {
             if(data.status === 'sucess'){
-                alert('Updated')
-                window.location.reload()
+                toggleadminSide('updated!!',true);
+                setTimeout(function(){window.location.reload() }, 3000);
             }
         })
 
@@ -22991,8 +23042,8 @@ socket.on('connect', () => {
 
         socket.on('updateFooterContent', data => {
             if(data.status === "sucess"){
-                alert('updated')
-                window.location.reload()
+               toggleadminSide('updated!!',true);
+                setTimeout(function(){window.location.reload() }, 3000);
             }
         })
     }

@@ -1,3 +1,4 @@
+import toggleadminSide from "./adminSideCustomPopup";
 export const betLockStatus = (data,rowId) => {
     let url = !data.betLock ? '/api/v1/users/updateUserStatusBettingLock' : '/api/v1/users/updateUserStatusBettingUnlock';
     // let message = !data.betLock ? 'user lock successfully' : 'user unlock successfully'
@@ -8,7 +9,8 @@ export const betLockStatus = (data,rowId) => {
         success:function(data){
             // console.log(data)
             if(data.status === 'success'){
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,true)
                 // let html = `<td class='getOwnChild' data-bs-dismiss='${JSON.stringify(data.user)}'>`;
                 // if(data.user.roleName != 'user'){
                 //     html += `<a href='/admin/userManagement?id=${data.user._id}'>${data.user.userName}</a></td>`
@@ -16,7 +18,8 @@ export const betLockStatus = (data,rowId) => {
                 //     html += `${data.user.userName}</td>`
                 // }
                 // $('tr[id = '+rowId+']').children().eq(1).replaceWith((html))
-                window.location.reload(true)
+                
+				setTimeout(function(){window.location.reload(true)}, 3000);
             }
 
             // let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id
@@ -24,7 +27,8 @@ export const betLockStatus = (data,rowId) => {
             // getOwnChild(id,0,'getOwnChild')
         },
         error:function(error){
-            alert(error.responseJSON.message)
+            //alert(error.responseJSON.message)
+			toggleadminSide(error.responseJSON.message,false)
         }
     })
 }
