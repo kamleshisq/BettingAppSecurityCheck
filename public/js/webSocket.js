@@ -8056,7 +8056,7 @@ socket.on('connect', () => {
               }else{
                   setTimeout(()=>{
                     marketId()
-                  }, 1000)
+                  }, 400)
               }
         }
         marketId()
