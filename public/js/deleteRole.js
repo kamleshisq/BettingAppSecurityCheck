@@ -1,4 +1,5 @@
 import { toggleadminSide } from "./adminSideCustomPopup";
+
 export const deleteRole = (data) => {
     $.ajax({
         url:'/api/v1/role/deleteRole',

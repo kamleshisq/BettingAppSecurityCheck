@@ -1,4 +1,5 @@
 import axios from "axios"
+import { toggleadminSide } from "./adminSideCustomPopup";
 export const reset = async(data) =>{
     // console.log(data)
     try{
@@ -8,7 +9,7 @@ export const reset = async(data) =>{
             data
         });
         if(res.data.status === 'success'){
-            alert("Password Changed Successfully!!!!!")
+            toggleadminSide("Password Changed Successfully!!!!!",true)
             $('#myModal3').modal('toggle')
             // window.setTimeout(()=>{
             //     location.assign('/userManagement')
@@ -18,6 +19,6 @@ export const reset = async(data) =>{
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }
