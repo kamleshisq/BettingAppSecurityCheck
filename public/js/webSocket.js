@@ -16666,11 +16666,25 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" class="blue" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(userAcc[i].description.startsWith('Chips')){
-                            if(userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+                           if(userAcc[i].user_id.userName == userAcc[i].child_id.userName){
+                                     if(userAcc[i].creditDebitamount > 0){
+                                        html += `<td >Deposit</td>`
+                                     }else{
+                                        html += `<td >Withdraw</td>`
+                                     }
+
+                                   }else{
+                                     if(userAcc[i].creditDebitamount > 0){
+                                        html += `<td >Withdraw</td>`
+                                       }else{
+                                          html += `<td >Deposit</td>`
+                                     }
+                                   }
+                            // if(userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
                           }else if(userAcc[i].child_id) {
                             if(userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
@@ -16731,11 +16745,26 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(userAcc[i].description.startsWith('Chips')){
-                            if(userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+                            // if(userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
+
+                            if(userAcc[i].user_id.userName == userAcc[i].child_id.userName){
+                                if(userAcc[i].creditDebitamount > 0){
+                                   html += `<td >Deposit</td>`
+                                }else{
+                                   html += `<td >Withdraw</td>`
+                                }
+
+                              }else{
+                                if(userAcc[i].creditDebitamount > 0){
+                                   html += `<td >Withdraw</td>`
+                                  }else{
+                                     html += `<td >Deposit</td>`
+                                }
+                              }
                           }else if(userAcc[i].child_id) {
                             if(userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
