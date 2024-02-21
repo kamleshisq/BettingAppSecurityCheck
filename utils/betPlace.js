@@ -16,6 +16,7 @@ const checkMarketWinAmount = require('./checkWinAmountOfThatMarket');
 const settelementHistory = require('../model/settelementHistory');
 const cataLog = require('../model/catalogControllModel');
 const suspendResume = require('../model/resumeSuspendMarket');
+const checkExposureincludingBet = require('./checkExpusingthatBet');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -59,16 +60,17 @@ async function placeBet(data){
     }
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     console.log(check, "checkcheckcheck")
-    if(check.availableBalance < parseFloat(data.data.stake)){
-        return "You do not have sufficient balance for bet"
-    }
+    // if(check.availableBalance < parseFloat(data.data.stake)){
+    //     return "You do not have sufficient balance for bet"
+    // }
     if(check.betLock){
         return "Please try again later, You don't have permission to Place Bet"
     }
     let exposureCHECk = await exposurecheck(check)
-    if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
-        return "Please try again later, Your exposure Limit is full"
-    }
+
+    // if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
+    //     return "Please try again later, Your exposure Limit is full"
+    // }
     let openBet = await betmodel.countDocuments({userName:data.LOGINDATA.LOGINUSER.userName, status:'OPEN'})
     // console.log(openBet, "openBetopenBetopenBet")
     let betLimitcheck = await betLimitModel.findOne({type : 'Sport'}) 
@@ -469,6 +471,8 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     if(data23 > limitData.max_profit){
         return 'Win Amount out of range'
     }
+    let looseAmount = await checkExposureincludingBet(betPlaceData)
+    console.log(looseAmount, "looseAmountlooseAmount")
     // return 'checking'
     // return 'Please try again leter market SUSPENDED'
     // console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
