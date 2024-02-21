@@ -475,8 +475,13 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     }
     let looseAmount = await checkExposureincludingBet(betPlaceData)
     console.log(looseAmount, exposureCHECk,"looseAmountlooseAmountdsdsdsdsd")
-    if( Math.abs(looseAmount) != 0 && (check.availableBalance < Math.abs(looseAmount))){
+    let totalEXPAfterThatBet = Math.abs(looseAmount) + Math.abs(exposureCHECk)
+
+    if( Math.abs(totalEXPAfterThatBet) != 0 && (check.availableBalance < Math.abs(totalEXPAfterThatBet))){
         return "You do not have sufficient balance for bet"
+    }
+    if(check.exposureLimit && check.exposureLimit !== 0 && totalEXPAfterThatBet != 0  &&(totalEXPAfterThatBet > check.exposureLimit)){
+            return "Please try again later, Your exposure Limit is full dfdf"
     }
     // return 'checking'
     // return 'Please try again leter market SUSPENDED'
