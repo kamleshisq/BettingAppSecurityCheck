@@ -59,7 +59,7 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
 			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
 			{
 				let WhiteLBL= getWhiteLabelDetails("",req);
-				if(WhiteLBL.whitelabelpath!='')
+				if(WhiteLBL.whitelabelpath!='' && WhiteLBL.whitelabelpath != undefined)
 					path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/logo/`;
 					
 				if(WhiteLBL.whiteLabelName !='')
@@ -93,7 +93,7 @@ exports.updateBasicDetails = catchAsync(async(req, res, next) => {
 			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
 			{
 				let WhiteLBL= getWhiteLabelDetails("",req);
-				if(WhiteLBL.whitelabelpath!='')
+				if(WhiteLBL.whitelabelpath!='' && WhiteLBL.whitelabelpath != undefined )
 					path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/logo/`;
 					
 				if(WhiteLBL.whiteLabelName !='')
