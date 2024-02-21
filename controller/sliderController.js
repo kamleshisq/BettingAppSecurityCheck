@@ -52,7 +52,7 @@ exports.createNewSlider = catchAsync(async(req, res, next) => {
 			
 			
 			
-            image.mv(`${path}/${req.body.name.split(' ')[0]}.webp`, (err)=>{
+            image.mv(`${path}${req.body.name.split(' ')[0]}.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
@@ -94,6 +94,8 @@ exports.addImage = catchAsync(async(req, res, next) =>{
             image.mv(`${path}${req.body.menuName}.webp`, (err)=>{
                 if(err) 
 				{
+					console.log("Inside If");
+					console.log(err);
                 	return next(new AppError("Something went wrong please try again later", 400))
 				}
             })
