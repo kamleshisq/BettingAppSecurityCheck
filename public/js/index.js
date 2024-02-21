@@ -384,7 +384,7 @@ $(document).on('submit','.Settlement-form',async function(e) {
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
     if(formDataObj.amount == 0){
-        // alert('please enter amount greater than 0')
+        alert('please enter amount greater than 0')
     }else{
     }
     formDataObj.sessiontoken = sessionTokenADMIN
