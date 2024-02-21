@@ -476,6 +476,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     let looseAmount = await checkExposureincludingBet(betPlaceData)
     console.log(looseAmount, exposureCHECk,"looseAmountlooseAmountdsdsdsdsd")
     let totalEXPAfterThatBet = Math.abs(looseAmount) + Math.abs(exposureCHECk)
+    console.log(totalEXPAfterThatBet, "totalEXPAfterThatBettotalEXPAfterThatBettotalEXPAfterThatBettotalEXPAfterThatBet")
 
     if( Math.abs(totalEXPAfterThatBet) != 0 && (check.availableBalance < Math.abs(totalEXPAfterThatBet))){
         return "You do not have sufficient balance for bet"
