@@ -17,6 +17,7 @@ const settelementHistory = require('../model/settelementHistory');
 const cataLog = require('../model/catalogControllModel');
 const suspendResume = require('../model/resumeSuspendMarket');
 const checkExposureincludingBet = require('./checkExpusingthatBet');
+const checkexposureOfthatMarket = require('./checkExposurofthatUserwithoutthatMarket');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -66,7 +67,8 @@ async function placeBet(data){
     if(check.betLock){
         return "Please try again later, You don't have permission to Place Bet"
     }
-    let exposureCHECk = await exposurecheck(check)
+    exposurecheck(check)
+    let exposureCHECk = await checkexposureOfthatMarket(check, data.data.market)
 
     // if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
     //     return "Please try again later, Your exposure Limit is full"
@@ -346,9 +348,9 @@ if(data.data.odds2){
     // }
     // console.log(creditDebitamount)
     // console.log(exposureCHECk,check.exposureLimit,  parseFloat(exposureCHECk + creditDebitamount), check.exposureLimit , parseFloat(exposureCHECk + creditDebitamount) > check.exposureLimit)
-    if(check.exposureLimit && check.exposureLimit !== 0 && (parseFloat(exposureCHECk) + parseFloat(creditDebitamount)) > check.exposureLimit){
-        return "Please try again later, Your exposure Limit is full dfdf"
-    }
+    // if(check.exposureLimit && check.exposureLimit !== 0 && (parseFloat(exposureCHECk) + parseFloat(creditDebitamount)) > check.exposureLimit){
+    //     return "Please try again later, Your exposure Limit is full dfdf"
+    // }
     // if(check.availableBalance < (parseFloat(exposureCHECk) + parseFloat(creditDebitamount))){
     //     return "You do not have sufficient balance for bet"
     // }
@@ -472,7 +474,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
         return 'Win Amount out of range'
     }
     let looseAmount = await checkExposureincludingBet(betPlaceData)
-    console.log(looseAmount, "looseAmountlooseAmountdsdsdsdsd")
+    console.log(looseAmount, exposureCHECk,"looseAmountlooseAmountdsdsdsdsd")
     if( Math.abs(looseAmount) != 0 && (check.availableBalance < Math.abs(looseAmount))){
         return "You do not have sufficient balance for bet"
     }
