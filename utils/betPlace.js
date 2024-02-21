@@ -472,7 +472,7 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
         return 'Win Amount out of range'
     }
     let looseAmount = await checkExposureincludingBet(betPlaceData)
-    console.log(looseAmount, "looseAmountlooseAmount")
+    console.log(looseAmount, "looseAmountlooseAmountdsdsdsdsd")
     if( Math.abs(looseAmount) != 0 && (check.availableBalance < Math.abs(looseAmount))){
         return "You do not have sufficient balance for bet"
     }
