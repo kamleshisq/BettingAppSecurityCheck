@@ -132,8 +132,10 @@ if(data){
                     status: "OPEN",
                     userName:userData.userName,
                     marketName: {
-                        $regex: /^(match|book|winn|toss|over\/under)/i,
-                        $ne: bet
+                        $regex: /^(match|book|winn|toss|over\/under)/i
+                    },
+                    marketId:{
+                        $ne:bet
                     }
                     
                 }
