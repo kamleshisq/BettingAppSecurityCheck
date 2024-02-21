@@ -52,7 +52,7 @@ exports.createNewSlider = catchAsync(async(req, res, next) => {
 			
 			
 			
-            image.mv(`${path}/${req.body.name.split(' ')[0]}.webp`, (err)=>{
+            image.mv(`${path}${req.body.name.split(' ')[0]}.webp`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
@@ -79,7 +79,8 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
 			{
 				let WhiteLBL= getWhiteLabelDetails("",req);		
-				if(WhiteLBL.whitelabelpath!='')
+				
+				if(WhiteLBL.whitelabelpath!='' && WhiteLBL.whitelabelpath != undefined)
 					path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/sliderImages/`;
 				
 				/*if(WhiteLBL.whiteLabelName !='')
@@ -89,11 +90,14 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 			}
 			/***/
 	
-	
-			
+				
             image.mv(`${path}${req.body.menuName}.webp`, (err)=>{
                 if(err) 
-                return next(new AppError("Something went wrong please try again later", 400))
+				{
+					console.log("Inside If");
+					console.log(err);
+                	return next(new AppError("Something went wrong please try again later", 400))
+				}
             })
             let slider = await sliderModel.findById(req.body.id)
             let check = slider.images.find(item => item.name == req.body.menuName)
