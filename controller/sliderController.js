@@ -80,7 +80,7 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 			{
 				let WhiteLBL= getWhiteLabelDetails("",req);		
 				
-				if(WhiteLBL.whitelabelpath!='' && WhiteLBL.whitelabelpath!='undefined')
+				if(WhiteLBL.whitelabelpath!='' && WhiteLBL.whitelabelpath != undefined)
 					path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/sliderImages/`;
 				
 				/*if(WhiteLBL.whiteLabelName !='')
