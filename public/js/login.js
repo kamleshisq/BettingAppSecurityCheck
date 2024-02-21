@@ -1,5 +1,6 @@
 import axios from "axios";
 import { notificationsss } from "./notificationsss";
+import { toggleadminSide } from "./adminSideCustomPopup";
 
 export const login = async(userName, password)=>{
     try{
@@ -35,7 +36,7 @@ export const login = async(userName, password)=>{
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     $(".loginFormAdmin button[type='submit']").removeClass("loading");
     }
 }

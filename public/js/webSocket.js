@@ -11126,12 +11126,12 @@ socket.on('connect', () => {
 
         socket.on("updatePage", async(data) => {
             if(data === "success"){
-                alert("Page updates")
+                toggleadminSide("Page updates",true)
                 setTimeout(()=>{
                     window.location.reload()
                   }, 500)
             }else{
-                alert("Something Went Wrong Please try again later")
+                toggleadminSide("Something Went Wrong Please try again later",false)
             }
         })
 
@@ -22770,7 +22770,7 @@ socket.on('connect', () => {
         socket.on('reqApproveUpdate', async(data) => {
             // console.log(data)
             if(data.status === 'err'){
-                alert(data.msg)
+                toggleadminSide(data.msg,false)
             }else{
                 // console.log(data)
                 $(`#${data.updatedReq._id}`).find('td:eq(4)').text(`${data.reqStatus}`)

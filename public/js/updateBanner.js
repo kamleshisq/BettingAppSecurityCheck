@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toggleadminSide } from "./adminSideCustomPopup";
 
 export const updateBanner = async(data)=>{
     try{
@@ -11,7 +12,7 @@ export const updateBanner = async(data)=>{
 
         // console.log(res,'==>res')
         if(res.data.status === 'success'){
-            alert('updated successfully!!!!');
+            toggleadminSide('updated successfully!!!!',true);
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{
@@ -21,6 +22,6 @@ export const updateBanner = async(data)=>{
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }

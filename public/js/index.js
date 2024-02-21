@@ -40,6 +40,8 @@ import session from "express-session";
 import { getIframe } from "./getIframe";
 // import { func } from "joi";
 
+import { toggleadminSide } from "./adminSideCustomPopup";
+
 
 
 // console.log(document.querySelector('.loginForm'))
@@ -272,7 +274,7 @@ const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
 if(formDataObj.role == "select"){
-    alert('please select role of user')
+    toggleadminSide('please select role of user',false)
 }
 
 if(formDataObj.whiteLabel == ""){
@@ -352,7 +354,7 @@ $(document).on('submit','.acc-form',async function(e) {
     formDataObj.id = id ;
     // console.log(formDataObj)
     if(formDataObj.amount == 0){
-        alert('please enter amount greater than 0')
+        toggleadminSide('please enter amount greater than 0',false)
     }else{
         formDataObj.sessiontoken = sessionTokenADMIN
         await debitCredit(formDataObj) 
@@ -384,7 +386,7 @@ $(document).on('submit','.Settlement-form',async function(e) {
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
     if(formDataObj.amount == 0){
-        alert('please enter amount greater than 0')
+        toggleadminSide('please enter amount greater than 0',false)
     }else{
         console.log('got here')
         formDataObj.sessiontoken = sessionTokenADMIN
