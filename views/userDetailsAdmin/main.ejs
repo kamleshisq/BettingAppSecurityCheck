@@ -371,18 +371,9 @@
                                   <td class="text-nowrap" ><%=formattedTime%></td>
                                   <%if(ACCount[i].description.startsWith('Chips')){%>
                                     <%if(ACCount[i].creditDebitamount > 0){%>
-                                      <%if(ACCount[i].child_id == ACCount[i].user_id){%>
-                                        <td >Deposit</td>
-                                      <%}else{%> 
-                                      <td >Withdraw</td>
-                                      <%}%>
+                                      <td >Deposit</td>
                                     <%}else{%>
-                                      <%if(ACCount[i].child_id == ACCount[i].user_id){%>
-                                        <td >Withdraw</td>
-                                        <%}else{%> 
-                                          <td >Deposit</td>
-                                      <!-- <td >Withdraw</td> -->
-                                      <%}%>
+                                      <td >Withdraw</td>
                                     <%}%>
                                   <%}else if(ACCount[i].child_id) {%>
                                     <%if(ACCount[i].creditDebitamount > 0){%>
