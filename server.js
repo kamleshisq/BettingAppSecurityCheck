@@ -5429,44 +5429,49 @@ io.on('connection', (socket) => {
               }
         ])
         if(user){
-            if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
-                try{
-                    // console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
-                    let commission = commissionAmount[0].totalCommission
-                    user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
-                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{ myPL:-commission, downlineBalance: commission, availableBalance:-commission}})
-                    // console.log(user)
-                    // for(let i = 0; i < user.parentUsers.length; i++){
-                    //     await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
-                    // }
-                    let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
-                    let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
-                    let childdata = {
-                        user_id:data.LOGINDATA.LOGINUSER._id,
-                        description : desc1,
-                        creditDebitamount : commission,
-                        balance : user.availableBalance + commission,
-                        date : Date.now(),
-                        userName : user.userName,
-                        role_type:user.role_type,
+            let checkUSer = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            if(checkUSer && checkUSer.availableBalance > commission){
+                if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
+                    try{
+                        // console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
+                        let commission = commissionAmount[0].totalCommission
+                        user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
+                        let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{ myPL:-commission, downlineBalance: commission, availableBalance:-commission}})
+                        // console.log(user)
+                        // for(let i = 0; i < user.parentUsers.length; i++){
+                        //     await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
+                        // }
+                        let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
+                        let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
+                        let childdata = {
+                            user_id:data.LOGINDATA.LOGINUSER._id,
+                            description : desc1,
+                            creditDebitamount : commission,
+                            balance : user.availableBalance + commission,
+                            date : Date.now(),
+                            userName : user.userName,
+                            role_type:user.role_type,
+                        }
+                        let perentData = {
+                            user_id:data.LOGINDATA.LOGINUSER.parent_id,
+                            description : desc2,
+                            creditDebitamount : -commission,
+                            balance : parenet.availableBalance - commission,
+                            date : Date.now(),
+                            userName : parenet.userName,
+                            role_type:parenet.role_type
+                        }
+                        await AccModel.create(childdata)
+                        await AccModel.create(perentData)
+                        await newCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
+                        socket.emit("claimCommission", "Success")
+                    }catch(err){
+                        console.log(err)
+                        socket.emit("claimCommission", "error")
                     }
-                    let perentData = {
-                        user_id:data.LOGINDATA.LOGINUSER.parent_id,
-                        description : desc2,
-                        creditDebitamount : -commission,
-                        balance : parenet.availableBalance - commission,
-                        date : Date.now(),
-                        userName : parenet.userName,
-                        role_type:parenet.role_type
-                    }
-                    await AccModel.create(childdata)
-                    await AccModel.create(perentData)
-                    await newCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
-                    socket.emit("claimCommission", "Success")
-                }catch(err){
-                    console.log(err)
-                    socket.emit("claimCommission", "error")
                 }
+            }else{
+                socket.emit("claimCommission", "error")
             }
 
            
@@ -8934,43 +8939,48 @@ io.on('connection', (socket) => {
         ])
         // console.log(commissionAmount, "commissionAmountcommissionAmountcommissionAmountcommissionAmount")
         if(user){
-            if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
-                try{
-                    let commission = commissionAmount[0].totalCommission
-                    await User.findByIdAndUpdate(operationUser._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
-                    // await User.findByIdAndUpdate(operationUser._id,{$inc:{myPL:commission, uplinePL: -commission, pointsWL:commission}})
-                    let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{myPL:-commission, availableBalance:-commission, downlineBalance: commission}})
-                    // for(let i = 0; i < user.parentUsers.length; i++){
-                    //     await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
-                    // }
-                    let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
-                    let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
-                    let childdata = {
-                        user_id:operationUser._id,
-                        description : desc1,
-                        creditDebitamount : commission,
-                        balance : user.availableBalance + commission,
-                        date : Date.now(),
-                        userName : user.userName,
-                        role_type:user.role_type,
+            let check = await User.findById(operationUser.parent_id)
+            if(check && check.availableBalance > commission){
+                if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
+                    try{
+                        let commission = commissionAmount[0].totalCommission
+                        await User.findByIdAndUpdate(operationUser._id,{$inc:{availableBalance:commission, myPL:commission, uplinePL: -commission, pointsWL:commission}})
+                        // await User.findByIdAndUpdate(operationUser._id,{$inc:{myPL:commission, uplinePL: -commission, pointsWL:commission}})
+                        let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{myPL:-commission, availableBalance:-commission, downlineBalance: commission}})
+                        // for(let i = 0; i < user.parentUsers.length; i++){
+                        //     await User.findByIdAndUpdate(user.parentUsers[i], {$inc :{ downlineBalance: commission}})
+                        // }
+                        let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
+                        let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
+                        let childdata = {
+                            user_id:operationUser._id,
+                            description : desc1,
+                            creditDebitamount : commission,
+                            balance : user.availableBalance + commission,
+                            date : Date.now(),
+                            userName : user.userName,
+                            role_type:user.role_type,
+                        }
+                        let perentData = {
+                            user_id:operationUser.parent_id,
+                            description : desc2,
+                            creditDebitamount : -commission,
+                            balance : parenet.availableBalance - commission,
+                            date : Date.now(),
+                            userName : parenet.userName,
+                            role_type:parenet.role_type
+                        }
+                        await AccModel.create(childdata)
+                        await AccModel.create(perentData)
+                        await newCommissionModel.updateMany({userId:operationUser._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
+                        socket.emit("claimCommissionAdmin", "Success")
+                    }catch(err){
+                        console.log(err)
+                        socket.emit("claimCommissionAdmin", "error")
                     }
-                    let perentData = {
-                        user_id:operationUser.parent_id,
-                        description : desc2,
-                        creditDebitamount : -commission,
-                        balance : parenet.availableBalance - commission,
-                        date : Date.now(),
-                        userName : parenet.userName,
-                        role_type:parenet.role_type
-                    }
-                    await AccModel.create(childdata)
-                    await AccModel.create(perentData)
-                    await newCommissionModel.updateMany({userId:operationUser._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
-                    socket.emit("claimCommissionAdmin", "Success")
-                }catch(err){
-                    console.log(err)
-                    socket.emit("claimCommissionAdmin", "error")
                 }
+            }else{
+            socket.emit("claimCommissionAdmin", "error")
             }
             // else{
             //     socket.emit("claimCommissionAdmin", "Success")
