@@ -8983,7 +8983,7 @@ socket.on('connect', () => {
                             let htmldiv = $('<div>').html(this.innerHTML)
                         let data1 = htmldiv.find('span:first').text()
                         let data2 = htmldiv.find('span:first').next().text().trim()
-                        console.log(data1, data2)
+                        // console.log(data1, data2)
                         if(data1 != section.lay || data2 != section.laySize){
                             this.style.backgroundColor = 'blanchedalmond';
                         }
