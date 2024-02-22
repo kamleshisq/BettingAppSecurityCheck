@@ -934,7 +934,24 @@ socket.on('connect', () => {
     //     }
     // })
 
-
+    function removeBackgroundMAIN(){
+        const spanElement2 = document.querySelectorAll('.tbl-td-bg-blu-spn');
+                spanElement2.forEach(spanElement => {
+                    if(spanElement.style){
+                        spanElement.style.backgroundColor = '';
+                    }// Remove background color
+                  });
+               
+                const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
+                spanElement.forEach(spanElement => {
+                    if(spanElement.style){
+                        spanElement.style.backgroundColor = '';
+                    }// Remove background color
+                  });
+                // setTimeout(() => {
+                //     removeBackgroundMAIN()
+                // }, 700)
+    }
     socket.on("marketId", (data) => {
         $(document).ready(function() {
       
@@ -1116,30 +1133,13 @@ socket.on('connect', () => {
                 }
             });
         })
+        removeBackgroundMAIN()
     })
-
-
-    function removeBackgroundMAIN(){
-        const spanElement2 = document.querySelectorAll('.tbl-td-bg-blu-spn');
-                spanElement2.forEach(spanElement => {
-                    if(spanElement.style){
-                        spanElement.style.backgroundColor = '';
-                    }// Remove background color
-                  });
-               
-                const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
-                spanElement.forEach(spanElement => {
-                    if(spanElement.style){
-                        spanElement.style.backgroundColor = '';
-                    }// Remove background color
-                  });
-                setTimeout(() => {
-                    removeBackgroundMAIN()
-                }, 700)
-    }
-    removeBackgroundMAIN()
-
-
+    
+    
+    
+    
+    
     $(document).on("click", ".commission", function(e){
         e.preventDefault()
         // console.log('Working, 123654789')
