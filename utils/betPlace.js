@@ -204,7 +204,7 @@ if(data.data.spoetId == 1){
     let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
     let limitData = await checkLimit({eventId:data.data.eventId, ids:[data.data.market]})
     limitData = limitData[0].Limits
-    console.log(limitData)
+    // console.log(limitData)
     if(limitData){
         // console.log(limitData,  parseFloat(data.data.stake),"123456789")
         if(limitData.min_stake > parseFloat(data.data.stake) ){
@@ -331,7 +331,7 @@ if(data.data.odds2){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
             WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }else{
-            console.log("gethere", data.data.stake , data.data.odds, )
+            // console.log("gethere", data.data.stake , data.data.odds, )
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
             WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
