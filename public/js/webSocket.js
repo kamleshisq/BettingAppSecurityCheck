@@ -1115,26 +1115,6 @@ socket.on('connect', () => {
                     }
                 }
             });
-
-            // const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
-            //     setTimeout(() => {
-            //         spanElement.forEach(spanElement => {
-            //             if(spanElement.style){
-            //                 spanElement.style.backgroundColor = '';
-            //             }// Remove background color
-            //           });
-                    
-            //     },300)
-
-            //     const spanElement2 = document.querySelectorAll('.tbl-td-bg-blu-spn');
-            //     setTimeout(() => {
-            //         spanElement2.forEach(spanElement => {
-            //             if(spanElement.style){
-            //                 spanElement.style.backgroundColor = '';
-            //             }// Remove background color
-            //           });
-                    
-            //     },300)
         })
     })
 
@@ -1155,7 +1135,7 @@ socket.on('connect', () => {
                   });
                 setTimeout(() => {
                     removeBackgroundMAIN()
-                }, 500)
+                }, 700)
     }
     removeBackgroundMAIN()
 
