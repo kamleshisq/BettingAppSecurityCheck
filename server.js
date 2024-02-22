@@ -11914,7 +11914,7 @@ io.on('connection', (socket) => {
             let lgoginData = await loginLogs.findOne({session_id:data.loginData.Token, userName:data.loginData.User.userName})
             // console.log(lgoginData, Date.now()  > lgoginData.login_time + (1000 * 5),Date.now(), lgoginData.login_time + (1000 * 5),"lgoginDatalgoginDatalgoginData")
             // if()
-            let thatDate = new Date(lgoginData.login_time) + (1000 * 60 )
+            let thatDate = new Date(lgoginData.login_time).getTime() + (1000 * 60 )
             console.log(thatDate, Date.now())
             if(lgoginData){
                 if(!lgoginData.isOnline){
