@@ -11912,12 +11912,13 @@ io.on('connection', (socket) => {
         if(data.loginData.User){
             data.loginData
             let lgoginData = await loginLogs.findOne({session_id:data.loginData.Token, userName:data.loginData.User.userName})
-            console.log(lgoginData, Date.now()  > lgoginData.login_time + (1000 * 5),Date.now(), new Date(lgoginData.login_time + (1000 * 60 * 10 ),"lgoginDatalgoginDatalgoginData")
+            // console.log(lgoginData, Date.now()  > lgoginData.login_time + (1000 * 5),Date.now(), lgoginData.login_time + (1000 * 5),"lgoginDatalgoginDatalgoginData")
             // if()
+            let thatDate = new Date(lgoginData.login_time) + (1000 * 60 * 10)
             if(lgoginData){
                 if(!lgoginData.isOnline){
                     socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
-                }else if(Date.now()  > new Date(lgoginData.login_time + (1000 * 60 * 10 ))){
+                }else if(Date.now()  > thatDate){
                     await loginLogs.findOneAndUpdate({session_id:data.loginData.Token, userName:data.loginData.User.userName}, {isOnline: false})
                     socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
                 }
