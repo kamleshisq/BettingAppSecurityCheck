@@ -323,13 +323,19 @@ if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.t
     let realodd = thatMarketMARKETREAL.runners.find(item => item.secId == data.data.secId)
     console.log(realodd, "runnersrunnersrunnersrunners")
     if(data.data.bettype2 === 'BACK'){
-
+        data.data.odds2 = realodd.back
     }else{
-
+        data.data.odds2 = realodd.lay
     }
     // if(data.data.odds2 != data.data.odds){
     // }
-    return 'Odds out of range'
+    if(data.data.check){
+        data.data.odds = data.data.odds2
+    }else{
+        if(data.data.odds2 != data.data.odds){
+            return 'Odds out of range'
+        }
+    }
 
 
 }
