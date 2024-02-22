@@ -10694,7 +10694,7 @@ socket.on('connect', () => {
         $(document).on('click','.tbl-td-with5',function(e){
             // console.log("WORKING")
             marketIdbookDetails( false )
-            $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
+            $(".minus").closest("tr").find('.set-stake-form-input2').val()
             $(".minus")
             .closest("tr")
             .find(".c-gren")
