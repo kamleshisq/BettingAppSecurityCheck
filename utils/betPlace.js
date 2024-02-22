@@ -336,6 +336,22 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
     }
 }else if(data.data.secId.startsWith('odd_Even')) {
     console.log(thatMarketMARKETREAL, "thatMarketMARKETREALthatMarketMARKETREALthatMarketMARKETREAL")
+    if(data.data.market.endsWith('F2')){
+        if(data.data.bettype2 === 'BACK'){
+            data.data.odds2 = thatMarketMARKETREAL.yes_rate
+        }else{
+            data.data.odds2 = thatMarketMARKETREAL.no_rate
+        }
+        if(data.data.check){
+            data.data.odds = data.data.odds2
+        }else{
+            if(data.data.odds2 != data.data.odds){
+                return 'Odds out of range'
+            }
+        }
+    }else{
+        
+    }
 }
 
 
