@@ -8168,9 +8168,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data2, "data2data2data2data2")
                             if(data1 != section.backPrice1 || data2 != section.backSize1){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
@@ -8190,9 +8190,9 @@ socket.on('connect', () => {
                             let data1 = htmldiv.find('span:first').text()
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             if(data1 != section.backPrice2 || data2 !=  section.backSize2){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }
                         // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
@@ -8212,9 +8212,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.backPrice3 || data2 != section.backSize3){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                         }
                     }
                 }
@@ -8261,9 +8261,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data2, "data2data2data2data2")
                                 if(data1 != section.backPrice1 || data2 != section.backSize1){
-                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                             }
                             // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }
@@ -8283,9 +8283,9 @@ socket.on('connect', () => {
                                 let data1 = htmldiv.find('span:first').text()
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 if(data1 != section.backPrice2 || data2 !=  section.backSize2){
-                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                             }
                             // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }
@@ -8305,9 +8305,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data1)
                                 if(data1 != section.backPrice3 || data2 != section.backSize3){
-                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                             }
                         }
                     }
@@ -8377,9 +8377,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice1 || data2 != section.laySize1){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }
                         
                     }
@@ -8400,9 +8400,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice2 || data2 != section.laySize2){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                         }
                         
                     }
@@ -8456,9 +8456,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice3 || data2 != section.laySize3){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                         }
                         
                     }
@@ -8525,9 +8525,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data1)
                                 if(data1 != section.layPrice1 || data2 != section.laySize1){
-                                    this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                             }
                             
                         }
@@ -8548,9 +8548,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data1)
                                 if(data1 != section.layPrice2 || data2 != section.laySize2){
-                                    this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                             }
                             
                         }
@@ -8604,9 +8604,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data1)
                                 if(data1 != section.layPrice3 || data2 != section.laySize3){
-                                    this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                             }
                             
                         }
@@ -8659,9 +8659,9 @@ socket.on('connect', () => {
                             let data1 = htmldiv.find('span:first').text()
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             if(data1 != section.backPrice1 || data2 != section.backSize1){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
@@ -8681,9 +8681,9 @@ socket.on('connect', () => {
                             let data1 = htmldiv.find('span:first').text()
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             if(data1 != section.backPrice2 || data2 != section.backSize2){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }
                         // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
@@ -8703,9 +8703,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.backPrice3 || data2 != section.backSize3){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                         }
                     }
                 }
@@ -8775,9 +8775,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice1 || data2 != section.laySize1){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }
                         
                     }
@@ -8798,9 +8798,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice2 || data2 != section.laySize2){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                         }
                         
                     }
@@ -8847,9 +8847,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice3 || data2 != section.laySize3){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                         }
                         
                     }
