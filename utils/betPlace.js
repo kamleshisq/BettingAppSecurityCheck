@@ -284,16 +284,17 @@ let RealmarketDetails = await marketDetailsBymarketID([`${data.data.market}`])
 let thatMarketMARKETREAL = RealmarketDetails.data.items[0]
 if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')|| marketDetails.title.toLowerCase().startsWith('over/under') ){
     let realodd = thatMarketMARKETREAL.odds.find(item => item.selectionId == data.data.secId)
-    let name
-    if(data.data.secId > 3){
-        name = `layPrice${data.data.secId - 3}`
-        data.data.bettype2 = 'LAY'
-    }else{
-        name = `backPrice${data.data.secId}`
-        data.data.bettype2 = 'BACK'
-    }
-    let odds = realodd[name];
-    data.data.odds2 = odds
+    console.log(realodd, "realoddrealoddrealodd")
+    // let name
+    // if(data.data.secId > 3){
+    //     name = `layPrice${data.data.secId - 3}`
+    //     data.data.bettype2 = 'LAY'
+    // }else{
+    //     name = `backPrice${data.data.secId}`
+    //     data.data.bettype2 = 'BACK'
+    // }
+    // let odds = realodd[name];
+    // data.data.odds2 = odds
     if(data.data.bettype2 === 'BACK'){
         let OddChake = (data.data.odds * 1) + (0.15) 
         // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
