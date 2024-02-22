@@ -9333,7 +9333,7 @@ socket.on('connect', () => {
                       });
                     setTimeout(() => {
                         removeBackground()
-                    }, 300)
+                    }, 500)
         }
         removeBackground()
 
