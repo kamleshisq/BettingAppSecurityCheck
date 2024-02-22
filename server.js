@@ -11915,7 +11915,7 @@ io.on('connection', (socket) => {
             // console.log(lgoginData, Date.now()  > lgoginData.login_time + (1000 * 5),Date.now(), lgoginData.login_time + (1000 * 5),"lgoginDatalgoginDatalgoginData")
             // if()
             let thatDate 
-            if(data.loginData.User.roleName != 'user'){
+            if(data.loginData.User.roleName === 'user'){
                 thatDate = new Date(lgoginData.login_time).getTime() + (1000 * 60 * 10)
             }else{
                 thatDate = new Date(lgoginData.login_time).getTime() + (1000 * 60 * 30)

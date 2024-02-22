@@ -5089,10 +5089,6 @@ socket.on('connect', () => {
             }
             if(id){
                 socket.emit('casionoStatusChange',{status,id,LOGINDATA})
-                // if(confirm('do you want to change status')){
-                // }else{
-                //     $(this).prop('checked') ? $(this).prop('checked',false) : $(this).prop('checked',true)
-                // }
             }
         })
 
