@@ -313,7 +313,7 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 }
 
 if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-    let realodd = thatMarket.runners.find(item => item.secId == data.data.secId)
+    let realodd = thatMarketMARKETREAL.runners.find(item => item.secId == data.data.secId)
     let name
     let name2
     if(data.data.secId == 2){
