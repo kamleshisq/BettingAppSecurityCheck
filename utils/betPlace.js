@@ -321,7 +321,7 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 
 if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
     let realodd = thatMarketMARKETREAL.runners.find(item => item.secId == data.data.secId)
-    console.log(realodd, "runnersrunnersrunnersrunners")
+    // console.log(realodd, "runnersrunnersrunnersrunners")
     if(data.data.bettype2 === 'BACK'){
         data.data.odds2 = realodd.back
     }else{
