@@ -51,7 +51,7 @@ function generateString(length) {
     
 
 async function placeBet(data){
-    console.log(data, "datadatadatadatadatadatadata")
+    // console.log(data, "datadatadatadatadatadatadata")
     let statusSettle = await settelementHistory.find({marketID:data.data.market})
     if(statusSettle.length != 0){
         return 'Please try again later, This market is settled'
@@ -280,9 +280,20 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 
 // console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 // FOR ODDS LIMIT
-// let RealmarketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-// let thatMarketMARKETREAL = marketDetails.data.items[0]
+let RealmarketDetails = await marketDetailsBymarketID([`${data.data.market}`])
+let thatMarketMARKETREAL = RealmarketDetails.data.items[0]
 if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')|| marketDetails.title.toLowerCase().startsWith('over/under') ){
+    let realodd = thatMarketMARKETREAL.odds.find(item => item.selectionId == data.data.secId)
+    let name
+    if(data.data.secId > 3){
+        name = `layPrice${data.data.secId - 3}`
+        data.data.bettype2 = 'LAY'
+    }else{
+        name = `backPrice${data.data.secId}`
+        data.data.bettype2 = 'BACK'
+    }
+    let odds = realodd[name];
+    data.data.odds2 = odds
     if(data.data.bettype2 === 'BACK'){
         let OddChake = (data.data.odds * 1) + (0.15) 
         // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
@@ -302,18 +313,42 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 }
 
 if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-    if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.oldOdds * 1) + (15) 
-        console.log(OddChake,data.data.odds, data.data.odds2 )
-        if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
-            return 'Odds out of range back'
-        }
+    let realodd = thatMarket.runners.find(item => item.secId == data.data.secId)
+    let name
+    let name2
+    if(data.data.secId == 2){
+        name = `layPrice${data.data.secId - 3}`
+        name =  name.slice(0, -2)
+        
+        data.data.bettype2 = 'LAY'
+        name2 = 'lay'
     }else{
-        let OddChake = (data.data.oldOdds * 1) - (15)  
-        if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
-            return 'Odds out of range'
-        }
+        name = `backPrice${data.data.secId}`
+        name = name.slice(0, -1)
+        data.data.bettype2 = 'BACK'
+        name2 = 'back'
     }
+    // console.log(realodd, name)
+    let odds = realodd[name2];
+    data.data.odds2 = odds
+    console.log(realodd, odds)
+    // if(data.data.bettype2 === 'BACK'){
+    //     let OddChake = (data.data.oldOdds * 1) + (15) 
+    //     console.log(OddChake,data.data.odds, data.data.odds2 )
+    //     if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
+    //         return 'Odds out of range back'
+    //     }
+    // }else{
+    //     let OddChake = (data.data.oldOdds * 1) - (15)  
+    //     if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
+    //         return 'Odds out of range'
+    //     }
+    // }
+    if(data.data.odds2 != data.data.odds){
+        return 'Odds out of range'
+    }
+
+
 }
 if(data.data.odds2){
     data.data.odds = data.data.odds2
