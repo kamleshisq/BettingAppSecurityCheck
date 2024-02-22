@@ -291,31 +291,47 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
     // if(data.data.check){
 
     // }
-    if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.odds * 1) + (0.15) 
-        data.data.odds2 = realodd.backPrice1
-        // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
-        if(data.data.check){
-            data.data.odds  = data.data.odds2
-        }else{
-            if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
-                return 'Odds out of range back'
+    if(marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')){
+        if(data.data.bettype2 === 'BACK'){
+            let OddChake = (data.data.odds * 1) + (0.15) 
+            data.data.odds2 = realodd.backPrice1
+            // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
+            if(data.data.check){
+                data.data.odds  = data.data.odds2
+            }else{
+                if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
+                    return 'Odds out of range back'
+                }else{
+                    data.data.odds  = data.data.odds2
+                }
             }
-    
-            if(data.data.odds > limitData.max_odd){
-                return 'Odds out of range'
+        }else{
+            data.data.odds2 = realodd.layPrice1
+            if(data.data.check){
+                data.data.odds  = data.data.odds2
+            }else{
+                let OddChake = (data.data.odds * 1) - (0.15)  
+                if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
+                    return 'Odds out of range'
+                }else{
+                    data.data.odds  = data.data.odds2
+                }
             }
         }
     }else{
-        data.data.odds2 = realodd.layPrice1
-        if(data.data.check){
-            data.data.odds  = data.data.odds2
+        if(data.data.bettype2 === 'BACK'){
+            data.data.odds2 = realodd.backPrice1
         }else{
-            let OddChake = (data.data.odds * 1) - (0.15)  
-            if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
+            data.data.odds2 = realodd.layPrice1
+        }
+        if(data.data.check){
+            data.data.odds = data.data.odds2
+        }else{
+            if(data.data.odds2 != data.data.odds){
                 return 'Odds out of range'
             }
         }
+
     }
 }else if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
     let realodd = thatMarketMARKETREAL.runners.find(item => item.secId == data.data.secId)
