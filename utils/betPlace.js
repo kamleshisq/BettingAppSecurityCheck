@@ -18,6 +18,7 @@ const cataLog = require('../model/catalogControllModel');
 const suspendResume = require('../model/resumeSuspendMarket');
 const checkExposureincludingBet = require('./checkExpusingthatBet');
 const checkexposureOfthatMarket = require('./checkExposurofthatUserwithoutthatMarket');
+const marketDetailsBymarketID = require("./utils/getmarketsbymarketId");
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -278,6 +279,8 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 
 // console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 // FOR ODDS LIMIT
+// let RealmarketDetails = await marketDetailsBymarketID([`${data.data.market}`])
+// let thatMarketMARKETREAL = marketDetails.data.items[0]
 if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')|| marketDetails.title.toLowerCase().startsWith('over/under') ){
     if(data.data.bettype2 === 'BACK'){
         let OddChake = (data.data.odds * 1) + (0.15) 
