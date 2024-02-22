@@ -11915,6 +11915,7 @@ io.on('connection', (socket) => {
             // console.log(lgoginData, Date.now()  > lgoginData.login_time + (1000 * 5),Date.now(), lgoginData.login_time + (1000 * 5),"lgoginDatalgoginDatalgoginData")
             // if()
             let thatDate = new Date(lgoginData.login_time) + (1000 * 60 )
+            console.log(thatDate, Date.now())
             if(lgoginData){
                 if(!lgoginData.isOnline){
                     socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
