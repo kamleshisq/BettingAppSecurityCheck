@@ -318,7 +318,7 @@ if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.t
     let name2
     if(data.data.secId == 2){
         name = `layPrice${data.data.secId - 3}`
-        name =  name.slice(0, -2)
+        name =  name
         
         data.data.bettype2 = 'LAY'
         name2 = 'lay'
