@@ -50,6 +50,7 @@ socket.on('connect', () => {
         socket.on('LoginCHeckUSerSIde', data => {
             window.location.reload();
         })
+        
     let popupTimeout; 
 
     function togglePopupMain(idname, id, message) {

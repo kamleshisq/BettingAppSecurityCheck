@@ -11910,8 +11910,9 @@ io.on('connection', (socket) => {
 
     socket.on('LoginCHeckUSerSIde', async(data) => {
         if(data.loginData.User){
+            data.loginData
             let lgoginData = await loginLogs.findOne({session_id:data.loginData.Token, userName:data.loginData.User.userName})
-            // console.log(lgoginData, "lgoginDatalgoginDatalgoginData")
+            console.log(lgoginData, "lgoginDatalgoginDatalgoginData")
             if(lgoginData){
                 if(!lgoginData.isOnline){
                     socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
