@@ -317,9 +317,7 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
             }
         }
     }
-}
-
-if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+}else if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
     let realodd = thatMarketMARKETREAL.runners.find(item => item.secId == data.data.secId)
     // console.log(realodd, "runnersrunnersrunnersrunners")
     if(data.data.bettype2 === 'BACK'){
@@ -336,9 +334,13 @@ if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.t
             return 'Odds out of range'
         }
     }
-
-
 }
+// else if() {
+
+// }
+
+
+
 if(data.data.odds2){
     data.data.odds = data.data.odds2
 }
