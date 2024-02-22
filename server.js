@@ -11917,7 +11917,7 @@ io.on('connection', (socket) => {
             if(lgoginData){
                 if(!lgoginData.isOnline){
                     socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
-                }else if(Date.now()  > lgoginData.login_time + (1000 * 5)){
+                }else if(Date.now()  > new Date(lgoginData.login_time + (1000 * 5))){
                     await loginLogs.findOneAndUpdate({session_id:data.loginData.Token, userName:data.loginData.User.userName}, {isOnline: false})
                     socket.emit('LoginCHeckUSerSIde', {mesg:'Reaload'})
                 }
