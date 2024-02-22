@@ -8894,9 +8894,12 @@ socket.on('connect', () => {
                         let data1 = htmldiv.find('span:first').text()
                         let data2 = htmldiv.find('span:first').next().text().trim()
                         this.setAttribute("data-bs-toggle", "collapse");
-                        console.log(data1, data2, "data2")
+                        // console.log(data1, data2, "data2")
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
                         // if(data1 != section.backPrice3)
+                        if(data1 != section.back || data2 != section.backSize){
+                            this.style.backgroundColor = 'blanchedalmond';
+                        }
                         this.innerHTML = `<span><b>${section.back}</b></span> <span> ${section.backSize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                     }
