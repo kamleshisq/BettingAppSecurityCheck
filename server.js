@@ -2529,11 +2529,11 @@ io.on('connection', (socket) => {
                 multimarketstatus = true
             }
             let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-            console.log(marketDetails)
+            // console.log(marketDetails)
             // data.data.oldData = data.data.odds
             data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
             let thatMarket = marketDetails.data.items[0]
-            console.log(thatMarket, "thatMarket")
+            // console.log(thatMarket, "thatMarket")
             if(thatMarket){
                 if(data.data.secId.startsWith('odd_Even_')){
                     if(data.data.secId == "odd_Even_Yes"){
@@ -2591,12 +2591,12 @@ io.on('connection', (socket) => {
                         data.data.bettype2 = 'BACK'
                         name2 = 'back'
                     }
-                    console.log(realodd, name)
+                    // console.log(realodd, name)
                     let odds = realodd[name2];
                     data.data.odds2 = odds
                     data.data.secId = data.data.secId.slice(0,-1)
                 }
-                console.log(data ,'++++++==>DATA', multimarketstatus)
+                // console.log(data ,'++++++==>DATA', multimarketstatus)
                 let result = await placeBet(data)
                 const endTimestamp = performance.now();
                 const elapsedTimeInSeconds = (endTimestamp - startTimestamp) / 1000;
