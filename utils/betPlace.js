@@ -335,7 +335,6 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
         }
     }
 }else if(data.data.secId.startsWith('odd_Even')) {
-    console.log(thatMarketMARKETREAL, "thatMarketMARKETREALthatMarketMARKETREALthatMarketMARKETREAL")
     if(data.data.market.endsWith('F2')){
         if(data.data.bettype2 === 'BACK'){
             data.data.odds2 = thatMarketMARKETREAL.yes_rate
@@ -350,7 +349,8 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
             }
         }
     }else{
-        
+        console.log(thatMarketMARKETREAL, "thatMarketMARKETREALthatMarketMARKETREALthatMarketMARKETREAL")
+
     }
 }
 
