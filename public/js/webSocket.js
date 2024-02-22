@@ -9324,15 +9324,19 @@ socket.on('connect', () => {
 
             first = false
         })
-        const spanElement2 = document.querySelectorAll('.button');
-            setTimeout(() => {
-                spanElement2.forEach(spanElement => {
-                    if(spanElement.style){
-                        spanElement.style.backgroundColor = '';
-                    }// Remove background color
-                  });
-                
-            },300)
+        function removeBackground(){
+            const spanElement2 = document.querySelectorAll('.button');
+                    spanElement2.forEach(spanElement => {
+                        if(spanElement.style){
+                            spanElement.style.backgroundColor = '';
+                        }// Remove background color
+                      });
+                    setTimeout(() => {
+                        removeBackground()
+                    }, 300)
+        }
+        removeBackground()
+
 
         // const buttons = document.querySelectorAll(".button");
         // buttons.forEach((button) => {
