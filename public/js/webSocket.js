@@ -8984,6 +8984,9 @@ socket.on('connect', () => {
                         let data1 = htmldiv.find('span:first').text()
                         let data2 = htmldiv.find('span:first').next().text().trim()
                         console.log(data1, data2)
+                        if(data1 != section.lay || data2 != section.laySize){
+                            this.style.backgroundColor = 'blanchedalmond';
+                        }
                         this.innerHTML = `<span><b>${section.lay}</b></span> <span> ${section.laySize}</span>`
                     }
                     if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0")){
