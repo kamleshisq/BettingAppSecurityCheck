@@ -2496,7 +2496,9 @@ socket.on('connect', () => {
                         <div class="btn-group">
                         `
                             // if(data.currentUser.role.authorization.includes('accountControl')){
-                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>`
+                                if(LOGINDATA.LOGINUSER.roleName != "Operator"){
+                                    html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>`
+                                }
                             // }
                             // if(data.currentUser.role.authorization.includes('accountControl')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange" title="Commission">C</button>`
@@ -2504,8 +2506,11 @@ socket.on('connect', () => {
                             // if(data.currentUser.role.authorization.includes('changeUserPassword')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange" title="Change Password">P</button>`
                             // }
+                            if(LOGINDATA.LOGINUSER.roleName != "Operator"){
                             html += `<button  data-bs-toggle="modal" data-bs-target="#myModalSE" class="Settlement" title="Settlement">S</button>`
+                            }
                             // if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
+
                             //     if(response[i].betLock){
                             //         html += `<button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>`
                             //     }else{ 
