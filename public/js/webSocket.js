@@ -73,7 +73,7 @@ socket.on('connect', () => {
             if(status){
 				//$(".modal-backdrop.fade").fadeOut();
 				//$(".modal.fade").fadeOut();
-				$('.modal').modal('toggle')
+				$('.modal').modal('hide');
 				//$(".modal-footer .btn.btn-default").toggle("click");
                 $("#success").fadeIn(500);
                 $("#success").html("<div class='popup-content'><button class='close-popup'>X</button><p>"+text+"</p> </div>");
