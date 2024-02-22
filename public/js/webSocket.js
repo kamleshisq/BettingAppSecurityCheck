@@ -71,6 +71,7 @@ socket.on('connect', () => {
         console.log(message, status)
             var text = message;
             if(status){
+				$(".modal.fade").fadeOut();
                 $("#success").fadeIn(500);
                 $("#success").html("<div class='popup-content'><button class='close-popup'>X</button><p>"+text+"</p> </div>");
                 $("#success .close-popup").click(function() {
