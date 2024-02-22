@@ -320,40 +320,16 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
 }
 
 if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-    let realodd = thatMarketMARKETREAL.runners.find(item => item.secId == data.data.secId)
-    let name
-    let name2
-    if(data.data.secId == 2){
-        name = `layPrice${data.data.secId - 3}`
-        name =  name
-        
-        data.data.bettype2 = 'LAY'
-        name2 = 'lay'
+    let realodd = thatMarketMARKETREAL.odds.find(item => item.selectionId == data.data.secId)
+    console.log(realodd)
+    if(data.data.bettype2 === 'BACK'){
+
     }else{
-        name = `backPrice${data.data.secId}`
-        name = name.slice(0, -1)
-        data.data.bettype2 = 'BACK'
-        name2 = 'back'
+
     }
-    // console.log(realodd, name)
-    let odds = realodd[name2];
-    data.data.odds2 = odds
-    console.log(realodd, odds)
-    // if(data.data.bettype2 === 'BACK'){
-    //     let OddChake = (data.data.oldOdds * 1) + (15) 
-    //     console.log(OddChake,data.data.odds, data.data.odds2 )
-    //     if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
-    //         return 'Odds out of range back'
-    //     }
-    // }else{
-    //     let OddChake = (data.data.oldOdds * 1) - (15)  
-    //     if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
-    //         return 'Odds out of range'
-    //     }
+    // if(data.data.odds2 != data.data.odds){
     // }
-    if(data.data.odds2 != data.data.odds){
-        return 'Odds out of range'
-    }
+    return 'Odds out of range'
 
 
 }
