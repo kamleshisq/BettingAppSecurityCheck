@@ -305,9 +305,16 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     if(comm.length !== 0){
         totlaCommissionUSer = comm[0].totalCommission
     }
-    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer},uplinePL:0,pointsWL:0},{
-        new:true
-    })
+    let user 
+    if(childUser.roleName === 'user'){
+        user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL, lifetimePL:totlaCommissionUSer},uplinePL:0,pointsWL:0, myPL:0},{
+            new:true
+        })
+    }else{
+        user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer},uplinePL:0,pointsWL:0},{
+            new:true
+        })
+    }
     await commissionNewModel.updateMany({userId:childUser.id,setleCOMMISSIONMY:true}, {setleCOMMISSIONMY:false})
     
     let childAccStatement = {}
@@ -441,7 +448,12 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(comm.length !== 0){
         totlaCommissionUSer = comm[0].totalCommission
     }
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
+    let user 
+    if(childUser.roleName === 'user'){
+        user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0, myPL:0})
+    }else{
+        user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL, myPL:-totlaCommissionUSer, lifetimePL:totlaCommissionUSer}, uplinePL:0,pointsWL:0})
+    }
     await commissionNewModel.updateMany({userId:childUser.id,setleCOMMISSIONMY:true}, {setleCOMMISSIONMY:false})
 
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-lifeTimePl, lifetimePL:lifeTimePl}});
