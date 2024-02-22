@@ -545,6 +545,10 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
     if(check.exposureLimit && check.exposureLimit !== 0 && totalEXPAfterThatBet != 0  &&(totalEXPAfterThatBet > check.exposureLimit)){
             return "Please try again later, Your exposure Limit is full dfdf"
     }
+
+    if(betPlaceData.oddValue > limitData.max_odd){
+        return 'Odds out of range'
+    }
     // return 'checking'
     // return 'Please try again leter market SUSPENDED'
     // console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
