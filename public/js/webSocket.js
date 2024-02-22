@@ -8890,10 +8890,10 @@ socket.on('connect', () => {
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         let htmldiv = $('<div>').html(this.innerHTML)
                         let data1 = htmldiv.find('span:first').text()
                         let data2 = htmldiv.find('span:first').next().text().trim()
-                        this.setAttribute("data-bs-toggle", "collapse");
                         // console.log(data1, data2, "data2")
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
                         // if(data1 != section.backPrice3)
@@ -8938,7 +8938,7 @@ socket.on('connect', () => {
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let check2 = data.marketArray.some(item => item == marketId)
                 if(this.id == `${section.secId}2` ){
-                    console.log(section.lay)
+                    // console.log(section.lay)
                     // if(!data.status){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
@@ -8980,6 +8980,10 @@ socket.on('connect', () => {
                         this.setAttribute("data-bs-toggle", "collapse");
                             parentElement.classList.remove("suspended")
                             $(this).parent().find(".match-status-message").text("")
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                        let data1 = htmldiv.find('span:first').text()
+                        let data2 = htmldiv.find('span:first').next().text().trim()
+                        console.log(data1, data2)
                         this.innerHTML = `<span><b>${section.lay}</b></span> <span> ${section.laySize}</span>`
                     }
                     if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0")){
