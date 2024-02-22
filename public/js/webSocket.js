@@ -10157,6 +10157,14 @@ socket.on('connect', () => {
                         .find(".c-gren")
                         .text(result.toFixed(2));
                     }
+                }else{
+                    marketIdbookDetails( false )
+                    $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
+                    $('.minus').closest("tr").find(".set-stake-form-input2").data('prevValue', `${0}`);
+                    $(".minus")
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text('00');
                 }
             })
           })
