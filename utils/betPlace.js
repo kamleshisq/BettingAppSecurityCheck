@@ -18,7 +18,7 @@ const cataLog = require('../model/catalogControllModel');
 const suspendResume = require('../model/resumeSuspendMarket');
 const checkExposureincludingBet = require('./checkExpusingthatBet');
 const checkexposureOfthatMarket = require('./checkExposurofthatUserwithoutthatMarket');
-const marketDetailsBymarketID = require("./utils/getmarketsbymarketId");
+const marketDetailsBymarketID = require("./getmarketsbymarketId");
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
