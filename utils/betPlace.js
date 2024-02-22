@@ -334,16 +334,15 @@ if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title
             return 'Odds out of range'
         }
     }
+}else if(data.data.secId.startsWith('odd_Even')) {
+    console.log(thatMarketMARKETREAL, "thatMarketMARKETREALthatMarketMARKETREALthatMarketMARKETREAL")
 }
-// else if() {
 
+
+
+// if(data.data.odds2){
+//     data.data.odds = data.data.odds2
 // }
-
-
-
-if(data.data.odds2){
-    data.data.odds = data.data.odds2
-}
 
 // // FOR LAY BACK DIFF
 
