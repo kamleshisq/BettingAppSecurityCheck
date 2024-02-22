@@ -50,6 +50,7 @@ socket.on('connect', () => {
         socket.on('LoginCHeckUSerSIde', data => {
             window.location.reload();
         })
+
     let popupTimeout; 
 
     function togglePopupMain(idname, id, message) {
@@ -65,6 +66,32 @@ socket.on('connect', () => {
         }, 3000);
     }
 
+
+    function toggleadminSide(message, status ){
+        console.log(message, status)
+            var text = message;
+            if(status){
+				//$(".modal-backdrop.fade").fadeOut();
+				//$(".modal.fade").fadeOut();
+				$('.modal').modal('hide');
+				//$(".modal-footer .btn.btn-default").toggle("click");
+                $("#success").fadeIn(500);
+                $("#success").html("<div class='popup-content'><button class='close-popup'>X</button><p>"+text+"</p> </div>");
+                $("#success .close-popup").click(function() {
+                $(".alert-popup").fadeOut(500);
+            });
+            }
+            else{
+                $("#error").fadeIn(500);
+                $("#error").html("<div class='popup-content'><button class='close-popup'>X</button><p>"+text+"</p> </div>");
+                $("#error .close-popup").click(function() {
+                $(".alert-popup").fadeOut(500);
+            });
+            }
+            setTimeout(function () {
+                $(".alert-popup").fadeOut(500);
+            }, 1500);
+    }
     
 
     $('.button').click(function (event) {
@@ -184,7 +211,8 @@ socket.on('connect', () => {
             }
 
         }else{
-            alert(data.msg)
+			toggleadminSide(data.msg, false);
+            //alert(data.msg)
             
         }
     })
@@ -842,7 +870,8 @@ socket.on('connect', () => {
 
     socket.on("alertMessage", async(data) => {
         // console.log(data)
-        alert(data)
+        //alert(data)
+		toggleadminSide(data,true);
     })
 
     $(document).on('click', ".promotionLink", function(){
@@ -905,7 +934,24 @@ socket.on('connect', () => {
     //     }
     // })
 
-
+    function removeBackgroundMAIN(){
+        const spanElement2 = document.querySelectorAll('.tbl-td-bg-blu-spn');
+                spanElement2.forEach(spanElement => {
+                    if(spanElement.style){
+                        spanElement.style.backgroundColor = '';
+                    }// Remove background color
+                  });
+               
+                const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
+                spanElement.forEach(spanElement => {
+                    if(spanElement.style){
+                        spanElement.style.backgroundColor = '';
+                    }// Remove background color
+                  });
+                // setTimeout(() => {
+                //     removeBackgroundMAIN()
+                // }, 700)
+    }
     socket.on("marketId", (data) => {
         $(document).ready(function() {
       
@@ -1086,30 +1132,14 @@ socket.on('connect', () => {
                     }
                 }
             });
-
-            const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
-                setTimeout(() => {
-                    spanElement.forEach(spanElement => {
-                        if(spanElement.style){
-                            spanElement.style.backgroundColor = '';
-                        }// Remove background color
-                      });
-                    
-                },300)
-
-                const spanElement2 = document.querySelectorAll('.tbl-td-bg-blu-spn');
-                setTimeout(() => {
-                    spanElement2.forEach(spanElement => {
-                        if(spanElement.style){
-                            spanElement.style.backgroundColor = '';
-                        }// Remove background color
-                      });
-                    
-                },300)
         })
+        removeBackgroundMAIN()
     })
-
-
+    
+    
+    
+    
+    
     $(document).on("click", ".commission", function(e){
         e.preventDefault()
         // console.log('Working, 123654789')
@@ -1319,9 +1349,11 @@ socket.on('connect', () => {
 
     socket.on('UpdateBetLimit', data => {
         if(data.status == "err"){
-            alert(data.message)
+            //alert(data.message)
+			toggleadminSide(data.message,false);
         }else{
-            alert("updated!!")
+			//alert("updated!!")
+			toggleadminSide("Updated",true);
             window.location.reload()
         }
     })
@@ -1471,7 +1503,8 @@ socket.on('connect', () => {
         })
 
         socket.on('editMyProfile',async(data)=>{
-            alert(data.msg)
+//            alert(data.msg)
+			toggleadminSide(data.msg,true);
             location.reload(true)
         })
 
@@ -1484,10 +1517,11 @@ socket.on('connect', () => {
         })
 
         socket.on('editMyPassword',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
             if(data.status == 'success'){
-
-                location.reload(true)
+				setTimeout(function() {location.reload(true)}, 3000);
+                
             }
         })
 
@@ -1563,25 +1597,31 @@ socket.on('connect', () => {
 
         let num1Input1 = document.getElementById('myShare');
         let num2Input1 = document.getElementById('Share');
-        num1Input1.addEventListener('input', () => {
-            if(num1Input1.value > visibleValue){
-                alert('please select share lessThan your visible share')
-            }else{
-                const num11 = parseFloat(num1Input1.value);
-                const num21 = visibleValue - num11;
-                num2Input1.value = num21;
-            }
-        });
+        if(num1Input1){
+            num1Input1.addEventListener('input', () => {
+                if(num1Input1.value > visibleValue){
+                   // alert('please select share lessThan your visible share')
+                   toggleadminSide('please select share lessThan your visible share',false);
+                }else{
+                    const num11 = parseFloat(num1Input1.value);
+                    const num21 = visibleValue - num11;
+                    num2Input1.value = num21;
+                }
+            });
+        }
 
-        num2Input1.addEventListener('input', () => {
-            if(num1Input1.value > visibleValue){
-                alert('please select share lessThan your visible share')
-            }else{
-                const num21 = parseFloat(num2Input1.value);
-                const num11 = visibleValue - num21;
-                num1Input1.value = num11;
-            }
-        });
+        if(num2Input1){
+            num2Input1.addEventListener('input', () => {
+                if(num1Input1.value > visibleValue){
+                    //alert('please select share lessThan your visible share')
+                    toggleadminSide('please select share lessThan your visible share',false);
+                }else{
+                    const num21 = parseFloat(num2Input1.value);
+                    const num11 = visibleValue - num21;
+                    num1Input1.value = num11;
+                }
+            });
+        }
 
 
 
@@ -1599,7 +1639,9 @@ socket.on('connect', () => {
             // console.log(data)
             
             if(data.status === "error"){
-                alert("Please try again later")
+                //alert("Please try again later")
+				toggleadminSide('Please try again later',false);
+				
             }else{
                 // console.log(data)
                 if(data.commissionData.length != 0){
@@ -1736,9 +1778,11 @@ socket.on('connect', () => {
 
         socket.on("updateCommission", async(data) =>  {
             if(data.status === "error"){
-                alert("Please try again later")
+               // alert("Please try again later")
+				toggleadminSide('Please try again later',false);
             }else{
-                alert("Updated!!")
+               // alert("Updated!!")
+				toggleadminSide('Updated',true);
             }
         })
 
@@ -1828,7 +1872,8 @@ socket.on('connect', () => {
 
         socket.on("getUserDetaisl", data => {
             if(data.status === "error"){
-                alert("Please Try again leter")
+                //alert("Please Try again leter")
+				toggleadminSide('Please Try again leter',false);
             }else{
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
@@ -1999,9 +2044,11 @@ socket.on('connect', () => {
         })
         socket.on("BetLockUnlock", data => {
             if(data.status === "error"){
-                alert("Please Try again leter")
+                //alert("Please Try again leter")
+				toggleadminSide('Please Try again leter',false);
             }else if (data.status){
-                alert("Bet Locked Successfully")
+                //alert("Bet Locked Successfully")
+				toggleadminSide('Bet Locked Successfully',true);
                 let row = $('#'+data.rowid)
                 row.find('.betLockStatus').addClass("Locked")
                 // let element = document.getElementsByClassName("betLockStatus")
@@ -2009,7 +2056,8 @@ socket.on('connect', () => {
                 //     element[i].classList.add("Locked");
                 //   }
             }else if (!data.status){
-                alert("Bet Unlocked Successfully")
+                //alert("Bet Unlocked Successfully")
+				toggleadminSide('Bet Unlocked Successfully',true);
                 let row = $('#'+data.rowid)
                 row.find('.betLockStatus').removeClass("Locked")
                 // let elements = document.getElementsByClassName("betLockStatus")
@@ -2108,7 +2156,8 @@ socket.on('connect', () => {
 
         socket.on("getUserDetaisl111", data => {
             if(data.status === "error"){
-                alert("Please Try again leter")
+                //alert("Please Try again leter")
+				toggleadminSide('Please Try again leter',false);
             }else{
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
@@ -2169,7 +2218,8 @@ socket.on('connect', () => {
 
         socket.on("userStatus", data => {
             if(data.status === "error"){
-                alert("Please try again later")
+                //alert("Please try again later")
+				toggleadminSide('Please Try again leter',false);
             }else{
                 let modleName = "#myModal4"
                 let form = $(modleName).find('.form-data')
@@ -2215,9 +2265,11 @@ socket.on('connect', () => {
 
         socket.on('changeExp', data => {
             if(data.message){
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,true);
             }else{
-                alert('Please try again leter')
+               // alert('Please try again leter')
+				toggleadminSide('Please Try again leter',false);
             }
         })
         // socket.on('getOwnChild',(data) => {
@@ -2348,7 +2400,7 @@ socket.on('connect', () => {
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
                         "<th>Points W/L</th>"+
-                        "<th>Upline P/L</th>"+
+                        "<th>Client P/L (%)</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
                     "</tr></thead>"
@@ -2361,7 +2413,7 @@ socket.on('connect', () => {
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
                         "<th>Points W/L</th>"+
-                        "<th>Upline P/L</th>"+
+                        "<th>Client P/L (%)</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
                     "</tr></thead>"
@@ -2419,7 +2471,7 @@ socket.on('connect', () => {
 
                         }
 
-                        html += `<td> ${response[i].uplinePL}</td>`
+                        html += `<td> ${response[i].myPL}</td>`
                         if(response[i].roleName != 'user'){
                             html += `<td>0</td>`
                         }else{
@@ -2445,7 +2497,9 @@ socket.on('connect', () => {
                         <div class="btn-group">
                         `
                             // if(data.currentUser.role.authorization.includes('accountControl')){
-                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>`
+                                if(LOGINDATA.LOGINUSER.roleName != "Operator"){
+                                    html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>`
+                                }
                             // }
                             // if(data.currentUser.role.authorization.includes('accountControl')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange" title="Commission">C</button>`
@@ -2453,8 +2507,11 @@ socket.on('connect', () => {
                             // if(data.currentUser.role.authorization.includes('changeUserPassword')){
                                 html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange" title="Change Password">P</button>`
                             // }
+                            if(LOGINDATA.LOGINUSER.roleName != "Operator"){
                             html += `<button  data-bs-toggle="modal" data-bs-target="#myModalSE" class="Settlement" title="Settlement">S</button>`
+                            }
                             // if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
+
                             //     if(response[i].betLock){
                             //         html += `<button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>`
                             //     }else{ 
@@ -2587,22 +2644,19 @@ socket.on('connect', () => {
 
     socket.on('claimCommissionAdmin', data => {
         if(data == "error"){
-            alert("Please try again leter")
+            //alert("Please try again leter")
+			toggleadminSide("Please try again leter",false);
         }else{
-            alert('commission claimed successfully')
+            //alert('commission claimed successfully')
+			toggleadminSide('commission claimed successfully',true);
             $('.COMMISSIONADMIN').text('Claim Commission (0)')
         }
     })
 
     $('#load-more').click(function(e){
         let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-
         let page = parseInt($('.rowId').attr('data-rowid'));
-
-
-        $('.rowId').attr('data-rowid',page + 1)
-       
-                
+		$('.rowId').attr('data-rowid',page + 1)
         socket.emit("search", {filterData,page,id, LOGINDATA })
         
     })
@@ -2692,7 +2746,8 @@ socket.on('connect', () => {
         // })
 
         socket.on('searchErr',(data) => {
-            alert(data.message)
+            //alert(data.message)
+			toggleadminSide(data.message,false);
         })
 
 
@@ -2825,9 +2880,11 @@ socket.on('connect', () => {
         })
 
         socket.on('editOperatorPermission',async(data)=>{
-            alert(data.msg)
-            if(data.status == 'success'){
-                location.reload(true)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
+            if(data.status == 'success')
+			{               
+				setTimeout(function(){ location.reload(true) }, 3000);
             }
         })
 
@@ -3235,11 +3292,25 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" class="blue" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].description.startsWith('Chips')){
-                            if(data.json.userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+                            if(data.json.userAcc[i].user_id.userName == data.json.userAcc[i].child_id.userName){
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Deposit</td>`
+                                }else{
+                                  html += `<td >Withdraw</td>`
+                                }
+        
+                              }else{
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Withdraw</td>`
+                                  }else{
+                                    html += `<td >Deposit</td>`
+                                }
+                              }
+                            // if(data.json.userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
                           }else if(data.json.userAcc[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
@@ -3300,11 +3371,25 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].description.startsWith('Chips')){
-                            if(data.json.userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+                            // if(data.json.userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
+                            if(data.json.userAcc[i].user_id.userName == data.json.userAcc[i].child_id.userName){
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Deposit</td>`
+                                }else{
+                                  html += `<td >Withdraw</td>`
+                                }
+        
+                              }else{
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Withdraw</td>`
+                                  }else{
+                                    html += `<td >Deposit</td>`
+                                }
+                              }
                           }else if(data.json.userAcc[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
@@ -4267,11 +4352,28 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" class="blue" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].description.startsWith('Chips')){
-                            if(data.json.userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+
+                            if(data.json.userAcc[i].user_id.userName == data.json.userAcc[i].child_id.userName){
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Deposit</td>`
+                                }else{
+                                  html += `<td >Withdraw</td>`
+                                }
+        
+                              }else{
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Withdraw</td>`
+                                  }else{
+                                    html += `<td >Deposit</td>`
+                                }
+                              }
+
+
+                            // if(data.json.userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
                           }else if(data.json.userAcc[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
@@ -4332,11 +4434,26 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(data.json.userAcc[i].description.startsWith('Chips')){
-                            if(data.json.userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+
+                            if(data.json.userAcc[i].user_id.userName == data.json.userAcc[i].child_id.userName){
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Deposit</td>`
+                                }else{
+                                  html += `<td >Withdraw</td>`
+                                }
+        
+                              }else{
+                                if(data.json.userAcc[i].creditDebitamount > 0){
+                                  html += `<td >Withdraw</td>`
+                                  }else{
+                                    html += `<td >Deposit</td>`
+                                }
+                              }
+                            // if(data.json.userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
                           }else if(data.json.userAcc[i].child_id) {
                             if(data.json.userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
@@ -4973,24 +5090,22 @@ socket.on('connect', () => {
             }
             if(id){
                 socket.emit('casionoStatusChange',{status,id,LOGINDATA})
-                // if(confirm('do you want to change status')){
-                // }else{
-                //     $(this).prop('checked') ? $(this).prop('checked',false) : $(this).prop('checked',true)
-                // }
             }
         })
 
         socket.on('casionoStatusChange',async(data)=>{
             if(data.status == 'success'){
                 if(data.message){
-                    alert(data.message)
+					//alert(data.message)
+					toggleadminSide(data.message,true);
                     console.log(elementchange_status[0], "elementchange_statuselementchange_statuselementchange_status")
                     elementchange_status[0].checked = false;
                     $(elementchange_status).parents('.switch').removeClass("on");
                     // console.log(elementchange_status)
                 }
             }else{
-                alert('somthig watn wrong!!')
+                //alert('somthig watn wrong!!');
+				toggleadminSide('somthig watn wrong!!',false);
             }
         })
     }
@@ -6032,7 +6147,8 @@ socket.on('connect', () => {
 
         socket.on("SelectLogoutUserId", (data) => {
             // console.log(data)
-            alert("User Logout")
+           // alert("User Logout")
+			toggleadminSide('User Logout',true)
                 window.setTimeout(()=>{
                     window.location.reload(true)
                 },500)
@@ -6506,6 +6622,7 @@ socket.on('connect', () => {
                     day: 'numeric',
                     hour: 'numeric',
                     minute: 'numeric',
+                    second: 'numeric',
                     hour12: true
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
@@ -6660,10 +6777,12 @@ socket.on('connect', () => {
 
     socket.on('alertBet', async(data) => {
         if(data.status == "fail"){
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,false);
             $('#myModal2').modal('toggle')
         }else{
-            alert('Bet alert Successfully !!')
+            //alert('Bet alert Successfully !!')
+			toggleadminSide("Bet alert Successfully !!",true);
             $('#myModal2').modal('toggle')
             refreshBetMonitorPage()
         }
@@ -7087,9 +7206,11 @@ socket.on('connect', () => {
 
         socket.on('timelyVoideBEt', async(data) => {
             if(data.status === "err"){
-                alert(data.message)
+               // alert(data.message)
+				toggleadminSide(data.message,false);
             }else{
-                alert('Bet Voided Successfully !!')
+                //alert('Bet Voided Successfully !!')
+				toggleadminSide('Bet Voided Successfully !!',true);
                 setTimeout(function() {
                     window.close();
                 }, 2000);
@@ -7216,10 +7337,13 @@ socket.on('connect', () => {
 
         socket.on('createNotification', async(data)=>{
             if(data.status != "success"){
-                alert(data.message)
+//                alert(data.message)
+				toggleadminSide(data.message,false);
             }else{
-                alert("Notification added successfully")
-                window.location.reload(true)
+//                alert("Notification added successfully")
+				toggleadminSide("Notification added successfully",true);
+				setTimeout(function(){ window.location.reload(true) }, 3000);
+               
             }
         })
 
@@ -7250,18 +7374,21 @@ socket.on('connect', () => {
                 }
                 document.getElementById(`${data.id}`).innerHTML = html
             }else{
-                alert(data)
+				toggleadminSide(data,false);
+//                alert(data)
             }
         })
 
         socket.on('deleteNotification', async(data)=>{
             if(data.status === 'success'){
-                alert("Deleted successfully")
+                //alert("Deleted successfully")
+				toggleadminSide("Deleted successfully",true);
                 window.setTimeout(()=>{
                     window.location.reload(true)
                 },500)
             }else{
-                alert(data.message)
+				toggleadminSide(data.message,false);
+                //alert(data.message)
             }
         })
 
@@ -7355,13 +7482,15 @@ socket.on('connect', () => {
         socket.on("createVerticalMenu", async(data)=>{
             // console.log(data)
             if(data.status === "success"){
-                alert("Menu Added Successfully")
+                //alert("Menu Added Successfully")
+				toggleadminSide("Menu Added Successfully",true);
                     window.setTimeout(()=>{
                         // window.location = '/admin/cms'
                         window.location.reload()
                     },500)
             }else{
-                alert(`${data.err.message}`)
+                //alert(`${data.err.message}`)
+				toggleadminSide(`${data.err.message}`,false);
             }
         })
 
@@ -7410,7 +7539,8 @@ socket.on('connect', () => {
         });
         
         socket.on("updateVerticalMenu", async(data)=>{
-            alert(`${data}`)
+            //alert(`${data}`)
+			toggleadminSide(`${data}`,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },500)
@@ -7427,7 +7557,8 @@ socket.on('connect', () => {
         })
 
         socket.on("deleteVerticalMenu", async(data) => {
-            alert("Menu Deleted Successfully")
+           // alert("Menu Deleted Successfully")
+			toggleadminSide("Menu Deleted Successfully",true);
             window.setTimeout(()=>{
                 window.location.reload()
             },500)
@@ -7502,7 +7633,8 @@ socket.on('connect', () => {
         })
 
         socket.on("deleteBanner", data =>{
-            alert(data)
+            //alert(data)
+			toggleadminSide(data,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },200)
@@ -7541,7 +7673,8 @@ socket.on('connect', () => {
             }
         })
         socket.on("dleteImageSport", async(data)=>{
-            alert(data)
+            //alert(data)
+			toggleadminSide(data,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },200)
@@ -7561,7 +7694,8 @@ socket.on('connect', () => {
 
         socket.on('editImageSport', data => {
             if(data == "Please try again later"){
-                alert(data)
+                //alert(data)
+				toggleadminSide(data,false);
             }else{
                 let modleName = "#EditSliderInImage"
                 let form = $(modleName).find('.editImageSportForm')
@@ -7578,7 +7712,8 @@ socket.on('connect', () => {
         })
 
         socket.on('UpdateSport', async(data) => {
-            alert(data)
+//            alert(data)
+			toggleadminSide(data,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },200)
@@ -7596,7 +7731,8 @@ socket.on('connect', () => {
             }
         })
         socket.on('deleteSlider', async(data) => {
-            alert(data)
+            //alert(data)
+			toggleadminSide(data,true);
             window.setTimeout(()=>{
                 window.location.reload()
             },200)
@@ -7689,33 +7825,33 @@ socket.on('connect', () => {
             });
         });
 
-        // if(document.getElementById('myIframe')){
-        //     let channelId = document.getElementById('myIframe').getAttribute('data-id');
-        //     // console.log(channelId, "channelIdchannelIdchannelId")
-        //     socket.emit('channelId', {channelId, search, LOGINDATA})
+        if(document.getElementById('myIframe')){
+            let channelId = document.getElementById('myIframe').getAttribute('data-id');
+            // console.log(channelId, "channelIdchannelIdchannelId")
+            socket.emit('channelId', {channelId, search, LOGINDATA})
     
-        //     socket.on('channelId', data => {
-        //         console.log(data, "WORKING")
-        //         try{
-        //             function xorEncrypt(input, key) {
-        //                 let output = '';
-        //                 for (let i = 0; i < input.length; i++) {
-        //                   output += String.fromCharCode(input.charCodeAt(i) ^ key);
-        //                 }
-        //                 return output;
-        //               }
-        //               const encryptionKey = 'JK';
-        //               const encryptedUrl = xorEncrypt(data, encryptionKey);
+            socket.on('channelId', data => {
+                console.log(data, "WORKING")
+                try{
+                    function xorEncrypt(input, key) {
+                        let output = '';
+                        for (let i = 0; i < input.length; i++) {
+                          output += String.fromCharCode(input.charCodeAt(i) ^ key);
+                        }
+                        return output;
+                      }
+                      const encryptionKey = 'JK';
+                      const encryptedUrl = xorEncrypt(data, encryptionKey);
 
-        //               $(document).ready(function() {
-        //                 $('#myIframe').attr('src', encryptedUrl);
-        //             });
+                      $(document).ready(function() {
+                        $('#myIframe').attr('src', encryptedUrl);
+                    });
     
-        //         }catch(err){
-        //             console.log(err)
-        //         }
-        //     })
-        // }
+                }catch(err){
+                    console.log(err)
+                }
+            })
+        }
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
         //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
@@ -7909,7 +8045,7 @@ socket.on('connect', () => {
         }
         setInterval(()=>{
             OddsCheck()
-        }, 5000)
+        }, 1000)
         OddsCheck()
         let limitData = []
         socket.on('OddsCheck', data => {
@@ -7991,7 +8127,7 @@ socket.on('connect', () => {
               }else{
                   setTimeout(()=>{
                     marketId()
-                  }, 1000)
+                  }, 400)
               }
         }
         marketId()
@@ -8038,9 +8174,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data2, "data2data2data2data2")
                             if(data1 != section.backPrice1 || data2 != section.backSize1){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
@@ -8060,9 +8196,9 @@ socket.on('connect', () => {
                             let data1 = htmldiv.find('span:first').text()
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             if(data1 != section.backPrice2 || data2 !=  section.backSize2){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }
                         // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
@@ -8082,9 +8218,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.backPrice3 || data2 != section.backSize3){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                         }
                     }
                 }
@@ -8131,9 +8267,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data2, "data2data2data2data2")
                                 if(data1 != section.backPrice1 || data2 != section.backSize1){
-                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                             }
                             // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }
@@ -8153,9 +8289,9 @@ socket.on('connect', () => {
                                 let data1 = htmldiv.find('span:first').text()
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 if(data1 != section.backPrice2 || data2 !=  section.backSize2){
-                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                             }
                             // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }
@@ -8175,9 +8311,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data1)
                                 if(data1 != section.backPrice3 || data2 != section.backSize3){
-                                    this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                             }
                         }
                     }
@@ -8247,9 +8383,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice1 || data2 != section.laySize1){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }
                         
                     }
@@ -8270,9 +8406,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice2 || data2 != section.laySize2){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                         }
                         
                     }
@@ -8326,9 +8462,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice3 || data2 != section.laySize3){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                         }
                         
                     }
@@ -8395,9 +8531,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data1)
                                 if(data1 != section.layPrice1 || data2 != section.laySize1){
-                                    this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                             }
                             
                         }
@@ -8418,9 +8554,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data1)
                                 if(data1 != section.layPrice2 || data2 != section.laySize2){
-                                    this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                             }
                             
                         }
@@ -8474,9 +8610,9 @@ socket.on('connect', () => {
                                  let data2 = htmldiv.find('span:first').next().text().trim()
                                 // console.log(data1)
                                 if(data1 != section.layPrice3 || data2 != section.laySize3){
-                                    this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                     this.style.backgroundColor = 'blanchedalmond';
                                 }
+                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                             }
                             
                         }
@@ -8529,9 +8665,9 @@ socket.on('connect', () => {
                             let data1 = htmldiv.find('span:first').text()
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             if(data1 != section.backPrice1 || data2 != section.backSize1){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
@@ -8551,9 +8687,9 @@ socket.on('connect', () => {
                             let data1 = htmldiv.find('span:first').text()
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             if(data1 != section.backPrice2 || data2 != section.backSize2){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }
                         // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
@@ -8573,9 +8709,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.backPrice3 || data2 != section.backSize3){
-                                this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.backPrice1}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                         }
                     }
                 }
@@ -8645,9 +8781,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice1 || data2 != section.laySize1){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }
                         
                     }
@@ -8668,9 +8804,9 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice2 || data2 != section.laySize2){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                         }
                         
                     }
@@ -8717,112 +8853,23 @@ socket.on('connect', () => {
                              let data2 = htmldiv.find('span:first').next().text().trim()
                             // console.log(data1)
                             if(data1 != section.layPrice3 || data2 != section.laySize3){
-                                this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                            this.innerHTML = `<span data-id="${section.layPrice1}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                         }
                         
                     }
                 }
             })
-            // $(".tied_match_Blue").each(function() {
-                    
-            //     let id = this.id
-            //     id = id.slice(0, -1);
-            //     let section = null;
-            //     console.log(data.finalResult)
-            //     data.finalResult.items.some(item => {
-            //         if(item && item.odds){
-            //             console.log(item, 4564654654)
-            //             section = item.odds.find(odd => odd.selectionId == id);
-            //             return section !== undefined;
-            //         }
-            //     });
-            //     console.log(section)
-            //     if(this.id == `${section.selectionId}1` ){
-            //         if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
-            //             this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-            //             <i class="fa-solid fa-lock"></i>
-            //           </span>`
-            //         }else{
-            //             // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-            //             // this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
-            //             this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
-            //                             <span>${section.backSize1}</span>`
-            //         }
-            //     }else if(this.id == `${section.selectionId}2`){
-            //         if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0"){
-            //             this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-            //             <i class="fa-solid fa-lock"></i>
-            //           </span>`
-            //         }else{
-            //             // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-            //             // this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
-            //             this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
-            //             <span>${section.backSize2}</span>`
-            //         }
-            //     }else if (this.id == `${section.selectionId}3`){
-            //         if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0"){
-            //             this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-            //             <i class="fa-solid fa-lock"></i>
-            //           </span>`
-            //         }else{
-            //             // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-            //             // this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
-            //             this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
-            //             <span>${section.backSize3}</span>`
-            //         }
-            //     }
-            // })
 
-
-            // $(".tied_match_Red").each(function() {
-                    
-            //     let id = this.id
-            //     id = id.slice(0, -1);
-            //     let section = null;
-            //     data.finalResult.items.some(item => {
-            //         if(item && item.odds){
-            //         section = item.odds.find(odd => odd.selectionId == id);
-            //         return section !== undefined;
-            //         }
-            //     });
-            //     if(this.id == `${section.selectionId}4` ){
-            //         if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
-            //             this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-            //             <i class="fa-solid fa-lock"></i>
-            //           </span>`
-            //         }else{
-            //             this.innerHTML = `<span><b>${section.layPrice1}</b></span> 
-            //                                 <span>${section.laySize1}</span>`
-            //         }
-            //     }else if(this.id == `${section.selectionId}5`){
-            //         if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0"){
-            //             this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-            //             <i class="fa-solid fa-lock"></i>
-            //           </span>`
-            //         }else{
-            //             this.innerHTML = `<span><b>${section.layPrice2}</b></span> 
-            //                             <span>${section.laySize2}</span>`
-            //         }
-            //     }else if (this.id == `${section.selectionId}6`){
-            //         if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
-            //             this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-            //             <i class="fa-solid fa-lock"></i>
-            //           </span>`
-            //         }else{
-            //             this.innerHTML = `<span><b>${section.layPrice3}</b></span> 
-            //                             <span>${section.laySize3}</span>`
-            //         }
-            //     }
-            // })
             $(".bookmaker_blue").each(function() {
                 let marketId = $(this).closest('table').attr('id')
                 let macLimitStatus 
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
                     if(limitOnTHis.Limits.max_odd){
-                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        // macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        macLimitStatus = limitOnTHis.Limits.max_odd
                     }
                 }
                 // console.log(macLimitStatus ,"macLimitStatusmacLimitStatus")
@@ -8850,7 +8897,15 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
+                        let htmldiv = $('<div>').html(this.innerHTML)
+                        let data1 = htmldiv.find('span:first').text()
+                        let data2 = htmldiv.find('span:first').next().text().trim()
+                        // console.log(data1, data2, "data2")
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        // if(data1 != section.backPrice3)
+                        if(data1 != section.back || data2 != section.backSize){
+                            this.style.backgroundColor = 'blanchedalmond';
+                        }
                         this.innerHTML = `<span><b>${section.back}</b></span> <span> ${section.backSize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                     }
@@ -8865,7 +8920,8 @@ socket.on('connect', () => {
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
                     if(limitOnTHis.Limits.max_odd){
-                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        // macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        macLimitStatus = limitOnTHis.Limits.max_odd
                     }
                 }
 
@@ -8888,6 +8944,7 @@ socket.on('connect', () => {
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let check2 = data.marketArray.some(item => item == marketId)
                 if(this.id == `${section.secId}2` ){
+                    // console.log(section.lay)
                     // if(!data.status){
                     //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                     //     <i class="fa-solid fa-lock"></i>
@@ -8929,6 +8986,13 @@ socket.on('connect', () => {
                         this.setAttribute("data-bs-toggle", "collapse");
                             parentElement.classList.remove("suspended")
                             $(this).parent().find(".match-status-message").text("")
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                        let data1 = htmldiv.find('span:first').text()
+                        let data2 = htmldiv.find('span:first').next().text().trim()
+                        // console.log(data1, data2)
+                        if(data1 != section.lay || data2 != section.laySize){
+                            this.style.backgroundColor = 'blanchedalmond';
+                        }
                         this.innerHTML = `<span><b>${section.lay}</b></span> <span> ${section.laySize}</span>`
                     }
                     if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0")){
@@ -9063,7 +9127,8 @@ socket.on('connect', () => {
                 let limitOnTHis = limitData.find(item => item.marketId == marketId)
                 if(limitOnTHis){
                     if(limitOnTHis.Limits.max_odd){
-                        macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        // macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                        macLimitStatus = limitOnTHis.Limits.max_odd
                     }
                 }
                 let id = this.id
@@ -9102,7 +9167,8 @@ socket.on('connect', () => {
                     let limitOnTHis = limitData.find(item => item.marketId == marketId)
                     if(limitOnTHis){
                         if(limitOnTHis.Limits.max_odd){
-                            macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                            // macLimitStatus =  (limitOnTHis.Limits.max_odd - 1) * 100
+                            macLimitStatus = limitOnTHis.Limits.max_odd
                         }
                     }
                     // console.log(macLimitStatus, "FANCY")
@@ -9188,16 +9254,20 @@ socket.on('connect', () => {
             });
 
             first = false
+        })
+        function removeBackground(){
             const spanElement2 = document.querySelectorAll('.button');
-                setTimeout(() => {
                     spanElement2.forEach(spanElement => {
                         if(spanElement.style){
                             spanElement.style.backgroundColor = '';
                         }// Remove background color
                       });
-                    
-                },300)
-        })
+                    setTimeout(() => {
+                        removeBackground()
+                    }, 500)
+        }
+        removeBackground()
+
 
         // const buttons = document.querySelectorAll(".button");
         // buttons.forEach((button) => {
@@ -9953,78 +10023,88 @@ socket.on('connect', () => {
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 let NewStake = spanId - 100;
-                $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
-                let result
-                let element = $(this)
-                let staleDiff = 100
-                if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
-                        result = (NewStake * Odds) - NewStake;
-                        resultDiff = (staleDiff * Odds) - staleDiff;
-                    }else{
-                        var escapedId = buttonId.replace(/\./g, '\\.');
-                        let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
-                        if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
-                            Odds = parseFloat(
-                                $(this).closest("tr").find(".selection-name").text().split('@')[1]
-                              );
+                if(NewStake > 0 ){
+                    $(this).closest("tr").find(".set-stake-form-input2").data('prevValue', `${NewStake}`);
+                    let result
+                    let element = $(this)
+                    let staleDiff = 100
+                    if($(this).closest('tr').hasClass('back-inplaymatch')){
+                        if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue') || IdButton.hasClass("goal_Blue")){
+                            result = (NewStake * Odds) - NewStake;
+                            resultDiff = (staleDiff * Odds) - staleDiff;
+                        }else{
+                            var escapedId = buttonId.replace(/\./g, '\\.');
+                            let IdButton = $(this).closest("tr").prev().find(`#${escapedId}`)
+                            if(IdButton.hasClass('only_over_blue')|| IdButton.hasClass('odd_even_blue')){
+                                Odds = parseFloat(
+                                    $(this).closest("tr").find(".selection-name").text().split('@')[1]
+                                  );
+                            }
+                            result = (NewStake * Odds) / 100
+                            resultDiff = (staleDiff * Odds) / 100
                         }
-                        result = (NewStake * Odds) / 100
-                        resultDiff = (staleDiff * Odds) / 100
-                    }
-                    let data = {
-                        result : resultDiff,
-                        element,
-                        status:false,
-                        NewStake : staleDiff,
-                        check : NewStake
-                    }
-                    Onlyminus(data)
-                }else{
-                    result = NewStake
-                    let resultDiff = 100
-
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
-                        plusMinus = (100 * Odds) - 100;
-                         
+                        let data = {
+                            result : resultDiff,
+                            element,
+                            status:false,
+                            NewStake : staleDiff,
+                            check : NewStake
+                        }
+                        Onlyminus(data)
                     }else{
-                        plusMinus = (100 * Odds) / 100
+                        result = NewStake
+                        let resultDiff = 100
+    
+                        if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('winner_Red') || IdButton.hasClass('goal_Red')){
+                            plusMinus = (100 * Odds) - 100;
+                             
+                        }else{
+                            plusMinus = (100 * Odds) / 100
+                        }
+                        let data = {
+                            result:resultDiff,
+                            element,
+                            status:true,
+                            NewStake : 100,
+                            plusMinus,
+                            check:NewStake
+                        }
+                        Onlyminus(data)
+                        // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                        //     result = (NewStake * 2) - NewStake;
+                        // }else{
+                        //     result = (NewStake * Odds) / 100
+                        // }
                     }
-                    let data = {
-                        result:resultDiff,
-                        element,
-                        status:true,
-                        NewStake : 100,
-                        plusMinus,
-                        check:NewStake
+                    if(!spanId){
+                        $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(0);
+                    }else if(NewStake < 0){
+                        $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(0);
                     }
-                    Onlyminus(data)
-                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                    //     result = (NewStake * 2) - NewStake;
-                    // }else{
-                    //     result = (NewStake * Odds) / 100
-                    // }
-                }
-                if(!spanId){
-                    $(this).closest("tr").find('.set-stake-form-input2').val(0)
-                    $(this)
+                    else{
+                        // console.log("WORKING")
+                        $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(result.toFixed(2));
+                    }
+                }else{
+                    marketIdbookDetails( false )
+                    $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
+                    $('.minus').closest("tr").find(".set-stake-form-input2").data('prevValue', `${0}`);
+                    $(".minus")
                     .closest("tr")
                     .find(".c-gren")
-                    .text(0);
-                }else if(NewStake < 0){
-                    $(this).closest("tr").find('.set-stake-form-input2').val(0)
-                    $(this)
-                    .closest("tr")
-                    .find(".c-gren")
-                    .text(0);
-                }
-                else{
-                    // console.log("WORKING")
-                    $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
-                    $(this)
-                    .closest("tr")
-                    .find(".c-gren")
-                    .text(result.toFixed(2));
+                    .text('00');
                 }
             })
           })
@@ -10491,6 +10571,7 @@ socket.on('connect', () => {
                 
             }
             let check = $(this).closest("tr").find("#changes").prop("checked");
+            data.check = check
             console.log(specificSpan, data.odds, "data.oddsdata.oddsdata.odds")
             if(specificSpan == data.odds){
                 if(data.stake === "" || data.stake == 0){
@@ -10563,8 +10644,10 @@ socket.on('connect', () => {
 
         $(document).on('click','.tbl-td-with5',function(e){
             // console.log("WORKING")
+
             marketIdbookDetails( false )
             $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
+            $('.minus').closest("tr").find(".set-stake-form-input2").data('prevValue', `${0}`);
             $(".minus")
             .closest("tr")
             .find(".c-gren")
@@ -10864,6 +10947,7 @@ socket.on('connect', () => {
                   <tr class="thead-border my-open-bet-trr">
                     <th>Selection</th>
                     <th>Odds</th>
+                    <th>Market</th>
                     <th>Stake</th>
                   </tr>
                 </thead>
@@ -10880,6 +10964,7 @@ socket.on('connect', () => {
                     let oddValue2 = data.openBet[0].oddValue
                     html2 += `<td>${selectionName}@${oddValue2}</td>
                       <td>${ oddValue1 }</td>
+                      <td>${ data.openBet[0].marketName}</td>
                       <td>${ data.openBet[0].Stake }</td>
                     </tr>
                   </tbody>
@@ -10887,6 +10972,7 @@ socket.on('connect', () => {
                 }else{
                     html2 += `<td>${ data.openBet[0].selectionName}</td>
                       <td>${ data.openBet[0].oddValue }</td>
+                      <td>${ data.openBet[0].marketName}</td>
                       <td>${ data.openBet[0].Stake }</td>
                     </tr>
                   </tbody>
@@ -10907,11 +10993,13 @@ socket.on('connect', () => {
                         let oddValue2 = data.openBet[i].oddValue
                         html2 += `<td>${selectionName}@${oddValue2}</td>
                         <td>${ oddValue1 }</td>
+                        <td>${ data.openBet[i].marketName}</td>
                         <td>${ data.openBet[i].Stake }</td>
                       </tr>`
                     }else{
                         html2 += `<td>${ data.openBet[i].selectionName}</td>
                         <td>${ data.openBet[i].oddValue }</td>
+                        <td>${ data.openBet[i].marketName}</td>
                         <td>${ data.openBet[i].Stake }</td>
                       </tr>`
                     }
@@ -11051,12 +11139,12 @@ socket.on('connect', () => {
 
         socket.on("updatePage", async(data) => {
             if(data === "success"){
-                alert("Page updates")
+                toggleadminSide("Page updates",true)
                 setTimeout(()=>{
                     window.location.reload()
                   }, 500)
             }else{
-                alert("Something Went Wrong Please try again later")
+                toggleadminSide("Something Went Wrong Please try again later",false)
             }
         })
 
@@ -14968,7 +15056,8 @@ socket.on('connect', () => {
               </tr>`
               $('#table123').append(html)
             }else{
-                alert("Something wrong, please try again later")
+                //alert("Something wrong, please try again later")
+				toggleadminSide("Something wrong, please try again later",false);
             }
         })
 
@@ -15018,7 +15107,8 @@ socket.on('connect', () => {
 
         socket.on("updateRules", data =>{
             if(data === "err"){
-                alert("Something wrong, please try again later")
+                //alert("Something wrong, please try again later")
+				toggleadminSide("Something wrong, please try again later",false);
             }else{
                 // console.log(data)
                 const trElement = $(`tr:has(button#${data._id})`);
@@ -15027,7 +15117,8 @@ socket.on('connect', () => {
                     trElement.find('td:eq(1)').text(`${data.name}`);
                     // trElement.find('td:eq(1)').text(`${data.description}`);
                 }
-                alert("Updated!!")
+                //alert("Updated!!")
+				toggleadminSide("Updated",true);
 
             }
         })
@@ -15620,7 +15711,8 @@ socket.on('connect', () => {
 
         socket.on("FUndData", async(data) => {
             if(data.status === "error"){
-                alert("Please Try again later")
+                //alert("Please Try again later")
+				toggleadminSide("Please Try again later",false);
             }else{
                 window.location.reload()
                 // $('#myModaladduser').modal('toggle');
@@ -16021,11 +16113,13 @@ socket.on('connect', () => {
 
         socket.on('voidBet', async(data) => {
             if(data.status === "fail"){
-                alert(data.msg)
+                //alert(data.msg)
+				toggleadminSide(data.msg,false);
             }else{
-                alert('Bet Voided Successfully !!')
+                //alert('Bet Voided Successfully !!')
+				toggleadminSide('Bet Voided Successfully !!',true);
                 $('#myModal2').modal('toggle')
-                location.reload(true)
+                setTimeout(function(){location.reload(true)}, 1500);
 
             }
         })
@@ -16043,7 +16137,8 @@ socket.on('connect', () => {
         
         socket.on("acceptBet", (data)=>{
             if(data.status === "fail"){
-                alert("Please try again later")
+                //alert("Please try again later")
+				toggleadminSide('Please try again later',false);
             }else{
                location.reload(true)
             }
@@ -16114,6 +16209,16 @@ socket.on('connect', () => {
             socket.emit("Wallet", {maxCreditReference, transferLock, id})
         })
 
+        socket.on('Wallet', data => {
+            if(data.status == 'sucess'){
+                toggleadminSide(data.message, true)
+
+            }else{
+                toggleadminSide(data.message, false)
+
+            }
+        })
+
         $(document).on('click', '.kycPdf', function(e){
             e.preventDefault()
             let id = $(this).attr('id')
@@ -16134,9 +16239,11 @@ socket.on('connect', () => {
 
         socket.on("maxCreditReference", data =>{
             if(data.status === "error"){
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,false);
             }else{
-                alert("Updated")
+                //alert("Updated")
+				toggleadminSide("Updated",true);
                 $(".Wallet").find('input[name="maxCreditReference"]').val(data.maxCreditReference)
                 // $(".Wallet").find('select[name="transferLock"]').val(data.transferLock)
             }
@@ -16572,11 +16679,25 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" class="blue" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(userAcc[i].description.startsWith('Chips')){
-                            if(userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+                           if(userAcc[i].user_id.userName == userAcc[i].child_id.userName){
+                                     if(userAcc[i].creditDebitamount > 0){
+                                        html += `<td >Deposit</td>`
+                                     }else{
+                                        html += `<td >Withdraw</td>`
+                                     }
+
+                                   }else{
+                                     if(userAcc[i].creditDebitamount > 0){
+                                        html += `<td >Withdraw</td>`
+                                       }else{
+                                          html += `<td >Deposit</td>`
+                                     }
+                                   }
+                            // if(userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
                           }else if(userAcc[i].child_id) {
                             if(userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
@@ -16637,11 +16758,26 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >
                         <td class="text-nowrap" >${formattedTime}</td>`
                         if(userAcc[i].description.startsWith('Chips')){
-                            if(userAcc[i].creditDebitamount > 0){
-                              html += `<td >Deposit</td>`
-                            }else{
-                              html += `<td >Withdraw</td>`
-                            }
+                            // if(userAcc[i].creditDebitamount > 0){
+                            //   html += `<td >Deposit</td>`
+                            // }else{
+                            //   html += `<td >Withdraw</td>`
+                            // }
+
+                            if(userAcc[i].user_id.userName == userAcc[i].child_id.userName){
+                                if(userAcc[i].creditDebitamount > 0){
+                                   html += `<td >Deposit</td>`
+                                }else{
+                                   html += `<td >Withdraw</td>`
+                                }
+
+                              }else{
+                                if(userAcc[i].creditDebitamount > 0){
+                                   html += `<td >Withdraw</td>`
+                                  }else{
+                                     html += `<td >Deposit</td>`
+                                }
+                              }
                           }else if(userAcc[i].child_id) {
                             if(userAcc[i].creditDebitamount > 0){
                               html += `<td >Settlement Deposit</td>`
@@ -17312,9 +17448,11 @@ socket.on('connect', () => {
     
         socket.on('VoidBetIn2', data => {
             if(data.status === "error"){
-                alert("Please try again later")
+//                alert("Please try again later")
+				toggleadminSide("Please try again later",false);
             }else{ 
-                alert(data.msg)
+                //alert(data.msg)
+				toggleadminSide(data.msg,true);
                 let html = ``
                 if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
                   html += `
@@ -17361,12 +17499,15 @@ socket.on('connect', () => {
     
         socket.on('ROLLBACKDETAILS', data => {
             if(data.status === "error"){
-                alert("Please try again later")
+				toggleadminSide("Please try again later",false);
+                //alert("Please try again later")
             }else if(data.status === "err"){
-                alert(data.msg)
+                //alert(data.msg)
+				toggleadminSide(data.msg,false);
             }else { 
                 // console.log(data)
-                alert(data.message)
+//                alert(data.message)
+				toggleadminSide(data.message,true);
                 // const deleteButton = document.getElementById(data.id);
                 // const row = deleteButton.closest('tr'); 
                 // const table = row.parentNode;
@@ -17387,7 +17528,7 @@ socket.on('connect', () => {
                 }
                 html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
-                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under"){
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under" && !data.betdata.marketName.toLowerCase().startsWith('bookm')){
                     if(data.betdata.marketId.slice(-2).startsWith('OE')){
                         html += `<td>
                         <select class="selectOption" >
@@ -17470,12 +17611,15 @@ socket.on('connect', () => {
         socket.on("VoidBetIn", async(data) => {
             if(data.status === "error"){
                 if(data.message){
-                    alert(data.message)
+                    //alert(data.message)
+					toggleadminSide(data.message,false);
                 }else{
-                    alert("Please try again later")
+                    //alert("Please try again later")
+					toggleadminSide("Please try again later",false);
                 }
             }else{
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,true);
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
                 if (row) {
@@ -17523,7 +17667,8 @@ socket.on('connect', () => {
     
         socket.on('unmapBet', data => {
             if(data.status === "error"){
-                alert(data.message.toUpperCase())
+               // alert(data.message.toUpperCase())
+				toggleadminSide(data.message.toUpperCase(),false);
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
                 const row = deleteButton.closest('tr'); 
@@ -17551,7 +17696,7 @@ socket.on('connect', () => {
                   </thead>`}
                 html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
-                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under"){
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM" && data.betdata.marketName.toLowerCase() != "over/under" && !data.betdata.marketName.toLowerCase().startsWith('bookm')){
                     if(data.betdata.marketId.slice(-2).startsWith('OE')){
                         html += `<td>
                         <select class="selectOption" >
@@ -17606,7 +17751,8 @@ socket.on('connect', () => {
                 }else{
                     document.getElementById('open-market-table').innerHTML = html
                 }
-                alert('Bet Unmaped Successfully')
+                //alert('Bet Unmaped Successfully')
+				toggleadminSide('Bet Unmaped Successfully',true);
             }
         })
     
@@ -17621,9 +17767,11 @@ socket.on('connect', () => {
         socket.on('Settle', data => {
             // console.log(data)
             if(data.status === "error"){
-                alert(data.message.toUpperCase())
+                //alert(data.message.toUpperCase())
+				toggleadminSide(data.message.toUpperCase(),false);
             }else{
-                alert(data.message)
+                //alert(data.message)
+				toggleadminSide(data.message,true);
                 const deleteButton = document.getElementById(data.id);
                 const row = deleteButton.closest('tr'); 
                 const table = row.parentNode;
@@ -17677,7 +17825,8 @@ socket.on('connect', () => {
     
         socket.on("VoidBetIn22", async(data) => {
             if(data.status === "error"){
-                alert(data.message.toUpperCase())
+                //alert(data.message.toUpperCase())
+				toggleadminSide(data.message.toUpperCase(),false);
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
                 const row = deleteButton.closest('tr'); 
@@ -17725,7 +17874,8 @@ socket.on('connect', () => {
                     document.getElementById('mapped-market-table').innerHTML = html
                 }
                 // document.getElementById('mapped-market-table').innerHTML = html
-                alert('Bets Maped Successfully')
+                //alert('Bets Maped Successfully')
+				toggleadminSide('Bets Maped Successfully',true);
             }
         })
     
@@ -18076,7 +18226,8 @@ socket.on('connect', () => {
           })
       
           socket.on("commissionMarketbyId", data =>{
-                alert(data.msg)
+            toggleadminSide(data.msg, true)
+                // alert(data.msg)
           })
     }
 
@@ -18585,13 +18736,41 @@ socket.on('connect', () => {
                     }else{
                         html += '<tr class="lay" >'
                     }
+                     var options = { 
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    second: 'numeric',
+                                    hour12: true
+                                };
+                                var formattedTime = date.toLocaleString('en-US', options);
                     html += `
-                    <td>${data.data[i].userName}</td>
-                    <td class="date-time" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
-                    <td>${data.data[i].marketName}</td>
-                    <!-- <td>${data.data[i].userName}</td> -->
-                    <td>${data.data[i].oddValue}</td>
-                    <td>${data.data[i].Stake}</td>
+                    <td>${formattedTime}</td>
+                    <td class="date-time" >${data.data[i].userName}</td>`
+                    if(data.data[i].match){
+                        html += `<td>${data.data[i].match}</td>`
+                        if(data.data[i].selectionName.includes('@')){
+                          
+                          let oddValue1 = data.data[i].selectionName.split('@')[1]
+                          let selectionName = data.data[i].selectionName.split('@')[0]
+                          let oddValue2 = data.data[i].oddValue
+                          
+                          html += `<td>${data.data[i].marketName} - ${oddValue2}</td>
+                          <td>${oddValue1}</td>`
+                        }else{
+                          html += `<td>${data.data[i].marketName} - ${data.data[i].selectionName} </td>
+                          <td>${data.data[i].oddValue}</td>`
+                        }
+                      }else{
+                          html += `<td>-</td>
+                          <td>-</td>
+                          <td>-</td>`
+                      }
+                    html += `<td>${data.data[i].Stake}</td>
+                    <td>${data.data[i].status}</td>
+                    <td>${data.data[i].ip}</td>
                     <td><div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="${data.data[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489 489" xml:space="preserve">
                     <g>
                       <g>
@@ -18659,9 +18838,11 @@ socket.on('connect', () => {
 
             socket.on("alertBet", async(data) => {
                 if(data.status === "fail"){
-                    alert(data.msg)
+                   // alert(data.msg)
+					toggleadminSide(data.msg,false);
                 }else{
-                    alert('Bet alert successfully')
+                    //alert('Bet alert successfully')
+					toggleadminSide('Bet alert successfully',true);
                     const deleteButton = document.getElementById(data.bet._id);
                     const row = deleteButton.closest('tr'); 
                     if (row) {
@@ -20111,7 +20292,8 @@ socket.on('connect', () => {
     })
     socket.on("alertBet", async(data) => {
         if(data.status === "error"){
-            alert("Please try again later")
+            //alert("Please try again later")
+			toggleadminSide("Please try again later",false);
         }else{
             // console.log(data.bet._id)
             const deleteButton = document.getElementById(data.bet._id);
@@ -21222,9 +21404,11 @@ socket.on('connect', () => {
 
         socket.on('eventNotification2', data => {
             if(data.status === "err"){
-                alert('Please try again later')
+                //alert('Please try again later')
+				toggleadminSide("Please try again later",false);
             }else{
-                alert('Notification Updated successfully!!!')
+				toggleadminSide("Notification Updated successfully",true);
+                //alert('Notification Updated successfully!!!')
             }
         })
     }
@@ -21305,10 +21489,13 @@ socket.on('connect', () => {
 
          socket.on('updateBetLimitMarket', data => {
             if(data.status == "err"){
-                alert('please try again leter')
+                //alert('please try again leter')
+				toggleadminSide("Please try again later",false);
             }else{
-                alert('updated!')
-                window.location.reload()
+                //alert('updated!')
+				toggleadminSide("Updated",true);
+				setTimeout(function(){window.location.reload() }, 3000);
+                
             }
          })
 
@@ -21332,8 +21519,10 @@ socket.on('connect', () => {
 
         socket.on('addnewStream',async(data)=>{
             if(data.status == 'success'){
-                alert(data.msg)
-                window.location.reload(true)
+				toggleadminSide(data.msg,true);
+				setTimeout(function(){window.location.reload(true) }, 3000);
+               // alert(data.msg)
+                //window.location.reload(true)
 
             }
         })
@@ -21365,8 +21554,10 @@ socket.on('connect', () => {
 
         socket.on('delteStreame',async(data)=>{
             if(data.status == 'success'){
-                alert('stream deleted successfully')
-                window.location.reload(true)
+                //alert('stream deleted successfully')
+                //window.location.reload(true)
+				toggleadminSide('stream deleted successfully',true);
+				setTimeout(function(){window.location.reload(true) }, 3000);
             }
         })
 
@@ -21406,8 +21597,10 @@ socket.on('connect', () => {
         socket.on('editStream',async(data) =>{
             // console.log(data)
             if(data.status == 'success'){
-                alert('stream updated successfully')
-                location.reload(true)
+                //alert('stream updated successfully')
+                //location.reload(true)
+				toggleadminSide('stream updated successfully',true);
+				setTimeout(function(){location.reload(true)}, 3000);
             }
         })
     }
@@ -21533,9 +21726,10 @@ socket.on('connect', () => {
         })
 
         socket.on('editpaymentMethod',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);				
             if(data.status == 'success'){
-                location.reload(true)
+                setTimeout(function(){location.reload(true)}, 3000);
             }
         })
 
@@ -21557,10 +21751,11 @@ socket.on('connect', () => {
         })
 
         socket.on('addpaymentMethod',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
             if(data.status == 'success'){
                 $('#myModal').modal('toggle')
-                location.reload(true)
+                setTimeout(function(){location.reload(true)}, 3000);
             }
         })
 
@@ -21576,9 +21771,11 @@ socket.on('connect', () => {
         })
 
         socket.on('deletePaymentMethod',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
             if(data.status == 'success'){
-                location.reload(true)
+                //location.reload(true)
+				setTimeout(function(){location.reload(true)}, 3000);
             }
         })
         $(document).on('click','.status_check_payment',function(){
@@ -21599,7 +21796,8 @@ socket.on('connect', () => {
         })
 
         socket.on('paymentmethodStatusChange',async(data)=>{
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
         })
 
      
@@ -21685,7 +21883,8 @@ socket.on('connect', () => {
                 }
                 $('.tbody').html(html)
             }else{
-                alert(data.msg)
+                //alert(data.msg)
+				toggleadminSide(data.msg,false);
             }
         })
 
@@ -21927,7 +22126,7 @@ socket.on('connect', () => {
         socket.on('getpaymentapprovalreqdata',async(data)=>{
             // console.log(data)
             if(data.status == 'fail'){
-                alert(data.msg)
+                toggleadminSide(data.msg,false);
             }else{
                 let form = $('#myModaladduser .paymentreq_form')
                 form.find('input[name="approvedamount"]').val(data.result.amount)
@@ -21949,7 +22148,7 @@ socket.on('connect', () => {
         socket.on('getpaymentdenyreqdata',async(data)=>{
             // console.log(data)
             if(data.status == 'fail'){
-                alert(data.msg)
+                toggleadminSide(data.msg,false);
             }else{
                 let form = $('#myModal2 .denypaymentreq_form')
                 form.find('input[name="id"]').val(data.result._id)
@@ -21977,11 +22176,12 @@ socket.on('connect', () => {
 
         socket.on('acceptpaymetnreq',async(data)=>{
             if(data.status == 'fail'){
-                alert(data.msg)
+                toggleadminSide(data.msg,false);
             }else{
-                alert(data.msg)
+                toggleadminSide(data.msg,true);
                 $('#myModaladduser').modal('toggle')
-                location.reload(true)
+                
+				setTimeout(function(){location.reload(true)}, 3000);
             }
         })
 
@@ -21997,9 +22197,10 @@ socket.on('connect', () => {
 
         socket.on('deniePaymentReq',async(data)=>{
             // console.log(data.err)
-            alert(data.msg)
+            //alert(data.msg)
+			toggleadminSide(data.msg,true);
             if(data.status == 'success'){
-                location.reload(true)
+                setTimeout(function(){location.reload(true)}, 3000);
             }
         })
 
@@ -22588,7 +22789,8 @@ socket.on('connect', () => {
                 // console.log(data, "datadatadata")
                 socket.emit('reqApproveUpdate', {LOGINDATA, data})
             }else{
-                alert('Please tick the checkbox')
+                //alert('Please tick the checkbox')
+				toggleadminSide('Please tick the checkbox',false);
             }
         })
 
@@ -22601,7 +22803,8 @@ socket.on('connect', () => {
                 data.id = $(this).attr('id')
                 socket.emit('reqCancelUpdate', {LOGINDATA, data})
             }else{
-                alert('Please tick the checkbox')
+                //alert('Please tick the checkbox')
+				toggleadminSide('Please tick the checkbox',false);
             }
         })
 
@@ -22609,27 +22812,29 @@ socket.on('connect', () => {
         socket.on('reqApproveUpdate', async(data) => {
             // console.log(data)
             if(data.status === 'err'){
-                alert(data.msg)
+                toggleadminSide(data.msg,false)
             }else{
                 // console.log(data)
                 $(`#${data.updatedReq._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
                 let date = new Date(data.date123)
                 let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
                 $(`#${data.updatedReq._id}`).find('td:eq(6)').text(`Transferred Date :- ${formetedDate}`)
-                alert('Status Updated!')
+                //alert('Status Updated!')
+				toggleadminSide('Status Updated!',true);
             }
         })
 
 
         socket.on('reqCancelUpdate', async(data) => {
             if(data.status === 'err'){
-                alert(data.msg)
+				toggleadminSide(data.msg,false);
             }else{
                 $(`#${data.cancelUpdate._id}`).find('td:eq(4)').text(`${data.reqStatus}`)
                 let date = new Date(data.date1234)
                 let formetedDate = date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()
                 $(`#${data.cancelUpdate._id}`).find('td:eq(6)').text(`Cancel Date :- ${formetedDate}`)
-                alert('Request cancel sucessfully!!')
+               // alert('Request cancel sucessfully!!')
+				toggleadminSide('Request cancel sucessfully!!',true);
             }
         })
 
@@ -22788,12 +22993,14 @@ socket.on('connect', () => {
 
         socket.on('colorCode', data => {
             if(data.status === "sucess"){
-                alert('updated!!')
+//                alert('updated!!')
+				toggleadminSide('updated!!',true);
                 setTimeout(()=>{
                     window.location.reload()
                 }, 1000)
             }else{
-                alert('Please try again later')
+				toggleadminSide('Please try again later',false);
+//                alert('Please try again later')
             }
         })
 
@@ -22833,8 +23040,8 @@ socket.on('connect', () => {
 
         socket.on('updateMedea', data => {
             if(data.status === 'sucess'){
-                alert('Updated')
-                window.location.reload()
+                toggleadminSide('updated!!',true);
+                setTimeout(function(){window.location.reload() }, 3000);
             }
         })
 
@@ -22877,8 +23084,8 @@ socket.on('connect', () => {
 
         socket.on('updateFooterContent', data => {
             if(data.status === "sucess"){
-                alert('updated')
-                window.location.reload()
+               toggleadminSide('updated!!',true);
+                setTimeout(function(){window.location.reload() }, 3000);
             }
         })
     }

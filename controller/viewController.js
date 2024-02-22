@@ -529,11 +529,9 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
 });
 
 exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
-    // console.log(req.query.id)
     let currentUser = req.currentUser
     let userDetails = await User.findById(req.query.id)
-    // if(userDetails.roleName)
-    // console.log(userDetails)
+  
     let limit = 10
     let skip = 0
     let bets
@@ -3401,53 +3399,49 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    // let featureEventId = []
     let featureEventId = await FeatureventModel.distinct('Id');
-    // featureStatusArr.map(ele => {
-    //     featureEventId.push(parseInt(ele.Id))
-    // })
-    // console.log(featureEventId, "featureStatusArrfeatureStatusArrfeatureStatusArrfeatureStatusArr")
-    // for(let i = 0; i < cricket.length; i++){
-    //     console.log(`${cricket[i].eventData.eventId}`)
-    // }
     let LiveCricket = cricket.filter(item => featureEventId.includes(`${item.eventData.eventId}`))
-    // console.log(LiveCricket)
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let liveFootBall = footBall.filter(item => featureEventId.includes(`${item.eventData.eventId}`));
     let liveTennis = Tennis.filter(item => featureEventId.includes(`${item.eventData.eventId}`))
-    let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
-    let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
-    let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintCricket = cricket.some(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
+    let upcomintFootball = footBall.some(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
+    let upcomintTennis = Tennis.some(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
     const data = await promotionModel.find();
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     let userLog
     let userMultimarkets
     let cricketSeries = [];
     let footbalSeries = [];
     let tennisSeries = []; 
     Tennis.forEach(match => {
-        let seriesIndex = tennisSeries.findIndex(series => series.series === match.eventData.league);
-        if (seriesIndex === -1) {
-            tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
-        } else {
-            tennisSeries[seriesIndex].matchdata.push(match);
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
+            let seriesIndex = tennisSeries.findIndex(series => series.series === match.eventData.league);
+            if (seriesIndex === -1) {
+                tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
+            } else {
+                tennisSeries[seriesIndex].matchdata.push(match);
+            }
         }
     });
     footBall.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let seriesIndex = footbalSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             footbalSeries.push({ series: match.eventData.league, matchdata: [match] });
         } else {
             footbalSeries[seriesIndex].matchdata.push(match);
         }
+    }
     });
     cricket.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let fancyCount = 0
             if(match.marketList.session != null){
                 let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
@@ -3464,6 +3458,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         } else {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
+    }
     });
     // console.log(footbalSeries);
     if(user){
@@ -3545,15 +3540,6 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
             footbalSeries[seriesIndex].matchdata.push(match);
         }
     });
-    // LiveCricket.forEach(match => {
-    //     let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
-    //     if (seriesIndex === -1) {
-    //         cricketSeries.push({ series: match.eventData.league, matchdata: [match] });
-    //     } else {
-    //         cricketSeries[seriesIndex].matchdata.push(match);
-    //     }
-    // });
-
     LiveCricket.forEach(match => {
         let fancyCount = 0
             if(match.marketList.session != null){
@@ -3613,11 +3599,11 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         featureEventId.push(parseInt(ele.Id))
     })
     let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
-    let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const data = await promotionModel.find();
     let userLog
     let userMultimarkets
@@ -3627,6 +3613,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     }
     let cricketSeries = [];
     cricket.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let fancyCount = 0
             if(match.marketList.session != null){
                 let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
@@ -3643,6 +3630,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         } else {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
+    }
     });
     let catalog = await catalogController.find()
   
@@ -3702,9 +3690,9 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
 exports.footBallPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
@@ -3714,7 +3702,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         featureEventId.push(parseInt(ele.Id))
     })
     let liveFootBall = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
-    let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
     const data = await promotionModel.find();
     let userLog
     let userMultimarkets
@@ -3724,12 +3712,13 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     }
     let footbalSeries = [];
     footBall.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let seriesIndex = footbalSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
             footbalSeries.push({ series: match.eventData.league, matchdata: [match] });
         } else {
             footbalSeries[seriesIndex].matchdata.push(match);
-        }
+        }}
     });
     let catalog = await catalogController.find()
 
@@ -3755,9 +3744,9 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
 exports.TennisPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let whiteLabel = whiteLabelcheck(req)
-let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
-let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
-let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
+    let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
+    let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
+    let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
     const sportListData = await getCrkAndAllData()
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
@@ -3767,7 +3756,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
         featureEventId.push(parseInt(ele.Id))
     })
     let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
-    let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY" && item.eventData.type != "CLOSED")
     const data = await promotionModel.find();
     let userLog
     let userMultimarkets
@@ -3777,6 +3766,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
     }
     let tennisSeries = [];
     Tennis.forEach(match => {
+        if(match.eventData.type === 'UPCOMING' || match.eventData.type === 'IN_PLAY'){
         let fancyCount = 0
         if(match.marketList.session != null){
             let count = (match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0)).length
@@ -3792,7 +3782,7 @@ let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , s
             tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
         } else {
             tennisSeries[seriesIndex].matchdata.push(match);
-        }
+        }}
     });
     let catalog = await catalogController.find()
 
@@ -4001,6 +3991,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         ipv4 = ip
     }
     let whiteLabel = whiteLabelcheck(req)
+    
     let basicDetails = await  globalSettingModel.find({whiteLabel:whiteLabel })
     let colorCode = await colorCodeModel.findOne({whitelabel:whiteLabel})
     let verticalMenus = await verticalMenuModel.find({whiteLabelName: whiteLabel , status:true}).sort({num:1});
@@ -4029,6 +4020,14 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
                 mainMassage:"Opps! Please try again later"
             })
         }
+    }
+    let catalog = await catalogController.countDocuments({Id:{$in:[match.eventData.eventId, match.eventData.compId]}})
+    if(catalog != 0 ){
+        return res.render('./errorMessage2',{
+            statusCode : 404,
+            message:"The match you are looking for is no more live",
+            mainMassage:"Opps! Please try again later"
+        })
     }
     let src
     let status = false

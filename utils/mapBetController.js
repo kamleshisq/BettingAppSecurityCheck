@@ -586,7 +586,7 @@ async function mapBet(data){
                     }else if (commission[0].fency.type == "ENTRY" && !(bets[bet].marketName.toLowerCase().startsWith('book')|| bets[bet].marketName.toLowerCase().startsWith('toss') || bets[bet].marketName.toLowerCase().startsWith('match')) && commission[0].fency.status){
                       commissionPer = commission[0].fency.percentage
                     }
-                    let commissionCoin = ((commissionPer * Math.abs(thatBet.returns))/100).toFixed(4)
+                    let commissionCoin = ((commissionPer * Math.abs(thatBet.Stake))/100).toFixed(4)
                     if(typeStatus){
                         if(commissionCoin && commission[0].Bookmaker.limit && commission[0].Bookmaker.limit != 0){
                             if (commissionCoin > commission[0].Bookmaker.limit){
@@ -635,7 +635,7 @@ async function mapBet(data){
                         let uplinePlCOMMIDDDION = 0
                         for(let i = 1; i < user.parentUsers.length; i++){
                             let childUser = await userModel.findById(user.parentUsers[i])
-                            let parentUser2Amount = new Decimal(childUser.Share).times(Math.abs(thatBet.returns)).dividedBy(100);
+                            let parentUser2Amount = new Decimal(childUser.Share).times(Math.abs(thatBet.Stake)).dividedBy(100);
                             let thatUserWinAmount = Math.abs(parentUser2Amount) + uplinePlCOMMIDDDION
                             let commissionChild = await commissionModel.find({userId:user.parentUsers[i]})
                             if(commissionChild.length > 0){

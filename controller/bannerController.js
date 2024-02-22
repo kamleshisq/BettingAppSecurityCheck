@@ -2,18 +2,51 @@ const bannerModel =  require("../model/bannerModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 const socialinfomodel = require('../model/socialMediaLinks');
+const whiteLabel = require('../model/whitelableModel');
+
+async function getWhiteLabelDetails(Wlbl,req)
+{	
+	if(Wlbl == "" || Wlbl == null)
+	{
+		let cookieValue = req.cookies.WhiteLabelSelected;		
+		if(cookieValue !='' && cookieValue!=null)
+			Wlbl = cookieValue;
+	}
+	
+	var WhiteLabelInfo = await whiteLabel.findOne({whiteLabelName:Wlbl});
+	//console.log(WhiteLabelInfo.whiteLabelName);
+	//whitelabelpath
+	return WhiteLabelInfo;
+}
 
 exports.createBanner = catchAsync(async(req, res, next) => {
     if(req.files){
         if(req.files.banner.mimetype.startsWith('image')){
             const image = req.files.banner
-            // console.log(logo)
-            image.mv(`public/banner/${req.body.bannerName}.webp`, (err)=>{
+			let whiteLabel = process.env.whiteLabelName
+			/**/			
+			let path="public/banner/"	
+			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
+			{
+				let WhiteLBL= getWhiteLabelDetails("",req);
+				if(WhiteLBL.whitelabelpath!='' && WhiteLBL.whitelabelpath != undefined)
+					path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/banner/`;
+					
+				if(WhiteLBL.whiteLabelName !='')
+				{
+					whiteLabel = WhiteLBL.whiteLabelName;
+				}
+			}			
+			/**/
+			
+            image.mv(`${path}${req.body.bannerName}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
             req.body.banner = req.body.bannerName
-            let whiteLabel = process.env.whiteLabelName
-            if(req.currentUser.role_type == 1){
+            
+			
+            if(req.currentUser.role_type == 1)
+			{
                 whiteLabel = "1"
             }
             req.body.whiteLabelName = whiteLabel
@@ -37,12 +70,28 @@ exports.createMedia = catchAsync(async(req, res, next) => {
         if(req.files.img.mimetype.startsWith('image')){
             const image = req.files.img
             // console.log(logo)
-            image.mv(`public/banner/${req.body.name}.webp`, (err)=>{
+			let WhiteLBL= getWhiteLabelDetails("",req);
+			let path="public/banner/"	
+			if(WhiteLBL.whitelabelpath!='' && WhiteLBL.whitelabelpath != undefined)
+				path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/banner/`;
+		
+            image.mv(`${path}${req.body.name}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
+			
             let pathname = `/banner/${req.body.name}.webp`
             req.body.banner = req.body.name
-            let whiteLabel = process.env.whiteLabelName
+            
+			let whiteLabel = process.env.whiteLabelName
+			
+			if(req.currentUser.roleName === "Admin" || req.currentUser.roleName === "Operator")
+			{
+				if(WhiteLBL.whiteLabelName !='')
+				{
+					whiteLabel = WhiteLBL.whiteLabelName;
+				}
+			}
+			
             if(req.currentUser.role_type == 1){
                 whiteLabel = "1"
             }
@@ -70,6 +119,11 @@ exports.createMedia = catchAsync(async(req, res, next) => {
 exports.updateBanner = catchAsync(async(req, res, next) => {
     // console.log(req.body)
     // console.log(req.files)
+	let WhiteLBL= getWhiteLabelDetails("",req);
+	let path="public/banner/"	
+	if(WhiteLBL.whitelabelpath!='' && WhiteLBL.whitelabelpath != undefined)
+		path = `/var/www/LiveBettingApp/${WhiteLBL.whitelabelpath}/bettingApp/public/banner/`;
+	
     if(req.body.check){
         req.body.status = true
     }else{
@@ -80,7 +134,7 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
             const image = req.files.file
             // console.log(logo)
             // console.log(image,'==>image')
-            image.mv(`public/banner/${req.body.Name}.webp`, (err)=>{
+            image.mv(`${path}${req.body.Name}.webp`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
 

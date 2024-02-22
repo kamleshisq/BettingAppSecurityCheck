@@ -1,3 +1,4 @@
+import { toggleadminSide } from "./adminSideCustomPopup";
 export const userStatus = (data, rawId) => {
     // let url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
     let url = '/api/v1/users/updateUserStatusActive'
@@ -11,18 +12,18 @@ export const userStatus = (data, rawId) => {
                     $('tr[id = '+rawId+']').html('')
                 }
                 if(data.message){
-                    alert(data.message)
+                    toggleadminSide(data.message,false)
                 }else{
-                    alert("Updated!")
+                    toggleadminSide("Updated!",true)
                 }
             }else{
-                alert(data.message)
+                toggleadminSide(data.message,false)
             }
             // console.log(data, 1212121)
         },
         error:function(err){
             console.log(err)
-            alert(err.responseJSON.message)
+            toggleadminSide(err.responseJSON.message,false)
         }
     })
 }

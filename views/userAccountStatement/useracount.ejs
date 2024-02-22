@@ -91,10 +91,19 @@
               <tr>
                 <td class="text-nowrap" ><%=formattedTime%></td>
                 <%if(data[i].description.startsWith('Chips')){%>
-                  <%if(data[i].creditDebitamount > 0){%>
-                    <td >Deposit</td>
+                  <%if(data[i].user_id.userName == data[i].child_id.userName){%>
+                    <%if(data[i].creditDebitamount > 0){%>
+                      <td >Deposit</td>
+                    <%}else{%>
+                      <td >Withdraw</td>
+                    <%}%>
+
                   <%}else{%>
-                    <td >Withdraw</td>
+                    <%if(data[i].creditDebitamount > 0){%>
+                      <td >Withdraw</td>
+                      <%}else{%>
+                        <td >Deposit</td>
+                    <%}%>
                   <%}%>
                 <%}else if(data[i].child_id) {%>
                   <%if(data[i].creditDebitamount > 0){%>
@@ -155,10 +164,19 @@
               <tr>
                 <td class="text-nowrap" ><%=formattedTime%></td>
                 <%if(data[i].description.startsWith('Chips')){%>
-                  <%if(data[i].creditDebitamount > 0){%>
-                    <td >Deposit</td>
+                  <%if(data[i].user_id.userName == data[i].child_id.userName){%>
+                    <%if(data[i].creditDebitamount > 0){%>
+                      <td >Deposit</td>
+                    <%}else{%>
+                      <td >Withdraw</td>
+                    <%}%>
+
                   <%}else{%>
-                    <td >Withdraw</td>
+                    <%if(data[i].creditDebitamount > 0){%>
+                      <td >Withdraw</td>
+                      <%}else{%>
+                        <td >Deposit</td>
+                    <%}%>
                   <%}%>
                 <%}else if(data[i].child_id) {%>
                   <%if(data[i].creditDebitamount > 0){%>

@@ -1,8 +1,3 @@
-const User = require('../model/userModel');
-const Bet = require('../model/betmodel');
-const runnerDataModel = require('../model/runnersData');
-
-
 async function checkExpoOfThatMarket( bet ){
     // console.log(bet, 123456789)
     let WinAmount = parseFloat(bet.WinAmount)
@@ -188,7 +183,7 @@ async function checkExpoOfThatMarket( bet ){
                   },
             ])
             if(betDetails.length > 0){
-                console.log(betDetails[0].data[0], " betDetails[0].data[0] betDetails[0].data[0]")
+
                 let runtopush = parseFloat(bet.selectionName.split('@')[1])
                 let objectPUsh = {
                     secId : bet.secId,
@@ -208,7 +203,7 @@ async function checkExpoOfThatMarket( bet ){
                         betDetails[0].data[0].push(objectPUsh)
                     }
                 }
-                console.log(betDetails[0].data[0], betDetails[0].uniqueRuns)
+                // console.log(betDetails[0].data[0], betDetails[0].uniqueRuns)
                 let dataToshow = []
                     if(betDetails.length != 0){
                         betDetails = betDetails[0]
@@ -344,8 +339,7 @@ async function checkExpoOfThatMarket( bet ){
                                     if: {
                                             $or: [
                                                 { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } },
-                                                { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
+                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } }
                                             ]
                                         },
                                     then:{
@@ -365,19 +359,20 @@ async function checkExpoOfThatMarket( bet ){
                                     if: {
                                             $or: [
                                                 { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } },
-                                                { $regexMatch: { input: "$marketName", regex: /^over\/under/i } }
+                                                { $regexMatch: { input: "$marketName", regex: /^winner/i } }
                                             ]
                                         },
                                     then:{
-                                        $sum: {
-                                            $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
-                                        }
+                                        $sum: "$Stake"
+                                        // {
+                                        //     $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                        // }
                                     },
                                     else:{
-                                        $sum: { 
-                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
-                                        }
+                                        $sum: "$Stake"
+                                        // { 
+                                        //     $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                        // }
                                     }
                                 }
                             }
@@ -399,17 +394,18 @@ async function checkExpoOfThatMarket( bet ){
                 },
                 exposure:{
                     // $sum:'$exposure'
-                    $sum: { 
-                        $cond: { 
-                            if : {$eq: ['$bettype2', "BACK"]},
-                            then : {
-                                $sum: '$exposure' 
-                            },
-                            else : {
-                                $multiply: ['$Stake', -1]
-                            }
-                        }
-                    }
+                    $sum: '$exposure' 
+                    // { 
+                    //     $cond: { 
+                    //         if : {$eq: ['$bettype2', "BACK"]},
+                    //         then : {
+                    //             $sum: '$exposure' 
+                    //         },
+                    //         else : {
+                    //             $multiply: ['$Stake', -1]
+                    //         }
+                    //     }
+                    // }
                 }
             },
             },
@@ -432,33 +428,22 @@ async function checkExpoOfThatMarket( bet ){
         if(betsMarketIdWise.length > 0){
             let index = betsMarketIdWise[0].selections.findIndex(item => item.selectionName === bet.selectionName)
             if(index === -1){
-                let objectTopush
-                if(bet.bettype2 === "LAY"){
-                    objectTopush = {
-                        selectionName : bet.selectionName,
-                        totalAmount :  - parseFloat(bet.exposure),
-                        exposure : -parseFloat(bet.WinAmount),
-                        matchName : bet.match,
-                        Stake : -bet.Stake
-                    }
-                }else{
-                    objectTopush = {
-                        selectionName : bet.selectionName,
-                        totalAmount : parseFloat(bet.WinAmount),
-                        exposure : parseFloat(bet.exposure),
-                        matchName : bet.match,
-                        Stake : -bet.Stake
-                    }
+                let objectTopush = {
+                    selectionName : bet.selectionName,
+                    totalAmount : parseFloat(bet.WinAmount),
+                    exposure : parseFloat(bet.exposure),
+                    matchName : bet.match,
+                    Stake : -bet.Stake
                 }
                 betsMarketIdWise[0].selections.push(objectTopush)
             }else{
                 if(bet.bettype2 === "LAY"){
                     console.log(betsMarketIdWise[0].selections[index], bet)
                     betsMarketIdWise[0].selections[index].totalAmount = betsMarketIdWise[0].selections[index].totalAmount - parseFloat(bet.exposure)
-                    betsMarketIdWise[0].selections[index].exposure = betsMarketIdWise[0].selections[index].exposure - parseFloat(bet.WinAmount)
+                    betsMarketIdWise[0].selections[index].exposure = betsMarketIdWise[0].selections[index].exposure + parseFloat(bet.WinAmount)
                     betsMarketIdWise[0].selections[index].Stake = betsMarketIdWise[0].selections[index].Stake - bet.Stake
                 }else{
-                    console.log(betsMarketIdWise[0].selections[index], 'bet')
+                    console.log(betsMarketIdWise[0].selections[index], bet)
 
                     betsMarketIdWise[0].selections[index].totalAmount = betsMarketIdWise[0].selections[index].totalAmount + parseFloat(bet.WinAmount)
                     betsMarketIdWise[0].selections[index].exposure = betsMarketIdWise[0].selections[index].exposure + parseFloat(bet.exposure)
@@ -499,6 +484,3 @@ async function checkExpoOfThatMarket( bet ){
     console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
     return WinAmount
 }
-
-
-module.exports = checkExpoOfThatMarket

@@ -40,6 +40,8 @@ import session from "express-session";
 import { getIframe } from "./getIframe";
 // import { func } from "joi";
 
+import { toggleadminSide } from "./adminSideCustomPopup";
+
 
 
 // console.log(document.querySelector('.loginForm'))
@@ -129,22 +131,22 @@ if(pathname.startsWith('/admin') || pathname.startsWith('/resetPassword')){
 }
 
 
-if(document.getElementById('myIframe')){
-    let channelId = document.getElementById('myIframe').getAttribute('data-id');
-    const urlParams = new URLSearchParams(window.location.search);
-    let eventId = urlParams.get('id')
-    console.log(channelId, eventId, "sdfghjkl;")
-    let ip
-    axios.get('https://api.ipify.org?format=json')
-  .then(response => {
-    console.log('Your IP address is:', response.data.ip);
-    ip = response.data.ip
-    let data = getIframe({ipv4:ip, id:channelId})
-  })
-  .catch(error => {
-    console.error('Error fetching IP address:', error);
-  });
-}
+// if(document.getElementById('myIframe')){
+//     let channelId = document.getElementById('myIframe').getAttribute('data-id');
+//     const urlParams = new URLSearchParams(window.location.search);
+//     let eventId = urlParams.get('id')
+//     console.log(channelId, eventId, "sdfghjkl;")
+//     let ip
+//     axios.get('https://api.ipify.org?format=json')
+//   .then(response => {
+//     console.log('Your IP address is:', response.data.ip);
+//     ip = response.data.ip
+//     let data = getIframe({ipv4:ip, id:channelId})
+//   })
+//   .catch(error => {
+//     console.error('Error fetching IP address:', error);
+//   });
+// }
 
 
 $(document).on('click','.passcodemsgbox',function(e){
@@ -272,7 +274,7 @@ const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
 if(formDataObj.role == "select"){
-    alert('please select role of user')
+    toggleadminSide('please select role of user',false)
 }
 
 if(formDataObj.whiteLabel == ""){
@@ -352,7 +354,7 @@ $(document).on('submit','.acc-form',async function(e) {
     formDataObj.id = id ;
     // console.log(formDataObj)
     if(formDataObj.amount == 0){
-        alert('please enter amount greater than 0')
+        toggleadminSide('please enter amount greater than 0',false)
     }else{
         formDataObj.sessiontoken = sessionTokenADMIN
         await debitCredit(formDataObj) 
@@ -384,30 +386,12 @@ $(document).on('submit','.Settlement-form',async function(e) {
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
     if(formDataObj.amount == 0){
-        // alert('please enter amount greater than 0')
+        toggleadminSide('please enter amount greater than 0',false)
     }else{
+        console.log('got here')
+        formDataObj.sessiontoken = sessionTokenADMIN
+        creditDebitSettle(formDataObj)
     }
-    formDataObj.sessiontoken = sessionTokenADMIN
-    creditDebitSettle(formDataObj)
-    // console.log(formDataObj)
-    // const url = window.location.href
-    // const id = url.split("=")[1]
-    // formDataObj.id = id
-    // console.log(formDataObj)
-    // let rowId = $('.rowId').attr('data-rowid')
-    // const user = await creditDebitSettle(formDataObj)
-    // var trElements = document.querySelectorAll('tr.trtable');
-    // // console.log(trElements)
-    // // console.log(user)
-    // trElements.forEach(function(trElement) {
-    //     if (trElement.getAttribute('data-id') === user.id) {
-    //         console.log(trElement, 4545445454)
-    //     }
-    // })
-    // console.log(rowId)
-    // let currentUser = $('#currentUserDetails').data('currentuser')
-    // updateRow(user,rowId,currentUser)
-    // console.log(user)
 })
 
 // $('.edit-form').submit(function(e){

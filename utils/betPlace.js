@@ -14,6 +14,11 @@ const exposurecheck = require('./checkExpoOfThatUSer');
 const checkLimit = require('./checkOddsLimit');
 const checkMarketWinAmount = require('./checkWinAmountOfThatMarket');
 const settelementHistory = require('../model/settelementHistory');
+const cataLog = require('../model/catalogControllModel');
+const suspendResume = require('../model/resumeSuspendMarket');
+const checkExposureincludingBet = require('./checkExpusingthatBet');
+const checkexposureOfthatMarket = require('./checkExposurofthatUserwithoutthatMarket');
+const marketDetailsBymarketID = require("./getmarketsbymarketId");
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -46,6 +51,7 @@ function generateString(length) {
     
 
 async function placeBet(data){
+    console.log(data, "datadatadatadatadatadatadata")
     let statusSettle = await settelementHistory.find({marketID:data.data.market})
     if(statusSettle.length != 0){
         return 'Please try again later, This market is settled'
@@ -56,13 +62,19 @@ async function placeBet(data){
         return "Stake out of range"
     }
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
-    if(check.availableBalance < parseFloat(data.data.stake)){
-        return "You do not have sufficient balance for bet"
+    // console.log(check, "checkcheckcheck")
+    // if(check.availableBalance < parseFloat(data.data.stake)){
+    //     return "You do not have sufficient balance for bet"
+    // }
+    if(check.betLock){
+        return "Please try again later, You don't have permission to Place Bet"
     }
-    let exposureCHECk = await exposurecheck(check)
-    if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
-        return "Please try again later, Your exposure Limit is full"
-    }
+    exposurecheck(check)
+    let exposureCHECk = await checkexposureOfthatMarket(check, data.data.market)
+
+    // if(check.exposureLimit && check.exposureLimit !== 0 && (exposureCHECk + parseFloat(data.data.stake)) > check.exposureLimit){
+    //     return "Please try again later, Your exposure Limit is full"
+    // }
     let openBet = await betmodel.countDocuments({userName:data.LOGINDATA.LOGINUSER.userName, status:'OPEN'})
     // console.log(openBet, "openBetopenBetopenBet")
     let betLimitcheck = await betLimitModel.findOne({type : 'Sport'}) 
@@ -192,7 +204,7 @@ if(data.data.spoetId == 1){
     let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
     let limitData = await checkLimit({eventId:data.data.eventId, ids:[data.data.market]})
     limitData = limitData[0].Limits
-    console.log(limitData)
+    // console.log(limitData)
     if(limitData){
         // console.log(limitData,  parseFloat(data.data.stake),"123456789")
         if(limitData.min_stake > parseFloat(data.data.stake) ){
@@ -201,6 +213,29 @@ if(data.data.spoetId == 1){
             return `Stake out of range`
         }
     }
+let catalogSuspend = await cataLog.countDocuments({Id:{$in:[liveBetGame.eventData.eventId, liveBetGame.eventData.compId]}, status: true})
+
+if(catalogSuspend != 0){
+    return `We caught you bro, Event is suspended :-)`
+}
+
+let checkingMarket = await suspendResume.countDocuments({marketId:data.data.market, status: false})
+console.log(checkingMarket)
+if(checkingMarket != 0){
+    return `We caught you bro, market is suspended :-)`
+}
+if(data.data.market.endsWith('OE') || data.data.market.endsWith('F2')){
+    let checkingMarket = await suspendResume.countDocuments({marketId:`${liveBetGame.eventData.eventId}/FANCY`, status: false})
+    if(checkingMarket != 0){
+        return `We caught you bro, market is suspended :-)`
+    }
+}
+
+
+if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) && liveBetGame.eventData.type != "IN_PLAY"){
+    return `We caught you bro, market is suspended :-)`
+}
+
 
 
 
@@ -245,42 +280,101 @@ if(data.data.spoetId == 1){
 
 // console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 // FOR ODDS LIMIT
+let RealmarketDetails = await marketDetailsBymarketID([`${data.data.market}`])
+let thatMarketMARKETREAL = RealmarketDetails.data.items[0]
 if((marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')) || marketDetails.title.toLowerCase().startsWith('winne')|| marketDetails.title.toLowerCase().startsWith('over/under') ){
-    if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.odds * 1) + (0.15) 
-        // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
-        if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
-            return 'Odds out of range back'
-        }
+    let realodd = thatMarketMARKETREAL.odds.find(item => item.selectionId == data.data.secId)
+    console.log(realodd, "realoddrealoddrealodd")
+    if(!realodd){
+        return 'Odds out of range'
+    }
+    // if(data.data.check){
 
-        if(data.data.odds > limitData.max_odd){
-            return 'Odds out of range'
+    // }
+    if(marketDetails.title.toLowerCase().startsWith('match') && marketDetails.title.toLowerCase().split(' ')[1].startsWith('odd')){
+        if(data.data.bettype2 === 'BACK'){
+            let OddChake = (data.data.odds * 1) + (0.15) 
+            data.data.odds2 = realodd.backPrice1
+            // console.log(OddChake, data.data.odds, data.data.oldOdds, (OddChake <= data.data.odds || data.data.odds < data.data.oldOdds))
+            if(data.data.check){
+                data.data.odds  = data.data.odds2
+            }else{
+                if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
+                    return 'Odds out of range back'
+                }else{
+                    data.data.odds  = data.data.odds2
+                }
+            }
+        }else{
+            data.data.odds2 = realodd.layPrice1
+            if(data.data.check){
+                data.data.odds  = data.data.odds2
+            }else{
+                let OddChake = (data.data.odds * 1) - (0.15)  
+                if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
+                    return 'Odds out of range'
+                }else{
+                    data.data.odds  = data.data.odds2
+                }
+            }
         }
     }else{
-        let OddChake = (data.data.odds * 1) - (0.15)  
-        if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
+        if(data.data.bettype2 === 'BACK'){
+            data.data.odds2 = realodd.backPrice1
+        }else{
+            data.data.odds2 = realodd.layPrice1
+        }
+        if(data.data.check){
+            data.data.odds = data.data.odds2
+        }else{
+            if(data.data.odds2 != data.data.odds){
+                return 'Odds out of range'
+            }
+        }
+
+    }
+}else if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+    let realodd = thatMarketMARKETREAL.runners.find(item => item.secId == data.data.secId)
+    // console.log(realodd, "runnersrunnersrunnersrunners")
+    if(data.data.bettype2 === 'BACK'){
+        data.data.odds2 = realodd.back
+    }else{
+        data.data.odds2 = realodd.lay
+    }
+    // if(data.data.odds2 != data.data.odds){
+    // }
+    if(data.data.check){
+        data.data.odds = data.data.odds2
+    }else{
+        if(data.data.odds2 != data.data.odds){
             return 'Odds out of range'
         }
     }
-}
-
-if(marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-    if(data.data.bettype2 === 'BACK'){
-        let OddChake = (data.data.oldOdds * 1) + (15) 
-        console.log(OddChake,data.data.odds, data.data.odds2 )
-        if(OddChake <= data.data.odds2 || data.data.odds > data.data.odds2){
-            return 'Odds out of range back'
+}else if(data.data.secId.startsWith('odd_Even')) {
+    if(data.data.market.endsWith('F2')){
+        if(data.data.bettype2 === 'BACK'){
+            data.data.odds2 = thatMarketMARKETREAL.yes_rate
+        }else{
+            data.data.odds2 = thatMarketMARKETREAL.no_rate
+        }
+        if(data.data.check){
+            data.data.odds = data.data.odds2
+        }else{
+            if(data.data.odds2 != data.data.odds){
+                return 'Odds out of range'
+            }
         }
     }else{
-        let OddChake = (data.data.oldOdds * 1) - (15)  
-        if(OddChake >= data.data.odds2 || data.data.odds < data.data.odds2 ){
-            return 'Odds out of range'
-        }
+        console.log(thatMarketMARKETREAL, "thatMarketMARKETREALthatMarketMARKETREALthatMarketMARKETREAL")
+
     }
 }
-if(data.data.odds2){
-    data.data.odds = data.data.odds2
-}
+
+
+
+// if(data.data.odds2){
+//     data.data.odds = data.data.odds2
+// }
 
 // // FOR LAY BACK DIFF
 
@@ -294,7 +388,7 @@ if(data.data.odds2){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
             WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }else{
-            console.log("gethere", data.data.stake , data.data.odds, )
+            // console.log("gethere", data.data.stake , data.data.odds, )
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
             WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
@@ -315,15 +409,15 @@ if(data.data.odds2){
     // }
     // console.log(creditDebitamount)
     // console.log(exposureCHECk,check.exposureLimit,  parseFloat(exposureCHECk + creditDebitamount), check.exposureLimit , parseFloat(exposureCHECk + creditDebitamount) > check.exposureLimit)
-    if(check.exposureLimit && check.exposureLimit !== 0 && (parseFloat(exposureCHECk) + parseFloat(creditDebitamount)) > check.exposureLimit){
-        return "Please try again later, Your exposure Limit is full dfdf"
-    }
-    if(check.availableBalance < (parseFloat(exposureCHECk) + parseFloat(creditDebitamount))){
-        return "You do not have sufficient balance for bet"
-    }
-    if(check.availableBalance < creditDebitamount){
-        return "You do not have sufficient balance for bet"
-    }
+    // if(check.exposureLimit && check.exposureLimit !== 0 && (parseFloat(exposureCHECk) + parseFloat(creditDebitamount)) > check.exposureLimit){
+    //     return "Please try again later, Your exposure Limit is full dfdf"
+    // }
+    // if(check.availableBalance < (parseFloat(exposureCHECk) + parseFloat(creditDebitamount))){
+    //     return "You do not have sufficient balance for bet"
+    // }
+    // if(check.availableBalance < creditDebitamount){
+    //     return "You do not have sufficient balance for bet"
+    // }
 
     // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
 //FOR BETPLACE PARENTSID ARRAY DATA
@@ -437,9 +531,25 @@ if(await commissionMarketModel.findOne({marketId:data.data.market})){
 
     let data23 = await checkMarketWinAmount(betPlaceData)
     // console.log(data23, "data23data23data23data23")
-    if(data23 >= limitData.max_profit){
+    if(data23 > limitData.max_profit){
         return 'Win Amount out of range'
     }
+    let looseAmount = await checkExposureincludingBet(betPlaceData)
+    console.log(looseAmount, exposureCHECk,"looseAmountlooseAmountdsdsdsdsd")
+    let totalEXPAfterThatBet = Math.abs(looseAmount) + Math.abs(exposureCHECk)
+    console.log(totalEXPAfterThatBet, "totalEXPAfterThatBettotalEXPAfterThatBettotalEXPAfterThatBettotalEXPAfterThatBet")
+
+    if( Math.abs(totalEXPAfterThatBet) != 0 && (check.availableBalance < Math.abs(totalEXPAfterThatBet))){
+        return "You do not have sufficient balance for bet"
+    }
+    if(check.exposureLimit && check.exposureLimit !== 0 && totalEXPAfterThatBet != 0  &&(totalEXPAfterThatBet > check.exposureLimit)){
+            return "Please try again later, Your exposure Limit is full dfdf"
+    }
+
+    if(betPlaceData.oddValue > limitData.max_odd){
+        return 'Odds out of range'
+    }
+    // return 'checking'
     // return 'Please try again leter market SUSPENDED'
     // console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
 // FOR ACC STATEMENTS DATA 

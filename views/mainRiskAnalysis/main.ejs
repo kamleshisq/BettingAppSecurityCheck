@@ -610,13 +610,15 @@
                       <table id="betTable">
                         <thead>
                             <tr>
-                                <th>Username</th>
-                                <th>Place Date</th>
+                                <th>Date</th>
+                                <th>User Name</th>
+                                <th>Event</th>
                                 <th>Market</th>
-                                <!-- <th>Bet Type</th> -->
                                 <th>Odds</th>
                                 <th>Stake</th>
-                                <th>Action</th>
+                                <th>Status</th>
+                                <th>Ip</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="betTableBody">
@@ -627,12 +629,43 @@
                             <%}else{%>
                                 <tr class="lay" >
                             <%}%>
+                            <%
+                                var options = { 
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    second: 'numeric',
+                                    hour12: true
+                                };
+                                var formattedTime = date.toLocaleString('en-US', options);
+                                %>
+                                <td><%=formattedTime%></td>
                                 <td><%=Bets[i].userName%></td>
-                                <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-                                <td><%=Bets[i].marketName%></td>
-                                <!-- <td><%=Bets[i].userName%></td> -->
-                                <td><%=Bets[i].oddValue%></td>
+                                <%if(Bets[i].match){%>
+                                    <td><%=Bets[i].match%></td>
+                                    <%if(Bets[i].selectionName.includes('@')){%>
+                                      <%
+                                      let oddValue1 = Bets[i].selectionName.split('@')[1]
+                                      let selectionName = Bets[i].selectionName.split('@')[0]
+                                      let oddValue2 = Bets[i].oddValue
+                                      %>
+                                      <td><%=Bets[i].marketName%> - <%=oddValue2%> </td>
+                                      <td><%=oddValue1%></td>
+                                    <%}else{%>
+                                      <td><%=Bets[i].marketName%> - <%=Bets[i].selectionName%> </td>
+                                      <td><%=Bets[i].oddValue%></td>
+                                    <%}%>
+                                  <%}else{%>
+                                      <td>-</td>
+                                      <td>-</td>
+                                      <td>-</td>
+                                  <%}%>
                                 <td><%=Bets[i].Stake%></td>
+                                <!-- <td><%=Bets[i].userName%></td> -->
+                                <td><%=Bets[i].status%></td>
+                                <td><%=Bets[i].ip%></td>
                                 <td><div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn alert flag-button" id="<%=Bets[i].id%>"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489 489" xml:space="preserve">
                                     <g>
                                       <g>

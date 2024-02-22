@@ -1,4 +1,5 @@
 import axios from "axios"
+import { toggleadminSide } from "./adminSideCustomPopup";
 export const resetadminpassword = async(data) =>{
     // console.log(data)
     try{
@@ -11,11 +12,11 @@ export const resetadminpassword = async(data) =>{
             location.href = `/passcodeview?sessiontoken=${sessionStorage.getItem('sessiontoken')}&passcode=${res.data.passcode}`
             
         }else {
-            alert(res.data.message)
+            toggleadminSide(res.data.message,true)
         }
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }

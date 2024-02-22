@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toggleadminSide } from "./adminSideCustomPopup";
 
 export const logoutUser = async() => {
     try{
@@ -11,6 +12,6 @@ export const logoutUser = async() => {
         }
     }catch(err){
         console.log(err);
-        alert('Error logging out! Try again.')
+        toggleadminSide('Error logging out! Try again.',false)
     }
 }

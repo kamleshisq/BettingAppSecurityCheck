@@ -10,11 +10,13 @@
             fill="#212121"></path>
         </svg> User Management</h3>
       <div class="table-heading-btn">
+        <%if(currentUser.roleName != "Operator" ){%>
         <button class="btn-filter COMMISSIONADMIN"><i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=unclaimCommission%>)</button>
         <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
         <button class="btn-filter add-user-btn" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i
         class="fa-solid fa-plus"></i> &nbsp; Add User</button>
-        <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
+        <%}else{%>
+          <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
         <%}%>
       </div>
     </div>
@@ -32,7 +34,7 @@
             <th>Available Balance</th>
             <th>Downlevel Balance</th>
             <th>Points W/L</th>
-            <th>Upline P/L</th>
+            <th>Client P/L (%)</th>
             <!-- <th>Exposure Limit</th> -->
             <th>Exposure</th>
 
@@ -105,7 +107,7 @@
                   </td>
                   <%} %>
                   <td>
-                    <%=users[i].uplinePL%>
+                    <%=users[i].myPL%>
                   </td>
                   <td>
                     0
@@ -114,12 +116,16 @@
                   
                   <td>
                     <div class="btn-group">
+                      <%if(currentUser.roleName != "Operator" ){%>
                         <button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>
+                      <%}%>
                         <button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange" title="Commission">C</button>
                         <button data-bs-toggle="modal" data-bs-target="#myModal3"
                           class="PasswordChange" title="Change Password">P</button>
+                          <%if(currentUser.roleName != "Operator" ){%>
                       <button  data-bs-toggle="modal" data-bs-target="#myModalSE " class="Settlement" title="Settlement">S</button>
-                        <button data-bs-toggle="modal" data-bs-target="#myModal4"
+                      <%}%>
+                      <button data-bs-toggle="modal" data-bs-target="#myModal4"
                           class="StatusChange" title="Change Status">CS</button>
                           <%if(users[i].roleName ==='user' ){%>
                             <button data-bs-toggle="modal" data-bs-target="#myModaL" class="ExposureLimit" title="Exposure Limit">L</button>

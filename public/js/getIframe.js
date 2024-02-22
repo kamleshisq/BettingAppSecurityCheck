@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toggleadminSide } from "./adminSideCustomPopup";
 export const getIframe = async(data) => {
     let body = {
         "ipv4":`${data.ipv4}`,
@@ -27,7 +28,7 @@ export const getIframe = async(data) => {
         console.log(res)
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }
         

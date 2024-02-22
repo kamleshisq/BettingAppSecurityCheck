@@ -499,6 +499,7 @@
                               <tr class="thead-border my-open-bet-trr">
                                 <th>Selection</th>
                                 <th>Odds</th>
+                                <th>Market</th>
                                 <th>Stake</th>
                               </tr>
                             </thead>
@@ -515,10 +516,12 @@
                                 let oddValue2 = betsOnthisMatch[i].oddValue%>
                                 <td><%= selectionName %>@<%=oddValue2%></td>
                                 <td><%= oddValue1 %></td>
+                                <td><%= betsOnthisMatch[i].marketName %></td>
                                 <td><%= betsOnthisMatch[i].Stake %></td>
                               <%}else{%>
                                 <td><%= betsOnthisMatch[i].selectionName%></td>
                                 <td><%= betsOnthisMatch[i].oddValue %></td>
+                                <td><%= betsOnthisMatch[i].marketName %></td>
                                 <td><%= betsOnthisMatch[i].Stake %></td>
                               <%}%>
                               </tr>

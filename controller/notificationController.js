@@ -5,9 +5,9 @@ const userModel = require('../model/userModel');
 
 exports.createNewNotification = catchAsync(async(req, res, next) => {
     // console.log(req.body)
-    if(req.body.Sdate === req.body.Edate){
-        return next(new AppError("Both starting and ending date are same that is not acceptable", 404))
-    }
+    // if(req.body.Sdate === req.body.Edate){
+    //     return next(new AppError("Both starting and ending date are same that is not acceptable", 404))
+    // }
 
     let ID = req.body.userId
     let currentUser = await userModel.findById(ID)
@@ -17,8 +17,8 @@ exports.createNewNotification = catchAsync(async(req, res, next) => {
     let data = {
         title : req.body.title,
         message : req.body.message,
-        startDate : new Date(req.body.Sdate),
-        endDate : new Date(req.body.Edate),
+        // startDate : new Date(req.body.Sdate),
+        // endDate : new Date(req.body.Edate),
         userId : ID
     }
     // console.log(data)
@@ -66,12 +66,12 @@ exports.myNotifications = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         let user = req.currentUser;
         const today = new Date();
-        let notifications = await notificationModel.find({userId:{$in:user.parentUsers},startDate: { $lte: today },endDate: { $gte: today }})
+        let notifications = await notificationModel.find({userId:{$in:user.parentUsers}})
         req.notifications = notifications
         next()
     }else{
         const today = new Date();
-        let notifications = await notificationModel.find({userId:{$in:"6492fd6cd09db28e00761691"},startDate: { $lte: today },endDate: { $gte: today }})
+        let notifications = await notificationModel.find({userId:{$in:"6492fd6cd09db28e00761691"}})
         req.notifications = notifications
         // console.log('WORKINGNOTIFICATION')
         next()

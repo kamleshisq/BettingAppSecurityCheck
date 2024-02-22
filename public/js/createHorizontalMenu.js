@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toggleadminSide } from "./adminSideCustomPopup";
 
 export const createHorizontalMenu = async(data)=>{
     try{
@@ -8,7 +9,7 @@ export const createHorizontalMenu = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-            alert('Menu created successfully!!!!');
+            toggleadminSide('Menu created successfully!!!!',true);
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{
@@ -18,6 +19,6 @@ export const createHorizontalMenu = async(data)=>{
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }

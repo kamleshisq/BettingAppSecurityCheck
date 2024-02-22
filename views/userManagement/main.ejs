@@ -64,6 +64,7 @@
   <%}%>
 
   <!-- models -->
+  <%if(currentUser.roleName != "Operator" ){%>
   <div class="modal fade deposit-withdraw-modal" id="myModal" role="dialog">
     <div class="modal-dialog">
     
@@ -144,8 +145,6 @@
       </div>
     </div>
   </div>
-
-
   <div class="modal fade deposit-withdraw-modal" id="myModalSE" role="dialog">
     <div class="modal-dialog">
     
@@ -226,8 +225,6 @@
       </div>
     </div>
   </div>
-
-
   <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog">
     
@@ -293,6 +290,248 @@
       </div>
     </div>
   </div>
+  <div class="modal fade align-top-popup" id="myModaladduser" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <h4 class="modal-title" >Add Account</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data" id="Add-User">
+            <div class="row">
+              <div class="col">
+                <label for="">Name</label>
+                <input type="text" class="form-control ml0" placeholder="" name="name" required>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">User ID</label>
+                <input type="text" class="form-control ml0" placeholder="Abitest" name="userName" required>
+              </div>
+              <div class="col">
+                <label for="">User Role</label>
+                <select name="role" id="roleSelect" class="form-control ml0"  required>
+                  <option value="select" selected></option>
+                  <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Operator"){%>
+                    <option value="6492fe4fd09db28e00761695">Super-Duper-Admin</option>
+                    <option value="650bccdbb3fdc8c922c34bbe">Operator</option>
+                    <option value="64db25621617ac95db36764e">Demo</option>
+                  <%}else if (B2C_Status){%>
+                    <option value="6492fe4fd09db28e00761694">user</option>
+                  <%}else{%>
+                    <%let userROLE%>
+                    <%for(let i = 0;i<roles.length; i++){%>
+                      <%if(roles[i]._id != '650bccdbb3fdc8c922c34bbe'){%>
+                        <%if(roles[i].roleName != "user"){%>
+                        <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                        <%}else{
+                          userROLE22 = roles[i]
+                        }%>
+                      <%}%>
+                    <%}%>
+                    <option value="<%=userROLE22._id%>"><%=userROLE22.roleName%></option>
+                  <%}%>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-2 createRole-form hide" id="operator-authorization">
+              <div class="option-group">
+            <%if(currentUser.roleName === "Admin"){%>
+            <div class="input_group">
+              <label for="HouseManagement">HouseManagement</label>
+              <input type="checkbox" name="operator" value="HouseManagement" id="HouseManagement" class="0">
+            </div>
+            
+            <div class="input_group">
+              <label for="whiteLabelAnalysis">whiteLabelAnalysis</label>
+              <input type="checkbox" name="operator" value="whiteLabelAnalysis" id="whiteLabelAnalysis" class="1">
+            </div>
+
+            <div class="input_group">
+              <label for="commissionMarkets">commissionMarkets</label>
+              <input type="checkbox" name="operator" value="commissionMarkets" id="commissionMarkets" class="2">
+            </div>
+            <div class="input_group">
+              <label for="settlements">settlements</label>
+              <input type="checkbox" name="operator" value="settlements" id="settlements" class="3">
+            </div>
+            
+            <div class="input_group">
+              <label for="gameAnalysis">gameAnalysis</label>
+              <input type="checkbox" name="operator" value="gameAnalysis" id="gameAnalysis" class="4">
+            </div>
+            <div class="input_group">
+              <label for="betLimits">betLimits</label>
+              <input type="checkbox" name="operator" value="betLimits" id="betLimits" class="9">
+            </div>
+            <div class="input_group">
+              <label for="casinocontrol">casinocontrol</label>
+              <input type="checkbox" name="operator" value="casinocontrol" id="casinocontrol" class="9">
+            </div>
+            <div class="input_group">
+              <label for="catalogcontrol">catalogcontrol</label>
+              <input type="checkbox" name="operator" value="catalogcontrol" id="catalogcontrol" class="9">
+            </div>
+            <div class="input_group">
+              <label for="eventcontrol">eventcontrol</label>
+              <input type="checkbox" name="operator" value="eventcontrol" id="eventcontrol" class="9">
+            </div>
+            <%}%>
+            
+            
+            <div class="input_group">
+              <label for="notification">notification</label>
+              <input type="checkbox" name="operator" value="notification" id="notification" class="5">
+            </div>
+            
+            <div class="input_group">
+              <label for="betsMonitaring">betsMonitaring</label>
+              <input type="checkbox" name="operator" value="betsMonitaring" id="betsMonitaring" class="6">
+            </div>
+            
+            <div class="input_group">
+              <label for="onlineUsers">onlineUsers</label>
+              <input type="checkbox" name="operator" value="onlineUsers" id="onlineUsers" class="7">
+            </div>
+            
+            <div class="input_group">
+              <label for="alertBets">alertBets</label>
+              <input type="checkbox" name="operator" value="alertBets" id="alertBets" class="8">
+            </div>
+            
+            
+            <div class="input_group">
+              <label for="voidBets">voidBets</label>
+              <input type="checkbox" name="operator" value="voidBets" id="voidBets" class="10">
+            </div>
+
+            <div class="input_group">
+              <label for="userManagement">userManagement</label>
+              <input type="checkbox" name="operator" value="userManagement" id="userManagement" class="10">
+            </div>
+
+            <div class="input_group">
+              <label for="dashBoard">dashBoard</label>
+              <input type="checkbox" name="operator" value="dashBoard" id="dashBoard" class="10">
+            </div>
+
+            <div class="input_group">
+              <label for="riskAnlysis">riskAnlysis</label>
+              <input type="checkbox" name="operator" value="riskAnlysis" id="riskAnlysis" class="10">
+            </div>
+
+            <div class="input_group">
+              <label for="viewReports">viewReports</label>
+              <input type="checkbox" name="operator" value="viewReports" id="viewReports" class="10">
+            </div>
+            <%if(currentUser.roleName != "Admin"){%>
+              <div class="input_group">
+                <label for="Payment">Payment</label>
+                <input type="checkbox" name="operator" value="Payment" id="Payment" class="10">
+              </div>
+            <%}%>
+            
+        </div>
+          </div>
+            <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Operator"){ %>
+              <div class="row mt-2">
+                <div class="col">
+                  <label for="customOptionCheckbox">
+                  New Domain
+                  <input type="checkbox"  id="customOptionCheckbox">
+                  </label>
+                  <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
+                  <label >WhiteLabel</label>
+                  <select id="whiteLabel" name="whiteLabel" class="form-control ml0">
+                    <%for(let i = 0; i < WhiteLabel.length; i++){ %>
+                      <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
+                    <%} %>
+                  </select>
+                  <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
+                  <label class="hide" id="B2C" >Is B2C WhiteLabel?
+                    <input type="checkbox" name="B2C">
+                  </label>
+                </div>
+              </div>
+            <%} %>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Email ID</label>
+                <input type="email" class="form-control ml0" placeholder="Abitest" name="email">
+              </div>
+              <div class="col">
+                <label for="">Contact No.</label>
+                <input type="number" class="form-control ml0" placeholder="Abitest" name="contact">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Password</label>
+                <input type="password" class="form-control ml0" placeholder="" name="password" required>
+              </div>
+              <div class="col">
+                <label for="">Confirm Password</label>
+                <input type="password" class="form-control ml0" placeholder="" name="passwordConfirm" required>
+              </div>
+            </div>
+            <div class="row mt-2" id="shareVisibleActual">
+              <div class="col">
+                <label for="">My Share</label>
+                <input type="text" id="Share" class="form-control ml0" placeholder="0" name="share" >
+              </div>
+              <div class="col">
+                <label for="">Visible</label>
+                <input type="text" id="myShare" class="form-control ml0" placeholder="<%=visible%>" name="Visible" >
+              </div>
+              <div class="col">
+                <label for="">Actual</label>
+                <input type="text" class="form-control ml0" placeholder="0" name="Actual" readonly value="0">
+              </div>
+              <div class="col">
+                <label for="">Max Acc Limit child User</label>
+                <input type="number" class="form-control ml0" placeholder="0" name="maxLimitForChildUser"  placeholder="0">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Credit Reference</label>
+                <input type="text" class="form-control ml0" placeholder="0" name="Credit" required>
+              </div>
+              <div class="col hide" id="ExposureLimits">
+                <label >Exposure Limits</label>
+                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Note</label>
+                <input type="text" class="form-control ml0" placeholder="" name="Note">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Transaction Passcode</label>
+                <input type="password" class="form-control ml0" placeholder="" name="Password" required>
+                <i class="bi bi-eye-slash" id="togglePassword"></i>
+              </div>
+            </div>
+            <button type="submit" class="btn-submit mt-3" >Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%}%>
+
+
+
+
 
   <div class="modal fade commision-popup" id="myModal2" role="dialog">
     <div class="modal-dialog">
@@ -538,243 +777,7 @@
     </div>
   </div>
 
-  <div class="modal fade align-top-popup" id="myModaladduser" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" >
-          <h4 class="modal-title" >Add Account</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data" id="Add-User">
-            <div class="row">
-              <div class="col">
-                <label for="">Name</label>
-                <input type="text" class="form-control ml0" placeholder="" name="name" required>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">User ID</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="userName" required>
-              </div>
-              <div class="col">
-                <label for="">User Role</label>
-                <select name="role" id="roleSelect" class="form-control ml0"  required>
-                  <option value="select" selected></option>
-                  <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Operator"){%>
-                    <option value="6492fe4fd09db28e00761695">Super-Duper-Admin</option>
-                    <option value="650bccdbb3fdc8c922c34bbe">Operator</option>
-                    <option value="64db25621617ac95db36764e">Demo</option>
-                  <%}else if (B2C_Status){%>
-                    <option value="6492fe4fd09db28e00761694">user</option>
-                  <%}else{%>
-                    <%let userROLE%>
-                    <%for(let i = 0;i<roles.length; i++){%>
-                      <%if(roles[i]._id != '650bccdbb3fdc8c922c34bbe'){%>
-                        <%if(roles[i].roleName != "user"){%>
-                        <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
-                        <%}else{
-                          userROLE22 = roles[i]
-                        }%>
-                      <%}%>
-                    <%}%>
-                    <option value="<%=userROLE22._id%>"><%=userROLE22.roleName%></option>
-                  <%}%>
-                </select>
-              </div>
-            </div>
-            <div class="row mt-2 createRole-form hide" id="operator-authorization">
-              <div class="option-group">
-            <%if(currentUser.roleName === "Admin"){%>
-            <div class="input_group">
-              <label for="HouseManagement">HouseManagement</label>
-              <input type="checkbox" name="operator" value="HouseManagement" id="HouseManagement" class="0">
-            </div>
-            
-            <div class="input_group">
-              <label for="whiteLabelAnalysis">whiteLabelAnalysis</label>
-              <input type="checkbox" name="operator" value="whiteLabelAnalysis" id="whiteLabelAnalysis" class="1">
-            </div>
-
-            <div class="input_group">
-              <label for="commissionMarkets">commissionMarkets</label>
-              <input type="checkbox" name="operator" value="commissionMarkets" id="commissionMarkets" class="2">
-            </div>
-            <div class="input_group">
-              <label for="settlements">settlements</label>
-              <input type="checkbox" name="operator" value="settlements" id="settlements" class="3">
-            </div>
-            
-            <div class="input_group">
-              <label for="gameAnalysis">gameAnalysis</label>
-              <input type="checkbox" name="operator" value="gameAnalysis" id="gameAnalysis" class="4">
-            </div>
-            <div class="input_group">
-              <label for="betLimits">betLimits</label>
-              <input type="checkbox" name="operator" value="betLimits" id="betLimits" class="9">
-            </div>
-            <div class="input_group">
-              <label for="casinocontrol">casinocontrol</label>
-              <input type="checkbox" name="operator" value="casinocontrol" id="casinocontrol" class="9">
-            </div>
-            <div class="input_group">
-              <label for="catalogcontrol">catalogcontrol</label>
-              <input type="checkbox" name="operator" value="catalogcontrol" id="catalogcontrol" class="9">
-            </div>
-            <div class="input_group">
-              <label for="eventcontrol">eventcontrol</label>
-              <input type="checkbox" name="operator" value="eventcontrol" id="eventcontrol" class="9">
-            </div>
-            <%}%>
-            
-            
-            <div class="input_group">
-              <label for="notification">notification</label>
-              <input type="checkbox" name="operator" value="notification" id="notification" class="5">
-            </div>
-            
-            <div class="input_group">
-              <label for="betsMonitaring">betsMonitaring</label>
-              <input type="checkbox" name="operator" value="betsMonitaring" id="betsMonitaring" class="6">
-            </div>
-            
-            <div class="input_group">
-              <label for="onlineUsers">onlineUsers</label>
-              <input type="checkbox" name="operator" value="onlineUsers" id="onlineUsers" class="7">
-            </div>
-            
-            <div class="input_group">
-              <label for="alertBets">alertBets</label>
-              <input type="checkbox" name="operator" value="alertBets" id="alertBets" class="8">
-            </div>
-            
-            
-            <div class="input_group">
-              <label for="voidBets">voidBets</label>
-              <input type="checkbox" name="operator" value="voidBets" id="voidBets" class="10">
-            </div>
-
-            <div class="input_group">
-              <label for="userManagement">userManagement</label>
-              <input type="checkbox" name="operator" value="userManagement" id="userManagement" class="10">
-            </div>
-
-            <div class="input_group">
-              <label for="dashBoard">dashBoard</label>
-              <input type="checkbox" name="operator" value="dashBoard" id="dashBoard" class="10">
-            </div>
-
-            <div class="input_group">
-              <label for="riskAnlysis">riskAnlysis</label>
-              <input type="checkbox" name="operator" value="riskAnlysis" id="riskAnlysis" class="10">
-            </div>
-
-            <div class="input_group">
-              <label for="viewReports">viewReports</label>
-              <input type="checkbox" name="operator" value="viewReports" id="viewReports" class="10">
-            </div>
-            <%if(currentUser.roleName != "Admin"){%>
-              <div class="input_group">
-                <label for="Payment">Payment</label>
-                <input type="checkbox" name="operator" value="Payment" id="Payment" class="10">
-              </div>
-            <%}%>
-            
-        </div>
-          </div>
-            <%if(currentUser.roleName === "Admin" || currentUser.roleName === "Operator"){ %>
-              <div class="row mt-2">
-                <div class="col">
-                  <label for="customOptionCheckbox">
-                  New Domain
-                  <input type="checkbox"  id="customOptionCheckbox">
-                  </label>
-                  <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
-                  <label >WhiteLabel</label>
-                  <select id="whiteLabel" name="whiteLabel" class="form-control ml0">
-                    <%for(let i = 0; i < WhiteLabel.length; i++){ %>
-                      <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
-                    <%} %>
-                  </select>
-                  <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
-                  <label class="hide" id="B2C" >Is B2C WhiteLabel?
-                    <input type="checkbox" name="B2C">
-                  </label>
-                </div>
-              </div>
-            <%} %>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Email ID</label>
-                <input type="email" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">Contact No.</label>
-                <input type="number" class="form-control ml0" placeholder="Abitest" name="contact">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="password" required>
-              </div>
-              <div class="col">
-                <label for="">Confirm Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="passwordConfirm" required>
-              </div>
-            </div>
-            <div class="row mt-2" id="shareVisibleActual">
-              <div class="col">
-                <label for="">My Share</label>
-                <input type="text" id="Share" class="form-control ml0" placeholder="0" name="share" >
-              </div>
-              <div class="col">
-                <label for="">Visible</label>
-                <input type="text" id="myShare" class="form-control ml0" placeholder="<%=visible%>" name="Visible" >
-              </div>
-              <div class="col">
-                <label for="">Actual</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="Actual" readonly value="0">
-              </div>
-              <div class="col">
-                <label for="">Max Acc Limit child User</label>
-                <input type="number" class="form-control ml0" placeholder="0" name="maxLimitForChildUser"  placeholder="0">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Credit Reference</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="Credit" required>
-              </div>
-              <div class="col hide" id="ExposureLimits">
-                <label >Exposure Limits</label>
-                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Note</label>
-                <input type="text" class="form-control ml0" placeholder="" name="Note">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Transaction Passcode</label>
-                <input type="password" class="form-control ml0" placeholder="" name="Password" required>
-                <i class="bi bi-eye-slash" id="togglePassword"></i>
-              </div>
-            </div>
-            <button type="submit" class="btn-submit mt-3" >Add</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
 
   

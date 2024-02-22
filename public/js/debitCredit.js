@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toggleadminSide } from "./adminSideCustomPopup";
 
 export const debitCredit = async(data)=>{
     // console.log(data)
@@ -10,7 +11,7 @@ export const debitCredit = async(data)=>{
                 data
             });
             if(res.data.status === 'success'){
-                alert('deposit successfully!!!!');
+                toggleadminSide('deposit successfully!!!!',true);
                 $("#myModal").modal("toggle");
                 // window.setTimeout(()=>{
                 //     location.assign('/userManagement')
@@ -20,7 +21,7 @@ export const debitCredit = async(data)=>{
     
         }catch(err){
             console.log(err)
-            setTimeout(alert(err.response.data.message), 1500)
+            setTimeout(toggleadminSide(err.response.data.message,false), 1500)
         }
     }else{
         try{
@@ -30,7 +31,7 @@ export const debitCredit = async(data)=>{
                 data
             });
             if(res.data.status === 'success'){
-                alert('withdrawl successfully!!!!');
+                toggleadminSide('withdrawl successfully!!!!',true);
                 // window.setTimeout(()=>{
                 //     location.assign('/userManagement')
                 // }, 100)
@@ -41,7 +42,7 @@ export const debitCredit = async(data)=>{
     
         }catch(err){
             console.log(err)
-        setTimeout(alert(err.response.data.message), 1500)
+        setTimeout(toggleadminSide(err.response.data.message,false), 1500)
         }
     }
 }

@@ -3,9 +3,9 @@ const Bet = require('../model/betmodel');
 const runnerDataModel = require('../model/runnersData');
 
 
-async function checkExpoOfThatMarket( bet ){
+async function checkExpoOfThatMarketincludingBet( bet ){
     // console.log(bet, 123456789)
-    let WinAmount = parseFloat(bet.WinAmount)
+    let WinAmount = parseFloat(bet.exposure)
     if(bet.secId.toLowerCase().startsWith('odd_even')){
         if(bet.marketId.endsWith('OE')){
             const exposure1 = await Bet.aggregate([
@@ -98,10 +98,15 @@ async function checkExpoOfThatMarket( bet ){
                         exposure1[0].data[i].totalWinAmount2 =  parseFloat(exposure1[0].data[i].totalWinAmount2) - parseFloat(bet.exposure)
                     }
                 }
-                WinAmount = exposure1[0].data.reduce((max, current) => 
-                current.totalWinAmount2 > max.totalWinAmount2 ? current : max,
-                { totalWinAmount2: -Infinity }
-              );
+            //     WinAmount = exposure1[0].data.reduce((max, current) => 
+            //     current.totalWinAmount2 > max.totalWinAmount2 ? current : max,
+            //     { totalWinAmount2: -Infinity }
+            //   );
+
+            WinAmount = exposure1[0].data.reduce((min, current) => 
+            current.totalWinAmount2 < min.totalWinAmount2 ? current : min,
+            { totalWinAmount2: Infinity }
+            );
               WinAmount = WinAmount.totalWinAmount2
             }
            
@@ -310,9 +315,14 @@ async function checkExpoOfThatMarket( bet ){
                         }
                     }
                 console.log(dataToshow, "1212122")
-                let maxSumObject = dataToshow.reduce((max, current) => 
-                    current.sum > max.sum ? current : max,
-                    { sum: -Infinity }
+                // let maxSumObject = dataToshow.reduce((max, current) => 
+                //     current.sum > max.sum ? current : max,
+                //     { sum: -Infinity }
+                // );
+
+                let maxSumObject = dataToshow.reduce((min, current) => 
+                current.sum < min.sum ? current : min,
+                { sum: Infinity }
                 );
     
                 WinAmount = maxSumObject.sum;
@@ -492,13 +502,14 @@ async function checkExpoOfThatMarket( bet ){
                     showData.push(amount)
                 }
                 // console.log(showData, "showDatashowDatashowData")
-                WinAmount = Math.max(...showData);
+                // WinAmount = Math.max(...showData);
+                WinAmount = Math.min(...showData);
         }
     }
 
-    console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
+    // console.log(WinAmount, "WinAmountWinAmountWinAmountWinAmount")
     return WinAmount
 }
 
 
-module.exports = checkExpoOfThatMarket
+module.exports = checkExpoOfThatMarketincludingBet

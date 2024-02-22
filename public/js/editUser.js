@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toggleadminSide } from "./adminSideCustomPopup";
+
 export const editUser = async(data) => {
 
     try{
@@ -8,7 +10,7 @@ export const editUser = async(data) => {
             data
         });
         if(res.data.status === 'success'){
-            alert('data update successfully!!!!');
+            toggleadminSide('data update successfully!!!!',true);
             $(".popup_body").removeClass("popup_body_show");
             // window.setTimeout(()=>{
             //     location.assign('/userManagement')
@@ -18,7 +20,7 @@ export const editUser = async(data) => {
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }
         

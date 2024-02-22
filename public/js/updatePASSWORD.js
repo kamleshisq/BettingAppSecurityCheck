@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toggleadminSide } from "./adminSideCustomPopup";
 
 export const updatePassword = async(data)=>{
     // console.log(data, "123")
@@ -9,7 +10,7 @@ export const updatePassword = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-            alert('updated successfully!!!!');
+            toggleadminSide('updated successfully!!!!',true);
             window.setTimeout(()=>{
                 location.reload();
             }, 100)
@@ -17,6 +18,6 @@ export const updatePassword = async(data)=>{
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { toggleadminSide } from "./adminSideCustomPopup";
 export const addImage = async(data)=>{
     try{
         const res = await axios({
@@ -8,7 +8,8 @@ export const addImage = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-            alert('image added successfully!!!!');
+            //alert('image added successfully!!!!');
+			 toggleadminSide('image added successfully!',true);
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{
@@ -18,6 +19,6 @@ export const addImage = async(data)=>{
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    setTimeout(toggleadminSide(err.response.data.message,false), 1500)
     }
 }
